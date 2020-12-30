@@ -412,6 +412,7 @@ function SWEP:PrimaryAttack()
 					end
 					if v.Sapped == false then
 						timer.Stop("SapSentry"..v:EntIndex())
+					end
 				end)
 			end
 		end
