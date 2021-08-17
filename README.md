@@ -1,6 +1,10 @@
 ## Team Fortress 2 Gamemode
 The Gamemode that allows you to play TF2 in Gmod!
 
+# Outdated
+
+This repository is currently out of date due to the lack of the new features.
+
 ## Installation
 Drop the addon folder into the addons folder.
 
