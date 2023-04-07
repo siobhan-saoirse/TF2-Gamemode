@@ -3,7 +3,7 @@
 	"base"				"base"
 	"title"				"Team Fortress 2"
 	"menusystem"		"1"
-	"workshopid"		"1932936017"
+	"workshopid"		"1417447538"
 
 	"author_name"		"LeadKiller"
 

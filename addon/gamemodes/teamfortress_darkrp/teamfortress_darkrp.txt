@@ -3,7 +3,7 @@
 	"base"				"teamfortress"
 	"title"				"Team Fortress 2 DarkRP"
 	"menusystem"		"1"
-	"workshopid"		"1932936017"
+	"workshopid"		"248302805"
 
 	"author_name"		"Daisreich"
 
