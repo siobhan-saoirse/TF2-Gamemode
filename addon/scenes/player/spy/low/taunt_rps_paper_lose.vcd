@@ -1,0 +1,152 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_rps_lose"
+    {
+      time 0.000000 6.933333
+      param "taunt_rps_paper_lose"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "Spy.Yes02"
+    {
+      time 4.891975 5.663880
+      param "spy_taunt_rps_lose_15"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_rps_exert_28"
+    {
+      time 0.175926 0.877355
+      param "spy_taunt_rps_exert_28"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_rps_exert_08"
+    {
+      time 1.720000 2.217415
+      param "spy_taunt_rps_exert_08"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_rps_exert_09"
+    {
+      time 2.140000 2.595397
+      param "spy_taunt_rps_exert_09"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_rps_exert_10"
+    {
+      time 2.600000 3.099274
+      param "spy_taunt_rps_exert_10"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "ahhhh"
+    {
+      time 3.342593 4.216244
+      param "Spy.NegativeVocalization08"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "rps"
+  {
+    event speak "Weapon_Sword.Swing"
+    {
+      time 1.783333 2.170136
+      param "Weapon_Sword.Swing"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Sword.Swing"
+    {
+      time 2.083333 2.473174
+      param "Weapon_Sword.Swing"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Sword.Swing"
+    {
+      time 2.663333 3.011474
+      param "Weapon_Sword.Swing"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Soldier03ClothesSwipe"
+    {
+      time 5.737654 6.038108
+      param "Taunt.Soldier03ClothesSwipe"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Soldier03ClothesSwipe"
+    {
+      time 6.027778 6.328232
+      param "Taunt.Soldier03ClothesSwipe"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "facial"
+  {
+    event flexanimation "face"
+    {
+      time 3.780864 6.938272
+      param ""
+      flexanimations samples_use_time
+      {
+        "CloseLid" combo
+        {
+          0.2080 1.0001 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        {
+          0.2080 0.4981 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        "multi_CloseLid"
+        {
+          0.0000 0.0275 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.2080 0.9099 curve_easein_to_curve_easeout
+          2.4216 0.9295 curve_easein_to_curve_easeout
+          2.9081 0.0196 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.1574 0.0000 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        "scaredUpper"
+        {
+          0.0000 0.0000 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.2080 0.5373 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          2.4189 0.8981 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          2.8405 0.0196 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.1574 0.0000 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

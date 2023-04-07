@@ -1,0 +1,90 @@
+// Choreo version 1
+event stoppoint "end"
+{
+  time 4.002873 -1.000000
+  param "noaction"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_hifiveSuccess"
+    {
+      time 0.036232 4.002899
+      param "taunt_hifiveSuccess"
+      fixedlength
+    }
+    event expression "defaultFace"
+    {
+      time 0.007246 0.362319
+      param "player\spy\emotion\emotion"
+      param2 "defaultFace"
+      event_ramp
+      {
+        0.0000 0.9843
+        0.2848 0.9922
+      }
+    }
+    event expression "happySmall"
+    {
+      time 0.347826 2.318841
+      param "player\spy\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.0000 0.0078
+        0.1303 0.9922
+        1.3278 1.0000
+      }
+    }
+    event expression "happyBig"
+    {
+      time 1.874063 3.988922
+      param "player\spy\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0030 0.0039
+        1.1152 0.9882
+        2.0785 0.9961
+      }
+    }
+    event expression "Smile02"
+    {
+      time 3.920290 3.920290
+      param "player\spy\emotion\emotion"
+      param2 "Smile02"
+    }
+    event speak "Spy.HighFiveSuccess01"
+    {
+      time 2.902529 4.001440
+      param "Spy.HighFiveSuccess02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "scaredUpper"
+    {
+      time 2.795977 3.795977
+      param "player\spy\emotion\emotion"
+      param2 "scaredUpper"
+      event_ramp
+      {
+        0.2848 0.0510
+        0.4152 0.5059
+        0.6273 0.0549
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

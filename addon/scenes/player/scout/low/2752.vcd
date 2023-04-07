@@ -1,0 +1,38 @@
+// Choreo version 1
+actor "Scout"
+{
+  channel "audio"
+  {
+    event speak "Scout.BeingShotInvincible26"
+    {
+      time 0.000000 0.466667
+      param "Scout.BeingShotInvincible26"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "madUpper"
+    {
+      time 0.000000 3.000000
+      param "player\scout\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.0939 0.8500
+        2.9061 0.7977
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,51 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event speak "Soldier.DirectHitTaunt01"
+    {
+      time 0.000000 1.864762
+      param "Soldier.DirectHitTaunt01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "painBig"
+    {
+      time 0.031250 1.791667
+      param "player\soldier\emotion\emotion"
+      param2 "painBig"
+      event_ramp
+      {
+        0.1030 0.0052
+        0.2182 0.7597
+        0.3091 0.3385
+        0.4242 0.7054
+        0.5333 0.4729
+        0.5909 0.2765
+        0.6212 0.2171
+        0.8030 0.4238
+        0.9273 0.3333
+        1.0000 0.2119
+        1.1000 0.2222
+        1.1909 0.4186
+        1.2545 0.2455
+        1.3758 0.1473
+        1.5424 0.0284
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

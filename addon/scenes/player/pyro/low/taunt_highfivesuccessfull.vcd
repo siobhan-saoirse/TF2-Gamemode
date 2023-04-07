@@ -1,0 +1,33 @@
+// Choreo version 1
+actor "pyro"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveSuccessFull"
+    {
+      time 0.000000 4.166667
+      param "taunt_highFiveSuccessFull"
+      fixedlength
+    }
+    event speak "Pyro.HighFiveSuccess01"
+    {
+      time 2.479675 3.437249
+      param "Pyro.HighFiveSuccess03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "164"
+  "RampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

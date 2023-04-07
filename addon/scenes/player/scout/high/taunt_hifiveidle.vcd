@@ -1,0 +1,39 @@
+// Choreo version 1
+actor "scout"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveIdle"
+    {
+      time 0.000000 1.533333
+      param "taunt_highFiveIdle"
+      fixedlength
+    }
+    event expression "happySmall"
+    {
+      time 0.003205 1.533334
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.0000 1.0000 "curve_easein_to_curve_easeout"
+        1.5237 1.0000 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+  channel "audio"
+  {
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "308"
+  "RampTool" "100"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

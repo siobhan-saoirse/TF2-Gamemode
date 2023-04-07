@@ -1,0 +1,36 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "sniper.CartMovingForwardOffense02"
+    {
+      time 0.000000 1.733311
+      param "sniper.CartMovingForwardOffense02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "AggresiveClosed"
+    {
+      time 0.000000 2.250000
+      param "player\sniper\emotion\emotion"
+      param2 "AggresiveClosed"
+      event_ramp
+      {
+        0.0956 0.9909
+        2.0600 0.9909
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "RampTool" "90"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

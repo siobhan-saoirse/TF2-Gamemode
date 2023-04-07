@@ -1,0 +1,115 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_headbutt_success"
+    {
+      time 0.006459 4.506459
+      param "taunt_headbutt_success"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "soldier_taunt_headbutt_success_windup"
+    {
+      time 0.000000 1.881497
+      param "soldier_taunt_headbutt_success_windup"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "soldier_taunt_headbutt_success_exert"
+    {
+      time 1.680000 2.252562
+      param "soldier_taunt_headbutt_success_exert"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "soldier_taunt_headbutt_success_recover"
+    {
+      time 2.600000 3.805306
+      param "soldier_taunt_headbutt_success_recover"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "SXF"
+  {
+    event speak "taunt_headbutt_sfx_hand_swoosh"
+    {
+      time 0.000000 0.572132
+      param "Taunt.EngineerSwoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_headbutt_sfx_head_impact"
+    {
+      time 1.700000 2.514150
+      param "Weapon_BaseballBat.HitFlesh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "MedicGloveSnap"
+    {
+      time 0.377778 1.036644
+      param "Taunt.MedicGloveSnap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "expression"
+  {
+    event expression "specialAction01"
+    {
+      time 0.026042 1.817708
+      param "player\soldier\emotion\emotion"
+      param2 "specialAction01"
+      event_ramp
+      {
+        0.2040 0.9569
+        1.5780 0.9725
+      }
+    }
+    event expression "painBig"
+    {
+      time 1.687500 2.630209
+      param "player\soldier\emotion\emotion"
+      param2 "painBig"
+      event_ramp
+      {
+        0.0160 0.0392
+        0.1720 0.9843
+        0.8420 0.9765
+      }
+    }
+    event expression "mad"
+    {
+      time 2.541667 4.479167
+      param "player\soldier\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.1800 0.9412
+        1.8200 0.9686
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

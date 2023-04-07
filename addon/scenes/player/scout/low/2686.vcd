@@ -1,0 +1,38 @@
+// Choreo version 1
+actor "Scout"
+{
+  channel "audio"
+  {
+    event speak "Scout.Domination12"
+    {
+      time 0.000000 3.813333
+      param "Scout.Domination12"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBigUpper"
+    {
+      time 0.000000 3.906250
+      param "player\scout\emotion\emotion"
+      param2 "happyBigUpper"
+      event_ramp
+      {
+        0.1063 0.9295
+        3.7271 0.9136
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "32"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

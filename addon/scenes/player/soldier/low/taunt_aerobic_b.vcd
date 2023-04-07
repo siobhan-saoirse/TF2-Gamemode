@@ -1,0 +1,223 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 6.157000 -1.000000
+  param "5.363000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "Anim"
+  {
+    event speak "spy_taunt_flip_landings"
+    {
+      time 0.357322 1.156596
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 4.064040 4.783133
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 4.440135 4.921133
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 6.893199 7.612292
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 2.701607 3.182605
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 2.028578 2.560143
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.SoldierClothesRustle"
+    {
+      time 2.471631 3.045962
+      param "Taunt.SoldierClothesRustle"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 5.255530 5.787095
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 6.095957 6.815050
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_BaseballBat.HitFlesh"
+    {
+      time 0.936171 1.750321
+      param "Weapon_BaseballBat.HitFlesh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_BaseballBat.HitFlesh"
+    {
+      time 1.326241 2.140391
+      param "Weapon_BaseballBat.HitFlesh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 4.890282 5.609375
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 5.652902 6.275941
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig"
+    {
+      time 0.003546 1.663121
+      param "player\soldier\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0680 0.0000
+        0.3863 0.0000
+        0.6686 0.0000
+        0.9157 0.9569
+        1.0020 0.2000
+        1.2373 0.9098
+        1.2961 0.1725
+        1.5160 0.8745
+      }
+    }
+    event expression "happySmall"
+    {
+      time 1.489362 3.475177
+      param "player\soldier\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.0600 0.8196
+        1.7804 0.8471
+        1.9858 0.0157
+      }
+    }
+    event speak "soldier_taunt_dosido_mid_rand"
+    {
+      time 1.946808 3.305039
+      param "soldier_taunt_dosido_mid_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig"
+    {
+      time 3.333333 5.376071
+      param "player\soldier\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.1235 0.9216
+        0.9078 0.9176
+        1.0725 0.2353
+        1.2306 0.6627
+        2.0428 1.0000
+      }
+    }
+    event speak "BostonBasher.Swing"
+    {
+      time 1.783688 2.035479
+      param "BostonBasher.Swing"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "BostonBasher.Swing"
+    {
+      time 1.964539 2.074108
+      param "BostonBasher.Swing"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "BostonBasher.Swing"
+    {
+      time 2.301418 2.533073
+      param "BostonBasher.Swing"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "soldier_taunt_rps_intro_wait_rand"
+    {
+      time 0.007092 0.727908
+      param "soldier_taunt_rps_intro_wait_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig"
+    {
+      time 5.379617 6.195036
+      param "player\soldier\emotion\emotion"
+      param2 "happyBig"
+    }
+    event sequence "taunt_aerobic_B"
+    {
+      time 0.000000 7.166667
+      param "taunt_aerobic_B"
+      fixedlength
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

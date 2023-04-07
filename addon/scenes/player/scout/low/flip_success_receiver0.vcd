@@ -1,0 +1,87 @@
+// Choreo version 1
+event loop "0"
+{
+  time 0.000000 -1.000000
+  param "0.000000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_flip_success_receiver"
+    {
+      time 0.000000 4.566667
+      param "taunt_flip_success_receiver"
+      fixedlength
+    }
+    event expression "happySmall"
+    {
+      time 0.005856 2.319207
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.2540 1.0000
+        2.3134 1.0000
+      }
+    }
+    event expression "madUpper"
+    {
+      time 2.333334 3.707819
+      param "player\scout\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.0533 0.9373
+        1.1622 0.9020
+      }
+    }
+  }
+  channel "audio"
+  {
+    event speak "Glass.ImpactHard"
+    {
+      time 1.864197 2.663471
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_PickAxe.Swing"
+    {
+      time 0.242799 0.743162
+      param "Weapon_PickAxe.Swing"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.EngineerSwoosh"
+    {
+      time 1.372429 1.944561
+      param "Taunt.EngineerSwoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Sword.Swing"
+    {
+      time 0.849794 1.239635
+      param "Weapon_Sword.Swing"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,100 @@
+// Choreo version 1
+event stoppoint "end"
+{
+  time 5.048442 -1.000000
+  param "noaction"
+}
+actor "!target1"
+{
+  channel "animation"
+  {
+    event sequence "taunt_laugh"
+    {
+      time 0.002415 4.835749
+      param "taunt_laugh"
+      fixedlength
+    }
+    event expression "happybig02"
+    {
+      time -0.004831 5.048309
+      param "player\heavy\emotion\emotion"
+      param2 "happybig02"
+      event_ramp
+      {
+        0.2400 0.9961
+        0.6867 0.9961
+        0.9200 0.0000
+        1.1800 1.0000
+        1.4133 0.4941
+        1.5533 0.4941
+        1.6600 1.0000
+        1.8233 0.6039
+        1.9933 0.6627
+        2.1500 1.0000
+        3.2250 0.3725
+        3.6367 0.3020
+        4.0033 0.7451
+        4.1967 0.3686
+        4.4067 0.6314
+        4.7917 0.3020
+      }
+    }
+    event expression "happy1"
+    {
+      time 0.739130 1.739130
+      param "player\heavy\emotion\emotion"
+      param2 "happy1"
+      event_ramp
+      {
+        0.0200 0.0039
+        0.1633 0.9922
+        0.3733 0.0039
+      }
+    }
+    event speak "Heavy.LaugherBigSnort01"
+    {
+      time 0.000000 5.046690
+      param "Heavy.LaugherBigSnort01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "aa2"
+    {
+      time 1.454106 2.400966
+      param "player\heavy\phonemes\phonemes_strong"
+      param2 "aa2"
+      event_ramp
+      {
+        0.2200 0.3843
+        0.4267 0.0039
+        0.6500 0.4039
+      }
+    }
+    event expression "painBig"
+    {
+      time 2.574879 3.574879
+      param "player\heavy\emotion\emotion"
+      param2 "painBig"
+      event_ramp
+      {
+        0.3967 0.0000
+        0.5500 1.0000
+        0.5733 0.9843
+        0.6400 0.1922
+        0.8000 0.0078
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

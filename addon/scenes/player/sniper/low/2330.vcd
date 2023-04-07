@@ -1,0 +1,36 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "sniper.CartMovingForwardDefense03"
+    {
+      time 0.000000 1.522630
+      param "sniper.CartMovingForwardDefense03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "madUpper"
+    {
+      time 0.000000 2.500000
+      param "player\sniper\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.1378 0.8023
+        2.3378 0.7432
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "RampTool" "74"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

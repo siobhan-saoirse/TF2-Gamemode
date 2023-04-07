@@ -1,0 +1,61 @@
+// Choreo version 1
+actor "heavy"
+{
+  channel "body"
+  {
+    event sequence "taunt_hifiveFail"
+    {
+      time 0.000000 4.733333
+      param "taunt_hifiveFail"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event expression "idleface"
+    {
+      time 0.007937 0.261905
+      param "player\heavy\emotion\emotion"
+      param2 "idleface"
+      event_ramp
+      {
+        0.0091 0.9107
+        0.2120 0.9286
+      }
+    }
+    event expression "happy1"
+    {
+      time 0.134921 2.277778
+      param "player\heavy\emotion\emotion"
+      param2 "happy1"
+      event_ramp
+      {
+        0.1121 0.7857
+        2.0375 0.9583
+      }
+    }
+    event expression "upperUpset1"
+    {
+      time 2.142857 4.722222
+      param "player\heavy\emotion\emotion"
+      param2 "upperUpset1"
+      event_ramp
+      {
+        0.0939 0.7798
+        2.3697 0.8214
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "SceneRampTool" "100"
+  "GestureTool" "100"
+  "RampTool" "66"
+  "ExpressionTool" "100"
+  "CChoreoView" "84"
+}
+fps 60
+snap off
+ignorePhonemes off

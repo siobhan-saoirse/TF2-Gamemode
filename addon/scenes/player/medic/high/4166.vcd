@@ -1,0 +1,45 @@
+// Choreo version 1
+actor "medic"
+{
+  channel "audio"
+  {
+    event speak "medic_mvm_wave_end04"
+    {
+      time 0.010417 2.419034
+      param "medic_mvm_wave_end04"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "emotion"
+  {
+    event expression "scaredHurt"
+    {
+      time 0.020833 2.541667
+      param "player\medic\emotion\emotion"
+      param2 "scaredHurt"
+      event_ramp
+      {
+        0.1030 0.0000
+        0.3121 0.6077 "curve_easein_to_curve_easeout"
+        1.3455 0.6577 "curve_easein_to_curve_easeout"
+        1.5788 0.9115 "curve_easein_to_curve_easeout"
+        1.7667 0.1615 "curve_easein_to_curve_easeout"
+        2.3303 0.1615 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,77 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_yetipunch"
+    {
+      time 0.000000 8.750000
+      param "taunt_yetipunch"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event expression "scared"
+    {
+      time 0.006173 1.006173
+      param "player\sniper\emotion\emotion"
+      param2 "scared"
+      event_ramp
+      {
+        0.0000 0.0118
+        0.1429 0.7647
+        0.7810 0.8078
+      }
+    }
+    event expression "happyBigClosed"
+    {
+      time 0.876543 4.691359
+      param "player\sniper\emotion\emotion"
+      param2 "happyBigClosed"
+      event_ramp
+      {
+        0.3786 1.0000
+        3.6160 0.9569
+      }
+    }
+    event expression "happyBig"
+    {
+      time 4.500000 8.717390
+      param "player\sniper\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0500 0.8549
+        3.9424 0.8745
+      }
+    }
+    event speak "Sniper.SpecialCompleted17"
+    {
+      time 3.391304 4.912210
+      param "Sniper.SpecialCompleted17"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Sniper.SpecialCompleted13"
+    {
+      time 6.833333 8.646644
+      param "sniper.Award12"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

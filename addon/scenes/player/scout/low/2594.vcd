@@ -1,0 +1,38 @@
+// Choreo version 1
+actor "Scout"
+{
+  channel "audio"
+  {
+    event speak "Scout.Revenge09"
+    {
+      time 0.000000 1.408005
+      param "Scout.Revenge09"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "painSmallUpper"
+    {
+      time 0.000000 2.250000
+      param "player\scout\emotion\emotion"
+      param2 "painSmallUpper"
+      event_ramp
+      {
+        0.1909 0.9068
+        2.0758 0.8477
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

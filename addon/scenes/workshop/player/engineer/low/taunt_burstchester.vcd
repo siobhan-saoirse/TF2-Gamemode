@@ -1,0 +1,92 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "Engineer"
+  {
+    event sequence "taunt_burstchester_engineer"
+    {
+      time 0.000000 4.958333
+      param "taunt_burstchester_engineer"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event speak "Flesh.ImpactHard"
+    {
+      time 0.015152 1.031025
+      param "Flesh.ImpactHard"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Flesh.ImpactSoft"
+    {
+      time 2.818181 3.368204
+      param "Flesh.ImpactSoft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_burstchester_engineer_01"
+    {
+      time 1.318182 3.274463
+      param "taunt_burstchester_engineer_01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_burstchester_engineer_02"
+    {
+      time 3.734848 4.226821
+      param "taunt_burstchester_engineer_02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_burstchester_engineer_pain"
+    {
+      time 0.318182 0.853692
+      param "taunt_burstchester_engineer_pain"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "mad"
+    {
+      time 2.772727 3.984848
+      param "player\engineer\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.1160 0.8824
+        0.5760 0.4353
+        1.0660 0.0275
+      }
+    }
+    event expression "painSmall"
+    {
+      time 0.053030 1.590909
+      param "player\engineer\emotion\emotion"
+      param2 "painSmall"
+      event_ramp
+      {
+        0.1260 0.8706
+        0.1600 0.8431
+        0.8920 0.6000
+        1.4416 0.5765
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

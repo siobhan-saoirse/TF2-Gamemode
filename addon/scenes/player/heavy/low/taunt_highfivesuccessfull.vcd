@@ -1,0 +1,70 @@
+// Choreo version 1
+actor "heavy"
+{
+  channel "body"
+  {
+    event speak "Heavy.Cheers02"
+    {
+      time 2.464928 4.107739
+      param "Heavy.Cheers02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "idleface"
+    {
+      time 0.013333 0.179710
+      param "player\heavy\emotion\emotion"
+      param2 "idleface"
+      event_ramp
+      {
+        0.0000 0.9370 "curve_easein_to_curve_easein"
+        0.0842 0.9003 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "happy1"
+    {
+      time 0.108696 2.108696
+      param "player\heavy\emotion\emotion"
+      param2 "happy1"
+      event_ramp
+      {
+        0.0000 0.0079
+        0.2420 0.9974 "curve_easein_to_curve_easein"
+        1.7689 0.9895 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "happybig"
+    {
+      time 1.985507 4.123188
+      param "player\heavy\emotion\emotion"
+      param2 "happybig"
+      event_ramp
+      {
+        0.0000 0.0131
+        0.2160 0.9921 "curve_easein_to_curve_easein"
+        0.4540 0.9921
+        0.6360 0.5381 "curve_easein_to_curve_easein"
+        1.8907 0.5276 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event sequence "taunt_highfiveSuccessFull"
+    {
+      time 0.000000 4.166667
+      param "taunt_highfiveSuccessFull"
+      fixedlength
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "92"
+  "SceneRampTool" "100"
+  "RampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

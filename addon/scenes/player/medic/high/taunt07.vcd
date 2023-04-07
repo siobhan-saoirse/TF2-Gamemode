@@ -1,0 +1,53 @@
+// Choreo version 1
+actor "medic"
+{
+  channel "body"
+  {
+    event sequence "taunt07"
+    {
+      time 0.000000 2.500000
+      param "taunt07"
+      fixedlength
+    }
+    event expression "scaredHurt"
+    {
+      time 0.000000 2.500000
+      param "player\medic\emotion\emotion"
+      param2 "yellingUpper"
+      event_ramp
+      {
+        0.1967 0.7621
+        0.2433 0.9102 "curve_bspline_to_curve_bspline"
+        0.3600 0.9296 "curve_bspline_to_curve_bspline"
+        2.2433 0.9029 "curve_easeout_to_curve_easeout"
+        2.3733 0.8811 "curve_bspline_to_curve_bspline"
+        2.4200 0.7670
+      }
+    }
+    event expression "uw"
+    {
+      time 0.000000 2.500000
+      param "player\medic\phonemes\phonemes_strong"
+      param2 "uw"
+      event_ramp
+      {
+        0.1353 0.8592 "curve_easein_to_curve_easein"
+        0.2265 0.9150 "curve_linear_interp_to_curve_linear_interp"
+        2.2618 0.8835 "curve_kochanek_to_curve_kochanek"
+        2.4088 0.8350 "curve_bspline_to_curve_bspline"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "112"
+  "RampTool" "68"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

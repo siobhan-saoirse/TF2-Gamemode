@@ -1,0 +1,50 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event speak "soldier_mvm_bomb_destroyed02"
+    {
+      time 0.000000 2.082789
+      param "soldier_mvm_bomb_destroyed02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "emotion"
+  {
+    event expression "madUpper"
+    {
+      time -0.020833 2.104167
+      param "player\soldier\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.0212 0.0103
+        0.1091 0.1448
+        0.2273 0.0621
+        0.4394 0.0655
+        0.6515 0.2828
+        0.9030 0.1517
+        1.1273 0.1448
+        1.2394 0.3069
+        1.4424 0.2448
+        1.6091 0.3655
+        1.9000 0.3345
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

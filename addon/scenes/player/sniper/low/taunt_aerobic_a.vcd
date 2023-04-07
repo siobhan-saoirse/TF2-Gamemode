@@ -1,0 +1,202 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 7.491000 -1.000000
+  param "6.706000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "Anim"
+  {
+    event speak "Default.StepLeft"
+    {
+      time 6.312267 7.031360
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 4.450773 4.931770
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 1.492387 2.115426
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 1.074677 1.606242
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 5.379852 6.002891
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 0.670631 1.151629
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 0.266170 0.985263
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 4.943473 5.475038
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event sequence "taunt_aerobic_A"
+    {
+      time 0.000000 7.500000
+      param "taunt_aerobic_A"
+      fixedlength
+    }
+    event speak "spy_taunt_flip_landings"
+    {
+      time 1.925532 2.724806
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_flip_landings"
+    {
+      time 2.716312 3.515586
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 5.798083 6.329648
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 6.216731 6.839769
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 7.018150 7.641189
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 7.411558 7.943123
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 3.638509 4.357602
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 3.950565 4.669658
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 6.642263 7.123260
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 2.273261 2.804826
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_sniper_aerobic_shared_dance_intro"
+    {
+      time 0.014957 2.973052
+      param "taunt_sniper_aerobic_shared_dance_intro"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_sniper_aerobic_shared_dance_outro"
+    {
+      time 3.581196 5.772738
+      param "taunt_sniper_aerobic_shared_dance_outro"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "HappySmallClosed"
+    {
+      time 0.000000 6.706000
+      param "player\sniper\emotion\emotion"
+      param2 "HappySmallClosed"
+    }
+    event expression "HappySmallClosed"
+    {
+      time 6.706000 7.549020
+      param "player\sniper\emotion\emotion"
+      param2 "HappySmallClosed"
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

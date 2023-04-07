@@ -1,0 +1,91 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "Anim"
+  {
+    event sequence "taunt_yetipunch"
+    {
+      time 0.016869 6.516869
+      param "taunt_yetipunch"
+      fixedlength
+    }
+  }
+  channel "sound"
+  {
+    event speak "Scout.AutoDejectedTie01"
+    {
+      time 0.070237 1.527289
+      param "Scout.AutoDejectedTie01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Scout.PainSevere02"
+    {
+      time 2.649184 3.966917
+      param "Scout.PainSevere02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Scout.PainSevere05"
+    {
+      time 3.974420 4.597005
+      param "Scout.PainSevere05"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "sound2"
+  {
+    event speak "Breakable.Flesh"
+    {
+      time 2.386026 4.289155
+      param "Breakable.Flesh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Breakable.Crate"
+    {
+      time 4.650545 5.799366
+      param "Breakable.Crate"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "expressions"
+  {
+    event expression "madUpper"
+    {
+      time 0.109195 2.712644
+      param "player\scout\emotion\emotion"
+      param2 "madUpper"
+    }
+    event expression "specialAction01"
+    {
+      time 2.678161 5.051724
+      param "player\scout\emotion\emotion"
+      param2 "specialAction01"
+    }
+    event expression "scared"
+    {
+      time 5.017241 6.488505
+      param "player\scout\emotion\emotion"
+      param2 "scared"
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

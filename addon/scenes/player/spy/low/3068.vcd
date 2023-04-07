@@ -1,0 +1,66 @@
+// Choreo version 1
+actor "spy"
+{
+  channel "audio"
+  {
+    event speak "Spy.DominationDemoMan07"
+    {
+      time 0.004762 5.439433
+      param "Spy.DominationDemoMan07"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "painBigUpper"
+    {
+      time 0.509524 1.942857
+      param "player\spy\emotion\emotion"
+      param2 "painBigUpper"
+      event_ramp
+      {
+        0.1818 0.5646
+        1.2398 0.5572
+      }
+    }
+    event expression "painSmallUpper"
+    {
+      time 1.652381 5.609524
+      param "player\spy\emotion\emotion"
+      param2 "painSmallUpper"
+      event_ramp
+      {
+        0.2424 0.3727 "curve_easein_to_curve_easein"
+        1.4152 0.4465 "curve_easein_to_curve_easeout"
+        1.5636 0.7528 "curve_easein_to_curve_easein"
+        2.3602 0.7712 "curve_easein_to_curve_easeout"
+        2.5026 0.0517 "curve_easein_to_curve_easeout"
+        2.7905 0.4760 "curve_easein_to_curve_easeout"
+        3.2610 0.4760 "curve_easein_to_curve_easein"
+        3.4481 0.0295
+      }
+    }
+    event expression "scaredUpper"
+    {
+      time 4.904763 5.447620
+      param "player\spy\emotion\emotion"
+      param2 "scaredUpper"
+      event_ramp
+      {
+        0.1242 0.5904
+        0.3216 0.6089
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "140"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

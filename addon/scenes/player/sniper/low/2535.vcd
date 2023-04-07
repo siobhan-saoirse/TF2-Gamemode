@@ -1,0 +1,42 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "sniper.CartStayCloseOffenseSoft04"
+    {
+      time 0.013334 1.461293
+      param "sniper.CartStayCloseOffenseSoft04"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "painSmallUpper"
+    {
+      time 0.020000 1.486667
+      param "player\sniper\emotion\emotion"
+      param2 "painSmallUpper"
+      event_ramp
+      {
+        0.2240 0.9039
+        0.6060 0.5943
+        1.1360 0.6014
+      }
+    }
+  }
+  channel "em"
+  {
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "RampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

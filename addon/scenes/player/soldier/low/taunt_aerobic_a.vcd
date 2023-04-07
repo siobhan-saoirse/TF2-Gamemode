@@ -1,0 +1,213 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 7.491000 -1.000000
+  param "6.695000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "Anim"
+  {
+    event speak "Default.StepLeft"
+    {
+      time 6.312267 7.031360
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 4.450773 5.073812
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 1.492387 1.973385
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 1.074677 1.793770
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 5.379852 6.002891
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 0.670631 1.151629
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 0.266170 0.797735
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 4.943473 5.662566
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig"
+    {
+      time 0.003546 6.695000
+      param "player\soldier\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0000 1.0000
+        0.3745 0.3294
+        2.0412 0.4510
+        2.4275 0.8157
+        4.2843 0.7098
+        4.9922 0.3608
+        6.2137 0.2784
+        6.6915 1.0000
+      }
+    }
+    event sequence "taunt_aerobic_A"
+    {
+      time 0.000000 7.500000
+      param "taunt_aerobic_A"
+      fixedlength
+    }
+    event speak "spy_taunt_flip_landings"
+    {
+      time 1.925532 2.724806
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_flip_landings"
+    {
+      time 2.716312 3.515586
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 5.798083 6.517176
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 6.216731 6.697729
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 7.018150 7.499147
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 7.411558 8.130651
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 3.638509 4.357602
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 3.950565 4.669658
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 6.642263 7.123260
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 2.273261 2.992354
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig"
+    {
+      time 6.695000 7.557518
+      param "player\soldier\emotion\emotion"
+      param2 "happyBig"
+    }
+    event speak "taunt_soldier_aerobic_shared_dance_A"
+    {
+      time 0.074469 1.827575
+      param "taunt_soldier_aerobic_shared_dance_A"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_soldier_aerobic_shared_dance_B"
+    {
+      time 4.709219 5.601101
+      param "taunt_soldier_aerobic_shared_dance_B"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

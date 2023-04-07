@@ -1,0 +1,113 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 4.000019 -1.000000
+  param "1.400000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_rps_start"
+    {
+      time 0.000000 4.000000
+      param "taunt_rps_start"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event flexanimation "facial"
+    {
+      time 0.002058 1.395063
+      param ""
+      flexanimations samples_use_time
+      {
+        "CloseLid" combo
+        {
+          0.1437 0.5491 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.2149 1.0001 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.2875 0.5177 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.4187 0.4785 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.6563 0.4589 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        {
+          0.2149 0.4981 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        "multi_CloseLid"
+        {
+          0.2149 0.5373 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        "blink"
+        {
+        }
+        "happyBig"
+        {
+          0.2149 0.0039 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.8158 0.0039 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        "upperHappy1"
+        {
+          0.2149 0.0000 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.6806 0.0078 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.8158 0.0000 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          1.3355 0.0078 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        "AIY"
+        {
+          0.2149 0.0000 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.7129 0.0275 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.8158 0.0588 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.9290 0.0471 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+      }
+    }
+    event speak "heavy_taunt_rps_start_rand"
+    {
+      time 0.040286 0.917338
+      param "heavy_taunt_rps_start_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_taunt_rps_intro_wait_rand"
+    {
+      time 2.543860 3.571842
+      param "heavy_taunt_rps_intro_wait_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "fx"
+  {
+    event speak "Weapon_Fist.HitHand"
+    {
+      time 0.801170 0.957179
+      param "Weapon_Fist.HitHand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Fist.HitHand"
+    {
+      time 1.038012 1.191844
+      param "Weapon_Fist.HitHand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

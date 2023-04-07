@@ -1,0 +1,25 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event sequence "primary_death_backstab"
+    {
+      time 0.000000 1.366667
+      param "primary_death_backstab"
+      fixedlength
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "80"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

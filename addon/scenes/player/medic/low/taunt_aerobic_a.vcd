@@ -1,0 +1,216 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 7.491000 -1.000000
+  param "6.695000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "Anim"
+  {
+    event speak "Default.StepLeft"
+    {
+      time 6.312267 6.843832
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 4.450773 4.931770
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 1.492387 1.973385
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 1.074677 1.793770
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 5.379852 6.002891
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 0.670631 1.151629
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 0.266170 0.797735
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 4.943473 5.475038
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event sequence "taunt_aerobic_A"
+    {
+      time 0.000000 7.500000
+      param "taunt_aerobic_A"
+      fixedlength
+    }
+    event speak "spy_taunt_flip_landings"
+    {
+      time 1.925532 2.724806
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_flip_landings"
+    {
+      time 2.716312 3.515586
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 5.798083 6.517176
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 6.216731 6.697729
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 7.018150 7.641189
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 7.411558 7.943123
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 3.638509 4.170074
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 3.950565 4.482130
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 6.642263 7.123260
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 2.273261 2.992354
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_medic_aerobic_shared_A"
+    {
+      time 0.049645 2.074588
+      param "taunt_medic_aerobic_shared_A"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_medic_aerobic_shared_B"
+    {
+      time 3.734042 4.894631
+      param "taunt_medic_aerobic_shared_B"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyFull"
+    {
+      time 6.710000 7.755319
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+    }
+    event expression "happyFull"
+    {
+      time 0.000000 6.710000
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.0000 0.9882
+        0.2588 0.5804
+        1.4392 0.4510
+        2.1719 0.5137
+        2.6922 0.7059
+        3.3156 0.8353
+        3.9687 0.5216
+        4.6594 0.4078
+        5.0125 0.7608
+        5.5062 1.0000
+        6.7100 0.9882
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

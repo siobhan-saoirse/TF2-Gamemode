@@ -1,0 +1,92 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_flip_success_receiver"
+    {
+      time 0.000000 3.833333
+      param "taunt_flip_success_receiver"
+      fixedlength
+    }
+    event speak "Glass.ImpactHard"
+    {
+      time 1.951852 2.751126
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Sword.Swing"
+    {
+      time 2.374074 2.763915
+      param "Weapon_Sword.Swing"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.EngineerSwoosh"
+    {
+      time 1.437037 2.009169
+      param "Taunt.EngineerSwoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.DemoEquipment1"
+    {
+      time 2.370372 2.762934
+      param "Selection.DemoEquipment1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.MedicHeelClick"
+    {
+      time 2.644445 3.095919
+      param "Selection.MedicHeelClick"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "soldier_taunt_flip_random_flipFlipping"
+    {
+      time 0.933333 2.045827
+      param "soldier_taunt_flip_random_flipFlipping"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "soldier_taunt_flip_random_flipFinish"
+    {
+      time 2.574075 3.704052
+      param "soldier_taunt_flip_random_flipFinish"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "painSmall"
+    {
+      time 2.100000 3.840741
+      param "player\soldier\emotion\emotion"
+      param2 "painSmall"
+    }
+    event expression "happyBig"
+    {
+      time 0.007407 2.144445
+      param "player\soldier\emotion\emotion"
+      param2 "happyBig"
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,186 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 6.737000 -1.000000
+  param "5.951000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "Anim"
+  {
+    event speak "spy_taunt_flip_landings"
+    {
+      time 0.382145 1.181419
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 2.159784 2.691349
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 2.507511 3.130549
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 1.276179 1.995272
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 0.808720 1.527813
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.MedicHardClap1"
+    {
+      time 3.039008 3.338713
+      param "Taunt.MedicHardClap1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.SoldierClothesRustle"
+    {
+      time 2.858156 3.432487
+      param "Taunt.SoldierClothesRustle"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 4.812475 5.435513
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 5.170424 5.889517
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 5.496873 5.977870
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 5.915105 6.446670
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 6.301838 6.782835
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_russian_rand_intro"
+    {
+      time 0.017730 1.517730
+      param "scout_taunt_russian_rand_intro"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_dosido_endlong_rand"
+    {
+      time 3.216312 5.036607
+      param "taunt_scout_aerobic_shared_dance_buttslap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_flip_random_flipThrowAntic"
+    {
+      time 1.716312 2.701414
+      param "scout_taunt_flip_random_flipThrowAntic"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happySmall"
+    {
+      time 0.007092 5.457447
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.0700 0.9294
+        4.4720 0.7961
+      }
+    }
+    event expression "happyBig"
+    {
+      time 5.951000 6.868794
+      param "player\scout\emotion\emotion"
+      param2 "happyBig"
+    }
+    event expression "happyBig"
+    {
+      time 5.155744 5.951000
+      param "player\scout\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.1060 0.6275
+        0.7953 1.0000
+      }
+    }
+    event sequence "taunt_aerobic_B"
+    {
+      time 0.000000 7.166667
+      param "taunt_aerobic_B"
+      fixedlength
+    }
+    event speak "Default.StepLeft"
+    {
+      time 6.666878 7.385971
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

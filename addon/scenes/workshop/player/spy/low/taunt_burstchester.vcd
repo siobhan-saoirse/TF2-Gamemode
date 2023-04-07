@@ -1,0 +1,115 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "spy"
+  {
+    event sequence "taunt_burstchester_spy"
+    {
+      time 0.000000 6.041667
+      param "taunt_burstchester_spy"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event expression "madUpper"
+    {
+      time 0.000000 6.047000
+      param "player\spy\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.0000 0.0000
+        0.0104 0.0000
+        0.1667 0.0000
+        0.2499 0.7059
+        0.6250 0.0392
+        1.6458 0.0000
+        2.5500 0.0000
+        2.7500 0.0000
+        3.3803 0.0510
+        3.5052 0.4902
+        3.7553 0.5098
+        4.6407 0.3765
+        4.7136 0.3569
+        4.8803 0.2000
+        5.0470 0.9922
+        5.4636 1.0000
+        5.7569 0.0824
+        6.0470 0.0000
+      }
+    }
+    event expression "scaredUpper"
+    {
+      time 0.000000 6.047000
+      param "player\spy\emotion\emotion"
+      param2 "scaredUpper"
+      event_ramp
+      {
+        0.0000 0.0000
+        0.1042 0.0000
+        0.1458 0.0000
+        0.2308 0.9216
+        0.3142 0.9059
+        1.1725 0.8824
+        1.2683 0.9255
+        1.4020 0.4157
+        1.6660 0.5294
+        1.9562 0.5765
+        2.4880 0.3569
+        2.7547 0.4941
+        2.8932 0.9333
+        3.0600 0.9333
+        3.2347 0.6980
+        4.0253 0.6431
+        4.3113 0.4510
+        5.1193 0.3294
+        5.5470 0.0000
+        6.0470 0.0000
+      }
+    }
+    event speak "Flesh.ImpactHard"
+    {
+      time 0.033333 1.049206
+      param "Flesh.ImpactHard"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Flesh.ImpactSoft"
+    {
+      time 2.620000 3.635873
+      param "Flesh.ImpactSoft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_burstchester_Spy_01"
+    {
+      time 1.320000 2.306848
+      param "taunt_burstchester_Spy_01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_burstchester_Spy_02"
+    {
+      time 4.026667 5.184762
+      param "taunt_burstchester_Spy_02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

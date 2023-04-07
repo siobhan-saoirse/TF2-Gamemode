@@ -1,0 +1,62 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "Sniper.DominationDemoMan04"
+    {
+      time 0.000000 2.058685
+      param "Sniper.DominationDemoMan04"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "HappyBigClosed"
+    {
+      time 0.695157 1.425926
+      param "player\sniper\emotion\emotion"
+      param2 "HappyBigClosed"
+      event_ramp
+      {
+        0.2394 0.3153
+        0.3964 0.5932
+        0.5035 0.4068
+      }
+    }
+    event expression "specialAction01Upper"
+    {
+      time 0.027066 1.027066
+      param "player\sniper\emotion\emotion"
+      param2 "specialAction01Upper"
+      event_ramp
+      {
+        0.3061 0.9119
+        0.7879 0.6542
+      }
+    }
+    event expression "happyBigUpper"
+    {
+      time 0.927350 1.846154
+      param "player\sniper\emotion\emotion"
+      param2 "happyBigUpper"
+      event_ramp
+      {
+        0.2576 0.5424
+        0.4061 0.6644
+        0.8249 0.6000
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "468"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

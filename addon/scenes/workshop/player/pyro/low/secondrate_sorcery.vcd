@@ -1,0 +1,118 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "Pyro"
+  {
+    event sequence "secondrate_sorcery_pyro"
+    {
+      time 0.000000 4.966667
+      param "secondrate_sorcery_pyro"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event expression "dummyBlend"
+    {
+      time 0.013333 4.980033
+      param "player\pyro\emotion\emotion"
+      param2 "dummyBlend"
+      event_ramp
+      {
+        0.0000 0.0000
+        4.9667 0.0000
+      }
+    }
+    event speak "pyro_taunt_rps_int_07"
+    {
+      time 0.300000 1.067075
+      param "pyro_taunt_rps_intro_wait_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_dosi_int_02"
+    {
+      time 1.233300 2.912302
+      param "pyro_taunt_dosido_intro_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_int_12"
+    {
+      time 3.653300 4.589309
+      param "Pyro.Jeers02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.EngineerClothesRustle"
+    {
+      time 0.391417 2.100623
+      param "Selection.EngineerClothesRustle"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_foot_stomp"
+    {
+      time 0.764750 0.990419
+      param "pyro_spring_rider_taunt_foot_stomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_foot_stomp"
+    {
+      time 1.304750 1.530419
+      param "pyro_spring_rider_taunt_foot_stomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_foot_stomp"
+    {
+      time 1.691417 1.917086
+      param "pyro_spring_rider_taunt_foot_stomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.SoldierClothesRustle"
+    {
+      time 2.738083 3.312414
+      param "Taunt.SoldierClothesRustle"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Passtime.Throw"
+    {
+      time 0.586667 1.094671
+      param "Passtime.Throw"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Bat.DrawCatch"
+    {
+      time 1.166667 1.322676
+      param "Weapon_Bat.DrawCatch"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

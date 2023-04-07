@@ -1,0 +1,56 @@
+// Choreo version 1
+event stoppoint "end"
+{
+  time 2.828768 -1.000000
+  param "noaction"
+}
+actor "Heavy"
+{
+  channel "Animation"
+  {
+    event sequence "spy_replay_taunt"
+    {
+      time 0.000000 2.833333
+      param "spy_replay_taunt"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event expression "scared"
+    {
+      time 0.004566 0.500000
+      param "player\spy\emotion\emotion"
+      param2 "scared"
+      event_ramp
+      {
+        0.2000 0.6410 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        0.3290 0.8910 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "happyBig"
+    {
+      time 0.426941 2.696347
+      param "player\spy\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.2467 0.9940 "curve_easein_to_curve_easein"
+        2.1400 1.0000 "curve_easeout_to_curve_easeout"
+      }
+    }
+  }
+  faceposermodel "D:\dev\staging\game\tf\models\player\heavy.mdl"
+}
+
+scalesettings
+{
+  "CChoreoView" "292"
+  "RampTool" "60"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

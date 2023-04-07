@@ -1,0 +1,96 @@
+// Choreo version 1
+event stoppoint "end"
+{
+  time 4.934916 -1.000000
+  param "noaction"
+}
+actor "Scout"
+{
+  channel "Animation"
+  {
+    event sequence "taunt_laugh"
+    {
+      time 0.000000 4.933333
+      param "taunt_laugh"
+      fixedlength
+    }
+    event speak "d"
+    {
+      time 0.000000 4.771701
+      param "Scout.LaughLong02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig"
+    {
+      time 0.002415 4.925121
+      param "player\scout\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0867 1.0000
+        4.8700 1.0000
+      }
+    }
+    event expression "aa2"
+    {
+      time 0.004831 4.939613
+      param "player\scout\phonemes\phonemes_strong"
+      param2 "aa2"
+      event_ramp
+      {
+        0.3967 0.0139
+        0.5733 0.8127
+        0.7200 0.0000
+        0.8467 0.9522
+        0.9167 0.0279
+        1.6200 0.0000
+        1.7600 0.8247 "curve_easein_to_curve_easeout"
+        1.8167 0.0000
+        1.8733 0.0100 "curve_easeout_to_curve_easeout"
+        2.0000 0.9163 "curve_easein_to_curve_easein"
+        2.0833 0.0020
+        4.0500 0.0080
+        4.2333 0.6673
+        4.3833 0.0120
+      }
+    }
+    event expression "happyBigUpper"
+    {
+      time 0.108696 4.847826
+      param "player\scout\emotion\emotion"
+      param2 "happyBigUpper"
+      event_ramp
+      {
+        0.0033 0.0000
+        0.1833 0.0000
+        0.3400 0.4183
+        0.3767 0.0000
+        0.5133 0.0000
+        0.5967 0.3506
+        0.6367 0.0000
+        0.8433 0.0000
+        1.0933 0.7430
+        1.3100 0.0000
+        2.3733 0.0000
+        2.6267 0.4263
+        3.1200 0.0000
+        4.7391 0.0000
+      }
+    }
+  }
+  faceposermodel "D:\dev\staging\game\tf\models\player\scout.mdl"
+}
+
+scalesettings
+{
+  "CChoreoView" "276"
+  "RampTool" "60"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

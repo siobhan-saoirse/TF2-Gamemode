@@ -1,0 +1,57 @@
+// Choreo version 1
+event loop "taunt_spy_boxtrot_loop"
+{
+  time 1.952000 -1.000000
+  param "1.590000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "spy"
+  {
+    event sequence "layer_taunt_spy_boxtrot_intro"
+    {
+      time 0.000000 2.000000
+      param "layer_taunt_spy_boxtrot_intro"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event speak "taunt_headbutt_sfx_hand_swoosh"
+    {
+      time 0.597561 1.169693
+      param "taunt_headbutt_sfx_hand_swoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Cardboard.ImpactSoft"
+    {
+      time 0.918699 1.256817
+      param "Cardboard.ImpactSoft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_boxtrot_intro"
+    {
+      time 1.280488 -1.000000
+      param "spy_taunt_boxtrot_intro"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

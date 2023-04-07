@@ -1,0 +1,138 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_rps_paper_lose"
+    {
+      time 0.000000 6.733333
+      param "taunt_rps_paper_lose"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "medic_taunt_rps_setting_up"
+    {
+      time 0.235294 1.142414
+      param "medic_taunt_rps_setting_up"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Medic.AutoDejectedTie03"
+    {
+      time 3.985295 4.378946
+      param "medic_taunt_rps_lose_12"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Medic.AutoDejectedTie04"
+    {
+      time 4.686275 5.715595
+      param "medic_taunt_rps_lose_16"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "medic_taunt_rps_exert_01"
+    {
+      time 1.930000 2.229547
+      param "medic_taunt_rps_exert_01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "medic_taunt_rps_exert_07"
+    {
+      time 2.220000 2.560363
+      param "medic_taunt_rps_exert_07"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "medic_taunt_rps_exert_24"
+    {
+      time 2.580000 2.820363
+      param "medic_taunt_rps_exert_24"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "rps"
+  {
+  }
+  channel "facial"
+  {
+    event flexanimation "Facial Animation"
+    {
+      time 0.000000 6.598039
+      param ""
+      flexanimations samples_use_time
+      {
+        "mad"
+        {
+          3.3811 0.0392 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.7297 0.5177 curve_easein_to_curve_easein
+          4.9568 0.5569 curve_easeout_to_curve_easeout
+          5.1297 0.0471 curve_easein_to_curve_easein
+          6.3757 0.0000 curve_easeout_to_curve_easeout
+        }
+        "happyBig"
+        {
+          0.2730 0.9295 curve_easein_to_curve_easein
+          3.1324 0.8785 curve_easeout_to_curve_easeout
+          3.3351 0.0196 curve_easein_to_curve_easein
+        }
+      }
+    }
+  }
+  channel "fx"
+  {
+    event speak "Taunt.MedicHardClap2"
+    {
+      time 1.973000 2.071685
+      param "Weapon_Fist.HitHand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.MedicHardClap2"
+    {
+      time 2.586314 2.742323
+      param "Weapon_Fist.HitHand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.MedicHardClap2"
+    {
+      time 2.250000 2.403832
+      param "Weapon_Fist.HitHand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Fist.Miss"
+    {
+      time 3.950980 4.516558
+      param "Weapon_Fist.Miss"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,201 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 7.827000 -1.000000
+  param "7.039000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "Anim"
+  {
+    event speak "spy_taunt_flip_landings"
+    {
+      time 0.325260 1.124534
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 6.624212 7.343305
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 6.996761 7.477758
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 5.792213 6.323778
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 6.202366 6.683363
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_taunt_flip_random_chesthits"
+    {
+      time 1.023863 1.316720
+      param "heavy_taunt_flip_random_chesthits"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.HeavyFootStomp"
+    {
+      time 2.114120 2.339789
+      param "Selection.HeavyFootStomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.HeavyFootStomp"
+    {
+      time 2.572776 2.798445
+      param "Selection.HeavyFootStomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.HeavyFootStomp"
+    {
+      time 1.788363 2.014031
+      param "Selection.HeavyFootStomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.HeavyFootStomp"
+    {
+      time 2.924001 3.149669
+      param "Selection.HeavyFootStomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_heavy_aerobic_flex"
+    {
+      time 3.365248 5.100940
+      param "taunt_heavy_aerobic_flex"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 7.344181 7.875746
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 7.771486 8.252483
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_heavy_aerobic_intro"
+    {
+      time 0.088652 2.574003
+      param "taunt_heavy_aerobic_intro"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_heavy_aerobic_end"
+    {
+      time 5.921986 7.607882
+      param "taunt_heavy_aerobic_end"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happysmall02"
+    {
+      time 0.028369 3.386525
+      param "player\heavy\emotion\emotion"
+      param2 "happysmall02"
+      event_ramp
+      {
+        0.1460 0.1373
+        3.0994 0.4980
+      }
+    }
+    event expression "happy1"
+    {
+      time 7.039000 7.836880
+      param "player\heavy\emotion\emotion"
+      param2 "happy1"
+    }
+    event expression "happy1"
+    {
+      time 5.333326 7.039000
+      param "player\heavy\emotion\emotion"
+      param2 "happy1"
+      event_ramp
+      {
+        0.1420 0.4863
+        1.2260 0.5843
+        1.7057 1.0000
+      }
+    }
+    event sequence "taunt_aerobic_B"
+    {
+      time 0.000000 7.833333
+      param "taunt_aerobic_B"
+      fixedlength
+    }
+    event expression "upperAngry2"
+    {
+      time 3.343971 5.411347
+      param "player\heavy\emotion\emotion"
+      param2 "upperAngry2"
+      event_ramp
+      {
+        0.0740 0.1490
+        0.1680 0.8471
+        1.8520 0.0078
+      }
+    }
+    event expression "mad"
+    {
+      time 3.340426 5.421986
+      param "player\heavy\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        1.7480 0.9059
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

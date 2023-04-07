@@ -1,0 +1,73 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event speak "soldier_mvm_tank_shooting03"
+    {
+      time 0.000000 3.714716
+      param "soldier_mvm_tank_shooting03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "emotion"
+  {
+    event expression "madUpper"
+    {
+      time 0.000000 3.718750
+      param "player\soldier\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.0091 0.0034
+        0.1061 0.0103
+        0.2030 0.0759
+        0.2545 0.3034
+        0.3667 0.3241
+        0.5273 0.3414
+        0.6364 0.3310
+        0.6939 0.3862
+        0.8455 0.2379
+        1.0848 0.1138
+        1.2788 0.1517
+        1.3667 0.2241
+        1.4121 0.1345
+        1.5121 0.2414
+        1.5909 0.1345
+        1.7333 0.1931
+        1.8636 0.1586
+        2.0061 0.2759
+        2.1727 0.2345
+        2.2758 0.1862
+        2.4242 0.1862
+        2.5485 0.3586
+        2.6909 0.2931
+        2.7545 0.4276
+        2.7970 0.4897
+        3.0545 0.5448
+        3.1364 0.5172
+        3.1636 0.3931
+        3.2364 0.3862
+        3.2848 0.4000
+        3.3152 0.5345
+        3.3970 0.5483
+        3.5424 0.5586
+        3.6000 0.4931
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

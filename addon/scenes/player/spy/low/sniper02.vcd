@@ -1,0 +1,56 @@
+// Choreo version 1
+actor "Spy"
+{
+  channel "sound"
+  {
+    event speak "vo\spy_mvm_sniper01.wav"
+    {
+      time 0.006666 0.573877
+      param "vo\spy_mvm_sniper01.wav"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "audio"
+  {
+    event expression "scaredUpper"
+    {
+      time -0.000767 0.680512
+      param "player\spy\emotion\emotion"
+      param2 "scaredUpper"
+      event_ramp
+      {
+        0.1182 0.8841 "curve_easein_to_curve_easeout"
+        0.5698 0.2117
+      }
+    }
+  }
+  channel "face"
+  {
+    event expression "scared"
+    {
+      time 0.659047 5.486427
+      param "player\spy\emotion\emotion"
+      param2 "scared"
+      event_ramp
+      {
+        0.3296 0.6708
+        1.4615 0.7002
+        4.5690 0.6646
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "ExpressionTool" "100"
+  "RampTool" "100"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

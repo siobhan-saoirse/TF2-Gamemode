@@ -1,0 +1,61 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event speak "Soldier.Robot12"
+    {
+      time 1.100000 3.245034
+      param "Soldier.Robot12"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "emotion"
+  {
+    event expression "specialAction01Upper"
+    {
+      time 0.072917 2.552083
+      param "player\engineer\emotion\emotion"
+      param2 "specialAction01Upper"
+      event_ramp
+      {
+        0.1515 1.0000 "curve_easein_to_curve_easein"
+        2.3606 1.0000 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "mad"
+    {
+      time 2.333333 3.500000
+      param "player\engineer\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.1273 1.0000 "curve_easein_to_curve_easein"
+        0.9909 0.9954 "curve_easeout_to_curve_easeout"
+      }
+    }
+  }
+  channel "body"
+  {
+    event sequence "taunt09"
+    {
+      time 0.000000 3.500000
+      param "taunt09"
+      fixedlength
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

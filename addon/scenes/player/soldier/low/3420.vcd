@@ -1,0 +1,45 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event speak "Soldier.DominationEngineer03"
+    {
+      time 0.000000 3.185102
+      param "Soldier.DominationEngineer03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "mad"
+    {
+      time 0.010417 3.197917
+      param "player\soldier\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.0030 0.0021
+        0.4091 0.0064
+        1.0818 0.2754 "curve_easein_to_curve_easein"
+        1.7515 0.2669 "curve_easeout_to_curve_easeout"
+        1.9606 0.7267
+        2.0455 0.1864 "curve_bspline_to_curve_bspline"
+        2.1000 0.0360 "curve_bspline_to_curve_bspline"
+        2.3182 0.0021 "curve_bspline_to_curve_bspline"
+        2.7030 0.4513
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

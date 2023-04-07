@@ -1,0 +1,75 @@
+// Choreo version 1
+event loop "flip_wait"
+{
+  time 6.085186 -1.000000
+  param "1.333333"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_flip_start"
+    {
+      time 0.000000 6.085714
+      param "taunt_flip_start"
+      fixedlength
+    }
+    event expression "specialAction01"
+    {
+      time 0.011111 6.089863
+      param "player\soldier\emotion\emotion"
+      param2 "specialAction01"
+      event_ramp
+      {
+        0.0000 0.0000
+        0.1960 1.0000
+        5.8943 1.0000
+        6.0768 0.0000
+      }
+    }
+    event speak "soldier_taunt_flip_random_intro"
+    {
+      time 0.029630 0.791353
+      param "soldier_taunt_flip_random_intro"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "soldier_taunt_flip_random_waiting1"
+    {
+      time 1.322222 2.584535
+      param "soldier_taunt_flip_random_waiting1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "soldier_taunt_flip_random_waiting2"
+    {
+      time 3.288890 3.364355
+      param "soldier_taunt_flip_random_waiting2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.DemoEquipment2"
+    {
+      time 0.018518 1.138881
+      param "Selection.DemoEquipment2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

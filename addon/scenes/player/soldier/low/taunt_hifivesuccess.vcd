@@ -1,0 +1,64 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "body"
+  {
+    event sequence "taunt_hifiveSuccess"
+    {
+      time 0.000000 4.166667
+      param "taunt_hifiveSuccess"
+      fixedlength
+    }
+    event expression "specialAction01"
+    {
+      time 0.000000 2.482456
+      param "player\soldier\emotion\emotion"
+      param2 "specialAction01"
+      event_ramp
+      {
+        0.0000 0.0000 "curve_easein_to_curve_easeout"
+        0.1960 1.0000 "curve_easein_to_curve_easein"
+        2.2980 1.0000 "curve_easein_to_curve_easeout"
+        2.4805 0.0000 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "ah"
+    {
+      time 1.751462 2.233918
+      param "player\soldier\phonemes\phonemes"
+      param2 "ah"
+      event_ramp
+      {
+        0.2256 0.8252
+      }
+    }
+    event speak "Soldier.KaBoomAlts03"
+    {
+      time 2.695907 3.961757
+      param "Soldier.KaBoomAlts03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Soldier.PositiveVocalization01"
+    {
+      time 0.584796 1.728379
+      param "Soldier.PositiveVocalization01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+
+scalesettings
+{
+  "SceneRampTool" "100"
+  "GestureTool" "100"
+  "ExpressionTool" "74"
+  "RampTool" "180"
+  "CChoreoView" "228"
+}
+fps 60
+snap off
+ignorePhonemes off

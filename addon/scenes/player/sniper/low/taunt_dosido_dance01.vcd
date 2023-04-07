@@ -1,0 +1,91 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_dosido_dance"
+    {
+      time 0.000000 8.300000
+      param "taunt_dosido_dance"
+      fixedlength
+    }
+    event expression "happyBig"
+    {
+      time 0.000000 5.493616
+      param "player\scout\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.7636 0.0941
+        0.9697 0.5608
+        5.4286 0.5608
+      }
+    }
+    event expression "happySmall"
+    {
+      time -0.000000 1.000000
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+    }
+    event expression "Cocky"
+    {
+      time 5.419541 8.304598
+      param "player\sniper\emotion\emotion"
+      param2 "Cocky"
+      event_ramp
+      {
+        0.0455 1.0000
+        2.8515 0.9922
+      }
+    }
+    event expression "l2"
+    {
+      time 7.609195 8.293103
+      param "player\sniper\phonemes\phonemes_strong"
+      param2 "l2"
+      event_ramp
+      {
+        0.3667 0.7020
+        0.4879 0.5843
+      }
+    }
+  }
+  channel "audio"
+  {
+    event speak "sniper_taunt_dosi_fun_02"
+    {
+      time 0.419540 1.606071
+      param "sniper_taunt_dosido_start_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "sniper_taunt_dosido_mid_rand"
+    {
+      time 3.465518 4.935677
+      param "sniper_taunt_dosido_mid_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "sniper_taunt_dosido_endlong_rand"
+    {
+      time 6.534484 7.836479
+      param "sniper_taunt_dosido_endlong_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

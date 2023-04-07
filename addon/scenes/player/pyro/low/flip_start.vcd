@@ -1,0 +1,57 @@
+// Choreo version 1
+event loop "flip_cycle"
+{
+  time 7.100000 -1.000000
+  param "1.500000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "flip_start"
+    {
+      time 0.000000 7.100000
+      param "taunt_flip_start"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "pyro_taunt_flip_random_intro"
+    {
+      time 0.000000 1.036825
+      param "pyro_taunt_flip_random_intro"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_flip_random_waiting1"
+    {
+      time 1.733333 2.737597
+      param "pyro_taunt_flip_random_waiting1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_flip_random_waiting2"
+    {
+      time 4.433333 5.611021
+      param "pyro_taunt_flip_random_waiting2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

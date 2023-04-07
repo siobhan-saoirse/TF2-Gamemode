@@ -1,0 +1,168 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "demo"
+  {
+    event sequence "taunt_burstchester_demo"
+    {
+      time 0.000000 4.625000
+      param "taunt_burstchester_demo"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event expression "happy"
+    {
+      time 0.000000 4.625000
+      param "player\demo\emotion\emotion"
+      param2 "happy"
+      event_ramp
+      {
+        0.0000 0.0000
+        1.2500 0.0000
+        1.4167 0.3765
+        2.0833 0.0000
+        4.6250 0.0000
+      }
+    }
+    event expression "AW"
+    {
+      time 0.000000 4.625000
+      param "player\demo\emotion\emotion"
+      param2 "AW"
+      event_ramp
+      {
+        0.0000 0.0000
+        0.1667 0.5255
+        0.4166 0.3255
+        0.8332 0.0000
+        4.6250 0.0000
+      }
+    }
+    event expression "drunkHappy"
+    {
+      time 0.000000 4.625000
+      param "player\demo\emotion\emotion"
+      param2 "drunkHappy"
+      event_ramp
+      {
+        0.0000 0.0000
+        1.4167 0.0000
+        2.0833 0.4314
+        2.3333 0.7255
+        3.6667 0.7255
+        3.7916 0.0824
+        4.2500 0.1137
+        4.4582 0.0000
+        4.6250 0.0000
+      }
+    }
+    event expression "painUpper"
+    {
+      time 0.000000 4.625000
+      param "player\demo\emotion\emotion"
+      param2 "painUpper"
+      event_ramp
+      {
+        0.0000 0.0000
+        0.1667 0.5608
+        0.4166 0.0000
+        4.6250 0.0000
+      }
+    }
+    event expression "madUpper"
+    {
+      time 0.000000 4.625000
+      param "player\demo\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.0000 0.0000
+        0.1667 0.0000
+        0.4167 0.4902
+        0.8333 0.4824
+        1.4167 0.0000
+        4.6250 0.0000
+      }
+    }
+    event expression "scaredUpper"
+    {
+      time 0.000000 4.625000
+      param "player\demo\emotion\emotion"
+      param2 "scaredUpper"
+      event_ramp
+      {
+        0.0000 0.0000
+        0.8333 0.0000
+        1.4166 0.6118
+        1.8333 0.5451
+        2.0832 0.0000
+        4.6250 0.0000
+      }
+    }
+    event expression "pain"
+    {
+      time 0.000000 4.625000
+      param "player\demo\emotion\emotion"
+      param2 "pain"
+      event_ramp
+      {
+        0.0000 0.0000
+        3.6667 0.0000
+        3.7917 0.6000
+        3.9583 0.4314
+        4.2499 0.0000
+        4.6250 0.0000
+      }
+    }
+    event expression "openJaw"
+    {
+      time 0.000000 4.625000
+      param "player\demo\emotion\emotion"
+      param2 "openJaw"
+      event_ramp
+      {
+        0.0000 0.0000
+        0.1667 0.6118
+        0.4166 0.0000
+        4.6250 0.0000
+      }
+    }
+    event speak "Weapon_HolyMackerel.HitFlesh"
+    {
+      time 0.000000 1.206916
+      param "Weapon_HolyMackerel.HitFlesh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_burstchester_demo"
+    {
+      time 1.821234 4.232323
+      param "taunt_burstchester_demo"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Bounce.Flesh"
+    {
+      time 3.910618 4.424359
+      param "Bounce.Flesh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

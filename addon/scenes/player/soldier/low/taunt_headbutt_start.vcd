@@ -1,0 +1,58 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 4.800938 -1.000000
+  param "2.060000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_headbutt_start"
+    {
+      time 0.000000 4.800000
+      param "taunt_headbutt_start"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "soldier_taunt_headbutt_start_1"
+    {
+      time 0.590000 1.930295
+      param "soldier_taunt_headbutt_start_1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "soldier_taunt_headbutt_start_2"
+    {
+      time 3.100000 4.121451
+      param "soldier_taunt_headbutt_start_2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "expression"
+  {
+    event expression "mad"
+    {
+      time 0.004505 4.806307
+      param "player\soldier\emotion\emotion"
+      param2 "mad"
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

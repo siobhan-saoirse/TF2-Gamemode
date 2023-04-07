@@ -1,0 +1,88 @@
+// Choreo version 1
+actor "spy"
+{
+  channel "face"
+  {
+    event sequence "taunt_laugh"
+    {
+      time 0.000000 6.666667
+      param "taunt_laugh"
+      fixedlength
+    }
+    event speak "spy.laughlong01"
+    {
+      time 0.000000 6.466757
+      param "Spy.LaughLong01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "scaredUpper"
+    {
+      time 0.006173 2.401235
+      param "player\spy\emotion\emotion"
+      param2 "scaredUpper"
+      event_ramp
+      {
+        0.1159 1.0000 "curve_easein_to_curve_easeout"
+        2.2136 1.0000 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "painBig"
+    {
+      time 2.240741 3.240741
+      param "player\spy\emotion\emotion"
+      param2 "painBig"
+      event_ramp
+      {
+        0.1182 0.8467 "curve_easein_to_curve_easeout"
+        0.8773 0.8421 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "scaredUpper"
+    {
+      time 3.104939 6.635803
+      param "player\spy\emotion\emotion"
+      param2 "painBigUpper"
+      event_ramp
+      {
+        0.1382 0.9176 "curve_easein_to_curve_easeout"
+        3.4441 0.9222 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "Smile02"
+    {
+      time 0.024691 3.259259
+      param "player\spy\emotion\emotion"
+      param2 "Smile02"
+      event_ramp
+      {
+        0.1632 1.0000 "curve_easein_to_curve_easeout"
+        3.0628 1.0000 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "happyBig"
+    {
+      time 3.141975 6.641975
+      param "player\spy\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.2474 1.0000 "curve_easein_to_curve_easeout"
+        3.2579 1.0000 "curve_easeout_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "108"
+  "RampTool" "38"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

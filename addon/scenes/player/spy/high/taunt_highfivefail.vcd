@@ -1,0 +1,67 @@
+// Choreo version 1
+actor "spy"
+{
+  channel "body"
+  {
+    event sequence "taunt_hifiveFail"
+    {
+      time 0.000000 3.966667
+      param "taunt_hifiveFail"
+      fixedlength
+    }
+    event expression "defaultFace"
+    {
+      time 0.013333 0.366667
+      param "player\spy\emotion\emotion"
+      param2 "defaultFace"
+    }
+    event expression "Smile01"
+    {
+      time 0.266667 2.020000
+      param "player\spy\emotion\emotion"
+      param2 "Smile01"
+      event_ramp
+      {
+        0.0080 0.0000
+        0.1560 0.9618 "curve_easein_to_curve_easein"
+        1.7080 0.9554 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "scared"
+    {
+      time 1.960000 2.960000
+      param "player\spy\emotion\emotion"
+      param2 "scared"
+      event_ramp
+      {
+        0.1900 0.9873 "curve_easein_to_curve_easein"
+        0.4420 0.9873 "curve_easeout_to_curve_easeout"
+        0.5780 0.5711 "curve_easein_to_curve_easein"
+        0.8160 0.5711 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "mad"
+    {
+      time 2.853333 3.966667
+      param "player\spy\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.1440 0.9830 "curve_easein_to_curve_easein"
+        1.1100 0.9915 "curve_easeout_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "RampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

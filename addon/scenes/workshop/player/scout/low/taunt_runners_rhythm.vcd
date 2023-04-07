@@ -1,0 +1,83 @@
+// Choreo version 1
+event loop "taunt_runners_rhythm_loop"
+{
+  time 13.842000 -1.000000
+  param "1.866000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "scout"
+  {
+    event sequence "taunt_runners_rhythm"
+    {
+      time 0.000000 13.866667
+      param "taunt_runners_rhythm"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event expression "happySmall"
+    {
+      time 0.000000 13.853000
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.0000 0.0000
+        0.2999 1.0000
+        13.8530 1.0000
+      }
+    }
+    event speak "scout_taunt_runners_rhythm_taunt_clothes_rustle"
+    {
+      time -0.166700 1.542506
+      param "scout_taunt_runners_rhythm_taunt_clothes_rustle"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_runners_rhythm_item_boxing_gloves_drop"
+    {
+      time 1.300000 1.640045
+      param "scout_taunt_runners_rhythm_item_boxing_gloves_drop"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_runners_rhythm_concrete3"
+    {
+      time 0.333300 1.052393
+      param "scout_taunt_runners_rhythm_concrete3"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_runners_rhythm_taunt_eng_swoosh"
+    {
+      time -0.066700 0.505432
+      param "scout_taunt_runners_rhythm_taunt_eng_swoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happySmall"
+    {
+      time 1.867000 13.842000
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

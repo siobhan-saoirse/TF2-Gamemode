@@ -1,0 +1,97 @@
+// Choreo version 1
+event stoppoint "end"
+{
+  time 4.831051 -1.000000
+  param "noaction"
+}
+actor "!target1"
+{
+  channel "animation"
+  {
+    event sequence "pyro_taunt_replay"
+    {
+      time 0.000000 4.833333
+      param "taunt_laugh"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "me"
+    {
+      time 0.330000 4.091633
+      param "Medic.LaughLong01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyFull"
+    {
+      time 0.018265 4.819634
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.4700 0.9961
+        4.6900 1.0000
+      }
+    }
+    event expression "ax2"
+    {
+      time 0.593607 4.732877
+      param "player\medic\phonemes\phonemes_strong"
+      param2 "ax2"
+      event_ramp
+      {
+        0.1000 0.6039
+        0.2367 0.0235
+        0.2933 0.5412
+        0.4733 0.5216
+        0.5567 0.7608
+        0.6367 0.3686
+        0.7267 0.7647
+        0.8533 0.3686
+        0.9700 0.5922
+        1.0400 0.3020
+        1.1700 0.6863
+        1.2000 0.5373
+        1.2967 0.6471
+        1.3833 0.1098
+        1.4700 0.5922
+        1.5333 0.4471
+        1.6467 0.5373
+        1.7533 0.0941
+        1.9267 0.4471
+        1.9500 0.3765
+        2.1767 0.2863
+        2.2267 0.0000
+        2.5200 0.3843
+        2.5600 0.0392
+        2.7200 0.3216
+        2.9800 0.0745
+      }
+    }
+    event expression "evilHappy"
+    {
+      time 0.924657 2.194064
+      param "player\medic\emotion\emotion"
+      param2 "evilHappy"
+      event_ramp
+      {
+        0.0967 0.1647
+        1.0300 0.1098
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,49 @@
+// Choreo version 1
+actor "Scout"
+{
+  channel "audio"
+  {
+    event speak "Scout.Revenge07"
+    {
+      time 0.000000 1.922676
+      param "Scout.Revenge07"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBigUpper"
+    {
+      time 0.000000 1.096899
+      param "player\scout\emotion\emotion"
+      param2 "happyBigUpper"
+      event_ramp
+      {
+        0.0758 0.9273 "curve_bspline_to_curve_bspline"
+        1.0333 0.9205 "curve_bspline_to_curve_bspline"
+      }
+    }
+    event expression "specialAction01Upper"
+    {
+      time 0.968992 2.437984
+      param "player\scout\emotion\emotion"
+      param2 "specialAction01Upper"
+      event_ramp
+      {
+        0.0727 0.8614 "curve_bspline_to_curve_bspline"
+        1.3667 0.8182 "curve_bspline_to_curve_bspline"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "172"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

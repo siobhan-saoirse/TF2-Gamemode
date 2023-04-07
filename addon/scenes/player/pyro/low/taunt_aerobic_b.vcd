@@ -1,0 +1,118 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 6.781000 -1.000000
+  param "5.985000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "Anim"
+  {
+    event speak "Default.StepLeft"
+    {
+      time 6.247333 6.778898
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 5.564248 6.187286
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 5.202338 5.733903
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_flip_landings"
+    {
+      time 0.400709 1.199983
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 5.851274 6.382839
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 6.684816 7.165813
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event sequence "taunt_aerobic_B"
+    {
+      time 0.000000 7.166667
+      param "taunt_aerobic_B"
+      fixedlength
+    }
+    event speak "pyro_taunt_flip_random_flipAdmire"
+    {
+      time 0.056738 1.128144
+      param "pyro_taunt_flip_random_flipAdmire"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_flip_random_flipExert"
+    {
+      time 3.017426 3.694886
+      param "pyro_taunt_flip_random_flipExert"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Soldier03ClothesSwipe"
+    {
+      time 1.278736 1.579190
+      param "Taunt.Soldier03ClothesSwipe"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Heavy03ClothesSwipe"
+    {
+      time 1.727011 2.027464
+      param "Taunt.Heavy03ClothesSwipe"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Soldier03ClothesRustle"
+    {
+      time 2.761494 4.470700
+      param "Taunt.Soldier03ClothesRustle"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

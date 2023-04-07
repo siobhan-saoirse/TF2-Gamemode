@@ -1,0 +1,111 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 0.000000 -1.000000
+  param "0.000000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveStart"
+    {
+      time 0.002347 4.302347
+      param "layer_taunt_flip_success_initiator"
+      fixedlength
+    }
+    event expression "happyFull"
+    {
+      time 0.004115 4.298354
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.3360 0.5961
+        1.2560 0.5529
+        1.6100 0.8824
+        2.0020 0.3922
+        2.6242 0.6863
+      }
+    }
+  }
+  channel "audio"
+  {
+    event speak "medic_taunt_flip_random_flipExert"
+    {
+      time 1.104938 1.996571
+      param "medic_taunt_flip_random_flipExertVocal"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_flip_random_flipkneeClap"
+    {
+      time 2.378601 2.678306
+      param "eng_taunt_flip_random_flipkneeClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_flip_random_flipkneeClap"
+    {
+      time 2.561728 2.861728
+      param "eng_taunt_flip_random_flipkneeClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_flip_random_flipkneeClap"
+    {
+      time 2.761317 3.061748
+      param "eng_taunt_flip_random_flipkneeClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_flip_random_flipkneeClap"
+    {
+      time 2.958848 3.258553
+      param "eng_taunt_flip_random_flipkneeClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_flip_random_flipkneeClap"
+    {
+      time 3.179013 3.479444
+      param "eng_taunt_flip_random_flipkneeClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_flip_random_flipkneeClap"
+    {
+      time 3.382716 3.682716
+      param "eng_taunt_flip_random_flipkneeClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "medic_taunt_flip_random_flipAdmire"
+    {
+      time 2.195473 3.754407
+      param "medic_taunt_flip_random_flipAdmire"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

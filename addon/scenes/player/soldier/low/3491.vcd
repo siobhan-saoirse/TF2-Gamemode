@@ -1,0 +1,59 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event speak "Soldier.HatOverHeartTaunt06"
+    {
+      time 0.000000 3.797596
+      param "Soldier.HatOverHeartTaunt06"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "painBigUpper"
+    {
+      time 0.020833 3.791667
+      param "player\soldier\emotion\emotion"
+      param2 "painBigUpper"
+      event_ramp
+      {
+        0.0030 0.0078
+        0.2061 0.2765
+        0.3303 0.1189
+        0.4212 0.5736
+        0.6152 0.2067
+        0.7970 0.4264 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        0.9455 0.5090 "curve_easein_to_curve_easein"
+        1.0970 0.2145 "curve_easein_to_curve_easeout"
+        1.2182 0.6382
+        1.4000 0.7416
+        1.5545 0.6305
+        1.7091 0.7571
+        2.2182 0.6408
+        2.4485 0.2894
+        2.5727 0.5013
+        2.8273 0.7752
+        2.9364 0.6925
+        3.0273 0.7855 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        3.1121 0.6512
+        3.2242 0.7881 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        3.3455 0.4083 "curve_easein_to_curve_easeout"
+        3.6394 0.4832 "curve_easeout_to_curve_easeout"
+        3.7606 0.0052
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

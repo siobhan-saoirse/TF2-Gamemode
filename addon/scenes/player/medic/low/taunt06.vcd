@@ -1,0 +1,127 @@
+// Choreo version 1
+actor "Medic"
+{
+  channel "Animation"
+  {
+    event sequence "Taunt06"
+    {
+      time 0.000000 4.000000
+      param "taunt06"
+      fixedlength
+    }
+    event expression "default"
+    {
+      time 0.006667 0.319592
+      param "player\medic\emotion\emotion"
+      param2 "default"
+      event_ramp
+      {
+        0.0660 0.9929
+        0.2605 1.0000
+        0.3085 0.0000
+      }
+    }
+    event expression "yellingUpper"
+    {
+      time 0.272109 1.272109
+      param "player\medic\emotion\emotion"
+      param2 "yellingUpper"
+      event_ramp
+      {
+        0.0740 0.7900 "curve_easein_to_curve_easeout"
+        0.9260 0.7758 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "happy"
+    {
+      time 2.112245 3.190476
+      param "player\medic\emotion\emotion"
+      param2 "happy"
+      event_ramp
+      {
+        0.2780 0.9893
+        1.0042 0.9929
+      }
+    }
+    event expression "JawOpen"
+    {
+      time 1.214285 2.326530
+      param "player\medic\emotion\emotion"
+      param2 "jawOpen"
+      event_ramp
+      {
+        0.1440 0.5730 "curve_easein_to_curve_easein"
+        0.5120 0.8007 "curve_easein_to_curve_easeout"
+        0.9780 0.1210
+      }
+    }
+    event expression "happyFull"
+    {
+      time 1.210884 2.323129
+      param "player\medic\emotion\emotion"
+      param2 "yellingUpper"
+      event_ramp
+      {
+        0.1440 1.0000
+        0.8900 0.9893
+      }
+    }
+    event expression "w"
+    {
+      time 1.204082 2.204082
+      param "player\medic\phonemes\phonemes"
+      param2 "w"
+      event_ramp
+      {
+        0.0940 0.7794
+        0.4540 0.1673
+        0.7700 0.8399
+      }
+    }
+    event expression "mad"
+    {
+      time 3.139456 3.836735
+      param "player\medic\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.1580 0.7972
+        0.5540 0.7651
+      }
+    }
+    event expression "zh"
+    {
+      time 2.122449 3.183674
+      param "player\medic\phonemes\phonemes_strong"
+      param2 "zh"
+      event_ramp
+      {
+        0.2960 0.9929 "curve_easein_to_curve_easeout"
+        0.9392 1.0000 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+  channel "audio"
+  {
+    event speak "Medic.Taunts16"
+    {
+      time 0.006173 3.469665
+      param "Medic.Taunts16"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "196"
+  "RampTool" "100"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

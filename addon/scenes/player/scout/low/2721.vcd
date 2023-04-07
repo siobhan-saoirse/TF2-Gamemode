@@ -1,0 +1,57 @@
+// Choreo version 1
+event stoppoint "end"
+{
+  time 1.770833 -1.000000
+  param "noaction"
+}
+actor "Scout"
+{
+  channel "audio"
+  {
+    event speak "Scout.DominationSol06"
+    {
+      time 0.000000 1.754671
+      param "Scout.DominationSol06"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "exp"
+  {
+    event expression "painBigUpper"
+    {
+      time -0.218750 1.354167
+      param "player\scout\emotion\emotion"
+      param2 "painBigUpper"
+      event_ramp
+      {
+        0.1606 0.7201 "curve_easein_to_curve_easeout"
+        1.1738 0.6877 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "happySmall"
+    {
+      time 0.927083 4.729167
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.2960 0.7896 "curve_easein_to_curve_easeout"
+        3.2200 0.7718 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "50"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

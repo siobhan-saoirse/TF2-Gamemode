@@ -1,0 +1,68 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveSuccess"
+    {
+      time 0.000000 4.000000
+      param "taunt_highFiveSuccess"
+      fixedlength
+    }
+    event expression "defaultFace"
+    {
+      time 0.007246 0.347826
+      param "player\sniper\emotion\emotion"
+      param2 "defaultFace"
+      event_ramp
+      {
+        0.0000 0.9922
+        0.2212 1.0000
+      }
+    }
+    event expression "Cocky"
+    {
+      time 0.253623 2.181159
+      param "player\sniper\emotion\emotion"
+      param2 "Cocky"
+      event_ramp
+      {
+        0.0818 0.9922
+        1.7818 0.9922
+      }
+    }
+    event expression "happyBig"
+    {
+      time 2.543478 3.971015
+      param "player\sniper\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0970 1.0000
+        1.4182 0.9922
+      }
+    }
+    event expression "happyBigClosed"
+    {
+      time 2.050725 2.615942
+      param "player\sniper\emotion\emotion"
+      param2 "happyBigClosed"
+      event_ramp
+      {
+        0.0970 0.9961
+        0.4485 0.9922
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

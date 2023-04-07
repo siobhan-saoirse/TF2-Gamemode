@@ -1,0 +1,112 @@
+// Choreo version 1
+event stoppoint "end"
+{
+  time 4.161111 -1.000000
+  param "noaction"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_flip_success_receiver"
+    {
+      time 0.000000 4.166667
+      param "taunt_flip_success_receiver"
+      fixedlength
+    }
+    event expression "Smile01"
+    {
+      time 0.005556 4.155555
+      param "player\spy\emotion\emotion"
+      param2 "Smile01"
+      event_ramp
+      {
+        0.2061 0.9176
+        4.0121 0.9333
+      }
+    }
+    event speak "spy_taunt_flip_random_flipExert"
+    {
+      time 1.116666 1.738344
+      param "spy_taunt_flip_random_flipExert"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Glass.ImpactHard"
+    {
+      time 1.844444 2.643718
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Sword.Swing"
+    {
+      time 2.388890 2.737031
+      param "Weapon_Sword.Swing"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_PickAxe.Swing"
+    {
+      time 2.566667 3.065148
+      param "Weapon_PickAxe.Swing"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Sword.Swing"
+    {
+      time 2.794445 3.142586
+      param "Weapon_Sword.Swing"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_PickAxe.Swing"
+    {
+      time 2.888889 3.387370
+      param "Weapon_PickAxe.Swing"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_PickAxe.Swing"
+    {
+      time 3.183333 3.683696
+      param "Weapon_PickAxe.Swing"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_flip_random_flipFlipping"
+    {
+      time 0.016667 1.177506
+      param "spy_taunt_flip_random_flipFlipping"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_flip_random_flipFinish"
+    {
+      time 2.255555 3.612856
+      param "spy_taunt_flip_random_flipFinish"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

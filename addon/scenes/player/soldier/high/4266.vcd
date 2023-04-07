@@ -1,0 +1,104 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event speak "soldier_mvm_taunt03"
+    {
+      time 0.000000 6.141973
+      param "soldier_mvm_taunt03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "emotion"
+  {
+    event expression "madUpper"
+    {
+      time 0.020833 6.156250
+      param "player\soldier\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.0091 0.0034
+        0.0939 0.1586
+        0.2061 0.1172
+        0.3576 0.1517
+        0.4727 0.1138
+        0.6667 0.1069
+        0.7273 0.1759
+        0.9091 0.1655
+        1.0667 0.2000
+        1.2364 0.1724
+        1.3121 0.1862
+        1.3727 0.3310
+        1.7303 0.3138
+        1.7909 0.1690
+        2.0030 0.1517
+        2.0606 0.2828
+        2.2152 0.1966
+        2.3364 0.2000
+        2.4848 0.3724
+        2.6455 0.1828
+        2.9242 0.4345
+        3.1242 0.3483
+        3.3273 0.2690
+        3.5606 0.2586
+        3.6727 0.5966
+        3.9152 0.5103
+        4.1303 0.4862
+        4.2091 0.6172
+        4.2939 0.6379
+        4.4758 0.5276
+        4.6939 0.4000
+        4.9273 0.5483
+        5.1242 0.4276
+        5.2606 0.7241
+        5.5152 0.7103
+        5.8606 0.5379
+      }
+    }
+  }
+  channel "emotion2"
+  {
+    event expression "happySmall"
+    {
+      time 0.010417 6.177083
+      param "player\soldier\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.0121 0.1172
+        0.2242 0.0138
+        1.3970 0.0069
+        1.5242 0.8724
+        1.7364 0.0000
+        1.8788 0.0241
+        2.1606 0.0034
+        2.3697 0.0000
+        2.4697 0.4103
+        2.6091 0.4517
+        2.7333 0.0138
+        2.9364 0.0138
+        3.0121 0.4552
+        3.0970 0.5138
+        3.2848 0.5586
+        3.5970 0.5310
+        3.8455 0.0034
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

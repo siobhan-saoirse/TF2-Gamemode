@@ -1,0 +1,78 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_hifiveSuccess"
+    {
+      time 0.000000 8.900000
+      param "taunt_dosido_dance"
+      fixedlength
+    }
+    event expression "happy1"
+    {
+      time 0.016703 6.416355
+      param "player\heavy\emotion\emotion"
+      param2 "happy1"
+      event_ramp
+      {
+        0.0000 0.2941
+        6.0778 0.2941
+      }
+    }
+    event expression "happyBig"
+    {
+      time 7.227779 8.894445
+      param "player\heavy\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.2364 0.0471
+        0.4455 0.1686
+        1.1454 0.1765
+      }
+    }
+    event expression "happy1"
+    {
+      time 6.149426 7.580460
+      param "player\heavy\emotion\emotion"
+      param2 "happy1"
+      event_ramp
+      {
+        0.0030 0.2863
+        1.1273 0.2824
+        1.4310 0.1804
+      }
+    }
+  }
+  channel "audio"
+  {
+    event speak "heavy_taunt_dosi_end_07"
+    {
+      time 8.315275 8.773121
+      param "heavy_taunt_dosi_end_07"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_taunt_dosido_start_rand"
+    {
+      time 1.522988 2.902489
+      param "heavy_taunt_dosido_start_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

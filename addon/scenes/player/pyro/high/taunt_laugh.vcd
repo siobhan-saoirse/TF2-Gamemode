@@ -1,0 +1,39 @@
+// Choreo version 1
+event stoppoint "end"
+{
+  time 4.934916 -1.000000
+  param "noaction"
+}
+actor "Pyro"
+{
+  channel "Animation"
+  {
+    event sequence "taunt_laugh"
+    {
+      time 0.000000 4.933333
+      param "taunt_laugh"
+      fixedlength
+    }
+    event speak "Pyro.laugh_addl04"
+    {
+      time 0.000000 4.952744
+      param "Pyro.laugh_addl04"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  faceposermodel "D:\dev\staging\game\tf\models\player\pyro.mdl"
+}
+
+scalesettings
+{
+  "CChoreoView" "276"
+  "RampTool" "60"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

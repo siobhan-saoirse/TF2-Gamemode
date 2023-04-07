@@ -1,0 +1,118 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_rps_scissors_lose"
+    {
+      time 0.000000 6.933333
+      param "taunt_rps_scissors_lose"
+      fixedlength
+    }
+  }
+  channel "rps"
+  {
+  }
+  channel "sound"
+  {
+    event speak "soldier_taunt_rps_exert_01"
+    {
+      time 1.734000 3.076177
+      param "soldier_taunt_rps_int_01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "did i win?"
+    {
+      time 3.971545 4.565332
+      param "soldier_taunt_rps_lose_21"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "ahh"
+    {
+      time 5.983740 6.365940
+      param "soldier_taunt_rps_lose_05"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "facial"
+  {
+    event expression "happyBig"
+    {
+      time 0.004065 1.556911
+      param "player\soldier\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.2683 0.3294
+        1.1927 0.3529
+      }
+    }
+  }
+  channel "fx"
+  {
+    event speak "Weapon_Fist.HitHand"
+    {
+      time 1.860000 2.016009
+      param "Weapon_Fist.HitHand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Fist.HitFlesh"
+    {
+      time 2.190000 2.346009
+      param "Weapon_Fist.HitHand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Fist.HitFlesh"
+    {
+      time 2.574244 2.730253
+      param "Weapon_Fist.HitHand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "painBig"
+    {
+      time 4.292683 5.292683
+      param "player\soldier\emotion\emotion"
+      param2 "painBig"
+      event_ramp
+      {
+        0.2146 0.0902
+        0.5073 0.5922
+        0.7610 0.0784
+      }
+    }
+    event expression "happyBig"
+    {
+      time 2.995935 4.215448
+      param "player\soldier\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.3122 0.6863
+        0.9626 0.6353
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,41 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 2.535000 -1.000000
+  param "1.000000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveStart"
+    {
+      time 0.002347 2.869014
+      param "taunt_highFiveStart"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "Pyro.HighFive01"
+    {
+      time 0.104839 0.977016
+      param "Pyro.HighFive01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

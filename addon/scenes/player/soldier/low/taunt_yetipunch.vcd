@@ -1,0 +1,151 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "Anim"
+  {
+    event expression "scared"
+    {
+      time 0.013514 7.279279
+      param "player\soldier\emotion\emotion"
+      param2 "scared"
+      event_ramp
+      {
+        0.0707 0.9647
+        0.6879 0.4706
+        1.1148 0.3176
+        1.6722 0.0000
+        3.3195 0.0000
+        4.9351 0.0000
+        6.3444 0.0000
+        7.1876 0.0000
+        7.2359 0.0000
+      }
+    }
+    event expression "specialAction01"
+    {
+      time 0.022523 7.274775
+      param "player\soldier\emotion\emotion"
+      param2 "specialAction01"
+      event_ramp
+      {
+        0.3138 0.0078
+        1.2534 0.0000
+        1.6552 1.0000
+        2.4310 1.0000
+        2.7655 0.2275
+        2.9845 0.7961
+        4.0049 0.9373
+        4.1445 0.0000
+      }
+    }
+  }
+  channel "sound"
+  {
+    event speak "Breakable.Crate"
+    {
+      time 4.328596 5.477417
+      param "Breakable.Crate"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig"
+    {
+      time 4.328828 7.284220
+      param "player\soldier\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.3403 0.0000
+        1.0638 0.9255
+        1.3293 0.5922
+        1.4552 0.0000
+        2.8276 0.0000
+      }
+    }
+    event speak "heavy_taunt_heavy_workout_taunt_clothes_swipe"
+    {
+      time 6.468468 6.768922
+      param "heavy_taunt_heavy_workout_taunt_clothes_swipe"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_taunt_soviet_strongarm_taunt_clothes_swipe2"
+    {
+      time 1.342343 1.916674
+      param "heavy_taunt_soviet_strongarm_taunt_clothes_swipe2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Bat.DrawSwoosh1"
+    {
+      time 2.718396 3.283974
+      param "Weapon_Bat.DrawSwoosh1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "w"
+    {
+      time 4.319819 7.103604
+      param "player\soldier\phonemes\phonemes"
+      param2 "w"
+      event_ramp
+      {
+        0.3207 0.8706
+        0.9690 0.2667
+        1.5414 0.0000
+      }
+    }
+    event expression "happySmall"
+    {
+      time 4.333333 7.284946
+      param "player\soldier\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.8672 0.0000
+        1.3207 0.0902
+        1.5241 0.9490
+        2.0500 0.9647
+        2.3190 0.0902
+      }
+    }
+    event expression "mad"
+    {
+      time 6.096775 7.279570
+      param "player\soldier\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.2310 0.8863
+        0.9328 0.9529
+      }
+    }
+    event sequence "taunt_yetipunch"
+    {
+      time 0.000000 6.633334
+      param "taunt_yetipunch"
+      fixedlength
+    }
+  }
+  channel "sound2"
+  {
+  }
+  channel "sound3"
+  {
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

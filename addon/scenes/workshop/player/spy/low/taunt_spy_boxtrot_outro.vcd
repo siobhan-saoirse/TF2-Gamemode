@@ -1,0 +1,35 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "spy"
+  {
+    event sequence "taunt_spy_boxtrot_outro"
+    {
+      time 0.000000 1.066667
+      param "taunt_spy_boxtrot_outro"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event speak "spy_taunt_boxtrot_outro"
+    {
+      time 0.035714 0.454353
+      param "spy_taunt_boxtrot_outro"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

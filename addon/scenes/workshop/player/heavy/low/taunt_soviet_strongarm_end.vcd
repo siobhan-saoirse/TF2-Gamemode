@@ -1,0 +1,70 @@
+// Choreo version 1
+event stoppoint "end"
+{
+  time 1.866667 -1.000000
+  param "noaction"
+}
+actor "!target1"
+{
+  channel "Heavy"
+  {
+    event sequence "taunt_soviet_strongarm_end"
+    {
+      time 0.000000 1.866667
+      param "taunt_soviet_strongarm_end"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event speak "heavy_soviet_strongarm_heavy_taunt_end_03"
+    {
+      time 0.199966 1.092778
+      param "heavy_taunt_soviet_strongarm_heavy_taunt_end_03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_tile2"
+    {
+      time 0.366666 0.989704
+      param "heavy_taunt_soviet_strongarm_tile2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_taunt_clothes_swipe2"
+    {
+      time -0.591634 -0.017303
+      param "heavy_taunt_soviet_strongarm_taunt_clothes_swipe2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "face"
+  {
+    event expression "happysmall02"
+    {
+      time -0.550926 1.865168
+      param "player\heavy\emotion\emotion"
+      param2 "happysmall02"
+      event_ramp
+      {
+        0.0500 0.4980
+        2.4056 0.4353
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

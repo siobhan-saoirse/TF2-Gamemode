@@ -1,0 +1,143 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_headbutt_success"
+    {
+      time 0.000000 4.833333
+      param "taunt_headbutt_success"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "sniper_taunt_headbutt_success_windup"
+    {
+      time 0.500000 3.010091
+      param "sniper_taunt_headbutt_success_windup"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "sniper_taunt_headbutt_success_recover"
+    {
+      time 3.100000 3.772154
+      param "sniper_taunt_headbutt_success_recover"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "SFX"
+  {
+    event speak "taunt_headbutt_sfx_hand_swoosh"
+    {
+      time 0.000000 0.572132
+      param "Taunt.EngineerSwoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_headbutt_sfx_head_impact"
+    {
+      time 1.740000 2.554150
+      param "Weapon_BaseballBat.HitFlesh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "MedicGloveSnap"
+    {
+      time 0.377778 1.036644
+      param "Taunt.MedicGloveSnap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "expression"
+  {
+    event expression "mad"
+    {
+      time 0.006667 2.053334
+      param "player\sniper\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.2760 0.8706
+        1.8360 0.9882
+      }
+    }
+    event expression "MouthWide"
+    {
+      time 1.726666 3.040000
+      param "player\sniper\emotion\emotion"
+      param2 "MouthWide"
+      event_ramp
+      {
+        0.1960 0.9686
+        0.7827 0.8980
+        1.0027 0.2706
+      }
+    }
+    event expression "painBig"
+    {
+      time 2.446667 4.133333
+      param "player\sniper\emotion\emotion"
+      param2 "painBig"
+      event_ramp
+      {
+        0.1980 0.8824
+        1.0180 0.6353
+      }
+    }
+    event expression "mad"
+    {
+      time 3.706667 4.800000
+      param "player\sniper\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.2980 0.9529
+        0.8780 0.8706
+      }
+    }
+  }
+  channel "EXPRESSION_UPPER"
+  {
+    event expression "scaredUpper"
+    {
+      time 1.713333 4.753333
+      param "player\sniper\emotion\emotion"
+      param2 "scaredUpper"
+      event_ramp
+      {
+        0.2100 0.9882
+        2.7740 0.9804
+      }
+    }
+    event expression "madUpper"
+    {
+      time 0.020000 1.913333
+      param "player\sniper\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.2980 0.8980
+        1.6380 0.9843
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,111 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "scout"
+  {
+    event expression "mad"
+    {
+      time 0.010101 5.292000
+      param "player\heavy\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.0000 0.6235
+        0.0926 0.9412
+        0.6074 0.9020
+        1.2963 0.8431
+        2.0283 0.0000
+        2.5148 0.0667
+        2.9566 0.8431
+        3.3085 0.0157
+        3.3321 0.1412
+        4.0663 0.8588
+      }
+    }
+    event expression "actionfire02"
+    {
+      time 0.010101 5.292000
+      param "player\heavy\emotion\emotion"
+      param2 "actionfire02"
+      event_ramp
+      {
+        0.5640 0.0000
+        1.8246 0.0000
+        1.9643 0.2941
+        2.0259 0.8824
+        2.1893 0.9216
+        2.4143 0.7255
+        2.9004 0.5922
+        3.0274 0.9216
+        4.2274 0.0078
+        4.3431 0.8941
+        4.6152 0.7255
+        4.7934 0.5608
+        5.1293 0.6118
+      }
+    }
+    event expression "mad"
+    {
+      time 0.020202 5.292000
+      param "player\heavy\emotion\emotion"
+      param2 "mad"
+    }
+    event expression "actionfire02"
+    {
+      time 0.782828 5.292000
+      param "player\heavy\emotion\emotion"
+      param2 "actionfire02"
+      event_ramp
+      {
+        0.0643 1.0000
+        0.1714 1.0000
+        0.4429 0.0000
+        0.8107 0.0000
+        1.1429 0.0000
+        1.2071 0.9333
+        1.2286 0.9529
+        1.2714 0.9647
+        1.3571 0.9725
+        1.7000 0.9804
+        1.8321 0.9804
+        1.8929 0.9765
+        1.9321 0.9725
+        2.3464 0.0000
+        3.4321 0.0000
+        3.5393 0.9882
+        4.3464 0.0000
+      }
+    }
+    event expression "aa"
+    {
+      time 4.262626 5.292000
+      param "player\heavy\phonemes\phonemes_strong"
+      param2 "aa"
+      event_ramp
+      {
+        0.0857 0.9804
+        0.4643 0.9608
+      }
+    }
+    event sequence "taunt_yeti"
+    {
+      time 0.000000 5.292000
+      param "taunt_yeti"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,60 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event sequence "primary_death_headshot"
+    {
+      time 0.000000 2.166667
+      param "primary_death_headshot"
+      fixedlength
+    }
+    event expression "jawOpen"
+    {
+      time 0.041667 1.816667
+      param "player\medic\emotion\emotion"
+      param2 "jawOpen"
+      event_ramp
+      {
+        0.0606 0.9974
+        0.9659 0.9793
+        1.6333 0.0181
+      }
+    }
+    event expression "scaredHurt"
+    {
+      time 0.041667 1.850000
+      param "player\medic\emotion\emotion"
+      param2 "scaredHurt"
+      event_ramp
+      {
+        0.0545 0.9974
+        1.6326 0.9948
+      }
+    }
+    event expression "pain"
+    {
+      time 1.275000 2.275000
+      param "player\medic\emotion\emotion"
+      param2 "pain"
+      event_ramp
+      {
+        0.0061 0.0181
+        0.3545 0.9871
+        1.0000 0.9897
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "80"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

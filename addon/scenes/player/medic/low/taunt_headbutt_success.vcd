@@ -1,0 +1,136 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_headbutt_success"
+    {
+      time 0.006459 4.506459
+      param "taunt_headbutt_success"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "medic_taunt_headbutt_success_windup"
+    {
+      time 0.130000 1.532812
+      param "medic_taunt_headbutt_success_windup"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "medic_taunt_headbutt_success_exert"
+    {
+      time 1.660000 2.014331
+      param "medic_taunt_headbutt_success_exert"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "medic_taunt_headbutt_success_recover"
+    {
+      time 2.660000 6.039478
+      param "medic_taunt_headbutt_success_recover"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "SFX"
+  {
+    event speak "taunt_headbutt_sfx_hand_swoosh"
+    {
+      time 0.000000 0.572132
+      param "Taunt.EngineerSwoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_headbutt_sfx_head_impact"
+    {
+      time 1.700000 2.514150
+      param "Weapon_BaseballBat.HitFlesh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "MedicGloveSnap"
+    {
+      time 0.377778 1.036644
+      param "Taunt.MedicGloveSnap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "expression"
+  {
+    event expression "happyFull"
+    {
+      time 0.005208 1.062500
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.2000 0.9608
+        0.8214 0.9922
+      }
+    }
+    event expression "madFull"
+    {
+      time 0.854167 1.973958
+      param "player\medic\emotion\emotion"
+      param2 "madFull"
+      event_ramp
+      {
+        0.3262 0.9686
+        0.8865 0.9765
+      }
+    }
+    event expression "jawOpen"
+    {
+      time 1.453125 2.000000
+      param "player\medic\emotion\emotion"
+      param2 "jawOpen"
+      event_ramp
+      {
+        0.1333 0.7686
+        0.3595 0.8235
+      }
+    }
+    event expression "scaredHurt"
+    {
+      time 1.927083 3.651042
+      param "player\medic\emotion\emotion"
+      param2 "scaredHurt"
+      event_ramp
+      {
+        0.3310 0.9412
+        1.2833 0.9176
+      }
+    }
+    event expression "happy"
+    {
+      time 3.291667 4.848958
+      param "player\medic\emotion\emotion"
+      param2 "happy"
+      event_ramp
+      {
+        0.4405 0.8510
+        1.2167 0.8235
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

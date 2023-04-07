@@ -1,0 +1,59 @@
+// Choreo version 1
+actor "medic"
+{
+  channel "audio"
+  {
+    event speak "medic_mvm_say_ready02"
+    {
+      time 0.000000 1.737302
+      param "medic_mvm_say_ready02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "emotion"
+  {
+    event expression "happyFull"
+    {
+      time 0.041667 1.906250
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.2303 0.5462 "curve_easein_to_curve_easeout"
+        0.4879 0.0231 "curve_easein_to_curve_easeout"
+        0.6545 0.5385 "curve_easein_to_curve_easeout"
+        1.0328 0.5615 "curve_easein_to_curve_easeout"
+        1.2055 0.9385 "curve_easein_to_curve_easeout"
+        1.3939 0.6269 "curve_easein_to_curve_easeout"
+        1.6116 0.6231 "curve_easein_to_curve_easeout"
+        1.8525 0.0038 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "yellingUpper"
+    {
+      time 1.018353 1.906250
+      param "player\medic\emotion\emotion"
+      param2 "yellingUpper"
+      event_ramp
+      {
+        0.1667 0.5731 "curve_easein_to_curve_easeout"
+        0.7790 0.5692 "curve_easein_to_curve_easeout"
+        0.8879 0.0462 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

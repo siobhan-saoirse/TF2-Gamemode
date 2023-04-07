@@ -1,0 +1,36 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event expression "painBig"
+    {
+      time 0.166666 1.166666
+      param "player\scout\emotion\emotion"
+      param2 "painBig"
+      event_ramp
+      {
+        0.0455 0.0103
+        0.2545 0.9948
+      }
+    }
+    event sequence "primary_death_headshot"
+    {
+      time 0.000000 1.333333
+      param "primary_death_headshot"
+      fixedlength
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "80"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

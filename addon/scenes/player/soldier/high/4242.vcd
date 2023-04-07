@@ -1,0 +1,44 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event speak "soldier_mvm_ask_ready02"
+    {
+      time 0.000000 1.487460
+      param "soldier_mvm_ask_ready02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "emotions"
+  {
+    event expression "madUpper"
+    {
+      time -0.010417 1.510417
+      param "player\soldier\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.2364 0.3793
+        0.7727 0.3793
+        0.8576 0.3241
+        0.9545 0.0414
+        1.1667 0.1207
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

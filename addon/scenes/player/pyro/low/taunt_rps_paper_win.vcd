@@ -1,0 +1,129 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_rps_paper_win"
+    {
+      time 0.000000 6.733333
+      param "taunt_rps_paper_win"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "Pyro.LaughEvil01"
+    {
+      time 3.293011 5.645029
+      param "Pyro.LaughEvil01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_rps_exert_18"
+    {
+      time 0.139785 0.817268
+      param "pyro_taunt_rps_exert_18"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_rps_exert_21"
+    {
+      time 1.825269 2.124543
+      param "pyro_taunt_rps_exert_21"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_rps_exert_22"
+    {
+      time 2.239248 2.508908
+      param "pyro_taunt_rps_exert_22"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_rps_exert_23"
+    {
+      time 2.629032 2.993454
+      param "pyro_taunt_rps_exert_23"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "rps"
+  {
+  }
+  channel "fx"
+  {
+    event speak "Weapon_BoxingGloves.Miss"
+    {
+      time 2.212366 2.464362
+      param "Weapon_waterbomb.draw"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Fist.HitHand"
+    {
+      time 0.559141 0.784810
+      param "Selection.PyroFootStomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Fist.HitHand"
+    {
+      time 0.709679 0.865688
+      param "Weapon_Fist.HitHand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Fist.Miss"
+    {
+      time 0.642473 1.208051
+      param "Weapon_Fist.Miss"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Fist.HitWorld"
+    {
+      time 4.916667 5.070499
+      param "Weapon_Fist.HitHand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_waterbomb.draw"
+    {
+      time 1.911290 2.163285
+      param "Weapon_waterbomb.draw"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_waterbomb.draw"
+    {
+      time 2.526882 2.778877
+      param "Weapon_waterbomb.draw"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

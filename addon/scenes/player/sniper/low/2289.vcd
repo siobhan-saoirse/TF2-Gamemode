@@ -1,0 +1,39 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "sniper.FightOnCap01"
+    {
+      time 0.000000 1.227959
+      param "sniper.FightOnCap01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happySmallUpper"
+    {
+      time 0.000000 2.000000
+      param "player\sniper\emotion\emotion"
+      param2 "happySmallUpper"
+      event_ramp
+      {
+        0.1260 0.5818 "curve_easein_to_curve_easeout"
+        0.3500 0.5750 "curve_easein_to_curve_easeout"
+        0.5120 1.0000 "curve_easein_to_curve_easeout"
+        0.6560 0.7909 "curve_easein_to_curve_easeout"
+        1.8640 0.6682
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "RampTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

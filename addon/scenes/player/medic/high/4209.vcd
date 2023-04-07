@@ -1,0 +1,63 @@
+// Choreo version 1
+actor "medic"
+{
+  channel "audio"
+  {
+    event speak "medic_mvm_tank_shooting03"
+    {
+      time 0.000000 2.550000
+      param "medic_mvm_tank_shooting03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "emotion"
+  {
+    event expression "scaredHurt"
+    {
+      time 0.062500 1.166667
+      param "player\medic\emotion\emotion"
+      param2 "scaredHurt"
+      event_ramp
+      {
+        0.1273 0.3808
+        0.9394 0.4923
+      }
+    }
+    event expression "mad"
+    {
+      time 1.020833 2.645833
+      param "player\medic\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.1758 0.5192
+        1.4182 0.6769
+      }
+    }
+    event expression "yellingUpper"
+    {
+      time 2.031250 2.697917
+      param "player\medic\emotion\emotion"
+      param2 "yellingUpper"
+      event_ramp
+      {
+        0.1909 0.6077
+        0.4786 0.7192
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

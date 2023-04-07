@@ -1,0 +1,54 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 5.157000 -1.000000
+  param "1.150000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "taunt"
+  {
+    event sequence "taunt_table_flip_intro"
+    {
+      time 0.000000 5.166667
+      param "taunt_table_flip_intro"
+      fixedlength
+    }
+    event speak "taunt_headbutt_sfx_hand_swoosh"
+    {
+      time 0.000000 0.572132
+      param "taunt_headbutt_sfx_hand_swoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Wood_Box.ImpactHard"
+    {
+      time 0.584699 1.117261
+      param "Wood_Box.ImpactHard"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.TableFlipBubblyPotWater"
+    {
+      time 0.564328 5.148818
+      param "Taunt.TableFlipBubblyPotWater"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

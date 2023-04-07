@@ -1,0 +1,49 @@
+// Choreo version 1
+event loop "taunt_the_skating_scorcher_loop"
+{
+  time 6.491000 -1.000000
+  param "2.048000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "Pyro"
+  {
+  }
+  channel "face"
+  {
+    event speak "pyro_taunt_the_skating_scorcher_projectile_swoosh6"
+    {
+      time 0.259133 0.812013
+      param "pyro_taunt_the_skating_scorcher_projectile_swoosh6"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_the_skating_scorcher_taunt_equipment_gun1"
+    {
+      time 0.859133 1.979496
+      param "pyro_taunt_the_skating_scorcher_taunt_equipment_gun1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event sequence "taunt_skating_scorcher_trick1"
+    {
+      time 0.000000 6.500000
+      param "taunt_skating_scorcher_trick1"
+      fixedlength
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

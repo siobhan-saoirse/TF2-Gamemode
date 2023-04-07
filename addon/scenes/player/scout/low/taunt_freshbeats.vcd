@@ -1,0 +1,158 @@
+// Choreo version 1
+event loop "congaLoop"
+{
+  time 4.493000 -1.000000
+  param "0.497000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_freshbeats"
+    {
+      time 0.000000 4.500000
+      param "taunt_freshbeats"
+      fixedlength
+    }
+  }
+  channel "kjojmnok"
+  {
+    event expression "happySmall"
+    {
+      time 0.013158 4.504386
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.0000 1.0000
+        0.4917 0.9765
+        0.9583 0.5961
+        1.9167 0.5098
+        2.8575 0.8824
+        4.4913 1.0000
+      }
+    }
+  }
+  channel "voice"
+  {
+    event speak "Taunt.Soldier01ClothesSwipe"
+    {
+      time 1.770580 2.071033
+      param "Taunt.Soldier01ClothesSwipe"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Soldier01ClothesSwipe"
+    {
+      time 0.407332 0.707785
+      param "Taunt.Soldier01ClothesSwipe"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Soldier01ClothesSwipe"
+    {
+      time 1.086820 1.387274
+      param "Taunt.Soldier01ClothesSwipe"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Soldier01ClothesSwipe"
+    {
+      time 3.121007 3.421460
+      param "Taunt.Soldier01ClothesSwipe"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Soldier01ClothesSwipe"
+    {
+      time 2.450067 2.750520
+      param "Taunt.Soldier01ClothesSwipe"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Soldier01ClothesSwipe"
+    {
+      time 3.821862 4.122315
+      param "Taunt.Soldier01ClothesSwipe"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Soldier01ClothesSwipe"
+    {
+      time 4.458615 4.759068
+      param "Taunt.Soldier01ClothesSwipe"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.MedicFootStomp"
+    {
+      time 0.834683 1.060352
+      param "Selection.MedicFootStomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.MedicFootStomp"
+    {
+      time 2.163743 2.389412
+      param "Selection.MedicFootStomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.MedicFootStomp"
+    {
+      time 3.501350 3.727019
+      param "Selection.MedicFootStomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.MedicFootStomp"
+    {
+      time 1.441521 1.667190
+      param "Selection.MedicFootStomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.MedicFootStomp"
+    {
+      time 2.787675 3.013344
+      param "Selection.MedicFootStomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.MedicFootStomp"
+    {
+      time 4.155196 4.380865
+      param "Selection.MedicFootStomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "sound"
+  {
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

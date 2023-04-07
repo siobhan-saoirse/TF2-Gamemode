@@ -1,0 +1,566 @@
+// Choreo version 1
+event loop "taunt_scotsmans_stagger_loop"
+{
+  time 9.200000 -1.000000
+  param "0.000000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "demo"
+  {
+    event sequence "taunt_scotsmans_stagger"
+    {
+      time 0.000000 9.208333
+      param "taunt_scotsmans_stagger"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event expression "right_CloseLid"
+    {
+      time 0.000000 9.202992
+      param "player\demo\emotion\emotion"
+      param2 "right_CloseLid"
+      event_ramp
+      {
+        0.0000 1.0000
+        1.8333 1.0000
+        1.8542 1.0000
+        1.9167 0.0235
+        1.9375 0.0314
+        1.9583 0.0275
+        1.9792 0.0196
+        2.0000 1.0000
+        2.0104 0.9804
+        2.0208 0.9569
+        2.0417 0.8941
+        2.0625 0.8196
+        2.1042 0.6627
+        2.1250 0.5922
+        2.1458 0.5373
+        2.1666 0.4980
+        2.1875 0.4745
+        2.2083 0.4588
+        2.2292 0.4431
+        2.2500 0.4353
+        2.2708 0.4314
+        2.2917 0.4314
+        2.3125 0.4314
+        2.3333 0.4392
+        2.3542 0.4510
+        2.3750 0.4627
+        2.3958 0.4784
+        2.4167 0.4980
+        2.4375 0.5255
+        2.4583 0.5569
+        2.4792 0.5961
+        2.5000 0.6431
+        2.5208 0.6902
+        2.5833 0.8431
+        2.6042 0.8902
+        2.6250 0.9333
+        2.6458 0.9686
+        2.6666 1.0000
+        2.6771 0.0039
+        2.6875 0.0118
+        2.7083 0.0235
+        2.7292 0.0235
+        2.7500 0.0196
+        2.8125 1.0000
+        2.8332 1.0000
+        2.8438 1.0000
+        2.8542 0.0000
+        2.8750 0.0118
+        2.9167 0.0353
+        2.9375 0.0431
+        2.9583 0.0431
+        2.9792 0.0275
+        3.0000 1.0000
+        3.0104 0.9725
+        3.0208 0.9373
+        3.0417 0.8510
+        3.0625 0.7451
+        3.0833 0.6314
+        3.1042 0.5216
+        3.1250 0.4235
+        3.1458 0.3490
+        3.1666 0.3059
+        3.1875 0.2824
+        3.2083 0.2627
+        3.2292 0.2471
+        3.2500 0.2314
+        3.2708 0.2196
+        3.2917 0.2118
+        3.3125 0.2039
+        3.3333 0.1961
+        3.3750 0.1922
+        3.3958 0.1922
+        3.4375 0.2000
+        3.4583 0.2039
+        3.5000 0.2196
+        3.5417 0.2431
+        3.5833 0.2706
+        3.6250 0.3059
+        3.6458 0.3294
+        3.6667 0.3569
+        3.6875 0.3922
+        3.7083 0.4314
+        3.7292 0.4745
+        3.7500 0.5255
+        3.7708 0.5725
+        3.8542 0.7843
+        3.8750 0.8314
+        3.8958 0.8784
+        3.9167 0.9255
+        3.9375 0.9647
+        3.9582 1.0000
+        3.9688 0.0078
+        3.9792 0.0157
+        4.0000 0.0235
+        4.0208 0.0157
+        4.0625 0.0000
+        4.0832 1.0000
+        9.2030 1.0000
+      }
+    }
+    event expression "left_CloseLid"
+    {
+      time 0.000000 9.202992
+      param "player\demo\emotion\emotion"
+      param2 "left_CloseLid"
+      event_ramp
+      {
+        0.0000 1.0000
+        1.8333 1.0000
+        1.8542 1.0000
+        1.9167 0.0235
+        1.9375 0.0314
+        1.9583 0.0275
+        1.9792 0.0196
+        2.0000 1.0000
+        2.0104 0.9804
+        2.0208 0.9569
+        2.0417 0.8941
+        2.0625 0.8196
+        2.1042 0.6627
+        2.1250 0.5922
+        2.1458 0.5373
+        2.1666 0.4980
+        2.1875 0.4745
+        2.2083 0.4588
+        2.2292 0.4431
+        2.2500 0.4353
+        2.2708 0.4314
+        2.2917 0.4314
+        2.3125 0.4314
+        2.3333 0.4392
+        2.3542 0.4510
+        2.3750 0.4627
+        2.3958 0.4784
+        2.4167 0.4980
+        2.4375 0.5255
+        2.4583 0.5569
+        2.4792 0.5961
+        2.5000 0.6431
+        2.5208 0.6902
+        2.5833 0.8431
+        2.6042 0.8902
+        2.6250 0.9333
+        2.6458 0.9686
+        2.6666 1.0000
+        2.6771 0.0039
+        2.6875 0.0118
+        2.7083 0.0235
+        2.7292 0.0235
+        2.7500 0.0196
+        2.8125 1.0000
+        2.8332 1.0000
+        2.8438 1.0000
+        2.8542 0.0000
+        2.8750 0.0118
+        2.9167 0.0353
+        2.9375 0.0431
+        2.9583 0.0431
+        2.9792 0.0275
+        3.0000 1.0000
+        3.0104 0.9725
+        3.0208 0.9373
+        3.0417 0.8510
+        3.0625 0.7451
+        3.0833 0.6314
+        3.1042 0.5216
+        3.1250 0.4235
+        3.1458 0.3490
+        3.1666 0.3059
+        3.1875 0.2824
+        3.2083 0.2627
+        3.2292 0.2471
+        3.2500 0.2314
+        3.2708 0.2196
+        3.2917 0.2118
+        3.3125 0.2039
+        3.3333 0.1961
+        3.3750 0.1922
+        3.3958 0.1922
+        3.4375 0.2000
+        3.4583 0.2039
+        3.5000 0.2196
+        3.5417 0.2431
+        3.5833 0.2706
+        3.6250 0.3059
+        3.6458 0.3294
+        3.6667 0.3569
+        3.6875 0.3922
+        3.7083 0.4314
+        3.7292 0.4745
+        3.7500 0.5255
+        3.7708 0.5725
+        3.8542 0.7843
+        3.8750 0.8314
+        3.8958 0.8784
+        3.9167 0.9255
+        3.9375 0.9647
+        3.9582 1.0000
+        3.9688 0.0078
+        3.9792 0.0157
+        4.0000 0.0235
+        4.0208 0.0157
+        4.0625 0.0000
+        4.0832 1.0000
+        9.2030 1.0000
+      }
+    }
+    event expression "multi_CloseLid"
+    {
+      time 0.000000 9.202992
+      param "player\demo\emotion\emotion"
+      param2 "multi_CloseLid"
+      event_ramp
+      {
+        0.0000 0.6941
+        1.8333 0.6941
+        1.8542 0.6941
+        1.9167 0.7059
+        1.9375 0.7059
+        1.9583 0.7059
+        1.9792 0.7020
+        2.0000 0.6941
+        2.0104 0.6863
+        2.0208 0.6784
+        2.0417 0.6510
+        2.0625 0.6235
+        2.1042 0.5608
+        2.1250 0.5333
+        2.1458 0.5137
+        2.1666 0.4980
+        2.2083 0.4824
+        2.2500 0.4745
+        2.2917 0.4706
+        2.3333 0.4745
+        2.3750 0.4824
+        2.4167 0.4980
+        2.4375 0.5098
+        2.4583 0.5216
+        2.4792 0.5373
+        2.5000 0.5529
+        2.5833 0.6314
+        2.6250 0.6667
+        2.6458 0.6824
+        2.6666 0.6941
+        2.6771 0.6980
+        2.7083 0.7059
+        2.7292 0.7059
+        2.8125 0.6941
+        2.8333 0.6941
+        2.8542 0.6941
+        2.9167 0.7059
+        2.9375 0.7059
+        2.9583 0.7059
+        2.9792 0.7020
+        3.0000 0.6941
+        3.0104 0.6863
+        3.0208 0.6745
+        3.0417 0.6510
+        3.0625 0.6235
+        3.1042 0.5608
+        3.1250 0.5333
+        3.1458 0.5098
+        3.1666 0.4980
+        3.2083 0.4863
+        3.2708 0.4745
+        3.3125 0.4706
+        3.3750 0.4667
+        3.4375 0.4667
+        3.5000 0.4745
+        3.5833 0.4902
+        3.6458 0.5059
+        3.6875 0.5216
+        3.7292 0.5451
+        3.7708 0.5725
+        3.8750 0.6471
+        3.9167 0.6706
+        3.9375 0.6824
+        3.9688 0.6980
+        3.9792 0.6980
+        4.0000 0.7020
+        4.0832 0.6941
+        9.2030 0.6941
+      }
+    }
+    event expression "dead"
+    {
+      time 0.000000 9.202992
+      param "player\demo\emotion\emotion"
+      param2 "dead"
+      event_ramp
+      {
+        0.0000 0.0000
+        0.8333 0.0000
+        0.9999 1.0000
+        1.7083 1.0000
+        1.8749 0.0000
+        9.2030 0.0000
+      }
+    }
+    event expression "drunkHappy"
+    {
+      time 0.000000 9.202992
+      param "player\demo\emotion\emotion"
+      param2 "drunkHappy"
+      event_ramp
+      {
+        0.0000 1.0000
+        0.8333 1.0000
+        0.9999 0.0000
+        1.7083 0.0000
+        1.8749 1.0000
+        3.2083 1.0000
+        3.3749 0.0000
+        3.9167 0.0000
+        4.0832 1.0000
+        7.1197 1.0000
+        7.4529 0.0000
+        8.3280 0.0000
+        8.6196 1.0000
+        9.2030 1.0000
+      }
+    }
+    event expression "mad"
+    {
+      time 0.000000 9.202992
+      param "player\demo\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.0000 0.0000
+        7.1197 0.0000
+        7.4529 1.0000
+        8.3280 1.0000
+        8.6196 0.0000
+        9.2030 0.0000
+      }
+    }
+    event expression "scared"
+    {
+      time 0.004273 9.202992
+      param "player\demo\emotion\emotion"
+      param2 "scared"
+      event_ramp
+      {
+        0.0000 0.0000
+        3.2083 0.0000
+        3.3749 1.0000
+        3.9167 1.0000
+        4.0832 0.0000
+        9.1987 0.0000
+      }
+    }
+    event expression "eyes_updown"
+    {
+      time 0.000000 9.202992
+      param "player\demo\emotion\emotion"
+      param2 "eyes_updown"
+      event_ramp
+      {
+        0.0000 0.4980
+        9.2030 0.4980
+      }
+    }
+    event expression "eyes_rightleft"
+    {
+      time 0.000000 9.202992
+      param "player\demo\emotion\emotion"
+      param2 "eyes_rightleft"
+      event_ramp
+      {
+        0.0000 0.4980
+        9.2030 0.4980
+      }
+    }
+    event speak "demo_taunt_dosido_burp_rand"
+    {
+      time 1.958300 2.519933
+      param "demo_taunt_dosido_burp_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Scout.DodgeCanDrink"
+    {
+      time 1.041700 2.266552
+      param "Scout.DodgeCanDrink"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 0.739000 1.219998
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 1.385000 2.104093
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 2.050966 2.674005
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 2.675598 3.394691
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_flip_landings"
+    {
+      time 3.474359 4.273633
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 4.128589 4.660154
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 4.721906 5.202904
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 5.367906 6.086999
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 6.025325 6.648363
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 6.743975 7.463068
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 7.341564 7.964602
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 7.923462 8.642555
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 8.589428 9.070426
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 0.035417 0.754510
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.SoldierClothesRustle"
+    {
+      time 3.200855 3.775186
+      param "Taunt.SoldierClothesRustle"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "demo_taunt_scotsmans_stagger_taunt_hop"
+    {
+      time 3.166700 3.555861
+      param "demo_taunt_scotsmans_stagger_taunt_hop"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "demo_taunt_scotsmans_stagger_demoman_gibberish"
+    {
+      time 4.416700 -1.000000
+      param "demo_taunt_scotsmans_stagger_demoman_gibberish"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

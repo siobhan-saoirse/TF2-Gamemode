@@ -1,0 +1,91 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 0.000000 -1.000000
+  param "0.000000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_flip_success_initiator"
+    {
+      time 0.000000 4.366667
+      param "taunt_flip_success_initiator"
+      fixedlength
+    }
+    event expression "happyBig"
+    {
+      time 0.003318 2.312284
+      param "player\soldier\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0560 0.4588
+        0.4244 0.4431
+        0.8706 0.8510
+        2.3089 0.8510
+      }
+    }
+    event speak "soldier_taunt_flip_random_flipExert"
+    {
+      time 0.985232 1.602080
+      param "soldier_taunt_flip_random_flipExert"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.SoldierClothesRustle"
+    {
+      time 2.086498 2.660829
+      param "Taunt.SoldierClothesRustle"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Pyro01Equipment1"
+    {
+      time 2.198312 2.590874
+      param "Taunt.Pyro01Equipment1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.MedicHeelClick"
+    {
+      time 2.364978 2.816452
+      param "Selection.MedicHeelClick"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "soldier_taunt_flip_random_flipthrowAntic"
+    {
+      time 0.006329 0.751703
+      param "soldier_taunt_flip_random_flipthrowAntic"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "soldier_taunt_flip_random_flipAdmire"
+    {
+      time 2.881856 4.170949
+      param "soldier_taunt_flip_random_flipAdmire"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

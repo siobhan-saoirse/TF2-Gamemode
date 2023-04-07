@@ -1,0 +1,259 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 12.083000 -1.000000
+  param "3.125000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "Engineer"
+  {
+    event expression "happyBigClosed"
+    {
+      time 0.035714 12.166668
+      param "player\engineer\emotion\emotion"
+      param2 "happyBigClosed"
+      event_ramp
+      {
+        0.1740 0.1804
+        0.5040 0.7765
+        1.5160 1.0000
+        2.1660 0.8706
+        2.2980 0.1804
+        12.1310 0.0000
+      }
+    }
+    event expression "happyBigClosed"
+    {
+      time 3.140000 12.113096
+      param "player\engineer\emotion\emotion"
+      param2 "happyBigClosed"
+      event_ramp
+      {
+        0.0780 0.0000
+        0.5280 0.4157
+        1.6640 0.1020
+        3.2580 0.1647
+        3.7140 0.5373
+        4.1400 0.2745
+        4.7280 0.2118
+        5.2760 0.8353
+        5.7760 0.3098
+        8.4060 0.8941
+      }
+    }
+  }
+  channel "face"
+  {
+    event speak "engineer_bucking_bronco_sentry_upgrading2"
+    {
+      time 0.166700 1.693503
+      param "engineer_bucking_bronco_sentry_upgrading2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_gunslinger_draw"
+    {
+      time 0.958300 1.509547
+      param "engineer_bucking_bronco_gunslinger_draw"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_gunslinger_swing"
+    {
+      time 1.625000 2.072823
+      param "engineer_bucking_bronco_gunslinger_swing"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_gunslinger_draw"
+    {
+      time 3.464319 4.015566
+      param "engineer_bucking_bronco_gunslinger_draw"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_sentry_move_short2"
+    {
+      time 2.208333 3.124478
+      param "engineer_bucking_bronco_sentry_move_short2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_taunt_equipment_jingle4"
+    {
+      time 0.458300 0.749275
+      param "engineer_bucking_bronco_taunt_equipment_jingle4"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_taunt_start"
+    {
+      time 0.029762 0.686111
+      param "engineer_bucking_bronco_taunt_start"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_taunt_yells"
+    {
+      time 2.113095 3.751757
+      param "engineer_bucking_bronco_taunt_yells"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event sequence "bucking_bronco_intro"
+    {
+      time 0.000000 12.166667
+      param "bucking_bronco_intro"
+      fixedlength
+    }
+    event speak "engineer_bucking_bronco_sentry_move_short2"
+    {
+      time 4.583333 5.499478
+      param "engineer_bucking_bronco_sentry_move_short2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_gunslinger_draw"
+    {
+      time 5.279796 5.831043
+      param "engineer_bucking_bronco_gunslinger_draw"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_gunslinger_draw"
+    {
+      time 8.011873 8.563121
+      param "engineer_bucking_bronco_gunslinger_draw"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_taunt_equipment_jingle4"
+    {
+      time 5.761871 6.052846
+      param "engineer_bucking_bronco_taunt_equipment_jingle4"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_sentry_move_short2"
+    {
+      time 6.666667 7.582812
+      param "engineer_bucking_bronco_sentry_move_short2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_gunslinger_draw"
+    {
+      time 5.630987 6.182234
+      param "engineer_bucking_bronco_gunslinger_draw"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_gunslinger_draw"
+    {
+      time 7.636872 8.188119
+      param "engineer_bucking_bronco_gunslinger_draw"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_sentry_move_short2"
+    {
+      time 9.077381 9.993526
+      param "engineer_bucking_bronco_sentry_move_short2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_taunt_yells_A"
+    {
+      time 4.666667 6.719207
+      param "engineer_bucking_bronco_taunt_yells_A"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_taunt_yells_short"
+    {
+      time 7.363095 8.019444
+      param "engineer_bucking_bronco_taunt_yells_short"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_taunt_yells_B"
+    {
+      time 8.851190 11.347335
+      param "engineer_bucking_bronco_taunt_yells_B"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_gunslinger_draw"
+    {
+      time 3.172587 3.723834
+      param "engineer_bucking_bronco_gunslinger_draw"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_gunslinger_draw"
+    {
+      time 10.184491 10.735739
+      param "engineer_bucking_bronco_gunslinger_draw"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_sentry_move_short2"
+    {
+      time 10.732143 11.648289
+      param "engineer_bucking_bronco_sentry_move_short2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_gunslinger_draw"
+    {
+      time 8.636940 9.188188
+      param "engineer_bucking_bronco_gunslinger_draw"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_gunslinger_draw"
+    {
+      time 11.583301 12.134548
+      param "engineer_bucking_bronco_gunslinger_draw"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

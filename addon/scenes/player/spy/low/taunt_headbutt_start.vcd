@@ -1,0 +1,107 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 5.099999 -1.000000
+  param "2.600000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_headbutt_start"
+    {
+      time 0.000000 5.100000
+      param "taunt_headbutt_start"
+      fixedlength
+    }
+  }
+  channel "sound"
+  {
+    event speak "spy_taunt_headbutt_start_1"
+    {
+      time 0.693000 2.022093
+      param "spy_taunt_headbutt_start_1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_headbutt_start_2"
+    {
+      time 3.196667 4.485329
+      param "spy_taunt_headbutt_start_2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "flex"
+  {
+    event flexanimation "Facial Animation"
+    {
+      time 0.020000 5.086668
+      param ""
+      flexanimations samples_use_time
+      {
+        "scaredUpper"
+        {
+          0.6520 0.0392 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.8080 0.9570 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          1.0460 0.2079 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          1.5140 0.0078 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          1.5940 0.3765 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          1.7160 0.0196 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.2857 0.0275 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.4095 0.4393 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.6381 0.0667 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          4.0048 0.0392 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          4.0619 0.4000 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          4.2809 0.0196 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+      }
+    }
+  }
+  channel "expression"
+  {
+    event expression "happyBig"
+    {
+      time 0.013333 5.093333
+      param "player\spy\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0111 0.5098
+        0.5833 0.5490
+        0.8167 0.0235
+        0.9611 0.2431
+        1.1389 0.2431
+        1.2611 0.0353
+        1.3444 0.0627
+        1.5056 0.1255
+        1.7833 0.1490
+        2.0556 0.4627
+        2.2611 0.4902
+        2.5722 0.4941
+        2.9944 0.4314
+        3.3556 0.1098
+        4.2500 0.1294
+        4.4222 0.1490
+        4.6145 0.4667
+        4.6778 0.5255
+        5.0367 0.5373
+        5.0800 0.5373
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

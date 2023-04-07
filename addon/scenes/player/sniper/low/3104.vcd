@@ -1,0 +1,49 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "Sniper.DominationPyro02"
+    {
+      time 0.010417 2.162435
+      param "Sniper.DominationPyro02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "scaredUpper"
+    {
+      time 0.293981 1.541667
+      param "player\sniper\emotion\emotion"
+      param2 "scaredUpper"
+      event_ramp
+      {
+        0.1091 0.6125
+        1.0152 0.5867
+      }
+    }
+    event expression "Aggressive"
+    {
+      time 1.384259 2.324074
+      param "player\sniper\emotion\emotion"
+      param2 "Aggressive"
+      event_ramp
+      {
+        0.1545 0.6900
+        0.7363 0.6753
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "288"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

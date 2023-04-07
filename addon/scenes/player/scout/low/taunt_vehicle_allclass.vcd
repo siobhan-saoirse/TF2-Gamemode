@@ -1,0 +1,73 @@
+// Choreo version 1
+event unspecified ""
+{
+  time 0.000000 -1.000000
+  param ""
+}
+event loop "idle"
+{
+  time 3.453000 -1.000000
+  param "1.722000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "animation"
+  {
+    event sequence "taunt_vehicle_allclass_start"
+    {
+      time 0.000000 3.466667
+      param "taunt_vehicle_allclass_start"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event expression "mad"
+    {
+      time 0.001344 3.464474
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.0940 0.8902
+        3.4631 1.0000
+      }
+    }
+    event speak "Taunt.BumperCarSpawn"
+    {
+      time 0.000000 2.286304
+      param "Taunt.BumperCarSpawn"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "BumperCar.JumpLand"
+    {
+      time 0.986239 2.241863
+      param "BumperCar.JumpLand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_flip_random_flipExert"
+    {
+      time 0.000000 0.726032
+      param "scout_taunt_flip_random_flipFlipping1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,51 @@
+// Choreo version 1
+actor "Scout"
+{
+  channel "audio"
+  {
+    event speak "Scout.BeingShotInvincible09"
+    {
+      time 0.000000 0.462676
+      param "Scout.BeingShotInvincible09"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "ey"
+    {
+      time 0.000000 0.650000
+      param "player\scout\phonemes\phonemes"
+      param2 "ey"
+      event_ramp
+      {
+        0.1091 0.9136
+        0.1902 0.4364
+        0.2381 0.8227
+        0.3083 0.4023
+      }
+    }
+    event expression "happySmall"
+    {
+      time 0.000000 2.000000
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.0979 0.8864
+        1.8979 0.8182
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "SceneRampTool" "100"
+  "GestureTool" "100"
+  "RampTool" "96"
+  "ExpressionTool" "100"
+  "CChoreoView" "252"
+}
+fps 60
+snap off
+ignorePhonemes off

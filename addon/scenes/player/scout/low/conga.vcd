@@ -1,0 +1,126 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "iiii"
+    {
+      time 0.000000 11.488511
+      param "taunt_conga"
+      fixedlength
+    }
+  }
+  channel "kjojmnok"
+  {
+    event speak "clap"
+    {
+      time 0.320988 0.620988
+      param "eng_taunt_flip_random_flipkneeClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "voice"
+  {
+    event expression "happyBig"
+    {
+      time 0.000000 11.487655
+      param "player\scout\emotion\emotion"
+      param2 "happyBig"
+    }
+    event speak "eng_taunt_flip_random_flipkneeClap"
+    {
+      time 1.796296 2.096001
+      param "eng_taunt_flip_random_flipkneeClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_flip_random_flipkneeClap"
+    {
+      time 3.197530 3.497235
+      param "eng_taunt_flip_random_flipkneeClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_flip_random_flipkneeClap"
+    {
+      time 4.672839 4.972544
+      param "eng_taunt_flip_random_flipkneeClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_flip_random_flipkneeClap"
+    {
+      time 6.037036 6.337036
+      param "eng_taunt_flip_random_flipkneeClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_flip_random_flipkneeClap"
+    {
+      time 7.530863 7.830863
+      param "eng_taunt_flip_random_flipkneeClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_flip_random_flipkneeClap"
+    {
+      time 8.925924 9.225630
+      param "eng_taunt_flip_random_flipkneeClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_flip_random_flipkneeClap"
+    {
+      time 10.364197 10.664197
+      param "eng_taunt_flip_random_flipkneeClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_conga_random_fun1"
+    {
+      time 0.037037 2.673001
+      param "scout_taunt_conga_random_fun1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_conga_random_fun1"
+    {
+      time 3.919753 3.995218
+      param "scout_taunt_conga_random_fun2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_conga_random_fun2"
+    {
+      time 7.358027 8.907574
+      param "scout_taunt_conga_random_fun3"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

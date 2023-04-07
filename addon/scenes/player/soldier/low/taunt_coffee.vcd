@@ -1,0 +1,112 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_coffee"
+    {
+      time 0.000000 5.300000
+      param "taunt_coffee"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "soldier_taunt_coffee_1_speech"
+    {
+      time 0.213333 2.413310
+      param "soldier_taunt_coffee_1_speech"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "soldier_taunt_coffee_3_ahhhh"
+    {
+      time 4.153333 5.117415
+      param "soldier_taunt_coffee_3_ahhhh"
+      event_ramp
+      {
+        0.1600 0.9843
+        0.9260 0.9765
+      }
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "soldier_taunt_coffee_2_slurp"
+    {
+      time 2.246667 3.496009
+      param "soldier_taunt_coffee_2_slurp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "expression"
+  {
+    event expression "happySmall"
+    {
+      time 4.486913 5.180000
+      param "player\soldier\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.3671 1.0000
+        0.6231 0.9961
+      }
+    }
+    event expression "specialAction01"
+    {
+      time 0.006667 2.200000
+      param "player\soldier\emotion\emotion"
+      param2 "specialAction01"
+      event_ramp
+      {
+        0.1140 0.6824
+        1.0280 0.5804
+      }
+    }
+    event expression "uw"
+    {
+      time 2.133334 4.073333
+      param "player\soldier\phonemes\phonemes_strong"
+      param2 "uw"
+      event_ramp
+      {
+        0.2900 0.6118
+        0.5140 0.9137
+        1.3200 1.0000
+        1.6800 0.2078
+      }
+    }
+    event expression "happyBig"
+    {
+      time 3.506667 4.300739
+      param "player\soldier\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.1600 0.5098
+        0.2960 0.7529
+        0.4301 0.7529
+      }
+    }
+    event expression "madUpper"
+    {
+      time 1.993333 3.680000
+      param "player\soldier\emotion\emotion"
+      param2 "madUpper"
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,79 @@
+// Choreo version 1
+actor "spy"
+{
+  channel "audio"
+  {
+    event speak "Spy.DominationScout06"
+    {
+      time 0.000000 5.526032
+      param "Spy.DominationScout06"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "painBigUpper"
+    {
+      time 0.023248 5.844277
+      param "player\spy\emotion\emotion"
+      param2 "painBigUpper"
+      event_ramp
+      {
+        0.2182 0.3026 "curve_easein_to_curve_easein"
+        1.1576 0.3395 "curve_easein_to_curve_easeout"
+        1.4182 0.7196 "curve_easein_to_curve_easeout"
+        1.8697 0.7491 "curve_easein_to_curve_easeout"
+        2.1303 0.0406
+        2.4758 0.0074
+        2.7121 0.9114 "curve_easein_to_curve_easeout"
+        4.1803 0.9262 "curve_easein_to_curve_easeout"
+        4.2985 0.9520 "curve_easein_to_curve_easeout"
+        4.4197 0.9557 "curve_easein_to_curve_easeout"
+        4.9439 0.9520 "curve_easein_to_curve_easeout"
+        5.2119 0.0185 "curve_easein_to_curve_easein"
+      }
+    }
+    event expression "scaredUpper"
+    {
+      time 1.780603 5.845247
+      param "player\spy\emotion\emotion"
+      param2 "scaredUpper"
+      event_ramp
+      {
+        0.3000 0.7601 "curve_easein_to_curve_easein"
+        0.6848 0.2288
+        0.8152 0.9816 "curve_easein_to_curve_easeout"
+        2.3795 0.9520 "curve_easein_to_curve_easeout"
+        2.6886 0.2952 "curve_easein_to_curve_easeout"
+        2.8765 0.4243 "curve_easeout_to_curve_easeout"
+        3.8462 0.4281 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "happyBig"
+    {
+      time 1.788136 6.036723
+      param "player\spy\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.2152 0.3838
+        2.2031 0.4133 "curve_easein_to_curve_easeout"
+        2.6697 0.0812 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        3.3425 0.0554 "curve_easein_to_curve_easeout"
+        3.5425 0.5092 "curve_easein_to_curve_easeout"
+        3.9410 0.5978 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "SceneRampTool" "100"
+  "GestureTool" "100"
+  "RampTool" "66"
+  "ExpressionTool" "100"
+  "CChoreoView" "236"
+}
+fps 60
+snap off
+ignorePhonemes off

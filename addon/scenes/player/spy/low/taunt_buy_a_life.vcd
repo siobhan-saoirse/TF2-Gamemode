@@ -1,0 +1,69 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "taunt"
+  {
+    event sequence "taunt_buy_a_life"
+    {
+      time 0.007246 6.373913
+      param "taunt_buy_a_life"
+      fixedlength
+    }
+  }
+  channel "sound"
+  {
+    event speak "spy_taunt_buyalife_1_speech"
+    {
+      time 0.586956 3.284348
+      param "spy_taunt_buyalife_1_speech"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_buyalife_3_bill_throw"
+    {
+      time 4.127193 4.938304
+      param "spy_taunt_buyalife_3_bill_throw"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "flex"
+  {
+  }
+  channel "expression"
+  {
+    event expression "specialAction01Upper"
+    {
+      time -0.021739 6.670099
+      param "player\spy\emotion\emotion"
+      param2 "specialAction01Upper"
+      event_ramp
+      {
+        0.0604 0.1020
+        0.3625 0.5765
+        0.7646 0.4235
+        1.0521 0.0824
+        1.5298 0.4157
+        2.0529 0.5490
+        3.7059 0.4039
+        4.2588 0.1333
+        5.4118 0.4510
+        5.8010 0.5059
+        6.1843 0.5020
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

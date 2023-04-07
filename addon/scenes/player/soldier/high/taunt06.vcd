@@ -1,0 +1,38 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "body"
+  {
+    event sequence "taunt06"
+    {
+      time 0.000000 2.500000
+      param "taunt06"
+      fixedlength
+    }
+    event expression "specialAction01"
+    {
+      time 0.000000 2.500000
+      param "player\soldier\emotion\emotion"
+      param2 "specialAction01"
+      event_ramp
+      {
+        0.1171 0.0000 "curve_easeout_to_curve_easeout"
+        0.2657 1.0000 "curve_easein_to_curve_easein"
+        2.2971 1.0000 "curve_easein_to_curve_easein"
+        2.4457 0.0000 "curve_easein_to_curve_easein"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "108"
+  "RampTool" "70"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

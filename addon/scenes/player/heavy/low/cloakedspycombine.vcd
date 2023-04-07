@@ -1,0 +1,27 @@
+// Choreo version 1
+actor "Heavy"
+{
+  channel "Sound"
+  {
+    event speak "vo\heavy_cloakedspycombine.wav"
+    {
+      time -0.000000 1.509297
+      param "vo\heavy_cloakedspycombine.wav"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "RampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

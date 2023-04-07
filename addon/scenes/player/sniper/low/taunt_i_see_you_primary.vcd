@@ -1,0 +1,49 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "sound"
+  {
+    event speak "sniper_taunt_iseeyou_1"
+    {
+      time 0.685535 2.561317
+      param "sniper_taunt_iseeyou_1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "expression"
+  {
+    event expression "specialAction01"
+    {
+      time 0.009434 3.223270
+      param "player\sniper\emotion\emotion"
+      param2 "specialAction01"
+      event_ramp
+      {
+        0.2354 0.9843
+        2.7840 0.9882
+      }
+    }
+  }
+  channel "taunt"
+  {
+    event sequence "taunt_i_see_you_primary"
+    {
+      time 0.000000 3.233333
+      param "taunt_i_see_you_primary"
+      fixedlength
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

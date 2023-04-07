@@ -1,0 +1,87 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "scout"
+  {
+    event sequence "taunt_the_boston_breakdance"
+    {
+      time 0.000000 5.416667
+      param "taunt_the_boston_breakdance"
+      fixedlength
+    }
+    event speak "boston"
+    {
+      time 0.486667 3.058549
+      param "scout_taunt_boston_breakdance"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_boston_breakdance_end"
+    {
+      time 4.020869 5.370211
+      param "scout_taunt_boston_breakdance_end"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_flip_landings"
+    {
+      time 4.351110 5.150384
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.EngineerSwoosh"
+    {
+      time -0.849206 -0.277074
+      param "Taunt.EngineerSwoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.EngineerSwoosh"
+    {
+      time 3.858000 4.430131
+      param "Taunt.EngineerSwoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Tranq.Draw"
+    {
+      time 0.115942 1.155035
+      param "Weapon_Tranq.Draw"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "face"
+  {
+    event expression "happySmall"
+    {
+      time 0.033333 5.413334
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.2100 0.8588
+        3.0101 0.9216
+        5.3180 0.9059
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

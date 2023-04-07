@@ -1,0 +1,71 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event speak "Soldier.DominationSniper01"
+    {
+      time 0.000000 4.059569
+      param "Soldier.DominationSniper01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "madUpper"
+    {
+      time -0.010417 2.645833
+      param "player\soldier\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.0030 0.0305
+        0.1182 0.4427 "curve_easein_to_curve_easeout"
+        0.3727 0.4377 "curve_easein_to_curve_easeout"
+        0.4303 0.3003 "curve_easein_to_curve_easein"
+        0.5303 0.2061 "curve_easein_to_curve_easeout"
+        0.6000 0.3562 "curve_easein_to_curve_easein"
+        0.6636 0.2875 "curve_easein_to_curve_easeout"
+        0.7667 0.4351 "curve_easein_to_curve_easeout"
+        0.8606 0.0254 "curve_easein_to_curve_easeout"
+        0.9970 0.6107 "curve_easein_to_curve_easeout"
+        1.0848 0.6183 "curve_easeout_to_curve_easeout"
+        1.1758 0.4529 "curve_easeout_to_curve_easeout"
+        1.2394 0.0712 "curve_easein_to_curve_easeout"
+        1.3061 0.4962 "curve_easeout_to_curve_easeout"
+        1.4848 0.4148 "curve_easein_to_curve_easeout"
+        1.7061 0.7303 "curve_easein_to_curve_easeout"
+        2.1242 0.6107 "curve_easeout_to_curve_easeout"
+        2.3333 0.0305 "curve_easein_to_curve_easein"
+      }
+    }
+    event expression "happyBigUpper"
+    {
+      time 2.593750 4.385417
+      param "player\soldier\emotion\emotion"
+      param2 "happyBigUpper"
+      event_ramp
+      {
+        0.0000 0.0153
+        0.0848 0.8295 "curve_easein_to_curve_easeout"
+        0.2727 0.5318
+        0.5152 0.9771 "curve_easein_to_curve_easeout"
+        0.7818 0.7125 "curve_easein_to_curve_easeout"
+        0.9303 0.9008 "curve_easein_to_curve_easeout"
+        1.2879 0.7481 "curve_easeout_to_curve_easeout"
+        1.4515 0.0712
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

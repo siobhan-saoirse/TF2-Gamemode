@@ -1,0 +1,50 @@
+// Choreo version 1
+actor "medic"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveFail"
+    {
+      time 0.000000 4.233333
+      param "taunt_highFiveFail"
+      fixedlength
+    }
+  }
+  channel "sync"
+  {
+    event speak "Medic.AutoDejectedTie05"
+    {
+      time 2.975000 3.935725
+      param "Medic.AutoDejectedTie05"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "emotion"
+  {
+    event expression "pain"
+    {
+      time 2.075000 4.200000
+      param "player\medic\emotion\emotion"
+      param2 "pain"
+      event_ramp
+      {
+        0.1375 0.4048
+        2.0167 0.8393
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "80"
+  "RampTool" "32"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

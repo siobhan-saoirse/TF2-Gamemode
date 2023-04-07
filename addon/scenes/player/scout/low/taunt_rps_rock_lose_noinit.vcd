@@ -1,0 +1,110 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_rps_rock_lose"
+    {
+      time 0.000000 6.933333
+      param "taunt_rps_rock_lose"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "scout_taunt_bos_exert_01"
+    {
+      time 0.445000 1.541735
+      param "scout_taunt_bos_exert_01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_rps_exert_23"
+    {
+      time 1.804000 2.182458
+      param "scout_taunt_rps_exert_02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_rps_exert_03"
+    {
+      time 2.259000 2.580746
+      param "scout_taunt_rps_exert_03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_rps_exert_22"
+    {
+      time 2.600000 3.048798
+      param "scout_taunt_rps_exert_22"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_rps_lose_12"
+    {
+      time 3.737500 5.320833
+      param "scout_taunt_rps_lose_12"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "rps"
+  {
+  }
+  channel "facial"
+  {
+    event expression "painBig"
+    {
+      time 5.062499 6.920833
+      param "player\scout\emotion\emotion"
+      param2 "painBig"
+      event_ramp
+      {
+        0.2660 0.5451
+        0.8700 0.5137
+        1.5363 0.4000
+      }
+    }
+    event expression "happyBig"
+    {
+      time 0.012500 3.862500
+      param "player\scout\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.2260 0.2157
+        3.8000 0.1961
+      }
+    }
+  }
+  channel "fx"
+  {
+    event expression "eh"
+    {
+      time 5.220833 6.733334
+      param "player\scout\phonemes\phonemes_strong"
+      param2 "eh"
+      event_ramp
+      {
+        0.1920 0.1529
+        1.2325 0.1647
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,46 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event speak "Soldier.DominationDemoman05"
+    {
+      time 0.000000 4.228957
+      param "Soldier.DominationDemoman05"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "painBig"
+    {
+      time 0.010417 4.187500
+      param "player\soldier\emotion\emotion"
+      param2 "painBig"
+      event_ramp
+      {
+        0.0000 0.0064 "curve_easeout_to_curve_easeout"
+        1.1909 0.0191 "curve_kochanek_late_to_curve_kochanek_late"
+        1.5758 0.3199
+        1.8424 0.0699
+        2.3242 0.0021
+        2.5667 0.2267
+        2.7939 0.0487
+        3.1030 0.0042
+        3.3242 0.2352
+        3.5364 0.0530
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

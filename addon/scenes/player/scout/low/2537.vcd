@@ -1,0 +1,65 @@
+// Choreo version 1
+event stoppoint "end"
+{
+  time 1.260417 -1.000000
+  param "noaction"
+}
+actor "Scout"
+{
+  channel "audio"
+  {
+    event speak "Scout.CartMovingForwardOffense05"
+    {
+      time 0.000000 1.277347
+      param "Scout.CartMovingForwardOffense05"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "expressions"
+  {
+    event expression "madUpper"
+    {
+      time 0.000000 2.333333
+      param "player\scout\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.1606 0.0397 "curve_easein_to_curve_easeout"
+        0.2121 0.0361 "curve_easein_to_curve_easeout"
+        0.4212 0.0433 "curve_easein_to_curve_easeout"
+        0.5667 0.0505 "curve_easein_to_curve_easeout"
+        0.9121 0.7726 "curve_easein_to_curve_easein"
+        1.4947 0.7653 "curve_easein_to_curve_easeout"
+        1.8788 0.0155
+      }
+    }
+    event expression "happyBigUpper"
+    {
+      time 0.000000 1.010417
+      param "player\scout\emotion\emotion"
+      param2 "happyBigUpper"
+      event_ramp
+      {
+        0.1909 0.5960 "curve_easein_to_curve_easein"
+        0.2394 0.6093 "curve_easeout_to_curve_easeout"
+        0.4242 0.9823 "curve_easein_to_curve_easeout"
+        0.5970 0.9801 "curve_easein_to_curve_easeout"
+        0.8242 0.0199
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

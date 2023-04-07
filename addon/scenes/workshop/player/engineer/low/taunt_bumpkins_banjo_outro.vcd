@@ -1,0 +1,81 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "Engineer"
+  {
+    event sequence "taunt_bumpkins_banjo_outro"
+    {
+      time 0.000000 2.041667
+      param "taunt_bumpkins_banjo_outro"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event expression "happySmall"
+    {
+      time -14.300000 2.075000
+      param "player\engineer\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.0000 0.0000
+        4.8750 0.0000
+        5.4582 1.0000
+        6.5417 1.0000
+        6.8749 0.0000
+        10.0000 0.0000
+        10.1666 1.0000
+        11.4167 1.0000
+        12.1666 0.0000
+        14.4583 0.0000
+        14.6666 1.0000
+        15.7917 1.0000
+        15.9582 0.0000
+        16.3750 0.0000
+      }
+    }
+    event expression "happyBig"
+    {
+      time -14.288890 2.086110
+      param "player\engineer\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0000 0.0000
+        0.0833 0.0000
+        0.4999 1.0000
+        4.8750 1.0000
+        5.4582 0.0000
+        6.5417 0.0000
+        6.8749 1.0000
+        10.0000 1.0000
+        10.1666 0.0000
+        11.4167 0.0000
+        12.1666 1.0000
+        14.4583 1.0000
+        14.6666 0.0000
+        16.3750 0.0000
+      }
+    }
+    event speak "engineer_taunt_bumpkins_banjo_engineer_mvm_get_upgrade01"
+    {
+      time 0.044410 1.768492
+      param "engineer_taunt_bumpkins_banjo_engineer_outro"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

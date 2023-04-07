@@ -1,0 +1,68 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event speak "Soldier.DominationSniper13"
+    {
+      time 0.000000 5.080023
+      param "Soldier.DominationSniper13"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "painBigUpper"
+    {
+      time -0.010417 5.072917
+      param "player\soldier\emotion\emotion"
+      param2 "painBigUpper"
+      event_ramp
+      {
+        0.0061 0.0078
+        0.0848 0.1680 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        0.2212 0.1395 "curve_easein_to_curve_easeout"
+        0.2970 0.7080 "curve_easein_to_curve_easeout"
+        0.4333 0.5995
+        0.5242 0.8398 "curve_easein_to_curve_easeout"
+        0.7364 0.8269 "curve_easein_to_curve_easeout"
+        0.8667 0.2093
+        1.0394 0.0155
+        1.1636 0.0879
+        1.2758 0.0181
+        1.5697 0.0491
+        1.8030 0.4832
+        1.9121 0.3359
+        2.0242 0.4625
+        2.2242 0.7829
+        2.3455 0.4083
+        2.4848 0.6925
+        2.6303 0.2713
+        2.9121 0.7209
+        3.0636 0.2558
+        3.3152 0.0078
+        3.5909 0.0904
+        3.7970 0.0155
+        3.9121 0.0646
+        3.9788 0.0078
+        4.2030 0.4780 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        4.3455 0.7028
+        4.4061 0.5401
+        4.5848 0.6098 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        4.7727 0.0465
+        5.0667 0.0129
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

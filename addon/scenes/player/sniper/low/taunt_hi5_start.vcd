@@ -1,0 +1,63 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 2.535000 -1.000000
+  param "1.000000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveStart"
+    {
+      time 0.000000 2.866667
+      param "taunt_highFiveStart"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "Sniper.Yes03"
+    {
+      time 0.456790 0.993751
+      param "Sniper.Yes03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "Aggressive"
+    {
+      time 0.004115 1.004115
+      param "player\sniper\emotion\emotion"
+      param2 "Aggressive"
+      event_ramp
+      {
+        0.0940 0.6275
+        0.8120 0.7216
+      }
+    }
+    event expression "happyBigClosed"
+    {
+      time 0.572016 2.724280
+      param "player\sniper\emotion\emotion"
+      param2 "happyBigClosed"
+      event_ramp
+      {
+        0.1340 0.8157
+        2.0793 0.8157
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

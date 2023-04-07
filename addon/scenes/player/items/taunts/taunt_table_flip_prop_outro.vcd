@@ -1,0 +1,40 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "Table"
+  {
+    event sequence "taunt_table_flip_outro"
+    {
+      time 0.000000 4.875000
+      param "taunt_table_flip_outro"
+      fixedlength
+    }
+    event speak "Taunt.TableFlipFlippingTable"
+    {
+      time 0.267000 4.715073
+      param "Taunt.TableFlipFlippingTable"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.TableFlipNotification"
+    {
+      time 0.000000 1.993469
+      param "Taunt.TableFlipNotification"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

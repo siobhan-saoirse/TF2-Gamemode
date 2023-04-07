@@ -1,0 +1,59 @@
+// Choreo version 1
+actor "Scout"
+{
+  channel "sound"
+  {
+    event speak "vo\scout_mvm_sniper01.wav"
+    {
+      time 0.006666 1.875192
+      param "vo\scout_mvm_sniper01.wav"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event flexanimation "scaredupper"
+    {
+      time 1.053332 2.966666
+      param ""
+      flexanimations samples_use_time defaultcurvetype=curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+      {
+        "scaredUpper" 
+        {
+          0.1186 0.3600
+          0.1977 0.4800
+          0.2953 0.7700
+          0.4209 0.7100
+          0.4884 0.3700
+          0.5395 0.0800
+        }
+      }
+    }
+    event flexanimation "scared"
+    {
+      time 1.279999 6.099999
+      param ""
+      flexanimations samples_use_time defaultcurvetype=curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+      {
+        "scared" 
+        {
+          0.0489 0.2000
+          0.1255 0.3500
+          0.1787 0.4900
+          0.2404 0.6600
+        }
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "RampTool" "100"
+  "ExpressionTool" "86"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,69 @@
+// Choreo version 1
+actor "scout"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveFail"
+    {
+      time 0.000000 4.166667
+      param "taunt_highFiveFail"
+      fixedlength
+    }
+    event expression "specialAction01Upper"
+    {
+      time 2.201923 4.166667
+      param "player\scout\emotion\emotion"
+      param2 "specialAction01Upper"
+      event_ramp
+      {
+        0.2540 1.0000 "curve_easein_to_curve_easeout"
+        1.7534 1.0000 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "scared"
+    {
+      time 1.817308 2.397436
+      param "player\scout\emotion\emotion"
+      param2 "scared"
+      event_ramp
+      {
+        0.1940 1.0000 "curve_easein_to_curve_easeout"
+        0.3300 1.0000 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "happySmall"
+    {
+      time 0.102564 1.967949
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.2540 1.0000 "curve_easein_to_curve_easeout"
+        1.6540 1.0000 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+  channel "audio"
+  {
+    event speak "Scout.InvincibleNotReady03"
+    {
+      time 1.942308 2.835641
+      param "Scout.InvincibleNotReady03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "208"
+  "RampTool" "100"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

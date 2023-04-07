@@ -1,0 +1,38 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "sniper.Domination12"
+    {
+      time 0.000000 1.858639
+      param "sniper.Domination12"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happySmallUpper"
+    {
+      time 0.006667 3.006667
+      param "player\sniper\emotion\emotion"
+      param2 "happySmallUpper"
+      event_ramp
+      {
+        0.1690 0.8409
+        2.8448 0.7977
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "RampTool" "58"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

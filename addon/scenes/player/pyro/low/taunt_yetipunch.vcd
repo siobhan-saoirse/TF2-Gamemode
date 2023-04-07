@@ -1,0 +1,83 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "Anim"
+  {
+    event sequence "taunt_yetipunch"
+    {
+      time 0.000000 6.750000
+      param "taunt_yetipunch"
+      fixedlength
+    }
+  }
+  channel "sound"
+  {
+    event speak "Pyro"
+    {
+      time 5.358373 6.013339
+      param "pyro_taunt_headbutt_success_exert"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "clap"
+    {
+      time 2.053191 2.366887
+      param "Taunt.MediumClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "clap"
+    {
+      time 1.748228 2.061924
+      param "Taunt.MediumClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "clap"
+    {
+      time 1.960992 2.280992
+      param "Taunt.MediumClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "clap"
+    {
+      time 2.216312 2.536312
+      param "Taunt.MediumClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_sf13_influx_small01"
+    {
+      time 0.925532 1.402108
+      param "pyro_sf13_influx_small01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.PyroTwirl"
+    {
+      time 3.138299 4.239795
+      param "Taunt.PyroTwirl"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

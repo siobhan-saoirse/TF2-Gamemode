@@ -1,0 +1,27 @@
+// Choreo version 1
+actor "Soldier"
+{
+  channel "Sound"
+  {
+    event speak "vo\soldier_cloakedspycombine.wav"
+    {
+      time 0.020000 1.529297
+      param "vo\soldier_cloakedspycombine.wav"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "RampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,83 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 3.298354 -1.000000
+  param "1.660000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_rps_start"
+    {
+      time 0.000000 3.300000
+      param "taunt_rps_start"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "sniper_taunt_rps_start_rand"
+    {
+      time 0.456790 1.133185
+      param "sniper_taunt_rps_start_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "sniper_taunt_rps_intro_wait_rand"
+    {
+      time 2.131687 2.888739
+      param "sniper_taunt_rps_intro_wait_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "facial"
+  {
+    event flexanimation "facial"
+    {
+      time 0.000000 3.301243
+      param ""
+      flexanimations samples_use_time
+      {
+        "Cocky"
+        {
+        }
+        "happyBig"
+        {
+          1.1143 0.0000 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        "MouthWide"
+        {
+          1.1143 0.0000 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        "painBig"
+        {
+          1.0097 0.0196 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          1.1143 0.2275 curve_easein_to_curve_easeout
+          3.2871 0.2196 curve_easein_to_curve_easeout
+        }
+        "EE"
+        {
+          1.0161 0.0196 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          1.1143 0.3373 curve_easein_to_curve_easeout
+          3.2968 0.3294 curve_easein_to_curve_easeout
+        }
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

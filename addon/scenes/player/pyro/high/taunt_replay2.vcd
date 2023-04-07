@@ -1,0 +1,34 @@
+// Choreo version 1
+event stoppoint "end"
+{
+  time 2.828768 -1.000000
+  param "noaction"
+}
+actor "Heavy"
+{
+  channel "Animation"
+  {
+    event sequence "pyro_taunt_replay"
+    {
+      time 0.000000 2.833333
+      param "pyro_taunt_replay"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+  }
+  faceposermodel "D:\dev\staging\game\tf\models\player\pyro.mdl"
+}
+
+scalesettings
+{
+  "CChoreoView" "292"
+  "RampTool" "60"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,40 @@
+// Choreo version 1
+actor "spy"
+{
+  channel "audio"
+  {
+    event speak "Spy.DominationMedic04"
+    {
+      time 0.000000 3.813333
+      param "Spy.DominationMedic04"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "specialAction01Upper"
+    {
+      time 2.145833 5.479167
+      param "player\spy\emotion\emotion"
+      param2 "specialAction01Upper"
+      event_ramp
+      {
+        0.1212 0.1884 "curve_easein_to_curve_easein"
+        1.0394 0.2319 "curve_easeout_to_curve_easeout"
+        1.3424 0.8188 "curve_easein_to_curve_easeout"
+        3.0316 0.7609 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

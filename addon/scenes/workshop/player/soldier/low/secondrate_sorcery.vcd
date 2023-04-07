@@ -1,0 +1,193 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "soldier"
+  {
+    event sequence "secondrate_sorcery_soldier"
+    {
+      time 0.000000 5.166667
+      param "secondrate_sorcery_soldier"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event expression "mad"
+    {
+      time 0.000000 5.166700
+      param "player\soldier\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.0000 0.0000
+        3.7000 0.0000
+        3.7084 0.0118
+        3.7167 0.0431
+        3.7333 0.1569
+        3.7500 0.3137
+        3.7833 0.6824
+        3.8000 0.8392
+        3.8167 0.9529
+        3.8332 1.0000
+        4.6000 1.0000
+        4.6167 0.9961
+        4.6333 0.9882
+        4.6500 0.9725
+        4.6667 0.9529
+        4.6833 0.9333
+        4.7000 0.9059
+        4.7167 0.8745
+        4.7333 0.8431
+        4.7500 0.8039
+        4.7667 0.7647
+        4.7833 0.7255
+        4.8167 0.6353
+        4.9000 0.4039
+        4.9333 0.3137
+        4.9667 0.2314
+        4.9833 0.1922
+        5.0000 0.1529
+        5.0167 0.1216
+        5.0333 0.0902
+        5.0500 0.0627
+        5.0667 0.0392
+        5.0833 0.0235
+        5.1000 0.0078
+        5.1167 0.0000
+        5.1332 0.0000
+        5.1667 0.0000
+      }
+    }
+    event expression "scared"
+    {
+      time 0.000000 5.166700
+      param "player\soldier\emotion\emotion"
+      param2 "scared"
+      event_ramp
+      {
+        0.0000 0.0000
+        0.8667 0.0000
+        0.9667 0.0000
+        1.0833 0.0078
+        1.2000 0.0196
+        1.3333 0.0392
+        1.4667 0.0627
+        1.6167 0.0941
+        1.7833 0.1294
+        2.2500 0.2392
+        2.3833 0.2667
+        2.5167 0.2941
+        2.6667 0.3176
+        2.8000 0.3333
+        2.9333 0.3451
+        3.0666 0.3490
+        3.1167 0.3451
+        3.1833 0.3373
+        3.2500 0.3216
+        3.3667 0.2941
+        3.4333 0.2824
+        3.5000 0.2706
+        3.5667 0.2667
+        3.5750 0.2627
+        3.5833 0.2549
+        3.6000 0.2235
+        3.6167 0.1804
+        3.6500 0.0824
+        3.6667 0.0392
+        3.6833 0.0118
+        3.7000 0.0000
+        5.1667 0.0000
+      }
+    }
+    event speak "soldier_laughshort04"
+    {
+      time 0.333300 1.413028
+      param "Soldier.LaughShort04"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "soldier_sf12_bombinomicon01"
+    {
+      time 1.806633 3.072483
+      param "Soldier.KaBoomAlts03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "soldier_negativevocalization04"
+    {
+      time 3.820000 5.152245
+      param "Soldier.NegativeVocalization04"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_foot_stomp"
+    {
+      time 0.838084 1.063753
+      param "pyro_spring_rider_taunt_foot_stomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Pyro01FootStomp"
+    {
+      time 1.291417 1.517086
+      param "Taunt.Pyro01FootStomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_foot_stomp"
+    {
+      time 1.724751 1.950420
+      param "pyro_spring_rider_taunt_foot_stomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Heavy03ClothesRustle"
+    {
+      time 3.518083 5.227289
+      param "Taunt.Heavy03ClothesRustle"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "weapon.ImpactHard"
+    {
+      time 4.371417 5.052460
+      param "Taunt.secondrate_sorcery_spell_staff_drop"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig"
+    {
+      time -0.000000 5.153333
+      param "player\soldier\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0380 0.0000
+        0.7680 0.7490
+        1.1700 0.7765
+        2.2640 0.7608
+        2.7140 0.7490
+        3.0980 0.0000
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

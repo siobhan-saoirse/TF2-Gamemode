@@ -1,0 +1,47 @@
+// Choreo version 1
+actor "medic"
+{
+  channel "body"
+  {
+    event sequence "taunt09"
+    {
+      time 0.000000 5.000000
+      param "taunt09"
+      fixedlength
+    }
+    event expression "evilHappyUpper"
+    {
+      time 0.000000 2.958333
+      param "player\medic\emotion\emotion"
+      param2 "evilHappyUpper"
+      event_ramp
+      {
+        0.1853 1.0000 "curve_easein_to_curve_easeout"
+        2.7840 1.0000 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "happyFull"
+    {
+      time 2.797619 4.970238
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.1647 0.9954 "curve_easein_to_curve_easeout"
+        1.9986 1.0000 "curve_easeout_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "112"
+  "RampTool" "68"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

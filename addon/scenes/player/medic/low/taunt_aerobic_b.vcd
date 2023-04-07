@@ -1,0 +1,192 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 7.492000 -1.000000
+  param "6.704000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "Anim"
+  {
+    event speak "Default.StepLeft"
+    {
+      time 5.825088 6.356653
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 5.451929 5.983494
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 7.432498 8.055536
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 7.020942 7.740035
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 3.046311 3.765404
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 6.283562 6.906601
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 2.638509 3.357602
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 6.673633 7.296672
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyFull"
+    {
+      time 0.014184 6.700727
+      param "player\medic\emotion\emotion"
+      param2 "happy"
+      event_ramp
+      {
+        0.1578 0.5294
+        0.6441 0.4588
+        0.8265 0.2353
+        2.8088 0.7922
+        4.9676 0.7216
+        6.6865 0.0000
+      }
+    }
+    event speak "pyro_taunt_partytrick_5_clap"
+    {
+      time 2.145390 2.349857
+      param "pyro_taunt_partytrick_5_clap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.HeavyClothesRustle"
+    {
+      time 2.237589 3.946795
+      param "Selection.HeavyClothesRustle"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.HeavyClothesRustle"
+    {
+      time 0.421986 2.131192
+      param "Selection.HeavyClothesRustle"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_medic_aerobic_intro"
+    {
+      time 0.017731 0.921427
+      param "taunt_medic_aerobic_intro"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_medic_aerobic_spin"
+    {
+      time 1.968085 3.855613
+      param "taunt_medic_aerobic_spin"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_medic_aerobic_outro"
+    {
+      time 3.890071 5.903087
+      param "taunt_medic_aerobic_outro"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Soldier01ClothesSwipe"
+    {
+      time 3.812056 4.112510
+      param "Taunt.Soldier01ClothesSwipe"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event sequence "taunt_aerobic_B"
+    {
+      time 0.000000 7.500000
+      param "taunt_aerobic_B"
+      fixedlength
+    }
+    event expression "happyFull"
+    {
+      time 0.863248 2.068376
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.2347 0.8157
+        0.9918 0.7333
+      }
+    }
+    event expression "happyFull"
+    {
+      time 6.705000 7.551282
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+    }
+    event expression "happyFull"
+    {
+      time 5.897436 6.705000
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.8076 1.0000
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

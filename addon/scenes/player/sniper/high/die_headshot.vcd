@@ -1,0 +1,42 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "body"
+  {
+    event speak "Sniper.Death"
+    {
+      time 0.000126 0.481940
+      param "Sniper.Death"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event sequence "primary_death_headshot"
+    {
+      time 0.000189 0.733522
+      param "primary_death_headshot"
+      fixedlength
+    }
+  }
+  channel "sync"
+  {
+    event expression "d"
+    {
+      time 0.000000 0.737548
+      param "player\sniper\phonemes\phonemes_strong"
+      param2 "d"
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "1000"
+  "RampTool" "58"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

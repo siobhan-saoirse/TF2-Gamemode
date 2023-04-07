@@ -1,0 +1,41 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveSuccess"
+    {
+      time 0.000000 4.000000
+      param "taunt_highFiveSuccess"
+      fixedlength
+    }
+  }
+  channel "sync"
+  {
+  }
+  channel "emotion"
+  {
+    event expression "happyFull"
+    {
+      time 2.649019 3.990686
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.1625 0.7725
+        1.1375 1.0000
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

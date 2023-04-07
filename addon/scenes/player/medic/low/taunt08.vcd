@@ -1,0 +1,89 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event sequence "taunt08"
+    {
+      time 0.000000 4.000000
+      param "taunt08"
+      fixedlength
+    }
+    event speak "med"
+    {
+      time 0.520834 3.092444
+      param "Medic.Taunts05"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "<sil>"
+    {
+      time 0.015278 0.438889
+      param "player\medic\phonemes\phonemes"
+      param2 "<sil>"
+      event_ramp
+      {
+        0.0000 1.0000
+        0.2212 1.0000
+      }
+    }
+    event expression "w"
+    {
+      time 0.266667 1.808334
+      param "player\medic\phonemes\phonemes_strong"
+      param2 "w"
+      event_ramp
+      {
+        0.0000 0.0026
+        0.2152 0.9921
+        1.3152 0.9948
+      }
+    }
+    event expression "madFull"
+    {
+      time 1.722222 2.819444
+      param "player\medic\emotion\emotion"
+      param2 "madFull"
+      event_ramp
+      {
+        0.1636 0.9921
+        0.7939 0.9816
+      }
+    }
+    event expression "jawOpen"
+    {
+      time 2.756945 3.173611
+      param "player\medic\emotion\emotion"
+      param2 "jawOpen"
+      event_ramp
+      {
+        0.0212 0.9948
+        0.2735 0.9974
+      }
+    }
+    event expression "evilHappy"
+    {
+      time 3.104167 4.104167
+      param "player\medic\emotion\emotion"
+      param2 "evilHappy"
+      event_ramp
+      {
+        0.1000 0.9948
+        0.9879 1.0000
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "SceneRampTool" "100"
+  "GestureTool" "100"
+  "RampTool" "66"
+  "ExpressionTool" "100"
+  "CChoreoView" "96"
+}
+fps 60
+snap off
+ignorePhonemes off

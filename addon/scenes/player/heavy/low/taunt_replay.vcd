@@ -1,0 +1,55 @@
+// Choreo version 1
+event stoppoint "end"
+{
+  time 2.828768 -1.000000
+  param "noaction"
+}
+actor "!target1"
+{
+  channel "animation"
+  {
+    event sequence "heavy_taunt_replay"
+    {
+      time 0.000000 2.833333
+      param "heavy_taunt_replay"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event expression "happysmall02"
+    {
+      time 0.004566 0.776256
+      param "player\heavy\emotion\emotion"
+      param2 "happysmall02"
+      event_ramp
+      {
+        0.2933 0.8549
+        0.6385 0.8824
+      }
+    }
+    event expression "happybig02"
+    {
+      time 0.618721 2.819635
+      param "player\heavy\emotion\emotion"
+      param2 "happybig02"
+      event_ramp
+      {
+        0.1433 0.9765
+        1.6564 0.9922
+        1.9233 0.0784
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

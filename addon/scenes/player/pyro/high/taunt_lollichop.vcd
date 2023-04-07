@@ -1,0 +1,33 @@
+// Choreo version 1
+actor "pyro"
+{
+  channel "body"
+  {
+    event sequence "taunt_lollichop"
+    {
+      time 0.000000 3.000000
+      param "taunt_lollichop"
+      fixedlength
+    }
+    event speak "Pyro.Lollichop"
+    {
+      time 0.500000 2.5
+      param "Pyro.Lollichop"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "108"
+  "RampTool" "100"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

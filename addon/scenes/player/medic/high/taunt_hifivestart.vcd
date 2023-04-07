@@ -1,0 +1,68 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 2.535000 -1.000000
+  param "1.000000"
+  loopcount "-1"
+}
+actor "Medic"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveStart"
+    {
+      time 0.002347 2.869014
+      param "taunt_highFiveStart"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "Medic.Yes02"
+    {
+      time 0.164609 0.759620
+      param "Medic.Yes02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "evilHappy"
+    {
+      time 0.014403 1.014403
+      param "player\medic\emotion\emotion"
+      param2 "evilHappy"
+      event_ramp
+      {
+        0.0160 0.1940
+        0.8760 0.1604
+      }
+    }
+    event expression "happyFull"
+    {
+      time 0.543210 2.742798
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.1520 0.8134 "curve_easein_to_curve_easein"
+        0.5020 0.8172
+        1.2697 0.8955
+        1.7937 0.8284
+        2.1237 0.8172 "curve_linear_interp_to_curve_linear_interp"
+      }
+    }
+  }
+  faceposermodel "D:\dev\staging\game\tf\models\player\medic.mdl"
+}
+
+scalesettings
+{
+  "CChoreoView" "324"
+  "RampTool" "100"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

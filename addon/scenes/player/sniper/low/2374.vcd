@@ -1,0 +1,36 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "sniper.MeleeDare07"
+    {
+      time 0.000000 1.310635
+      param "sniper.MeleeDare07"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "Cocky"
+    {
+      time 0.000000 2.000000
+      param "player\sniper\emotion\emotion"
+      param2 "Cocky"
+      event_ramp
+      {
+        0.0652 0.8727
+        1.9283 0.7932
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "RampTool" "92"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

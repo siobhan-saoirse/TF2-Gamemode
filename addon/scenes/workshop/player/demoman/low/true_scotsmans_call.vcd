@@ -1,0 +1,265 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "demo"
+  {
+    event sequence "true_scotsmans_call"
+    {
+      time 0.000000 10.541667
+      param "true_scotsmans_call"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event expression "happyUpper"
+    {
+      time 0.000000 10.520000
+      param "player\demo\emotion\emotion"
+      param2 "happyUpper"
+      event_ramp
+      {
+        0.0000 0.0000
+        0.9667 0.0000
+        0.9833 0.0000
+        1.0167 0.0000
+        1.0500 0.0157
+        1.0833 0.0353
+        1.1000 0.0510
+        1.1333 0.0745
+        1.1667 0.1059
+        1.2000 0.1451
+        1.2333 0.1804
+        1.2667 0.2275
+        1.3000 0.2706
+        1.3333 0.3216
+        1.3833 0.3961
+        1.5333 0.6275
+        1.6000 0.7216
+        1.6333 0.7647
+        1.6667 0.8118
+        1.7000 0.8510
+        1.7333 0.8863
+        1.7667 0.9137
+        1.8000 0.9451
+        1.8333 0.9647
+        1.8500 0.9765
+        1.8833 0.9922
+        1.9000 0.9961
+        1.9333 1.0000
+        6.5200 1.0000
+        8.7867 0.9961
+        8.8034 0.9922
+        8.8200 0.9765
+        8.8367 0.9569
+        8.8534 0.9255
+        8.8700 0.9020
+        8.8867 0.8588
+        8.9034 0.8157
+        8.9200 0.7765
+        8.9367 0.7255
+        8.9534 0.6706
+        8.9700 0.6157
+        9.0200 0.4353
+        9.0534 0.3255
+        9.0700 0.2706
+        9.0867 0.2157
+        9.1034 0.1686
+        9.1200 0.1294
+        9.1367 0.0902
+        9.1534 0.0588
+        9.1700 0.0353
+        9.1866 0.0157
+        9.2034 0.0000
+        9.2199 0.0000
+        10.5200 0.0000
+        10.5200 0.0000
+      }
+    }
+    event expression "madUpper"
+    {
+      time 0.000000 10.520000
+      param "player\demo\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.0000 0.0000
+        0.0167 0.0000
+        0.0333 0.0157
+        0.0500 0.0353
+        0.0667 0.0588
+        0.0833 0.0902
+        0.1000 0.1294
+        0.1167 0.1765
+        0.1333 0.2196
+        0.1500 0.2706
+        0.1667 0.3255
+        0.2000 0.4353
+        0.2500 0.6118
+        0.2667 0.6667
+        0.2833 0.7216
+        0.3000 0.7686
+        0.3167 0.8157
+        0.3333 0.8588
+        0.3500 0.9020
+        0.3667 0.9294
+        0.3833 0.9608
+        0.4000 0.9804
+        0.4167 0.9922
+        0.4333 1.0000
+        0.5333 0.9961
+        0.7833 0.9765
+        0.8667 0.9765
+        0.8750 0.9490
+        0.8833 0.9020
+        0.9000 0.7216
+        0.9333 0.2510
+        0.9500 0.0706
+        0.9666 0.0000
+        2.1667 1.0000
+        2.9333 1.0000
+        5.4867 0.0000
+        6.6867 0.0000
+        7.7367 0.0000
+        8.6867 1.0000
+        8.6951 1.0000
+        8.7034 0.9961
+        8.7200 0.9804
+        8.7367 0.9608
+        8.7533 0.9451
+        8.7617 0.9451
+        8.7866 0.9412
+        8.9700 0.9451
+        9.1534 0.9451
+        9.3867 0.9608
+        10.0867 0.9961
+        10.3200 0.0000
+        10.5200 0.0000
+        10.5200 0.0000
+      }
+    }
+    event speak "true_scotsmans_music"
+    {
+      time 0.026666 10.568344
+      param "true_scotsmans_music"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Soldier01ClothesRustle"
+    {
+      time 0.153333 1.862540
+      param "Taunt.Soldier01ClothesRustle"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 2.366667 3.085760
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 2.866668 3.489706
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 3.340000 3.871565
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 4.540002 5.163040
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 5.720001 6.439094
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 6.220002 6.701000
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 6.740001 7.271566
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 7.313334 8.032427
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 7.740002 8.221000
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 8.280002 8.761000
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 8.746668 9.278233
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 8.913335 9.536373
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

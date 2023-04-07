@@ -1,0 +1,49 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "scout"
+  {
+    event sequence "taunt_yeti"
+    {
+      time 0.000000 7.750000
+      param "taunt_yeti"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event expression "happySmall"
+    {
+      time 6.565656 7.727273
+      param "player\soldier\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.1240 0.9098
+        1.0460 0.8706
+      }
+    }
+    event expression "mad"
+    {
+      time 3.651515 6.691919
+      param "player\soldier\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.1220 1.0000
+        2.7100 0.9882
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

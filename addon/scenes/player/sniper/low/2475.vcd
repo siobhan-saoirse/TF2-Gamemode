@@ -1,0 +1,44 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "sniper.Revenge24"
+    {
+      time 0.000000 2.749297
+      param "sniper.Revenge24"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "painSmallUpper"
+    {
+      time 0.013333 2.753333
+      param "player\sniper\emotion\emotion"
+      param2 "painSmallUpper"
+      event_ramp
+      {
+        0.1420 0.5196 "curve_easein_to_curve_easein"
+        0.6600 0.6548 "curve_easein_to_curve_easeout"
+        1.1380 0.7046 "curve_easeout_to_curve_easeout"
+        1.2080 0.9039
+        1.5060 0.7438 "curve_easein_to_curve_easein"
+        1.9660 0.6548
+        2.0820 0.7829
+        2.5540 0.6655
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "GestureTool" "100"
+  "ExpressionTool" "100"
+  "SceneRampTool" "100"
+  "RampTool" "100"
+  "CChoreoView" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

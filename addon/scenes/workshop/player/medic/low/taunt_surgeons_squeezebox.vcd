@@ -1,0 +1,50 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 10.039000 -1.000000
+  param "1.833000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "medic"
+  {
+    event sequence "taunt_surgeons_squeezebox"
+    {
+      time 0.000000 10.041667
+      param "taunt_surgeons_squeezebox"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event expression "happyFull"
+    {
+      time 1.833100 10.213726
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+    }
+    event expression "happyFull"
+    {
+      time 0.009571 10.213726
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.8800 1.0000
+        7.0133 0.1216
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

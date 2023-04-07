@@ -1,0 +1,112 @@
+// Choreo version 1
+event stoppoint "end"
+{
+  time 4.831051 -1.000000
+  param "noaction"
+}
+actor "!target1"
+{
+  channel "animation"
+  {
+    event sequence "taunt_laugh"
+    {
+      time 0.000000 4.833333
+      param "taunt_laugh"
+      fixedlength
+    }
+    event speak "Soldier.LaughLong03"
+    {
+      time 0.004831 4.091543
+      param "Soldier.LaughLong03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig"
+    {
+      time 0.019324 4.835749
+      param "player\soldier\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.6233 0.2824
+        1.1767 0.9843
+        1.5800 0.4549
+        2.0367 0.9843
+        3.9633 1.0000
+        4.1133 0.3176
+        4.2400 1.0000
+        4.6267 1.0000
+      }
+    }
+    event expression "uw"
+    {
+      time 3.618358 4.618358
+      param "player\soldier\phonemes\phonemes_strong"
+      param2 "uw"
+      event_ramp
+      {
+        0.5200 0.7765
+        0.8200 0.0431
+      }
+    }
+    event expression "ah"
+    {
+      time 0.524155 3.509662
+      param "player\soldier\phonemes\phonemes_strong"
+      param2 "ah"
+      event_ramp
+      {
+        0.4900 0.0157
+        0.6367 0.4863
+        0.7800 0.0000
+      }
+    }
+    event expression "iy"
+    {
+      time 3.258454 4.258454
+      param "player\soldier\phonemes\phonemes_strong"
+      param2 "iy"
+      event_ramp
+      {
+        0.3667 0.3137
+        0.6967 0.0196
+      }
+    }
+    event expression "eh"
+    {
+      time 0.422705 3.980676
+      param "player\soldier\phonemes\phonemes_strong"
+      param2 "eh"
+      event_ramp
+      {
+        0.5967 0.0157
+        0.7433 0.1686
+        0.9000 0.0078
+        1.5033 0.0078
+        1.6300 0.1725
+        1.7100 0.0000
+        2.0400 0.0078
+        2.1300 0.1294
+        2.2067 0.0039
+        2.3567 0.0118
+        2.4100 0.1216
+        2.4567 0.0157
+        3.0200 0.0000
+        3.0967 0.0941
+        3.1533 0.0078
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

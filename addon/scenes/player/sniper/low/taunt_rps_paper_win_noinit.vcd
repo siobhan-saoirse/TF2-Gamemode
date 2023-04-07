@@ -1,0 +1,173 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_rps_paper_win"
+    {
+      time 0.000000 6.733333
+      param "taunt_rps_paper_win"
+      fixedlength
+    }
+  }
+  channel "sound"
+  {
+    event speak "Sniper.BattleCry04"
+    {
+      time 5.750726 6.482608
+      param "sniper_taunt_rps_win_02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "sniper_taunt_rps_exert_01"
+    {
+      time 1.942000 2.143701
+      param "sniper_taunt_rps_exert_01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "sniper_taunt_rps_exert_02"
+    {
+      time 2.253000 2.479168
+      param "sniper_taunt_rps_exert_02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "sniper_taunt_rps_exert_16"
+    {
+      time 2.572000 2.962363
+      param "sniper_taunt_rps_exert_16"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "sniper_taunt_rps_win_18"
+    {
+      time 4.299999 5.825305
+      param "sniper_taunt_rps_win_14"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "sniper_taunt_rps_win_15"
+    {
+      time 3.628572 4.313901
+      param "sniper_taunt_rps_win_15"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "flex"
+  {
+  }
+  channel "rps"
+  {
+  }
+  channel "facial"
+  {
+    event expression "painBig"
+    {
+      time 0.724000 2.123000
+      param "player\sniper\emotion\emotion"
+      param2 "painBig"
+      event_ramp
+      {
+        0.3879 0.7020
+        1.0455 0.6863
+      }
+    }
+    event expression "happyBig"
+    {
+      time 4.057143 6.657144
+      param "player\sniper\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.2818 0.5608
+        2.3970 0.6392
+      }
+    }
+    event expression "scared"
+    {
+      time 2.761905 3.761904
+      param "player\sniper\emotion\emotion"
+      param2 "scared"
+      event_ramp
+      {
+        0.2091 0.5569
+        0.4818 0.6941
+      }
+    }
+    event expression "happyBig"
+    {
+      time 3.190476 4.190476
+      param "player\sniper\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.5000 0.5922
+      }
+    }
+  }
+  channel "fx"
+  {
+    event speak "Weapon_Fist.Miss"
+    {
+      time 1.833000 2.398578
+      param "Weapon_Fist.Miss"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Fist.Miss"
+    {
+      time 2.550000 3.104694
+      param "Weapon_Fist.Miss"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Fist.Miss"
+    {
+      time 2.195000 2.749694
+      param "Weapon_Fist.Miss"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig"
+    {
+      time 5.752381 6.752381
+      param "player\sniper\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.2606 0.6471
+        0.7697 0.7176
+      }
+    }
+    event speak "taunt.hawk"
+    {
+      time 3.490741 6.321399
+      param "taunt.hawk"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,57 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 3.060000 -1.000000
+  param "1.100000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_dosido_intro"
+    {
+      time 0.000000 3.066667
+      param "taunt_dosido_intro"
+      event_ramp
+      {
+        0.3061 0.8471
+        3.0667 0.9961
+      }
+      fixedlength
+    }
+    event speak "Pyro.LaughEvil03"
+    {
+      time 0.045455 1.053913
+      param "pyro_taunt_dosido_intro_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happy1"
+    {
+      time -0.005051 3.045455
+      param "player\heavy\emotion\emotion"
+      param2 "happy1"
+    }
+    event speak "pyro_taunt_dosido_intro_wait_rand"
+    {
+      time 1.242424 1.317889
+      param "pyro_taunt_dosido_intro_wait_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

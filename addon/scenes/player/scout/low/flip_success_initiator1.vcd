@@ -1,0 +1,76 @@
+// Choreo version 1
+event loop "0"
+{
+  time 0.000000 -1.000000
+  param "0.000000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_flip_success_initiate"
+    {
+      time 0.000000 3.800000
+      param "taunt_flip_success_initiator"
+      fixedlength
+    }
+    event expression "happySmall"
+    {
+      time 0.003027 3.796831
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.2540 1.0000
+        3.7938 1.0000
+      }
+    }
+  }
+  channel "audio"
+  {
+    event speak "eng_taunt_flip_random_flipkneeClap"
+    {
+      time 2.134259 2.434259
+      param "eng_taunt_flip_random_flipkneeClap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_flip_random_flipExert"
+    {
+      time 1.219907 1.628887
+      param "scout_taunt_flip_random_flipExert"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_flip_random_flipThrowAntic"
+    {
+      time 0.064815 1.049917
+      param "scout_taunt_flip_random_flipThrowAntic"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_flip_random_flipAdmire"
+    {
+      time 2.393518 3.324425
+      param "scout_taunt_flip_random_flipAdmire"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

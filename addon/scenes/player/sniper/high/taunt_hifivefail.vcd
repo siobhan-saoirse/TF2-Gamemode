@@ -1,0 +1,70 @@
+// Choreo version 1
+actor "snip"
+{
+  channel "body"
+  {
+    event sequence "taunt_hifiveFail"
+    {
+      time 0.000000 3.966667
+      param "taunt_hifiveFail"
+      fixedlength
+    }
+    event expression "defaultFace"
+    {
+      time 0.021739 0.528986
+      param "player\sniper\emotion\emotion"
+      param2 "defaultFace"
+      event_ramp
+      {
+        0.0000 1.0000
+        0.3606 0.9979 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "Cocky"
+    {
+      time 0.398551 2.086957
+      param "player\sniper\emotion\emotion"
+      param2 "Cocky"
+      event_ramp
+      {
+        0.1000 0.9936 "curve_easein_to_curve_easein"
+        1.5212 0.9851 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "AggresiveClosed"
+    {
+      time 2.014493 2.760870
+      param "player\sniper\emotion\emotion"
+      param2 "AggresiveClosed"
+      event_ramp
+      {
+        0.0000 0.0085
+        0.0455 0.9979 "curve_easein_to_curve_easein"
+        0.5818 0.9979 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "mad"
+    {
+      time 2.659420 3.963768
+      param "player\sniper\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.0788 0.9936 "curve_easein_to_curve_easein"
+        1.2970 1.0000 "curve_easeout_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "92"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

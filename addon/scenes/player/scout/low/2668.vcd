@@ -1,0 +1,78 @@
+// Choreo version 1
+event stoppoint "end\"
+{
+  time 3.652084 -1.000000
+  param "noaction"
+}
+actor "Scout"
+{
+  channel "audio"
+  {
+    event speak "Scout.DominationSnp02"
+    {
+      time 0.000000 3.648005
+      param "Scout.DominationSnp02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "madUpper"
+    {
+      time -0.254166 1.620834
+      param "player\scout\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.1485 0.3786 "curve_easein_to_curve_easeout"
+        1.7030 0.3803 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "happyBigUpper"
+    {
+      time 1.475001 2.881251
+      param "player\scout\emotion\emotion"
+      param2 "happyBigUpper"
+      event_ramp
+      {
+        0.0818 0.4029 "curve_easein_to_curve_easeout"
+        0.4030 0.4045 "curve_easein_to_curve_easeout"
+        1.0699 0.7767 "curve_easein_to_curve_easeout"
+        1.3062 0.7638 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "happyBig"
+    {
+      time 2.787501 5.464584
+      param "player\scout\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.1394 0.1133 "curve_easein_to_curve_easeout"
+        2.5057 0.1392 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "happyBig"
+    {
+      time 3.225001 4.110418
+      param "player\scout\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0788 0.4159
+        0.6758 0.3026
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,56 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event speak "Soldier.DominationSniper06"
+    {
+      time 0.000000 3.719592
+      param "Soldier.DominationSniper06"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "madUpper"
+    {
+      time 0.000000 3.718750
+      param "player\soldier\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.0061 0.0078
+        0.0909 0.2222
+        0.1818 0.1964
+        0.3727 0.9845
+        0.5485 0.5581
+        0.6333 0.0775
+        0.8909 0.7984 "curve_easein_to_curve_easein"
+        1.1727 0.9070 "curve_easein_to_curve_easeout"
+        1.3636 0.5401 "curve_easeout_to_curve_easeout"
+        1.5212 0.6279 "curve_easein_to_curve_easein"
+        1.6576 0.1757
+        1.8303 0.4160
+        2.0545 0.6382
+        2.2545 0.2868
+        2.4212 0.0336
+        2.5576 0.5840 "curve_easein_to_curve_easeout"
+        2.8697 0.3773 "curve_easein_to_curve_easeout"
+        3.1879 0.9716 "curve_easein_to_curve_easeout"
+        3.2758 0.9328 "curve_easein_to_curve_easeout"
+        3.4424 0.0129
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,44 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event speak "Soldier.PickAxeTaunt02"
+    {
+      time 0.000000 1.327211
+      param "Soldier.PickAxeTaunt02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "painSmallUpper"
+    {
+      time 0.031250 1.354167
+      param "player\soldier\emotion\emotion"
+      param2 "painSmallUpper"
+      event_ramp
+      {
+        0.0030 0.0026
+        0.1394 0.3437 "curve_easein_to_curve_easeout"
+        0.3727 0.3049 "curve_easeout_to_curve_easeout"
+        0.5091 0.7028 "curve_easein_to_curve_easeout"
+        0.5818 0.3902
+        0.7364 0.7804
+        0.8212 0.5685 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        0.9061 0.0310 "curve_easein_to_curve_easein"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

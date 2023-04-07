@@ -1,0 +1,81 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "animation"
+  {
+    event sequence "layer_taunt_chicken"
+    {
+      time 0.006667 5.256667
+      param "layer_taunt_chicken"
+      fixedlength
+    }
+  }
+  channel "sound"
+  {
+    event speak "Scout.Taunts19"
+    {
+      time -0.001159 5.283376
+      param "Scout.Taunts19"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "face"
+  {
+    event expression "happySmall"
+    {
+      time 0.026854 2.433958
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.1391 0.7804
+        0.5957 0.5725
+        1.3207 0.3804
+        2.0207 0.3137
+      }
+    }
+  }
+  channel "emotion"
+  {
+    event expression "specialAction01Upper"
+    {
+      time 2.984557 5.275362
+      param "player\scout\emotion\emotion"
+      param2 "specialAction01Upper"
+      event_ramp
+      {
+        0.3217 0.0431
+        0.4130 0.4745
+        0.7000 0.7412
+        1.1522 0.6157
+        1.8913 0.6353
+      }
+    }
+    event expression "painBigUpper"
+    {
+      time 2.166198 2.901171
+      param "player\scout\emotion\emotion"
+      param2 "painBigUpper"
+      event_ramp
+      {
+        0.1217 0.8627
+      }
+    }
+  }
+  channel "EmotionB"
+  {
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

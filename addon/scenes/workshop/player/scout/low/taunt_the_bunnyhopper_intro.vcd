@@ -1,0 +1,45 @@
+// Choreo version 1
+event loop "taunt_the_bunnyhopper_loop"
+{
+  time 5.241000 -1.000000
+  param "2.996000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "scout"
+  {
+    event sequence "taunt_the_bunnyhopper_intro"
+    {
+      time 0.000000 5.250000
+      param "taunt_the_bunnyhopper_intro"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event expression "happySmall"
+    {
+      time 0.000000 5.252810
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.0000 1.0000
+        5.2498 1.0000
+        5.2528 1.0000
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

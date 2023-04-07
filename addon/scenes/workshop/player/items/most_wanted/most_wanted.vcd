@@ -1,0 +1,24 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "animation"
+  {
+    event sequence "taunt"
+    {
+      time 0.000000 5.958333
+      param "taunt"
+      fixedlength
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

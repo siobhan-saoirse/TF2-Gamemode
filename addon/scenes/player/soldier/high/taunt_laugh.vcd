@@ -1,0 +1,114 @@
+// Choreo version 1
+event stoppoint "end"
+{
+  time 4.831051 -1.000000
+  param "noaction"
+}
+actor "Soldier"
+{
+  channel "Animation"
+  {
+    event sequence "taunt_laugh"
+    {
+      time 0.000000 4.833333
+      param "taunt_laugh"
+      fixedlength
+    }
+    event speak "Soldier.LaughLong03"
+    {
+      time 0.004831 4.091543
+      param "Soldier.LaughLong03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig"
+    {
+      time 0.019324 4.835749
+      param "player\soldier\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.6233 0.2829
+        1.1767 0.9861 "curve_easein_to_curve_easeout"
+        1.5800 0.4582
+        2.0367 0.9861
+        3.9633 1.0000
+        4.1133 0.3207
+        4.2400 1.0000
+        4.6267 1.0000 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "uw"
+    {
+      time 3.618358 4.618358
+      param "player\soldier\phonemes\phonemes_strong"
+      param2 "uw"
+      event_ramp
+      {
+        0.5200 0.7789
+        0.8200 0.0438 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "ah"
+    {
+      time 0.524155 3.509662
+      param "player\soldier\phonemes\phonemes_strong"
+      param2 "ah"
+      event_ramp
+      {
+        0.4900 0.0179 "curve_kochanek_to_curve_kochanek"
+        0.6367 0.4880 "curve_easein_to_curve_easeout"
+        0.7800 0.0000 "curve_easein_to_curve_easein"
+      }
+    }
+    event expression "iy"
+    {
+      time 3.258454 4.258454
+      param "player\soldier\phonemes\phonemes_strong"
+      param2 "iy"
+      event_ramp
+      {
+        0.3667 0.3167
+        0.6967 0.0219
+      }
+    }
+    event expression "eh"
+    {
+      time 0.422705 3.980676
+      param "player\soldier\phonemes\phonemes_strong"
+      param2 "eh"
+      event_ramp
+      {
+        0.5967 0.0159
+        0.7433 0.1713
+        0.9000 0.0080
+        1.5033 0.0100
+        1.6300 0.1753
+        1.7100 0.0020
+        2.0400 0.0100
+        2.1300 0.1315
+        2.2067 0.0060
+        2.3567 0.0120
+        2.4100 0.1235
+        2.4567 0.0159
+        3.0200 0.0020
+        3.0967 0.0956
+        3.1533 0.0080
+      }
+    }
+  }
+  faceposermodel "D:\dev\staging\game\tf\models\player\soldier.mdl"
+}
+
+scalesettings
+{
+  "CChoreoView" "276"
+  "RampTool" "60"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

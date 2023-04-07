@@ -1,0 +1,355 @@
+// Choreo version 1
+event loop "soviet_strongarm_loop"
+{
+  time 12.086420 -1.000000
+  param "3.330000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "Heavy"
+  {
+    event sequence "layer_taunt_soviet_strongarm_intro_loop"
+    {
+      time 0.000000 12.100000
+      param "layer_taunt_soviet_strongarm_intro_loop"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event speak "heavy_soviet_strongarm_heavy_cheers01"
+    {
+      time 1.208300 2.552155
+      param "heavy_taunt_soviet_strongarm_heavy_cheers01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_heavy_taunt_exert_06"
+    {
+      time 3.708300 4.061089
+      param "heavy_taunt_soviet_strongarm_heavy_taunt_exert_06"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_heavy_taunt_flip_exert_01"
+    {
+      time 7.166700 7.242165
+      param "heavy_taunt_soviet_strongarm_heavy_taunt_flip_exert_01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_heavy_taunt_exert_04"
+    {
+      time 10.461276 10.536741
+      param "heavy_taunt_soviet_strongarm_heavy_taunt_exert_04"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_heavy_taunt_end_03"
+    {
+      time 12.208300 13.101111
+      param "heavy_taunt_soviet_strongarm_heavy_taunt_end_03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_taunt_foot_spin"
+    {
+      time 0.416700 1.142324
+      param "heavy_taunt_soviet_strongarm_taunt_foot_spin"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_draw_primary"
+    {
+      time 0.166700 1.205793
+      param "heavy_taunt_soviet_strongarm_draw_primary"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_demo_charge_hit_world3"
+    {
+      time 13.250000 14.294172
+      param "heavy_taunt_soviet_strongarm_demo_charge_hit_world3"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_demo_charge_hit_world1"
+    {
+      time 13.291699 14.477232
+      param "heavy_taunt_soviet_strongarm_demo_charge_hit_world1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_loose_cannon_ball_impact"
+    {
+      time 13.541699 14.135327
+      param "heavy_taunt_soviet_strongarm_loose_cannon_ball_impact"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_taunt_clothes_rustle"
+    {
+      time 8.583300 10.292506
+      param "heavy_taunt_soviet_strongarm_taunt_clothes_rustle"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_tile4"
+    {
+      time 0.708300 1.151883
+      param "heavy_taunt_soviet_strongarm_tile4"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_tile2"
+    {
+      time 12.375000 12.998038
+      param "heavy_taunt_soviet_strongarm_tile2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_sand2"
+    {
+      time 0.375000 0.821304
+      param "heavy_taunt_soviet_strongarm_sand2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_taunt_foot_stomp"
+    {
+      time 2.833300 3.953663
+      param "heavy_taunt_soviet_strongarm_taunt_foot_stomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_taunt_tie_fix"
+    {
+      time 3.541700 4.171541
+      param "heavy_taunt_soviet_strongarm_taunt_tie_fix"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_taunt_clothes_swipe2"
+    {
+      time 4.541700 5.116031
+      param "heavy_taunt_soviet_strongarm_taunt_clothes_swipe2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_taunt_clothes_swipe2"
+    {
+      time 6.375000 6.949331
+      param "heavy_taunt_soviet_strongarm_taunt_clothes_swipe2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_taunt_clothes_swipe2"
+    {
+      time 8.166699 8.741031
+      param "heavy_taunt_soviet_strongarm_taunt_clothes_swipe2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_taunt_soviet_strongarm_taunt_equipment_gun2"
+    {
+      time 9.791699 10.912062
+      param "heavy_taunt_soviet_strongarm_taunt_equipment_gun2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_taunt_clothes_swipe2"
+    {
+      time 11.416699 11.991031
+      param "heavy_taunt_soviet_strongarm_taunt_clothes_swipe2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_taunt_equipment_gun1"
+    {
+      time 1.541700 2.662063
+      param "heavy_taunt_soviet_strongarm_taunt_equipment_gun1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_soviet_strongarm_taunt_clothes_rustle"
+    {
+      time 1.166700 2.875906
+      param "heavy_taunt_soviet_strongarm_taunt_clothes_rustle"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "face"
+  {
+    event expression "idleface"
+    {
+      time 0.000000 0.547619
+      param "player\heavy\emotion\emotion"
+      param2 "idleface"
+    }
+    event expression "actionfire01"
+    {
+      time 0.029894 0.444708
+      param "player\heavy\emotion\emotion"
+      param2 "actionfire01"
+      event_ramp
+      {
+        0.0000 0.4863
+        0.3300 0.5216
+      }
+    }
+    event expression "d"
+    {
+      time 1.223214 1.923831
+      param "player\heavy\phonemes\phonemes_strong"
+      param2 "d"
+      event_ramp
+      {
+        0.2283 0.0314
+        0.5086 0.2824
+      }
+    }
+    event expression "ae"
+    {
+      time 1.920414 2.216711
+      param "player\heavy\phonemes\phonemes_strong"
+      param2 "ae"
+      event_ramp
+      {
+        0.0674 0.0392
+        0.1697 0.3176
+        0.2349 0.0000
+      }
+    }
+    event expression "d2"
+    {
+      time 2.216748 3.537736
+      param "player\heavy\phonemes\phonemes"
+      param2 "d2"
+      event_ramp
+      {
+        0.0884 0.2745
+        1.1395 0.2314
+      }
+    }
+    event expression "happysmall02"
+    {
+      time 0.374074 14.496759
+      param "player\heavy\emotion\emotion"
+      param2 "happysmall02"
+      event_ramp
+      {
+        0.0500 0.4980
+        14.1122 0.4353
+      }
+    }
+    event expression "ae"
+    {
+      time 7.184387 8.184387
+      param "player\heavy\phonemes\phonemes_strong"
+      param2 "ae"
+      event_ramp
+      {
+        0.1721 0.0275
+        0.3791 0.8157
+        0.6558 0.0000
+      }
+    }
+    event expression "upperHappy2"
+    {
+      time 8.029215 9.965998
+      param "player\heavy\emotion\emotion"
+      param2 "upperHappy2"
+      event_ramp
+      {
+        0.3186 0.0000
+        0.6442 0.3725
+        1.4977 0.6510
+        1.8093 0.0392
+      }
+    }
+    event expression "happyBig"
+    {
+      time 1.224617 2.224617
+      param "player\heavy\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.2930 0.0000
+        0.7721 0.1412
+        0.8953 0.0000
+      }
+    }
+    event expression "upperAngry3"
+    {
+      time 3.615422 4.615421
+      param "player\heavy\emotion\emotion"
+      param2 "upperAngry3"
+      event_ramp
+      {
+        0.1023 0.0000
+        0.3512 0.7647
+        0.5953 0.0000
+      }
+    }
+    event expression "happyBigUpper"
+    {
+      time 1.391284 2.391284
+      param "player\heavy\emotion\emotion"
+      param2 "happyBigUpper"
+      event_ramp
+      {
+        0.3233 0.0392
+        0.5860 1.0000
+        0.8279 0.0392
+      }
+    }
+    event expression "upperAngry3"
+    {
+      time 7.287836 8.287836
+      param "player\heavy\emotion\emotion"
+      param2 "upperAngry3"
+      event_ramp
+      {
+        0.0721 0.0000
+        0.2674 0.7412
+        0.4581 0.0000
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

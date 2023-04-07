@@ -1,0 +1,60 @@
+// Choreo version 1
+actor "Scout"
+{
+  channel "audio"
+  {
+    event speak "Scout.CartStoppedOffense02"
+    {
+      time 0.000000 1.794671
+      param "Scout.CartStoppedOffense02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "scaredUpper"
+    {
+      time 0.000000 2.760417
+      param "player\scout\emotion\emotion"
+      param2 "scaredUpper"
+      event_ramp
+      {
+        0.0121 0.0066 "curve_easein_to_curve_easeout"
+        0.1182 0.0949 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        0.2727 1.0000 "curve_easein_to_curve_easeout"
+        0.4091 0.9184 "curve_easein_to_curve_easein"
+        0.9697 0.8808 "curve_easeout_to_curve_easeout"
+        1.2152 0.3422 "curve_easein_to_curve_easein"
+        1.5515 0.2561 "curve_easein_to_curve_easeout"
+        2.1788 0.2561
+        2.6636 0.0066
+      }
+    }
+    event expression "painBigUpper"
+    {
+      time 0.000000 2.791667
+      param "player\scout\emotion\emotion"
+      param2 "painBigUpper"
+      event_ramp
+      {
+        0.0939 0.0044 "curve_easeout_to_curve_easeout"
+        0.9485 0.0397 "curve_easeout_to_curve_easeout"
+        1.1818 0.8985 "curve_easein_to_curve_easeout"
+        1.3697 0.8631 "curve_easein_to_curve_easeout"
+        2.2515 0.8035 "curve_easeout_to_curve_easeout"
+        2.7394 0.0221 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

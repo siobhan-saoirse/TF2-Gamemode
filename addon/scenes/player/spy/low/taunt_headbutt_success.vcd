@@ -1,0 +1,108 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_headbutt_success"
+    {
+      time 0.000000 4.700000
+      param "taunt_headbutt_success"
+      fixedlength
+    }
+  }
+  channel "sound"
+  {
+    event speak "spy_taunt_headbutt_success_windup"
+    {
+      time 0.366667 1.201882
+      param "spy_taunt_headbutt_success_windup"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_headbutt_success_exert"
+    {
+      time 1.680000 2.004399
+      param "spy_taunt_headbutt_success_exert"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_headbutt_success_recover"
+    {
+      time 2.570000 3.043900
+      param "spy_taunt_headbutt_success_recover"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "SFX"
+  {
+    event speak "taunt_headbutt_sfx_hand_swoosh"
+    {
+      time 0.000000 0.572132
+      param "Taunt.EngineerSwoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_headbutt_sfx_head_impact"
+    {
+      time 1.700000 2.514150
+      param "Weapon_BaseballBat.HitFlesh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "MedicGloveSnap"
+    {
+      time 0.377778 1.036644
+      param "Taunt.MedicGloveSnap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "expression"
+  {
+    event flexanimation "face"
+    {
+      time 0.000000 4.686666
+      param ""
+      flexanimations samples_use_time
+      {
+        "mad"
+        {
+          0.3600 0.2785 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.6267 0.4000 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          1.1588 0.0863 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          1.4706 0.9177 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          1.8059 0.9374 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          2.2294 0.0078 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        "painBig"
+        {
+          2.0118 0.0196 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          2.4000 0.7177 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          2.8176 0.5491 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.1000 0.3765 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.5412 0.3098 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          4.2235 0.1177 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          4.6706 0.0078 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

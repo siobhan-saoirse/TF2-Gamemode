@@ -1,0 +1,42 @@
+// Choreo version 1
+actor "spy"
+{
+  channel "audio"
+  {
+    event speak "Spy.MeleeDare01"
+    {
+      time 0.000000 1.856009
+      param "Spy.MeleeDare01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "defaultFace"
+    {
+      time 0.812500 3.958333
+      param "player\spy\emotion\emotion"
+      param2 "defaultFace"
+      event_ramp
+      {
+        0.2121 0.4638 "curve_easein_to_curve_easein"
+        0.3697 0.4783 "curve_easeout_to_curve_easeout"
+        0.5909 0.9819
+        1.2152 0.9819
+        1.3636 0.7971 "curve_easeout_to_curve_easeout"
+        3.0144 0.7210 "curve_easeout_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

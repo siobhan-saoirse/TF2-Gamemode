@@ -1,0 +1,60 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event sequence "primary_death_backstab"
+    {
+      time 0.000000 1.166667
+      param "primary_death_backstab"
+      fixedlength
+    }
+    event expression "painBig"
+    {
+      time 0.825000 1.166667
+      param "player\scout\emotion\emotion"
+      param2 "painBig"
+      event_ramp
+      {
+        0.0000 0.0052
+        0.2394 0.9948
+        0.3417 1.0000
+      }
+    }
+    event expression "specialAction01"
+    {
+      time 0.175000 0.900000
+      param "player\scout\emotion\emotion"
+      param2 "specialAction01"
+      event_ramp
+      {
+        0.0030 0.0052
+        0.2485 0.9948 "curve_easein_to_curve_easeout"
+        0.4394 0.9921 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "defaultFaceUpper"
+    {
+      time 0.008333 0.516667
+      param "player\scout\emotion\emotion"
+      param2 "defaultFaceUpper"
+      event_ramp
+      {
+        0.0000 0.9895 "curve_easein_to_curve_easeout"
+        0.2242 0.9895 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "80"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

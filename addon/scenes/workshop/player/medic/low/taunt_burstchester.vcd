@@ -1,0 +1,133 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "medic"
+  {
+    event sequence "taunt_burstchester_medic"
+    {
+      time 0.000000 5.541667
+      param "taunt_burstchester_medic"
+      fixedlength
+    }
+    event expression "scaredHurt"
+    {
+      time 3.540000 4.726666
+      param "player\medic\emotion\emotion"
+      param2 "scaredHurt"
+      event_ramp
+      {
+        0.1480 0.7098
+        0.3500 0.4235
+        0.7480 0.1098
+      }
+    }
+    event expression "scaredHurt"
+    {
+      time 0.126667 1.313333
+      param "player\medic\emotion\emotion"
+      param2 "scaredHurt"
+      event_ramp
+      {
+        0.0960 0.8431
+        0.6220 0.4549
+      }
+    }
+    event expression "yellingUpper"
+    {
+      time 0.946667 2.306667
+      param "player\medic\emotion\emotion"
+      param2 "yellingUpper"
+      event_ramp
+      {
+        0.3000 0.6980
+        0.8020 0.8275
+        1.0360 0.1098
+      }
+    }
+    event speak "taunt_burstchester_Medic_pain_big"
+    {
+      time 0.206667 0.775556
+      param "taunt_burstchester_Medic_pain_big"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.MedicFootStomp"
+    {
+      time 3.566667 3.792336
+      param "Selection.MedicFootStomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "uw"
+    {
+      time 3.940000 4.640000
+      param "player\medic\phonemes\phonemes"
+      param2 "uw"
+      event_ramp
+      {
+        0.1140 0.8824
+        0.5740 0.8941
+      }
+    }
+    event expression "scaredHurt"
+    {
+      time 4.446667 5.540000
+      param "player\medic\emotion\emotion"
+      param2 "scaredHurt"
+      event_ramp
+      {
+        0.1200 0.1333
+        0.2200 0.8196
+        0.4500 0.3569
+      }
+    }
+  }
+  channel "face"
+  {
+    event speak "Flesh.ImpactHard"
+    {
+      time 0.053333 1.069206
+      param "Flesh.ImpactHard"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Flesh.ImpactSoft"
+    {
+      time 4.520000 5.535873
+      param "Flesh.ImpactSoft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_burstchester_Medic_01"
+    {
+      time 1.346666 3.288866
+      param "taunt_burstchester_Medic_01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_burstchester_Medic_pain"
+    {
+      time 3.633333 4.036780
+      param "taunt_burstchester_Medic_pain"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

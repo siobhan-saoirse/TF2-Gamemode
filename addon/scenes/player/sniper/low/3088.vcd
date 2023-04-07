@@ -1,0 +1,70 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "Sniper.DominationEngineer04"
+    {
+      time 0.000000 3.328005
+      param "Sniper.DominationEngineer04"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBigUpper"
+    {
+      time 2.459252 3.222742
+      param "player\sniper\emotion\emotion"
+      param2 "happyBigUpper"
+      event_ramp
+      {
+        0.0588 0.1860
+        0.1155 0.4726
+        0.2452 0.7710 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        0.5180 0.9461 "curve_easein_to_curve_easeout"
+        0.5959 0.7774
+        0.6558 0.4268 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+      }
+    }
+    event expression "painSmallUpper"
+    {
+      time 0.028302 1.078616
+      param "player\sniper\emotion\emotion"
+      param2 "painSmallUpper"
+      event_ramp
+      {
+        0.0520 0.1890
+        0.1324 0.6067 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        0.8470 0.8628 "curve_easein_to_curve_easeout"
+        0.9714 0.1829
+      }
+    }
+    event expression "madUpper"
+    {
+      time 0.886792 2.691824
+      param "player\sniper\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.1236 0.1953
+        0.2899 0.6538 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        0.4926 0.8284 "curve_easein_to_curve_easeout"
+        1.4237 0.9201 "curve_easein_to_curve_easeout"
+        1.6176 0.6124 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        1.7406 0.0858
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "424"
+  "ExpressionTool" "100"
+  "RampTool" "296"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

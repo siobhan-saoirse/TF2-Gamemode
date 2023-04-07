@@ -1,0 +1,241 @@
+// Choreo version 1
+event loop "spring_rider_loop"
+{
+  time 10.072000 -1.000000
+  param "3.250000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "Pyro"
+  {
+    event sequence "taunt_spring_rider"
+    {
+      time 0.000000 10.083333
+      param "taunt_spring_rider"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event speak "pyro_spring_rider_taunt_shotgun_shoulder"
+    {
+      time 0.273433 0.654385
+      param "pyro_spring_rider_taunt_shotgun_shoulder"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_foot_stomp_light"
+    {
+      time 1.300100 1.388626
+      param "pyro_spring_rider_taunt_foot_stomp_light"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_clothes_swipe"
+    {
+      time 1.566700 1.867154
+      param "pyro_spring_rider_taunt_clothes_swipe"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_foot_stomp"
+    {
+      time 1.566700 1.792369
+      param "pyro_spring_rider_taunt_foot_stomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_equipment_jingle3short"
+    {
+      time 4.200100 4.713569
+      param "pyro_spring_rider_taunt_equipment_jingle3short"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_equipment_jingle4"
+    {
+      time 5.013367 5.304342
+      param "pyro_spring_rider_taunt_equipment_jingle4"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_equipment_jingle"
+    {
+      time 3.300100 3.746359
+      param "pyro_spring_rider_taunt_equipment_jingle"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_equipment_jingle3"
+    {
+      time 5.880099 6.393568
+      param "pyro_spring_rider_taunt_equipment_jingle3"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_equipment_jingle3"
+    {
+      time 1.888618 2.402087
+      param "pyro_spring_rider_taunt_equipment_jingle3"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_springrider_giggles"
+    {
+      time 3.646667 -1.000000
+      param "taunt_springrider_giggles"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_springrider_intro"
+    {
+      time 0.573333 -1.000000
+      param "taunt_springrider_intro"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_equipment_jingle3short"
+    {
+      time 7.673434 8.186903
+      param "pyro_spring_rider_taunt_equipment_jingle3short"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_equipment_jingle4"
+    {
+      time 8.486701 8.777676
+      param "pyro_spring_rider_taunt_equipment_jingle4"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_equipment_jingle"
+    {
+      time 6.773434 7.219693
+      param "pyro_spring_rider_taunt_equipment_jingle"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_equipment_jingle3"
+    {
+      time 9.353433 9.866902
+      param "pyro_spring_rider_taunt_equipment_jingle3"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt.springrider"
+    {
+      time 1.962983 2.518992
+      param "Taunt.SpringRiderSit"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Taunt.SpringRiderSqueak1"
+    {
+      time 3.629649 4.280579
+      param "Taunt.Taunt.SpringRiderSqueak1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Taunt.SpringRiderSqueak2"
+    {
+      time 4.556158 5.207088
+      param "Taunt.Taunt.SpringRiderSqueak2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Taunt.SpringRiderSqueak3"
+    {
+      time 5.353606 6.004536
+      param "Taunt.Taunt.SpringRiderSqueak3"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Taunt.SpringRiderSqueak4"
+    {
+      time 6.060616 6.711546
+      param "Taunt.Taunt.SpringRiderSqueak4"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Taunt.SpringRiderSqueak5"
+    {
+      time 7.135135 7.786064
+      param "Taunt.Taunt.SpringRiderSqueak5"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_spring_rider_taunt_equipment_jingle3"
+    {
+      time 9.353433 9.866902
+      param "pyro_spring_rider_taunt_equipment_jingle3"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Taunt.SpringRiderSqueak5"
+    {
+      time 2.644145 3.295075
+      param "Taunt.Taunt.SpringRiderSqueak5"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Taunt.SpringRiderSqueak2"
+    {
+      time 7.887387 8.538317
+      param "Taunt.Taunt.SpringRiderSqueak2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Taunt.SpringRiderSqueak5"
+    {
+      time 9.459461 10.110391
+      param "Taunt.Taunt.SpringRiderSqueak5"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.Taunt.SpringRiderSqueak3"
+    {
+      time 8.650904 9.301833
+      param "Taunt.Taunt.SpringRiderSqueak3"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

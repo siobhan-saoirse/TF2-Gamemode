@@ -1,0 +1,50 @@
+// Choreo version 1
+actor "Medic"
+{
+  channel "Animation"
+  {
+    event sequence "Taunt04"
+    {
+      time 0.000000 3.666667
+      param "taunt04"
+      fixedlength
+    }
+  }
+  channel "Audio"
+  {
+    event speak "med"
+    {
+      time 0.000000 2.571610
+      param "Medic.Taunts05"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "Face"
+  {
+    event expression "evilHappyUpper"
+    {
+      time 0.006803 3.668483
+      param "player\medic\emotion\emotion"
+      param2 "evilHappyUpper"
+      event_ramp
+      {
+        0.1000 0.7046 "curve_easein_to_curve_easeout"
+        3.5550 0.7046 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "312"
+  "RampTool" "78"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

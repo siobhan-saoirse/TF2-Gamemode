@@ -1,0 +1,104 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 0.000000 -1.000000
+  param "0.000000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveStart"
+    {
+      time 0.002347 5.302347
+      param "taunt_flip_success_receiver"
+      fixedlength
+    }
+    event expression "happyFull"
+    {
+      time 1.962524 5.276733
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.0640 0.8863
+        0.7180 0.9608
+        0.7860 0.2863
+        1.0100 0.1922
+        1.3380 0.2275
+        2.6055 0.5490
+      }
+    }
+  }
+  channel "audio"
+  {
+    event speak "medic_taunt_flip_random_flipExert"
+    {
+      time 0.952675 1.741088
+      param "medic_taunt_flip_random_flipFlipping"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Glass.ImpactHard"
+    {
+      time 1.913580 2.712854
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.DemoEquipment1"
+    {
+      time 2.257202 2.649764
+      param "Selection.DemoEquipment1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "medic_taunt_flip_random_flipFlipAntic"
+    {
+      time 0.039094 0.793947
+      param "medic_taunt_flip_random_flipFlipAntic"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "medic_taunt_flip_random_flipFinish"
+    {
+      time 2.810699 4.648182
+      param "medic_taunt_flip_random_flipFinish"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.MedicHeelClick"
+    {
+      time 2.331276 2.782750
+      param "Selection.MedicHeelClick"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_headbutt_sfx_hand_swoosh"
+    {
+      time 1.117487 1.689618
+      param "taunt_headbutt_sfx_hand_swoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

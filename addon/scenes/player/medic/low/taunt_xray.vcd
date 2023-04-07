@@ -1,0 +1,106 @@
+// Choreo version 1
+event unspecified ""
+{
+  time 0.000000 -1.000000
+  param ""
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_xray"
+    {
+      time 0.006172 6.139505
+      param "taunt_xray"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "medic_taunt_xray_1_prognosis"
+    {
+      time 0.320833 1.253327
+      param "medic_taunt_xray_1_prognosis"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "medic_taunt_xray_2_laugh"
+    {
+      time 1.962500 2.458146
+      param "medic_taunt_xray_2_laugh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "medic_taunt_xray_2B_dead"
+    {
+      time 3.129167 3.945698
+      param "medic_taunt_xray_2B_dead"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "expression"
+  {
+    event expression "evilHappyUpper"
+    {
+      time 0.012500 0.666667
+      param "player\medic\emotion\emotion"
+      param2 "evilHappyUpper"
+      event_ramp
+      {
+        0.2020 0.6000
+        0.5337 0.5725
+      }
+    }
+    event expression "yellingUpper"
+    {
+      time 0.333334 1.570834
+      param "player\medic\emotion\emotion"
+      param2 "yellingUpper"
+      event_ramp
+      {
+        0.0080 0.0235
+        0.2015 0.8510
+        1.0515 0.8549
+      }
+    }
+    event expression "happyFull"
+    {
+      time 1.420833 2.958333
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.3615 0.9804
+        1.1545 1.0000
+      }
+    }
+    event expression "evilHappyUpper"
+    {
+      time 2.645834 6.150000
+      param "player\medic\emotion\emotion"
+      param2 "evilHappyUpper"
+      event_ramp
+      {
+        0.2020 0.3608
+        0.7775 0.8745
+        2.5300 0.8824
+        3.1861 0.3961
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

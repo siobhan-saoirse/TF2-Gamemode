@@ -1,0 +1,51 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 2.533000 -1.000000
+  param "1.000000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveStart"
+    {
+      time 0.000000 2.533333
+      param "taunt_highFiveStart"
+      fixedlength
+    }
+    event expression "happyBig"
+    {
+      time 0.224034 2.533000
+      param "player\soldier\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0560 0.4588
+        0.4244 0.4431
+        0.8706 0.8510
+        2.3089 0.8510
+      }
+    }
+    event speak "Let's Go!"
+    {
+      time 0.223833 0.984286
+      param "Soldier.Go03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

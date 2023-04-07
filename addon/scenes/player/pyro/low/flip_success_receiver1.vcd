@@ -1,0 +1,73 @@
+// Choreo version 1
+event loop "flip_cycle"
+{
+  time 0.000000 -1.000000
+  param "0.000000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "flip_start"
+    {
+      time -0.006667 4.493333
+      param "taunt_flip_success_receiver"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "pyro_taunt_flip_random_flipExert"
+    {
+      time 0.503402 1.171361
+      param "pyro_taunt_flip_random_flipExert"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.EngineerSwoosh"
+    {
+      time 1.261905 1.834036
+      param "Taunt.EngineerSwoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Glass.ImpactHard"
+    {
+      time 2.448979 3.248253
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_flip_random_flipFlipping"
+    {
+      time 1.340136 2.201905
+      param "pyro_taunt_flip_random_flipFlipping"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_flip_random_flipFinish"
+    {
+      time 2.816327 3.853153
+      param "pyro_taunt_flip_random_flipFinish"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,47 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "body"
+  {
+    event sequence "taunt_replay"
+    {
+      time 0.006173 3.339506
+      param "taunt_replay"
+      fixedlength
+    }
+    event expression "happyBig"
+    {
+      time 0.456790 3.314815
+      param "player\sniper\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.2927 1.0000
+        2.6195 1.0000
+      }
+    }
+    event expression "mad"
+    {
+      time 0.037037 0.808642
+      param "player\sniper\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.1512 1.0000
+        0.4780 1.0000
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "108"
+  "RampTool" "82"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

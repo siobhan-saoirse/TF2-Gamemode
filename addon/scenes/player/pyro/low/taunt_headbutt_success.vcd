@@ -1,0 +1,78 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_headbutt_success"
+    {
+      time 0.000000 4.733333
+      param "taunt_headbutt_success"
+      fixedlength
+    }
+  }
+  channel "sound"
+  {
+    event speak "pyro_taunt_headbutt_success_windup"
+    {
+      time 0.006666 3.210657
+      param "pyro_taunt_headbutt_success_windup"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_headbutt_success_recover_1"
+    {
+      time 1.700000 2.290952
+      param "pyro_taunt_headbutt_success_recover_1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_headbutt_success_recover_2"
+    {
+      time 3.030000 3.763265
+      param "pyro_taunt_headbutt_success_recover_2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "SFX"
+  {
+    event speak "taunt_headbutt_sfx_hand_swoosh"
+    {
+      time 0.000000 0.572132
+      param "Taunt.EngineerSwoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_BaseballBat.HitFlesh"
+    {
+      time 1.740000 2.554150
+      param "taunt_headbutt_sfx_head_impact"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "MedicGloveSnap"
+    {
+      time 0.377778 1.036644
+      param "Taunt.MedicGloveSnap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

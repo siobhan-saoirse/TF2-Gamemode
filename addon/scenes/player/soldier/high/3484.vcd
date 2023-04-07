@@ -1,0 +1,39 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event speak "Soldier.DominationSpy07"
+    {
+      time 0.020833 3.006230
+      param "Soldier.DominationSpy07"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "aa2"
+    {
+      time 1.687500 2.250000
+      param "player\soldier\phonemes\phonemes"
+      param2 "aa2"
+      event_ramp
+      {
+        0.1970 0.0258
+        0.3364 0.7959
+        0.4182 0.0233
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,99 @@
+// Choreo version 1
+event stoppoint "end"
+{
+  time 4.831051 -1.000000
+  param "noaction"
+}
+actor "Medic"
+{
+  channel "Animation"
+  {
+    event sequence "pyro_taunt_replay"
+    {
+      time 0.000000 4.833333
+      param "taunt_laugh"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "me"
+    {
+      time 0.330000 4.091633
+      param "Medic.LaughLong01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyFull"
+    {
+      time 0.018265 4.819634
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.4700 0.9980 "curve_easein_to_curve_easeout"
+        4.6900 1.0000 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "ax2"
+    {
+      time 0.593607 4.732877
+      param "player\medic\phonemes\phonemes_strong"
+      param2 "ax2"
+      event_ramp
+      {
+        0.1000 0.6076
+        0.2367 0.0239
+        0.2933 0.5418
+        0.4733 0.5219
+        0.5567 0.7629
+        0.6367 0.3705
+        0.7267 0.7649
+        0.8533 0.3705
+        0.9700 0.5956
+        1.0400 0.3048
+        1.1700 0.6892
+        1.2000 0.5398
+        1.2967 0.6494
+        1.3833 0.1116
+        1.4700 0.5956
+        1.5333 0.4482
+        1.6467 0.5398
+        1.7533 0.0956 "curve_easein_to_curve_easeout"
+        1.9267 0.4482 "curve_kochanek_late_to_curve_kochanek_late"
+        1.9500 0.3765 "curve_easein_to_curve_easeout"
+        2.1767 0.2869 "curve_easeout_to_curve_easeout"
+        2.2267 0.0000 "curve_bspline_to_curve_bspline"
+        2.5200 0.3845 "curve_easein_to_curve_easeout"
+        2.5600 0.0418 "curve_easein_to_curve_easein"
+        2.7200 0.3247 "curve_easein_to_curve_easeout"
+        2.9800 0.0757
+      }
+    }
+    event expression "evilHappy"
+    {
+      time 0.924657 2.194064
+      param "player\medic\emotion\emotion"
+      param2 "evilHappy"
+      event_ramp
+      {
+        0.0967 0.1673 "curve_easein_to_curve_easein"
+        1.0300 0.1116 "curve_easeout_to_curve_easeout"
+      }
+    }
+  }
+  faceposermodel "D:\dev\staging\game\tf\models\player\medic.mdl"
+}
+
+scalesettings
+{
+  "CChoreoView" "292"
+  "RampTool" "60"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

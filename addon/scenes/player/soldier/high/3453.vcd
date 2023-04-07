@@ -1,0 +1,57 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "audio"
+  {
+    event speak "Soldier.DominationScout07"
+    {
+      time 0.000000 3.618073
+      param "Soldier.DominationScout07"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "madUpper"
+    {
+      time 0.000000 3.656250
+      param "player\soldier\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.0121 0.0254
+        0.0727 0.4631 "curve_easein_to_curve_easeout"
+        0.3242 0.2163
+        0.3909 0.4733 "curve_easein_to_curve_easeout"
+        0.5545 0.4911 "curve_easeout_to_curve_easeout"
+        0.6152 0.3104
+        0.6818 0.4656 "curve_easein_to_curve_easein"
+        0.9758 0.4733 "curve_easeout_to_curve_easeout"
+        1.0818 0.2774
+        1.1879 0.4911 "curve_easeout_to_curve_easeout"
+        1.5606 0.5064 "curve_easeout_to_curve_easeout"
+        1.7667 0.7354 "curve_easein_to_curve_easein"
+        1.8667 0.7354 "curve_easein_to_curve_easeout"
+        2.0182 0.4427 "curve_easein_to_curve_easein"
+        2.2182 0.4097 "curve_easein_to_curve_easeout"
+        2.4455 0.4351 "curve_easein_to_curve_easeout"
+        2.5909 0.7735 "curve_easein_to_curve_easeout"
+        2.8788 0.5140 "curve_easein_to_curve_easeout"
+        3.1273 0.5700 "curve_easein_to_curve_easeout"
+        3.2212 0.1120 "curve_easein_to_curve_easein"
+        3.4606 0.0076 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

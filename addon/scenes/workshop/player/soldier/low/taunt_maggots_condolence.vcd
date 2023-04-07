@@ -1,0 +1,116 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "soldier"
+  {
+    event sequence "taunt_maggots_condolence"
+    {
+      time 0.000000 4.791667
+      param "taunt_maggots_condolence"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event speak "soldier_taunt_maggots_condolence_soldier_hatoverhearttaunt05"
+    {
+      time 2.349900 4.266667
+      param "soldier_taunt_maggots_condolence_soldier_hatoverhearttaunt05"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "soldier_taunt_maggots_condolence_rock_impact_soft3"
+    {
+      time 4.299900 4.299900
+      param "soldier_taunt_maggots_condolence_rock_impact_soft3"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "soldier_taunt_maggots_condolence_rock_impact_soft1"
+    {
+      time 4.499900 4.499900
+      param "soldier_taunt_maggots_condolence_rock_impact_soft1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "soldier_taunt_maggots_condolence_concrete_impact_soft2"
+    {
+      time 4.666600 4.666600
+      param "soldier_taunt_maggots_condolence_concrete_impact_soft2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_maggots_condolence_soldier"
+    {
+      time 1.773334 3.745398
+      param "taunt_maggots_condolence_soldier"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Boulder.ImpactHard"
+    {
+      time 1.046667 2.232200
+      param "Boulder.ImpactHard"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "defaultFace"
+    {
+      time 0.033333 1.886667
+      param "player\soldier\emotion\emotion"
+      param2 "defaultFace"
+      event_ramp
+      {
+        0.0560 0.8392
+        1.7220 0.8980
+      }
+    }
+    event expression "defaultFaceUpper"
+    {
+      time 3.726667 4.793333
+      param "player\soldier\emotion\emotion"
+      param2 "defaultFaceUpper"
+      event_ramp
+      {
+        0.0920 0.8824
+        1.0000 0.9216
+      }
+    }
+    event expression "specialAction01"
+    {
+      time 0.080000 1.313333
+      param "player\soldier\emotion\emotion"
+      param2 "specialAction01"
+      event_ramp
+      {
+        0.1360 0.9333
+        0.7080 0.8196
+      }
+    }
+    event speak "Boulder.ImpactSoft"
+    {
+      time 3.373333 3.610181
+      param "Boulder.ImpactSoft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

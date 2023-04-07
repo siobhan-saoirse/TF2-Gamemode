@@ -1,0 +1,38 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "Pyro"
+  {
+    event sequence "taunt_the_grilled_gunman"
+    {
+      time 0.000000 5.333333
+      param "taunt_the_grilled_gunman"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event expression "dummyBlend"
+    {
+      time 0.000000 5.333300
+      param "player\pyro\emotion\emotion"
+      param2 "dummyBlend"
+      event_ramp
+      {
+        0.0000 0.0000
+        5.3333 0.0000
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

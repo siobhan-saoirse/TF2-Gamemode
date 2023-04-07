@@ -1,0 +1,72 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 3.060000 -1.000000
+  param "1.100000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_dosido_intro"
+    {
+      time 0.000000 3.066667
+      param "taunt_dosido_intro"
+      fixedlength
+    }
+    event speak "heavy_taunt_dosido_intro_wait_rand"
+    {
+      time 0.086207 0.894098
+      param "sniper_taunt_dosido_intro_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig"
+    {
+      time 0.000000 3.062581
+      param "player\scout\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.7636 0.0941
+        0.9697 0.4235
+        2.9976 0.4196
+      }
+    }
+    event expression "happySmall"
+    {
+      time -0.000000 1.000000
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+    }
+    event speak "Taunt.Engineer01FootStomp"
+    {
+      time 2.804597 3.030266
+      param "Taunt.Engineer01FootStomp"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "sniper_taunt_dosido_intro_wait_rand"
+    {
+      time 2.143678 2.219143
+      param "sniper_taunt_dosido_intro_wait_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

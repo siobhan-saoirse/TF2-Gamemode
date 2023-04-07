@@ -1,0 +1,100 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 3.962983 -1.000000
+  param "1.950000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_rps_start"
+    {
+      time 0.000000 3.966666
+      param "taunt_rps_start"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "Medic.Yes02"
+    {
+      time 0.090535 1.639968
+      param "medic_taunt_rps_int_01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "evilHappy"
+    {
+      time 0.014403 1.014403
+      param "player\medic\emotion\emotion"
+      param2 "evilHappy"
+      event_ramp
+      {
+        0.0160 0.1922
+        0.8760 0.1569
+      }
+    }
+    event speak "medic_taunt_rps_intro_wait_rand"
+    {
+      time 2.820987 3.769400
+      param "medic_taunt_rps_intro_wait_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "face"
+  {
+    event flexanimation "face"
+    {
+      time 0.010288 3.965020
+      param ""
+      flexanimations samples_use_time
+      {
+        "happyBig"
+        {
+          0.0000 0.0392 curve_easeout_to_curve_easeout
+          1.1611 0.0784 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          1.4389 0.8393 curve_easeout_to_curve_easeout
+          3.9547 0.8275 curve_easein_to_curve_easein
+        }
+        "evilSmile"
+        {
+        }
+      }
+    }
+  }
+  channel "fx"
+  {
+    event speak "Weapon_Fist.HitHand"
+    {
+      time 1.485597 1.641606
+      param "Weapon_Fist.HitHand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Fist.HitHand"
+    {
+      time 1.341564 1.495396
+      param "Weapon_Fist.HitHand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

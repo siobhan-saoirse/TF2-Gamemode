@@ -1,0 +1,51 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_laugh"
+    {
+      time 0.000000 3.500000
+      param "taunt_laugh"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "sniper_laughlong02"
+    {
+      time 0.000000 3.192744
+      param "Sniper.LaughLong02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig"
+    {
+      time 0.012346 3.493827
+      param "player\sniper\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.1976 0.0000
+        0.5119 0.8314
+        2.3952 0.8275
+        2.8000 0.4824
+        2.9452 0.7882
+        3.0881 0.3882
+        3.2381 0.7059
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,135 @@
+// Choreo version 1
+event loop "flip_cycle"
+{
+  time 0.000000 -1.000000
+  param "0.000000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "flip_give_flip"
+    {
+      time 0.000000 4.633334
+      param "layer_taunt_flip_success_initiator"
+      fixedlength
+    }
+    event expression "upperAngry2"
+    {
+      time 1.105556 2.105556
+      param "player\heavy\emotion\emotion"
+      param2 "upperAngry2"
+      event_ramp
+      {
+        0.1440 0.4863
+        0.5840 0.7412
+      }
+    }
+    event expression "happyBig"
+    {
+      time 1.794444 4.163889
+      param "player\heavy\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0240 0.7373
+        1.9480 0.7608
+      }
+    }
+    event expression "ax"
+    {
+      time 1.216667 1.711111
+      param "player\heavy\phonemes\phonemes_strong"
+      param2 "ax"
+      event_ramp
+      {
+        0.0820 0.7020
+        0.3240 0.7686
+      }
+    }
+  }
+  channel "audio"
+  {
+    event speak "chestHit"
+    {
+      time 2.349445 2.644343
+      param "heavy_taunt_flip_random_chesthits"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "chestHit"
+    {
+      time 2.571667 2.866565
+      param "heavy_taunt_flip_random_chesthits"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "chestHit"
+    {
+      time 2.738334 3.023617
+      param "heavy_taunt_flip_random_chesthits"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "chestHit"
+    {
+      time 2.927223 3.221735
+      param "heavy_taunt_flip_random_chesthits"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "chestHit"
+    {
+      time 3.018890 3.302541
+      param "heavy_taunt_flip_random_chesthits"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "chestHit"
+    {
+      time 3.246667 3.541565
+      param "heavy_taunt_flip_random_chesthits"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_taunt_flip_random_exerts"
+    {
+      time 1.244445 2.306236
+      param "heavy_taunt_flip_random_exerts"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig"
+    {
+      time 0.013889 1.191667
+      param "player\heavy\emotion\emotion"
+      param2 "happy1"
+      event_ramp
+      {
+        0.1700 0.5373
+        0.6100 0.8000
+        0.6960 0.7490
+        0.9700 0.6824
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

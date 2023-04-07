@@ -1,0 +1,41 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "sniper"
+  {
+    event sequence "killer_solo"
+    {
+      time 0.000000 4.250000
+      param "killer_solo"
+      fixedlength
+    }
+    event expression "uw"
+    {
+      time 0.004386 4.280702
+      param "player\sniper\phonemes\phonemes_weak"
+      param2 "uw"
+      event_ramp
+      {
+        0.1500 0.0000
+        0.5580 0.2471
+        0.8920 1.0000
+        3.3880 1.0000
+        3.7776 0.9176
+      }
+    }
+  }
+  channel "face"
+  {
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

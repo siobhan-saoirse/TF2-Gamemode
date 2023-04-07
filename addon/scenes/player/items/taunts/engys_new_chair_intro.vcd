@@ -1,0 +1,30 @@
+// Choreo version 1
+event loop "intro"
+{
+  time 27.850000 -1.000000
+  param "7.000000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "chair_intro_qcistyle"
+    {
+      time 0.000000 27.866667
+      param "chair_intro_qcistyle"
+      fixedlength
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

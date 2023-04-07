@@ -1,0 +1,111 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 6.567528 -1.000000
+  param "1.500000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_headbutt_start"
+    {
+      time 0.000000 6.566667
+      param "taunt_headbutt_start"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "scout_taunt_headbutt_start_1"
+    {
+      time 0.000000 0.789206
+      param "scout_taunt_headbutt_start_1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_headbutt_start_2"
+    {
+      time 1.190000 2.322381
+      param "scout_taunt_headbutt_start_2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_headbutt_start_3"
+    {
+      time 3.260000 4.319796
+      param "scout_taunt_headbutt_start_3"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "expression"
+  {
+    event expression "specialAction01Upper"
+    {
+      time -0.044415 4.913032
+      param "player\scout\emotion\emotion"
+      param2 "specialAction01Upper"
+    }
+    event expression "happyBig"
+    {
+      time -0.003546 2.031915
+      param "player\scout\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0020 0.0000
+        0.4340 0.0000
+        0.6980 0.7216
+        0.9260 0.6157
+        1.1380 0.0157
+        2.0355 0.2941
+      }
+    }
+    event expression "happyBig"
+    {
+      time 3.244681 4.500000
+      param "player\scout\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0020 0.0000
+        0.2540 0.0353
+        0.4160 0.3451
+        0.4440 0.4078
+        0.6420 0.4039
+        0.6580 0.3137
+        0.7018 0.0157
+        1.2553 0.0000
+      }
+    }
+    event expression "happyBigUpper"
+    {
+      time 3.262412 4.198582
+      param "player\scout\emotion\emotion"
+      param2 "happyBigUpper"
+      event_ramp
+      {
+        0.0000 0.0039
+        0.0920 0.8980
+        0.8380 0.9137
+        0.9340 0.0039
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,54 @@
+// Choreo version 1
+actor "medic"
+{
+  channel "audio"
+  {
+    event speak "medic_mvm_ask_ready01"
+    {
+      time 0.020833 1.488793
+      param "medic_mvm_ask_ready01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "emotion"
+  {
+    event expression "mad"
+    {
+      time 0.031250 1.500000
+      param "player\medic\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.1788 0.7269
+        1.2970 0.6846
+      }
+    }
+    event expression "jawOpen"
+    {
+      time 0.010417 1.500000
+      param "player\medic\emotion\emotion"
+      param2 "jawOpen"
+      event_ramp
+      {
+        0.2424 0.1615 "curve_easein_to_curve_easeout"
+        0.4727 0.0731
+        0.6394 0.3808 "curve_easein_to_curve_easeout"
+        0.7879 0.0000
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

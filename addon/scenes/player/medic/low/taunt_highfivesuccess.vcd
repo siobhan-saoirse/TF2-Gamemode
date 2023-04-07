@@ -1,0 +1,42 @@
+// Choreo version 1
+actor "medic"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveSuccess"
+    {
+      time 0.000000 4.000000
+      param "taunt_highFiveSuccess"
+      fixedlength
+    }
+  }
+  channel "sync"
+  {
+  }
+  channel "emotion"
+  {
+    event expression "happyFull"
+    {
+      time 2.649019 3.990686
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.1625 0.7738
+        1.1375 1.0000
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "80"
+  "RampTool" "32"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

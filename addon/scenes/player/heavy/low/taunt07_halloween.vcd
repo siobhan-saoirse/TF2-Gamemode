@@ -1,0 +1,61 @@
+// Choreo version 1
+actor "Heavy"
+{
+  channel "body"
+  {
+    event sequence "taunt07_halloween"
+    {
+      time 0.000000 2.900000
+      param "taunt07_Halloween"
+      fixedlength
+    }
+    event expression "mad"
+    {
+      time 0.000000 2.672625
+      param "player\heavy\emotion\emotion"
+      param2 "upperAngry2"
+      event_ramp
+      {
+        0.0390 1.0000 "curve_easein_to_curve_easein"
+        2.6065 1.0000 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "ah"
+    {
+      time 0.467532 2.761905
+      param "player\heavy\phonemes\phonemes_strong"
+      param2 "ah"
+      event_ramp
+      {
+        0.0947 0.8856 "curve_easein_to_curve_easein"
+        1.0702 0.9336 "curve_easein_to_curve_easeout"
+        2.0502 0.8719 "curve_easeout_to_curve_easeout"
+        2.2944 0.0000 "curve_easein_to_curve_easein"
+      }
+    }
+  }
+  channel "audio"
+  {
+    event speak "Heavy.Go02"
+    {
+      time 0.500000 2.610113
+      param "Heavy.PainCrticialDeath01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  faceposermodel "D:\dev\staging\game\tf\models\player\heavy.mdl"
+}
+
+scalesettings
+{
+  "CChoreoView" "308"
+  "RampTool" "114"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

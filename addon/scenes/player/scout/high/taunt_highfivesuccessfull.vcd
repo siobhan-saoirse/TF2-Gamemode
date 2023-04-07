@@ -1,0 +1,77 @@
+// Choreo version 1
+actor "scout"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveSuccessFull"
+    {
+      time 0.000000 4.166667
+      param "taunt_highFiveSuccessFull"
+      fixedlength
+    }
+    event expression "happySmall"
+    {
+      time 2.195513 4.160257
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.2540 1.0000 "curve_easein_to_curve_easeout"
+        1.7534 1.0000 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "happyBig"
+    {
+      time 1.814103 2.394231
+      param "player\scout\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.1940 1.0000 "curve_easein_to_curve_easeout"
+        0.3300 1.0000 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "happySmall"
+    {
+      time 0.102564 1.967949
+      param "player\scout\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.2540 1.0000 "curve_easein_to_curve_easeout"
+        1.6540 1.0000 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+  channel "audio"
+  {
+    event speak "Scout.Cheers01"
+    {
+      time 2.865385 3.660669
+      param "Scout.Cheers01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Scout.BeingShotInvincible15"
+    {
+      time 1.887821 2.367163
+      param "Scout.BeingShotInvincible15"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "208"
+  "RampTool" "100"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

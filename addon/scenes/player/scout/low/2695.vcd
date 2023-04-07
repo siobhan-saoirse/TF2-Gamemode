@@ -1,0 +1,46 @@
+// Choreo version 1
+event stoppoint "end"
+{
+  time 1.180673 -1.000000
+  param "noaction"
+}
+actor "Scout"
+{
+  channel "audio"
+  {
+    event speak "Scout.StunBallHit10"
+    {
+      time 0.000000 1.180000
+      param "Scout.StunBallHit10"
+      event_ramp
+      {
+        0.1030 0.6505 "curve_easein_to_curve_easeout"
+        1.0909 0.6424 "curve_easein_to_curve_easeout"
+      }
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "exp"
+  {
+    event expression "scaredUpper"
+    {
+      time -0.081738 3.077837
+      param "player\scout\emotion\emotion"
+      param2 "scaredUpper"
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "188"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

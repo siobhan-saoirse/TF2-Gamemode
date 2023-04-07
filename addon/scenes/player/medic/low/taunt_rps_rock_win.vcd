@@ -1,0 +1,183 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_rps_r_win"
+    {
+      time 0.000000 6.966667
+      param "taunt_rps_rock_win"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "medic_taunt_rps_setting"
+    {
+      time 0.447306 1.338802
+      param "medic_taunt_rps_setting_up"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Medic.LaughEvil03"
+    {
+      time 1.934210 2.233757
+      param "medic_taunt_rps_exert_01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "medic_taunt_rps_exert_07"
+    {
+      time 2.222222 2.562585
+      param "medic_taunt_rps_exert_07"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "medic_taunt_rps_exert_24"
+    {
+      time 2.583333 2.823696
+      param "medic_taunt_rps_exert_24"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "medic_taunt_rps_win_08"
+    {
+      time 3.716667 4.620363
+      param "medic_taunt_rps_win_08"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "medic_taunt_rps_win_06"
+    {
+      time 4.722222 5.882812
+      param "medic_taunt_rps_win_05"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyFull"
+    {
+      time 3.405555 6.944443
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.1600 0.5333
+        3.2909 0.8353
+      }
+    }
+    event expression "happyFull"
+    {
+      time 0.231944 2.243056
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.1600 0.5333
+        1.7631 0.2941
+      }
+    }
+  }
+  channel "rps"
+  {
+    event speak "Taunt.MedicHardClap2"
+    {
+      time 1.973958 2.129967
+      param "Weapon_Fist.HitHand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.MedicHardClap2"
+    {
+      time 2.250000 2.348685
+      param "Weapon_Fist.HitHand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.MedicHardClap2"
+    {
+      time 2.552083 2.650768
+      param "Weapon_Fist.HitHand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.MedicHeelClick"
+    {
+      time 3.812500 4.263974
+      param "Selection.MedicHeelClick"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.MedicHeelClick"
+    {
+      time 4.171875 4.623349
+      param "Selection.MedicHeelClick"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.MedicHeelClick"
+    {
+      time 4.640625 5.092099
+      param "Selection.MedicHeelClick"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.MedicHeelClick"
+    {
+      time 5.151042 5.602516
+      param "Selection.MedicHeelClick"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.MedicHeelClick"
+    {
+      time 5.640624 6.092098
+      param "Selection.MedicHeelClick"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.MedicHeelClick"
+    {
+      time 6.078125 6.529599
+      param "Selection.MedicHeelClick"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Selection.MedicHeelClick"
+    {
+      time 6.197917 6.649391
+      param "Selection.MedicHeelClick"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "facial"
+  {
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

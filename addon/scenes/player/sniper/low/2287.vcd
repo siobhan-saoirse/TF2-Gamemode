@@ -1,0 +1,16 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "sniper.SpecialWeapon04"
+    {
+      param "sniper.SpecialWeapon04"
+      fixedlength
+    }
+  }
+}
+
+fps 60
+snap off
+ignorePhonemes off

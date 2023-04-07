@@ -1,0 +1,96 @@
+// Choreo version 1
+actor "spy"
+{
+  channel "audio"
+  {
+    event speak "Spy.DominationSniper04"
+    {
+      time -0.023611 3.576389
+      param "Spy.DominationSniper04"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig"
+    {
+      time 1.277778 3.805556
+      param "player\spy\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.2303 0.4465
+        2.2694 0.4502
+      }
+    }
+    event expression "painBigUpper"
+    {
+      time 0.061111 1.330556
+      param "player\spy\emotion\emotion"
+      param2 "painBigUpper"
+      event_ramp
+      {
+        0.1667 0.5535
+        1.0114 0.5387
+      }
+    }
+    event expression "scaredUpper"
+    {
+      time 1.283333 1.961111
+      param "player\spy\emotion\emotion"
+      param2 "scaredUpper"
+      event_ramp
+      {
+        0.1273 0.7085
+        0.4879 0.7232
+      }
+    }
+    event expression "painBigUpper"
+    {
+      time 1.988889 3.808334
+      param "player\spy\emotion\emotion"
+      param2 "painBigUpper"
+      event_ramp
+      {
+        0.1182 0.4834 "curve_easein_to_curve_easeout"
+        0.4727 0.4834
+        0.8624 0.3247 "curve_easeout_to_curve_easeout"
+        1.0018 0.5793 "curve_easeout_to_curve_easeout"
+        1.5745 0.0627
+      }
+    }
+    event expression "happyBig"
+    {
+      time 0.005556 1.255555
+      param "player\spy\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.1273 0.5720
+        1.0636 0.5941
+      }
+    }
+    event expression "ah"
+    {
+      time 2.675000 3.858333
+      param "player\spy\phonemes\phonemes"
+      param2 "ah"
+      event_ramp
+      {
+        0.1273 0.5756
+        1.0144 0.9041
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "SceneRampTool" "100"
+  "GestureTool" "100"
+  "RampTool" "66"
+  "ExpressionTool" "100"
+  "CChoreoView" "240"
+}
+fps 60
+snap off
+ignorePhonemes off

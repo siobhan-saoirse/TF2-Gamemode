@@ -1,0 +1,47 @@
+// Choreo version 1
+event loop "Infinite"
+{
+  time 9.350000 -1.000000
+  param "0.000000"
+  loopcount "-1"
+}
+actor "Spy"
+{
+  channel "Anim01"
+  {
+    event sequence "Anim01"
+    {
+      time 0.002778 3.002778
+      param "SelectionMenu_Anim01"
+      fixedlength
+    }
+    event sequence "Idle"
+    {
+      time 3.002778 5.002779
+      param "SelectionMenu_Idle"
+    }
+    event sequence "Anim01"
+    {
+      time 5.008636 8.008636
+      param "SelectionMenu_Anim01"
+      fixedlength
+    }
+    event sequence "Idle"
+    {
+      time 8.016276 10.016276
+      param "SelectionMenu_Idle"
+    }
+  }
+}
+
+scalesettings
+{
+  "GestureTool" "100"
+  "ExpressionTool" "100"
+  "SceneRampTool" "100"
+  "RampTool" "100"
+  "CChoreoView" "80"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,156 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 8.531250 -1.000000
+  param "5.166000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_headbutt_start"
+    {
+      time 0.000000 8.533334
+      param "taunt_headbutt_start"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "medic_taunt_headbutt_start_1"
+    {
+      time 1.350000 2.041519
+      param "medic_taunt_headbutt_start_1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "medic_taunt_headbutt_start_2"
+    {
+      time 2.700833 3.710470
+      param "medic_taunt_headbutt_start_2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "medic_taunt_headbutt_start_3"
+    {
+      time 5.593333 7.134557
+      param "medic_taunt_headbutt_start_3"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "SFX"
+  {
+    event expression "yellingUpper"
+    {
+      time 3.798851 4.402299
+      param "player\medic\emotion\emotion"
+      param2 "yellingUpper"
+      event_ramp
+      {
+        0.3636 0.9176
+        0.4376 0.9412
+      }
+    }
+    event expression "evilHappyUpper"
+    {
+      time 3.982759 5.459770
+      param "player\medic\emotion\emotion"
+      param2 "evilHappyUpper"
+      event_ramp
+      {
+        0.2545 0.3569
+        1.2091 0.3569
+      }
+    }
+    event expression "yellingUpper"
+    {
+      time 1.051724 2.574713
+      param "player\medic\emotion\emotion"
+      param2 "yellingUpper"
+      event_ramp
+      {
+        0.3636 0.9176
+        1.1455 0.9412
+      }
+    }
+    event expression "yellingUpper"
+    {
+      time 6.465518 7.068965
+      param "player\medic\emotion\emotion"
+      param2 "yellingUpper"
+      event_ramp
+      {
+        0.3636 0.9176
+        0.4376 0.9412
+      }
+    }
+    event expression "evilHappyUpper"
+    {
+      time 6.534483 8.603449
+      param "player\medic\emotion\emotion"
+      param2 "evilHappyUpper"
+      event_ramp
+      {
+        0.2182 0.2078
+        0.4636 0.3176
+        1.7737 0.3412
+        2.0636 0.3412
+      }
+    }
+    event expression "evilHappyUpper"
+    {
+      time 5.517242 6.747128
+      param "player\medic\emotion\emotion"
+      param2 "evilHappyUpper"
+      event_ramp
+      {
+        0.2182 0.2078
+        0.4182 0.8353
+        0.8727 0.7333
+        1.1711 0.1843
+      }
+    }
+  }
+  channel "expression"
+  {
+    event expression "happyFull"
+    {
+      time 0.005208 8.515625
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.0091 0.6353
+        0.2280 0.6078
+        1.3020 0.6196
+        2.0020 0.8471
+        2.1818 0.9294
+        2.6909 0.5451
+        3.5182 0.5451
+        4.0909 0.9294
+        4.5273 0.9961
+        5.2727 0.9961
+        5.5545 0.3765
+        6.6455 0.3020
+        7.1000 0.9725
+        8.5104 1.0000
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

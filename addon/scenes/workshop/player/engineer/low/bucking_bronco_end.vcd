@@ -1,0 +1,35 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "Engineer"
+  {
+  }
+  channel "face"
+  {
+    event speak "engineer_bucking_bronco_sentry_upgrading2"
+    {
+      time 0.285748 1.812551
+      param "engineer_bucking_bronco_sentry_upgrading2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event sequence "bucking_bronco_end"
+    {
+      time 0.000000 1.541667
+      param "bucking_bronco_end"
+      fixedlength
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,106 @@
+// Choreo version 1
+event loop "flip_cycle"
+{
+  time 6.166666 -1.000000
+  param "1.400000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "flip_start"
+    {
+      time 0.000000 7.100000
+      param "taunt_flip_start"
+      fixedlength
+    }
+    event expression "upperHappy2"
+    {
+      time 3.743333 5.936667
+      param "player\heavy\emotion\emotion"
+      param2 "happy1"
+      event_ramp
+      {
+        0.1120 0.5412
+        1.8427 0.4863
+      }
+    }
+    event expression "upperAngry2"
+    {
+      time 2.243333 3.530000
+      param "player\heavy\emotion\emotion"
+      param2 "upperAngry2"
+      event_ramp
+      {
+        0.0980 0.3529
+        0.9800 0.2157
+      }
+    }
+  }
+  channel "audio"
+  {
+    event speak "heavy_taunt_flip_random_intro"
+    {
+      time 0.106667 2.120635
+      param "heavy_taunt_flip_random_intro"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.EngineerSwoosh"
+    {
+      time 0.066666 0.638798
+      param "Taunt.EngineerSwoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Heavy"
+    {
+      time 0.170000 1.290363
+      param "Selection.HeavyEquipment2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_taunt_flip_random_waiting"
+    {
+      time 2.330000 3.528141
+      param "heavy_taunt_flip_random_waiting"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "heavy_taunt_flip_random_waiting1"
+    {
+      time 3.963334 4.805443
+      param "heavy_taunt_flip_random_waiting1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig02Upper"
+    {
+      time -0.010000 1.376667
+      param "player\heavy\emotion\emotion"
+      param2 "happyBig02Upper"
+      event_ramp
+      {
+        0.0080 0.7882
+        1.1160 0.6431
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

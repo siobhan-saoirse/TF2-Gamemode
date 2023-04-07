@@ -1,0 +1,95 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "body"
+  {
+    event sequence "taunt04"
+    {
+      time -0.025641 4.841026
+      param "taunt04"
+      fixedlength
+    }
+    event speak "soldier_ch"
+    {
+      time 2.961538 4.073194
+      param "Soldier.Cheers05"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "defaultFaceUpper"
+    {
+      time 0.012820 1.012820
+      param "player\soldier\emotion\emotion"
+      param2 "defaultFaceUpper"
+    }
+    event expression "b"
+    {
+      time 2.743590 2.979000
+      param "player\soldier\phonemes\phonemes_weak"
+      param2 "b"
+    }
+    event expression "uw"
+    {
+      time 2.929487 3.280000
+      param "player\soldier\phonemes\phonemes_strong"
+      param2 "uw"
+      event_ramp
+      {
+        0.0627 0.8941 "curve_easein_to_curve_easeout"
+        0.1851 0.8792 "curve_easein_to_curve_easeout"
+        0.2955 0.0318
+        0.3478 0.0064
+      }
+    }
+    event expression "er2"
+    {
+      time 3.211539 3.408000
+      param "player\soldier\phonemes\phonemes"
+      param2 "er2"
+      event_ramp
+      {
+        0.0284 0.8030 "curve_easein_to_curve_easein"
+        0.1448 0.8008 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "ah"
+    {
+      time 3.346154 4.432000
+      param "player\soldier\phonemes\phonemes"
+      param2 "ah"
+      event_ramp
+      {
+        0.5119 0.9280 "curve_easein_to_curve_easeout"
+        0.6597 0.9492 "curve_easein_to_curve_easeout"
+        0.8396 0.6144 "curve_kochanek_to_curve_kochanek"
+        0.9724 0.5339 "curve_kochanek_to_curve_kochanek"
+      }
+    }
+    event expression "defaultFaceUpper"
+    {
+      time 4.221000 5.500000
+      param "player\soldier\emotion\emotion"
+      param2 "defaultFaceUpper"
+      event_ramp
+      {
+        0.0030 0.0106
+        0.1015 0.7436 "curve_easein_to_curve_easein"
+        0.2343 0.8708 "curve_easein_to_curve_easein"
+        1.1463 0.8178 "curve_easein_to_curve_easein"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "104"
+  "RampTool" "134"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

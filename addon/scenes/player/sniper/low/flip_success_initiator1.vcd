@@ -1,0 +1,68 @@
+// Choreo version 1
+event loop "flip_cycle"
+{
+  time 0.000000 -1.000000
+  param "0.000000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "flip_start"
+    {
+      time 0.000000 5.700000
+      param "taunt_flip_success_initiator"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event expression "happyBig"
+    {
+      time 2.000000 4.600000
+      param "player\sniper\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.2667 0.6667
+        2.2167 0.6784
+      }
+    }
+    event speak "snipes_taunt_flip_random_flipExert"
+    {
+      time 1.016667 1.812064
+      param "snipes_taunt_flip_random_flipExert"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "snipes_taunt_flip_random_flipAdmire"
+    {
+      time 2.000000 4.475374
+      param "snipes_taunt_flip_random_flipAdmire"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "snipes_taunt_flip_random_flipFlipAntic"
+    {
+      time 0.016667 0.661043
+      param "snipes_taunt_flip_random_flipFlipAntic"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

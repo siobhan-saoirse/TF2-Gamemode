@@ -1,0 +1,63 @@
+// Choreo version 1
+actor "snip"
+{
+  channel "body"
+  {
+    event sequence "taunt_highfiveSuccessFull"
+    {
+      time 0.000000 3.800000
+      param "taunt_highfiveSuccessFull"
+      fixedlength
+    }
+    event speak "Sniper.Go02"
+    {
+      time 0.086956 1.689133
+      param "Sniper.Go02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Sniper.GoodJob03"
+    {
+      time 2.456522 3.097973
+      param "Sniper.GoodJob03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "Cocky"
+    {
+      time 0.202899 2.181159
+      param "player\sniper\emotion\emotion"
+      param2 "Cocky"
+      event_ramp
+      {
+        0.0576 0.9979 "curve_easein_to_curve_easeout"
+        1.8061 0.9830 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "HappyBigClosed"
+    {
+      time 2.144928 3.768116
+      param "player\sniper\emotion\emotion"
+      param2 "HappyBigClosed"
+      event_ramp
+      {
+        0.1333 0.7941 "curve_easein_to_curve_easein"
+        1.6121 0.7622 "curve_easeout_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "92"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

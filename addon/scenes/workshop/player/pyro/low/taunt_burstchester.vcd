@@ -1,0 +1,59 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "Pyro"
+  {
+    event sequence "taunt_burstchester_pyro"
+    {
+      time 0.000000 4.958333
+      param "taunt_burstchester_pyro"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event speak "Flesh.ImpactHard"
+    {
+      time 0.026667 0.877098
+      param "Flesh.ImpactHard"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Flesh.ImpactSoft"
+    {
+      time 4.433332 5.449205
+      param "Flesh.ImpactSoft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_burstchester_Pyro_pain"
+    {
+      time 0.320000 0.706667
+      param "taunt_burstchester_Pyro_pain"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_burstchester_Pyro_happy"
+    {
+      time 1.986666 3.842675
+      param "taunt_burstchester_Pyro_happy"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

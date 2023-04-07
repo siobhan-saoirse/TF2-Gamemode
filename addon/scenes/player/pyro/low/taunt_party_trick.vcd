@@ -1,0 +1,91 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_party_trick"
+    {
+      time 0.006173 7.472840
+      param "taunt_party_trick"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "pyro_taunt_partytrick_1_blow"
+    {
+      time 0.092592 1.679826
+      param "pyro_taunt_partytrick_1_blow"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_partytrick_3_giggle"
+    {
+      time 3.425926 4.992615
+      param "pyro_taunt_partytrick_3_giggle"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_partytrick_4_laugh"
+    {
+      time 5.305555 7.058140
+      param "pyro_taunt_partytrick_4_laugh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_partytrick_2_make"
+    {
+      time 1.722223 3.140000
+      param "pyro_taunt_partytrick_2_make"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_partytrick_5_clap"
+    {
+      time 5.868056 6.072523
+      param "pyro_taunt_partytrick_5_clap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_partytrick_6_clap"
+    {
+      time 6.041667 6.277676
+      param "pyro_taunt_partytrick_6_clap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_partytrick_7_clap"
+    {
+      time 6.263889 6.501894
+      param "pyro_taunt_partytrick_7_clap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "pyro_taunt_partytrick_8_clap"
+    {
+      time 6.472223 6.716078
+      param "pyro_taunt_partytrick_8_clap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

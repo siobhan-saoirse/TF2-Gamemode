@@ -1,0 +1,66 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 2.535000 -1.000000
+  param "1.000000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveStart"
+    {
+      time 0.002347 2.869014
+      param "taunt_highFiveStart"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "Medic.Yes02"
+    {
+      time 0.164609 0.759620
+      param "Medic.Yes02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "evilHappy"
+    {
+      time 0.014403 1.014403
+      param "player\medic\emotion\emotion"
+      param2 "evilHappy"
+      event_ramp
+      {
+        0.0160 0.1922
+        0.8760 0.1569
+      }
+    }
+    event expression "happyFull"
+    {
+      time 0.543210 2.742798
+      param "player\medic\emotion\emotion"
+      param2 "happyFull"
+      event_ramp
+      {
+        0.1520 0.8118
+        0.5020 0.8157
+        1.2697 0.8941
+        1.7937 0.8275
+        2.1237 0.8157
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

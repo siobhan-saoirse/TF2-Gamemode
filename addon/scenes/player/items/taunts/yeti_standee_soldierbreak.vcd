@@ -1,0 +1,59 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "Anim"
+  {
+    event sequence "soldier_break"
+    {
+      time 0.000000 4.375000
+      param "soldier_break"
+      fixedlength
+    }
+  }
+  channel "sound"
+  {
+    event speak "taunt_headbutt_sfx_hand_swoosh"
+    {
+      time 0.018018 0.590150
+      param "taunt_headbutt_sfx_hand_swoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Wood.ImpactSoft"
+    {
+      time 0.441441 0.804253
+      param "Wood.ImpactSoft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_FlareGun.Grab"
+    {
+      time 3.004505 3.160514
+      param "Weapon_FlareGun.Grab"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Bat.DrawSwoosh1"
+    {
+      time 3.040541 3.606119
+      param "Weapon_Bat.DrawSwoosh1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

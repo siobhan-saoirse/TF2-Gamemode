@@ -1,0 +1,106 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_headbutt_success"
+    {
+      time 0.000000 4.500000
+      param "taunt_headbutt_success"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "scout_taunt_headbutt_success_windup"
+    {
+      time 0.396000 0.970762
+      param "scout_taunt_headbutt_success_windup"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "scout_taunt_headbutt_success_recover"
+    {
+      time 2.607000 4.716955
+      param "scout_taunt_headbutt_success_recover"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "SFX"
+  {
+    event speak "taunt_headbutt_sfx_head_impact"
+    {
+      time 1.740000 2.554150
+      param "Weapon_BaseballBat.HitFlesh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_headbutt_sfx_hand_swoosh"
+    {
+      time 0.000000 0.572132
+      param "Taunt.EngineerSwoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "MedicGloveSnap"
+    {
+      time 0.377778 1.036644
+      param "Taunt.MedicGloveSnap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "expression"
+  {
+    event expression "madUpper"
+    {
+      time 0.000000 1.520833
+      param "player\scout\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.2180 0.8980
+        1.3280 0.9451
+      }
+    }
+    event expression "scared"
+    {
+      time 1.276041 2.234375
+      param "player\scout\emotion\emotion"
+      param2 "scared"
+      event_ramp
+      {
+        0.2440 0.9608
+        0.7720 0.9765
+      }
+    }
+    event expression "painSmall"
+    {
+      time 1.979167 4.473959
+      param "player\scout\emotion\emotion"
+      param2 "painSmall"
+      event_ramp
+      {
+        0.3200 0.9843
+        2.4940 0.9843
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

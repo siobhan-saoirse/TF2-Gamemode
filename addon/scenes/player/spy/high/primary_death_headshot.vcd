@@ -1,0 +1,51 @@
+// Choreo version 1
+actor "demo"
+{
+  channel "body"
+  {
+    event sequence "primary_death_headshot"
+    {
+      time 0.000000 0.666667
+      param "primary_death_headshot"
+      fixedlength
+    }
+    event expression "scared"
+    {
+      time 0.011905 0.410714
+      param "player\spy\emotion\emotion"
+      param2 "scared"
+      event_ramp
+      {
+        0.0015 0.0148
+        0.1672 0.9915
+        0.3940 0.0042
+      }
+    }
+  }
+  channel "wav"
+  {
+    event expression "defaultFace"
+    {
+      time 0.267857 0.702381
+      param "player\spy\emotion\emotion"
+      param2 "defaultFace"
+      event_ramp
+      {
+        0.1313 0.9979
+        0.4358 1.0000
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "112"
+  "RampTool" "134"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

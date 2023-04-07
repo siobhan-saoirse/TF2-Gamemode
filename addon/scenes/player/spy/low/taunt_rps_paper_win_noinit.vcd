@@ -1,0 +1,124 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_rps_paper_win"
+    {
+      time 0.000000 6.933333
+      param "taunt_rps_paper_win"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "Spy.TeaseVictim"
+    {
+      time 3.971153 5.540450
+      param "spy_taunt_rps_win_11"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_rps_exert_08"
+    {
+      time 1.721153 2.218568
+      param "spy_taunt_rps_exert_08"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_rps_exert_09"
+    {
+      time 2.147436 2.602833
+      param "spy_taunt_rps_exert_09"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_rps_exert_10"
+    {
+      time 2.602564 3.101839
+      param "spy_taunt_rps_exert_10"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Shovel.Miss"
+    {
+      time 1.708334 2.324389
+      param "Weapon_Shovel.Miss"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Shovel.Miss"
+    {
+      time 2.163462 2.779516
+      param "Weapon_Shovel.Miss"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Shovel.Miss"
+    {
+      time 2.583334 3.199389
+      param "Weapon_Shovel.Miss"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Belltower.Ring"
+    {
+      time 3.532051 6.622731
+      param "Belltower.Ring"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "rps"
+  {
+  }
+  channel "facial"
+  {
+    event flexanimation "facail"
+    {
+      time 0.006410 6.939102
+      param ""
+      flexanimations samples_use_time
+      {
+        "happyBig"
+        {
+          0.2081 0.5373 curve_easein_to_curve_easein
+          3.2135 0.4393 curve_easeout_to_curve_easeout
+          3.3404 0.3138 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.5135 0.0196 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        "Smile02"
+        {
+          0.0838 0.0078 curve_easein_to_curve_easein
+          3.3404 0.0078 curve_easein_to_curve_easein
+          3.5946 0.4981 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        "scaredUpper"
+        {
+          0.0432 0.0275 curve_easeout_to_curve_easeout
+          3.3404 0.0392 curve_easein_to_curve_easein
+          3.6541 0.8275 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

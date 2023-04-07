@@ -1,0 +1,81 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 14.666000 -1.000000
+  param "4.083000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_pyro_pool"
+    {
+      time 0.000000 14.666666
+      param "taunt_pyro_pool"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "pyro_taunt_flip_random_flipAdmire"
+    {
+      time 5.885965 6.887575
+      param "pyro_taunt_flip_random_flipAdmire"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Player.Puff"
+    {
+      time 0.517543 0.781852
+      param "Player.Puff"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Physics.WaterSplash"
+    {
+      time 3.436491 4.742931
+      param "Physics.WaterSplash"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_demo_nuke_4_pour"
+    {
+      time 1.552631 3.717552
+      param "taunt_demo_nuke_4_pour"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spla"
+    {
+      time 4.982456 6.115767
+      param "soldier_taunt_coffee_5_can_splash"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spla"
+    {
+      time 9.754385 10.887695
+      param "soldier_taunt_coffee_5_can_splash"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

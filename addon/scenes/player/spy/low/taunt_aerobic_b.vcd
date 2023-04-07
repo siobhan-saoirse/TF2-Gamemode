@@ -1,0 +1,127 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 5.741000 -1.000000
+  param "4.961000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "Anim"
+  {
+    event speak "spy_taunt_flip_landings"
+    {
+      time 0.390341 1.189615
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 1.241531 1.773096
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 4.432395 4.913393
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 0.777968 1.497061
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 5.266691 5.798256
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 4.833021 5.552114
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 5.690863 6.171861
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_flip_random_flipFlipping"
+    {
+      time 0.060284 1.205976
+      param "spy_taunt_flip_random_flipFlipping"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "Smile01"
+    {
+      time 0.000000 4.961000
+      param "player\spy\emotion\emotion"
+      param2 "Smile01"
+      event_ramp
+      {
+        0.1255 0.0000
+        0.9843 0.2235
+        1.0765 0.7882
+        1.8706 0.8863
+        2.2804 0.9569
+        2.6370 0.1137
+        2.6771 0.3647
+        2.8383 0.8980
+        3.6015 1.0000
+        4.9610 1.0000
+      }
+    }
+    event expression "Smile01"
+    {
+      time 4.961000 5.768412
+      param "player\spy\emotion\emotion"
+      param2 "Smile01"
+    }
+    event sequence "taunt_aerobic_B"
+    {
+      time 0.000000 5.750000
+      param "taunt_aerobic_B"
+      fixedlength
+    }
+    event speak "taunt_spy_aerobic_finish"
+    {
+      time 2.333333 5.101043
+      param "taunt_spy_aerobic_finish"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

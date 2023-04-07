@@ -1,0 +1,67 @@
+// Choreo version 1
+event stoppoint "end"
+{
+  time 2.831051 -1.000000
+  param "noaction"
+}
+actor "Heavy"
+{
+  channel "Animation"
+  {
+    event sequence "scout_taunt_replay"
+    {
+      time 0.000000 2.833333
+      param "scout_taunt_replay"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event expression "happyBig"
+    {
+      time 0.399543 2.794520
+      param "player\scout\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0800 0.9953 "curve_easein_to_curve_easeout"
+        2.0695 1.0000 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "painSmall"
+    {
+      time 0.004566 0.527397
+      param "player\scout\emotion\emotion"
+      param2 "painSmall"
+      event_ramp
+      {
+        0.0467 0.3193 "curve_easein_to_curve_easein"
+        0.3567 0.3193 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "aa"
+    {
+      time 0.445206 2.723744
+      param "player\scout\phonemes\phonemes_strong"
+      param2 "aa"
+      event_ramp
+      {
+        0.1967 0.6294 "curve_easein_to_curve_easein"
+        2.0004 0.6200 "curve_easeout_to_curve_easeout"
+      }
+    }
+  }
+  faceposermodel "D:\dev\staging\game\tf\models\player\scout.mdl"
+}
+
+scalesettings
+{
+  "CChoreoView" "292"
+  "RampTool" "60"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

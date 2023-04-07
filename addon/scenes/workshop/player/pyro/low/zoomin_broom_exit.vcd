@@ -1,0 +1,27 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "demo"
+  {
+  }
+  channel "face"
+  {
+    event sequence "taunt_zoomin_broom_exit"
+    {
+      time 0.000000 1.433333
+      param "taunt_zoomin_broom_exit"
+      fixedlength
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

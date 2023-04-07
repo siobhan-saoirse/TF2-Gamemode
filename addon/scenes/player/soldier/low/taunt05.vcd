@@ -1,0 +1,95 @@
+// Choreo version 1
+actor "soldier"
+{
+  channel "body"
+  {
+    event sequence "taunt05"
+    {
+      time 0.000000 4.300000
+      param "taunt05"
+      fixedlength
+    }
+    event expression "specialAction01Upper"
+    {
+      time 0.000000 2.956790
+      param "player\soldier\emotion\emotion"
+      param2 "specialAction01Upper"
+      event_ramp
+      {
+        0.9486 0.0000 "curve_easeout_to_curve_easeout"
+        1.0800 0.0947
+        1.2000 0.5680 "curve_simple_cubic_to_curve_simple_cubic"
+        1.2943 0.4029 "curve_kochanek_to_curve_kochanek"
+        1.6829 0.4636 "curve_easeout_to_curve_easeout"
+        1.8143 0.7209 "curve_kochanek_late_to_curve_kochanek_late"
+        1.9571 0.5704
+        2.1029 0.0485
+        2.1686 0.0000 "curve_kochanek_late_to_curve_kochanek_late"
+      }
+    }
+    event expression "mad"
+    {
+      time 2.506173 4.302469
+      param "player\soldier\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.4029 0.8058
+        0.6473 0.9903 "curve_easein_to_curve_easeout"
+        0.6918 0.9951 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "painBig"
+    {
+      time 3.240741 3.648148
+      param "player\soldier\emotion\emotion"
+      param2 "painBig"
+      event_ramp
+      {
+        0.1982 0.8519
+      }
+    }
+  }
+  channel "Audio"
+  {
+    event speak "Soldier.PickAxeTaunt04"
+    {
+      time 1.358025 2.674125
+      param "Soldier.PickAxeTaunt04"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "madUpper"
+    {
+      time 1.378858 2.660108
+      param "player\soldier\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.0061 0.0103
+        0.0667 0.0879
+        0.2061 0.7649 "curve_easein_to_curve_easeout"
+        0.4848 0.8114 "curve_easein_to_curve_easeout"
+        0.6242 0.3540 "curve_easein_to_curve_easeout"
+        0.7242 0.6667 "curve_easein_to_curve_easeout"
+        0.8273 0.2842 "curve_easein_to_curve_easeout"
+        1.0333 0.3101 "curve_easein_to_curve_easeout"
+        1.1030 0.0465
+        1.2545 0.0103
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "108"
+  "RampTool" "220"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off
