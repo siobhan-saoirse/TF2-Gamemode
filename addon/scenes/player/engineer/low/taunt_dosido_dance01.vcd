@@ -1,0 +1,98 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_dosido_dance"
+    {
+      time 0.000000 8.300000
+      param "taunt_dosido_dance"
+      fixedlength
+    }
+    event expression "defaultFace"
+    {
+      time 0.014493 0.536232
+      param "player\engineer\emotion\emotion"
+      param2 "defaultFace"
+      event_ramp
+      {
+        0.0000 0.9922
+        0.3848 0.9961
+      }
+    }
+    event expression "happyBig"
+    {
+      time 0.000000 3.207275
+      param "player\engineer\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0091 0.6510
+        3.0667 0.6588
+      }
+    }
+    event expression "happyBigClosed"
+    {
+      time 3.079491 6.442686
+      param "player\engineer\emotion\emotion"
+      param2 "happyBigClosed"
+      event_ramp
+      {
+        0.1394 1.0000
+        3.1784 1.0000
+      }
+    }
+    event expression "happyBigClosed"
+    {
+      time 6.277779 8.282829
+      param "player\engineer\emotion\emotion"
+      param2 "happyBigClosed"
+      event_ramp
+      {
+        0.3091 0.6706
+        0.7545 0.6706
+        1.1333 0.2510
+        1.4727 0.6627
+        1.8849 0.6667
+      }
+    }
+  }
+  channel "audio"
+  {
+    event speak "eng_taunt_dosido_mid_rand"
+    {
+      time 2.782829 2.858294
+      param "eng_taunt_dosido_mid_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_dosido_end_rand"
+    {
+      time 5.858585 7.540263
+      param "eng_taunt_dosido_end_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_dosido_start_rand"
+    {
+      time 1.401212 1.476677
+      param "eng_taunt_dosido_start_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

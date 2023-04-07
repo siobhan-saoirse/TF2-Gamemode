@@ -1,0 +1,26 @@
+// Choreo version 1
+actor "demoman"
+{
+  channel "audio"
+  {
+    event speak "Demoman.dominationsoldier03"
+    {
+      time 0.000000 5.118000
+      param "Demoman.dominationsoldier03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off

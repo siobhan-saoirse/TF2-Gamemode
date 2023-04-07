@@ -1,0 +1,69 @@
+// Choreo version 1
+actor "eng"
+{
+  channel "body"
+  {
+    event sequence "taunt_hifiveFailFull"
+    {
+      time 0.000000 3.966667
+      param "taunt_hifiveFailFull"
+      fixedlength
+    }
+    event expression "defaultFace"
+    {
+      time 0.000000 0.326087
+      param "player\engineer\emotion\emotion"
+      param2 "defaultFace"
+      event_ramp
+      {
+        0.0000 0.9958
+        0.2182 0.9979 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "happyBig"
+    {
+      time 0.202899 1.884058
+      param "player\engineer\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.3242 0.9979 "curve_easein_to_curve_easein"
+        1.4818 0.9979 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "scared"
+    {
+      time 1.760870 2.514493
+      param "player\engineer\emotion\emotion"
+      param2 "scared"
+      event_ramp
+      {
+        0.0697 1.0000 "curve_easein_to_curve_easein"
+        0.5746 0.9936 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "mad"
+    {
+      time 2.413043 3.971014
+      param "player\engineer\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.4515 0.9851 "curve_easein_to_curve_easein"
+        1.5489 0.9979 "curve_easeout_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "92"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

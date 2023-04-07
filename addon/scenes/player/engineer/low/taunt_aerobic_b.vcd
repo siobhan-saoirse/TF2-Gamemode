@@ -1,0 +1,139 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 7.082000 -1.000000
+  param "6.294000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "Anim"
+  {
+    event speak "spy_taunt_flip_landings"
+    {
+      time 0.446539 1.245813
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 2.873052 3.592145
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 5.849875 6.472914
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 1.923645 2.455210
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 6.625430 7.156995
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 6.231103 6.950196
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 7.050284 7.673323
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBigClosed"
+    {
+      time 0.004167 6.368000
+      param "player\engineer\emotion\emotion"
+      param2 "happyBigClosed"
+      event_ramp
+      {
+        0.1059 0.0745
+        0.7608 0.0784
+        1.2529 0.5686
+        4.2608 0.5020
+        5.4569 0.5961
+        6.3638 1.0000
+      }
+    }
+    event speak "spy_taunt_flip_landings"
+    {
+      time 3.306388 4.105662
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_flip_landings"
+    {
+      time 2.321539 3.120813
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_dosido_start_rand"
+    {
+      time 0.011364 0.324652
+      param "eng_taunt_dosido_start_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "engineer_bucking_bronco_taunt_yells"
+    {
+      time 1.852273 3.733089
+      param "engineer_bucking_bronco_taunt_yells"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBigClosed"
+    {
+      time 6.368000 7.179167
+      param "player\engineer\emotion\emotion"
+      param2 "happyBigClosed"
+    }
+    event sequence "taunt_aerobic_B"
+    {
+      time 0.000000 7.166667
+      param "taunt_aerobic_B"
+      fixedlength
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

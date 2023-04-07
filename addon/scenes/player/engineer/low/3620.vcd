@@ -1,0 +1,39 @@
+// Choreo version 1
+actor "engineer"
+{
+  channel "audio"
+  {
+    event speak "engineer_meleedare02"
+    {
+      time 0.000000 1.365442
+      param "engineer_meleedare02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "painSmall"
+    {
+      time 0.010417 1.864584
+      param "player\engineer\emotion\emotion"
+      param2 "painSmall"
+      event_ramp
+      {
+        0.5909 0.0073
+        0.7879 0.7718 "curve_easein_to_curve_easein"
+        1.7242 0.7670 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

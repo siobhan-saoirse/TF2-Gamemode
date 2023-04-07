@@ -1,0 +1,49 @@
+// Choreo version 1
+actor "engineer"
+{
+  channel "audio"
+  {
+    event speak "engineer_dominationmedic08"
+    {
+      time 0.000000 4.114512
+      param "engineer_dominationmedic08"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happySmall"
+    {
+      time -0.010417 3.083334
+      param "player\engineer\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.2455 0.6796
+        2.9394 0.6117
+      }
+    }
+    event expression "happyBigClosed"
+    {
+      time 2.729167 5.229167
+      param "player\engineer\emotion\emotion"
+      param2 "happyBigClosed"
+      event_ramp
+      {
+        0.3091 0.8471
+        2.3758 0.7840
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

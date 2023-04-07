@@ -1,0 +1,38 @@
+// Choreo version 1
+actor "demoman"
+{
+  channel "audio"
+  {
+    event speak "Demoman.dominationheavy05"
+    {
+      time 0.000000 4.385215
+      param "Demoman.dominationheavy05"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "madUpper"
+    {
+      time 0.000000 4.437500
+      param "player\demo\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.5667 0.3481
+        3.4867 0.3556
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "56"
+  "ExpressionTool" "100"
+  "RampTool" "30"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

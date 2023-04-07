@@ -1,0 +1,917 @@
+//Extras
+Criterion "IsNotSaidSmalltown01_path05" "worldSaidSmalltown01_path05" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown01_path06" "worldSaidSmalltown01_path06" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown01_path07" "worldSaidSmalltown01_path07" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown01_path08" "worldSaidSmalltown01_path08" "!=1" "required" weight 0
+Criterion "IsNotSaidsmalltown02_path01" "worldSaidsmalltown02_path01" "!=1" "required" weight 0
+Criterion "IsNotSaidsmalltown02_path02" "worldSaidsmalltown02_path02" "!=1" "required" weight 0
+Criterion "IsNotSaidsmalltown02_path03" "worldSaidsmalltown02_path03" "!=1" "required" weight 0
+Criterion "IsNotSaidsmalltown02_path04" "worldSaidsmalltown02_path04" "!=1" "required" weight 0
+Criterion "IsNotSaidsmalltown02_path05" "worldSaidsmalltown02_path05" "!=1" "required" weight 0
+Criterion "IsNotSaidsmalltown02_path06" "worldSaidsmalltown02_path06" "!=1" "required" weight 0
+Criterion "IsNotSaidsmalltown02_path07" "worldSaidsmalltown02_path07" "!=1" "required" weight 0
+Criterion "IsNotSaidsmalltown02_path08" "worldSaidsmalltown02_path08" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown03_path01" "worldSaidSmalltown03_path01" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown03_path02" "worldSaidSmalltown03_path02" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown03_path03" "worldSaidSmalltown03_path03" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown03_path04" "worldSaidSmalltown03_path04" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown03_path05" "worldSaidSmalltown03_path05" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown03_path06" "worldSaidSmalltown03_path06" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown03_path07" "worldSaidSmalltown03_path07" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown03_path08" "worldSaidSmalltown03_path08" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown03_path09" "worldSaidSmalltown03_path09" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown03_path10" "worldSaidSmalltown03_path10" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown03_path11" "worldSaidSmalltown03_path11" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown03_path12" "worldSaidSmalltown03_path12" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown03_path13" "worldSaidSmalltown03_path13" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown04_path01" "worldSaidSmalltown04_path01" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown04_path02" "worldSaidSmalltown04_path02" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown04_path03" "worldSaidSmalltown04_path03" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown04_path04" "worldSaidSmalltown04_path04" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown04_path05" "worldSaidSmalltown04_path05" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown04_path06" "worldSaidSmalltown04_path06" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown04_path07" "worldSaidSmalltown04_path07" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown04_path08" "worldSaidSmalltown04_path08" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown04_path09" "worldSaidSmalltown04_path09" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown04_path10" "worldSaidSmalltown04_path10" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown05_path01" "worldSaidSmalltown05_path01" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown05_path02" "worldSaidSmalltown05_path02" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown05_path03" "worldSaidSmalltown05_path03" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown05_path04" "worldSaidSmalltown05_path04" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown05_path05" "worldSaidSmalltown05_path05" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown05_path06" "worldSaidSmalltown05_path06" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm01_path01" "worldSaidFarm01_path01" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm01_path02" "worldSaidFarm01_path02" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm01_path03" "worldSaidFarm01_path03" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm01_path04" "worldSaidFarm01_path04" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm01_path05" "worldSaidFarm01_path05" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm01_path06" "worldSaidFarm01_path06" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm01_path07" "worldSaidFarm01_path07" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm01_path08" "worldSaidFarm01_path08" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm02_path01" "worldSaidFarm02_path01" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm02_path02" "worldSaidFarm02_path02" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm02_path03" "worldSaidFarm02_path03" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm02_path04" "worldSaidFarm02_path04" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm02_path05" "worldSaidFarm02_path05" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm02_path06" "worldSaidFarm02_path06" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm02_path07" "worldSaidFarm02_path07" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm02_path08" "worldSaidFarm02_path08" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm02_path09" "worldSaidFarm02_path09" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm03_path01" "worldSaidFarm03_path01" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm03_path02" "worldSaidFarm03_path02" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm03_path03" "worldSaidFarm03_path03" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm03_path04" "worldSaidFarm03_path04" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm03_path05" "worldSaidFarm03_path05" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm03_path06" "worldSaidFarm03_path06" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm03_path07" "worldSaidFarm03_path07" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm04_path01" "worldSaidFarm04_path01" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm04_path02" "worldSaidFarm04_path02" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm04_path03" "worldSaidFarm04_path03" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm04_path04" "worldSaidFarm04_path04" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm04_path05" "worldSaidFarm04_path05" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm04_path06" "worldSaidFarm04_path06" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm04_path07" "worldSaidFarm04_path07" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm04_path08" "worldSaidFarm04_path08" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm04_path09" "worldSaidFarm04_path09" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm05_path01" "worldSaidFarm05_path01" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm05_path02" "worldSaidFarm05_path02" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm05_path03" "worldSaidFarm05_path03" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm05_path04" "worldSaidFarm05_path04" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm05_path05" "worldSaidFarm05_path05" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm03_path08" "worldSaidFarm03_path08" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown02_path09" "worldSaidSmalltown02_path09" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown03_path14" "worldSaidSmalltown03_path14" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown04_path11" "worldSaidSmalltown04_path11" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm04_path10" "worldSaidFarm04_path10" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm01_path09" "worldSaidFarm01_path09" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm02_path10" "worldSaidFarm02_path10" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm03_path09" "worldSaidFarm03_path09" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown01_path09" "worldSaidSmalltown01_path09" "!=1" "required" weight 0
+Criterion "IsNotSaidSmalltown01_path10" "worldSaidSmalltown01_path10" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm05_path06" "worldSaidFarm05_path06" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm05_path07" "worldSaidFarm05_path07" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm05_path08" "worldSaidFarm05_path08" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm05_path09" "worldSaidFarm05_path09" "!=1" "required" weight 0
+Criterion "IsNotSaidFarm03_path10" "worldSaidFarm03_path10" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path01" "worldSaidcrashcourse01_path01" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path02" "worldSaidcrashcourse01_path02" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path03" "worldSaidcrashcourse01_path03" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path15" "worldSaidcrashcourse01_path15" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path16" "worldSaidcrashcourse01_path16" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path04" "worldSaidcrashcourse01_path04" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path05" "worldSaidcrashcourse01_path05" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path06" "worldSaidcrashcourse01_path06" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path07" "worldSaidcrashcourse01_path07" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path08" "worldSaidcrashcourse01_path08" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path09" "worldSaidcrashcourse01_path09" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path10" "worldSaidcrashcourse01_path10" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path11" "worldSaidcrashcourse01_path11" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path12" "worldSaidcrashcourse01_path12" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path13" "worldSaidcrashcourse01_path13" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path14" "worldSaidcrashcourse01_path14" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path19" "worldSaidcrashcourse01_path19" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path18" "worldSaidcrashcourse01_path18" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path17" "worldSaidcrashcourse01_path17" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path21" "worldSaidcrashcourse01_path21" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path20" "worldSaidcrashcourse01_path20" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path24" "worldSaidcrashcourse01_path24" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse01_path25" "worldSaidcrashcourse01_path25" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse02_path01" "worldSaidcrashcourse02_path01" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse02_path02" "worldSaidcrashcourse02_path02" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse02_path04" "worldSaidcrashcourse02_path04" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse02_path05" "worldSaidcrashcourse02_path05" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse02_path06" "worldSaidcrashcourse02_path06" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse02_path07" "worldSaidcrashcourse02_path07" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse02_path09" "worldSaidcrashcourse02_path09" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse02_path10" "worldSaidcrashcourse02_path10" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse02_path11" "worldSaidcrashcourse02_path11" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse02_path12" "worldSaidcrashcourse02_path12" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse02_path08" "worldSaidcrashcourse02_path08" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse02_intro" "worldSaidcrashcourse02_intro" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcourse02_path14" "worldSaidcrashcourse02_path14" "!=1" "required" weight 0
+//##LEAVEHERE1##
+
+Criterion "IsSaidFarm05_path08" "worldSaidFarm05_path08" ">0" "required" 
+Criterion "IsSaidFarm05_path10" "worldSaidFarm05_path10" ">0" "required" 
+Criterion "IsNotSaidcrashcoursebirds" "worldSaidcrashcoursebirds" "!=1" "required" weight 0
+Criterion "IsNotSaidcrashcoursealley" "worldSaidcrashcoursealley" "!=1" "required" weight 0
+
+
+//Is Remarkable lists
+
+criterion "IsSmalltown01_path05"   "subject" "Smalltown01_path05"	  required
+criterion "IsSmalltown01_path06"   "subject" "Smalltown01_path06"	  required
+criterion "IsSmalltown01_path07"   "subject" "Smalltown01_path07"	  required
+criterion "IsSmalltown01_path08"   "subject" "Smalltown01_path08"	  required
+criterion "Issmalltown02_path01"   "subject" "smalltown02_path01"	  required
+criterion "Issmalltown02_path02"   "subject" "smalltown02_path02"	  required
+criterion "Issmalltown02_path03"   "subject" "smalltown02_path03"	  required
+criterion "Issmalltown02_path04"   "subject" "smalltown02_path04"	  required
+criterion "Issmalltown02_path05"   "subject" "smalltown02_path05"	  required
+criterion "Issmalltown02_path06"   "subject" "smalltown02_path06"	  required
+criterion "Issmalltown02_path07"   "subject" "smalltown02_path07"	  required
+criterion "Issmalltown02_path08"   "subject" "smalltown02_path08"	  required
+criterion "IsSmalltown03_path01"   "subject" "Smalltown03_path01"	  required
+criterion "IsSmalltown03_path02"   "subject" "Smalltown03_path02"	  required
+criterion "IsSmalltown03_path03"   "subject" "Smalltown03_path03"	  required
+criterion "IsSmalltown03_path04"   "subject" "Smalltown03_path04"	  required
+criterion "IsSmalltown03_path05"   "subject" "Smalltown03_path05"	  required
+criterion "IsSmalltown03_path06"   "subject" "Smalltown03_path06"	  required
+criterion "IsSmalltown03_path07"   "subject" "Smalltown03_path07"	  required
+criterion "IsSmalltown03_path08"   "subject" "Smalltown03_path08"	  required
+criterion "IsSmalltown03_path09"   "subject" "Smalltown03_path09"	  required
+criterion "IsSmalltown03_path10"   "subject" "Smalltown03_path10"	  required
+criterion "IsSmalltown03_path11"   "subject" "Smalltown03_path11"	  required
+criterion "IsSmalltown03_path12"   "subject" "Smalltown03_path12"	  required
+criterion "IsSmalltown03_path13"   "subject" "Smalltown03_path13"	  required
+criterion "IsSmalltown04_path01"   "subject" "Smalltown04_path01"	  required
+criterion "IsSmalltown04_path02"   "subject" "Smalltown04_path02"	  required
+criterion "IsSmalltown04_path03"   "subject" "Smalltown04_path03"	  required
+criterion "IsSmalltown04_path04"   "subject" "Smalltown04_path04"	  required
+criterion "IsSmalltown04_path05"   "subject" "Smalltown04_path05"	  required
+criterion "IsSmalltown04_path06"   "subject" "Smalltown04_path06"	  required
+criterion "IsSmalltown04_path07"   "subject" "Smalltown04_path07"	  required
+criterion "IsSmalltown04_path08"   "subject" "Smalltown04_path08"	  required
+criterion "IsSmalltown04_path09"   "subject" "Smalltown04_path09"	  required
+criterion "IsSmalltown04_path10"   "subject" "Smalltown04_path10"	  required
+criterion "IsSmalltown05_path01"   "subject" "Smalltown05_path01"	  required
+criterion "IsSmalltown05_path02"   "subject" "Smalltown05_path02"	  required
+criterion "IsSmalltown05_path03"   "subject" "Smalltown05_path03"	  required
+criterion "IsSmalltown05_path04"   "subject" "Smalltown05_path04"	  required
+criterion "IsSmalltown05_path05"   "subject" "Smalltown05_path05"	  required
+criterion "IsSmalltown05_path06"   "subject" "Smalltown05_path06"	  required
+criterion "IsFarm01_path01"   "subject" "Farm01_path01"	  required
+criterion "IsFarm01_path02"   "subject" "Farm01_path02"	  required
+criterion "IsFarm01_path03"   "subject" "Farm01_path03"	  required
+criterion "IsFarm01_path04"   "subject" "Farm01_path04"	  required
+criterion "IsFarm01_path05"   "subject" "Farm01_path05"	  required
+criterion "IsFarm01_path06"   "subject" "Farm01_path06"	  required
+criterion "IsFarm01_path07"   "subject" "Farm01_path07"	  required
+criterion "IsFarm01_path08"   "subject" "Farm01_path08"	  required
+criterion "IsFarm02_path01"   "subject" "Farm02_path01"	  required
+criterion "IsFarm02_path02"   "subject" "Farm02_path02"	  required
+criterion "IsFarm02_path03"   "subject" "Farm02_path03"	  required
+criterion "IsFarm02_path04"   "subject" "Farm02_path04"	  required
+criterion "IsFarm02_path05"   "subject" "Farm02_path05"	  required
+criterion "IsFarm02_path06"   "subject" "Farm02_path06"	  required
+criterion "IsFarm02_path07"   "subject" "Farm02_path07"	  required
+criterion "IsFarm02_path08"   "subject" "Farm02_path08"	  required
+criterion "IsFarm02_path09"   "subject" "Farm02_path09"	  required
+criterion "IsFarm03_path01"   "subject" "Farm03_path01"	  required
+criterion "IsFarm03_path02"   "subject" "Farm03_path02"	  required
+criterion "IsFarm03_path03"   "subject" "Farm03_path03"	  required
+criterion "IsFarm03_path04"   "subject" "Farm03_path04"	  required
+criterion "IsFarm03_path05"   "subject" "Farm03_path05"	  required
+criterion "IsFarm03_path06"   "subject" "Farm03_path06"	  required
+criterion "IsFarm03_path07"   "subject" "Farm03_path07"	  required
+criterion "IsFarm04_path01"   "subject" "Farm04_path01"	  required
+criterion "IsFarm04_path02"   "subject" "Farm04_path02"	  required
+criterion "IsFarm04_path03"   "subject" "Farm04_path03"	  required
+criterion "IsFarm04_path04"   "subject" "Farm04_path04"	  required
+criterion "IsFarm04_path05"   "subject" "Farm04_path05"	  required
+criterion "IsFarm04_path06"   "subject" "Farm04_path06"	  required
+criterion "IsFarm04_path07"   "subject" "Farm04_path07"	  required
+criterion "IsFarm04_path08"   "subject" "Farm04_path08"	  required
+criterion "IsFarm04_path09"   "subject" "Farm04_path09"	  required
+criterion "IsFarm05_path01"   "subject" "Farm05_path01"	  required
+criterion "IsFarm05_path02"   "subject" "Farm05_path02"	  required
+criterion "IsFarm05_path03"   "subject" "Farm05_path03"	  required
+criterion "IsFarm05_path04"   "subject" "Farm05_path04"	  required
+criterion "IsFarm05_path05"   "subject" "Farm05_path05"	  required
+criterion "IsFarm03_path08"   "subject" "Farm03_path08"	  required
+criterion "IsSmalltown02_path09"   "subject" "Smalltown02_path09"	  required
+criterion "IsSmalltown03_path14"   "subject" "Smalltown03_path14"	  required
+criterion "IsSmalltown04_path11"   "subject" "Smalltown04_path11"	  required
+criterion "IsFarm04_path10"   "subject" "Farm04_path10"	  required
+criterion "IsFarm01_path09"   "subject" "Farm01_path09"	  required
+criterion "IsFarm02_path10"   "subject" "Farm02_path10"	  required
+criterion "IsFarm03_path09"   "subject" "Farm03_path09"	  required
+criterion "IsSmalltown01_path09"   "subject" "Smalltown01_path09"	  required
+criterion "IsSmalltown01_path10"   "subject" "Smalltown01_path10"	  required
+criterion "IsFarm05_path06"   "subject" "Farm05_path06"	  required
+criterion "IsFarm05_path07"   "subject" "Farm05_path07"	  required
+criterion "IsFarm05_path08"   "subject" "Farm05_path08"	  required
+criterion "IsFarm05_path09"   "subject" "Farm05_path09"	  required
+criterion "IsFarm03_path10"   "subject" "Farm03_path10"	  required
+criterion "Iscrashcourse01_path01"   "subject" "crashcourse01_path01"	  required
+criterion "Iscrashcourse01_path02"   "subject" "crashcourse01_path02"	  required
+criterion "Iscrashcourse01_path03"   "subject" "crashcourse01_path03"	  required
+criterion "Iscrashcourse01_path15"   "subject" "crashcourse01_path15"	  required
+criterion "Iscrashcourse01_path16"   "subject" "crashcourse01_path16"	  required
+criterion "Iscrashcourse01_path04"   "subject" "crashcourse01_path04"	  required
+criterion "Iscrashcourse01_path05"   "subject" "crashcourse01_path05"	  required
+criterion "Iscrashcourse01_path06"   "subject" "crashcourse01_path06"	  required
+criterion "Iscrashcourse01_path07"   "subject" "crashcourse01_path07"	  required
+criterion "Iscrashcourse01_path08"   "subject" "crashcourse01_path08"	  required
+criterion "Iscrashcourse01_path09"   "subject" "crashcourse01_path09"	  required
+criterion "Iscrashcourse01_path10"   "subject" "crashcourse01_path10"	  required
+criterion "Iscrashcourse01_path11"   "subject" "crashcourse01_path11"	  required
+criterion "Iscrashcourse01_path12"   "subject" "crashcourse01_path12"	  required
+criterion "Iscrashcourse01_path13"   "subject" "crashcourse01_path13"	  required
+criterion "Iscrashcourse01_path14"   "subject" "crashcourse01_path14"	  required
+criterion "Iscrashcourse01_path19"   "subject" "crashcourse01_path19"	  required
+criterion "Iscrashcourse01_path18"   "subject" "crashcourse01_path18"	  required
+criterion "Iscrashcourse01_path17"   "subject" "crashcourse01_path17"	  required
+criterion "Iscrashcourse01_path21"   "subject" "crashcourse01_path21"	  required
+criterion "Iscrashcourse01_path20"   "subject" "crashcourse01_path20"	  required
+criterion "Iscrashcourse01_path24"   "subject" "crashcourse01_path24"	  required
+criterion "Iscrashcourse01_path25"   "subject" "crashcourse01_path25"	  required
+criterion "Iscrashcourse02_path01"   "subject" "crashcourse02_path01"	  required
+criterion "Iscrashcourse02_path02"   "subject" "crashcourse02_path02"	  required
+criterion "Iscrashcourse02_path04"   "subject" "crashcourse02_path04"	  required
+criterion "Iscrashcourse02_path05"   "subject" "crashcourse02_path05"	  required
+criterion "Iscrashcourse02_path06"   "subject" "crashcourse02_path06"	  required
+criterion "Iscrashcourse02_path07"   "subject" "crashcourse02_path07"	  required
+criterion "Iscrashcourse02_path09"   "subject" "crashcourse02_path09"	  required
+criterion "Iscrashcourse02_path10"   "subject" "crashcourse02_path10"	  required
+criterion "Iscrashcourse02_path11"   "subject" "crashcourse02_path11"	  required
+criterion "Iscrashcourse02_path12"   "subject" "crashcourse02_path12"	  required
+criterion "Iscrashcourse02_path08"   "subject" "crashcourse02_path08"	  required
+criterion "Iscrashcourse02_intro"   "subject" "crashcourse02_intro"	  required
+criterion "Iscrashcourse02_starta"   "subject" "crashcourse02_starta"	  required
+criterion "Iscrashcourse02_startb"   "subject" "crashcourse02_startb"	  required
+criterion "Iscrashcourse02_startc"   "subject" "crashcourse02_startc"	  required
+criterion "Iscrashcourse02_startd"   "subject" "crashcourse02_startd"	  required
+criterion "Iscrashcourse02_path14"   "subject" "crashcourse02_path14"	  required
+//##LEAVEHERE2##
+
+
+//AUTOGENERATED FILES REMOVED
+
+
+//Survival Mode
+criterion "ConceptSetSurvivalMode" "Concept" "SetSurvivalMode"	  required
+criterion "IsSurvivalMode" "worldSurvivalMode" "1"	  required
+criterion "NotSurvivalMode" "worldSurvivalMode" "<1"	  required
+
+
+//CrashCourseIntro
+criterion "ConceptIntroCrash" "Concept" "introCrashCourse"	  required
+criterion "IsCrashCourse"	"map"	"c9m1_alleys"	required weight 10
+
+//CrashCourse01
+criterion "NotHowitzerFired" "worldHowitzerWasFired" "<1" required
+criterion "IsHowitzerFired" "worldHowitzerWasFired" "1" required
+criterion "NotHowitzerSeen" "worldHowitzerSeen" "<1" required
+criterion "IsHowitzerSeen" "worldHowitzerSeen" "1" required
+criterion "IsHowitzerNag" "worldNagHowitzer" "<1" required
+criterion "NotHowitzerNag" "worldNagHowitzer" "1" required
+criterion "NotCrash01ThroughBridge" "worldCrash01ThroughBridge" "<1" required
+criterion "NotSaidCrash01SafeHouse" "worldSaidCrash01SafeHouse" "<1" required
+criterion "NotSaidMegaMobPilot" "worldSaidMegaMobPilot" "<1" required
+
+//CrashCourse02
+criterion "IsCrash02IntroReady" "worldCrash02IntroReady" "1" required
+criterion "NotCrash02IntroReady" "worldCrash02IntroReady" "<1" required
+criterion "NotCrash02IntroPaused" "worldCrash02IntroPaused" "<1" required
+criterion "ConceptCrashFinaleGeneratorPress" "Concept" "CrashFinaleGeneratorPress" required //started pressing the power generator button
+criterion "ConceptCrashFinaleGeneratorUnPress" "Concept" "CrashFinaleGeneratorUnPress" required //stoppen pressing the power generator button before power is on
+criterion "ConceptCrashFinaleGeneratorOn" "Concept" "CrashFinaleGeneratorOn" required //finished pressing the power generator button
+criterion "ConceptCrashFinaleGeneratorBreak" "Concept" "CrashFinaleGeneratorBreak" required //Generator breaks during finale
+criterion "ConceptCrashFinaleTruckReady" "Concept" "CrashFinaleTruckReady" required //Truck is down and ready to go! GO GO GO!
+criterion "ConceptCrashFinaleTruckReadySpk" "Concept" "CrashFinaleTruckReadySpk" required //Truck is down and ready to go! GO GO GO!
+criterion "NotCrashFinaleSaidGeneratorBroken" "worldCrashFinaleSaidGeneratorBroken" "<1" required
+criterion "IsCrashFinaleGeneratorBroken" "worldCrashFinaleGeneratorBroken" "1" required
+criterion "ConceptCrashFinaleGenerator2Press" "Concept" "CrashFinaleGenerator2Press" required //started pressing the power generator button
+criterion "ConceptCrashFinaleGenerator2UnPress" "Concept" "CrashFinaleGenerator2UnPress" required //stoppen pressing the power generator button before power is on
+criterion "ConceptCrashFinaleGenerator2On" "Concept" "CrashFinaleGenerator2On" required //finished pressing the power generator button
+criterion "NotCrash02FinaleStarted" "worldCrash02FinaleStarted" "<1" required
+criterion "IsCrash02FinaleStarted" "worldCrash02FinaleStarted" "1" required
+criterion "IsCrashFinalePressingManager" "worldCrashFinalePressingManager" "1" required
+criterion "IsCrashFinalePressingBiker" "worldCrashFinalePressingBiker" "1" required
+criterion "IsCrashFinalePressingTeenGirl" "worldCrashFinalePressingTeenGirl" "1" required
+criterion "IsCrashFinalePressingNamVet" "worldCrashFinalePressingNamVet" "1" required
+criterion "ConceptCrashFinaleGeneratorUnPressSpeak" "Concept" "CrashFinaleGeneratorUnPressSpeak" required
+criterion "IsCrashFinaleTruckReady" "worldCrashFinaleTruckReady" "1" required
+criterion "NotCrashFinaleTruckNagPaused" "worldCrashFinaleTruckNagPaused" "<1" required
+criterion "NotCrashFinaleNagPaused" "worldCrashFinaleNagPaused" "<1" required
+criterion "NotNagCrashManager" "worldNagCrashManager" "<1" required
+criterion "NotNagCrashTeenGirl" "worldNagCrashTeenGirl" "<1" required
+criterion "NotNagCrashBiker" "worldNagCrashBiker" "<1" required
+criterion "NotNagCrashNamVet" "worldNagCrashNamVet" "<1" required
+
+
+//generator_break_timer OnTimer
+
+
+
+
+//##DO NOT EDIT BETWEEN AUTOGENERATED ORATOR START & AUTOGENERATED ORATOR END
+//##AUTOGENERATED ORATOR START
+
+
+//--------------------------------------------------------------------------------------------------------------
+// DLC2 - Crescendo
+//--------------------------------------------------------------------------------------------------------------
+Response Crash01BridgeEntryOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  //
+}
+Rule Crash01BridgeEntryOrator
+{
+	criteria ConceptCrash01BridgeEntry
+	ApplyContext "Crash01ThroughBridge:1:0"
+	applycontexttoworld
+	Response Crash01BridgeEntryOrator
+}
+
+Response HowitzerBurnEndOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then any HowitzerBurnEnd00 foo:0 0.05 //
+}
+Rule HowitzerBurnEndOrator
+{
+	criteria ConceptHowitzerBurnEnd NotSurvivalMode
+	Response HowitzerBurnEndOrator
+}
+
+Response HowitzerFiredOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  //
+}
+Rule HowitzerFiredOrator
+{
+	criteria ConceptHowitzerFired NotSurvivalMode
+	ApplyContext "HowitzerWasFired:1:0"
+	applycontexttoworld
+	Response HowitzerFiredOrator
+}
+
+
+//--------------------------------------------------------------------------------------------------------------
+// DLC2 - Finale
+//--------------------------------------------------------------------------------------------------------------
+Response CrashFinaleGen2UnPressBOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then Biker CrashFinaleGeneratorUnPressSpeak foo:0 0.05 //
+}
+Rule CrashFinaleGen2UnPressBOrator
+{
+	criteria ConceptCrashFinaleGenerator2UnPress IsCrashFinalePressingBiker
+	Response CrashFinaleGen2UnPressBOrator
+}
+
+Response CrashFinaleGen2UnPressMOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then Manager CrashFinaleGeneratorUnPressSpeak foo:0 0.05 //
+}
+Rule CrashFinaleGen2UnPressMOrator
+{
+	criteria ConceptCrashFinaleGenerator2UnPress IsCrashFinalePressingManager
+	Response CrashFinaleGen2UnPressMOrator
+}
+
+Response CrashFinaleGen2UnPressNOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then NamVet CrashFinaleGeneratorUnPressSpeak foo:0 0.05 //
+}
+Rule CrashFinaleGen2UnPressNOrator
+{
+	criteria ConceptCrashFinaleGenerator2UnPress IsCrashFinalePressingNamVet
+	Response CrashFinaleGen2UnPressNOrator
+}
+
+Response CrashFinaleGen2UnPressTOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then TeenGirl CrashFinaleGeneratorUnPressSpeak foo:0 0.05 //
+}
+Rule CrashFinaleGen2UnPressTOrator
+{
+	criteria ConceptCrashFinaleGenerator2UnPress IsCrashFinalePressingTeenGirl
+	Response CrashFinaleGen2UnPressTOrator
+}
+
+Response CrashFinaleGenerator2OnBOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then Biker CrashFinaleGenerator2OnSpk foo:0 0.05 //
+}
+Rule CrashFinaleGenerator2OnBOrator
+{
+	criteria ConceptCrashFinaleGenerator2On PanicEventBiker
+	ApplyContext "CrashFinaleGeneratorBroken:0:0,CrashFinaleSaidGeneratorBroken:1:0"
+	applycontexttoworld
+	Response CrashFinaleGenerator2OnBOrator
+}
+
+Response CrashFinaleGenerator2OnMOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then Manager CrashFinaleGenerator2OnSpk foo:0 0.05 //
+}
+Rule CrashFinaleGenerator2OnMOrator
+{
+	criteria ConceptCrashFinaleGenerator2On PanicEventManager
+	ApplyContext "CrashFinaleGeneratorBroken:0:0,CrashFinaleSaidGeneratorBroken:1:0"
+	applycontexttoworld
+	Response CrashFinaleGenerator2OnMOrator
+}
+
+Response CrashFinaleGenerator2OnNOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then NamVet CrashFinaleGenerator2OnSpk foo:0 0.05 //
+}
+Rule CrashFinaleGenerator2OnNOrator
+{
+	criteria ConceptCrashFinaleGenerator2On PanicEventNamVet
+	ApplyContext "CrashFinaleGeneratorBroken:0:0,CrashFinaleSaidGeneratorBroken:1:0"
+	applycontexttoworld
+	Response CrashFinaleGenerator2OnNOrator
+}
+
+Response CrashFinaleGenerator2OnTOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then TeenGirl CrashFinaleGenerator2OnSpk foo:0 0.05 //
+}
+Rule CrashFinaleGenerator2OnTOrator
+{
+	criteria ConceptCrashFinaleGenerator2On PanicEventTeenGirl
+	ApplyContext "CrashFinaleGeneratorBroken:0:0,CrashFinaleSaidGeneratorBroken:1:0"
+	applycontexttoworld
+	Response CrashFinaleGenerator2OnTOrator
+}
+
+Response CrashFinaleGenerator2PressBOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then Biker CrashFinaleGenerator2Speak foo:0 0.05 //
+}
+Rule CrashFinaleGenerator2PressBOrator
+{
+	criteria ConceptCrashFinaleGenerator2Press PanicEventBiker
+	ApplyContext "CrashFinaleSaidGeneratorBroken:1:15,CrashFinalePressingBiker:1:7"
+	applycontexttoworld
+	Response CrashFinaleGenerator2PressBOrator
+}
+
+Response CrashFinaleGenerator2PressMOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then Manager CrashFinaleGenerator2Speak foo:0 0.05 //
+}
+Rule CrashFinaleGenerator2PressMOrator
+{
+	criteria ConceptCrashFinaleGenerator2Press PanicEventManager
+	ApplyContext "CrashFinaleSaidGeneratorBroken:1:15,CrashFinalePressingManager:1:7"
+	applycontexttoworld
+	Response CrashFinaleGenerator2PressMOrator
+}
+
+Response CrashFinaleGenerator2PressNOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then NamVet CrashFinaleGenerator2Speak foo:0 0.05 //
+}
+Rule CrashFinaleGenerator2PressNOrator
+{
+	criteria ConceptCrashFinaleGenerator2Press PanicEventNamVet
+	ApplyContext "CrashFinaleSaidGeneratorBroken:1:15,CrashFinalePressingNamVet:1:7"
+	applycontexttoworld
+	Response CrashFinaleGenerator2PressNOrator
+}
+
+Response CrashFinaleGenerator2PressTOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then TeenGirl CrashFinaleGenerator2Speak foo:0 0.05 //
+}
+Rule CrashFinaleGenerator2PressTOrator
+{
+	criteria ConceptCrashFinaleGenerator2Press PanicEventTeenGirl
+	ApplyContext "CrashFinaleSaidGeneratorBroken:1:15,CrashFinalePressingTeenGirl:1:7"
+	applycontexttoworld
+	Response CrashFinaleGenerator2PressTOrator
+}
+
+Response CrashFinaleGeneratorBreakOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then any CrashFinaleGeneratorBreakSpk foo:0 0.05 //
+}
+Rule CrashFinaleGeneratorBreakOrator
+{
+	criteria ConceptCrashFinaleGeneratorBreak NotSurvivalMode
+	ApplyContext "CrashFinaleGeneratorBroken:1:0,CrashFinaleSaidGeneratorBroken:1:10"
+	applycontexttoworld
+	Response CrashFinaleGeneratorBreakOrator
+}
+
+Response CrashFinaleGeneratorOnBOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  //
+}
+Rule CrashFinaleGeneratorOnBOrator
+{
+	criteria ConceptCrashFinaleGeneratorOn PanicEventBiker
+	ApplyContext "Crash02FinaleStarted:1:0,CrashFinaleNagPaused:1:6"
+	applycontexttoworld
+	Response CrashFinaleGeneratorOnBOrator
+}
+
+Response CrashFinaleGeneratorOnMOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  //
+}
+Rule CrashFinaleGeneratorOnMOrator
+{
+	criteria ConceptCrashFinaleGeneratorOn PanicEventManager
+	ApplyContext "Crash02FinaleStarted:1:0,CrashFinaleNagPaused:1:6"
+	applycontexttoworld
+	Response CrashFinaleGeneratorOnMOrator
+}
+
+Response CrashFinaleGeneratorOnNOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  //
+}
+Rule CrashFinaleGeneratorOnNOrator
+{
+	criteria ConceptCrashFinaleGeneratorOn PanicEventNamVet
+	ApplyContext "Crash02FinaleStarted:1:0,CrashFinaleNagPaused:1:6"
+	applycontexttoworld
+	Response CrashFinaleGeneratorOnNOrator
+}
+
+Response CrashFinaleGeneratorOnTOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  //
+}
+Rule CrashFinaleGeneratorOnTOrator
+{
+	criteria ConceptCrashFinaleGeneratorOn PanicEventTeenGirl
+	ApplyContext "Crash02FinaleStarted:1:0,CrashFinaleNagPaused:1:6"
+	applycontexttoworld
+	Response CrashFinaleGeneratorOnTOrator
+}
+
+Response CrashFinaleGeneratorPressBOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then Biker CrashFinaleGeneratorSpeak foo:0 0.05 //
+}
+Rule CrashFinaleGeneratorPressBOrator
+{
+	criteria ConceptCrashFinaleGeneratorPress PanicEventBiker
+	ApplyContext "CrashFinalePressingBiker:1:6,SaidCreshendoStartNear:1:0"
+	applycontexttoworld
+	Response CrashFinaleGeneratorPressBOrator
+}
+
+Response CrashFinaleGeneratorPressMOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then Manager CrashFinaleGeneratorSpeak foo:0 0.05 //
+}
+Rule CrashFinaleGeneratorPressMOrator
+{
+	criteria ConceptCrashFinaleGeneratorPress PanicEventManager
+	ApplyContext "CrashFinalePressingManager:1:6,SaidCreshendoStartNear:1:0"
+	applycontexttoworld
+	Response CrashFinaleGeneratorPressMOrator
+}
+
+Response CrashFinaleGeneratorPressNOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then NamVet CrashFinaleGeneratorSpeak foo:0 0.05 //
+}
+Rule CrashFinaleGeneratorPressNOrator
+{
+	criteria ConceptCrashFinaleGeneratorPress PanicEventNamVet
+	ApplyContext "CrashFinalePressingNamVet:1:6,SaidCreshendoStartNear:1:0"
+	applycontexttoworld
+	Response CrashFinaleGeneratorPressNOrator
+}
+
+Response CrashFinaleGeneratorPressTOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then TeenGirl CrashFinaleGeneratorSpeak foo:0 0.05 //
+}
+Rule CrashFinaleGeneratorPressTOrator
+{
+	criteria ConceptCrashFinaleGeneratorPress PanicEventTeenGirl
+	ApplyContext "CrashFinalePressingTeenGirl:1:6,SaidCreshendoStartNear:1:0"
+	applycontexttoworld
+	Response CrashFinaleGeneratorPressTOrator
+}
+
+Response CrashFinaleGenUnPressBOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then Biker CrashFinaleGeneratorUnPressSpeak foo:0 0.05 //
+}
+Rule CrashFinaleGenUnPressBOrator
+{
+	criteria ConceptCrashFinaleGeneratorUnPress IsCrashFinalePressingBiker NotCrash02FinaleStarted
+	Response CrashFinaleGenUnPressBOrator
+}
+
+Response CrashFinaleGenUnPressMOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then Manager CrashFinaleGeneratorUnPressSpeak foo:0 0.05 //
+}
+Rule CrashFinaleGenUnPressMOrator
+{
+	criteria ConceptCrashFinaleGeneratorUnPress IsCrashFinalePressingManager NotCrash02FinaleStarted
+	Response CrashFinaleGenUnPressMOrator
+}
+
+Response CrashFinaleGenUnPressNOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then NamVet CrashFinaleGeneratorUnPressSpeak foo:0 0.05 //
+}
+Rule CrashFinaleGenUnPressNOrator
+{
+	criteria ConceptCrashFinaleGeneratorUnPress IsCrashFinalePressingNamVet NotCrash02FinaleStarted
+	Response CrashFinaleGenUnPressNOrator
+}
+
+Response CrashFinaleGenUnPressTOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then TeenGirl CrashFinaleGeneratorUnPressSpeak foo:0 0.05 //
+}
+Rule CrashFinaleGenUnPressTOrator
+{
+	criteria ConceptCrashFinaleGeneratorUnPress IsCrashFinalePressingTeenGirl NotCrash02FinaleStarted
+	Response CrashFinaleGenUnPressTOrator
+}
+
+Response CrashFinaleTruckReadyOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  then any CrashFinaleTruckReadySpk foo:0 0.05 //
+}
+Rule CrashFinaleTruckReadyOrator
+{
+	criteria ConceptCrashFinaleTruckReady
+	ApplyContext "CrashFinaleTruckReady:1:0,CrashFinaleTruckNagPaused:1:6"
+	applycontexttoworld
+	Response CrashFinaleTruckReadyOrator
+}
+
+Response SetSurvivalModeOrator
+{
+	scene "scenes/npcs/orator_blank.vcd"  //
+}
+Rule SetSurvivalModeOrator
+{
+	criteria ConceptSetSurvivalMode
+	ApplyContext "SurvivalMode:1:0"
+	applycontexttoworld
+	Response SetSurvivalModeOrator
+}
+
+
+//##AUTOGENERATED ORATOR END
+//##DO NOT EDIT BETWEEN AUTOGENERATED ORATOR START & AUTOGENERATED ORATOR END
+
+
+
+
+
+
+
+
+
+
+//Conversation stuff
+criterion "Conceptcrashcourse01_path01zresp"   "concept" "crashcourse01_path01zresp"	  required
+criterion "ConceptDontBeAnAss"   "concept" "DontBeAnAss"	  required
+criterion "ConceptRiversideIsDead"   "concept" "RiversideIsDead"	  required
+criterion "ConceptRiversideIsDeadA"   "concept" "RiversideIsDeadA"	  required
+criterion "ConceptRiversideIsDeadB"   "concept" "RiversideIsDeadB"	  required
+criterion "ConceptRiversideIsDeadSpecial1A"   "concept" "RiversideIsDeadSpecial1A"	  required
+criterion "ConceptRiversideIsDeadSpecial1B"   "concept" "RiversideIsDeadSpecial1B"	  required
+criterion "ConceptRiversideIsDeadSpecial1C"   "concept" "RiversideIsDeadSpecial1C"	  required
+criterion "ConceptRiversideIsDeadPlan"   "concept" "RiversideIsDeadPlan"	  required
+criterion "Conceptsmalltown02_path01a"   "concept" "smalltown02_path01a"	  required
+criterion "Conceptsmalltown02_path01b"   "concept" "smalltown02_path01b"	  required
+criterion "Conceptsmalltown02_path01c"   "concept" "smalltown02_path01c"	  required
+criterion "Conceptsmalltown02_path07a"   "concept" "smalltown02_path07a"	  required
+criterion "Conceptsmalltown02_path08a"   "concept" "smalltown02_path08a"	  required
+criterion "Conceptsmalltown04_path07a"   "concept" "smalltown04_path07a"	  required
+criterion "Conceptsmalltown04_path05a"   "concept" "smalltown04_path05a"	  required
+criterion "Conceptsmalltown05_path03a"   "concept" "smalltown05_path03a"	  required
+criterion "ConceptFarm01_path03a"   "concept" "Farm01_path03a"	  required
+criterion "ConceptFarm02_path01a"   "concept" "Farm02_path01a"	  required
+criterion "ConceptFarm02_path02a"   "concept" "Farm02_path02a"	  required
+criterion "ConceptFarm02_path02b"   "concept" "Farm02_path02b"	  required
+criterion "ConceptFarm03_path01a"   "concept" "Farm03_path01a"	  required
+criterion "ConceptFarm05_path07b"   "concept" "Farm05_path07b"	  required
+criterion "ConceptFarmVampiresb"   "concept" "FarmVampiresb"	  required
+criterion "ConceptFarmVampiresC"   "concept" "FarmVampiresC"	  required
+criterion "ConceptFarm05_path09C"   "concept" "Farm05_path09C"	  required
+criterion "ConceptNeedsHelpResponseLouisB2"   "concept" "NeedsHelpResponseLouisB2"	  required
+criterion "ConceptNeedsHelpResponseLouisC2"   "concept" "NeedsHelpResponseLouisC2"	  required
+
+criterion "IsWithOne"	"NumberOfTeamAlive"	"2"		required
+criterion "IsAllAlive"	"NumberOfTeamAlive"	"4"		required
+
+criterion "ConceptBridgeReadyToCross"   "concept" "BridgeReadyToCross"	  required
+
+
+criterion "NotSaidFarm01_TracksBelow" "worldSaidFarm01_TracksBelow" "<1" required
+criterion "NotSaidFarm02_TracksBelow" "worldSaidFarm02_TracksBelow" "<1" required
+
+
+criterion "RemarkableReadyToGo" "worldRemarkableReadyToGo" "1" required
+criterion "NotRemarkableBlocked" "worldRemarkableBlocker" "<1" required
+
+
+
+//Smalltown 01
+//05 - tunnel entrance
+//06 - tunnel middle deathtrap
+//07 - tunnel blocked
+//08 - through here door at blocked tunnel point
+//09 - ***Safe house ahead (1000)***
+//10 - Deer Sign
+
+//Smalltown 02
+//09 - ***Safe house ahead (1000)***
+
+
+
+//Smalltown 03
+//01 - Entrance to trainyard
+//02 - Middle of trainyard
+//03 - Trainyard Fence
+//04 - Bottom of trainyard stairs
+//05 - Top of Trainyard Stairs
+//06 - Top of train to cross fence
+//07 - Stick to road
+//08 - Riverside sign
+//09 - Burning bus
+//10 - House
+//11 - Riverside is quiet
+//12 - Church
+//13 - Church fallback
+//14 - ***Safe house ahead***
+
+
+//Smalltown 04
+//01 - *Riverside is a bust
+//02 - *Riverside is a bust (safety)
+//03 - *Abandoned barricade
+//04 - *Fence (bill ruminates)
+//05 - *Van you have to jump on top of
+//06 - Cubicles
+//07 - *Main Street	
+//08 - *Big ass machine gun
+//09 - *Barricade #2
+//10 - *Stairs
+//11 - ***Safehouse Ahead***
+
+//Smalltown 05
+//01 - *House
+//02 - *Wide open
+//03 - *Get to the river through here
+//04 - *I hate vans (in parking lot)
+//05 - *I hate vans (right after safe room)
+//06 - *door leading out of house
+
+
+
+//Farm 01
+//01 - *Woods comment
+//02 - *Bridge
+//03 - *Trailer
+//04 - *Tracks from above #1
+//05 - *Tracks from above #2
+//06 - *Tracks from above #3
+//07 - *Tracks from above #4
+//08 - *Tracks from above #5
+//09 - ***Safehouse Ahead (1500)***
+
+//Farm 02
+//01 - *Going down stairs
+//02 - *Window overlooking tracks 1
+//03 - *Window overlooking tracks 2
+//04 - *Window overlooking tracks 3
+//05 - *Window overlooking tracks 4
+//06 - *Platform leading down to ground floor of wheelhouse
+//07 - "Through here" door
+//08 - *Train tunnel entrance
+//09 - *Ladder up and over train car
+//10 - ***safehouse ahead! (400)***
+
+//Farm 03
+//01 - *In tunnels after safe room
+//02 - *Emerging from tunnel into woody area
+//03 - *Door from woody area back into tunnel
+//04 - *Find tracks again
+//05 - *Find tracks again (safety)
+//06 - *Tracks Are Blocked
+//07 - *Dead Cow
+//08 - Bridge that gets knocked down
+//09 - ***Safehouse ahead! (400)***
+//10 - Go up the bridge (after knocked down)
+
+//Farm 04
+//01 - *Barn
+//02 - *Tracks 1
+//03 - *Tracks 2
+//04 - *Inside building (to gate track speech)
+//05 - *Outside building (to gate track speech)
+//06 - *Blocked track
+//07 - *Stairs up
+//08 - *Through here!
+//09 - ***Caboose! (safe house ahead!)***
+//10 - *Lawnmower Carnage!
+
+
+//Farm 05
+//01 - Tracks Blocked
+//02 - Ladder up train car!
+//03 - Cornfield 1
+//04 - Cornfield 2
+//05 - Cornfield 3
+//06 - Farm House
+//07 - Radio
+//08 - First Military Outpost sign
+//09 - Second Military Outpost sign (right at entrance to cornfield)
+//10 - Military Outpost Sign next to path08
+
+
+//crashcourse01
+//01 - Pilot
+//02 - Birds opportunity 1
+//03 - Birds opportunity 2
+//04 - elevated train tracks near start
+//05 - truck blocking road
+//06 - inside warehouse
+//07 - Hersch Sign
+//08 - alley
+//09 - alley #2
+//10 - Magazine Rack
+//11 - Army Humvee
+//12 - crashed train
+//13 - first sight of bridge
+//14 - hill to bridge (we can get back up)
+//15 - Birds opportunity 3
+//16 - Birds opportunity 4
+//17 - Bridge is blocked
+//18 - howitzer
+//19 - for lease sign
+//20 - riverside sign
+//21 - Waterworks a
+//22 - Waterworks b
+//23 - waterworks c
+//24 - safehouse distant
+//25 - safehouse close
+//crashcourse02_path08 0 steam pipes (moved from crashcourse02)
+
+
+//crashcourse02
+//01 - Magazine rack
+//02 - Metal supply #1
+//03 - Metal supply #2
+//04 - Alley
+//05 - container passage
+//06 - gas tanks
+//07 - bulletin board #1
+//08 
+//09 - copy paper
+//10 - fence climb
+//11 - recycling
+//12 - see depot
+//13 - near depot
+//14 - badass truck
+//15 - generator
+//16 - 
+//17 - 
+//18 - 
+//19 - 
+//20 - 
+
+
+
+

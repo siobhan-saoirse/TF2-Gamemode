@@ -1,0 +1,106 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 0.000000 -1.000000
+  param "0.000000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_flip_success_initiator"
+    {
+      time 0.000000 3.833333
+      param "taunt_flip_success_initiator"
+      fixedlength
+    }
+    event expression "happy"
+    {
+      time -0.001852 3.829629
+      param "player\demo\emotion\emotion"
+      param2 "happy"
+      event_ramp
+      {
+        0.2098 0.6745
+        0.5902 0.8431
+        3.8315 0.8118
+      }
+    }
+    event speak "demo_taunt_flip_random_flipExert"
+    {
+      time 1.042592 1.467944
+      param "demo_taunt_flip_random_flipExert"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "mad"
+    {
+      time 1.005883 1.756863
+      param "player\demo\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.1659 1.0000
+      }
+    }
+    event expression "eh"
+    {
+      time 1.050980 1.405882
+      param "player\demo\phonemes\phonemes_strong"
+      param2 "eh"
+      event_ramp
+      {
+        0.0293 0.8039
+        0.2415 0.8078
+      }
+    }
+    event speak "demo_taunt_flip_random_flipThrowAntic"
+    {
+      time 0.009804 0.936380
+      param "demo_taunt_flip_random_flipThrowAntic"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "demo_taunt_flip_random_flipAdmire"
+    {
+      time 1.670588 3.900316
+      param "demo_taunt_flip_random_flipAdmire"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happy"
+    {
+      time -0.001961 0.998039
+      param "player\demo\emotion\emotion"
+      param2 "happy"
+    }
+    event expression "eh"
+    {
+      time -0.009804 0.941177
+      param "player\demo\phonemes\phonemes_strong"
+      param2 "eh"
+      event_ramp
+      {
+        0.0171 0.0000
+        0.1512 0.0000
+        0.3488 0.7294
+        0.9463 0.7686
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

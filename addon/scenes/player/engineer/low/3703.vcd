@@ -1,0 +1,42 @@
+// Choreo version 1
+actor "engineer"
+{
+  channel "audio"
+  {
+    event speak "engineer_gunslingertriplepunchfinal01"
+    {
+      time 0.000000 3.374104
+      param "engineer_gunslingertriplepunchfinal01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig"
+    {
+      time 0.000000 3.802084
+      param "player\engineer\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.2167 0.5947 "curve_bspline_to_curve_bspline"
+        0.6069 0.8592 "curve_easein_to_curve_easeout"
+        1.5379 0.8883 "curve_bspline_to_curve_bspline"
+        1.7345 0.4490
+        2.1138 0.9078 "curve_bspline_to_curve_bspline"
+        3.5793 0.8301 "curve_kochanek_early_to_curve_kochanek_early"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "58"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

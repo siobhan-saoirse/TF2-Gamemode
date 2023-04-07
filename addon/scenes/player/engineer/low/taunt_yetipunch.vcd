@@ -1,0 +1,62 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "Anim"
+  {
+    event sequence "Anim"
+    {
+      time 0.000000 6.833333
+      param "taunt_yetipunch"
+      fixedlength
+    }
+  }
+  channel "sound"
+  {
+    event expression "happyBig"
+    {
+      time 0.014184 2.592199
+      param "player\engineer\emotion\emotion"
+      param2 "happyBig"
+    }
+    event expression "scared"
+    {
+      time 2.514184 3.934275
+      param "player\engineer\emotion\emotion"
+      param2 "scared"
+      event_ramp
+      {
+        0.1060 0.4078
+      }
+    }
+    event expression "happyBigClosed"
+    {
+      time 3.776596 5.950354
+      param "player\engineer\emotion\emotion"
+      param2 "happyBigClosed"
+    }
+    event speak "Engineer.LaughEvil01"
+    {
+      time 5.075735 6.283172
+      param "Engineer.LaughEvil01"
+      event_ramp
+      {
+        0.5660 0.6353
+        0.9860 0.3569
+      }
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

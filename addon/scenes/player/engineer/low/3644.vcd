@@ -1,0 +1,38 @@
+// Choreo version 1
+actor "engineer"
+{
+  channel "audio"
+  {
+    event speak "engineer_dominationheavy07"
+    {
+      time 0.000000 2.347959
+      param "engineer_dominationheavy07"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happySmall"
+    {
+      time 0.000000 3.697917
+      param "player\engineer\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.2545 0.7670
+        3.5667 0.7184
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

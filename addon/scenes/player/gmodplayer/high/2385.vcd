@@ -1,0 +1,36 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "sniper.Domination14"
+    {
+      time 0.000000 3.519977
+      param "sniper.Domination14"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "Cocky"
+    {
+      time 0.000000 4.500000
+      param "player\sniper\emotion\emotion"
+      param2 "Cocky"
+      event_ramp
+      {
+        0.1739 0.8864
+        4.3609 0.8659
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "RampTool" "46"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,219 @@
+// Choreo version 1
+actor "Heavy"
+{
+  channel "Animation"
+  {
+    event sequence "taunt04"
+    {
+      time 0.000000 4.000000
+      param "taunt04"
+      fixedlength
+    }
+    event expression "ax"
+    {
+      time 0.322701 0.701786
+      param "player\heavy\phonemes\phonemes_strong"
+      param2 "ax"
+      event_ramp
+      {
+        0.0840 0.8614 "curve_bspline_to_curve_bspline"
+        0.2560 1.0000 "curve_bspline_to_curve_bspline"
+      }
+    }
+    event expression "t"
+    {
+      time 0.633807 1.263436
+      param "player\heavy\phonemes\phonemes_strong"
+      param2 "t"
+      event_ramp
+      {
+        0.1240 0.8727 "curve_bspline_to_curve_bspline"
+        0.4736 0.9182 "curve_kochanek_to_curve_kochanek"
+      }
+    }
+    event expression "m"
+    {
+      time 1.215818 1.615289
+      param "player\heavy\phonemes\phonemes_strong"
+      param2 "m"
+      event_ramp
+      {
+        0.0900 0.8227
+        0.2655 0.9045
+      }
+    }
+    event expression "<sil>"
+    {
+      time 1.431217 1.791005
+      param "player\heavy\phonemes\phonemes_strong"
+      param2 "<sil>"
+      event_ramp
+      {
+        0.1220 0.8114 "curve_easein_to_curve_easein"
+        0.2578 0.9477 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "uh"
+    {
+      time 1.619048 1.910053
+      param "player\heavy\phonemes\phonemes"
+      param2 "uh"
+      event_ramp
+      {
+        0.1780 0.9818
+        0.2297 0.5682
+      }
+    }
+    event expression "eh"
+    {
+      time 1.791005 2.055556
+      param "player\heavy\phonemes\phonemes"
+      param2 "eh"
+      event_ramp
+      {
+        0.0900 0.9795 "curve_easein_to_curve_easeout"
+        0.1440 0.8477 "curve_linear_interp_to_curve_linear_interp"
+      }
+    }
+    event expression "ih2"
+    {
+      time 1.912698 2.235450
+      param "player\heavy\phonemes\phonemes"
+      param2 "ih2"
+      event_ramp
+      {
+        0.0531 0.9136
+        0.2578 0.5386
+      }
+    }
+    event expression "w"
+    {
+      time 1.484127 1.791005
+      param "player\heavy\phonemes\phonemes"
+      param2 "w"
+      event_ramp
+      {
+        0.0500 0.8727 "curve_kochanek_late_to_curve_kochanek_late"
+        0.2175 0.4864
+        0.2516 0.1341
+        0.3065 0.0045 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "m"
+    {
+      time 2.094125 2.604707
+      param "player\heavy\phonemes\phonemes_strong"
+      param2 "m"
+      event_ramp
+      {
+        0.0031 0.0045 "curve_easein_to_curve_easeout"
+        0.0656 0.1318
+        0.1416 0.8227 "curve_bspline_to_curve_bspline"
+        0.3063 0.9250 "curve_bspline_to_curve_bspline"
+      }
+    }
+    event expression "<sil>"
+    {
+      time 2.420635 2.780423
+      param "player\heavy\phonemes\phonemes_strong"
+      param2 "<sil>"
+      event_ramp
+      {
+        0.1220 0.8114 "curve_easein_to_curve_easein"
+        0.2578 0.9477 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "uh"
+    {
+      time 2.608466 2.899471
+      param "player\heavy\phonemes\phonemes"
+      param2 "uh"
+      event_ramp
+      {
+        0.1780 0.7795
+        0.2297 0.5682
+      }
+    }
+    event expression "eh"
+    {
+      time 2.780423 3.044974
+      param "player\heavy\phonemes\phonemes"
+      param2 "eh"
+      event_ramp
+      {
+        0.0900 0.9364 "curve_easein_to_curve_easeout"
+        0.1440 0.8477 "curve_kochanek_to_curve_kochanek"
+      }
+    }
+    event expression "ih2"
+    {
+      time 2.902116 3.224868
+      param "player\heavy\phonemes\phonemes"
+      param2 "ih2"
+      event_ramp
+      {
+        0.0531 0.9136
+        0.2578 0.5386
+      }
+    }
+    event expression "w"
+    {
+      time 2.304233 2.780423
+      param "player\heavy\phonemes\phonemes"
+      param2 "w"
+      event_ramp
+      {
+        0.1016 0.9522 "curve_easein_to_curve_easeout"
+        0.3868 0.4864
+        0.4209 0.1341
+        0.4758 0.0045 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "b"
+    {
+      time 3.136752 3.792735
+      param "player\heavy\phonemes\phonemes_weak"
+      param2 "b"
+      event_ramp
+      {
+        0.0016 0.0068 "curve_easein_to_curve_easeout"
+        0.0484 0.1091
+        0.0969 0.7250 "curve_bspline_to_curve_bspline"
+        0.2266 0.7636 "curve_bspline_to_curve_bspline"
+        0.3016 0.2318
+        0.3990 0.0455 "curve_bspline_to_curve_bspline"
+      }
+    }
+    event expression "happyBig02Upper"
+    {
+      time 0.002137 4.002137
+      param "player\heavy\emotion\emotion"
+      param2 "happyBig02Upper"
+      event_ramp
+      {
+        0.0029 0.0000 "curve_easein_to_curve_easeout"
+        0.1853 0.8705 "curve_easein_to_curve_easeout"
+        0.7912 0.8705 "curve_easein_to_curve_easeout"
+        0.9147 1.0000 "curve_easein_to_curve_easeout"
+        1.1735 1.0000 "curve_easein_to_curve_easeout"
+        1.3735 0.8773 "curve_easein_to_curve_easeout"
+        3.2912 0.8705 "curve_easein_to_curve_easeout"
+        3.5059 0.4205 "curve_easein_to_curve_easeout"
+        3.7824 0.4205 "curve_easein_to_curve_easeout"
+        3.9941 0.0000 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "GestureTool" "100"
+  "ExpressionTool" "100"
+  "SceneRampTool" "100"
+  "RampTool" "68"
+  "CChoreoView" "312"
+}
+fps 60
+snap off
+ignorePhonemes off

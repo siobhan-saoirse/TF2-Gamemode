@@ -1,0 +1,338 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_nuke"
+    {
+      time 0.000000 11.033333
+      param "taunt_nuke"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "taunt_demo_nuke_1_grenade_get"
+    {
+      time 0.525000 0.754206
+      param "taunt_demo_nuke_1_grenade_get"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_demo_nuke_2_grenade_open"
+    {
+      time 1.575000 2.023005
+      param "taunt_demo_nuke_2_grenade_open"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spit"
+    {
+      time 2.258334 2.798810
+      param "taunt_demo_nuke_3_spit_lid"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_demo_nuke_4_pour"
+    {
+      time 2.825000 4.989921
+      param "taunt_demo_nuke_4_pour"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_demo_nuke_5_grenade_drop"
+    {
+      time 4.933333 5.932925
+      param "taunt_demo_nuke_5_grenade_drop"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_demo_nuke_6_bottle_drop"
+    {
+      time 4.866667 6.049297
+      param "taunt_demo_nuke_6_bottle_drop"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_demo_nuke_7_spit"
+    {
+      time 6.066668 7.209525
+      param "taunt_demo_nuke_7_spit"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "demo_taunt_nuke_9_button"
+    {
+      time 8.291667 10.643957
+      param "demo_taunt_nuke_9_button"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_demo_nuke_8_explosion"
+    {
+      time 6.641666 9.141462
+      param "taunt_demo_nuke_8_explosion"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "face"
+  {
+    event flexanimation "DIALOG"
+    {
+      time 0.000000 -1.000000
+      param ""
+    }
+    event expression "hh2"
+    {
+      time 1.041667 2.041667
+      param "player\demo\phonemes\phonemes_strong"
+      param2 "hh2"
+      event_ramp
+      {
+        0.1373 0.9529
+        0.7784 0.9569
+      }
+    }
+    event expression "ae"
+    {
+      time 0.733333 1.733333
+      param "player\demo\phonemes\phonemes_strong"
+      param2 "ae"
+      event_ramp
+      {
+        0.2137 0.9451
+        0.4824 0.9843
+        0.8725 0.1176
+      }
+    }
+    event expression "w"
+    {
+      time 2.108333 2.625000
+      param "player\demo\phonemes\phonemes_strong"
+      param2 "w"
+      event_ramp
+      {
+        0.1353 0.9765
+        0.2931 0.9843
+      }
+    }
+    event expression "r3"
+    {
+      time 2.683334 3.425000
+      param "player\demo\phonemes\phonemes_strong"
+      param2 "r3"
+      event_ramp
+      {
+        0.2294 0.9686
+        0.4417 0.9686
+      }
+    }
+    event expression "aa2"
+    {
+      time 3.000000 4.558333
+      param "player\demo\phonemes\phonemes_strong"
+      param2 "aa2"
+      event_ramp
+      {
+        0.1510 0.9686
+        1.1917 0.9647
+      }
+    }
+    event expression "aa2"
+    {
+      time 2.258333 2.766666
+      param "player\demo\phonemes\phonemes_strong"
+      param2 "aa2"
+      event_ramp
+      {
+        0.1510 0.9686
+        0.3652 0.9647
+      }
+    }
+    event expression "openJaw"
+    {
+      time 3.000000 4.550000
+      param "player\demo\emotion\emotion"
+      param2 "openJaw"
+      event_ramp
+      {
+        0.7451 0.5294
+        1.0725 0.3490
+      }
+    }
+    event expression "openJaw"
+    {
+      time 6.966666 8.166666
+      param "player\demo\emotion\emotion"
+      param2 "openJaw"
+      event_ramp
+      {
+        0.1941 0.8588
+        0.3549 0.7882
+        0.4902 0.4235
+        0.7225 0.4039
+        0.9314 0.0902
+      }
+    }
+  }
+  channel "expression"
+  {
+    event expression "mad"
+    {
+      time 0.119048 3.465477
+      param "player\demo\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.6471 0.9608
+        2.7015 0.9686
+      }
+    }
+    event expression "madUpper"
+    {
+      time 5.572728 8.165153
+      param "player\demo\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.4294 0.4588
+        0.8489 0.8196
+        1.4453 1.0000
+        1.7731 0.9098
+      }
+    }
+    event expression "madUpper"
+    {
+      time 2.951515 4.509849
+      param "player\demo\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.2471 0.9686
+        1.2465 0.9804
+      }
+    }
+    event expression "evilHappy"
+    {
+      time 7.491667 10.491668
+      param "player\demo\emotion\emotion"
+      param2 "evilHappy"
+      event_ramp
+      {
+        0.6882 0.5843
+        2.2696 0.8706
+      }
+    }
+    event expression "mad"
+    {
+      time 2.966667 6.016667
+      param "player\demo\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.2804 0.2196
+        1.2961 0.8941
+        2.5662 0.9765
+      }
+    }
+    event expression "w"
+    {
+      time 5.908333 7.141668
+      param "player\demo\phonemes\phonemes_strong"
+      param2 "w"
+      event_ramp
+      {
+        0.2941 0.9647
+        1.0333 0.9333
+      }
+    }
+    event expression "dead"
+    {
+      time 7.033334 8.566666
+      param "player\demo\emotion\emotion"
+      param2 "dead"
+      event_ramp
+      {
+        0.1784 0.9882
+        1.3000 0.9647
+      }
+    }
+    event expression "happyUpper"
+    {
+      time 8.216668 10.550000
+      param "player\demo\emotion\emotion"
+      param2 "happyUpper"
+      event_ramp
+      {
+        0.0804 0.0392
+        0.1843 0.2078
+        0.2706 0.6706
+        0.4137 0.6353
+        0.5314 0.2275
+        0.7804 0.2118
+        1.3510 0.1922
+        1.4373 0.4588
+        1.6000 0.5176
+        1.7118 0.5373
+        1.9824 0.5490
+      }
+    }
+    event expression "happyUpper"
+    {
+      time 1.750000 2.425000
+      param "player\demo\emotion\emotion"
+      param2 "happyUpper"
+      event_ramp
+      {
+        0.1373 0.4980
+        0.4863 0.5569
+      }
+    }
+    event expression "happyUpper"
+    {
+      time 3.108333 4.608333
+      param "player\demo\emotion\emotion"
+      param2 "happyUpper"
+      event_ramp
+      {
+        0.4843 0.2510
+        0.9725 0.5569
+        1.2525 0.3961
+        1.4314 0.1647
+      }
+    }
+    event expression "happyUpper"
+    {
+      time 5.724999 6.400000
+      param "player\demo\emotion\emotion"
+      param2 "happyUpper"
+      event_ramp
+      {
+        0.1373 0.3490
+        0.2667 0.5843
+        0.4863 0.5569
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

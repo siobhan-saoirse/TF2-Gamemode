@@ -1,0 +1,71 @@
+// Choreo version 1
+actor "demoman"
+{
+  channel "audio"
+  {
+    event speak "Demoman.dominationpyro04"
+    {
+      time 0.000000 1.975147
+      param "Demoman.dominationpyro04"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "er2"
+    {
+      time 0.143519 0.337963
+      param "player\demo\phonemes\phonemes"
+      param2 "er2"
+      event_ramp
+      {
+        0.0758 0.5778
+      }
+    }
+    event expression "er2"
+    {
+      time 0.722222 0.944444
+      param "player\demo\phonemes\phonemes"
+      param2 "er2"
+      event_ramp
+      {
+        0.0879 0.4444
+      }
+    }
+    event expression "er2"
+    {
+      time 1.314815 1.754630
+      param "player\demo\phonemes\phonemes"
+      param2 "er2"
+      event_ramp
+      {
+        0.0848 0.7185
+        0.3532 0.7407
+      }
+    }
+    event expression "madUpper"
+    {
+      time 0.013889 1.967593
+      param "player\demo\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.1636 0.7037
+        1.1939 0.3111
+        1.4818 0.9444
+        1.8879 0.7037
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "144"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,49 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 2.533000 -1.000000
+  param "1.000000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveStart"
+    {
+      time 0.000000 2.533333
+      param "taunt_highFiveStart"
+      fixedlength
+    }
+    event speak "Yes01"
+    {
+      time 0.415032 0.986823
+      param "Demoman.Yes01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "drunkHappy"
+    {
+      time 0.002283 2.533000
+      param "player\demo\emotion\emotion"
+      param2 "drunkHappy"
+      event_ramp
+      {
+        0.1320 0.8902
+        2.5307 0.8824
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

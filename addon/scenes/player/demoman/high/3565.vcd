@@ -1,0 +1,56 @@
+// Choreo version 1
+actor "demoman"
+{
+  channel "audio"
+  {
+    event speak "Demoman.eyelandertaunt02"
+    {
+      time 0.000000 4.100204
+      param "Demoman.eyelandertaunt02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "madUpper"
+    {
+      time 0.010417 4.125000
+      param "player\demo\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.2061 0.6582
+        3.9758 0.5382
+      }
+    }
+    event expression "openJaw"
+    {
+      time 0.000000 4.114583
+      param "player\demo\emotion\emotion"
+      param2 "openJaw"
+      event_ramp
+      {
+        0.1212 0.1745
+        0.3545 0.2764
+        0.5364 0.0218
+        1.2545 0.0073
+        1.4606 0.6909
+        1.7394 0.0764
+        2.9030 0.0036
+        3.1364 0.8000
+        3.6455 0.1600
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

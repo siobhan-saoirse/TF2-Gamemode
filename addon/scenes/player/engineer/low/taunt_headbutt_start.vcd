@@ -1,0 +1,90 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 6.136110 -1.000000
+  param "2.130000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_headbutt_start"
+    {
+      time 0.000000 6.133333
+      param "taunt_headbutt_start"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "eng_taunt_headbutt_start_1"
+    {
+      time 0.066000 0.761329
+      param "eng_taunt_headbutt_start_1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_headbutt_start_2"
+    {
+      time 0.830000 1.948186
+      param "eng_taunt_headbutt_start_2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_headbutt_start_3"
+    {
+      time 2.390000 3.354762
+      param "eng_taunt_headbutt_start_3"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_headbutt_start_4"
+    {
+      time 4.720000 5.260499
+      param "eng_taunt_headbutt_start_4"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "expression"
+  {
+    event expression "happyBigClosed"
+    {
+      time 0.019231 6.153846
+      param "player\engineer\emotion\emotion"
+      param2 "happyBigClosed"
+      event_ramp
+      {
+        0.0000 0.4039
+        1.7368 0.4392
+        1.9842 0.5882
+        2.2368 0.6235
+        2.4200 0.4980
+        2.7632 0.4235
+        3.3733 0.4392
+        3.6867 0.6353
+        4.4933 0.7294
+        4.7333 0.5059
+        4.8733 0.3765
+        5.6333 0.3922
+        6.1333 0.6314
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

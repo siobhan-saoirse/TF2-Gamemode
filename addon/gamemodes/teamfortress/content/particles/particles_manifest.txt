@@ -1,0 +1,51 @@
+particles_manifest
+{
+	"file"		"!particles/error.pcf"
+	"file"		"particles/steamworks.pcf"
+	"file"		"particles/environmental_fx.pcf"
+	"file"		"particles/rain_fx.pcf"
+	"file"		"particles/burning_fx.pcf"
+	"file"		"particles/fire_01.pcf"
+	"file"		"particles/fire_01L4D.pcf"
+	"file"		"particles/electrical_fx.pcf"
+	"file"		"particles/steam_fx.pcf"
+	"file"		"particles/locator_fx.pcf"
+	"file"		"particles/witch_fx.pcf"
+	"file"		"particles/speechbubbles.pcf"
+	"file"		"particles/rain_storm_fx.pcf"
+	"file"		"particles/military_artillery_impacts.pcf"
+	"file"		"particles/rope_fx.pcf"
+	"file"		"particles/spitter_fx.pcf"
+	"file"		"particles/fireworks_fx.pcf"
+	"file"		"particles/vehicle_fx.pcf"
+	"file"		"particles/insect_fx.pcf"
+	"file"		"particles/charger_fx.pcf"
+	"file"		"particles/item_fx.pcf"
+	"file"		"particles/gen_dest_fx.pcf"
+	"file"		"particles/tanker_explosion.pcf"
+	"file"		"particles/firework_crate_fx.pcf"
+
+	// clean
+	"file"		"!particles/footstep_fx.pcf"
+	"file"		"!particles/screen_fx.pcf"
+	"file"		"!particles/smoker_fx.pcf"
+	"file"		"!particles/boomer_fx.pcf"
+	"file"		"!particles/hunter_fx.pcf"
+	"file"		"!particles/water_fx.pcf"
+	"file"		"!particles/tank_fx.pcf"
+	"file"		"!particles/blood_fx.pcf"
+
+
+	// Were ! appear to be precached
+	"file"		"particles/infected_fx.pcf"
+
+	//require cleaning
+	"file"		"!particles/survivor_fx.pcf"
+	"file"		"!particles/weapon_fx.pcf"
+	"file"		"!particles/impact_fx.pcf"
+
+
+
+	//deprecated
+	//"file"	"particles/ui_fx.pcf"
+}

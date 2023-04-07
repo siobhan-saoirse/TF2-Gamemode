@@ -1,0 +1,66 @@
+// Choreo version 1
+actor "demo"
+{
+  channel "body"
+  {
+    event sequence "taunt11_Howl"
+    {
+      time 0.000000 5.500000
+      param "taunt11_Howl"
+      fixedlength
+    }
+  }
+  channel "wav"
+  {
+    event speak "halloween.wolf_01"
+    {
+      time 0.333000 5.225517
+      param "halloween.wolf_01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "defaultFace"
+    {
+      time 0.028736 5.478735
+      param "player\demo\emotion\emotion"
+      param2 "defaultFace"
+      event_ramp
+      {
+        0.1556 1.0000 "curve_easein_to_curve_easein"
+        5.1944 1.0000 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "ae"
+    {
+      time 0.275862 5.287356
+      param "player\demo\phonemes\phonemes"
+      param2 "ae"
+      event_ramp
+      {
+        0.0667 0.0892 "curve_easein_to_curve_easein"
+        0.1444 0.9519 "curve_easein_to_curve_easein"
+        0.2778 0.2494 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        0.3778 0.9291 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        0.5000 0.2220 "curve_easein_to_curve_easein"
+        0.6222 0.9130 "curve_easein_to_curve_easeout"
+        0.8000 0.1419 "curve_easein_to_curve_easein"
+        1.1000 0.8902
+        1.3167 0.6568 "curve_easein_to_curve_easein"
+        4.5111 0.6339 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "116"
+  "RampTool" "36"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,52 @@
+// Choreo version 1
+actor "demoman"
+{
+  channel "audio"
+  {
+    event speak "Demoman.dominationspy02"
+    {
+      time 0.010417 4.550938
+      param "Demoman.dominationspy02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "mad"
+    {
+      time 0.000000 4.572917
+      param "player\demo\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.1061 0.5956 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        0.4667 0.4449 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        0.6182 0.1912 "curve_easein_to_curve_easein"
+        0.7152 0.1471 "curve_easeout_to_curve_easeout"
+        0.7455 0.3199 "curve_easein_to_curve_easein"
+        1.0091 0.3860 "curve_easein_to_curve_easein"
+        1.0576 0.1838 "curve_easein_to_curve_easein"
+        1.1545 0.0846 "curve_easein_to_curve_easein"
+        1.2455 0.3419 "curve_easein_to_curve_easeout"
+        1.6545 0.1691 "curve_easeout_to_curve_easeout"
+        2.2636 0.1213 "curve_easein_to_curve_easeout"
+        2.3182 0.1434
+        2.4303 0.1507
+        2.5394 0.5368 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        3.0455 0.8456 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        4.2970 0.6471
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

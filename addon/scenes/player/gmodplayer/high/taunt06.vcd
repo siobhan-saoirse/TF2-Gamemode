@@ -1,0 +1,38 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "body"
+  {
+    event sequence "taunt06"
+    {
+      time 0.000000 2.500000
+      param "taunt06"
+      fixedlength
+    }
+    event expression "Aggressive"
+    {
+      time 0.000000 2.500000
+      param "player\sniper\emotion\emotion"
+      param2 "Aggressive"
+      event_ramp
+      {
+        0.1585 0.8495
+        0.3098 1.0000 "curve_easein_to_curve_easein"
+        2.2854 1.0000 "curve_easein_to_curve_easeout"
+        2.4098 0.8374
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "108"
+  "RampTool" "82"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

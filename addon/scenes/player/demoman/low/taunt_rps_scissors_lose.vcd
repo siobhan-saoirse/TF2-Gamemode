@@ -1,0 +1,138 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_rps_scissors_lose"
+    {
+      time 3.385057 6.885056
+      param "taunt_rps_scissors_lose"
+      fixedlength
+    }
+    event speak "oh come on!!"
+    {
+      time 3.749895 5.441483
+      param "taunt_demo_rps_lose_06"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "face"
+  {
+    event flexanimation "face"
+    {
+      time 0.003268 6.784314
+      param ""
+      flexanimations samples_use_time
+      {
+        "CloseLid" combo
+        {
+          0.1000 0.5765 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.3714 0.9766 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.4286 0.9491 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.4857 0.8472 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.9857 0.4079 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          1.2857 0.6864 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          1.5571 0.5099 curve_easein_to_curve_easein
+          2.7571 0.5177 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.2429 0.5177 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.6429 0.9687 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.9223 1.0001 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          4.1286 0.9491 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          4.3857 0.4589 curve_easein_to_curve_easein
+        }
+        {
+          3.9223 0.4981 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        "happyUpper"
+        {
+          0.7714 0.0588 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          1.3286 0.7883 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          2.9143 0.9099 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.4429 0.4079 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.7857 0.8785 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.9223 0.9648 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          4.5714 0.0000 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          5.1143 0.0000 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        "drunkHappy"
+        {
+          3.9223 0.0000 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        "OO"
+        {
+          3.6714 0.0078 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.9223 1.0001 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          4.2429 0.0392 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+      }
+    }
+  }
+  channel "rps"
+  {
+    event sequence "taunt_rps_scissors"
+    {
+      time 0.000000 3.433333
+      param "taunt_rps_scissors"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "cmon then"
+    {
+      time 0.206000 1.104980
+      param "taunt_demo_int_27"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_demo_rps_exert_04"
+    {
+      time 1.850000 3.056984
+      param "taunt_demo_rps_exert_04"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "fx"
+  {
+    event speak "Weapon_Fist.Miss"
+    {
+      time 1.810000 2.375578
+      param "Weapon_Fist.Miss"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Fist.Miss"
+    {
+      time 2.200000 2.765578
+      param "Weapon_Fist.Miss"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Fist.Miss"
+    {
+      time 2.610000 3.175578
+      param "Weapon_Fist.Miss"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,74 @@
+// Choreo version 1
+actor "demo"
+{
+  channel "body"
+  {
+    event sequence "taunt07"
+    {
+      time -0.000000 4.366667
+      param "taunt07"
+      fixedlength
+    }
+  }
+  channel "wav"
+  {
+    event expression "screamingUpper"
+    {
+      time 0.000000 4.367816
+      param "player\demo\emotion\emotion"
+      param2 "screamingUpper"
+    }
+    event speak "Demoman.BattleCry06"
+    {
+      time 0.500000 3.216735
+      param "Demoman.BattleCry06"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "ax2"
+    {
+      time 0.000000 1.005747
+      param "player\demo\phonemes\phonemes"
+      param2 "ax2"
+      event_ramp
+      {
+        0.3224 0.6208 "curve_easein_to_curve_easeout"
+        0.5328 0.4894
+      }
+    }
+    event expression "uw"
+    {
+      time 1.804598 2.160919
+      param "player\demo\phonemes\phonemes_weak"
+      param2 "uw"
+      event_ramp
+      {
+        0.1448 0.9831
+      }
+    }
+    event expression "dh"
+    {
+      time 3.045977 4.045977
+      param "player\demo\phonemes\phonemes_strong"
+      param2 "dh"
+      event_ramp
+      {
+        0.1582 0.8602
+        0.6134 0.0064
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "116"
+  "RampTool" "134"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

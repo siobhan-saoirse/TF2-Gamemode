@@ -1,0 +1,52 @@
+// Choreo version 1
+actor "heavy"
+{
+  channel "audio"
+  {
+    event speak "heavy_mvm_wave_end01"
+    {
+      time 0.000000 2.182336
+      param "heavy_mvm_wave_end01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "emotion"
+  {
+    event expression "happybigUpper"
+    {
+      time 0.063657 2.180556
+      param "player\heavy\emotion\emotion"
+      param2 "happybigUpper"
+      event_ramp
+      {
+        0.1939 0.6923
+        1.9434 0.6615
+      }
+    }
+    event expression "happy1"
+    {
+      time -0.000000 2.128858
+      param "player\heavy\emotion\emotion"
+      param2 "happy1"
+      event_ramp
+      {
+        0.1515 0.4577
+        1.9960 0.3962
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "48"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

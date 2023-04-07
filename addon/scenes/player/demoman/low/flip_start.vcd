@@ -1,0 +1,104 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 7.100000 -1.000000
+  param "1.666667"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_flip_start"
+    {
+      time 0.000000 7.100000
+      param "taunt_flip_start"
+      fixedlength
+    }
+    event expression "happy"
+    {
+      time 0.000000 7.107639
+      param "player\demo\emotion\emotion"
+      param2 "happy"
+      event_ramp
+      {
+        0.2176 0.7176
+        0.6176 0.2745
+        3.6824 0.0157
+        3.9059 0.0000
+        4.1412 0.6039
+        4.5765 0.3725
+      }
+    }
+    event expression "mad"
+    {
+      time 1.705673 2.801418
+      param "player\demo\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.0970 0.6549
+        0.4389 0.7098
+        0.8154 0.6863
+        1.0124 0.5294
+      }
+    }
+    event expression "happyUpper"
+    {
+      time 0.014184 1.542553
+      param "player\demo\emotion\emotion"
+      param2 "happyUpper"
+      event_ramp
+      {
+        0.0059 0.6784
+        0.9412 0.6941
+      }
+    }
+  }
+  channel "audio"
+  {
+    event speak "demo_taunt_flip_random_intro"
+    {
+      time 0.204861 1.468217
+      param "demo_taunt_flip_random_intro"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "demo_taunt_flip_random_waiting"
+    {
+      time 1.722222 2.742608
+      param "demo_taunt_flip_random_waiting"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "demo_taunt_flip_random_waiting2"
+    {
+      time 5.475695 6.396829
+      param "demo_taunt_flip_random_waiting2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "cleats_conc.StepLeft"
+    {
+      time 0.440973 0.986279
+      param "cleats_conc.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

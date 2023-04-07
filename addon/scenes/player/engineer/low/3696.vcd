@@ -1,0 +1,45 @@
+// Choreo version 1
+actor "engineer"
+{
+  channel "audio"
+  {
+    event speak "engineer_revenge02"
+    {
+      time 0.000000 2.322540
+      param "engineer_revenge02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "specialAction01"
+    {
+      time 0.000000 3.104167
+      param "player\engineer\emotion\emotion"
+      param2 "specialAction01"
+      event_ramp
+      {
+        0.1485 0.7621 "curve_easein_to_curve_easein"
+        0.6030 0.7597 "curve_easein_to_curve_easeout"
+        0.8000 0.0024
+        0.9545 0.7718 "curve_easein_to_curve_easein"
+        1.4636 0.7670 "curve_easein_to_curve_easeout"
+        1.5818 0.0049
+        1.6303 0.0000
+        1.7788 0.7767 "curve_easein_to_curve_easein"
+        3.0273 0.7694 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

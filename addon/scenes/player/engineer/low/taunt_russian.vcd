@@ -1,0 +1,73 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_russian"
+    {
+      time 0.000000 16.533335
+      param "taunt_russian"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "engy_taunt_russian_rand"
+    {
+      time 8.108695 9.792142
+      param "engy_taunt_russian_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Engineer.Cheers01"
+    {
+      time 0.295894 1.683286
+      param "Engineer.Cheers01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "facial"
+  {
+    event expression "happyBig"
+    {
+      time 0.065477 11.738095
+      param "player\engineer\emotion\emotion"
+      param2 "happyBig"
+    }
+  }
+  channel "SFX"
+  {
+    event speak "Taunt.MedicHardClap1"
+    {
+      time 8.527778 8.827483
+      param "Taunt.MedicHardClap1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.MedicHardClap1"
+    {
+      time 8.541666 8.841372
+      param "Taunt.MedicHardClap1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "56"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

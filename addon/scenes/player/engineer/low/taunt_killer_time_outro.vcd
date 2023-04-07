@@ -1,0 +1,64 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_killer_time_outro"
+    {
+      time 0.000000 2.266667
+      param "taunt_killer_time_outro"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "engy_taunt_killertime_6_close"
+    {
+      time 0.081104 2.539653
+      param "engy_taunt_killertime_6_close"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "flex"
+  {
+    event flexanimation "face"
+    {
+      time 0.036232 2.110641
+      param ""
+      flexanimations samples_use_time
+      {
+        "OH"
+        {
+        }
+      }
+    }
+  }
+  channel "emotion"
+  {
+    event expression "mad"
+    {
+      time 0.041105 2.061104
+      param "player\engineer\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.3900 0.9843
+        0.8480 0.5490
+        1.7615 0.4510
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

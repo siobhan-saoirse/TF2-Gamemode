@@ -1,0 +1,36 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "sniper.Award10"
+    {
+      time 0.000000 1.383968
+      param "sniper.Award10"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "ScaredClosed"
+    {
+      time 0.000000 2.500000
+      param "player\sniper\emotion\emotion"
+      param2 "ScaredClosed"
+      event_ramp
+      {
+        0.1474 0.9091
+        2.3974 0.8682
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "RampTool" "76"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

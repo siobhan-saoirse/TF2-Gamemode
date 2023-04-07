@@ -1,0 +1,75 @@
+// Choreo version 1
+actor "heavy"
+{
+  channel "audio"
+  {
+    event speak "Heavy.SandwichTaunt16"
+    {
+      time 0.000000 2.762676
+      param "Heavy.SandwichTaunt16"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "ae"
+    {
+      time 1.070000 2.767785
+      param "player\heavy\phonemes\phonemes"
+      param2 "ae"
+      event_ramp
+      {
+        0.0970 0.9432 "curve_easein_to_curve_easeout"
+        0.1818 1.0000 "curve_easein_to_curve_easeout"
+        0.4333 0.3523 "curve_easein_to_curve_easeout"
+        0.6091 0.9773 "curve_easein_to_curve_easeout"
+        0.7273 0.6023
+        0.8606 0.9659 "curve_easein_to_curve_easeout"
+        1.0636 0.6182
+        1.1970 0.9545 "curve_easein_to_curve_easeout"
+        1.3212 0.6250
+        1.5121 0.9250 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "happyBig02Upper"
+    {
+      time 0.000000 1.166791
+      param "player\heavy\emotion\emotion"
+      param2 "happyBig02Upper"
+      event_ramp
+      {
+        0.1030 0.7568 "curve_easein_to_curve_easeout"
+        1.0576 0.7568 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "happybig02"
+    {
+      time 1.073295 2.772483
+      param "player\heavy\emotion\emotion"
+      param2 "happybig02"
+      event_ramp
+      {
+        0.1182 0.7159 "curve_easein_to_curve_easeout"
+        0.3333 0.5091
+        0.5636 0.7045
+        0.7667 0.4705
+        0.8939 0.6818
+        1.0485 0.4795
+        1.2000 0.6955
+        1.3212 0.5136
+        1.4636 0.7159 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "164"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

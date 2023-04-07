@@ -1,0 +1,52 @@
+// Choreo version 1
+actor "heavy"
+{
+  channel "audio"
+  {
+    event speak "heavy_mvm_sentry_buster01"
+    {
+      time 0.000000 2.032313
+      param "heavy_mvm_sentry_buster01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "mad"
+    {
+      time 1.072917 2.072917
+      param "player\heavy\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.2333 0.6567 "curve_easein_to_curve_easein"
+        0.6212 0.8284 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "upperAngry2"
+    {
+      time 0.020833 2.020833
+      param "player\heavy\emotion\emotion"
+      param2 "upperAngry2"
+      event_ramp
+      {
+        0.0212 0.0224
+        0.3939 0.4104
+        0.5273 0.7873 "curve_easein_to_curve_easein"
+        1.5970 0.7612 "curve_easeout_to_curve_easeout"
+        1.9818 0.0037
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "SceneRampTool" "100"
+  "GestureTool" "100"
+  "RampTool" "66"
+  "ExpressionTool" "100"
+  "CChoreoView" "64"
+}
+fps 60
+snap off
+ignorePhonemes off

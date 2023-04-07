@@ -1,0 +1,48 @@
+// Choreo version 1
+actor "engineer"
+{
+  channel "audio"
+  {
+    event speak "engineer_mvm_ask_ready01"
+    {
+      time 0.000000 1.357460
+      param "engineer_mvm_ask_ready01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "emotion"
+  {
+    event expression "madUpper"
+    {
+      time 0.000000 1.354701
+      param "player\engineer\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.0030 0.0000
+        0.0545 0.2090
+        0.2182 0.2090
+        0.4242 0.2090
+        0.5000 0.0037
+        0.5848 0.1269
+        0.6879 0.1418
+        0.8394 0.1418
+        1.1212 0.0448
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "156"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

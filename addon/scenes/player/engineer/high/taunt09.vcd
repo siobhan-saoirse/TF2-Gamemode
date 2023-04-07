@@ -1,0 +1,64 @@
+// Choreo version 1
+actor "engineer"
+{
+  channel "body"
+  {
+    event sequence "taunt09"
+    {
+      time 0.000000 4.333333
+      param "taunt09"
+      fixedlength
+    }
+    event expression "madUpper"
+    {
+      time 0.372652 1.209608
+      param "player\engineer\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.0000 0.0049 "curve_easein_to_curve_easeout"
+        0.0766 0.0388 "curve_easeout_to_curve_easeout"
+        0.2192 0.9612 "curve_easein_to_curve_easein"
+        0.5987 0.9563 "curve_easein_to_curve_easeout"
+      }
+    }
+    event expression "happyBig"
+    {
+      time 1.256709 2.854268
+      param "player\engineer\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.0830 0.1432 "curve_easein_to_curve_easeout"
+        0.6796 0.1529 "curve_easeout_to_curve_easeout"
+        0.9340 1.0000 "curve_easein_to_curve_easeout"
+        1.4638 1.0000 "curve_easeout_to_curve_easeout"
+        1.5798 0.0218
+      }
+    }
+    event expression "happyBigClosed"
+    {
+      time 2.679013 4.321927
+      param "player\engineer\emotion\emotion"
+      param2 "happyBigClosed"
+      event_ramp
+      {
+        0.0000 0.0097 "curve_easein_to_curve_easeout"
+        0.2213 1.0000 "curve_easein_to_curve_easeout"
+        1.5850 1.0000
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "184"
+  "RampTool" "94"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

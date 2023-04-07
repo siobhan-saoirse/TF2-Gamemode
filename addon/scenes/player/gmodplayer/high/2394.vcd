@@ -1,0 +1,36 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "sniper.Revenge13"
+    {
+      time 0.000000 3.445306
+      param "sniper.Revenge13"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "specialAction01Upper"
+    {
+      time 0.000000 4.000000
+      param "player\sniper\emotion\emotion"
+      param2 "specialAction01Upper"
+      event_ramp
+      {
+        0.2174 0.8500
+        3.8739 0.8091
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "RampTool" "46"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,103 @@
+// Choreo version 1
+actor "demo"
+{
+  channel "body"
+  {
+    event sequence "taunt04"
+    {
+      time 0.000000 5.000000
+      param "taunt04"
+      fixedlength
+    }
+    event expression "silence"
+    {
+      time 0.000000 1.000000
+      param "player\demo\emotion\emotion"
+      param2 "silence"
+      event_ramp
+      {
+        0.2172 0.6299 "curve_kochanek_to_curve_kochanek"
+        0.8034 0.6335 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "happy"
+    {
+      time 2.000000 3.000000
+      param "player\demo\emotion\emotion"
+      param2 "happy"
+      event_ramp
+      {
+        0.0542 0.1139 "curve_linear_interp_to_curve_linear_interp"
+        0.2600 0.9359
+        0.3462 1.0000 "curve_easein_to_curve_easeout"
+        0.7512 1.0000 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "evilHappy"
+    {
+      time 2.845238 3.845238
+      param "player\demo\emotion\emotion"
+      param2 "evilHappy"
+      event_ramp
+      {
+        0.0615 0.7722 "curve_kochanek_to_curve_kochanek"
+        0.0914 0.8861
+        0.1600 0.9715
+        0.2496 1.0000 "curve_bspline_to_curve_bspline"
+        0.6519 1.0000 "curve_easeout_to_curve_easeout"
+        0.8019 1.0000
+      }
+    }
+    event expression "madUpper"
+    {
+      time 0.827381 2.200000
+      param "player\demo\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.1363 0.4698 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        1.1450 0.4448
+      }
+    }
+    event expression "mad"
+    {
+      time 3.777778 4.316667
+      param "player\demo\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.0771 0.7189
+        0.4514 0.8185 "curve_easein_to_curve_easein"
+      }
+    }
+    event expression "ax"
+    {
+      time 2.002222 3.002222
+      param "player\demo\phonemes\phonemes_strong"
+      param2 "ax"
+      event_ramp
+      {
+        0.0700 0.0249 "curve_linear_interp_to_curve_linear_interp"
+        0.1607 0.0320 "curve_linear_interp_to_curve_linear_interp"
+        0.1726 0.0747
+        0.2400 0.6584 "curve_easein_to_curve_easein"
+        0.4700 0.6726 "curve_easein_to_curve_easein"
+        0.6750 0.6512 "curve_easeout_to_curve_easeout"
+        0.8024 0.5160
+        0.8950 0.0000
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "96"
+  "RampTool" "168"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,46 @@
+// Choreo version 1
+actor "demo"
+{
+  channel "body"
+  {
+    event sequence "taunt07"
+    {
+      time -0.000000 4.366667
+      param "taunt07"
+      fixedlength
+    }
+  }
+  channel "wav"
+  {
+    event expression "screamingUpper"
+    {
+      time 0.000000 4.367816
+      param "player\demo\emotion\emotion"
+      param2 "screamingUpper"
+    }
+    event expression "drunkHappy"
+    {
+      time 1.741379 3.655172
+      param "player\demo\emotion\emotion"
+      param2 "drunkHappy"
+      event_ramp
+      {
+        0.0030 0.0275
+        0.3090 0.9534 "curve_easein_to_curve_easein"
+        1.4761 0.9407 "curve_easeout_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "116"
+  "RampTool" "134"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,36 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "sniper.MeleeDare06"
+    {
+      time 0.000000 0.922630
+      param "sniper.MeleeDare06"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "AggresiveClosed"
+    {
+      time 0.000000 1.500000
+      param "player\sniper\emotion\emotion"
+      param2 "AggresiveClosed"
+      event_ramp
+      {
+        0.0700 0.8773
+        1.4380 0.8091
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "RampTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

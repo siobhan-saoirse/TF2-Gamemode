@@ -1,0 +1,82 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_rps_paper_lose"
+    {
+      time 3.385057 6.885056
+      param "taunt_rps_paper_lose"
+      fixedlength
+    }
+    event speak "NOOO"
+    {
+      time 3.606561 4.575132
+      param "taunt_demo_rps_lose_04"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "face"
+  {
+  }
+  channel "rps"
+  {
+    event sequence "taunt_rps_paper"
+    {
+      time 0.000000 3.433333
+      param "taunt_rps_paper"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "taunt_demo_rps_exert_04"
+    {
+      time 1.850000 3.056984
+      param "taunt_demo_rps_exert_04"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "fx"
+  {
+    event speak "Weapon_Fist.Miss"
+    {
+      time 1.810000 2.364694
+      param "Weapon_Fist.Miss"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Fist.Miss"
+    {
+      time 2.200000 2.765578
+      param "Weapon_Fist.Miss"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Fist.Miss"
+    {
+      time 2.610000 3.164694
+      param "Weapon_Fist.Miss"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

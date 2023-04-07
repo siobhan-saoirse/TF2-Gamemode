@@ -1,0 +1,91 @@
+// Choreo version 1
+actor "eng"
+{
+  channel "body"
+  {
+    event sequence "taunt_highfiveSuccess"
+    {
+      time 0.000000 3.966667
+      param "taunt_highfiveSuccess"
+      fixedlength
+    }
+    event speak "Engineer.Cheers02"
+    {
+      time 2.158611 4.039427
+      param "Engineer.Cheers02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "defaultFace"
+    {
+      time 0.000000 1.000000
+      param "player\engineer\emotion\emotion"
+      param2 "defaultFace"
+      event_ramp
+      {
+        0.0061 1.0000
+      }
+    }
+    event expression "happyBigClosed"
+    {
+      time 0.604167 1.604167
+      param "player\engineer\emotion\emotion"
+      param2 "happyBigClosed"
+      event_ramp
+      {
+        0.0030 0.0026
+        0.4121 0.9895
+        0.9030 0.9974
+      }
+    }
+    event expression "ow"
+    {
+      time 2.261905 3.375238
+      param "player\engineer\phonemes\phonemes_strong"
+      param2 "ow"
+      event_ramp
+      {
+        0.0061 0.0184
+        0.1879 0.9895
+        0.8970 0.9869
+      }
+      active 0
+    }
+    event expression "happyBig"
+    {
+      time 1.457556 2.457556
+      param "player\engineer\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.1364 0.9974
+        0.5758 0.9869
+      }
+    }
+    event expression "defaultFace"
+    {
+      time 3.921324 4.566252
+      param "player\engineer\emotion\emotion"
+      param2 "defaultFace"
+      event_ramp
+      {
+        0.0000 0.0052
+        0.0970 0.9921
+        0.6273 0.9974
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "92"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

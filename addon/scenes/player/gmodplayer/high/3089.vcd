@@ -1,0 +1,93 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "Sniper.DominationEngineer05"
+    {
+      time 0.000000 3.584014
+      param "Sniper.DominationEngineer05"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBigUpper"
+    {
+      time 0.371531 1.455056
+      param "player\sniper\emotion\emotion"
+      param2 "happyBigUpper"
+      event_ramp
+      {
+        0.1321 0.3462 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+        0.3095 0.6095
+        0.6276 0.7485
+        0.9218 0.5000
+        0.9874 0.1598 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+      }
+    }
+    event expression "specialAction01Upper"
+    {
+      time 1.119850 2.685691
+      param "player\sniper\emotion\emotion"
+      param2 "specialAction01Upper"
+      event_ramp
+      {
+        0.1364 0.2012
+        0.4697 0.9379
+        0.6034 0.9231
+        0.8727 0.9467 "curve_easein_to_curve_easeout"
+        1.1101 0.9615 "curve_easein_to_curve_easeout"
+        1.2598 0.7988
+        1.4083 0.1420
+      }
+    }
+    event expression "happySmall"
+    {
+      time 3.024536 3.580525
+      param "player\sniper\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.0581 0.1124
+        0.1847 0.4172
+        0.4787 0.1332
+      }
+    }
+    event expression "happySmall"
+    {
+      time 0.009363 0.617020
+      param "player\sniper\emotion\emotion"
+      param2 "happySmall"
+      event_ramp
+      {
+        0.1149 0.6391
+        0.1811 0.8964
+        0.3134 0.9763 "curve_easein_to_curve_easeout"
+        0.4553 0.5947
+      }
+    }
+    event expression "painBigUpper"
+    {
+      time 2.507576 3.289773
+      param "player\sniper\emotion\emotion"
+      param2 "painBigUpper"
+      event_ramp
+      {
+        0.2811 0.9379 "curve_easein_to_curve_easeout"
+        0.5555 0.9379 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "352"
+  "ExpressionTool" "100"
+  "RampTool" "148"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,25 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "sniper.Domination17"
+    {
+      time 0.000000 2.813311
+      param "sniper.Domination17"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

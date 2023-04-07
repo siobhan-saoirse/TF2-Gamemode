@@ -1,0 +1,69 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 7.100000 -1.000000
+  param "1.666667"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_flip_start"
+    {
+      time 0.002347 7.102347
+      param "taunt_flip_start"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event expression "happyBigClosed"
+    {
+      time 0.454372 7.106302
+      param "player\engineer\emotion\emotion"
+      param2 "happyBigClosed"
+      event_ramp
+      {
+        0.7609 0.0000
+        0.9544 0.5333
+        6.6345 0.5529
+      }
+    }
+    event speak "intro_random"
+    {
+      time 0.290599 1.399238
+      param "eng_taunt_flip_random_intro"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_flip_random_waiting"
+    {
+      time 1.834029 2.376002
+      param "eng_taunt_flip_random_waiting"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_flip_random_waiting2"
+    {
+      time 3.456990 4.202160
+      param "eng_taunt_flip_random_waiting2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

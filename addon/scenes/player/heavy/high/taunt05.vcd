@@ -1,0 +1,39 @@
+// Choreo version 1
+actor "heavy"
+{
+  channel "emotion"
+  {
+    event expression "mad"
+    {
+      time 0.000000 4.230000
+      param "player\heavy\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.1727 1.0000 "curve_easein_to_curve_easeout"
+        4.0658 1.0000 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+  channel "animation"
+  {
+    event sequence "Boxing Taunt"
+    {
+      time 0.000000 4.233333
+      param "taunt05"
+      fixedlength
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "172"
+  "ExpressionTool" "100"
+  "RampTool" "42"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

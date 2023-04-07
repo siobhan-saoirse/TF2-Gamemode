@@ -1,0 +1,144 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_dosido_dance"
+    {
+      time 0.000000 8.900000
+      param "taunt_dosido_dance"
+      fixedlength
+    }
+    event expression "defaultFace"
+    {
+      time 0.014493 0.536232
+      param "player\engineer\emotion\emotion"
+      param2 "defaultFace"
+      event_ramp
+      {
+        0.0000 0.9922
+        0.3848 0.9961
+      }
+    }
+    event expression "happy"
+    {
+      time 0.385417 3.046875
+      param "player\demo\emotion\emotion"
+      param2 "happy"
+      event_ramp
+      {
+        0.0697 0.7922
+        2.5477 0.7922
+      }
+    }
+    event expression "scared"
+    {
+      time 3.010417 3.635417
+      param "player\demo\emotion\emotion"
+      param2 "scared"
+      event_ramp
+      {
+        0.1364 0.9059
+        0.4157 0.8980
+      }
+    }
+    event expression "happy"
+    {
+      time 3.500000 6.166667
+      param "player\demo\emotion\emotion"
+      param2 "happy"
+      event_ramp
+      {
+        0.1030 0.4667
+        2.5942 0.4980
+      }
+    }
+    event expression "scared"
+    {
+      time 6.067709 7.697917
+      param "player\demo\emotion\emotion"
+      param2 "scared"
+      event_ramp
+      {
+        0.0242 0.7294
+        1.4636 0.8235
+      }
+    }
+    event expression "drunkHappy"
+    {
+      time 7.562501 8.869793
+      param "player\demo\emotion\emotion"
+      param2 "drunkHappy"
+      event_ramp
+      {
+        0.1152 0.7569
+        1.2515 0.7490
+      }
+    }
+    event expression "ah"
+    {
+      time 2.958333 3.812500
+      param "player\demo\phonemes\phonemes_strong"
+      param2 "ah"
+      event_ramp
+      {
+        0.0848 0.9804
+        0.5939 0.9765
+      }
+    }
+  }
+  channel "audio"
+  {
+    event speak "taunt_demo_dose_end_04"
+    {
+      time 0.552083 2.268342
+      param "demo_taunt_dosido_start_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_demo_dose_fun_07"
+    {
+      time 4.265625 4.341090
+      param "demo_taunt_dosido_mid_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_demo_dose_end_05"
+    {
+      time 7.312501 8.873771
+      param "demo_taunt_dosido_end_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_demo_burp_03"
+    {
+      time 3.119792 3.681425
+      param "demo_taunt_dosido_burp_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_demo_flip_fun_01"
+    {
+      time 5.966667 7.066372
+      param "demo_taunt_dosido_balance_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,78 @@
+ENT.Base = "base_brush"
+ENT.Type = "brush"
+
+randomscoutubertaunt = 
+{
+	"vo/Scout_specialcompleted12.mp3",
+	"vo/Scout_award05.mp3", 
+	"vo/taunts/Scout_taunts02.mp3",
+	"vo/taunts/Scout_taunts09.mp3"
+}	
+randomsoldierubertaunt = 
+{
+	"vo/taunts/Soldier_taunts05.mp3",
+	"vo/taunts/Soldier_taunts11.mp3", 
+	"vo/taunts/Soldier_taunts21.mp3",
+	"vo/taunts/Soldier_taunts06.mp3",
+	"vo/taunts/Soldier_taunts15.mp3",
+	"vo/taunts/Soldier_taunts04.mp3",
+	"vo/taunts/Soldier_taunts12.mp3"
+}		
+randomdemomanubertaunt = 
+{
+	"vo/taunts/demoman_taunts01.mp3",
+	"vo/taunts/demoman_taunts07.mp3",
+	"vo/taunts/demoman_taunts09.mp3",
+	"vo/taunts/demoman_taunts15.mp3",
+}
+		
+randompyroubertaunt = 
+{
+	"vo/Pyro_specialcompleted01.mp3",
+	"vo/Pyro_laughlong01.mp3",
+}
+function ENT:Initialize()
+	local pos = self:GetPos()
+	local mins, maxs = self:WorldSpaceAABB() -- https://forum.facepunch.com/gmoddev/lmcw/Brush-entitys-ent-GetPos/1/#postdwfmq
+	pos = (mins + maxs) * 0.5
+
+	self.Team = self.Team or 0		
+	self.TeamNum = self.TeamNum or 0
+	self.Pos = pos 
+	self.Players = {}
+end 
+
+function ENT:KeyValue(key,value)
+	key = string.lower(key)
+	
+	if key=="teamnum" then
+		local t = tonumber(value)
+		
+		if t==0 then
+			self.TeamNum = 0
+		elseif t==2 then
+			self.TeamNum = TEAM_RED
+		elseif t==3 then
+			self.TeamNum = TEAM_BLU
+		end
+
+		self.Team = tonumber(value)
+	end
+	print(key, value, tonumber(value), self.Team)
+end
+
+function ENT:StartTouch(ent) 
+end
+
+function ENT:StartTouch(ent)
+	if ent:IsPlayer() and ent:Team() == TEAM_BLU then
+		self.Players[ent] = -1
+		print(self.Team)
+	end
+end
+
+function ENT:EndTouch(ent)
+	if ent:IsPlayer() then
+		self.Players[ent] = nil
+	end
+end

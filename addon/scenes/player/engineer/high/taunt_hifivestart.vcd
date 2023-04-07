@@ -1,0 +1,54 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 2.535000 -1.000000
+  param "1.000000"
+  loopcount "-1"
+}
+actor "Engineer"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveStart"
+    {
+      time 0.002347 2.535680
+      param "taunt_highFiveStart"
+      fixedlength
+    }
+    event expression "happyBigClosed"
+    {
+      time 0.104622 2.537315
+      param "player\engineer\emotion\emotion"
+      param2 "happyBigClosed"
+      event_ramp
+      {
+        0.2540 0.8806 "curve_easein_to_curve_easeout"
+        2.4327 0.8806 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+  channel "audio"
+  {
+    event speak "heck yes"
+    {
+      time 0.109053 0.939167
+      param "Engineer.Yes02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  faceposermodel "D:\dev\staging\game\tf\models\player\engineer.mdl"
+}
+
+scalesettings
+{
+  "CChoreoView" "324"
+  "RampTool" "100"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

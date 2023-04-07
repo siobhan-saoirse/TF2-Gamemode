@@ -1,0 +1,38 @@
+// Choreo version 1
+actor "engineer"
+{
+  channel "body"
+  {
+    event sequence "taunt06"
+    {
+      time 0.000000 2.500000
+      param "taunt06"
+      fixedlength
+    }
+    event expression "happyBig"
+    {
+      time 0.000000 2.500000
+      param "player\engineer\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.1255 0.8617
+        0.2574 0.9927 "curve_easein_to_curve_easein"
+        2.2532 1.0000 "curve_easein_to_curve_easeout"
+        2.3830 0.8714
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "108"
+  "RampTool" "94"
+  "ExpressionTool" "74"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

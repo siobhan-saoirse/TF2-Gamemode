@@ -1,0 +1,60 @@
+// Choreo version 1
+event unspecified ""
+{
+  time 0.000000 -1.000000
+  param ""
+}
+event loop "idle"
+{
+  time 3.666000 -1.000000
+  param "1.799000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "animation"
+  {
+    event expression "mad"
+    {
+      time 0.001154 3.665516
+      param "player\engineer\emotion\emotion"
+      param2 "happySmall"
+    }
+    event sequence "taunt_vehicle_allclass_honk"
+    {
+      time 0.000000 3.666667
+      param "taunt_vehicle_allclass_honk"
+      fixedlength
+    }
+  }
+  channel "sound"
+  {
+    event speak "Taunt.BumperCarHorn"
+    {
+      time 0.326861 0.679378
+      param "Taunt.BumperCarHorn"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Taunt.BumperCarHorn"
+    {
+      time 0.656958 1.009475
+      param "Taunt.BumperCarHorn"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

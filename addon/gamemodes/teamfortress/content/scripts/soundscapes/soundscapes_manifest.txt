@@ -1,0 +1,22 @@
+soundscapes_manifest
+{
+
+		"file"		"scripts/soundscapes.txt"
+
+		// List additional soundscape files here
+
+		"file"		"scripts/soundscapes_2fort.txt"
+		"file"		"scripts/soundscapes_dustbowl.txt"
+		"file"		"scripts/soundscapes_well.txt"
+		"file"		"scripts/soundscapes_badlands.txt"
+		"file"		"scripts/soundscapes_gravelpit.txt"
+		"file"		"scripts/soundscapes_hydro.txt"
+		"file"		"scripts/soundscapes_granary.txt"
+		"file"		"scripts/soundscapes_goldrush.txt"
+		"file"		"scripts/soundscapes_ravine.txt"
+		"file"		"scripts/soundscapes_lumberyard.txt"
+		"file"		"scripts/soundscapes_pipeline.txt"
+		"file"		"scripts/soundscapes_sawmill.txt"
+		"file"		"scripts/soundscapes_egypt.txt"
+		"file"		"scripts/soundscapes_nucleus.txt"
+}

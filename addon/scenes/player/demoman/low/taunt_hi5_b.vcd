@@ -1,0 +1,73 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_highFiveSuccess"
+    {
+      time 0.000000 4.166667
+      param "taunt_highFiveSuccess"
+      fixedlength
+    }
+    event expression "drunkHappy"
+    {
+      time -0.002315 2.829504
+      param "player\demo\emotion\emotion"
+      param2 "evilHappy"
+      event_ramp
+      {
+        0.0000 0.0000
+        0.2000 0.1333
+        0.5040 0.8902
+        2.5807 0.8902
+        2.8091 0.0000
+      }
+    }
+    event expression "openJaw"
+    {
+      time 1.879295 2.558540
+      param "player\demo\emotion\emotion"
+      param2 "openJaw"
+      event_ramp
+      {
+        0.0000 0.0000
+        0.1420 0.5059
+        0.2960 0.2275
+        0.4640 0.1176
+        0.5340 0.1137
+        0.6740 0.0000
+      }
+    }
+    event expression "happy"
+    {
+      time 2.655092 4.134259
+      param "player\demo\emotion\emotion"
+      param2 "happy"
+      event_ramp
+      {
+        0.0000 0.0000
+        0.1220 1.0000
+        1.4129 1.0000
+      }
+    }
+    event speak "Demoman.LaughShort05"
+    {
+      time 0.057870 1.320455
+      param "Demoman.LaughShort05"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

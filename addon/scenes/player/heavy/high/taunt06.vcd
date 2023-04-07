@@ -1,0 +1,66 @@
+// Choreo version 1
+actor "heavy"
+{
+  channel "emotion"
+  {
+    event expression "dead02"
+    {
+      time 0.000000 2.500000
+      param "player\heavy\emotion\emotion"
+      param2 "dead02"
+      event_ramp
+      {
+        0.1286 0.0000 "curve_easein_to_curve_easein"
+        0.2476 1.0000 "curve_easein_to_curve_easein"
+        2.4238 1.0000
+      }
+    }
+    event expression "ao"
+    {
+      time 0.000000 2.500000
+      param "player\heavy\phonemes\phonemes_strong"
+      param2 "ao"
+      event_ramp
+      {
+        0.2524 0.0000
+        0.4381 0.1505 "curve_easein_to_curve_easein"
+        0.6429 0.1456 "curve_easeout_to_curve_easeout"
+        0.7476 0.0000
+        0.9524 0.1529 "curve_easein_to_curve_easein"
+        1.2381 0.1529 "curve_easeout_to_curve_easeout"
+        1.4000 0.0000
+        1.5524 0.1626 "curve_easein_to_curve_easein"
+        1.7143 0.1578 "curve_easeout_to_curve_easeout"
+        1.8429 0.0170
+        1.9333 0.0218
+        2.0476 0.1650 "curve_easein_to_curve_easein"
+        2.2476 0.1578 "curve_easeout_to_curve_easeout"
+        2.4000 0.0121
+      }
+    }
+  }
+  channel "animation"
+  {
+    event sequence "halloween taunt"
+    {
+      time 0.000000 2.500000
+      param "taunt06"
+      fixedlength
+    }
+  }
+  channel "taunt"
+  {
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "352"
+  "ExpressionTool" "100"
+  "RampTool" "42"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

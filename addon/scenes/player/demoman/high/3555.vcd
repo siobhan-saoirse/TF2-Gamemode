@@ -1,0 +1,54 @@
+// Choreo version 1
+actor "demoman"
+{
+  channel "audio"
+  {
+    event speak "Demoman.dominationsoldierupdate01"
+    {
+      time 0.010417 3.500213
+      param "Demoman.dominationsoldierupdate01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "madUpper"
+    {
+      time 0.052083 1.875000
+      param "player\demo\emotion\emotion"
+      param2 "madUpper"
+      event_ramp
+      {
+        0.0970 0.6778
+        1.6979 0.6000
+      }
+    }
+    event expression "scaredUpper"
+    {
+      time 1.354167 3.520833
+      param "player\demo\emotion\emotion"
+      param2 "scaredUpper"
+      event_ramp
+      {
+        0.2879 0.6333
+        0.8152 0.6556
+        1.0576 0.4630
+        1.4303 0.5333 "curve_easein_to_curve_easeout"
+        1.5121 0.9370 "curve_bspline_to_curve_bspline"
+        1.8636 0.9444 "curve_easein_to_curve_easeout"
+        2.1091 0.8000
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,1 @@
+matproxy.Add({	name = "ItemTintColor",	init = function(self, mat, values)		self.ResultTo = values.resultvar	end,	bind = function(self, mat, ent )		if (ent.GetCosmeticTint) then			mat:SetVector(self.ResultTo, ent:GetCosmeticTint())		else			mat:SetVector(self.ResultTo, Vector(0, 0, 0))		end	end})

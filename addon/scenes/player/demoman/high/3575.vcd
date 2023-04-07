@@ -1,0 +1,67 @@
+// Choreo version 1
+actor "demoman"
+{
+  channel "audio"
+  {
+    event speak "Demoman.gibberish10"
+    {
+      time 0.000000 5.898209
+      param "Demoman.gibberish10"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "pain"
+    {
+      time 0.010417 5.916667
+      param "player\demo\emotion\emotion"
+      param2 "pain"
+      event_ramp
+      {
+        0.1606 0.2982
+        0.5182 0.6145
+        1.0000 0.5236
+        1.3939 0.3418
+        2.2000 0.3709
+        2.5000 0.0109
+        3.1667 0.0218
+        3.5121 0.5891
+        5.0061 0.6109
+      }
+    }
+    event expression "scaredUpper"
+    {
+      time 2.406250 3.354167
+      param "player\demo\emotion\emotion"
+      param2 "scaredUpper"
+      event_ramp
+      {
+        0.1242 0.8800
+        0.7364 0.4764
+      }
+    }
+    event expression "openJaw"
+    {
+      time 2.395833 3.291667
+      param "player\demo\emotion\emotion"
+      param2 "openJaw"
+      event_ramp
+      {
+        0.2182 0.9273
+        0.6909 0.0327
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

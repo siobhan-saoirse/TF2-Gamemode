@@ -1,0 +1,52 @@
+// Choreo version 1
+event loop "idle"
+{
+  time 3.833333 -1.000000
+  param "1.500000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_rps_start"
+    {
+      time 0.000000 3.833333
+      param "taunt_rps_start"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event speak "demo_taunt_rps_intro_wait_rand"
+    {
+      time 2.009132 3.363032
+      param "demo_taunt_rps_intro_wait_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "audio"
+  {
+    event speak "demo_taunt_rps_start_rand"
+    {
+      time 0.075343 1.022395
+      param "demo_taunt_rps_start_rand"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

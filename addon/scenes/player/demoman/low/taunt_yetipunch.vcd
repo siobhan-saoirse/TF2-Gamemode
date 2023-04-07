@@ -1,0 +1,54 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "yeti_punch"
+  {
+    event sequence "taunt_yetipunch"
+    {
+      time 0.004504 5.871171
+      param "taunt_yetipunch"
+      fixedlength
+    }
+  }
+  channel "sound"
+  {
+    event speak "Demoman.Jeers03"
+    {
+      time 0.080247 3.702560
+      param "Demoman.Jeers03"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Demoman.LaughShort01"
+    {
+      time 4.026285 5.367238
+      param "Demoman.LaughShort01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "sound2"
+  {
+    event speak "Breakable.Crate"
+    {
+      time 3.117118 4.265939
+      param "Breakable.Crate"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,1 @@
+local JaratedColor = Vector(2.0, 2.0, 0.7)local DefaultColor = Vector(1, 1, 1)matproxy.Add({	name = "YellowLevel",	init = function(self, mat, kv)		self.Result = kv.resultvar	end,	bind = function(self, mat, ent)		if ent:GetProxyVar("Jarated") then			mat:SetVector(self.Result, JaratedColor)		else			mat:SetVector(self.Result, DefaultColor)		end	end})

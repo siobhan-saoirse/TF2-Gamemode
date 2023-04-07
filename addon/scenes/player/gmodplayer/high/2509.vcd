@@ -1,0 +1,54 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "sniper.CartStopItDefenseSoft01"
+    {
+      time 0.000000 2.055964
+      param "sniper.CartStopItDefenseSoft01"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "AggresiveClosed"
+    {
+      time 0.000000 2.453333
+      param "player\sniper\emotion\emotion"
+      param2 "AggresiveClosed"
+      event_ramp
+      {
+        0.2560 0.9075
+        1.8027 0.5907
+        2.3440 0.0391
+      }
+    }
+    event expression "painSmallUpper"
+    {
+      time 0.060000 2.086667
+      param "player\sniper\emotion\emotion"
+      param2 "painSmallUpper"
+      event_ramp
+      {
+        0.1600 0.0178
+        0.2680 0.3488
+        0.6280 0.0854 "curve_kochanek_late_to_curve_kochanek_late"
+        1.2840 0.0391 "curve_easein_to_curve_easeout"
+        1.5720 0.9324 "curve_simple_cubic_to_curve_simple_cubic"
+        1.7160 0.7402 "curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "RampTool" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

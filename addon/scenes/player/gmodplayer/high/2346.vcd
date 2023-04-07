@@ -1,0 +1,36 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "sniper.Award08"
+    {
+      time 0.000000 1.322630
+      param "sniper.Award08"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "HappySmallClosed"
+    {
+      time 0.000000 2.500000
+      param "player\sniper\emotion\emotion"
+      param2 "HappySmallClosed"
+      event_ramp
+      {
+        0.1452 0.8182
+        2.3929 0.7977
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "RampTool" "84"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

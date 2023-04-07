@@ -1,0 +1,38 @@
+// Choreo version 1
+actor "engineer"
+{
+  channel "audio"
+  {
+    event speak "engineer_gunslingertriplepunchfinal02"
+    {
+      time -0.020833 1.331003
+      param "engineer_gunslingertriplepunchfinal02"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "mad"
+    {
+      time 0.000000 3.020834
+      param "player\engineer\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.1333 0.7282 "curve_easein_to_curve_easein"
+        2.9477 0.7209 "curve_easein_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

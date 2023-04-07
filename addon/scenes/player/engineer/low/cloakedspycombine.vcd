@@ -1,0 +1,27 @@
+// Choreo version 1
+actor "Engineer"
+{
+  channel "Sound"
+  {
+    event speak "vo\engineer_cloakedspycombine.wav"
+    {
+      time 0.003112 2.952047
+      param "vo\engineer_cloakedspycombine.wav"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+
+scalesettings
+{
+  "SceneRampTool" "100"
+  "RampTool" "100"
+  "GestureTool" "100"
+  "ExpressionTool" "100"
+  "CChoreoView" "88"
+}
+fps 60
+snap off
+ignorePhonemes off

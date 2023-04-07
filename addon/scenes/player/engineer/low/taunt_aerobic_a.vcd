@@ -1,0 +1,210 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 7.499000 -1.000000
+  param "6.706000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "Anim"
+  {
+    event speak "Default.StepLeft"
+    {
+      time 6.312267 7.031360
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 4.450773 5.073812
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 1.492387 2.115426
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 1.074677 1.793770
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 5.379852 6.002891
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 0.670631 1.293669
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 0.266170 0.797735
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 4.943473 5.662566
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event sequence "taunt_aerobic_A"
+    {
+      time 0.000000 7.500000
+      param "taunt_aerobic_A"
+      fixedlength
+    }
+    event speak "spy_taunt_flip_landings"
+    {
+      time 1.925532 2.724806
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "spy_taunt_flip_landings"
+    {
+      time 2.716312 3.515586
+      param "spy_taunt_flip_landings"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 5.798083 6.329648
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 6.216731 6.839769
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 7.018150 7.641189
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 7.411558 8.130651
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 3.638509 4.170074
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 3.950565 4.482130
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepRight"
+    {
+      time 6.642263 7.123260
+      param "Default.StepRight"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Default.StepLeft"
+    {
+      time 2.273261 2.804826
+      param "Default.StepLeft"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "taunt_engineer_aerobic_shared_dance_intro"
+    {
+      time 0.014429 5.332910
+      param "taunt_engineer_aerobic_shared_dance_intro"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBig"
+    {
+      time 6.706000 7.526144
+      param "player\engineer\emotion\emotion"
+      param2 "happyBigClosed"
+    }
+    event speak "eng_taunt_conga_random_fun3"
+    {
+      time 5.758503 7.819455
+      param "eng_taunt_conga_random_fun3"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBigClosed"
+    {
+      time 0.000000 6.706000
+      param "player\engineer\emotion\emotion"
+      param2 "happyBigClosed"
+      event_ramp
+      {
+        0.0000 1.0000
+        0.3314 0.4078
+        1.5471 0.3882
+        4.2373 0.3765
+        6.7060 1.0000
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

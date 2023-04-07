@@ -1,0 +1,31 @@
+// Choreo version 1
+event loop "LOOP"
+{
+  time 9.000000 -1.000000
+  param "0.000000"
+  loopcount "-1"
+}
+actor "heavy"
+{
+  channel "emotion"
+  {
+    event expression "upperHappy2"
+    {
+      time 0.000000 10.000000
+      param "player\heavy\emotion\emotion"
+      param2 "happybig"
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "40"
+  "ExpressionTool" "100"
+  "RampTool" "4"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

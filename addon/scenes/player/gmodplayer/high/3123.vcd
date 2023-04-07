@@ -1,0 +1,67 @@
+// Choreo version 1
+actor "sniper"
+{
+  channel "audio"
+  {
+    event speak "Sniper.DominationSoldier06"
+    {
+      time -0.010417 2.178926
+      param "Sniper.DominationSoldier06"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "happyBigUpper"
+    {
+      time 0.016667 1.043333
+      param "player\sniper\emotion\emotion"
+      param2 "happyBigUpper"
+      event_ramp
+      {
+        0.1485 0.8044
+        0.8355 0.7343
+      }
+    }
+    event expression "Cocky"
+    {
+      time 0.746667 2.473333
+      param "player\sniper\emotion\emotion"
+      param2 "Cocky"
+      event_ramp
+      {
+        0.1727 0.8118
+        1.4936 0.7601
+      }
+    }
+    event expression "painBigUpper"
+    {
+      time 0.753333 2.473333
+      param "player\sniper\emotion\emotion"
+      param2 "painBigUpper"
+      event_ramp
+      {
+        0.1030 0.6827 "curve_easeout_to_curve_easeout"
+        0.3242 0.6015 "curve_easeout_to_curve_easeout"
+        0.4909 0.6790 "curve_easeout_to_curve_easeout"
+        0.6091 0.6125 "curve_easeout_to_curve_easeout"
+        0.7424 0.6863 "curve_easeout_to_curve_easeout"
+        0.8636 0.6162 "curve_easeout_to_curve_easeout"
+        1.0030 0.6937 "curve_easeout_to_curve_easeout"
+        1.1485 0.6310 "curve_easeout_to_curve_easeout"
+        1.2909 0.7122 "curve_easeout_to_curve_easeout"
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "200"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

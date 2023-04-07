@@ -1,0 +1,141 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "taunt_rps_rock_win"
+    {
+      time 3.385059 6.785059
+      param "taunt_rps_rock_win"
+      fixedlength
+    }
+  }
+  channel "face"
+  {
+    event flexanimation "face"
+    {
+      time 0.003268 6.784314
+      param ""
+      flexanimations samples_use_time
+      {
+        "CloseLid" combo
+        {
+          0.1000 0.5765 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.3714 0.9766 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.4286 0.9491 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.4857 0.8472 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          0.9857 0.4079 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          1.2857 0.6864 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          1.5571 0.5099 curve_easein_to_curve_easein
+          2.7571 0.3373 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.2429 0.3373 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.6429 0.7883 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.9223 0.8197 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          4.1286 0.7687 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          4.3857 0.2785 curve_easein_to_curve_easein
+        }
+        {
+          3.9223 0.0981 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        "happyUpper"
+        {
+          0.7714 0.0588 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          1.3286 0.7883 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          2.9143 0.5099 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.4429 0.0078 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.7857 0.4785 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.9223 0.5648 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          4.0000 0.9099 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          4.5714 0.5687 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          5.9429 0.0863 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        "drunkHappy"
+        {
+          3.4000 0.0000 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.9223 0.0000 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          4.5000 0.5295 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+        "OO"
+        {
+          3.6714 0.0000 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          3.9223 0.6001 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+          4.2429 0.0000 curve_catmullrom_normalize_x_to_curve_catmullrom_normalize_x
+        }
+      }
+    }
+  }
+  channel "rps"
+  {
+    event sequence "taunt_rps_rock"
+    {
+      time 0.003268 3.436601
+      param "taunt_rps_rock"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "c"
+    {
+      time 0.206897 1.105877
+      param "taunt_demo_int_27"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "ONE TWO THREE"
+    {
+      time 1.855026 3.062010
+      param "taunt_demo_rps_exert_04"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "OH YES"
+    {
+      time 3.689545 5.420815
+      param "taunt_demo_rps_win_08"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "fx"
+  {
+    event speak "Weapon_Fist.Miss"
+    {
+      time 2.202615 2.757309
+      param "Weapon_Fist.Miss"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Fist.Miss"
+    {
+      time 1.810457 2.365151
+      param "Weapon_Fist.Miss"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_Fist.Miss"
+    {
+      time 2.614379 3.179957
+      param "Weapon_Fist.Miss"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off

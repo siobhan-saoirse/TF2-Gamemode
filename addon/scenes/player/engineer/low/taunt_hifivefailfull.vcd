@@ -1,0 +1,85 @@
+// Choreo version 1
+actor "eng"
+{
+  channel "body"
+  {
+    event sequence "taunt_hifiveFailFull"
+    {
+      time -0.007246 3.959421
+      param "taunt_hifiveFailFull"
+      fixedlength
+    }
+    event expression "defaultFace"
+    {
+      time 0.000000 0.326087
+      param "player\engineer\emotion\emotion"
+      param2 "defaultFace"
+      event_ramp
+      {
+        0.0000 0.9958
+        0.2182 0.9979 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "happyBig"
+    {
+      time 0.202899 1.884058
+      param "player\engineer\emotion\emotion"
+      param2 "happyBig"
+      event_ramp
+      {
+        0.3242 0.9979 "curve_easein_to_curve_easein"
+        1.4818 0.9979 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "scared"
+    {
+      time 1.753624 2.507247
+      param "player\engineer\emotion\emotion"
+      param2 "scared"
+      event_ramp
+      {
+        0.0697 1.0000 "curve_easein_to_curve_easein"
+        0.5746 0.9936 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event expression "mad"
+    {
+      time 2.348527 3.906498
+      param "player\engineer\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.4515 0.9851 "curve_easein_to_curve_easein"
+        1.5489 0.9979 "curve_easeout_to_curve_easeout"
+      }
+    }
+    event speak "Engineer.NegativeVocaliz"
+    {
+      time -0.355072 -1.000000
+      param "Engineer.NegativeVocaliz"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Engineer.NegativeVocalization07"
+    {
+      time 2.373539 -1.000000
+      param "Engineer.NegativeVocalization07"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "124"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

@@ -1,0 +1,38 @@
+// Choreo version 1
+actor "engineer"
+{
+  channel "audio"
+  {
+    event speak "engineer_dominationheavy13"
+    {
+      time 0.000000 1.543311
+      param "engineer_dominationheavy13"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event expression "specialAction01"
+    {
+      time 0.000000 1.968750
+      param "player\engineer\emotion\emotion"
+      param2 "specialAction01"
+      event_ramp
+      {
+        0.1758 0.5194
+        1.8333 0.4927
+      }
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "64"
+  "ExpressionTool" "100"
+  "RampTool" "66"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

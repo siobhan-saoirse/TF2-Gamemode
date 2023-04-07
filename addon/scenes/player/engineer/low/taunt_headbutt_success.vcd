@@ -1,0 +1,123 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "body"
+  {
+    event sequence "layer_taunt_headbutt_success"
+    {
+      time 0.000000 4.500000
+      param "layer_taunt_headbutt_success"
+      fixedlength
+    }
+  }
+  channel "audio"
+  {
+    event speak "eng_taunt_headbutt_success_windup"
+    {
+      time 0.430000 1.713991
+      param "eng_taunt_headbutt_success_windup"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_headbutt_success_exert"
+    {
+      time 1.530000 2.113991
+      param "eng_taunt_headbutt_success_exert"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_headbutt_success_recover_1"
+    {
+      time 2.435862 3.159921
+      param "eng_taunt_headbutt_success_recover_1"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "eng_taunt_headbutt_success_recover_2"
+    {
+      time 3.589885 4.436801
+      param "eng_taunt_headbutt_success_recover_2"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "SFX"
+  {
+    event speak "taunt_headbutt_sfx_hand_swoosh"
+    {
+      time 0.000000 0.572132
+      param "Taunt.EngineerSwoosh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "Weapon_BaseballBat.HitFlesh"
+    {
+      time 1.740000 2.554150
+      param "Weapon_BaseballBat.HitFlesh"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "MedicGloveSnap"
+    {
+      time 0.377778 1.036644
+      param "Taunt.MedicGloveSnap"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "expression"
+  {
+    event expression "happyBigClosed"
+    {
+      time 2.173333 4.506667
+      param "player\engineer\emotion\emotion"
+      param2 "happyBigClosed"
+      event_ramp
+      {
+        0.1574 0.5020
+        2.3328 0.5882
+      }
+    }
+    event expression "mad"
+    {
+      time 1.506667 2.306667
+      param "player\engineer\emotion\emotion"
+      param2 "mad"
+      event_ramp
+      {
+        0.3516 0.3765
+        0.5038 0.9294
+        0.6846 0.9294
+      }
+    }
+    event expression "specialAction01"
+    {
+      time 0.425287 1.603449
+      param "player\engineer\emotion\emotion"
+      param2 "specialAction01"
+      event_ramp
+      {
+        0.3442 0.6078
+        0.8339 0.5843
+      }
+    }
+  }
+}
+mapname "maps\lol.bsp"
+scalesettings
+{
+  "CChoreoView" "100"
+  "SceneRampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+}
+fps 60
+snap off
