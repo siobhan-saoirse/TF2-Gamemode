@@ -1,1 +1,0 @@
-NEXT_MAP = "ep1_citadel_03"

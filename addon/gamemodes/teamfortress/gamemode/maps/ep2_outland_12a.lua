@@ -1,1 +1,0 @@
-NEXT_MAP = "d1_trainstation_01"
