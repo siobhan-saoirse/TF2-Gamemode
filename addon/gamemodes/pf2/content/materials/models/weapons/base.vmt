@@ -1,0 +1,35 @@
+"VertexLitGeneric"
+{
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	
+	// Glow
+	$glowcolor 1
+
+	"Proxies"
+	{
+//		"AnimatedWeaponSheen"
+//		{
+//			"animatedtexturevar" 		"$sheenmapmask"
+//			"animatedtextureframenumvar" 	"$sheenmapmaskframe"
+//			"animatedtextureframerate" 		"40"
+//		}
+		"vm_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}

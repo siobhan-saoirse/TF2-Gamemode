@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/items/ammo_bucket"
+	"$bumpmap" "models/effects/flat_normal"
+
+	"$phong" "1"
+	"$phongexponent" "5"
+	"$phongboost" "0.5"	
+	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
+	"$phongfresnelranges"	"[2 1 5]"
+
+	// Rim lighting parameters
+	"$rimlight" "1"
+	"$rimlightexponent" "4"	
+	"$rimlightboost" "2"
+}

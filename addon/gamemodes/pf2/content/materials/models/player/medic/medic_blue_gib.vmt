@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models/player/medic/medic_blue_gib"
+	"$surfaceprop"	"flesh"
+	"$bumpmap" "models\player\medic\medic_normal"
+
+	"$phong" "1"
+	"$phongexponenttexture" "models/player/medic/medic_exponent"
+	"$phongboost" ".5"	
+	"$lightwarptexture" "models/player/pyro/pyro_lightwarp"
+	"$phongfresnelranges"	"[1 10 20]"
+	"$halflambert" "1"
+	
+}

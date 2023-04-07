@@ -1,0 +1,16 @@
+"Patch"
+{
+	include "materials/models/weapons/world_base.vmt"
+
+	insert
+	{
+	"$baseTexture" "models\weapons\w_club\w_club"
+
+	"$phong" "1"
+	"$phongexponent" "5"
+	"$phongboost" "0.5"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[.25 .5 1]"
+	"$basemapalphaphongmask" "1"
+	}
+}

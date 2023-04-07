@@ -1,0 +1,16 @@
+"eyes"
+	{
+		"$basetexture"  "models/Alyx/eyeball_l"
+		"$iris"         "models/player/shared/dxlevel80/iris_blue_r"
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"$cloakfactor"	"1"
+	"$cloakColorTint"	"[1 1 1]"
+	
+	"Proxies"
+	{
+		"spy_invis"
+		{
+		}
+	}
+}

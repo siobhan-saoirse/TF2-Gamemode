@@ -1,0 +1,25 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/items/armor_pickup"
+	"$bumpmap" "models/items/armor_pickup_phongmask"
+	"$selfillum" "1"
+
+	"$phong" "1"
+	"$phongexponent" "40"
+	"$phongboost" ".8"	
+	"$lightwarptexture" "models/player/pyro/pyro_lightwarp"
+	"$phongfresnelranges"	"[.3 1 8]"
+
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=DX90"
+	{
+		"$baseTexture" 		"models/items/armor_pickup"
+		"$selfillummask" 	"models/items/item_selfillum"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<DX90"
+	{
+		"$baseTexture" 	"models/items/armor_pickup"
+	}
+}

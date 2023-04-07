@@ -1,0 +1,17 @@
+"Patch"
+{
+	include "materials/models/weapons/base.vmt"
+
+	insert
+	{
+	"$basetexture" "models/weapons/v_mat49/v_mat49"
+	//"$bumpmap" "models/weapons/v_mat49/v_mat49_normal"
+
+	"$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost" "1"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[.15 .5 1]"
+	"$basemapalphaphongmask" "1"
+	}
+}

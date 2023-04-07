@@ -1,0 +1,10 @@
+"Patch"
+{
+	include "materials/models/weapons/world_base.vmt"
+
+	insert
+	{
+	"$basetexture"	"models/weapons/w_syringe/w_syringe_glass"
+	"$translucent" "1"
+	}
+}

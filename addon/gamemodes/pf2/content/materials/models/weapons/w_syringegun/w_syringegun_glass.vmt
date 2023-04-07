@@ -1,0 +1,14 @@
+"Patch"
+{
+	include "materials/models/weapons/world_base.vmt"
+
+	insert
+	{
+	"$basetexture"	"models\weapons\w_syringegun\w_syringegun_glass"
+	"$translucent" "1"
+	"$additive" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	}
+}

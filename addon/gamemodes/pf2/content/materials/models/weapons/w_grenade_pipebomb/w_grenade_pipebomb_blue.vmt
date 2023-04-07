@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\weapons\w_grenade_pipebomb/w_grenade_pipebomb_blue"
+	"$selfillum" "1"
+}

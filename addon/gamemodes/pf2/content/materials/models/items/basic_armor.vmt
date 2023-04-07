@@ -1,0 +1,19 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/items/basic_armor"
+	"$selfillum" "1"
+
+
+	// Use separate self-illum mask on Pre DX9 hardware
+	">=DX90"
+	{
+		"$baseTexture" 		"models/items/basic_armor"
+		"$selfillummask" 	"models/items/item_selfillum"
+	}
+
+	// Use redundant self-illum in base alpha on Pre DX9 hardware
+	"<DX90"
+	{
+		"$baseTexture" 	"models/items/basic_armor"
+	}
+}

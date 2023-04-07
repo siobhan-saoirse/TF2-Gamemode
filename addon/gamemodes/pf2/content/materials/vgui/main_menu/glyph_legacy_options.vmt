@@ -1,0 +1,9 @@
+"UnlitGeneric"
+{
+	"$basetexture" "vgui\main_menu\glyph_legacy_options"
+	"$translucent" 1
+	"$ignorez" 1
+	"$vertexcolor" 1
+	"$vertexalpha" "1"
+	"%keywords" "pf"
+}

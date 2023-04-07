@@ -1,0 +1,27 @@
+"Patch"
+{
+	include "materials/models/weapons/base.vmt"
+
+	insert
+	{
+	"$basetexture"	"models\weapons\v_brandingiron\v_iron_sheet"
+	"$selfillum" 1
+	"$selfillummask" "models\weapons\v_brandingiron\v_iron_sheet_glow"
+	"$basemapalphaphongmask" "1"
+
+	"$phong" "1"
+	"$phongexponent" "10"
+	"$phongboost" "1.2"	
+	"$glowcolor" "1"
+	"$lightwarptexture" "models/lightwarps/weapon_lightwarp"
+	"$phongfresnelranges"	"[1 5 10]"
+	"$halflambert" "1"
+	
+	// Rim lighting parameters
+	//"$rimlight" "1"												// To enable rim lighting (requires phong)
+	//"$rimlightexponent" "2"										// Exponent for phong component of rim lighting	
+	//"$rimlightboost" ".25"										// Boost for ambient cube component of rim lighting
+
+	"360?$color2" "[ 0.7 0.7 0.65 ]"
+	}
+}

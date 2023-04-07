@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture" "vgui\maps\menu_photos_ad_dustbowl2"
+	"$translucent" 1
+	"$ignorez" 1
+	"$vertexcolor" 1
+}

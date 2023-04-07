@@ -1,0 +1,9 @@
+patch
+{
+	include materials\hud\armor_light_blue.vmt
+	insert
+	{
+		"$baseTexture" "hud\armor_gradient_red"
+		//"$detail" "hud\armor_light_mask"
+	}
+}

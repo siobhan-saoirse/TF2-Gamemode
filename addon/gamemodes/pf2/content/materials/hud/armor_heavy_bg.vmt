@@ -1,0 +1,8 @@
+patch
+{
+	include materials\hud\armor_light_bg.vmt
+	insert
+	{
+		"$baseTexture" "hud\armor_medium_mask"
+	}
+}

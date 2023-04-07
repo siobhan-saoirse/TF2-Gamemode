@@ -1,0 +1,49 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 4.500000 -1.000000
+  param "4.100000"
+  loopcount "-1"
+}
+actor "soldier"
+{
+  channel "body"
+  {
+  }
+  channel "sequence"
+  {
+    event sequence "Start"
+    {
+      time 0.000000 0.000000
+      param "selectionMenu_StartPose"
+      fixedlength
+    }
+    event sequence "selectionMenu_Anim01"
+    {
+      time 0.020000 4.020000
+      param "selectionMenu_Anim01"
+      resumecondition
+      fixedlength
+    }
+    event sequence "idle"
+    {
+      time 4.006667 4.506667
+      param "selectionMenu_Idle"
+    }
+  }
+  channel "facial"
+  {
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "RampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

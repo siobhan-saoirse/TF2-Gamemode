@@ -1,0 +1,20 @@
+"Patch"
+{
+	include "materials/models/weapons/world_base.vmt"
+
+	insert
+	{
+	"$basetexture"	"models\weapons\w_sniperrifle\w_sniperrifle01"
+	"$bumpmap" "models/weapons\w_sniperrifle\w_sniperrifle_normal"
+
+	"$phong" "1"
+	"$phongexponent" "40"
+	"$phongboost" "6"	
+	"$lightwarptexture" "models\lightwarps\weapon_lightwarp"
+	"$phongfresnelranges"	"[.25 .5 1]"
+
+	//"$rimlight" "1"
+	//"$rimlightexponent" "4"	
+	//"$rimlightboost" "2"
+	}
+}
