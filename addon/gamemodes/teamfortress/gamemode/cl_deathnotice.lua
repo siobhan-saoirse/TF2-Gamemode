@@ -182,73 +182,103 @@ usermessage.Hook("Notice_EntityHumiliationLaughCounter", function(msg)
 end)
 
 usermessage.Hook("Notice_EntityFinishedOffEntity", function(msg)
-	local pid = LocalPlayer():UserID()
-	
-	local victim_name = msg:ReadString()
-	local victim_team = msg:ReadShort()
-	local victim_id = msg:ReadShort()
-	
-	local attacker_name = msg:ReadString()
-	local attacker_team = msg:ReadShort()
-	local attacker_id = msg:ReadShort()
-	
-	GAMEMODE:TFAddDeathNotice(
-		attacker_name,
-		attacker_team,
-		"skull",
-		victim_name,
-		victim_team,
-		nil,
-		0,
-		"finished off ",
-		false,
-		pid==attacker_id or pid==victim_id,
-		GetDeathNoticeID(victim_id, attacker_id, 0, "__finish")
-	)
+	if (LocalPlayer() and LocalPlayer():GetPlayerClass() == "gmodplayer") then
+		local victim_name = msg:ReadString()
+		local victim_team = msg:ReadShort()
+		local victim_id = msg:ReadShort()
+		
+		local attacker_name = msg:ReadString()
+		local attacker_team = msg:ReadShort()
+		local attacker_id = msg:ReadShort()
+
+		GAMEMODE:AddDeathNotice( attacker_name, attacker_team, "skull", victim_name, victim_team )
+	else
+		local pid = LocalPlayer():UserID()
+		
+		local victim_name = msg:ReadString()
+		local victim_team = msg:ReadShort()
+		local victim_id = msg:ReadShort()
+		
+		local attacker_name = msg:ReadString()
+		local attacker_team = msg:ReadShort()
+		local attacker_id = msg:ReadShort()
+		
+		GAMEMODE:TFAddDeathNotice(
+			attacker_name,
+			attacker_team,
+			"skull",
+			victim_name,
+			victim_team,
+			nil,
+			0,
+			"finished off ",
+			false,
+			pid==attacker_id or pid==victim_id,
+			GetDeathNoticeID(victim_id, attacker_id, 0, "__finish")
+		)
+	end
 end)
 
 usermessage.Hook("Notice_EntityFell", function(msg)
-	local pid = LocalPlayer():UserID()
 	
-	local victim_name = msg:ReadString()
-	local victim_team = msg:ReadShort()
-	local victim_id = msg:ReadShort()
-	
-	GAMEMODE:TFAddDeathNotice(
-		victim_name,
-		victim_team,
-		"skull",
-		"",
-		0,
-		nil,
-		0,
-		"fell to a clumsy, painful death",
-		false,
-		pid==attacker_id or pid==victim_id,
-		GetDeathNoticeID(victim_id, 0, 0, "__falldamage")
-	)
+	if (LocalPlayer() and LocalPlayer():GetPlayerClass() == "gmodplayer") then
+		local victim_name = msg:ReadString()
+		local victim_team = msg:ReadShort()
+		local victim_id = msg:ReadShort()
+
+		GAMEMODE:AddDeathNotice( victim_name, victim_team, "skull", victim_name, victim_team )
+	else
+		local pid = LocalPlayer():UserID()
+		
+		local victim_name = msg:ReadString()
+		local victim_team = msg:ReadShort()
+		local victim_id = msg:ReadShort()
+		
+		GAMEMODE:TFAddDeathNotice(
+			victim_name,
+			victim_team,
+			"skull",
+			"",
+			0,
+			nil,
+			0,
+			"fell to a clumsy, painful death",
+			false,
+			pid==attacker_id or pid==victim_id,
+			GetDeathNoticeID(victim_id, 0, 0, "__falldamage")
+		)
+	end
 end)
 
 usermessage.Hook("Notice_EntitySuicided", function(msg)
-	local pid = LocalPlayer():UserID()
 	
-	local victim_name = msg:ReadString()
-	local victim_team = msg:ReadShort()
-	local victim_id = msg:ReadShort()
-	
-	GAMEMODE:TFAddDeathNotice(
-		victim_name,
-		victim_team,
-		"skull",
-		"",
-		0,
-		nil,
-		0,
-		"bid farewell, cruel world!",
-		false,
-		pid==attacker_id or pid==victim_id,
-		GetDeathNoticeID(victim_id, 0, 0, "__suicide")
-	)
+	if (LocalPlayer() and LocalPlayer():GetPlayerClass() == "gmodplayer") then
+		local victim_name = msg:ReadString()
+		local victim_team = msg:ReadShort()
+		local victim_id = msg:ReadShort()
+
+		GAMEMODE:AddDeathNotice( victim_name, victim_team, "skull", victim_name, victim_team )
+	else
+		local pid = LocalPlayer():UserID()
+		
+		local victim_name = msg:ReadString()
+		local victim_team = msg:ReadShort()
+		local victim_id = msg:ReadShort()
+		
+		GAMEMODE:TFAddDeathNotice(
+			victim_name,
+			victim_team,
+			"skull",
+			"",
+			0,
+			nil,
+			0,
+			"bid farewell, cruel world!",
+			false,
+			pid==attacker_id or pid==victim_id,
+			GetDeathNoticeID(victim_id, 0, 0, "__suicide")
+		)
+	end
 end)
 
 usermessage.Hook("Notice_EntityDominatedEntity", function(msg)

@@ -31,8 +31,8 @@ if SERVER then
 AddCSLuaFile( "shared.lua" )
 
 ENT.Model = Model("models/buildables/sentry3_rockets.mdl")
-
-ENT.ExplosionSound = Sound("BaseExplosionEffect.Sound")
+ 
+ENT.ExplosionSound = Sound("TF_BaseExplosionEffect.Sound")
 
 ENT.BaseDamage = 100
 ENT.DamageRandomize = 0

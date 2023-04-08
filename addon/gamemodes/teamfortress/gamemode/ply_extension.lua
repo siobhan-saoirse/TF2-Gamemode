@@ -457,7 +457,7 @@ function meta:TFTaunt(args)
 									d:SetInflictor( ply:GetWeapons()[3] )
 									d:SetDamageType( DMG_BLAST )
 									v:TakeDamageInfo( d )
-									v:EmitSound("BaseExplosionEffect.Sound")
+									v:EmitSound("TF_BaseExplosionEffect.Sound")
 								elseif v:IsPlayer() and not v:IsFriendly(ply) and v:EntIndex() != ply:EntIndex() then
 									local d = DamageInfo()
 									d:SetDamage( v:Health() )
@@ -465,12 +465,12 @@ function meta:TFTaunt(args)
 									d:SetInflictor( ply:GetWeapons()[3] )
 									d:SetDamageType( DMG_BLAST )
 									v:TakeDamageInfo( d )
-									v:EmitSound("BaseExplosionEffect.Sound")
+									v:EmitSound("TF_BaseExplosionEffect.Sound")
 								end
 							end
 							timer.Simple(0.3, function()
 							
-								ply:EmitSound("BaseExplosionEffect.Sound")
+								ply:EmitSound("TF_BaseExplosionEffect.Sound")
 								local dmg = DamageInfo()
 								dmg:SetDamage( ply:Health() )
 								dmg:SetAttacker( ply )

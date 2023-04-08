@@ -59,8 +59,8 @@ AddCSLuaFile( "shared.lua" )
 
 ENT.Model = Model("models/weapons/w_models/w_rocket.mdl")
 ENT.ModelNuke = Model("models/props_trainyard/cart_bomb_separate.mdl")
-
-ENT.ExplosionSound = Sound("BaseExplosionEffect.Sound")
+ 
+ENT.ExplosionSound = Sound("TF_BaseExplosionEffect.Sound")
 ENT.ExplosionSoundFast = Sound("Weapon_RPG_DirectHit.Explode")
 ENT.ExplosionSoundNuke = Sound("Cart.Explode")
 ENT.BounceSound = Sound("Weapon_Grenade_Pipebomb.Bounce")

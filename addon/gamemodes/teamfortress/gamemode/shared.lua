@@ -482,11 +482,18 @@ sound.Add( {
 	sound = { "music/pzattack/vassalation.wav"} 
 } )
 sound.Add( {
-	name = "BaseExplosionEffect.Sound",
+	name = "TF_BaseExplosionEffect.Sound",
 	volume = 1.0,
 	level = 95,
 	pitch = { 100 },
 	sound = { "tf/weapons/explode1.wav",  "tf/weapons/explode2.wav",  "tf/weapons/explode3.wav"} 
+} )
+sound.Add( {
+	name = "BaseExplosionEffect.Sound",
+	volume = 1.0,
+	level = 150,
+	pitch = { 95, 105 },
+	sound = { "^weapons/explode3.wav", "^weapons/explode4.wav", "^weapons/explode5.wav" } 
 } )
 sound.Add( {
 	name = "NPC_AntlionGuard.StepLight",
