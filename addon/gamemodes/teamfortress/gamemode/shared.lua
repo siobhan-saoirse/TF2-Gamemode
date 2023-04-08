@@ -494,37 +494,7 @@ sound.Add( {
 	level = 150,
 	pitch = { 95, 105 },
 	sound = { "^weapons/explode3.wav", "^weapons/explode4.wav", "^weapons/explode5.wav" } 
-} )
-sound.Add( {
-	name = "NPC_AntlionGuard.StepLight",
-	level = 75,
-	pitch = { 70, 85 },
-	sound = { "npc/antlion_guard/foot_light1.wav", "npc/antlion_guard/foot_light2.wav" } 
-} )
-sound.Add( {
-	name = "NPC_AntlionGuard.StepHeavy",
-	pitch = { 70, 85 },
-	level = 75,
-	sound = { "^npc/antlion_guard/foot_heavy1.wav", "^npc/antlion_guard/foot_heavy2.wav" }  
-} )
-sound.Add( {
-	name = "NPC_AntlionGuard.FarStepLight",
-	pitch = { 70, 85 },
-	level = 155,
-	sound = { "npc/antlion_guard/far_foot_light1.wav", "npc/antlion_guard/far_foot_light2.wav" }  
-} )
-sound.Add( {
-	name = "NPC_AntlionGuard.FarStepHeavy",
-	pitch = { 70, 85 },
-	level = 155,
-	sound = { "npc/antlion_guard/far_foot_heavy1.wav", "npc/antlion_guard/far_foot_heavy2.wav" }  
-} )
-sound.Add( {
-	name = "NPC_AntlionGuard.NearStepLight",
-	pitch = { 70, 85 },
-	level = 125,
-	sound = { "npc/antlion_guard/near_foot_heavy1.wav", "npc/antlion_guard/near_foot_heavy2.wav" }  
-} )
+} ) 
 sound.Add( {
 	name = "NPC_CombineDropship.NearRotorLoop",
 	pitch = 100,
@@ -1637,7 +1607,7 @@ include("shd_attributes.lua")
 include("shd_loadout.lua")
 include("shd_extras.lua")
 include("shd_workshop.lua")
-
+ 
 include("shd_competitive.lua")
 include("shd_spec.lua")
 
@@ -1749,105 +1719,6 @@ hook.Add( "EntityEmitSound", "TimeWarpSounds", function( t )
 end )
 
 concommand.Add("tf_spydisguise", function(ply, cmd)
-end)
-
-hook.Add("PlayerStepSoundTime", "FootTime", function(ply, iType, iWalking)
-	if (ply:GetPlayerClass() == "tank_l4d") then
-		if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
-			local speed = 250 + 100
-			return speed
-		else
-			local speed = 250
-			return speed
-		end
-	end
-	if (ply:GetPlayerClass() == "boomer") then
-		if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
-			local speed = 400 + 100
-			return speed
-		else
-			local speed = 350
-			return speed
-		end
-	end
-	if (ply:GetPlayerClass() == "charger") then
-		if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
-			local speed = 300 + 100
-			return speed
-		else
-			local speed = 270
-			return speed
-		end
-	end
-	if (ply:GetPlayerClass() == "smoker") then
-		if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
-			local speed = 400 + 100
-			return speed
-		else
-			local speed = 370
-			return speed
-		end
-	end
-	if (ply:GetPlayerClass() == "hunter") then
-		if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
-			local speed = 400 + 100
-			return speed
-		else
-			local speed = 360
-			return speed
-		end
-	end
-	if (iType == STEPSOUNDTIME_NORMAL || iType == STEPSOUNDTIME_WATER_FOOT) then
-		if (ply:GetMoveType() == MOVETYPE_LADDER) then
-			local speed = math.Remap(ply:GetMaxSpeed(), 200, 450, 400, 200) + 100
-			return speed
-		else
-			if (ply:Crouching()) then
-				local speed = math.Remap(ply:GetMaxSpeed(), 200, 450, 400, 200) + 100
-				return speed
-			else
-				if (ply:GetWalkSpeed() > 450) then
-				
-					local speed = 200
-					return speed
-					
-				else
-					if (ply:GetWalkSpeed() < 229 and !ply:KeyDown(IN_SPEED)) then
-					
-						local speed = 400
-						return speed 
-						
-					else
-						local speed = math.Remap(ply:GetMaxSpeed(), 200, 450, 400, 200)
-						return speed
-					end
-				end
-			end
-		end
-	end
-	if (iType == STEPSOUNDTIME_WATER_KNEE) then
-		if (ply:Crouching()) then
-			local speed = math.Remap(ply:GetMaxSpeed(), 200, 450, 600, 200) + 100
-			return speed
-		else
-			if (ply:GetWalkSpeed() > 450) then
-			
-				local speed = 200
-				return speed
-				
-			else
-				if (ply:GetWalkSpeed() < 229 and !ply:KeyDown(IN_SPEED)) then
-					
-					local speed = 400
-					return speed 
-						
-				else
-					local speed = math.Remap(ply:GetMaxSpeed(), 200, 450, 600, 200)
-					return speed
-				end
-			end
-		end
-	end
 end)
 
 

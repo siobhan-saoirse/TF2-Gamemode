@@ -35,6 +35,7 @@ function lookForNextPlayer(ply,bot)
 end
 
 concommand.Add("tf_spectate", function(ply, _, args)
+	if (!ply:Alive()) then return end
 	for k,v in ipairs(player.GetAll()) do
 		if (k < 2 and v:Team() == TEAM_SPECTATOR) then
 			GAMEMODE.round_active = false

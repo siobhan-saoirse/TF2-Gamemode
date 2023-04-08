@@ -19,7 +19,7 @@ file.Append(LOGFILE, "Loading serverside script\n")
 local load_time = SysTime() 
 
 include("sv_npc_relationship.lua")  
-include("sv_ent_substitute.lua") 
+include("sv_ent_substitute.lua")  
 
 CreateConVar("grapple_distance", -1, false)  
 response_rules.Load("talker/tf_response_rules.txt")

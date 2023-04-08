@@ -489,36 +489,6 @@ sound.Add( {
 	sound = { "tf/weapons/explode1.wav",  "tf/weapons/explode2.wav",  "tf/weapons/explode3.wav"} 
 } )
 sound.Add( {
-	name = "NPC_AntlionGuard.StepLight",
-	level = 75,
-	pitch = { 70, 85 },
-	sound = { "npc/antlion_guard/foot_light1.wav", "npc/antlion_guard/foot_light2.wav" } 
-} )
-sound.Add( {
-	name = "NPC_AntlionGuard.StepHeavy",
-	pitch = { 70, 85 },
-	level = 75,
-	sound = { "^npc/antlion_guard/foot_heavy1.wav", "^npc/antlion_guard/foot_heavy2.wav" }  
-} )
-sound.Add( {
-	name = "NPC_AntlionGuard.FarStepLight",
-	pitch = { 70, 85 },
-	level = 155,
-	sound = { "npc/antlion_guard/far_foot_light1.wav", "npc/antlion_guard/far_foot_light2.wav" }  
-} )
-sound.Add( {
-	name = "NPC_AntlionGuard.FarStepHeavy",
-	pitch = { 70, 85 },
-	level = 155,
-	sound = { "npc/antlion_guard/far_foot_heavy1.wav", "npc/antlion_guard/far_foot_heavy2.wav" }  
-} )
-sound.Add( {
-	name = "NPC_AntlionGuard.NearStepLight",
-	pitch = { 70, 85 },
-	level = 125,
-	sound = { "npc/antlion_guard/near_foot_heavy1.wav", "npc/antlion_guard/near_foot_heavy2.wav" }  
-} )
-sound.Add( {
 	name = "NPC_CombineDropship.NearRotorLoop",
 	pitch = 100,
 	level = 90,

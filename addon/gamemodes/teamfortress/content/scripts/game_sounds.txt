@@ -430,15 +430,23 @@
 
 "npc_citizen.die"
 {
-	"channel"	"CHAN_VOICE"
-	"volume"	"0.8"
-	"soundlevel"  "SNDLVL_75dB"
+	"channel"		"CHAN_VOICE"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_NORM"
 
 	"rndwave"
 	{
-		"wave"	"player/pl_pain5.wav"
-		"wave"	"player/pl_pain6.wav"
-		"wave"	"player/pl_pain7.wav"
+		"wave"	"*vo/npc/$gender01/pain01.wav"
+		"wave"	"*vo/npc/$gender01/pain02.wav"
+		"wave"	"*vo/npc/$gender01/pain03.wav"
+		"wave"	"*vo/npc/$gender01/pain04.wav"
+		"wave"	"*vo/npc/$gender01/pain05.wav"
+		"wave"	"*vo/npc/$gender01/pain06.wav"
+		"wave"	"*vo/npc/$gender01/pain07.wav"
+		"wave"	"*vo/npc/$gender01/pain08.wav"
+		"wave"	"*vo/npc/$gender01/pain09.wav"
 	}
 }
 
