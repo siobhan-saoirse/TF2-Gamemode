@@ -564,7 +564,7 @@ local tracedata = {
 }
 
 hook.Add("EntityTakeDamage","L4D2BloodSplatterDamage",function(ent,dmginfo)
-	 
+	--[[
 	if (!dmginfo:IsDamageType(DMG_BURN) and !dmginfo:IsDamageType(DMG_BLAST) and !dmginfo:IsDamageType(DMG_DIRECT) and ent:IsTFPlayer()) then
 		sound.Play( "player/survivor/splat/zombie_blood_spray_0"..math.random(1,6)..".wav", dmginfo:GetDamagePosition(), 55, math.random(95,105),0.3)
 		for i=1,5 do
@@ -648,7 +648,7 @@ hook.Add("EntityTakeDamage","L4D2BloodSplatterDamage",function(ent,dmginfo)
 	
 			goto loop
 		end
-	end
+	end]]
 
 end)
 
