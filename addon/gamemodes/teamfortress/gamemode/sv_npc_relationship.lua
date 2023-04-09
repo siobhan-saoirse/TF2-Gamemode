@@ -95,6 +95,8 @@ hook.Add("OnEntityCreated", "TF_UpdateNPCRelationship", function(ent)
 	end
 	if (ent:IsNPC()) then
 		ent:AddFlags(FL_NPC)
+		ent:AddFlags(FL_CLIENT)
+		ent:AddFlags(FL_FAKECLIENT)
 	end
 	if ent:IsNPC() and ent:EntityTeam()~=TEAM_HIDDEN and not IgnoredClasses[ent:Classify()] and !ent:HasNPCFlag(NPC_NORELATIONSHIP) then
 		GAMEMODE:UpdateEntityRelationship(ent)
@@ -197,9 +199,4 @@ hook.Add("OnEntityCreated", "TF_UpdateNPCRelationship", function(ent)
 end)
 hook.Add("Think", "TF_UpdateNPCRelationshipLoop", function(ent)
 	
-	for k,ent in ipairs(ents.GetAll()) do
-		if ent:IsNPC() and ent:EntityTeam()~=TEAM_HIDDEN and not IgnoredClasses[ent:Classify()] and !ent:HasNPCFlag(NPC_NORELATIONSHIP) then
-			GAMEMODE:UpdateEntityRelationship(ent)
-		end
-	end
 end)

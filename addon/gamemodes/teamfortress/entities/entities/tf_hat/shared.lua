@@ -1028,11 +1028,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					v.TargetEnt = snd.Entity
 
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -1061,11 +1061,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -2922,11 +2922,11 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 						v.TargetEnt = snd.Entity
 	
 						if SERVER then
-							for _,npc in ipairs(ents.GetAll()) do
+							--[[for _,npc in ipairs(ents.GetAll()) do
 								if npc:IsNPC() then
 									npc:AddEntityRelationship(v,D_HT,99)
 								end
-							end
+							end]]
 						end
 					end
 				end
@@ -2955,11 +2955,11 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 							timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 						end)
 						if SERVER then
-							for _,npc in ipairs(ents.GetAll()) do
+							--[[for _,npc in ipairs(ents.GetAll()) do
 								if npc:IsNPC() then
 									npc:AddEntityRelationship(v,D_HT,99)
 								end
-							end
+							end]]
 						end
 					end
 				end
@@ -3084,11 +3084,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					v.TargetEnt = snd.Entity
 
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3117,11 +3117,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3231,11 +3231,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					v.TargetEnt = snd.Entity
 
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3264,11 +3264,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3328,11 +3328,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					v.TargetEnt = snd.Entity
 
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3361,11 +3361,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3416,11 +3416,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					v.TargetEnt = snd.Entity
 
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3449,11 +3449,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3533,11 +3533,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					v.TargetEnt = snd.Entity
 
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3566,11 +3566,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3609,11 +3609,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					v.TargetEnt = snd.Entity
 
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3642,11 +3642,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3697,11 +3697,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					v.TargetEnt = snd.Entity
 
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3730,11 +3730,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3785,11 +3785,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					v.TargetEnt = snd.Entity
 
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3818,11 +3818,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3880,11 +3880,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					v.TargetEnt = snd.Entity
 
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3913,11 +3913,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -3999,11 +3999,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					v.TargetEnt = snd.Entity
 
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -4032,11 +4032,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -4137,11 +4137,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					v.TargetEnt = snd.Entity
 
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end
@@ -4170,11 +4170,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
+						--[[for _,npc in ipairs(ents.GetAll()) do
 							if npc:IsNPC() then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end
+						end]]
 					end
 				end
 			end

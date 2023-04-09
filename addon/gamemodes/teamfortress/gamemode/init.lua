@@ -35,21 +35,11 @@ response_rules.AddCriterion([[criterion "WeaponIsScattergunDouble" "item_name" "
 --end) 
 
 hook.Add("Think", "NoAttackPuppet", function()
-	for k,v in ipairs(player.GetAll()) do
+	for k,v in ipairs(player.GetAll()) do 
 		if (v:WaterLevel() < 2 and !v.IsDrowning) then
 			timer.Stop("Drown"..v:EntIndex())
 			timer.Stop("DrownContinue"..v:EntIndex())
 		end
-	end
-	for k,v in ipairs(ents.FindByClass("npc_*")) do
-		for _,puppet in ipairs(ents.FindByClass("pill_puppet")) do
-			v:AddEntityRelationship(puppet, D_LI, 99)
-		end
-	end
-	for k,v in ipairs(ents.FindByClass("monster_*")) do
-		for _,puppet in ipairs(ents.FindByClass("pill_puppet")) do
-			v:AddEntityRelationship(puppet, D_LI, 99)
-		end 
 	end
 end) 
 

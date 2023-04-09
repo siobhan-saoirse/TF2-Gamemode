@@ -551,19 +551,6 @@ function GM:RollCritical(pl)
 	end
 end
 function GM:Tick()
-	for _,ply in ipairs(ents.GetAll()) do
-		if ply:IsTFPlayer() and ply:HasPlayerState(PLAYERSTATE_PUKEDON) then
-			if (math.random(1,80) == 1) then
-				for i=3,8 do
-					local zombie = ents.Create("infected")
-					zombie:SetPos(zombie:FindSpot("random", {pos=ply:GetPos(),radius = 2000,type="hiding",stepup=800,stepdown=800}))
-					zombie:Spawn()
-					zombie:Activate()
-					zombie:SetEnemy(ply)
-				end
-			end
-		end
-	end
 end
 function GM:Think()
 	if not self.NextUpdateDamage or CurTime()>self.NextUpdateDamage then

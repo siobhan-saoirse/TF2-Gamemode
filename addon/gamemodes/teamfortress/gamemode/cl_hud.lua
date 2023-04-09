@@ -293,7 +293,11 @@ end
 -- Using a custom TargetID system
 
 function GM:HUDDrawTargetID()
-     return false
+	if (LocalPlayer():IsHL2()) then
+		return true
+	else
+    	return false
+	end
 end
 
 local function targetid_trace_condition(tr)

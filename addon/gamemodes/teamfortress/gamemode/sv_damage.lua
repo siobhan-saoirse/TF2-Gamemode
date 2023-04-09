@@ -172,9 +172,9 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 	gamemode.Call("PreScaleDamage", ent, hitgroup, dmginfo)
 
 	local is_normal_damage = true
-	if (ent:IsPlayer() and ent:EntIndex() != att:EntIndex() and att:IsTFPlayer() and !att:IsFriendly(ent)) then
+	if (ent.TFBot and ent:EntIndex() != att:EntIndex() and att:IsTFPlayer() and !att:IsFriendly(ent)) then
 		for k,v in ipairs(ents.FindInSphere(ent:GetPos(),1200)) do
-			if (v:IsTFPlayer() and v:IsFriendly(ent) and v:EntIndex() != ent:EntIndex()) then
+			if (v:IsTFPlayer() and (v:IsFriendly(ent) || !v:IsFriendly(ent)) and v:EntIndex() != ent:EntIndex()) then
 				if (math.random(1,3) == 1 and !att:IsPlayer() and ent.TFBot and (!IsValid(ent.TargetEnt) or ent.TargetEnt:EntIndex() != att:EntIndex())) then
 					ent.TargetEnt = att
 					local args = {"TLK_PLAYER_BATTLECRY"}

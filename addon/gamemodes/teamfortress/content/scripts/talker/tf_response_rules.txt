@@ -702,4 +702,3 @@ criterion "ConceptPlayerMatchOverComp" "Concept" "TLK_MATCH_OVER_COMP" required
 #include "talker/Pyro.txt"
 #include "talker/Spy.txt"
 #include "talker/Civilian_.txt"
-//#include "talker/gmodplayer.txt" 
