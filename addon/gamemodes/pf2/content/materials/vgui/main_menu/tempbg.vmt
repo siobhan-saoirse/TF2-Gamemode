@@ -1,6 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "vgui\main_menu\tempbg"
-	"$translucent" 1
-	"$vertexcolor" 1
-}
