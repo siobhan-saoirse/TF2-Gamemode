@@ -331,7 +331,7 @@ function GM:HUDDrawTargetID()
 		-- The fonts internal drop shadow looks lousy with AA on
 		draw.SimpleText( text, font, x + 1, y + 1, Color( 0, 0, 0, 120 ) )
 		draw.SimpleText( text, font, x + 2, y + 2, Color( 0, 0, 0, 50 ) )
-		draw.SimpleText( text, font, x, y, self:GetTeamColor( trace.Entity ) )
+		draw.SimpleText( text, font, x, y, team.GetColor( GAMEMODE:EntityTeam(trace.Entity) ) )
 		
 		y = y + h + 5
 		
@@ -344,7 +344,7 @@ function GM:HUDDrawTargetID()
 		
 		draw.SimpleText( text, font, x + 1, y + 1, Color( 0, 0, 0, 120 ) )
 		draw.SimpleText( text, font, x + 2, y + 2, Color( 0, 0, 0, 50 ) )
-		draw.SimpleText( text, font, x, y, self:GetTeamColor( trace.Entity ) )
+		draw.SimpleText( text, font, x, y, team.GetColor( GAMEMODE:EntityTeam(trace.Entity) ) )
 
 	else
     	return false
