@@ -135,7 +135,8 @@ function CLASS:Initialize()
 	if self:HasWeapon(cl_defaultweapon) then
 		self:SelectWeapon(cl_defaultweapon) 
 	end
-	timer.Simple(0.12,function()
+	timer.Simple(0.12,function() 
+		self:SetNWString("PlayerClassModel",modelname)
 		if (self:IsBot() and self.TFBot and self:GetPlayerClass() == "gmodplayer") then
 
 				local primaryweps = {

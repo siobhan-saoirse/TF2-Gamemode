@@ -1312,7 +1312,6 @@ end
 
 function ApplyGlobalAttributesFromPlayer(pl, act, ...)
 	CURRENT_PLAYER = pl
-	
 	for _,w in pairs(pl:GetTFItems()) do
 		if not w.OnlyProvideAttributesOnActive or pl:GetActiveWeapon() == w then
 			local c = ApplyAttributesFromEntity(w, "_global_"..act, ...)

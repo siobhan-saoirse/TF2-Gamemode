@@ -149,9 +149,6 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 		if not att:CanDamage(ent) then
 			dmginfo:SetDamage(0)
 			dmginfo:SetDamageType(DMG_GENERIC)
-			if (ent:IsPlayer()) then
-				ApplyGlobalAttributesFromPlayer(att, "pre_damage_ally", ent, hitgroup, dmginfo)
-			end
 			return true
 		end
 	end

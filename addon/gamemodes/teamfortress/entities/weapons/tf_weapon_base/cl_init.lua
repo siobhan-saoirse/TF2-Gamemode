@@ -13,7 +13,7 @@ SWEP.BounceWeaponIcon   = false
 SWEP.WepSelectIcon = surface.GetTextureID( "weapons/swep" )
 SWEP.SwayScale			= 0 -- 0.5
 SWEP.BobScale			= 0.25
-
+ 
 --[[
 hook.Add("HUDPaint", "testlol", function()
 	draw.Text{text="Current sequence = "..LocalPlayer():GetViewModel():GetSequence(),pos={10, 10}}
@@ -318,6 +318,7 @@ function SWEP:DoMuzzleFlash()
 			effectdata:SetEntity(self)
 		util.Effect(betaeffect, effectdata)
 	else
+		--ent:MuzzleFlash()
 		ParticleEffectAttach(self.MuzzleEffect, PATTACH_POINT_FOLLOW, ent, ent:LookupAttachment("muzzle"))
 	end
 end

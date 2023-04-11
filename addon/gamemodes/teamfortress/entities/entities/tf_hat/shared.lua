@@ -921,9 +921,7 @@ hook.Add("EntityEmitSound", "MouthFix", function(snd)
 			if !IsValid(snd.Entity) then return end
 			local pl = snd.Entity
 			if (!pl:IsL4D() and !pl:IsBot()) then
-				if (pl:GetPlayerClass() == "gmodplayer") then
-					pl:SetModel(player_manager.TranslatePlayerModel(pl:GetInfo("cl_playermodel")))
-				else
+				if (pl:GetPlayerClass() != "gmodplayer") then
 					pl:SetModel(pl:GetNWString("PlayerClassModel"))
 				end
 			elseif (pl:IsL4D()) then
@@ -1000,13 +998,6 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 				end
 			end
 		end]]
-		if SERVER then
-			if (snd.Entity:GetPlayerClass() == "gmodplayer" and !snd.Entity.TFBot) then
-				local cl_playermodel = snd.Entity:GetInfo("cl_playermodel")
-				local modelname = player_manager.TranslatePlayerModel(cl_playermodel)
-				snd.Entity:SetNWString("PlayerClassModel",modelname)
-			end
-		end
 		if (snd.Entity:GetClass() == "infected") then
 			if (string.find(snd.Entity:GetModel(),"clown")) then
 

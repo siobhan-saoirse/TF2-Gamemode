@@ -134,7 +134,7 @@ end
 function SWEP:GetAttribute(class)
 	for _,a in pairs(self:GetItemData().attributes or {}) do
 		if a.attribute_class == class then return a end
-	end
+	end 
 end
 
 function SWEP:IsAttributeEnabled(class)

@@ -94,19 +94,6 @@ function SWEP:SetupBuilding(obj)
 end
 
 function SWEP:Inspect()
-end	
-
-function SWEP:CheckUpdateItem()
-	
-	self:CallBaseFunction("CheckUpdateItem") 
-	if self.dt.BuildGroup ~= self.CurrentBuildGroup or self.dt.BuildMode ~= self.CurrentBuildMode then
-		local obj = tf_objects.Get(self.dt.BuildGroup, self.dt.BuildMode)
-		if obj then
-			self:SetupBuilding(obj)
-		end
-		self.CurrentBuildGroup = self.dt.BuildGroup
-		self.CurrentBuildMode = self.dt.BuildMode
-	end
 end
 
 function SWEP:Equip()

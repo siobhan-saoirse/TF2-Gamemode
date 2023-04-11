@@ -68,6 +68,7 @@ function SWEP:PrimaryAttack()
 		if SERVER then
 			self:SendWeaponAnim(self.VM_PRIMARYATTACK)
 		end
+		
 		self.Owner:SetAnimation(PLAYER_ATTACK1)
 		self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 		self:ShootEffects()
