@@ -26,7 +26,15 @@ local NOTICE_DOMINATION = 3
 local NOTICE_HUMILIATION2 = 4
 
 function TranslateKilliconName(name)
-	return KilliconTranslate[name] or "d_"..name
+	if (LocalPlayer():GetPlayerClass() == "gmodplayer") then 
+		if (IsValid(LocalPlayer():GetActiveWeapon()) && string.find(LocalPlayer():GetActiveWeapon():GetClass(),"tf_weapon_")) then
+			return KilliconTranslate[name] or "d_"..name
+		else
+			return name
+		end
+	else
+		return KilliconTranslate[name] or "d_"..name
+	end
 end
 
 local function IsHidden(name)

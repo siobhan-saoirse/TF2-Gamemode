@@ -17,13 +17,14 @@ if not __scripted_ents_register then
 end
 
 function scripted_ents.Register(tbl, name, reload)
+	--[[
 	if tbl.Type == "ai" then
 		forced_client_class[name] = true
-		MsgN("Registered clientside functions for class \""..name.."\"")
+		//MsgN("Registered clientside functions for class \""..name.."\"")
 		tf_util.SaveFullDebugInfo("clinit_"..name)
 	end
 	
-	return __scripted_ents_register(tbl, name, reload)
+	return __scripted_ents_register(tbl, name, reload)]]
 end
 
 function GM:LoadEntityClientFunctions()
