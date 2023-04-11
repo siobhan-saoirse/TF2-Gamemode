@@ -29,6 +29,6 @@ end
 function PANEL:PerformLayout()
 	self:SetSize(ScrW(), ScrH())
 end
-
+ 
 if VGUI_TeamMenuBackground then VGUI_TeamMenuBackground:Remove() end
 VGUI_TeamMenuBackground = vgui.CreateFromTable(vgui.RegisterTable(PANEL, "DModelPanel"))

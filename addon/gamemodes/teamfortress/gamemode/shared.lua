@@ -2006,7 +2006,19 @@ function GM:EntityName(ent, nolocalize)
 		if ent:IsPlayer() and ent:IsValid() then
 			return ent:Name()
 		elseif ent:IsValid() and list.Get("NPC")[ent:GetClass()] and list.Get("NPC")[ent:GetClass()].Name then
-			return list.Get("NPC")[ent:GetClass()].Name
+			if (ent:GetClass() == "npc_combine_s" && ent:GetModel() == "models/combine_super_soldier.mdl") then
+				return "Combine Elite"
+			elseif (ent:GetClass() == "npc_combine_s" && ent:GetSkin() == 1 and IsValid(ent:GetActiveWeapon()) and ent:GetActiveWeapon():GetClass() == "weapon_shotgun" && ent:GetModel() != "models/combine_soldier_prisonguard.mdl") then
+				return "Shotgun Soldier"
+			elseif (ent:GetClass() == "npc_combine_s" && ent:GetModel() == "models/combine_soldier_prisonguard.mdl" and ent:GetSkin() == 0) then
+				return "Prison Guard"
+			elseif (ent:GetClass() == "npc_combine_s" && ent:GetModel() == "models/combine_soldier_prisonguard.mdl" and IsValid(ent:GetActiveWeapon()) and ent:GetActiveWeapon():GetClass() == "weapon_shotgun") then
+				return "Prison Shotgun Guard"
+			elseif (ent:GetClass() == "npc_antlionguard" && ent:GetSkin() == 1) then
+				return "Antlion Guardian"
+			else
+				return list.Get("NPC")[ent:GetClass()].Name
+			end
 		elseif ent:IsValid() and scripted_ents.GetList()[ent:GetClass()] and scripted_ents.GetList()[ent:GetClass()].t and scripted_ents.GetList()[ent:GetClass()].t.PrintName then
 			return scripted_ents.GetList()[ent:GetClass()].t.PrintName
 		elseif ent:IsValid() then

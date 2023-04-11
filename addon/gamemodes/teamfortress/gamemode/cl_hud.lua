@@ -294,14 +294,66 @@ end
 
 function GM:HUDDrawTargetID()
 	if (LocalPlayer():IsHL2()) then
-		return self.BaseClass:HUDDrawTargetID()
+		
+		local tr = util.GetPlayerTrace( LocalPlayer() )
+		local trace = util.TraceLine( tr )
+		if ( !trace.Hit ) then return end
+		if ( !trace.HitNonWorld ) then return end
+		
+		local text = "ERROR"
+		local font = "TargetID"
+		
+		if ( trace.Entity:IsTFPlayer() ) then
+			text = GAMEMODE:EntityTargetIDName(trace.Entity)
+		else
+			return
+			--text = trace.Entity:GetClass()
+		end
+		
+		surface.SetFont( font )
+		local w, h = surface.GetTextSize( text )
+		
+		local MouseX, MouseY = gui.MousePos()
+		
+		if ( MouseX == 0 && MouseY == 0 ) then
+		
+			MouseX = ScrW() / 2
+			MouseY = ScrH() / 2
+		
+		end
+		
+		local x = MouseX
+		local y = MouseY
+		
+		x = x - w / 2
+		y = y + 30
+		
+		-- The fonts internal drop shadow looks lousy with AA on
+		draw.SimpleText( text, font, x + 1, y + 1, Color( 0, 0, 0, 120 ) )
+		draw.SimpleText( text, font, x + 2, y + 2, Color( 0, 0, 0, 50 ) )
+		draw.SimpleText( text, font, x, y, self:GetTeamColor( trace.Entity ) )
+		
+		y = y + h + 5
+		
+		local text = trace.Entity:Health() .. "%"
+		local font = "TargetIDSmall"
+		
+		surface.SetFont( font )
+		local w, h = surface.GetTextSize( text )
+		local x = MouseX - w / 2
+		
+		draw.SimpleText( text, font, x + 1, y + 1, Color( 0, 0, 0, 120 ) )
+		draw.SimpleText( text, font, x + 2, y + 2, Color( 0, 0, 0, 50 ) )
+		draw.SimpleText( text, font, x, y, self:GetTeamColor( trace.Entity ) )
+
 	else
     	return false
 	end
 end
 
-local function targetid_trace_condition(tr)
-	return IsValid(tr.Entity) and (tr.Entity:IsTFPlayer() ) and (GAMEMODE:EntityTeam(tr.Entity)==LocalPlayer():Team() or hud_targetid_anyteam:GetBool() or LocalPlayer():GetPlayerClass() == "spy") or LocalPlayer():Team() == TEAM_FRIENDLY and tr.Entity:IsTFPlayer() or GAMEMODE:EntityTeam(tr.Entity) ~= LocalPlayer():EntityTeam() and tr.Entity:IsPlayer() and tr.Entity:GetPlayerClass() == "spy"
+local function targetid_trace_condition(tr,ply)
+	ply = ply or LocalPlayer()
+	return !ply:IsHL2() and IsValid(tr.Entity) and (tr.Entity:IsTFPlayer() ) and (GAMEMODE:EntityTeam(tr.Entity)==LocalPlayer():Team() or hud_targetid_anyteam:GetBool() or LocalPlayer():GetPlayerClass() == "spy") or LocalPlayer():Team() == TEAM_FRIENDLY and tr.Entity:IsTFPlayer() or GAMEMODE:EntityTeam(tr.Entity) ~= LocalPlayer():EntityTeam() and tr.Entity:IsPlayer() and tr.Entity:GetPlayerClass() == "spy"
 end
 
 function GM:TargetIDThink()
