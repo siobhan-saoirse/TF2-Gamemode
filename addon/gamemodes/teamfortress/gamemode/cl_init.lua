@@ -8,7 +8,7 @@ hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
 					local tr = util.TraceHull{
 						start = origin,
 						endpos = origin - newdist * angles:Forward(),
-						filter = ply,
+						filter = {ply,ply:GetNWEntity("RagdollEntity")},
 						mins = Vector(-3,-3,-3),
 						maxs = Vector( 3, 3, 3)
 					}
