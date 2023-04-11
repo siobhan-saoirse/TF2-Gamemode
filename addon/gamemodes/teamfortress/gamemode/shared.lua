@@ -2121,10 +2121,10 @@ function GM:ShouldCollide(ent1, ent2)
 	
 	local t1 = self:EntityTeam(ent1)
 	local t2 = self:EntityTeam(ent2)
-	
+	--[[
 	if (ent1:IsPlayer() or ent2:IsPlayer()) and (t1==TEAM_RED or t1==TEAM_BLU or t1==TF_TEAM_PVE_INVADERS or t1==TEAM_INFECTED) and t1==t2 then
 		return false
-	end
+	end]]
 	
 	if CLIENT then
 		local c1, c2 = ent1:GetClass(), ent2:GetClass()

@@ -2303,7 +2303,7 @@ function SWEP:PrimaryAttack(noscene)
 		return
 	end
 	
-			if (string.find(self:GetClass(),"smg") or string.find(self:GetClass(),"pistol")) and CLIENT then
+			if (string.find(self:GetClass(),"smg") or string.find(self:GetClass(),"pistol") or string.find(self:GetClass(),"revolver")) and CLIENT then 
 				--PrintTable(self.CModel:GetAttachments())
 				if (self.CModel:GetAttachment(self.CModel:LookupAttachment("eject_brass"))) then
 					local effectdata = EffectData()

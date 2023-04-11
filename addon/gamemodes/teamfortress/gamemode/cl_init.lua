@@ -2,6 +2,7 @@ hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
 	if (!ply:Alive()) then
 		if (IsValid(ply:GetNWEntity("RagdollEntity"))) then
 			if (ply:GetObserverMode() == OBS_MODE_DEATHCAM and ply:GetObserverMode() != OBS_MODE_FREEZECAM) then
+				ply:SetViewOffset(Vector(0, 0, 48 * pl:GetModelScale()))
 				local newdist = 115
 				local origin = ply:GetNWEntity("RagdollEntity"):GetPos()
 				if GetConVar("cam_collision"):GetBool() then

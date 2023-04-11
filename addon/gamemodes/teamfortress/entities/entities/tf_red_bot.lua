@@ -48,62 +48,177 @@ local function LeadBot_S_Add_Zombie(team,class,pos,ent)
 			bot.TFBot = true
 			
 			if (bot:GetPlayerClass() == "gmodplayer") then
-				local primaryweps = {
-					"weapon_ak47_cstrike",
-					"weapon_aug_cstrike",
-					"weapon_famas_cstrike",
-					"weapon_galil_cstrike",
-					"weapon_m3_cstrike",
-					"weapon_mp5_cstrike",
-					"weapon_p90_cstrike",
-					"weapon_m4a1_cstrike",
-					"weapon_sg552_cstrike",
-					"weapon_tmp_cstrike",
-					"weapon_xm1014_cstrike",
-					"weapon_rifle_l4d",
-					"weapon_autoshotgun_l4d",
-					"weapon_huntingrifle_l4d",
-					"weapon_pumpshotgun_l4d",
-					"weapon_smg_l4d",
-					"weapon_rifle",
-					"weapon_huntingrifle",
-					"weapon_sniper_military",
-					"weapon_smg_silenced",
-					"weapon_smg",
-					"weapon_shotgun_chrome_l4d2",
-					"weapon_pumpshotgun_l4d2",
-					"weapon_ar2_scripted",
-					"weapon_shotgun_scripted",
-					"weapon_smg1_scripted",
-					"",
-					"",
-					"",
-				}
-				local secondaryweps = {
-					"weapon_deagle_cstrike",
-					"weapon_elite_cstrike",
-					"weapon_fiveseven_cstrike",
-					"weapon_glock_cstrike",
-					"weapon_p228_cstrike",
-					"weapon_usp_cstrike",
-					"weapon_pistol_l4d",
-					"weapon_pistol_l4d_dual",
-					"weapon_pistol_l4d2",
-					"weapon_pistol_l4d2_dual",
-					"weapon_pistol_deagle_l4d2",
-					"weapon_pistol_scripted",
-					"weapon_357_scripted"
-				}
-				timer.Simple(0.3, function()
-				
-					bot:SetModel(table.Random(player_manager.AllValidModels()))
+				if (IsMounted("left4dead2") and IsMounted("left4dead") and IsMounted("cstrike")) then
+					local primaryweps = {
+						"weapon_ak47_cstrike",
+						"weapon_aug_cstrike",
+						"weapon_famas_cstrike",
+						"weapon_galil_cstrike",
+						"weapon_m3_cstrike",
+						"weapon_mp5_cstrike",
+						"weapon_p90_cstrike",
+						"weapon_m4a1_cstrike",
+						"weapon_sg552_cstrike",
+						"weapon_tmp_cstrike",
+						"weapon_xm1014_cstrike",
+						"weapon_rifle_l4d",
+						"weapon_autoshotgun_l4d",
+						"weapon_huntingrifle_l4d",
+						"weapon_pumpshotgun_l4d",
+						"weapon_smg_l4d",
+						"weapon_rifle",
+						"weapon_huntingrifle",
+						"weapon_sniper_military",
+						"weapon_smg_silenced",
+						"weapon_smg",
+						"weapon_shotgun_chrome_l4d2",
+						"weapon_pumpshotgun_l4d2",
+						"weapon_ar2_scripted",
+						"weapon_shotgun_scripted",
+						"weapon_smg1_scripted",
+						"",
+						"",
+						"",
+					}
+					local secondaryweps = {
+						"weapon_deagle_cstrike",
+						"weapon_elite_cstrike",
+						"weapon_fiveseven_cstrike",
+						"weapon_glock_cstrike",
+						"weapon_p228_cstrike",
+						"weapon_usp_cstrike",
+						"weapon_pistol_l4d",
+						"weapon_pistol_l4d_dual",
+						"weapon_pistol_l4d2",
+						"weapon_pistol_l4d2_dual",
+						"weapon_pistol_deagle_l4d2",
+						"weapon_pistol_scripted",
+						"weapon_357_scripted"
+					}
+					timer.Simple(0.3, function()
 					
-					bot:StripWeapons()
-					bot:Give(table.Random(primaryweps))
-					bot:Give(table.Random(secondaryweps))
-					bot:Give("weapon_knife_cstrike")
-					bot:SetArmor(math.random(15,250))
-				end)
+						bot:SetModel(table.Random(player_manager.AllValidModels()))
+						
+						bot:StripWeapons()
+						bot:Give(table.Random(primaryweps))
+						bot:Give(table.Random(secondaryweps))
+						bot:Give("weapon_knife_cstrike")
+						bot:SetArmor(math.random(15,250))
+					end)
+				elseif (IsMounted("left4dead2") and !IsMounted("left4dead") and IsMounted("cstrike")) then
+					local primaryweps = {
+						"weapon_ak47_cstrike",
+						"weapon_aug_cstrike",
+						"weapon_famas_cstrike",
+						"weapon_galil_cstrike",
+						"weapon_m3_cstrike",
+						"weapon_mp5_cstrike",
+						"weapon_p90_cstrike",
+						"weapon_m4a1_cstrike",
+						"weapon_sg552_cstrike",
+						"weapon_tmp_cstrike",
+						"weapon_xm1014_cstrike",
+						"weapon_rifle",
+						"weapon_huntingrifle",
+						"weapon_sniper_military",
+						"weapon_smg_silenced",
+						"weapon_smg",
+						"weapon_shotgun_chrome_l4d2",
+						"weapon_pumpshotgun_l4d2",
+						"weapon_ar2_scripted",
+						"weapon_shotgun_scripted",
+						"weapon_smg1_scripted",
+						"",
+						"",
+						"",
+					}
+					local secondaryweps = {
+						"weapon_deagle_cstrike",
+						"weapon_elite_cstrike",
+						"weapon_fiveseven_cstrike",
+						"weapon_glock_cstrike",
+						"weapon_p228_cstrike",
+						"weapon_usp_cstrike",
+						"weapon_pistol_l4d2",
+						"weapon_pistol_l4d2_dual",
+						"weapon_pistol_deagle_l4d2",
+						"weapon_pistol_scripted",
+						"weapon_357_scripted"
+					}
+					timer.Simple(0.3, function()
+					
+						bot:SetModel(table.Random(player_manager.AllValidModels()))
+						
+						bot:StripWeapons()
+						bot:Give(table.Random(primaryweps))
+						bot:Give(table.Random(secondaryweps))
+						bot:Give("weapon_knife_cstrike")
+						bot:SetArmor(math.random(15,250))
+					end)
+				elseif (!IsMounted("left4dead2") and !IsMounted("left4dead") and IsMounted("cstrike")) then
+					local primaryweps = {
+						"weapon_ak47_cstrike",
+						"weapon_aug_cstrike",
+						"weapon_famas_cstrike",
+						"weapon_galil_cstrike",
+						"weapon_m3_cstrike",
+						"weapon_mp5_cstrike",
+						"weapon_p90_cstrike",
+						"weapon_m4a1_cstrike",
+						"weapon_sg552_cstrike",
+						"weapon_tmp_cstrike",
+						"weapon_xm1014_cstrike",
+						"weapon_ar2_scripted",
+						"weapon_shotgun_scripted",
+						"weapon_smg1_scripted",
+						"",
+						"",
+						"",
+					}
+					local secondaryweps = {
+						"weapon_deagle_cstrike",
+						"weapon_elite_cstrike",
+						"weapon_fiveseven_cstrike",
+						"weapon_glock_cstrike",
+						"weapon_p228_cstrike",
+						"weapon_usp_cstrike",
+						"weapon_pistol_scripted",
+						"weapon_357_scripted"
+					}
+					timer.Simple(0.3, function()
+					
+						bot:SetModel(table.Random(player_manager.AllValidModels()))
+						
+						bot:StripWeapons()
+						bot:Give(table.Random(primaryweps))
+						bot:Give(table.Random(secondaryweps))
+						bot:Give("weapon_knife_cstrike")
+						bot:SetArmor(math.random(15,250))
+					end)
+				elseif (!IsMounted("left4dead2") and !IsMounted("left4dead") and !IsMounted("cstrike")) then
+					local primaryweps = {
+						"weapon_ar2_scripted",
+						"weapon_shotgun_scripted",
+						"weapon_smg1_scripted",
+						"",
+						"",
+						"",
+					}
+					local secondaryweps = {
+						"weapon_pistol_scripted",
+						"weapon_357_scripted"
+					}
+					timer.Simple(0.3, function()
+					
+						bot:SetModel(table.Random(player_manager.AllValidModels()))
+						
+						bot:StripWeapons()
+						bot:Give(table.Random(primaryweps))
+						bot:Give(table.Random(secondaryweps))
+						bot:Give("weapon_fists")
+						bot:SetArmor(math.random(15,250))
+					end)
+				end
 			end
 		end
 	end)
