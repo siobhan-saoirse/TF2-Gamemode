@@ -27,7 +27,7 @@ local NOTICE_HUMILIATION2 = 4
 
 function TranslateKilliconName(name)
 	if (LocalPlayer():GetPlayerClass() == "gmodplayer") then 
-		if (IsValid(LocalPlayer():GetActiveWeapon()) && string.find(LocalPlayer():GetActiveWeapon():GetClass(),"tf_weapon_")) then
+		if (!string.find(name,"weapon_") && !string.find(name,"grenade_") && !string.find(name,"npc_") && !string.find(name,"monster_") && !string.find(name,"prop_") && !string.find(name,"combine_mine")) then
 			return KilliconTranslate[name] or "d_"..name
 		else
 			return name
