@@ -17,18 +17,16 @@ if not __scripted_ents_register then
 end
 
 function scripted_ents.Register(tbl, name, reload)
-	--[[
 	if tbl.Type == "ai" then
 		forced_client_class[name] = true
 		//MsgN("Registered clientside functions for class \""..name.."\"")
 		tf_util.SaveFullDebugInfo("clinit_"..name)
 	end
 	
-	return __scripted_ents_register(tbl, name, reload)]]
+	return __scripted_ents_register(tbl, name, reload)
 end
 
 function GM:LoadEntityClientFunctions()
-	--[[
 	local path = self.Folder.."/entities/entities/"
 	local luapath = string.gsub(self.Folder, "gamemodes/", "").."/entities/entities/"
 
@@ -42,11 +40,11 @@ function GM:LoadEntityClientFunctions()
 				if ENT.Type == "ai" then
 					scripted_ents.Register(ENT, class, false)
 					forced_client_class[class] = true
-					MsgN("Registered clientside functions for class \""..class.."\"")
+					//MsgN("Registered clientside functions for class \""..class.."\"")
 				end
 			end
 		end
-	end]]
+	end
 end
 
 GM:LoadEntityClientFunctions()
@@ -62,13 +60,12 @@ local function meta_init(ent)
 			local newmeta = class_meta[class]
 			setmetatable(ent:GetTable(), {__index = newmeta})
 			ent.__metainit = true
-			MsgFN("Initialized clientside metatable for %s", tostring(ent))
+			//MsgFN("Initialized clientside metatable for %s", tostring(ent))
 		end
 	end
 end
 
 hook.Add("Think", "TFClientEntityThink", function()
-	--[[
 	for _,v in pairs(ents.GetAll()) do
 		if IsValid(v) and forced_client_class[v:GetClass()] then
 			meta_init(v)
@@ -83,25 +80,23 @@ hook.Add("Think", "TFClientEntityThink", function()
 				if v.Think then v:Think() end
 			end
 		end
-	end]]
+	end
 end)
 
 hook.Add("PostDrawOpaqueRenderables", "TFClientEntityDraw", function()
-	--[[
 	for _,v in pairs(ents.GetAll()) do
 		if IsValid(v) and forced_client_class[v:GetClass()] and v.ClientInitialized then
 			meta_init(v)
 			if v.Draw then v:Draw() end
 		end
-	end]]
+	end
 end)
 
 hook.Add("PostDrawTranslucentRenderables", "TFClientEntityDrawTranslucent", function()
-	--[[
 	for _,v in pairs(ents.GetAll()) do
 		if IsValid(v) and forced_client_class[v:GetClass()] and v.ClientInitialized then
 			meta_init(v)
 			if v.DrawTranslucent then v:DrawTranslucent() end
 		end
-	end]]
+	end
 end)
