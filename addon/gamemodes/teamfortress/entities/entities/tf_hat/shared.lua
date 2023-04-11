@@ -4226,7 +4226,12 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 			snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/medic", "vo/mvm/norm/taunts/medic_mvm")
 			snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/sniper", "vo/mvm/norm/taunts/sniper_mvm")
 			snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/spy", "vo/mvm/norm/taunts/spy_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
+			
+			if (file.Exists(string.Replace(snd.SoundName, ".mp3", ".wav"), "WORKSHOP")) then
+				snd.SoundName = string.Replace(snd.SoundName, ".mp3", ".wav")
+			else
+				snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
+			end
 		end
 		return true
 	elseif IsValid(snd.Entity) and string.find(snd.SoundName, "vo/") and GetConVar("tf_pyrovision"):GetBool() then
@@ -4250,7 +4255,12 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		snd.SoundName = string.Replace(snd.SoundName, "heavy_laughshort04", "heavy_laughshort01")
 		snd.SoundName = string.Replace(snd.SoundName, "heavy_laughshort05", "heavy_laughshort02")
 		snd.SoundName = string.Replace(snd.SoundName, "heavy_laughlong03", "heavy_laughlong02")
-		snd.SoundName = string.Replace(snd.SoundName, ".mp3", ".wav")
+		
+		if (file.Exists(string.Replace(snd.SoundName, ".mp3", ".wav"), "WORKSHOP")) then
+			snd.SoundName = string.Replace(snd.SoundName, ".mp3", ".wav")
+		else 
+			snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
+		end
 		snd.Pitch = 100 * 1.3
 		return true
 	elseif IsValid(snd.Entity) and snd.Entity:IsPlayer() and !snd.Entity:IsHL2() and snd.Entity:GetModel() and ((snd.Entity:GetInfoNum("tf_giant_robot",0) == 1 or (string.find(snd.Entity:GetModel(),"bot") and string.find(snd.Entity:GetModel(),"boss")))) and string.StartWith(snd.SoundName, "vo/") then
@@ -4316,8 +4326,12 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 			
 			if snd.Entity:GetInfoNum("tf_player_use_female_models", 0) == 1 && snd.Entity:GetPlayerClass() == "soldier" then
 				snd.Pitch = 130
+			end 
+			if (file.Exists(string.Replace(snd.SoundName, ".mp3", ".wav"), "WORKSHOP")) then
+				snd.SoundName = string.Replace(snd.SoundName, ".mp3", ".wav")
+			else
+				snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
 			end
-			snd.SoundName = string.Replace(snd.SoundName, ".mp3", ".wav")
 		end
 		return true	
 	elseif IsValid(snd.Entity) and string.StartWith(snd.SoundName, "vo/") and snd.Entity:IsPlayer() and snd.Entity.playerclass == "spy" then
@@ -4348,7 +4362,13 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 			snd.SoundName = string.Replace(snd.SoundName, "autoonfire", "laughhappy")
 		end
 		if (!string.find(snd.SoundName,"announcer_") && !string.find(snd.SoundName,"mvm_")) then
-			snd.SoundName = string.Replace(snd.SoundName, ".mp3", ".wav")
+			
+			if (file.Exists(string.Replace(snd.SoundName, ".mp3", ".wav"), "WORKSHOP")) then
+				snd.SoundName = string.Replace(snd.SoundName, ".mp3", ".wav")
+			else
+				snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
+			end
+
 		end
 		return true
 	elseif IsValid(snd.Entity) and string.StartWith(snd.SoundName, "vo/") and snd.Entity:IsPlayer() and snd.Entity:Team() == TEAM_BLU and string.find(game.GetMap(), "mvm") then

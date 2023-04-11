@@ -586,7 +586,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	end
 	if hp<=0 then
 		--ent.LastDamageInfo = CopyDamageInfo(dmginfo)
-	elseif not dmginfo:IsFallDamage() and not dmginfo:IsDamageType(DMG_DIRECT) then
+	elseif not dmginfo:IsFallDamage() and not dmginfo:IsDamageType(DMG_DIRECT) and ent:WaterLevel() < 1 then
 		if 2*ent:Health()<ent:GetMaxHealth() or ent == attacker then
 			if ent:HasGodMode() == false then
 				ent:Speak("TLK_PLAYER_ATTACKER_PAIN")

@@ -76,10 +76,10 @@ concommand.Add("tf_spectate", function(ply, _, args)
 	ply:SetModel("models/weapons/c_arms_animations.mdl") -- anti ragdoll on death
 	end)
 	concommand.Add("tf_spectate2", function(ply, _, args)
-	if args[1] == "2" then ply:Spectate(OBS_MODE_CHASE) ply.SpectateMode = 2 return
-	elseif args[1] == "1" then ply:Spectate(OBS_MODE_IN_EYE) ply.SpectateMode = 1 return
-	elseif args[1] == "3" then ply:Spectate(OBS_MODE_ROAMING) ply.SpectateMode = 3 return
-	elseif args[1] == "-1" then ply:UnSpectate() ply:SetTeam(TEAM_RED) ply.IsSpectating = false ply:KillSilent() ply:Spawn() return end
+	if args[1] == "2" then ply:Spectate(OBS_MODE_CHASE) ply.SpectateMode = 2 bot:SetNoDraw(false) return
+	elseif args[1] == "1" then ply:Spectate(OBS_MODE_IN_EYE) ply.SpectateMode = 1 bot:SetNoDraw(true) return
+	elseif args[1] == "3" then ply:Spectate(OBS_MODE_ROAMING) ply.SpectateMode = 3 bot:SetNoDraw(false) return
+	elseif args[1] == "-1" then ply:UnSpectate() ply:SetTeam(TEAM_RED) ply.IsSpectating = false ply:KillSilent() ply:Spawn() bot:SetNoDraw(false) return end
 
 	ply:StripWeapons()
 	ply:SetTeam(TEAM_SPECTATOR)
@@ -91,9 +91,6 @@ end)
 
 concommand.Add("tf_spectate_respawn", function(ply, _, args)
 	if (ply:Alive()) then return end
-	if args[1] == "2" then ply:Spectate(OBS_MODE_CHASE) ply.SpectateMode = 2 umsg.Start("ExitFreezecam", ply) umsg.End() return
-	elseif args[1] == "1" then ply:Spectate(OBS_MODE_IN_EYE) ply.SpectateMode = 1 umsg.Start("ExitFreezecam", ply) umsg.End() return
-	elseif args[1] == "3" then ply:Spectate(OBS_MODE_ROAMING) ply.SpectateMode = 3 umsg.Start("ExitFreezecam", ply) umsg.End() return end
 
 	ply:StripWeapons()
 
@@ -105,6 +102,9 @@ concommand.Add("tf_spectate_respawn", function(ply, _, args)
 		bot = table.Random(lookForNextPlayer(ply,ply:GetObserverTarget()),getNPCs())
 	end
 	--ply:Kill()
+	if args[1] == "2" then ply:Spectate(OBS_MODE_CHASE) ply.SpectateMode = 2 bot:SetNoDraw(false) umsg.Start("ExitFreezecam", ply)  umsg.End() return
+	elseif args[1] == "1" then ply:Spectate(OBS_MODE_IN_EYE) ply.SpectateMode = 1 bot:SetNoDraw(true) umsg.Start("ExitFreezecam", ply) umsg.End() return
+	elseif args[1] == "3" then ply:Spectate(OBS_MODE_ROAMING) ply.SpectateMode = 3 bot:SetNoDraw(false) umsg.Start("ExitFreezecam", ply) return end
 	ply:SpectateEntity(bot)
 	if (bot:IsPlayer()) then
 		ply:SetupHands(bot)
@@ -128,9 +128,9 @@ end)
 
 concommand.Add("tf_spectate_respawn2", function(ply, _, args)
 	if (ply:Alive()) then return end
-	if args[1] == "2" then ply:Spectate(OBS_MODE_CHASE) ply.SpectateMode = 2 umsg.Start("ExitFreezecam", ply) umsg.End() return
-	elseif args[1] == "1" then ply:Spectate(OBS_MODE_IN_EYE) ply.SpectateMode = 1 umsg.Start("ExitFreezecam", ply) umsg.End() return
-	elseif args[1] == "3" then ply:Spectate(OBS_MODE_ROAMING) ply.SpectateMode = 3 umsg.Start("ExitFreezecam", ply) umsg.End() return end
+	if args[1] == "2" then ply:Spectate(OBS_MODE_CHASE) ply.SpectateMode = 2 bot:SetNoDraw(false) umsg.Start("ExitFreezecam", ply)  umsg.End() return
+	elseif args[1] == "1" then ply:Spectate(OBS_MODE_IN_EYE) ply.SpectateMode = 1 bot:SetNoDraw(true) umsg.Start("ExitFreezecam", ply) umsg.End() return
+	elseif args[1] == "3" then ply:Spectate(OBS_MODE_ROAMING) ply.SpectateMode = 3 bot:SetNoDraw(false) umsg.Start("ExitFreezecam", ply) return end
 	
 	ply:StripWeapons()
 	

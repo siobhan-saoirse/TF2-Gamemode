@@ -16,7 +16,7 @@ local deathcam_rot_approach_speed	= CreateConVar("deathcam_rot_approach_speed"	,
 
 local freezecam_dist			= CreateConVar("freezecam_dist"				, 100)
 local freezecam_dist_variation	= CreateConVar("freezecam_dist_variation"	, 0.5)
-local freezecam_delay			= CreateConVar("freezecam_delay"			, 2.5)
+local freezecam_delay			= CreateConVar("freezecam_delay"			, 2.0)
 local freezecam_timetoarrive	= CreateConVar("freezecam_timetoarrive"		, 0.5)
 
 local tf_thirdperson	= CreateConVar("cam_thirdperson"		, 0)
@@ -172,40 +172,6 @@ hook.Add("CalcView", "TFCalcView", function(pl, pos, ang, fov)
 	-- FREEZECAM
 	if pl.FrozenScreen then
 		return {origin = pl.FreezeCamPos, angles = pl.FreezeCamAng}
-	end
-	
-	if pl.FreezeCam then
-		local targetpos
-		if IsValid(pl.FreezeCamTarget) then
-			targetpos = ViewTarget(pl.FreezeCamTarget)
-		elseif pl.FreezeCamDefaultTargetPos then
-			targetpos = pl.FreezeCamDefaultTargetPos
-		else
-			return StopFreezeCam()
-		end
-		
-		local targetang = (targetpos-pl.FreezeCamPos):Angle()
-		targetang.p = 0
-		
-		local tr = util.TraceLine{
-			start = targetpos,
-			endpos = targetpos - targetang:Forward() * pl.FreezeCamDistance,
-			filter = pl.FreezeCamTarget,
-		}
-		
-		targetpos = tr.HitPos
-		
-		local d = pl.FreezeCamPos:Distance(targetpos)
-		pl.FreezeCamSpeed = math.Clamp(FreezecamSpeedMultiplier * pl.FreezeCamStartPos:Distance(targetpos) / freezecam_timetoarrive:GetFloat(),
-			FreezecamMinSpeed, FreezecamMaxSpeed)
-		if d<pl.FreezeCamSpeed then
-			StartFreezeScreen()
-			pl.FreezeCamAng = targetang
-			return {origin = pl.FreezeCamPos, angles = pl.FreezeCamAng}
-		else
-			pl.FreezeCamPos = pl.FreezeCamPos + (targetpos - pl.FreezeCamPos) * (pl.FreezeCamSpeed / d)
-			return {origin = pl.FreezeCamPos, angles = targetang}
-		end
 	end
 	
 	
@@ -451,25 +417,6 @@ end
 
 function StartFreezeCam(startpos, target, defaultpos)
 	FreezePanelBase:Show()
-	
-	LocalPlayer().FreezeCamStartPos = startpos
-	LocalPlayer().FreezeCamPos = startpos
-	LocalPlayer().FreezeCam = true
-	LocalPlayer().FreezeCamTarget = target
-	LocalPlayer().FreezeCamDefaultTargetPos = defaultpos
-	
-	local var = freezecam_dist_variation:GetFloat()
-	LocalPlayer().FreezeCamDistance = freezecam_dist:GetFloat() * (1+math.Rand(-var, var))
-	
-	local targetpos
-	if IsValid(target) then targetpos = ViewTarget(target)
-	elseif defaultpos then targetpos = defaultpos
-	else return StopFreezeCam()
-	end
-	
-	LocalPlayer().FreezeCamSpeed = math.Clamp(FreezecamSpeedMultiplier * startpos:Distance(targetpos) / freezecam_timetoarrive:GetFloat(),
-		FreezecamMinSpeed, FreezecamMaxSpeed)
-	LocalPlayer():EmitSound("misc/freeze_cam.wav")
 end
 
 function StopFreezeCam()

@@ -209,7 +209,7 @@ hook.Add("EntityEmitSound","InfectedHearSound",function(snd)
 					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 						if (IsValid(snd.Entity:GetEnemy())) then
 							v:SetEnemy(snd.Entity:GetEnemy())
-							v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+							v:EmitSound(table.Random({"L4D_Zombie.Alert","L4D_Zombie.BecomeAlert"}))
 						end
 					end
 				end
@@ -237,7 +237,7 @@ hook.Add("EntityEmitSound","InfectedHearSound",function(snd)
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
 				if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 					v:SetEnemy(snd.Entity)
-					v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+					v:EmitSound(table.Random({"L4D_Zombie.Alert","L4D_Zombie.BecomeAlert"}))
 	
 					if SERVER then
 						local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
@@ -271,7 +271,7 @@ function ENT:IsNPC()
 	return true
 end
 function ENT:Shove(anim)
-	self:EmitSound("Zombie.Shoved")
+	self:EmitSound("L4D_Zombie.Shoved")
 end
 function ENT:Initialize()
 
@@ -411,7 +411,7 @@ function ENT:FindEnemy()
 			if ( ( v:IsPlayer() or v:IsNPC()) and !v:IsFriendly(self) and GAMEMODE:EntityTeam(v) != TEAM_SPECTATOR and GAMEMODE:EntityTeam(v) != TEAM_FRIENDLY and v:Health() > 0 and !v:IsFlagSet(FL_NOTARGET) ) then
 				-- We found one so lets set it as our enemy and return true
 				self:SetEnemy(v)
-				self:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+				self:EmitSound(table.Random({"L4D_Zombie.Alert","L4D_Zombie.BecomeAlert"}))
 				if (v:IsNPC()) then
 					if (!IsValid(v:GetEnemy())) then
 						v:SetEnemy(self)
@@ -541,10 +541,10 @@ function ENT:HandleAnimEvent( event, eventTime, cycle, type, options )
 					end
 				end
 			else 
-				self:EmitSound("Zombie.AttackMiss")
+				self:EmitSound("L4D_Zombie.AttackMiss")
 			end
 		else
-			self:EmitSound("Zombie.AttackMiss")
+			self:EmitSound("L4D_Zombie.AttackMiss")
 		end
 	end
 end
@@ -897,12 +897,12 @@ function ENT:Think()
 			if (IsValid(self:GetEnemy())) then
 				if (math.random(1,200) == 1) then
 					if (!self.PlayingSequence) then
-						self:EmitSound(table.Random({"Zombie.BecomeEnraged","Zombie.BecomeEnraged","Zombie.Rage","Zombie.RageAtVictim"}))
+						self:EmitSound(table.Random({"L4D_Zombie.BecomeEnraged","L4D_Zombie.BecomeEnraged","L4D_Zombie.Rage","L4D_Zombie.RageAtVictim"}))
 					end
 				end
 			else
 				if (math.random(1,800) == 1) then
-					self:EmitSound("Zombie.Wander")
+					self:EmitSound("L4D_Zombie.Wander")
 				end
 			end
 		end
@@ -1040,7 +1040,7 @@ function ENT:ChaseEnemy( options )
 		local mad = self:LookupSequence("violent_alert01_Common_"..table.Random({"a","b","c","d","e"}))
 		self:ResetSequence( mad )
 		self.PlayingSequence = true
-		self:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+		self:EmitSound(table.Random({"L4D_Zombie.Alert","L4D_Zombie.BecomeAlert"}))
 		timer.Simple(self:SequenceDuration(mad), function()
 			self.PlayingSequence = false
 			if (string.find(self:GetModel(),"mud")) then
@@ -1127,7 +1127,7 @@ function ENT:OnInjured( dmginfo )
 			self.Burning = true
 		end
 		if (math.random(1,40) == 1) then
-			self:EmitSound("Zombie.IgniteScream")
+			self:EmitSound("L4D_Zombie.IgniteScream")
 		end
 	end
 	if SERVER then
@@ -1135,7 +1135,7 @@ function ENT:OnInjured( dmginfo )
 	end
 	if (dmginfo:IsDamageType(DMG_BULLET) and self:Health() > 0) then
 		if (math.random(1,10) == 1) then
-			self:EmitSound("Zombie.BulletImpact")
+			self:EmitSound("L4D_Zombie.BulletImpact")
 		end
 	end
 end
@@ -1257,7 +1257,7 @@ function ENT:OnKilled( dmginfo )
 	local pos = self:GetPos()
 	self:PrecacheGibs()
 	if (self.WasShotInTheHead) then
-		self:EmitSound("Zombie.HeadlessCough")
+		self:EmitSound("L4D_Zombie.HeadlessCough")
 		self:EmitSound("Blood.Spurt")
 		local headgib = ents.Create("prop_ragdoll")
 		headgib:SetModel("models/infected/limbs/limb_male_head01.mdl")
@@ -1282,9 +1282,9 @@ function ENT:OnKilled( dmginfo )
 		self:ManipulateBoneScale(self:LookupBone("ValveBiped.Bip01_Head1"),Vector(0,0,0))
 	else
 		if (dmginfo:IsDamageType(DMG_BULLET) and math.random(1,10) == 1) then
-			self:EmitSound("Zombie.Shot")
+			self:EmitSound("L4D_Zombie.Shot")
 		else
-			self:EmitSound("Zombie.Die") 
+			self:EmitSound("L4D_Zombie.Die") 
 		end
 	end
 	if SERVER then

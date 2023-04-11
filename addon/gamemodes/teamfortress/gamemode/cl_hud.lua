@@ -294,7 +294,7 @@ end
 
 function GM:HUDDrawTargetID()
 	if (LocalPlayer():IsHL2()) then
-		return true
+		return self.BaseClass:HUDDrawTargetID()
 	else
     	return false
 	end
@@ -305,24 +305,30 @@ local function targetid_trace_condition(tr)
 end
 
 function GM:TargetIDThink()
-	if not LocalPlayer():Alive() then
+	local ply = LocalPlayer()
+
+	if LocalPlayer():GetObserverTarget() and LocalPlayer():GetObserverTarget():IsPlayer() then
+		ply = LocalPlayer():GetObserverTarget()
+	end
+
+	if not ply:Alive() then
 		return
 	end
 	
-	--local ent = LocalPlayer():GetEyeTrace().Entity
+	--local ent = ply:GetEyeTrace().Entity
 	
-	local start = LocalPlayer():GetShootPos()
-	local endpos = start + LocalPlayer():GetAimVector() * 10000
+	local start = ply:GetShootPos()
+	local endpos = start + ply:GetAimVector() * 10000
 	
 	local tr = tf_util.MixedTrace({
 		start = start,
 		endpos = endpos,
-		filter = LocalPlayer(),
+		filter = ply,
 		mins = Vector(-5, -5, -5),
 		maxs = Vector(5, 5, 5),
 	}, targetid_trace_condition)
 	
-	if targetid_trace_condition(tr) then
+	if targetid_trace_condition(tr, ply) then
 		HudTargetID:SetTargetEntity(tr.Entity)
 		HudTargetID:SetVisible(true)
 	else

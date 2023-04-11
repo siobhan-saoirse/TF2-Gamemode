@@ -27,6 +27,7 @@ function scripted_ents.Register(tbl, name, reload)
 end
 
 function GM:LoadEntityClientFunctions()
+	--[[
 	local path = self.Folder.."/entities/entities/"
 	local luapath = string.gsub(self.Folder, "gamemodes/", "").."/entities/entities/"
 
@@ -44,7 +45,7 @@ function GM:LoadEntityClientFunctions()
 				end
 			end
 		end
-	end
+	end]]
 end
 
 GM:LoadEntityClientFunctions()
@@ -66,6 +67,7 @@ local function meta_init(ent)
 end
 
 hook.Add("Think", "TFClientEntityThink", function()
+	--[[
 	for _,v in pairs(ents.GetAll()) do
 		if IsValid(v) and forced_client_class[v:GetClass()] then
 			meta_init(v)
@@ -80,23 +82,25 @@ hook.Add("Think", "TFClientEntityThink", function()
 				if v.Think then v:Think() end
 			end
 		end
-	end
+	end]]
 end)
 
 hook.Add("PostDrawOpaqueRenderables", "TFClientEntityDraw", function()
+	--[[
 	for _,v in pairs(ents.GetAll()) do
 		if IsValid(v) and forced_client_class[v:GetClass()] and v.ClientInitialized then
 			meta_init(v)
 			if v.Draw then v:Draw() end
 		end
-	end
+	end]]
 end)
 
 hook.Add("PostDrawTranslucentRenderables", "TFClientEntityDrawTranslucent", function()
+	--[[
 	for _,v in pairs(ents.GetAll()) do
 		if IsValid(v) and forced_client_class[v:GetClass()] and v.ClientInitialized then
 			meta_init(v)
 			if v.DrawTranslucent then v:DrawTranslucent() end
 		end
-	end
+	end]]
 end)

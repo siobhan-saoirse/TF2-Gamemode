@@ -466,7 +466,7 @@ sound.Add( {
 	level = 50,
 	pitch = { 100 },
 	sound = { "music/mvm_class_menu_bg.wav"} 
-} )
+} ) 
 sound.Add( {
 	name = "Hunter.Music",
 	volume = 1.0,
@@ -481,13 +481,28 @@ sound.Add( {
 	pitch = { 100 },
 	sound = { "music/pzattack/vassalation.wav"} 
 } )
+
+if (file.Exists("sound/tf/weapons/explode1.wav", "WORKSHOP")) then
+
+	sound.Add( {
+		name = "TF_BaseExplosionEffect.Sound",
+		volume = 1.0,
+		level = 95,
+		pitch = { 100 },
+		sound = { "tf/weapons/explode1.wav",  "tf/weapons/explode2.wav",  "tf/weapons/explode3.wav"} 
+	} )
+
+else
+
 sound.Add( {
 	name = "TF_BaseExplosionEffect.Sound",
 	volume = 1.0,
 	level = 95,
 	pitch = { 100 },
-	sound = { "tf/weapons/explode1.wav",  "tf/weapons/explode2.wav",  "tf/weapons/explode3.wav"} 
+	sound = { "weapons/explode1.wav",  "weapons/explode2.wav"} 
 } )
+
+end
 sound.Add( {
 	name = "BaseExplosionEffect.Sound",
 	volume = 1.0,
