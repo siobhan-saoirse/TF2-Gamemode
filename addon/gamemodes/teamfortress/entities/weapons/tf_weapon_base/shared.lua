@@ -2303,16 +2303,12 @@ function SWEP:PrimaryAttack(noscene)
 		return
 	end
 	
-			if (string.find(self:GetClass(),"smg") or string.find(self:GetClass(),"pistol") or string.find(self:GetClass(),"revolver")) and CLIENT then 
-				--PrintTable(self.CModel:GetAttachments())
-				if (self.CModel:GetAttachment(self.CModel:LookupAttachment("eject_brass"))) then
-					local effectdata = EffectData()
-					effectdata:SetEntity( self.Owner:GetViewModel() )
-					effectdata:SetOrigin( self.CModel:GetAttachment(self.CModel:LookupAttachment("eject_brass")).Pos )
-					effectdata:SetAngles( Angle(self.CModel:GetAttachment(self.CModel:LookupAttachment("eject_brass")).Ang.x,self.CModel:GetAttachment(self.CModel:LookupAttachment("eject_brass")).Ang.y,self.CModel:GetAttachment(self.CModel:LookupAttachment("eject_brass")).Ang.z) )
-					util.Effect( "ShellEject", effectdata )
-				end
-			end
+	
+	if SERVER then
+		umsg.Start("TF2ShellEject")
+			umsg.Entity(self)
+		umsg.End()
+	end
 	if self.NextReload or self.NextReloadStart then
 		self.NextReload = nil
 		self.NextReloadStart = nil
