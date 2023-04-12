@@ -378,6 +378,24 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	local attacker = dmginfo:GetAttacker()
 	local amount = dmginfo:GetDamage()
 	
+	-- Friendly fire
+	if (!attacker:IsL4D() and !ent:IsL4D()) then
+		if attacker~=ent and attacker:IsTFPlayer() and attacker:IsFriendly(ent) and !GetConVar("mp_friendlyfire"):GetBool() then
+			dmginfo:SetDamageType(DMG_GENERIC)
+			dmginfo:SetDamage(0)
+			ent:SetBloodColor(DONT_BLEED)
+			return
+		else
+			ent:SetBloodColor(BLOOD_COLOR_RED)
+		end
+	end
+
+	if (ent:IsPlayer() and ent:GetInfoNum("tf_robot",0) != 1) then
+		ent:SetBloodColor(BLOOD_COLOR_RED)
+	elseif (ent:IsPlayer() and ent:GetInfoNum("tf_robot",0) == 1) then
+		ent:SetBloodColor(DONT_BLEED)
+	end
+
 	if ent:IsTFPlayer() and ent:Health() <= 0 then
 		return
 	end
@@ -406,14 +424,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		dmginfo:SetDamageType(DMG_GENERIC)
 	end
 	
-	-- Friendly fire
-	local t1, t2 = attacker:EntityTeam(), ent:EntityTeam()
-	if (!attacker:IsL4D() and !ent:IsL4D()) then
-		if attacker~=ent and attacker:IsTFPlayer() and attacker:IsFriendly(ent) and !GetConVar("mp_friendlyfire"):GetBool() then
-			dmginfo:SetDamage(0)
-			dmginfo:SetDamageType(DMG_GENERIC)
-		end
-	end
 	
 	-- Quickfix for bullet damage mysteriously gaining DMG_ALWAYSGIB flag
 	if dmginfo:GetDamageType() == bit.bor(DMG_BULLET,DMG_ALWAYSGIB) then
