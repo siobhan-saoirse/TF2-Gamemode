@@ -166,6 +166,9 @@ function PANEL:UpdateLoadout()
 		local slot = (specialslots[v:GetClass()] and specialslots[v:GetClass()]) or v.Slot or v:GetSlot()
 
 		if slot and not v.Hidden then
+			if (!string.find(v:GetClass(),"tf_weapon")) then
+				slot = 3 + slot
+			end
 			loadout[slot+1] = {
 				class=v:GetClass(),
 				ent=v,
@@ -227,7 +230,6 @@ function PANEL:UpdateLoadout()
 			
 			t.number = l.slot
 			t.itemImage_hi = nil
-			
 			if l.ent == LocalPlayer():GetActiveWeapon() then
 				self.Current = i
 				self.CurrentSlot = l.slot

@@ -1,34 +1,26 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "Models/Weapons/v_physcannon/v_superphyscannon_sheet"
-	"$normalmap" "Models/Weapons/v_physcannon/v_superphyscannon_sheet_normal"
-	"$phongexponenttexture" "Models/Weapons/v_physcannon/v_superphyscannon_sheet_ao"
-
-	"$selfillum" 1
-
-	"$phong" "1"
-	"$phongexponent" "18"
-	"$phongboost" "2"
-	"$lightwarptexture" "models\weapons\lightwarp_tf2style\lightwarp_tf2style02"
-
-	"$phongfresnelranges"	"[.5 .9 .3]"
-
-	"$halflambert" "1"
-	"$glowcolor" "2"
-
-	"$tempvar" "0"
-
-	"$commadd_phongexponent" "20"
-	"$commadd_phongboost" 	"22.5"
-
-	"$basemapalphaphongmask" "1"
+	"$baseTexture" "Models/Weapons/V_physcannon/v_superphyscannon_sheet"
+	// "$envmap" "env_cubemap"
+	// "$envmapmask" "Models/Weapons/V_physcannon/v_physcannon_mask"
+	// "$envmapcontrast" ".7"
+	// "$envmapsaturation" "[.8 .8 .8]"
 	
-	"$rimlight" "3"						
-	"$rimlightexponent" "28"				
-	"$rimlightboost" "3"
-
-	"$yellow" "0"
-
+	$detail "Models/Weapons/V_physcannon/v_superphyscannon_detail"
+	$detailscale 1
+	$detailblendfactor 1.0
+	$detailblendmode 0
+	
+	"$bumpmap" "models/weapons/v_physcannon/v_superphyscannon_normal"
+	
+	"$phong" "1"
+	"$phongtint" "[0.9 0.8 0.7]"
+	"$phongboost" "0.8"
+	"$phongexponent" "6"
+	"$phongfresnelranges" "[0.3 0.6 1]"
+	
+	"$rimlight" "0"
+	
 	"$selfillum" "1"
 	// "$selfillumtint" "[0.3 1.8 2.1]" // Default
 	// "$selfillumtint" "[1.5 2.2 1.9]" // White
@@ -39,49 +31,14 @@
 	// "$selfillumtint" "[0.5 0.6 3.1]" // Blue (lavender)
 	// "$selfillumtint" "[1.4 0.6 2.5]" // Purple
 	// "$selfillumtint" "[1.9 0.6 1.1]" // Pink
-
-	// Cloaking
-	"$cloakPassEnabled" "1"
-	"$sheenPassEnabled" "1"
-
-	"Proxies"
+	
+	
+	Proxies
 	{
-		"AnimatedWeaponSheen"
+		PlayerWeaponColor
 		{
-			"animatedtexturevar" 		"$sheenmapmask"
-			"animatedtextureframenumvar" 	"$sheenmapmaskframe"
-			"animatedtextureframerate" 		"40"
-		}
-		"invis"
-		{
-		}
-		"ModelGlowColor"
-		{
-			"resultVar" "$glowcolor"
-		}
-		"Equals"
-		{
-			"srcVar1"  "$glowcolor"
-			"resultVar" "$selfillumtint"
-		}
-		"Equals"
-		{
-			"srcVar1"  "$glowcolor"
-			"resultVar" "$color2"
-		}
-		"YellowLevel"
-		{
-			"resultVar" "$yellow"
-		}
-		"Multiply"
-		{
-			"srcVar1" "$color2"
-			"srcVar2" "$yellow"
-			"resultVar" "$color2"
-		} 
-		"PlayerWeaponColor"
-		{
-			"resultVar"	"$selfillumtint"
+			resultVar	$selfillumtint
 		}
 	}
 }
+	

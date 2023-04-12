@@ -2402,7 +2402,19 @@ function GM:PlayerSetHandsModel( ply, ent )
 					end
 					ent:SetModel("models/weapons/c_models/c_"..class.."_arms.mdl")
 				elseif (ply:GetPlayerClass() == "demoman") then
-					ent:SetModel( "models/weapons/c_models/c_demo_arms.mdl" )
+					if ((IsValid(ply:GetActiveWeapon()) and string.find(ply:GetActiveWeapon():GetClass(),"tf_weapon")) or !IsValid(ply:GetActiveWeapon())) then
+
+						ent:SetModel( "models/weapons/c_models/c_demo_arms.mdl" )
+
+					else
+						
+						if (file.Exists("models/player/demomanplayer/demonstrationman_hands.mdl", "WORKSHOP")) then
+							ent:SetModel( "models/player/demomanplayer/demonstrationman_hands.mdl" )
+						else
+							ent:SetModel("models/weapons/v_hands.mdl")
+						end
+
+					end
 				elseif (ply:GetPlayerClass() == "civilian_") then
 					ent:SetModel( "models/weapons/c_models/c_civilian_arms.mdl" )
 				elseif (ply:GetPlayerClass() == "civilian") then
@@ -2428,7 +2440,20 @@ function GM:PlayerSetHandsModel( ply, ent )
 							end
 						end
 					else
-						ent:SetModel( "models/weapons/c_models/c_"..ply:GetPlayerClass().."_arms.mdl" )
+						
+						if ((IsValid(ply:GetActiveWeapon()) and string.find(ply:GetActiveWeapon():GetClass(),"tf_weapon")) or !IsValid(ply:GetActiveWeapon())) then
+
+							ent:SetModel( "models/weapons/c_models/c_"..ply:GetPlayerClass().."_arms.mdl" )
+
+						else
+
+							if (file.Exists("models/player/"..ply:GetPlayerClass().."player/"..ply:GetPlayerClass().."_hands.mdl", "WORKSHOP")) then
+								ent:SetModel( "models/player/"..ply:GetPlayerClass().."player/"..ply:GetPlayerClass().."_hands.mdl" )
+							else
+								ent:SetModel("models/weapons/v_hands.mdl")
+							end
+
+						end
 					end
 				end
 				if (ply:Team() == TEAM_BLU or ply:Team() == TEAM_GREEN) then

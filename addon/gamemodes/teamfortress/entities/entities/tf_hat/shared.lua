@@ -271,6 +271,17 @@ if CLIENT then
 	end)
 
 end
+
+hook.Add( "PlayerSwitchWeapon", "SetTF2Hands", function( ply, oldWeapon, newWeapon )
+	if (!ply:IsHL2() and !ply:IsL4D()) then
+		timer.Simple(0.1, function()
+		
+			GAMEMODE:PlayerSetHandsModel( ply, ply:GetHands() )
+			
+		end)
+	end
+end)
+
 hook.Add("EntityTakeDamage", "InfectedHurt", function(ent,dmginfo)
 	if (ent:IsPlayer()) then 
 		if (dmginfo:GetAttacker():IsPlayer() and dmginfo:GetAttacker():IsL4D() and dmginfo:GetAttacker():EntityTeam(ent) != ent:Team()) then
