@@ -182,6 +182,17 @@ function ENT:OnRemove()
 	if self.particle_crit and self.particle_crit:IsValid(self.WModel2) then self.particle_crit:Remove() end
 end
 
+function ENT:GravGunPunt( ply )
+	self:SetOwner(ply)
+	self:GetPhysicsObject():EnableMotion( true )
+	return true
+end
+
+function ENT:GravGunPickupAllowed( ply )
+	self:GetPhysicsObject():EnableMotion( true )
+	return true
+end
+
 function ENT:Think()
 	if self:GetOwner():IsPlayer() and self:GetOwner():GetActiveWeapon():GetItemData().model_player == "models/weapons/c_models/c_scottish_resistance/c_scottish_resistance.mdl" then
 		self:SetModel("models/weapons/w_models/w_stickybomb_d.mdl")	

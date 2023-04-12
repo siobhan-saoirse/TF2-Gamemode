@@ -1,4 +1,5 @@
 if (!IsMounted("tf")) then return end
+if (!file.Exists("models/player/civilian.mdl","WORKSHOP")) then return end
 if SERVER then AddCSLuaFile() end
 
 ENT.Base = "tf_red_bot"

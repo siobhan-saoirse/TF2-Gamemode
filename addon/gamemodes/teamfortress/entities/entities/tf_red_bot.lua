@@ -246,6 +246,10 @@ function ENT:Initialize()
 	if (self.Team == "BLU") then
 		team = 1
 	end
+	
+	if (self.PZClass == "civilian_" && !file.Exists("models/player/civilian.mdl","WORKSHOP")) then 
+		self:Remove()
+	end
     local npc = LeadBot_S_Add_Zombie(team,self.PZClass,self:GetPos(),self)
     if (!IsValid(npc)) then 
         ErrorNoHalt("The bot could not spawn because you are in singleplayer!") 

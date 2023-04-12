@@ -362,6 +362,8 @@ criterion "IsInvulnerable"  "invulnerable"               "1"   required weight 1
 criterion "IsOnFriendlyControlPoint"  "OnFriendlyControlPoint"	"1"   required
 criterion "IsOnCappableControlPoint"  "OnCappableControlPoint"	"1"   required
 
+criterion "WeaponIsPhyscannon" "playerweapon" "weapon_physcannon" "required"
+criterion "WeaponIsPhysgun" "playerweapon" "weapon_physgun" "required"
 criterion "WeaponIsLaserPointer" "playerweapon" "tf_weapon_laser_pointer" "required"
 criterion "WeaponIsMinigun" "playerweapon" "tf_weapon_minigun" "required"
 criterion "WeaponIsShotgun" "playerweapon" "tf_weapon_shotgun" "required"

@@ -32,13 +32,15 @@ end
 
 function ENT:StartTouch(ent)
 	if ent:IsPlayer() then
-		if (ent:Team() != TEAM_YELLOW and ent:Team() != TEAM_GREEN and ent:Team() != TEAM_NEUTRAL and ent:Team() != TEAM_FRIENDLY) then
-			if (ent:Team() != self.TeamNum and ent:Team() != TEAM_SPECTATOR) then
-				ent:KillSilent()
-				ent:Spawn()
-				ent:PrintMessage(HUD_PRINTCENTER,"You are not allowed to enter enemy spawnrooms.")
-			end
-		end 
+		if (!string.find(game.GetMap(), "mvm_")) then -- suck my dick
+			if (ent:Team() != TEAM_YELLOW and ent:Team() != TEAM_GREEN and ent:Team() != TEAM_NEUTRAL and ent:Team() != TEAM_FRIENDLY) then
+				if (ent:Team() != self.TeamNum and ent:Team() != TEAM_SPECTATOR) then
+					ent:KillSilent()
+					ent:Spawn()
+					ent:PrintMessage(HUD_PRINTCENTER,"You are not allowed to enter enemy spawnrooms.")
+				end
+			end 
+		end
 	end
 end
  

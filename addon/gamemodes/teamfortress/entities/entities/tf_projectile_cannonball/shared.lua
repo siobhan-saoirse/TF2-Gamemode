@@ -93,9 +93,10 @@ function ENT:Initialize()
 	end
 	
 	self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:SetSolid(SOLID_CUSTOM)
+	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetHealth(1)
-	
+	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+
 	if self.GrenadeMode==1 then
 		self:SetMoveCollide(MOVECOLLIDE_FLY_BOUNCE)
 	else
@@ -181,6 +182,17 @@ function ENT:Think()
 		self:DoExplosion()
 		self.NextExplode = nil
 	end
+end
+
+function ENT:GravGunPunt( ply )
+	self:SetOwner(ply)
+	self:GetPhysicsObject():EnableMotion( true )
+	return true
+end
+ 
+function ENT:GravGunPickupAllowed( ply )
+	self:GetPhysicsObject():EnableMotion( true )
+	return true
 end
 
 function ENT:DoExplosion()

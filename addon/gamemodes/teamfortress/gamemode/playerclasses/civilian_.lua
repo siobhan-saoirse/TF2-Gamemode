@@ -61,6 +61,13 @@ CLASS.AmmoMax = {
 if SERVER then
 
 	function CLASS:Initialize()
+		if (!file.Exists("models/player/civilian.mdl","WORKSHOP")) then 
+			if (self:IsBot()) then
+				self:Kick("")
+			else
+				self:SetPlayerClass("civilian")
+			end
+		end
 		self:StripWeapons()
 		self:Give("tf_weapon_fireaxe")
 	end

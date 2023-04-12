@@ -586,9 +586,9 @@ function GM:TranslateActivity(pl, act)
 		
 		return LoserStateActivityTranslate[act] or act
 	end
-
+	
 	if pl:InVehicle() then
-		return ACT_DOD_RELOAD_DEPLOYED or act
+		return ACT_KART_IDLE or act
 	end
 	
 	return pl:TranslateWeaponActivity(act)
@@ -725,7 +725,7 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 			pl:AddVCDSequenceToGestureSlot(GESTURE_SLOT_FLINCH, pl:LookupSequence(TauntGestures[data]), 0, true)
 		else
 			-- just let us do custom ones man
-			pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, data, true)
+			pl:AddVCDSequenceToGestureSlot( GESTURE_SLOT_CUSTOM, data, 0, true )
 		end
 		
 		return ACT_INVALID
@@ -742,9 +742,9 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 		return ACT_INVALID
 	end
 end
-local plyr = FindMetaTable("Entity")
+local plyr = FindMetaTable("Player")
 
-function plyr:PlaySequence(anim,autokill)
+function plyr:DoTauntEvent(anim,autokill)
 	if (self:IsPlayer()) then
 		if (autokill == nil) then
 			autokill = true

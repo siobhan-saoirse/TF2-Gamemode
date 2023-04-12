@@ -1927,7 +1927,13 @@ hook.Add( "PlayerButtonDown", "PlayerButtonDownTF", function( pl, key )
 		if (pl:GetInfoNum("tf_sentrybuster",0) == 1) then
 			pl:ConCommand("tf_sentrybuster_explode")         
 		else
-			pl:ConCommand("tf_taunt "..pl:GetActiveWeapon():GetSlot() + 1)         
+			if (pl:GetActiveWeapon():GetClass() == "weapon_physcannon") then
+				pl:ConCommand("tf_taunt_laugh")
+			elseif (pl:GetActiveWeapon():GetClass() == "weapon_physgun") then
+				pl:ConCommand("tf_taunt_directors_vision")
+			else
+				pl:ConCommand("tf_taunt "..pl:GetActiveWeapon():GetSlot() + 1)         
+			end
 			print("taunt")
 			print(pl:GetWeapon(pl:GetActiveWeapon():GetClass()):GetSlot() + 1)
 		end
@@ -2370,16 +2376,6 @@ function GM:PlayerSpawn(ply)
 		timer.Simple(0.1, function()
 		
 			ply:GiveLoadout()
-			if (!ply:IsHL2() and !ply:IsL4D()) then
-		
-				if (ply:GetInfoNum("tf_give_hl2_weapons",0) == 1) then
-					ply:Give("weapon_physgun")
-					ply:Give("weapon_physcannon")
-					ply:Give("gmod_tool")
-					ply:Give("gmod_camera")
-				end
-				
-			end
 		
 		end)
 	end
@@ -2450,7 +2446,7 @@ function GM:PlayerSetHandsModel( ply, ent )
 								ent:SetModel( "models/v_models/weapons/v_claw_"..class..".mdl" )
 							end
 						end
-					else
+					else 
 						
 						if ((IsValid(ply:GetActiveWeapon()) and string.find(ply:GetActiveWeapon():GetClass(),"tf_weapon")) or !IsValid(ply:GetActiveWeapon())) then
 
@@ -2458,10 +2454,18 @@ function GM:PlayerSetHandsModel( ply, ent )
 
 						else
 
-							if (file.Exists("models/player/"..ply:GetPlayerClass().."player/"..ply:GetPlayerClass().."_hands.mdl", "WORKSHOP")) then
-								ent:SetModel( "models/player/"..ply:GetPlayerClass().."player/"..ply:GetPlayerClass().."_hands.mdl" )
+							if (ply:GetPlayerClass() == "engineer") then
+								if (file.Exists("models/player/engieplayer/"..ply:GetPlayerClass().."_hands.mdl", "WORKSHOP")) then
+									ent:SetModel( "models/player/engieplayer/"..ply:GetPlayerClass().."_hands.mdl" )
+								else
+									ent:SetModel("models/weapons/v_hands.mdl")
+								end
 							else
-								ent:SetModel("models/weapons/v_hands.mdl")
+								if (file.Exists("models/player/"..ply:GetPlayerClass().."player/"..ply:GetPlayerClass().."_hands.mdl", "WORKSHOP")) then
+									ent:SetModel( "models/player/"..ply:GetPlayerClass().."player/"..ply:GetPlayerClass().."_hands.mdl" )
+								else
+									ent:SetModel("models/weapons/v_hands.mdl")
+								end
 							end
 
 						end

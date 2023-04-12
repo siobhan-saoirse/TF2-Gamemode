@@ -14,7 +14,7 @@ if CLIENT then
 end
 
 CLASS.Loadout = {"tf_weapon_minigun", "tf_weapon_shotgun_hwg", "tf_weapon_fists"}
-CLASS.DefaultLoadout = {"Killing Gloves of Boxing","Pugilist's Protector"}
+CLASS.DefaultLoadout = {"Killing Gloves of Boxing",""}
 CLASS.ModelName = "heavy"
 
 ----------------------------------------

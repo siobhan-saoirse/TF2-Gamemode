@@ -105,6 +105,7 @@ function ENT:Initialize()
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetHealth(1)
+	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
 	
 	if self.GrenadeMode==1 then
 		self:SetMoveCollide(MOVECOLLIDE_FLY_BOUNCE)
@@ -182,6 +183,7 @@ function ENT:Initialize()
 end
 
 function ENT:GravGunPunt( ply )
+	self:SetOwner(ply)
 	self:GetPhysicsObject():EnableMotion( true )
 	return true
 end

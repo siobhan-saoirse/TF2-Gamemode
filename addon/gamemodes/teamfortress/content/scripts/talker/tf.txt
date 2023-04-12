@@ -2019,3 +2019,116 @@
 	}
 
 //============================================================================================================
+// LAMBDA FORTRESS EXTENDED RESPONSE RULES
+
+	rule ScoutTauntGravityGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsScout
+		response ScoutTauntLaugh
+	}
+
+	rule SoldierTauntGravityGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsSoldier
+		response SoldierTauntLaugh
+	}
+
+	rule PyroTauntGravityGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsPyro
+		response PyroTauntLaugh
+	}
+
+	rule DemomanTauntGravityGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsDemoman
+		response DemomanTauntLaugh
+	}
+
+	rule HeavyTauntGravityGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsHeavy
+		response HeavyTauntLaugh
+	}
+
+	rule EngineerTauntGravityGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsEngineer
+		response EngineerTauntLaugh
+	}
+
+	rule MedicTauntGravityGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsMedic
+		response MedicTauntLaugh
+	}
+
+	rule SniperTauntGravityGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsSniper
+		response SniperTauntLaugh
+	}
+
+	rule SpyTauntGravityGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsSpy
+		response SpyTauntLaugh
+	}
+
+
+
+	rule ScoutTauntPhysGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhysgun IsScout
+		response ScoutTauntReplay
+	}
+
+	rule SoldierTauntPhysGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhysgun IsSoldier
+		response SoldierTauntReplay 
+	}
+
+	rule PyroTauntPhysGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhysgun IsPyro
+		response PyroTauntReplay
+	}
+
+	rule DemomanTauntPhysGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhysgun IsDemoman
+		response DemomanTauntReplay
+	}
+
+	rule HeavyTauntPhysGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhysgun IsHeavy
+		response HeavyTauntReplay
+	}
+
+	rule EngineerTauntPhysGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhysgun IsEngineer
+		response EngineerTauntReplay
+	}
+
+	rule MedicTauntPhysGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhysgun IsMedic
+		response MedicTauntReplay
+	}
+
+	rule SniperTauntPhysGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhysgun IsSniper
+		response SniperTauntReplay
+	}
+
+	rule SpyTauntPhysGun
+	{
+		criteria ConceptPlayerTaunt WeaponIsPhysgun IsSpy
+		response SpyTauntReplay
+	}
+
+//============================================================================================================

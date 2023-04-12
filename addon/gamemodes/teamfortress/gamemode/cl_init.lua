@@ -545,7 +545,7 @@ function GM:OpenMainMenu()
 			end 
 		end},
 
-		{"Disconnect", function() RunConsoleCommand("gamemenucommand", "disconnect") RunConsoleCommand("cl_wpn_sway_interp","0.1") end},
+		{"Disconnect", function() RunConsoleCommand("gamemenucommand", "disconnect")  end},
 		{"Quit", function() self:CloseMenus() RunConsoleCommand("pause") RunConsoleCommand("gamemenucommand", "quit") end}
 	}
 
@@ -1348,20 +1348,20 @@ function L4DClassSelection()
 	TankButton:SetPos(10, 35)
 	TankButton:SetText("Tank")
 	TankButton.OnCursorEntered = function() icon:SetModel( "models/infected/hulk.mdl" ) icon2:GetEntity():SetParent(icon:GetEntity()) icon2:GetEntity():AddEffects(EF_BONEMERGE) icon2:GetEntity():SetModel("models/empty.mdl") local dance = icon:GetEntity():LookupSequence( "idle" ) icon:GetEntity():SetSequence( dance ) icon:GetEntity():SetModelScale(1) end
-	TankButton.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "tank_l4d")  LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") ClassFrame:Close()  end
+	TankButton.DoClick = function()  RunConsoleCommand("changeclass", "tank_l4d")  LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") ClassFrame:Close()  end
 
 	local BoomerButton = vgui.Create("DButton", ClassFrame)
 	BoomerButton:SetSize(100, 30)
 	BoomerButton:SetPos(100, 35)
 	BoomerButton:SetText("Boomer") --Set the name of the button
 	BoomerButton.OnCursorEntered = function() icon:SetModel( "models/infected/boomer.mdl" ) icon2:GetEntity():SetParent(icon:GetEntity()) icon2:GetEntity():AddEffects(EF_BONEMERGE) local dance = icon:GetEntity():LookupSequence( "Idle_Standing" ) icon:GetEntity():SetSequence( dance ) icon:GetEntity():SetModelScale(1) end
-	BoomerButton.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "boomer") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") end
+	BoomerButton.DoClick = function()  RunConsoleCommand("changeclass", "boomer") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") end
 	
 	local L4DZombie = vgui.Create("DButton", ClassFrame)
 	L4DZombie:SetSize(100, 30)
 	L4DZombie:SetPos(200, 35)
 	L4DZombie:SetText("Smoker") --Set the name of the button
-	L4DZombie.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "smoker") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM")end
+	L4DZombie.DoClick = function()  RunConsoleCommand("changeclass", "smoker") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM")end
 	
 	L4DZombie.OnCursorEntered = function() icon:SetModel( "models/infected/smoker.mdl" ) icon2:GetEntity():SetParent(icon:GetEntity()) icon2:GetEntity():AddEffects(EF_BONEMERGE)icon2:GetEntity():SetModel("models/empty.mdl")  local dance = icon:GetEntity():LookupSequence( "Idle_Upper_KNIFE" ) icon:GetEntity():SetSequence( dance ) icon:GetEntity():SetModelScale(1) end
 
@@ -1369,28 +1369,28 @@ function L4DClassSelection()
 	Hunter:SetSize(100, 30)
 	Hunter:SetPos(300, 35)
 	Hunter:SetText("Hunter") --Set the name of the button
-	Hunter.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "hunter") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
+	Hunter.DoClick = function()  RunConsoleCommand("changeclass", "hunter") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 	
 	Hunter.OnCursorEntered = function() icon:SetModel( "models/infected/hunter.mdl" ) icon2:GetEntity():SetParent(icon:GetEntity()) icon2:GetEntity():AddEffects(EF_BONEMERGE)icon2:GetEntity():SetModel("models/empty.mdl")  local dance = icon:GetEntity():LookupSequence( "Idle_Upper_KNIFE" ) icon:GetEntity():SetSequence( dance ) icon:GetEntity():SetModelScale(1) end
 	local Charger = vgui.Create("DButton", ClassFrame)
 	Charger:SetSize(100, 30)
 	Charger:SetPos(400, 35)
 	Charger:SetText("Charger") --Set the name of the button
-	Charger.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "charger") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
+	Charger.DoClick = function()  RunConsoleCommand("changeclass", "charger") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 	
 	Charger.OnCursorEntered = function() icon:SetModel( "models/infected/charger.mdl" ) icon2:GetEntity():SetParent(icon:GetEntity()) icon2:GetEntity():AddEffects(EF_BONEMERGE)icon2:GetEntity():SetModel("models/empty.mdl")  local dance = icon:GetEntity():LookupSequence( "charger_run" ) icon:GetEntity():SetSequence( dance ) icon:GetEntity():SetModelScale(1) end
 	local Jockey = vgui.Create("DButton", ClassFrame)
 	Jockey:SetSize(100, 30)
 	Jockey:SetPos(500, 35)
 	Jockey:SetText("Jockey") --Set the name of the button
-	Jockey.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "jockey") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
+	Jockey.DoClick = function()  RunConsoleCommand("changeclass", "jockey") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 	
 	Jockey.OnCursorEntered = function() icon:SetModel( "models/infected/jockey.mdl" ) icon2:GetEntity():SetParent(icon:GetEntity()) icon2:GetEntity():AddEffects(EF_BONEMERGE)icon2:GetEntity():SetModel("models/empty.mdl")  local dance = icon:GetEntity():LookupSequence( "standing_idle" ) icon:GetEntity():SetSequence( dance ) icon:GetEntity():SetModelScale(1) end
 	local Spitter = vgui.Create("DButton", ClassFrame)
 	Spitter:SetSize(100, 30)
 	Spitter:SetPos(600, 35)
 	Spitter:SetText("Spitter") --Set the name of the button
-	Spitter.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "spitter") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
+	Spitter.DoClick = function()  RunConsoleCommand("changeclass", "spitter") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 	
 	Spitter.OnCursorEntered = function() icon:SetModel( "models/infected/spitter.mdl" ) icon2:GetEntity():SetParent(icon:GetEntity()) icon2:GetEntity():AddEffects(EF_BONEMERGE)icon2:GetEntity():SetModel("models/empty.mdl")  local dance = icon:GetEntity():LookupSequence( "standing_idle" ) icon:GetEntity():SetSequence( dance ) icon:GetEntity():SetModelScale(1) end
 
@@ -1481,7 +1481,7 @@ end )
 hook.Add( "PlayerSay", "Class Scout", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass scout" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "scout")
+		 RunConsoleCommand("changeclass", "scout")
 		return false
 	end
 end )
@@ -1489,7 +1489,7 @@ end )
 hook.Add( "PlayerSay", "Class Soldier", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass soldier" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "soldier")
+		 RunConsoleCommand("changeclass", "soldier")
 		return false
 	end
 end )
@@ -1497,7 +1497,7 @@ end )
 hook.Add( "PlayerSay", "Class Pyro", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass pyro" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "pyro")
+		 RunConsoleCommand("changeclass", "pyro")
 		return false
 	end
 end )
@@ -1505,7 +1505,7 @@ end )
 hook.Add( "PlayerSay", "Class Demoman", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass demoman" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "demoman")
+		 RunConsoleCommand("changeclass", "demoman")
 		return false
 	end
 end )
@@ -1513,7 +1513,7 @@ end )
 hook.Add( "PlayerSay", "Class Heavy", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass heavy" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "heavy")
+		 RunConsoleCommand("changeclass", "heavy")
 		return false
 	end
 end )
@@ -1521,7 +1521,7 @@ end )
 hook.Add( "PlayerSay", "Class Engineer", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass engineer" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "engineer")
+		 RunConsoleCommand("changeclass", "engineer")
 		return false
 	end
 end )
@@ -1529,7 +1529,7 @@ end )
 hook.Add( "PlayerSay", "Class Medic", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass medic" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "medic")
+		 RunConsoleCommand("changeclass", "medic")
 		return false
 	end
 end )
@@ -1537,7 +1537,7 @@ end )
 hook.Add( "PlayerSay", "Class Sniper", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass sniper" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "sniper")
+		 RunConsoleCommand("changeclass", "sniper")
 		return false
 	end
 end )
@@ -1545,7 +1545,7 @@ end )
 hook.Add( "PlayerSay", "Class Spy", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass spy" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "spy")
+		 RunConsoleCommand("changeclass", "spy")
 		return false
 	end
 end )
@@ -2057,20 +2057,20 @@ function L4DClassSelection()
 	TankButton:SetPos(10, 35)
 	TankButton:SetText("Tank")
 	TankButton.OnCursorEntered = function() icon:SetModel( "models/infected/hulk.mdl" ) icon2:GetEntity():SetParent(icon:GetEntity()) icon2:GetEntity():AddEffects(EF_BONEMERGE) icon2:GetEntity():SetModel("models/props_debris/concrete_chunk01a.mdl") local dance = icon:GetEntity():LookupSequence( "throw_02" ) icon:GetEntity():SetSequence( dance ) icon:GetEntity():SetModelScale(0.865) end
-	TankButton.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "tank")  LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") ClassFrame:Close()  end
+	TankButton.DoClick = function()  RunConsoleCommand("changeclass", "tank")  LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") ClassFrame:Close()  end
 
 	local BoomerButton = vgui.Create("DButton", ClassFrame)
 	BoomerButton:SetSize(100, 30)
 	BoomerButton:SetPos(100, 35)
 	BoomerButton:SetText("Boomer") --Set the name of the button
 	BoomerButton.OnCursorEntered = function() icon:SetModel( "models/infected/boomer_l4d.mdl" ) icon2:GetEntity():SetParent(icon:GetEntity()) icon2:GetEntity():AddEffects(EF_BONEMERGE) local dance = icon:GetEntity():LookupSequence( "Run_Upper_KNIFE" ) icon:GetEntity():SetSequence( dance ) icon:GetEntity():SetModelScale(0.865) end
-	BoomerButton.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "boomer") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") end
+	BoomerButton.DoClick = function()  RunConsoleCommand("changeclass", "boomer") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") end
 	
 	local L4DZombie = vgui.Create("DButton", ClassFrame)
 	L4DZombie:SetSize(100, 30)
 	L4DZombie:SetPos(190, 35)
 	L4DZombie:SetText("Male Zombie") --Set the name of the button
-	L4DZombie.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "l4d_zombie") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
+	L4DZombie.DoClick = function()  RunConsoleCommand("changeclass", "l4d_zombie") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 	
 	L4DZombie.OnCursorEntered = function() icon:SetModel( "models/cpthazama/l4d1/common/male_01.mdl" ) icon2:GetEntity():SetParent(icon:GetEntity()) icon2:GetEntity():AddEffects(EF_BONEMERGE)icon2:GetEntity():SetModel("models/empty.mdl")  local dance = icon:GetEntity():LookupSequence( "Run_01" ) icon:GetEntity():SetSequence( dance ) icon:GetEntity():SetModelScale(0.865) end
 
@@ -2223,7 +2223,7 @@ local ScoutButton = vgui.Create("DButton", ClassFrame)
 ScoutButton:SetSize(100, 30)
 ScoutButton:SetPos(10, 35)
 ScoutButton:SetText("Scout")
-ScoutButton.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "scout") surface.PlaySound( "/music/class_menu_01.wav" ) ClassFrame:Close()  end
+ScoutButton.DoClick = function()  RunConsoleCommand("changeclass", "scout") surface.PlaySound( "/music/class_menu_01.wav" ) ClassFrame:Close()  end
 if (IsMounted("left4dead2")) then
 	local L4DButton = vgui.Create("DButton", ClassFrame)
 	L4DButton:SetSize(100, 30)
@@ -2235,50 +2235,49 @@ local SoldierButton = vgui.Create("DButton", ClassFrame)
 SoldierButton:SetSize(100, 30)
 SoldierButton:SetPos(100, 35)
 SoldierButton:SetText("Soldier") --Set the name of the button
-SoldierButton.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "soldier") surface.PlaySound( "/music/class_menu_02.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM")	end
+SoldierButton.DoClick = function()  RunConsoleCommand("changeclass", "soldier") surface.PlaySound( "/music/class_menu_02.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM")	end
 
 local PyroButton = vgui.Create("DButton", ClassFrame)
 PyroButton:SetSize(100, 30)
 PyroButton:SetPos(190, 35)
 PyroButton:SetText("Pyro") --Set the name of the button
-PyroButton.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "pyro") surface.PlaySound( "/music/class_menu_03.wav" ) ClassFrame:Close()  if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
+PyroButton.DoClick = function()  RunConsoleCommand("changeclass", "pyro") surface.PlaySound( "/music/class_menu_03.wav" ) ClassFrame:Close()  if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 
 local DemomanButton = vgui.Create("DButton", ClassFrame)
 DemomanButton:SetSize(100, 30)
 DemomanButton:SetPos(280, 35)
 DemomanButton:SetText("Demoman") --Set the name of the button
-DemomanButton.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "demoman") surface.PlaySound( "/music/class_menu_04.wav" ) ClassFrame:Close()  if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
+DemomanButton.DoClick = function()  RunConsoleCommand("changeclass", "demoman") surface.PlaySound( "/music/class_menu_04.wav" ) ClassFrame:Close()  if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 
 local HeavyButton = vgui.Create("DButton", ClassFrame)
 HeavyButton:SetSize(100, 30)
 HeavyButton:SetPos(370, 35)
 HeavyButton:SetText("Heavy") --Set the name of the button
-HeavyButton.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "heavy") surface.PlaySound( "/music/class_menu_05.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
+HeavyButton.DoClick = function()  RunConsoleCommand("changeclass", "heavy") surface.PlaySound( "/music/class_menu_05.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 
 local EngineerButton = vgui.Create("DButton", ClassFrame)
 EngineerButton:SetSize(100, 30)
 EngineerButton:SetPos(460, 35)
 EngineerButton:SetText("Engineer") --Set the name of the button
-EngineerButton.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "engineer") surface.PlaySound( "/music/class_menu_06.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
+EngineerButton.DoClick = function()  RunConsoleCommand("changeclass", "engineer") surface.PlaySound( "/music/class_menu_06.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 
 local MedicButton = vgui.Create("DButton", ClassFrame)
 MedicButton:SetSize(100, 30)
 MedicButton:SetPos(550, 35)
 MedicButton:SetText("Medic") --Set the name of the button
-MedicButton.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "medic") surface.PlaySound( "/music/class_menu_07.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
+MedicButton.DoClick = function()  RunConsoleCommand("changeclass", "medic") surface.PlaySound( "/music/class_menu_07.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 
 local SniperButton = vgui.Create("DButton", ClassFrame)
 SniperButton:SetSize(100, 30)
 SniperButton:SetPos(640, 35)
 SniperButton:SetText("Sniper") --Set the name of the button
-SniperButton.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "sniper") surface.PlaySound( "/music/class_menu_08.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
+SniperButton.DoClick = function()  RunConsoleCommand("changeclass", "sniper") surface.PlaySound( "/music/class_menu_08.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 
 local SpyButton = vgui.Create("DButton", ClassFrame)
 SpyButton:SetSize(100, 30)
 SpyButton:SetPos(730, 35)
 SpyButton:SetText("Spy") --Set the name of the button
-SpyButton.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "spy") surface.PlaySound( "/music/class_menu_09.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
-
+SpyButton.DoClick = function()  RunConsoleCommand("changeclass", "spy") surface.PlaySound( "/music/class_menu_09.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 
 ScoutButton.OnCursorEntered = function() 
 	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1) then
@@ -2384,7 +2383,7 @@ HeavyButton.OnCursorEntered = function()
 	icon:GetEntity():SetSequence( dance ) 
 	icon:GetEntity():SetModelScale(0.865) 
 end
-EngineerButton.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "engineer") surface.PlaySound( "/music/class_menu_06.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
+EngineerButton.DoClick = function()  RunConsoleCommand("changeclass", "engineer") surface.PlaySound( "/music/class_menu_06.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 
 EngineerButton.OnCursorEntered = function() 
 
@@ -2407,7 +2406,7 @@ EngineerButton.OnCursorEntered = function()
 	icon:GetEntity():SetSequence( dance ) 
 	icon:GetEntity():SetModelScale(0.865) 
 end
-MedicButton.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "medic") surface.PlaySound( "/music/class_menu_07.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
+MedicButton.DoClick = function()  RunConsoleCommand("changeclass", "medic") surface.PlaySound( "/music/class_menu_07.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 
 MedicButton.OnCursorEntered = function() 
 
@@ -2430,7 +2429,7 @@ MedicButton.OnCursorEntered = function()
 	icon:GetEntity():SetSequence( dance ) 
 	icon:GetEntity():SetModelScale(0.865) 
 end
-SniperButton.DoClick = function() RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "sniper") surface.PlaySound( "/music/class_menu_08.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
+SniperButton.DoClick = function()  RunConsoleCommand("changeclass", "sniper") surface.PlaySound( "/music/class_menu_08.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 
 SniperButton.OnCursorEntered = function() 
 
@@ -2515,7 +2514,7 @@ if (!GetConVar("tf_disable_fun_classes"):GetBool()) then
 	GmodButton:SetSize(100, 30)
 	GmodButton:SetPos(366, 70)
 	GmodButton:SetText("GMod Player") --Set the name of the button
-	GmodButton.DoClick = function() RunConsoleCommand("changeclass", "gmodplayer") RunConsoleCommand("cl_wpn_sway_interp","0.1") ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM")  end
+	GmodButton.DoClick = function() RunConsoleCommand("changeclass", "gmodplayer")  ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM")  end
 	GmodButton.OnCursorEntered = function() 
 		icon2:GetEntity():SetModel("models/weapons/w_crowbar.mdl") if LocalPlayer():IsHL2() then icon:SetModel( LocalPlayer():GetModel() ) else icon:SetModel(player_manager.TranslatePlayerModel(GetConVar("cl_playermodel"):GetString())) end  icon2:GetEntity():SetParent(icon:GetEntity()) icon2:GetEntity():AddEffects(EF_BONEMERGE) LocalPlayer():EmitSound( "/music/class_menu_07db.wav", 100, 100, 1, CHAN_VOICE ) local dance = icon:GetEntity():LookupSequence( "run_melee" ) icon:GetEntity():SetSequence( dance ) icon:GetEntity():SetModelScale(0.865) icon:GetEntity():SetPoseParameter("move_x",1)  
 	end 
@@ -2895,7 +2894,7 @@ end )
 hook.Add( "PlayerSay", "Class Scout", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass scout" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "scout")
+		 RunConsoleCommand("changeclass", "scout")
 		return false
 	end
 end )
@@ -2903,7 +2902,7 @@ end )
 hook.Add( "PlayerSay", "Class Soldier", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass soldier" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "soldier")
+		 RunConsoleCommand("changeclass", "soldier")
 		return false
 	end
 end )
@@ -2911,7 +2910,7 @@ end )
 hook.Add( "PlayerSay", "Class Pyro", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass pyro" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "pyro")
+		 RunConsoleCommand("changeclass", "pyro")
 		return false
 	end
 end )
@@ -2919,7 +2918,7 @@ end )
 hook.Add( "PlayerSay", "Class Demoman", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass demoman" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "demoman")
+		 RunConsoleCommand("changeclass", "demoman")
 		return false
 	end
 end )
@@ -2927,7 +2926,7 @@ end )
 hook.Add( "PlayerSay", "Class Heavy", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass heavy" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "heavy")
+		 RunConsoleCommand("changeclass", "heavy")
 		return false
 	end
 end )
@@ -2935,7 +2934,7 @@ end )
 hook.Add( "PlayerSay", "Class Engineer", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass engineer" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "engineer")
+		 RunConsoleCommand("changeclass", "engineer")
 		return false
 	end
 end )
@@ -2943,7 +2942,7 @@ end )
 hook.Add( "PlayerSay", "Class Medic", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass medic" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "medic")
+		 RunConsoleCommand("changeclass", "medic")
 		return false
 	end
 end )
@@ -2951,7 +2950,7 @@ end )
 hook.Add( "PlayerSay", "Class Sniper", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass sniper" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "sniper")
+		 RunConsoleCommand("changeclass", "sniper")
 		return false
 	end
 end )
@@ -2959,7 +2958,7 @@ end )
 hook.Add( "PlayerSay", "Class Spy", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass spy" ) then
-		RunConsoleCommand("cl_wpn_sway_interp","0.0") RunConsoleCommand("changeclass", "spy")
+		 RunConsoleCommand("changeclass", "spy")
 		return false
 	end
 end )

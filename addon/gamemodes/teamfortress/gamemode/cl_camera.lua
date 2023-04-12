@@ -67,12 +67,12 @@ hook.Add("CreateMove", "TauntMove", function(cmd)
 	local s = SensitivityMultiplier * sensitivity:GetFloat()
 	taunt_angles.pitch = taunt_angles.pitch	+ cmd:GetMouseY() * GetConVar("m_pitch"):GetFloat()
 	taunt_angles.yaw = taunt_angles.yaw		- cmd:GetMouseX() * GetConVar("m_yaw"):GetFloat()
-	if LocalPlayer():GetNWBool("Taunting") then
+	if LocalPlayer():GetNWBool("Taunting") or LocalPlayer():IsPlayingTaunt() then
 		if lockangle == nil then
 			lockangle = taunt_angles * 1
 		end
 
-		if (LocalPlayer():GetPlayerClass() != "tank_l4d") then
+		if (LocalPlayer():GetPlayerClass() != "tank_l4d" and !LocalPlayer():IsPlayingTaunt()) then
 			cmd:SetViewAngles(lockangle)
 		end
 		cmd:ClearButtons()
@@ -164,8 +164,12 @@ hook.Add("CalcView", "TFCalcView", function(pl, pos, ang, fov)
 	if not IsValid(pl) then
 		return
 	end
-	
 	if IsValid(GetViewEntity()) and GetViewEntity() ~= pl then
+		return
+	end
+	--------------------------------------------------------------------------------------------
+	-- THIRD PERSON
+	if not pl.IsThirdperson and not tf_thirdperson:GetBool() and not pl:IsPlayingTaunt() then
 		return
 	end
 	--------------------------------------------------------------------------------------------
@@ -242,13 +246,6 @@ hook.Add("CalcView", "TFCalcView", function(pl, pos, ang, fov)
 		
 		pl.DeathCamPos = nil
 		pl.LastDead = false
-	end
-	
-	
-	--------------------------------------------------------------------------------------------
-	-- THIRD PERSON
-	if not pl.IsThirdperson and not tf_thirdperson:GetBool() then
-		return
 	end
 	
 	if pl.SimulatedCamera and pl.CameraAngles then
@@ -346,7 +343,8 @@ function GM:RenderScreenspaceEffects()
 	end
 end
 
-function GM:ShouldDrawLocalPlayer()
+function GM:ShouldDrawLocalPlayer() 
+	if ( LocalPlayer():IsPlayingTaunt() ) then return true end
 	return LocalPlayer().IsThirdperson
 end
 
@@ -364,7 +362,9 @@ function EndThirdperson(immediate)
 		LocalPlayer().NextEndThirdperson = nil
 		LocalPlayer().IsThirdperson = false
 	else
-		LocalPlayer().NextEndThirdperson = CurTime() + ThirdpersonEndDelay
+		if (LocalPlayer().IsThirdperson) then
+			LocalPlayer().NextEndThirdperson = CurTime() + ThirdpersonEndDelay
+		end
 	end
 end
 
@@ -379,7 +379,9 @@ end)
 
 net.Receive("DeActivateTauntCam", function()
 	if LocalPlayer().FirstReality == true then return end
-	LocalPlayer().NextEndThirdperson = CurTime() + ThirdpersonEndDelay
+	if (LocalPlayer().IsThirdperson) then
+		LocalPlayer().NextEndThirdperson = CurTime() + ThirdpersonEndDelay
+	end
 end)
 
 function StartSimulatedCamera()

@@ -5,6 +5,7 @@ local allowedtaunts = {
 	"2",
 	"3",	
 	"4",
+	"5"
 }
 
 rockpaperscissors = {
@@ -721,6 +722,12 @@ function meta:TFTaunt(args)
 			elseif table.KeyFromValue(allowedtaunts,args[1]) == 4 then
 				ply:SelectWeapon(ply:GetWeapons()[3]:GetClass())
 				ply:DoAnimationEvent(ACT_DOD_SPRINT_AIM_SPADE, true)
+			elseif ply:GetActiveWeapon():GetClass() == "weapon_physcannon" then
+				ply:SelectWeapon("weapon_physcannon")
+				ply:DoAnimationEvent(ACT_DOD_HS_CROUCH_KNIFE, true)
+			elseif ply:GetActiveWeapon():GetClass() == "weapon_physgun" then
+				ply:SelectWeapon("weapon_physgun")
+				ply:DoAnimationEvent(ACT_DOD_HS_CROUCH_KNIFE, true)
 			end		
 		end
 		ply:Speak("TLK_PLAYER_TAUNT")

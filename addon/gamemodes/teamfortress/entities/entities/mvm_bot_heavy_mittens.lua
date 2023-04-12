@@ -7,7 +7,7 @@ ENT.Spawnable = false
 ENT.AdminOnly = false
 ENT.IsBoss = false
 ENT.PrintName		= "Heavy Mittens"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TF2: MVM Bots" 
 ENT.Items = {"Holiday Punch","All-Father","Point and Shoot"}
 ENT.PreferredIcon = "hud/leaderboard_class_heavy_mittens"
 

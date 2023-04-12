@@ -93,6 +93,7 @@ local function LeadBot_S_Add_Zombie(team,class,pos,ent)
 			elseif (string.find(class,"demoknight")) then
 				class = "demo"
 			end
+			ent:CustomOnInitialize(npc)
 		end
 	end)
 
@@ -191,7 +192,6 @@ function ENT:Initialize()
 						elseif (npc.playerclass == "Heavy") then
 							npc:EmitSound("MVM.GiantHeavyLoop")
 						end	
-						self:CustomOnInitialize(npc)
 					end)
 				end
 				

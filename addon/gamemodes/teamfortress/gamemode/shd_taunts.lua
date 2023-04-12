@@ -342,7 +342,7 @@ end)
 
 concommand.Add("tf_taunt_laugh", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -374,7 +374,7 @@ concommand.Add("tf_taunt_laugh", function(ply)
 end)
 concommand.Add("tf_taunt_woohoo", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 	if ply:GetPlayerClass() != "demoman" then ply:ChatPrint("You're not demoman!") return end
@@ -416,7 +416,7 @@ concommand.Add("tf_taunt_woohoo", function(ply)
 end)
 concommand.Add("tf_taunt_rip_rick_may_you_will_be_forever_missed", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 	if ply:GetPlayerClass() != "soldier" then ply:ChatPrint("You're not Soldier!") return end
@@ -458,7 +458,7 @@ concommand.Add("tf_taunt_rip_rick_may_you_will_be_forever_missed", function(ply)
 end)
 concommand.Add("tf_taunt_disco", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -545,7 +545,7 @@ concommand.Add("tf_taunt_conga_stop", function(ply)
 end)
 concommand.Add("tf_taunt_russian_start", function(ply)
 	if ply:GetNWBool("Taunting2") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -589,7 +589,7 @@ concommand.Add("tf_taunt_banjo_start", function(ply)
 	if ply:GetNWBool("Taunting2") == true then return end
 	if ply:GetNWBool("Taunting2") == true then return end
 	if ply:GetPlayerClass() != "engineer" then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -623,7 +623,7 @@ concommand.Add("tf_taunt_chair", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
 	if ply:GetNWBool("Taunting2") == true then return end
 	if ply:GetPlayerClass() != "spy" then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -656,7 +656,7 @@ concommand.Add("tf_taunt_weight", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
 	if ply:GetNWBool("Taunting2") == true then return end
 	if ply:GetPlayerClass() != "heavy" then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -696,7 +696,7 @@ concommand.Add("tf_taunt_chair2", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
 	if ply:GetNWBool("Taunting2") == true then return end
 	if ply:GetPlayerClass() != "engineer" then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -769,7 +769,7 @@ concommand.Add("tf_taunt_pyro_partytrick", function(ply)
 	if ply:GetNWBool("Taunting2") == true then return end
 	if ply:GetNWBool("Taunting2") == true then return end
 	if ply:GetPlayerClass() != "pyro" then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -808,7 +808,7 @@ end)
 
 
 concommand.Add("tf_taunt_introduction", function(ply)
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -894,7 +894,7 @@ concommand.Add("tf_taunt_chair2_stop", function(ply)
 end)
 concommand.Add("tf_taunt_thriller", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -915,7 +915,7 @@ concommand.Add("tf_taunt_thriller", function(ply)
 end)
 concommand.Add("tf_taunt_directors_vision", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 	local act = ACT_BARNACLE_PULL
@@ -923,13 +923,17 @@ concommand.Add("tf_taunt_directors_vision", function(ply)
 	local time = ply:PlayScene("scenes/player/"..ply:GetPlayerClass().."/low/taunt_replay.vcd", 0)
 	if (ply:GetPlayerClass() == "pyro") then
 		if (math.random(1,3) == 2) then
-			local time = ply:PlayScene("scenes/player/pyro/low/taunt_replay2.vcd", 0)
-			ply:DoTauntEvent(ply:LookupSequence("pyro_taunt_replay2"), true)
+			time = ply:PlayScene("scenes/player/pyro/low/taunt_replay2.vcd", 0)
+			ply:DoAnimationEvent(ply:LookupSequence("pyro_taunt_replay2"))
 		else
-			ply:DoTauntEvent(ply:LookupSequence("pyro_taunt_replay2"), true)
+			ply:DoAnimationEvent(ply:LookupSequence("pyro_taunt_replay"))
 		end
 	else
-		ply:DoTauntEvent(ply:LookupSequence("heavy_taunt_replay"), true)
+		if (ply:LookupSequence(ply:GetPlayerClass().."_taunt_replay") == -1) then
+			ply:DoAnimationEvent(ply:LookupSequence("taunt_replay"))
+		else
+			ply:DoAnimationEvent(ply:LookupSequence(ply:GetPlayerClass().."_taunt_replay"))
+		end
 	end
 	ply:SetNWBool("Taunting", true)
 	ply:SetNWBool("NoWeapon", true)
@@ -945,7 +949,7 @@ concommand.Add("tf_taunt_directors_vision", function(ply)
 end)
 concommand.Add("tf_taunt_yeti", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -1028,7 +1032,7 @@ concommand.Add("tf_taunt_yeti", function(ply)
 end)
 concommand.Add("tf_taunt_yetipunch", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -1049,7 +1053,7 @@ concommand.Add("tf_taunt_yetipunch", function(ply)
 end)
 concommand.Add("tf_taunt_highfive", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if ply:WaterLevel() ~= 0 then return end
 
 	if ply:GetInfoNum("tf_giantrobot", 0) == 1 then ply:ChatPrint("You can't taunt as a mighty robot!") return end
@@ -1133,7 +1137,7 @@ concommand.Add("tf_taunt_highfive", function(ply)
 end)
 concommand.Add("tf_taunt_highfive_fail", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if ply:WaterLevel() ~= 0 then return end
 
 	if ply:GetInfoNum("tf_giantrobot", 0) == 1 then ply:ChatPrint("You can't taunt as a mighty robot!") return end
@@ -1217,7 +1221,7 @@ concommand.Add("tf_taunt_highfive_fail", function(ply)
 end)
 concommand.Add("tf_taunt_skullcracker", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -1260,7 +1264,7 @@ concommand.Add("tf_taunt_skullcracker", function(ply)
 end)
 concommand.Add("tf_taunt_robot_stun", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 	if ply:GetInfoNum("tf_robot", 0) == 0 and ply:GetInfoNum("tf_giantrobot", 0) == 0 then ply:ChatPrint("You can't use this command as a human!") return end
@@ -1362,7 +1366,7 @@ concommand.Add("tf_stun_me", function(ply)
 end)
 concommand.Add("tf_taunt_flipping_start", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -1404,7 +1408,7 @@ concommand.Add("tf_taunt_flipping_start", function(ply)
 end)
 concommand.Add("tf_taunt_heroric", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 	if ply:GetPlayerClass() != "medic" then 
@@ -1430,7 +1434,7 @@ concommand.Add("tf_taunt_heroric", function(ply)
 end)
 concommand.Add("tf_taunt_highfive_success", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -1497,7 +1501,7 @@ concommand.Add("tf_taunt_highfive_success", function(ply)
 end)
 concommand.Add("tf_taunt_squaredance", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -1539,7 +1543,7 @@ concommand.Add("tf_taunt_squaredance", function(ply)
 end)
 concommand.Add("tf_taunt_squaredance_intro", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -1601,7 +1605,7 @@ concommand.Add("tf_taunt_squaredance_intro", function(ply)
 end)
 concommand.Add("tf_taunt_flipping_intro", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -1675,7 +1679,7 @@ concommand.Add("tf_taunt_flipping_intro", function(ply)
 end)
 concommand.Add("tf_taunt_squaredance_intro", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -1737,7 +1741,7 @@ concommand.Add("tf_taunt_squaredance_intro", function(ply)
 end)
 concommand.Add("tf_taunt_rockpaperscissors_intro", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -1980,7 +1984,7 @@ concommand.Add("tf_taunt_rockpaperscissors_intro_stop", function(ply)
 end)
 concommand.Add("tf_taunt_rockpaperscissors", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -2025,7 +2029,7 @@ concommand.Add("tf_taunt", function(ply,cmd,args)
 end)
 concommand.Add("tf_taunt_scary", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -2046,7 +2050,7 @@ concommand.Add("tf_taunt_scary", function(ply)
 end)
 concommand.Add("tf_taunt_drg", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 	local time = CurTime() + 3.5
@@ -2085,7 +2089,7 @@ concommand.Add("tf_taunt_drg", function(ply)
 end)
 concommand.Add("tf_taunt_drg_spawn", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 	local time = CurTime() + 3.5
@@ -2131,7 +2135,7 @@ concommand.Add("tf_taunt_drg_spawn", function(ply)
 end)
 concommand.Add("tf_taunt_scary_demo", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
@@ -2152,7 +2156,7 @@ concommand.Add("tf_taunt_scary_demo", function(ply)
 end)
 concommand.Add("tf_taunt_brutallegend", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
-	if ply:IsHL2() then ply:ConCommand("act laugh") return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
 
