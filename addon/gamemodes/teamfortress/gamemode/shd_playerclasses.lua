@@ -177,6 +177,12 @@ function meta:SetPlayerClass(class)
 		for k,v in ipairs(c.Loadout or {}) do
 			self:Give(v)
 		end
+		if (self:GetInfoNum("tf_give_hl2_weapons",0) == 1) then
+			self:Give("weapon_physgun")
+			self:Give("weapon_physcannon")
+			self:Give("gmod_tool")
+			self:Give("gmod_camera")
+		end
 	end
 	
 	self:ResetHealth()

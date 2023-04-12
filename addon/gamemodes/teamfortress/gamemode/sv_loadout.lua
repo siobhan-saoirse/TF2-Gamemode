@@ -25,6 +25,21 @@ function meta:GiveLoadout()
             --self:ConCommand("__svgiveitem", itemname) --id)
         end
     end
+
+
+    timer.Simple(0.3, function()
+    
+		if (!self:IsL4D()) then
+		
+			if (self:GetInfoNum("tf_give_hl2_weapons",0) == 1) then
+				self:Give("weapon_physgun")
+				self:Give("weapon_physcannon")
+				self:Give("gmod_tool")
+				self:Give("gmod_camera")
+			end
+				
+		end
+    end)
 end
 
 concommand.Add("loadout_update", function(ply)

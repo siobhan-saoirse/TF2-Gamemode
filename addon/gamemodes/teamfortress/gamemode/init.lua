@@ -2370,6 +2370,16 @@ function GM:PlayerSpawn(ply)
 		timer.Simple(0.1, function()
 		
 			ply:GiveLoadout()
+			if (!ply:IsHL2() and !ply:IsL4D()) then
+		
+				if (ply:GetInfoNum("tf_give_hl2_weapons",0) == 1) then
+					ply:Give("weapon_physgun")
+					ply:Give("weapon_physcannon")
+					ply:Give("gmod_tool")
+					ply:Give("gmod_camera")
+				end
+				
+			end
 		
 		end)
 	end
@@ -2380,6 +2390,7 @@ function GM:PlayerSpawn(ply)
 	net.Start("TF_PlayerSpawn")
 	net.WriteEntity(ply)
 	net.Broadcast()
+
 end
 
 function GM:PlayerSetHandsModel( ply, ent )
