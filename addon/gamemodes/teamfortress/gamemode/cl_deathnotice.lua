@@ -69,7 +69,11 @@ usermessage.Hook("Notice_EntityKilledEntity", function(msg)
 		local cooperator_team = msg:ReadShort()
 		local cooperator_id = msg:ReadShort()
 
-		GAMEMODE:AddDeathNotice( attacker_name, attacker_team, string.Replace(string.Replace(TranslateKilliconName(inflictor),"d_",""),"hl_","weapon_"), victim_name, victim_team )
+		if (LocalPlayer():GetPlayerClass() == "gmodplayer" and !string.StartWith(inflictor,"weapon_") && !string.find(inflictor,"grenade_") && !string.find(inflictor,"npc_") && !string.find(inflictor,"monster_") && !string.find(inflictor,"prop_") && !string.find(inflictor,"combine_mine")) then
+			GAMEMODE:AddDeathNotice( attacker_name, attacker_team, inflictor, victim_name, victim_team )
+		else
+			GAMEMODE:AddDeathNotice( attacker_name, attacker_team, string.Replace(string.Replace(TranslateKilliconName(inflictor),"d_",""),"hl_","weapon_"), victim_name, victim_team )
+		end
 	else
 		local pid = LocalPlayer():UserID()
 		

@@ -383,10 +383,14 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		if attacker~=ent and attacker:IsTFPlayer() and attacker:IsFriendly(ent) and !GetConVar("mp_friendlyfire"):GetBool() then
 			dmginfo:SetDamageType(DMG_GENERIC)
 			dmginfo:SetDamage(0)
-			ent:SetBloodColor(DONT_BLEED)
+			if (ent:IsPlayer()) then
+				ent:SetBloodColor(DONT_BLEED)
+			end
 			return
 		else
-			ent:SetBloodColor(BLOOD_COLOR_RED)
+			if (ent:IsPlayer()) then
+				ent:SetBloodColor(BLOOD_COLOR_RED)
+			end
 		end
 	end
 
