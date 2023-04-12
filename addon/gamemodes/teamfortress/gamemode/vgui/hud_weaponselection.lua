@@ -167,7 +167,7 @@ function PANEL:UpdateLoadout()
 
 		if slot and not v.Hidden then
 			if (!string.find(v:GetClass(),"tf_weapon")) then
-				if (LocalPlayer:GetPlayerClass() == "spy") then
+				if (LocalPlayer():GetPlayerClass() == "spy") then
 					slot = 4 + slot
 				elseif (LocalPlayer():GetPlayerClass() == "engineer") then
 					slot = 5 + slot
