@@ -167,7 +167,13 @@ function PANEL:UpdateLoadout()
 
 		if slot and not v.Hidden then
 			if (!string.find(v:GetClass(),"tf_weapon")) then
-				slot = 3 + slot
+				if (LocalPlayer:GetPlayerClass() == "spy") then
+					slot = 4 + slot
+				elseif (LocalPlayer():GetPlayerClass() == "engineer") then
+					slot = 5 + slot
+				else
+					slot = 3 + slot
+				end
 			end
 			loadout[slot+1] = {
 				class=v:GetClass(),
