@@ -399,8 +399,9 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	--Msg(tostring(ent).." - "..tostring(dmginfo).." > Received damage : "..dmginfo:GetDamage().."  Attacker : "..tostring(attacker).."\n")
 	-- No damage from fire, as we are using a custom fire system
 	if (inflictor:GetClass()=="entityflame" and ent:IsNPC()) then
-		dmginfo:SetDamageType(DMG_GENERIC)
-		dmginfo:ScaleDamage(0)
+		if (IsValid(ent:GetEnemy())) then
+			dmginfo:SetAttacker(ent:GetEnemy())
+		end
 	elseif inflictor:GetClass()=="entityflame" and ent:IsPlayer() then
 		dmginfo:SetDamageType(DMG_GENERIC)
 	end
