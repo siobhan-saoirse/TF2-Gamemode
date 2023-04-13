@@ -261,13 +261,33 @@ concommand.Add("open_charinfo_direct", function(_, _, args)
 		classmodel:GetEntity().Weapon:SetParent(classmodel:GetEntity())
         classmodel:GetEntity().Weapon:AddEffects(EF_BONEMERGE)
 	end
-    local hat1 = vgui.Create("DButton", frame)
-    hat1:SetSize(150, 80)
-    hat1:SetText("")
+    local hat1 = vgui.Create("DImageButton", frame)
+    hat1:SetSize(128, 128)
+    hat1:SetText("Open Hat Menu")
     hat1:SetTextColor(Color(255, 255, 0))
-    hat1:SetPos(305, 80)
+    hat1:SetPos(305, 35)
+    hat1:SetImage( "backpack/player/items/spy/firesuit" )
     hat1.DoClick = function(self) surface.PlaySound("ui/buttonclick.wav") hatSelector("hat") end
 	hat1.OnCursorEntered = function()
+		classmodel:GetEntity():SetSequence("competitive_loserstate_idle")    
+        classmodel:GetEntity().Weapon:SetNoDraw(true)        
+	end
+    local hat2 = vgui.Create("DImageButton", frame)
+    hat2:SetSize(128, 128)
+    hat2:SetText("Open Taunt Menu")
+    hat2:SetTextColor(Color(255, 255, 0))
+    hat2:SetPos(305, 120)
+    hat2:SetImage( "backpack/player/items/all_class/taunt_russian_large" )
+    hat2.DoClick = function(self) 
+        
+        frame.OnClose = function(self)
+
+        end
+        frame:Close()
+        surface.PlaySound("ui/buttonclick.wav") 
+        RunConsoleCommand("open_taunt_menu") 
+    end
+	hat2.OnCursorEntered = function()
 		classmodel:GetEntity():SetSequence("competitive_loserstate_idle")    
         classmodel:GetEntity().Weapon:SetNoDraw(true)        
 	end
@@ -296,11 +316,6 @@ concommand.Add("open_charinfo_direct", function(_, _, args)
                             if wep.image_inventory then
                                 weapon3.icon = surface.GetTextureID(wep.image_inventory)
                             end
-                        elseif wep.id == tonumber(loadout[4]) then
-                            hat1.text = name
-                            if wep.image_inventory then
-                                hat1.icon = surface.GetTextureID(wep.image_inventory)
-                            end
                         end
                     end
                 end
@@ -322,11 +337,6 @@ concommand.Add("open_charinfo_direct", function(_, _, args)
                             weapon3.text = name
                             if wep.image_inventory then
                                 weapon3.icon = surface.GetTextureID(wep.image_inventory)
-                            end
-                        elseif wep.id == tonumber(loadout[4]) then
-                            hat1.text = name
-                            if wep.image_inventory then
-                                hat1.icon = surface.GetTextureID(wep.image_inventory)
                             end
                         end
                     end
@@ -360,7 +370,6 @@ concommand.Add("open_charinfo_direct", function(_, _, args)
         weapon1.Paint = paintf
         weapon2.Paint = paintf
         weapon3.Paint = paintf
-        hat1.Paint = paintf
     end
 end)
 
