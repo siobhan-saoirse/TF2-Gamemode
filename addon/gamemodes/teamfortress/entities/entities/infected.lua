@@ -378,7 +378,7 @@ function ENT:HaveEnemy()
 				return false
 			end
 		-- If the enemy is dead( we have to check if its a player before we use Alive() )
-		elseif ( self:GetEnemy():IsTFPlayer() and (GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_SPECTATOR or GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_FRIENDLY or self:GetEnemy():Health() < 0 or self:GetEnemy():IsFlagSet(FL_NOTARGET)) ) then
+		elseif ( self:GetEnemy():IsTFPlayer() and (GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_SPECTATOR or GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_FRIENDLY or self:GetEnemy():Health() < 1 or self:GetEnemy():IsFlagSet(FL_NOTARGET)) ) then
 			if (math.random(1,2) == 1) then
 				return self:FindEnemy()
 			else
@@ -910,7 +910,7 @@ function ENT:Think()
 	if (self:IsOnFire() and !string.find(self:GetModel(),"ceda")) then
 		self:SetSequence( self:LookupSequence("run_onfire") )
 	end
-	if (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 0) then
+	if (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 1) then
 		self:SetEnemy(nil)
 	end
 	if (IsValid(self.Door) and self:IsOnGround() and self.Door:GetPos():Distance(self:GetPos()) < self.AttackRange) then
@@ -1016,7 +1016,7 @@ function ENT:Think()
 				self.loco:SetAcceleration(270)
 			end
 		end
-	elseif (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 0) then
+	elseif (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 1) then
 		self:SetEnemy(nil)
 	elseif (self.ContinueRunning or self:IsOnFire()) then
 		self:SetPlaybackRate(1)

@@ -149,7 +149,7 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 		if not att:CanDamage(ent) then
 			dmginfo:SetDamage(0)
 			dmginfo:SetDamageType(DMG_GENERIC)
-			return true
+			return
 		end
 	end
 
@@ -219,38 +219,8 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 			end
 		end
 	end
+	is_normal_damage = true
 	-- if the entity can receive crits
-	if gamemode.Call("ShouldCrit", ent, inf, att, hitgroup, dmginfo) then
-		if att == ent then
-			-- Self damage, don't scale the damage, but still notify the player that they critted themselves
-			if ent:IsPlayer() and ent.NextSpeak<CurTime() then
-				SendNet("CriticalHitReceived", ent)
-			end
-			dontscaledamage = true
-		else
-			-- Modify the damage
-			dmginfo:ScaleDamage(3 - 1)
-
-			DispatchCritEffect(ent, inf, att, false)
-
-			is_normal_damage = true
-		end
-
-		ent.LastDamageWasCrit = true
-	elseif gamemode.Call("ShouldMiniCrit", ent, inf, att, hitgroup, dmginfo) then
-		local mul
-
-		-- Modify the damage
-		-- (apparently, minicrits don't suffer from damage spread either)
-		dmginfo:ScaleDamage(1.35)
-		
-		DispatchCritEffect(ent, inf, att, true)
-		is_normal_damage = true
-		
-		ent.LastDamageWasCrit = true
-	else
-		dmginfo:ScaleDamage(1)
-	end
 	
 	if is_normal_damage then
 		-- Not a crit, calculate the damage properly here
@@ -266,7 +236,7 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 					if inf.OwnerDamage then
 						damage = inf.BaseDamage * inf.OwnerDamage
 					else
-						dmginfo:SetDamage(inf.BaseDamage * 0.8)
+						dmginfo:SetDamage(inf.BaseDamage)
 					end
 					dmginfo:SetDamageForce(dmginfo:GetDamageForce() * 2)
 				elseif ent.IsTFBuilding then
@@ -289,14 +259,16 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 				end
 			end
 			
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.01 * damage)
+			--dmginfo:SetDamage(damage)
+			dmginfo:SetDamage(inf.BaseDamage)
 			
 		elseif dmginfo:IsBulletDamage() and (inf:IsWeapon() or inf.IsTFBuilding) then
 			if (inf.IsTFWeapon or inf.IsTFBuilding) and inf.CalculateDamage then
 				-- Bullet damage inflicted from a TF2 weapon
 				local damage = inf:CalculateDamage(dmginfo:GetDamagePosition(), ent)
 				
-				dmginfo:SetDamage(damage)
+				--dmginfo:SetDamage(damage)
+				dmginfo:SetDamage(inf.BaseDamage)
 				dontscaledamage = true
 			else
 				-- Bullet damage inflicted from another weapon
@@ -468,10 +440,44 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (inflictor.BlastForceMultiplier or 1) * BlastForceMultiplier)
 	end
 	
+	if gamemode.Call("ShouldCrit", ent, inflictor, attacker, hitgroup, dmginfo) then
+		if att == ent then
+			-- Self damage, don't scale the damage, but still notify the player that they critted themselves
+			if ent:IsPlayer() and ent.NextSpeak<CurTime() then
+				SendNet("CriticalHitReceived", ent)
+			end
+		else
+			-- Modify the damage
+			dmginfo:ScaleDamage(3)
+
+			if ent:IsPlayer() and ent.NextSpeak<CurTime() then
+				SendNet("CriticalHitReceived", ent)
+			end
+			DispatchCritEffect(ent, inflictor, attacker, false)
+		end
+
+		ent.LastDamageWasCrit = true
+	elseif gamemode.Call("ShouldMiniCrit", ent, inflictor, attacker, hitgroup, dmginfo) then
+		local mul
+
+		if ent:IsPlayer() and ent.NextSpeak<CurTime() then
+			SendNet("CriticalHitReceived", ent)
+		end
+		
+		-- Modify the damage
+		-- (apparently, minicrits don't suffer from damage spread either)
+		dmginfo:ScaleDamage(1.35)
+		
+		DispatchCritEffect(ent, inflictor, attacker, true)
+		
+		ent.LastDamageWasCrit = true
+	else
+		dmginfo:ScaleDamage(1)
+	end
 	if ent:IsTFPlayer() then
 		-- Increased bullet force
 		if dmginfo:IsBulletDamage() then
-			dmginfo:SetDamageForce(dmginfo:GetDamageForce() * BulletForceMultiplier)
+			--dmginfo:SetDamageForce(dmginfo:GetDamageForce() * BulletForceMultiplier)
 		end
 		
 		-- Overexaggerated explosion force

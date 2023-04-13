@@ -7,7 +7,7 @@ PrecacheParticleSystem( "spell_skeleton_goop_green" );
 ENT.Base 			= "npc_tf_zombie"
 ENT.Spawnable		= false
 ENT.AttackDelay = 50
-ENT.AttackDamage = 30
+ENT.AttackDamage = 15
 ENT.AttackRange = 120
 
 local zombie_classes = {
@@ -25,7 +25,9 @@ local zombie_classes = {
 function ENT:Initialize()
 
 	if SERVER then
-		self.playerclass = table.Random(zombie_classes)
+		if (!self.playerclassdefined) then
+			self.playerclass = table.Random(zombie_classes)
+		end
 		self:SetModel( "models/player/"..self.playerclass..".mdl" )
 		if (self.playerclass == "spy") then
 			self:SetSkin(math.random(22,23))
@@ -68,11 +70,24 @@ end
 ----------------------------------------------------
 function ENT:SetEnemy(ent)
 	self.Enemy = ent
+	if (IsValid(ent)) then
+		self:EmitSound("Zombie.Alert")
+	end
 end
 function ENT:GetEnemy()
 	return self.Enemy
 end
 
+function ENT:OnInjured( dmginfo )
+	self:EmitSound("Zombie.Pain")
+end
+function ENT:FireAnimationEvent( pos, ang, event, name )
+	if (event == 6004 or event == 7001) then
+		timer.Simple(0.02, function()
+			self:EmitSound("Zombie.Footstep"..table.Random({"Left","Right"}))
+		end)
+	end
+end
 ----------------------------------------------------
 -- ENT:RunBehaviour()
 -- This is where the meat of our AI is
@@ -116,13 +131,18 @@ function ENT:Think()
 	if SERVER then
 		self:BodyMoveXY()
 	end
-	if (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 0) then
+	if (math.random(1,1500) == 1) then
+		self:EmitSound("Zombie.Idle")
+	end
+	if (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 1) then
 		self:SetEnemy(nil)
 	end
 	if (IsValid(self:GetEnemy()) and self:IsOnGround()) then
 		if (self:GetEnemy():GetPos():Distance(self:GetPos()) < self.AttackRange and self:GetEnemy():Health() > 0) then
 			if (IsValid(self:GetEnemy()) and (!self.MeleeAttackDelay or CurTime() > self.MeleeAttackDelay)) then
 				self.MeleeAttackDelay = CurTime() + 0.8
+				self:EmitSound("Zombie.Attack")
+				self:EmitSound("Zombie.AttackHit")
 				self:AddGesture(ACT_MP_ATTACK_STAND_MELEE,true)
 				local dmginfo = DamageInfo()
 				dmginfo:SetAttacker(self)
@@ -156,7 +176,7 @@ function ENT:Think()
 		end
 		self:AddGesture(ACT_MP_JUMP_LAND_MELEE,true)
 		self.AirwalkAnim = false
-	elseif (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 0) then
+	elseif (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 1) then
 		self:SetEnemy(nil)
 	end
 	self:NextThink(CurTime())
@@ -168,8 +188,12 @@ function ENT:OnKilled( dmginfo )
 
 	local pos = self:GetPos()
 	self:PrecacheGibs()
-	self:BecomeRagdoll(dmginfo)
+	--self:BecomeRagdoll(dmginfo)
+	self:EmitSound("TFPlayer.Decapitated")
+	self:GibBreakServer(dmginfo:GetDamageForce() * 0.01)
+	self:SetNoDraw(true)
 	timer.Simple(0.02, function()
+		self:EmitSound("Zombie.Die")
 		self:Remove()
 	end)
 end

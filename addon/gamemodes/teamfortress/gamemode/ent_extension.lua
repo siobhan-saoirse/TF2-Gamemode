@@ -521,7 +521,7 @@ local function TFBulletCallback(attacker, trace, dmginfo)
 			end
 			
 			if dmg.Critical then
-				tracer = tracer.."_crit"
+				tracer = tracer.."_crit" 
 			end
 			
 			umsg.Start("DoBulletTracer")
@@ -538,13 +538,8 @@ end
 function meta:FireTFBullets(b)
 	self.TempDamageInfo = {
 		BaseDamage = b.Damage,
-		MaxDamageFalloff = b.Falloff,
-		MaxDamageRampUp = b.RampUp,
-		DamageModifier = b.DamageModifier,
-		DamageRandomize = b.DamageRandomize,
 		Src = b.Src,
 		Critical = b.Critical,
-		CritDamageMultiplier = b.CritMultiplier,
 		Tracer = b.Tracer or 1,
 		TracerName = b.TracerName or "bullet_tracer01",
 		Force = b.Force or 1,

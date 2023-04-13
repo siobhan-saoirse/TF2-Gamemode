@@ -33,7 +33,7 @@ function GM:ShouldCrit(ent, inf, att, hitgroup, dmginfo)
 	if dmginfo:GetDamage() == 0 and not inf.ZeroDamageCrits then return false end
 	
 	if att:IsNPC() then
-		if (math.random(1,8) == 1) then
+		if (math.random(1,5) == 1) then
 			return true
 		else
 			return false
@@ -45,6 +45,13 @@ function GM:ShouldCrit(ent, inf, att, hitgroup, dmginfo)
 		return true
 	end
 	
+	-- if it's a headshot for any other gun that isn't from TF2 (also jarated NPCs can't do headshots)
+	if (not inf.IsTFWeapon and not inf.IsTFBuilding) and dmginfo:IsBulletDamage() and hitgroup == HITGROUP_HEAD then
+		if not(att:IsNPC() and att:HasPlayerState(PLAYERSTATE_JARATED)) then
+			return true
+		end
+	end
+
 	return false
 end
 

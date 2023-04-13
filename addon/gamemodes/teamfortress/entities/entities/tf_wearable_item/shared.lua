@@ -119,28 +119,32 @@ end
 
 function ENT:Think()
 	if self.Model and string.find(self.Model,"_zombie") then
-		if (self.Owner:GetPlayerClass() == "spy") then
-			if (self.Owner:Team() == TEAM_BLU) then
-				self.Owner:SetSkin(23)
-				self:SetSkin(1)
+		if (IsValid(self.Owner)) then
+			if (self.Owner:GetPlayerClass() == "spy") then
+				if (self.Owner:Team() == TEAM_BLU) then
+					self.Owner:SetSkin(23)
+					self:SetSkin(1)
+				else
+					self.Owner:SetSkin(22)
+					self:SetSkin(0)
+				end
 			else
-				self.Owner:SetSkin(22)
-				self:SetSkin(0)
-			end
-		else
-			if (self.Owner:Team() == TEAM_BLU) then
-				self.Owner:SetSkin(5)
-				self:SetSkin(1)
-			else
-				self.Owner:SetSkin(4)
-				self:SetSkin(0)
+				if (self.Owner:Team() == TEAM_BLU) then
+					self.Owner:SetSkin(5)
+					self:SetSkin(1)
+				else
+					self.Owner:SetSkin(4)
+					self:SetSkin(0)
+				end
 			end
 		end
 	elseif self.Model then
-		if (self.Owner:Team() == TEAM_BLU) then
-			self:SetSkin(1)
-		else
-			self:SetSkin(0)
+		if (IsValid(self.Owner)) then
+			if (self.Owner:Team() == TEAM_BLU) then
+				self:SetSkin(1)
+			else
+				self:SetSkin(0)
+			end
 		end
 	end
 end

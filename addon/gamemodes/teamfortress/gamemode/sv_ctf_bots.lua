@@ -30,7 +30,7 @@ end
 
 function getNPCsAndPlayers()
 	local npcs = {}
-	if (math.random(1,3) == 1) then
+	if (math.random(1,8) == 1) then
 		for k,v in ipairs(ents.GetAll()) do
 			if (v:IsNPC() or v:IsNextBot()) then
 				if (v:Health() > 0) then
@@ -464,7 +464,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 		end
 	end
 		if (bot.ControllerBot.PosGen != nil) then
-			if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then
+			if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 1) then
 				bot.TargetEnt = nil
 			end
 		end
@@ -475,7 +475,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 	if bot:GetPlayerClass() == "medic" or bot:GetPlayerClass() == "giantmedic" then
 			--print(intel)
 		local targetply = player.GetAll()[1]
-		for k, v in pairs(player.GetAll()) do
+		for k, v in pairs(player.GetBots()) do
 			if v ~= bot and bot:IsFriendly(v) and v:Health() < v:GetMaxHealth() / 2 then
 				targetply = v
 			end
@@ -532,7 +532,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			end
 		end
 	end
-	for k, v in pairs(player.GetAll()) do
+	for k, v in pairs(player.GetBots()) do
 		if (!IsValid(bot.TargetEnt)) then
 			if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:GetPos():Distance(bot:GetPos()) < 3600 and !IsValid(bot.TargetEnt) then
 				if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
@@ -861,7 +861,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			bot:SelectWeapon("nz_quickknife_crowbar")
 		end]]
 		
-		if (bot.TargetEnt:Health() < 0) then
+		if (bot.TargetEnt:Health() < 1) then
 			bot.TargetEnt = bot
 		end
 		
@@ -972,7 +972,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 					return
 				end
 			end	
-			if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then 
+			if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 1) then 
 				bot.TargetEnt = nil
 			end
 			local lerp = 1.2
@@ -1341,7 +1341,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 						end
 					end
 				end
-				for k, v in pairs(player.GetAll()) do
+				for k, v in pairs(player.GetBots()) do
 					if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:GetPos():Distance(bot:GetPos()) < 1200 and !IsValid(bot.TargetEnt) then
 						if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
 							local targetpos = v:EyePos() - Vector(0, 0, 10) -- bot eye check, don't start shooting targets just because we barely see their head

@@ -342,11 +342,11 @@ function GM:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 
 	else
 		if d > 180 then
-			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(0.1, pl.PlayerBodyYaw+360, pl.TargetBodyYaw))
+			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(0.15, pl.PlayerBodyYaw+360, pl.TargetBodyYaw))
 		elseif d < -180 then
-			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(0.1, pl.PlayerBodyYaw-360, pl.TargetBodyYaw))
+			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(0.15, pl.PlayerBodyYaw-360, pl.TargetBodyYaw))
 		else
-			pl.PlayerBodyYaw = Lerp(0.1, pl.PlayerBodyYaw, pl.TargetBodyYaw)
+			pl.PlayerBodyYaw = Lerp(0.15, pl.PlayerBodyYaw, pl.TargetBodyYaw)
 		end
 	end
 	if (string.StartWith(pl:GetModel(), "models/infected/") || pl:GetPlayerClass() == "rebel" || pl:GetPlayerClass() == "combinesoldier") then
@@ -725,7 +725,7 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 			pl:AddVCDSequenceToGestureSlot(GESTURE_SLOT_FLINCH, pl:LookupSequence(TauntGestures[data]), 0, true)
 		else
 			-- just let us do custom ones man
-			pl:AddVCDSequenceToGestureSlot( GESTURE_SLOT_CUSTOM, data, 0, true )
+			pl:AddVCDSequenceToGestureSlot( GESTURE_SLOT_FLINCH, data, 0, true )
 		end
 		
 		return ACT_INVALID

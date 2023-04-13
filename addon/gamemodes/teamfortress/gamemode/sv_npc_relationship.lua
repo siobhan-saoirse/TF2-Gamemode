@@ -100,6 +100,9 @@ hook.Add("OnEntityCreated", "TF_UpdateNPCRelationship", function(ent)
 	end
 	if ent:IsNPC() and ent:EntityTeam()~=TEAM_HIDDEN and not IgnoredClasses[ent:Classify()] and !ent:HasNPCFlag(NPC_NORELATIONSHIP) then
 		GAMEMODE:UpdateEntityRelationship(ent)
+		timer.Simple(0.1, function()
+			GAMEMODE:UpdateEntityRelationship(ent)
+		end)
 		if (GetConVar("civ2_randomizer"):GetBool() and ent:IsNPC() and !ent.IsRandomizedNPC) then
 			ent.IsRandomizedNPC = true
 			local mahogany = {

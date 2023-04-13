@@ -1,23 +1,23 @@
-if !CLIENT then return end
+
 local PANEL = {}
 local PlayerVoicePanels = {}
 
 function PANEL:Init()
+
 	self.LabelName = vgui.Create( "DLabel", self )
+	--self.LabelName:SetFont( "GModNotify" )
 	self.LabelName:SetFont( "GModNotify" )
 	self.LabelName:Dock( FILL )
 	self.LabelName:DockMargin( 8, 0, 0, 0 )
-	self.LabelName:SetTextColor( Color( 255, 255, 255, 255 ) )
-	self.LabelName:SetFont("HudHintTextLarge")
+	self.LabelName:SetTextColor( color_white )
 
-	self.Avatar = vgui.Create( "Material", self )
+	self.Avatar = vgui.Create( "AvatarImage", self )
 	self.Avatar:Dock( LEFT )
 	self.Avatar:SetSize( 32, 32 )
-	self.Avatar:SetMaterial("voice/icntlk_sv")
 
 	self.Color = color_transparent
 
-	self:SetSize( 260, 32 + 2 )
+	self:SetSize( 250, 32 + 8 )
 	self:DockPadding( 4, 4, 4, 4 )
 	self:DockMargin( 2, 2, 2, 2 )
 	self:Dock( BOTTOM )
@@ -29,7 +29,7 @@ function PANEL:Setup( ply )
 	self.ply = ply
 	self.LabelName:SetText( ply:Nick() )
 	self.Avatar:SetPlayer( ply )
-	 
+	
 	self.Color = team.GetColor( ply:Team() )
 	
 	self:InvalidateLayout()
@@ -39,7 +39,7 @@ end
 function PANEL:Paint( w, h )
 
 	if ( !IsValid( self.ply ) ) then return end
-	draw.RoundedBox( 0, 0, 0, w, h, team.GetColor(self.ply:Team()) )
+	draw.RoundedBox( 4, 0, 0, w, h, Color( 0, self.ply:VoiceVolume() * 255, 0, 240 ) )
 
 end
 
@@ -57,13 +57,17 @@ end
 
 function PANEL:FadeOut( anim, delta, data )
 	
+	if ( anim.Finished ) then
+	
 		if ( IsValid( PlayerVoicePanels[ self.ply ] ) ) then
 			PlayerVoicePanels[ self.ply ]:Remove()
 			PlayerVoicePanels[ self.ply ] = nil
 			return
 		end
+		
+	return end
 	
-	self:SetAlpha( 0 )
+	self:SetAlpha( 255 - ( 255 * delta ) )
 
 end
 
@@ -87,7 +91,6 @@ function GM:PlayerStartVoice( ply )
 		end
 
 		PlayerVoicePanels[ ply ]:SetAlpha( 255 )
-		PlayerVoicePanels[ ply ]:SetColor( team.GetColor( ply:Team() ) )
 
 		return
 

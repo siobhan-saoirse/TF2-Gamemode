@@ -1212,7 +1212,7 @@ function SWEP:Deploy()
 						owner:GetViewModel():SetBodygroup(b[group], 1)
 					end
 				end
-			end
+			end	
 		end
 	end
 	

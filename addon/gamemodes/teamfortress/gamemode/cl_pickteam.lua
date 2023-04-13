@@ -31,10 +31,10 @@ function TeamSelection()
 	TeamFriendly:SetSize( 130, 20 )
 	TeamFriendly:SetText( "Friendly Team" )
 	teamframe:SetSize(150,150) --set its size
-	teamframe:Center() --position it at the center of the screen
+	teamframe:Center() --position it at the center of the screen 
 	teamframe:SetDraggable(false) --can you move it around
 	teamframe:SetSizable(false) --can you resize it?
-	teamframe:ShowCloseButton(false) --can you close it
+	teamframe:ShowCloseButton(true) --can you close it
 	teamframe:MakePopup() --make it appear
 	teamframe:SetKeyboardInputEnabled( false )
 	

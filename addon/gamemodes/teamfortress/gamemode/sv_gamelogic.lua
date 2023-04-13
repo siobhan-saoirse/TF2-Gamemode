@@ -632,7 +632,7 @@ function GM:Think()
 		if (bot.TargetEnt) then
 			for k,v in pairs(player.GetAll()) do
 				if (v:EntIndex() == bot.TargetEnt) then
-					if (v:Health() < 0) then
+					if (v:Health() < 1) then
 						bot.TargetEnt = table.Random({team.GetPlayers(v:Team())})
 					end
 				end

@@ -61,8 +61,10 @@ function ENT:Initialize()
 	self:SetCollisionBounds(unpack(self.CollisionBox))
 	--self:PhysicsInitShadow(true, true)
 	self:PhysicsInitBox(unpack(self.CollisionBox))
-	self:SetSolid(SOLID_BBOX)
-	self:SetMoveType(MOVETYPE_NONE)
+	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:PhysicsInit(SOLID_BBOX)
+	self:SetHealth(1)
+	self:SetCollisionGroup(COLLISION_GROUP_NPC)
 	
 	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
@@ -91,6 +93,14 @@ function ENT:Initialize()
 	self.StartTime = CurTime()
 	self.TimeLeft = 0
 	self:SetNoDraw(true)
+end
+
+function ENT:GravGunPunt( ply )
+	return false
+end
+ 
+function ENT:GravGunPickupAllowed( ply )
+	return self:GetBuilder():EntIndex() == ply:EntIndex()
 end
 
 function ENT:Build()

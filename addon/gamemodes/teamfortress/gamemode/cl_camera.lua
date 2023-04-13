@@ -286,7 +286,7 @@ hook.Add("CalcView", "TFCalcView", function(pl, pos, ang, fov)
 				gamemode.Call("OnViewModeChanged", false)
 			end]]
 			return
-		else
+		else 
 			if pl.CurrentView and not tf_thirdperson:GetBool() then -- stupid bug fix
 				if pl.TauntingCam then
 					pl:SetEyeAngles(taunt_angles)
@@ -373,6 +373,7 @@ net.Receive("ActivateTauntCam", function()
 	LocalPlayer().IsThirdperson = true
 	LocalPlayer().CurrentView = nil
 	LocalPlayer().TauntingCam = true
+	LocalPlayer().NextEndThirdperson = nil
 	lockangle = LocalPlayer():GetAngles()
 	taunt_angles = LocalPlayer():GetAngles()
 end)
@@ -419,6 +420,25 @@ end
 
 function StartFreezeCam(startpos, target, defaultpos)
 	FreezePanelBase:Show()
+	
+	LocalPlayer().FreezeCamStartPos = startpos
+	LocalPlayer().FreezeCamPos = startpos
+	LocalPlayer().FreezeCam = true
+	LocalPlayer().FreezeCamTarget = target
+	LocalPlayer().FreezeCamDefaultTargetPos = defaultpos
+	
+	local var = freezecam_dist_variation:GetFloat()
+	LocalPlayer().FreezeCamDistance = freezecam_dist:GetFloat() * (1+math.Rand(-var, var))
+	
+	local targetpos
+	if IsValid(target) then targetpos = ViewTarget(target)
+	elseif defaultpos then targetpos = defaultpos
+	else return StopFreezeCam()
+	end
+	
+	LocalPlayer().FreezeCamSpeed = math.Clamp(FreezecamSpeedMultiplier * startpos:Distance(targetpos) / freezecam_timetoarrive:GetFloat(),
+		FreezecamMinSpeed, FreezecamMaxSpeed)
+	--LocalPlayer():EmitSound("misc/freeze_cam.wav")
 end
 
 function StopFreezeCam()

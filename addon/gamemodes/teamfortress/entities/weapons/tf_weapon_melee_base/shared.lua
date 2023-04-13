@@ -21,9 +21,9 @@ SWEP.HitFlesh = Sound("")
 SWEP.HitRobot = Sound("MVM_Weapon_Default.HitFlesh")
 SWEP.HitWorld = Sound("")
 
-SWEP.MeleeAttackDelay = 0.15
+SWEP.MeleeAttackDelay = 0.2
 --SWEP.MeleeAttackDelayCritical = 0.25
-SWEP.MeleeRange = 60
+SWEP.MeleeRange = 48
 
 SWEP.MaxDamageRampUp = 0
 SWEP.MaxDamageFalloff = 0

@@ -230,12 +230,12 @@ end
 function ENT:HaveEnemy()
 
 --self.loco:SetDesiredSpeed(self.Speed)
---if (self:Health() < 0) then
+--if (self:Health() < 1) then
 --else
 	if ( self:GetEnemy() and IsValid( self:GetEnemy() ) ) then
 		if ( self:GetRangeTo( self:GetEnemy():GetPos() ) > self.LoseTargetDist ) then
 			return self:FindEnemy() 
-		elseif ( self:GetEnemy():Health() < 0 or !IsValid(self:GetEnemy()) ) then
+		elseif ( self:GetEnemy():Health() < 1 or !IsValid(self:GetEnemy()) ) then
 			self:EmitSound("Halloween.EyeballBossLaugh")
 			return false
 		end	

@@ -1,7 +1,7 @@
 hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
 	if (!ply:Alive()) then
 		if (IsValid(ply:GetNWEntity("RagdollEntity"))) then
-			if (ply:GetObserverMode() == OBS_MODE_DEATHCAM and ply:GetObserverMode() != OBS_MODE_FREEZECAM) then
+			if ((ply:GetObserverMode() == OBS_MODE_DEATHCAM or (!ply:Alive() and !IsValid(ply:GetObserverTarget()))) and ply:GetObserverMode() != OBS_MODE_FREEZECAM) then
 				ply:SetViewOffset(Vector(0, 0, 48 * ply:GetModelScale()))
 				local newdist = 115
 				local origin = ply:GetNWEntity("RagdollEntity"):GetPos()
@@ -15,9 +15,10 @@ hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
 					}
 					newdist = newdist * tr.Fraction
 				end
+				local newangles = angles
 				local view = {
 					origin = ply:GetNWEntity("RagdollEntity"):GetPos() - ( angles:Forward() * newdist ),
-					angles = angles,
+					angles = newangles,
 					fov = fov,
 					drawviewer = true
 				}	
@@ -43,6 +44,7 @@ include("tf_lang_module.lua")
 include("shd_items.lua")
 tf_lang.Load("tf_english.txt")
 
+include("cl_voice.lua") 
 include("cl_proxies.lua")
 include("cl_pickteam.lua")
 

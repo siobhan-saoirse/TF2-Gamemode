@@ -12,14 +12,26 @@ CLASS.Health = 100
 
 CLASS.AdditionalAmmo = {
 	Pistol = 256,
+	["9mmRound"] = 256,
+	["MP5_Grenade"] = 6,
 	SMG1 = 256,
 	grenade = 5,
+	snark = 5,
+	GrenadeHL1 = 5,
 	Buckshot = 64,
+	BuckshotHL1 = 64,
 	["357"] = 32,
+	["357Round"] = 32,
 	XBowBolt = 32,
+	XBowBoltHL1 = 32,
 	AR2AltFire = 6,
 	AR2 = 100,
+	Uranium = 100,
 	SMG1_Grenade = 6,
+	Satchel = 10,
+	TripMine = 10,
+	RPG_Rocket = 18,
+	RPG = 18,
 }
 
 CLASS.DefaultLoadout = {}
@@ -114,6 +126,8 @@ function CLASS:Initialize()
 			self:Give("weapon_hl1_egon")
 			self:Give("weapon_hl1_shotgun")
 			self:Give("weapon_hl1_mp5")
+			self:Give("weapon_hl1_tripmine")
+			self:Give("weapon_hl1_hornetgun")
 		else
 			self:Give("weapon_snark")
 			self:Give("weapon_satchel")
@@ -128,6 +142,8 @@ function CLASS:Initialize()
 			self:Give("weapon_egon")
 			self:Give("weapon_shotgun_hl1")
 			self:Give("weapon_mp5_hl1")
+			self:Give("weapon_tripmine")
+			self:Give("weapon_hornetgun")
 		end
 	end
 	local cl_defaultweapon = self:GetInfo("cl_defaultweapon")

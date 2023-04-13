@@ -1066,9 +1066,10 @@ end
  
 function SWEP:OnRemove()
 	self:StopTimers()
-	
-	local VModel = self:GetOwner():GetViewModel()
-	VModel:SetMaterial("")
+	if (IsValid(self:GetOwner())) then
+		local VModel = self:GetOwner():GetViewModel()
+		VModel:SetMaterial("")
+	end
 	--self:Holster() 
 end
 

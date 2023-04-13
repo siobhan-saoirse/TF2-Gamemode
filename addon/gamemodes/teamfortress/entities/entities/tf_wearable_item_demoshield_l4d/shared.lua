@@ -233,7 +233,7 @@ function ENT:MeleeAttack()
 			if phys and phys:IsValid(self.WModel2) then
 				tr.Entity:SetPhysicsAttacker(self:GetOwner())
 			end
-			if (tr.Entity:Health() < 0) then
+			if (tr.Entity:Health() < 1) then
 				self:GetOwner():SetNWBool("Taunting", false)
 				net.Start("DeActivateTauntCam")
 				net.Send(self:GetOwner())

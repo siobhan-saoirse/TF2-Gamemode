@@ -131,7 +131,7 @@ function ENT:HaveEnemy()
 			end
 			return self:FindEnemy()
 		-- If the enemy is dead( we have to check if its a player before we use Alive() )
-		elseif ( self:GetEnemy():IsTFPlayer() and (GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_SPECTATOR or GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_FRIENDLY or self:GetEnemy():Health() < 0 or self:GetEnemy():IsFlagSet(FL_NOTARGET)) ) then
+		elseif ( self:GetEnemy():IsTFPlayer() and (GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_SPECTATOR or GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_FRIENDLY or self:GetEnemy():Health() < 1 or self:GetEnemy():IsFlagSet(FL_NOTARGET)) ) then
 			return self:FindEnemy()		-- Return false if the search finds nothing
 		end	
 		-- The enemy is neither too far nor too dead so we can return true

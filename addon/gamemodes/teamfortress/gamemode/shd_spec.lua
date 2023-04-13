@@ -95,7 +95,7 @@ concommand.Add("tf_spectate_respawn", function(ply, _, args)
 	ply:StripWeapons()
 
 	local bot = table.Random(getAllPlayersButNotThisGuy(ply),getNPCs())
-	if (bot:EntIndex() == ply:EntIndex()) then
+	if (IsValid(bot) and bot:EntIndex() == ply:EntIndex()) then
 		bot = table.Random(getAllPlayersButNotThisGuy(ply),getNPCs())
 	end
 	if (ply:GetObserverTarget():EntIndex() == bot:EntIndex()) then
@@ -106,7 +106,7 @@ concommand.Add("tf_spectate_respawn", function(ply, _, args)
 	elseif args[1] == "1" then ply:Spectate(OBS_MODE_IN_EYE) ply.SpectateMode = 1  umsg.Start("ExitFreezecam", ply) umsg.End() return
 	elseif args[1] == "3" then ply:Spectate(OBS_MODE_ROAMING) ply.SpectateMode = 3  umsg.Start("ExitFreezecam", ply) return end
 	ply:SpectateEntity(bot)
-	if (bot:IsPlayer()) then
+	if (IsValid(bot) and bot:IsPlayer()) then
 		ply:SetupHands(bot)
 		ply:SetPlayerColor(bot:GetPlayerColor())
 	end

@@ -277,7 +277,7 @@ hook.Add( "PlayerSwitchWeapon", "SetTF2Hands", function( ply, oldWeapon, newWeap
 		timer.Simple(0.1, function()
 		
 			GAMEMODE:PlayerSetHandsModel( ply, ply:GetHands() )
-			
+
 		end)
 	end
 end)
@@ -2796,6 +2796,9 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 	if ( CLIENT && engine.GetDemoPlaybackTimeScale() != 1 ) then
 		snd.Pitch = math.Clamp( snd.Pitch * engine.GetDemoPlaybackTimeScale(), 0, 255 )
 	end
+
+	
+
 	if string.StartWith(snd.SoundName,"physics/body/") and string.find(snd.SoundName, "impact") and GetConVar("tf_enable_l4d2_ragdoll_sounds"):GetBool() then
 		snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "l4d2/physics/body/body_medium_impact_soft"..table.Random({"1","2","5","6","7"})..".wav")
 		snd.Volume = 0.6
@@ -4387,8 +4390,8 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
 		return true 
 	end
+	return true
 end) 
-
 
 hook.Add("PlayerStepSoundTime", "FootTime", function(ply, iType, iWalking)
 	if (ply:GetPlayerClass() == "tank_l4d") then

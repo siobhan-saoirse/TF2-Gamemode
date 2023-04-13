@@ -215,7 +215,7 @@ function ENT:HaveEnemy()
 			
 			return self:FindEnemy()
 		-- If the enemy is dead( we have to check if its a player before we use Alive() )
-		elseif ( self:GetEnemy():IsTFPlayer() and (GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_SPECTATOR or GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_FRIENDLY or self:GetEnemy():Health() < 0 or self:GetEnemy():IsFlagSet(FL_NOTARGET)) ) then
+		elseif ( self:GetEnemy():IsTFPlayer() and (GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_SPECTATOR or GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_FRIENDLY or self:GetEnemy():Health() < 1 or self:GetEnemy():IsFlagSet(FL_NOTARGET)) ) then
 			return self:FindEnemy()
 		end	
 		-- The enemy is neither too far nor too dead so we can return true
@@ -337,7 +337,7 @@ function ENT:HandleAnimEvent( event, eventTime, cycle, type, options )
 							timer.Create("ShredMyVictimToGibs"..self:EntIndex(), 0.6, 0, function()
 								self:StartActivity( self:GetSequenceActivity(self:LookupSequence("killing_blow_loop"))  )
 								self:EmitSound("WitchZombie.KillingFrenzy")
-								if (self:GetEnemy():Health() < 0) then
+								if (self:GetEnemy():Health() < 1) then
 						
 									self.WillIShredMyEnemyToGibs = false
 									timer.Stop("ShredMyVictimToGibs"..self:EntIndex())
@@ -585,7 +585,7 @@ function ENT:Think()
 			self.WillIShredMyEnemyToGibs = false
 		end
 		if (self.Angry) then
-			if (!IsValid(self:GetEnemy()) or self:GetEnemy():Health() < 0) then
+			if (!IsValid(self:GetEnemy()) or self:GetEnemy():Health() < 1) then
 
 				self.WillIShredMyEnemyToGibs = false
 				timer.Stop("ShredMyVictimToGibs"..self:EntIndex())
@@ -698,7 +698,7 @@ function ENT:Think()
 	if (self:IsOnFire() and !string.find(self:GetModel(),"ceda")) then
 		self:SetSequence( self:LookupSequence("run_onfire") )
 	end
-	if (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 0) then
+	if (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 1) then
 		self:SetEnemy(nil)
 	end
 	if (IsValid(self.Door) and self:IsOnGround() and self.Door:GetPos():Distance(self:GetPos()) < self.AttackRange) then
@@ -790,7 +790,7 @@ function ENT:Think()
 				self.loco:SetAcceleration(500)
 			end
 		end 
-	elseif (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 0) then
+	elseif (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 1) then
 		self:SetEnemy(nil)
 	elseif (self.ContinueRunning or self:IsOnFire()) then
 		self:SetPlaybackRate(1)

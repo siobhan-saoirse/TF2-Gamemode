@@ -1107,7 +1107,7 @@ function SWEP:SecondaryAttack()
 					end
 				end)
 				timer.Create("TongueAttack"..self.Owner:EntIndex(), 0, 0, function()
-					if (enemy:Health() < 0 and enemy.IsChoking) then
+					if (enemy:Health() < 1 and enemy.IsChoking) then
 						timer.Stop("TongueAttack"..self.Owner:EntIndex())
 						timer.Stop("TongueAttack2"..self.Owner:EntIndex())
 						self.Smoking = false
@@ -1124,7 +1124,7 @@ function SWEP:SecondaryAttack()
 						end
 						enemy.IsChoking = false
 						self.Owner:AddVCDSequenceToGestureSlot( GESTURE_SLOT_ATTACK_AND_RELOAD, self.Owner:LookupSequence("tongue_attack_to_idle"), 0, true )
-					elseif (self.Owner:Health() < 0) then
+					elseif (self.Owner:Health() < 1) then
 						timer.Stop("TongueAttack"..self.Owner:EntIndex())
 						timer.Stop("TongueAttack2"..self.Owner:EntIndex())
 						self.Smoking = false
@@ -1928,7 +1928,7 @@ function SWEP:PrimaryAttack()
 					end
 				end)
 				timer.Create("TongueAttack"..self.Owner:EntIndex(), 0, 0, function()
-					if (enemy:Health() < 0 and enemy.IsChoking) then
+					if (enemy:Health() < 1 and enemy.IsChoking) then
 						timer.Stop("TongueAttack"..self.Owner:EntIndex())
 						timer.Stop("TongueAttack2"..self.Owner:EntIndex())
 						if SERVER then
@@ -1944,7 +1944,7 @@ function SWEP:PrimaryAttack()
 						end
 						enemy.IsChoking = false
 						self.Owner:PlaySequence( "tongue_attack_to_idle", true )
-					elseif (self.Owner:Health() < 0) then
+					elseif (self.Owner:Health() < 1) then
 						timer.Stop("TongueAttack"..self.Owner:EntIndex())
 						timer.Stop("TongueAttack2"..self.Owner:EntIndex())
 						if SERVER then

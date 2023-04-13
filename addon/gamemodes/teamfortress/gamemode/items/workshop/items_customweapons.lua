@@ -156,21 +156,26 @@
 					"attribute_class"	"mult_bullets_per_shot"
 					"value" "3"
 				}
-				"damage penalty"
-				{
-					"attribute_class"	"mult_dmg"
-					"value" "0.9"
-				}
 				"clip size bonus"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value" "1.05"
+					"value" "1.20"
+				}
+				"spread penalty"
+				{
+					"attribute_class"	"mult_spread_scale"
+					"value" "1.60"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value" "0.45"
 				}
 				"crit mod disabled"
 				{
 					"attribute_class"	"mult_crit_chance"
 					"value"	"0"
-				}				
+				}			
 			}
 			"allowed_attributes"
 			{

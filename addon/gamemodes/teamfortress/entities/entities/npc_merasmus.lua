@@ -98,7 +98,7 @@ function ENT:HaveEnemy()
 			-- FindEnemy() will return true if an enemy is found, making this function return true
 			return self:FindEnemy()
 		-- If the enemy is dead( we have to check if its a player before we use Alive() )
-		elseif ( self:GetEnemy():IsTFPlayer() and (GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_SPECTATOR or GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_FRIENDLY or self:GetEnemy():Health() < 0 or self:GetEnemy():IsFlagSet(FL_NOTARGET)) ) then
+		elseif ( self:GetEnemy():IsTFPlayer() and (GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_SPECTATOR or GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_FRIENDLY or self:GetEnemy():Health() < 1 or self:GetEnemy():IsFlagSet(FL_NOTARGET)) ) then
 			return self:FindEnemy()		-- Return false if the search finds nothing
 		end	
 		-- The enemy is neither too far nor too dead so we can return true
@@ -303,13 +303,13 @@ function ENT:Think()
 					self.loco:SetAcceleration(0)
 					self.Ready = false
 					timer.Simple(self:SequenceDuration(self:SelectWeightedSequence(ACT_RANGE_ATTACK2)), function()
-						if (self:Health() < 0) then return end
+						if (self:Health() < 1) then return end
 						self.Ready = true
 						self.UsingBomb = false
 					end)
 					self.RangedAttackDelay2 = CurTime() + self:SequenceDuration(self:SelectWeightedSequence(ACT_RANGE_ATTACK2))
 					timer.Simple(1.2, function()
-						if (self:Health() < 0) then return end
+						if (self:Health() < 1) then return end
 						if (!self:HaveEnemy()) then bomb:Remove() return end
 						self:EmitSound("Halloween.Merasmus_Spell")
 						local effectdata = EffectData()

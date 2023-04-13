@@ -90,7 +90,7 @@ function ENT:HaveEnemy()
 			-- FindEnemy() will return true if an enemy is found, making this function return true
 			return self:FindEnemy()
 		-- If the enemy is dead( we have to check if its a player before we use Alive() )
-		elseif ( self:GetEnemy():IsTFPlayer() and (GAMEMODE:EntityTeam(v) == TEAM_SPECTATOR or GAMEMODE:EntityTeam(v) == TEAM_FRIENDLY or self:GetEnemy():Health() < 0 or self:GetEnemy():IsFlagSet(FL_NOTARGET)) ) then
+		elseif ( self:GetEnemy():IsTFPlayer() and (GAMEMODE:EntityTeam(v) == TEAM_SPECTATOR or GAMEMODE:EntityTeam(v) == TEAM_FRIENDLY or self:GetEnemy():Health() < 1 or self:GetEnemy():IsFlagSet(FL_NOTARGET)) ) then
 			return self:FindEnemy()		-- Return false if the search finds nothing
 		end	
 		-- The enemy is neither too far nor too dead so we can return true
@@ -114,13 +114,14 @@ function ENT:FindEnemy()
 	for k,v in ipairs( _ents ) do
 		if ( ( v:IsTFPlayer() and !v:IsNextBot()) and GAMEMODE:EntityTeam(v) != TEAM_SPECTATOR and GAMEMODE:EntityTeam(v) != TEAM_FRIENDLY and v:Health() > 0 and !v:IsFlagSet(FL_NOTARGET) ) then
 			-- We found one so lets set it as our enemy and return true
+			if v:IsNPC() and (v:Classify() == CLASS_ZOMBIE || v:Classify() == CLASS_HEADCRAB) then return end
 			self:SetEnemy(v)
 			if (v:IsNPC()) then
 				v:SetEnemy(self)
 			end
 			if SERVER then
 				for k,v in ipairs(ents.GetAll()) do
-					if v:IsNPC() then
+					if v:IsNPC() and v:Classify() != CLASS_ZOMBIE and v:Classify() != CLASS_HEADCRAB then
 						v:AddEntityRelationship(self,D_HT,99)
 					end
 				end
@@ -185,7 +186,7 @@ function ENT:Think()
 	if SERVER then
 		self:BodyMoveXY()
 	end
-	if (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 0) then
+	if (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 1) then
 		self:SetEnemy(nil)
 	end
 	if (self:GetModel() == "models/bots/skeleton_sniper/skeleton_sniper.mdl" or self:GetModel() == "models/bots/skeleton_sniper_boss/skeleton_sniper_boss.mdl") then
@@ -245,7 +246,7 @@ function ENT:Think()
 		end
 		self:AddGesture(ACT_MP_JUMP_LAND_MELEE,true)
 		self.AirwalkAnim = false
-	elseif (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 0) then
+	elseif (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 1) then
 		self:SetEnemy(nil)
 	end
 	self:NextThink(CurTime())

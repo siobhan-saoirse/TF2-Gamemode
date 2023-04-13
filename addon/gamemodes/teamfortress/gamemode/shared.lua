@@ -1615,7 +1615,6 @@ include("tf_item_module.lua")
 include("tf_timer_module.lua")
 include("tf_soundscript_module.lua")
 
-include("cl_voice.lua")
 
 include("shd_objects.lua")
 include("shd_attributes.lua")
@@ -2064,13 +2063,17 @@ function GM:EntityTeam(ent)
 		end
 	else
 		local t = ent:GetNWInt("Team") or 0
-		if t>=1 then
+		if t>=1 then 
 			return t
 		else	
 			if (ent.PreviousTeam) then
 				t = ent.PreviousTeam
 			else
-				t = ent:GetNPCData().team
+				if (ent:GetClass() == "npc_turret_floor" and ent:HasSpawnFlags(512)) then
+					t = TEAM_RED
+				else
+					t = ent:GetNPCData().team
+				end
 			end
 			if not t and IsValid(ent:GetOwner()) then
 				return self:EntityTeam(ent:GetOwner())

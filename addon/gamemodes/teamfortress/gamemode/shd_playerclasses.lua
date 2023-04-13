@@ -95,6 +95,9 @@ function meta:SetPlayerClass(class)
 		return
 	end
 	
+	if (c.IsL4D and !IsMounted("left4dead2")) then
+		return
+	end
 	if PlayerNamedBodygroups[oldclass] then
 		for _,v in pairs(PlayerNamedBodygroups[oldclass]) do
 			self:SetBodygroup(v, 0)
@@ -176,12 +179,6 @@ function meta:SetPlayerClass(class)
 	else
 		for k,v in ipairs(c.Loadout or {}) do
 			self:Give(v)
-		end
-		if (self:GetInfoNum("tf_give_hl2_weapons",0) == 1) then
-			self:Give("weapon_physgun")
-			self:Give("weapon_physcannon")
-			self:Give("gmod_tool")
-			self:Give("gmod_camera")
 		end
 	end
 	

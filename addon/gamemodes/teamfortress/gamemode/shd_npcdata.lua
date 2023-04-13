@@ -202,7 +202,7 @@ npc_combine_s = {
 },
 npc_metropolice = {
 	team=TEAM_BLU,
-	health=125,
+	health=80,
 	flags=NPC_HUMAN,
 	vplayer=VPLAYER_METROCOP
 },
@@ -276,7 +276,7 @@ npc_hunter = {
 },
 npc_strider = {
 	team=TEAM_BLU,
-	health=350,
+	health=1200,
 	alternatehealth=200,
 	flags=bit.bor(NPC_NODMGFORCE, NPC_MECH, NPC_FIREPROOF, NPC_FLYING),
 	vplayer=VPLAYER_NONE

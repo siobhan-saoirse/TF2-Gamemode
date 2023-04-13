@@ -2109,6 +2109,11 @@ function GM:PlayerSpawn(ply)
 			GAMEMODE.Director = director
 		end
 	end]]
+	for k,v in ipairs(ents.GetAll()) do
+		if (v:IsNPC()) then
+			GAMEMODE:UpdateEntityRelationship(v)
+		end
+	end
 	for k,v in ipairs(player.GetAll()) do
 		if (k<1) then
 

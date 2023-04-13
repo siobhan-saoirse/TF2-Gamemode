@@ -33,6 +33,9 @@ function GM:DoTFPlayerDeath(ent, attacker, dmginfo)
 			end)
 		end
 	end
+	if (dmginfo:IsDamageType(DMG_DISSOLVE)) then
+		ent:EmitSound("TFPlayer.Dissolve")
+	end
 	ent:StopSound("Weapon_Minifun.Fire")
 	ent:StopSound("Weapon_Minigun.Fire")
 	ent:StopSound("Weapon_Tomislav.ShootLoop")
@@ -436,6 +439,18 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	
 	net.Start("DeActivateTauntCam")
 	net.Send(ply)
+
+	if (!ply:IsHL2() and !ply:IsL4D() and attacker:IsNPC() and attacker:Classify() == CLASS_HEADCRAB) then
+		
+		local item = ents.Create("npc_tf_zombie_old")
+		if (IsValid(item)) then
+			local a, b = ply:WorldSpaceAABB()
+			item:SetPos((a+b) * 0.5)
+			item.playerclassdefined = true
+			item.playerclass = ply.playerclass
+			item:Spawn()
+		end
+	end
 	if (IsValid(ply.ControllingPlayer)) then
 		if (ply.ControllingPlayer.WasTFBot) then
 			ply.ControllingPlayer.WasTFBot = false
@@ -839,7 +854,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 			end
 		end
 	end
-	if (attacker:IsTFPlayer() and attacker:EntIndex() != ply:EntIndex() and !ply:Alive()) then
+	if (IsValid(attacker) and attacker:IsTFPlayer() and attacker:EntIndex() != ply:EntIndex() and !ply:Alive()) then
 		ply:Spectate(OBS_MODE_DEATHCAM)
 		ply:SpectateEntity(attacker)
 		timer.Simple(0 + 2.0 + 0.4 - 0.3, function()
