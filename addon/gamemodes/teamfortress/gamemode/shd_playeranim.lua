@@ -277,9 +277,8 @@ function GM:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 		pl:SetPlaybackRate(1.15)
 	elseif pl:KeyDown(IN_WALK) and !pl:IsL4D() then
 		pl:SetPlaybackRate(0.8)
-		if SERVER then
-		pl:SetLaggedMovementValue( 0.8 )
-		end
+	elseif pl:WaterLevel() == 2 and !pl:IsL4D() then
+		pl:SetPlaybackRate(0.8)
 	else
 		pl:SetPlaybackRate(1)
 		if SERVER then

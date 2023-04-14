@@ -169,7 +169,7 @@ local ATTRIBUTES = {
 ["mult_reload_time"] = {
 	unimplemented = true,
 	equip = function(v,weapon,owner)-- NOT IMPLEMENTED
-		-- todo
+		weapon.ReloadTime = weapon.ReloadTime * v
 	end,
 },
 

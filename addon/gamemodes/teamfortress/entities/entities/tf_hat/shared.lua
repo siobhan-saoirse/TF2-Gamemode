@@ -1139,6 +1139,19 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 end)
 
 hook.Add("Think","Bacterias",function()
+	for k,v in ipairs(player.GetAll()) do
+
+		if (v:WaterLevel() > 2 and !v.IsUnderWater) then
+			PrecacheParticleSystem("water_playerdive")
+			ParticleEffectAttach("water_playerdive", PATTACH_ABSORIGIN_FOLLOW, v, 0) 
+			v.IsUnderWater = true
+		elseif (v:WaterLevel() < 2 and v.IsUnderWater) then
+			PrecacheParticleSystem("water_playeremerge")
+			ParticleEffectAttach("water_playeremerge", PATTACH_ABSORIGIN_FOLLOW, v, 0) 
+			v.IsUnderWater = false
+		end
+
+	end
 	if (math.random(1,150) == 1 and SERVER) then
 		for k,v in ipairs(player.GetAll()) do
 			if (v:Alive()) then

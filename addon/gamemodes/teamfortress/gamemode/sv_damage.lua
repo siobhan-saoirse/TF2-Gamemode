@@ -171,11 +171,11 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 	local is_normal_damage = true
 	if (ent.TFBot and ent:EntIndex() != att:EntIndex() and att:IsTFPlayer() and !att:IsFriendly(ent)) then
 		for k,v in ipairs(ents.FindInSphere(ent:GetPos(),1200)) do
-			if (v:IsTFPlayer() and (v:IsFriendly(ent) || !v:IsFriendly(ent)) and v:EntIndex() != ent:EntIndex()) then
+			if (v:IsTFPlayer() and (v:IsFriendly(ent)) and v:EntIndex() != ent:EntIndex()) then
 				if (math.random(1,3) == 1 and !att:IsPlayer() and ent.TFBot and (!IsValid(ent.TargetEnt) or ent.TargetEnt:EntIndex() != att:EntIndex())) then
 					ent.TargetEnt = att
 					local args = {"TLK_PLAYER_BATTLECRY"}
-					if ent:Speak(args[1]) then
+					if ent:Speak(args[1]) and !string.find(v:GetModel(),"/bot_") then
 						ent:DoAnimationEvent(ACT_MP_GESTURE_VC_FISTPUMP, true)
 				
 						umsg.Start("TFPlayerVoice")
@@ -184,11 +184,11 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 						umsg.End()
 					end
 				end
-				if (math.random(1,5) == 1) then
+				if (math.random(1,5) == 1 and v:Health() > 0) then
 					if (v:IsPlayer()) then
 						if (ent:IsBot()) then
 							local args = {"TLK_PLAYER_HELP"}
-							if ent:Speak(args[1]) then
+							if ent:Speak(args[1])  and !string.find(v:GetModel(),"/bot_") then
 								ent:DoAnimationEvent(ACT_MP_GESTURE_VC_HANDMOUTH, true)
 						
 								umsg.Start("TFPlayerVoice")
@@ -198,7 +198,7 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 							end
 						end
 						if (v:IsBot()) then
-							if (math.random(1,5) == 1) then
+							if (math.random(1,5) == 1 and !string.find(v:GetModel(),"/bot_")) then
 								local args = {"TLK_PLAYER_BATTLECRY"}
 								if v:Speak(args[1]) then
 									v:DoAnimationEvent(ACT_MP_GESTURE_VC_FISTPUMP, true)
@@ -444,14 +444,14 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		if att == ent then
 			-- Self damage, don't scale the damage, but still notify the player that they critted themselves
 			if ent:IsPlayer() and ent.NextSpeak<CurTime() then
-				SendNet("CriticalHitReceived", ent)
+				SendUserMessage("CriticalHitReceived", ent)
 			end
 		else
 			-- Modify the damage
 			dmginfo:ScaleDamage(3)
 
 			if ent:IsPlayer() and ent.NextSpeak<CurTime() then
-				SendNet("CriticalHitReceived", ent)
+				SendUserMessage("CriticalHitReceived", ent)
 			end
 			DispatchCritEffect(ent, inflictor, attacker, false)
 		end
@@ -461,7 +461,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		local mul
 
 		if ent:IsPlayer() and ent.NextSpeak<CurTime() then
-			SendNet("CriticalHitReceived", ent)
+			SendUserMessage("CriticalHitReceived", ent)
 		end
 		
 		-- Modify the damage

@@ -229,7 +229,7 @@ function PANEL:Paint()
 		surface.SetTexture(tex)
 		surface.SetDrawColor(255,255,255,255)
 		surface.DrawTexturedRect(22*Scale, 350*Scale, 92*Scale, 92*Scale)
-	end
+	end 
 	
 	ServerName.text = tf_lang.GetFormatted("#Scoreboard_Server", GetHostName())
 	draw.Text(ServerName)

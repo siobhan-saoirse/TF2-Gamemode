@@ -61,7 +61,7 @@ usermessage.Hook("Notice_EntityKilledEntity", function(msg)
 		
 		local inflictor   = msg:ReadString()
 		
-		local attacker_name = msg:ReadString()
+		local attacker_name = msg:ReadString() 
 		local attacker_team = msg:ReadShort()
 		local attacker_id = msg:ReadShort()
 		

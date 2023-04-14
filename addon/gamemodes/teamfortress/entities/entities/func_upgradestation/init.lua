@@ -23,7 +23,8 @@ function ENT:StartTouch(ent)
 			ent:SetArmor(2000)
 			timer.Create("Speed"..ent:EntIndex(), 0.01, 0, function()
 				if ent:Alive() then
-					ent:SetClassSpeed(3*135)
+					ent:ResetClassSpeed()
+					ent:SetClassSpeed(ent:GetClassSpeed() * 1.3)
 				else
 					timer.Stop("Speed"..ent:EntIndex())
 					return
@@ -35,7 +36,8 @@ function ENT:StartTouch(ent)
 			ent:SetArmor(2950)
 			timer.Create("Speed"..ent:EntIndex(), 0.01, 0, function()
 				if ent:Alive() then
-					ent:SetClassSpeed(3*112)
+					ent:ResetClassSpeed()
+					ent:SetClassSpeed(ent:GetClassSpeed() * 1.3)
 				else
 					timer.Stop("Speed"..ent:EntIndex())
 					return
@@ -47,7 +49,8 @@ function ENT:StartTouch(ent)
 			ent:SetArmor(2950)
 			timer.Create("Speed"..ent:EntIndex(), 0.01, 0, function()
 				if ent:Alive() then
-					ent:SetClassSpeed(3*290)
+					ent:ResetClassSpeed()
+					ent:SetClassSpeed(ent:GetClassSpeed() * 1.3)
 				else
 					timer.Stop("Speed"..ent:EntIndex())
 					return
@@ -59,7 +62,8 @@ function ENT:StartTouch(ent)
 			ent:SetArmor(2220)
 			timer.Create("Speed"..ent:EntIndex(), 0.01, 0, function()
 				if ent:Alive() then
-					ent:SetClassSpeed(3*121)
+					ent:ResetClassSpeed()
+					ent:SetClassSpeed(ent:GetClassSpeed() * 1.3)
 				else
 					timer.Stop("Speed"..ent:EntIndex())
 					return
@@ -71,7 +75,8 @@ function ENT:StartTouch(ent)
 			ent:SetArmor(2220)
 			timer.Create("Speed"..ent:EntIndex(), 0.01, 0, function()
 				if ent:Alive() then
-					ent:SetClassSpeed(3*120)
+					ent:ResetClassSpeed()
+					ent:SetClassSpeed(ent:GetClassSpeed() * 1.3)
 				else
 					timer.Stop("Speed"..ent:EntIndex())
 					return
@@ -83,7 +88,8 @@ function ENT:StartTouch(ent)
 			ent:SetArmor(2320)
 			timer.Create("Speed"..ent:EntIndex(), 0.01, 0, function()
 				if ent:Alive() then
-					ent:SetClassSpeed(3*118)
+					ent:ResetClassSpeed()
+					ent:SetClassSpeed(ent:GetClassSpeed() * 1.3)
 				else
 					timer.Stop("Speed"..ent:EntIndex())
 					return
@@ -95,7 +101,8 @@ function ENT:StartTouch(ent)
 			ent:SetArmor(2420)
 			timer.Create("Speed"..ent:EntIndex(), 0.01, 0, function()
 				if ent:Alive() then
-					ent:SetClassSpeed(3*130)
+					ent:ResetClassSpeed()
+					ent:SetClassSpeed(ent:GetClassSpeed() * 1.3)
 				else
 					timer.Stop("Speed"..ent:EntIndex())
 					return
@@ -107,7 +114,8 @@ function ENT:StartTouch(ent)
 			ent:SetArmor(2620)
 			timer.Create("Speed"..ent:EntIndex(), 0.01, 0, function()
 				if ent:Alive() then
-					ent:SetClassSpeed(3*112)
+					ent:ResetClassSpeed()
+					ent:SetClassSpeed(ent:GetClassSpeed() * 1.3)
 				else
 					timer.Stop("Speed"..ent:EntIndex())
 					return
@@ -119,7 +127,8 @@ function ENT:StartTouch(ent)
 			ent:SetArmor(2420)
 			timer.Create("Speed"..ent:EntIndex(), 0.01, 0, function()
 				if ent:Alive() then
-					ent:SetClassSpeed(3*128)
+					ent:ResetClassSpeed()
+					ent:SetClassSpeed(ent:GetClassSpeed() * 1.3)
 				else
 					timer.Stop("Speed"..ent:EntIndex())
 					return
@@ -131,7 +140,8 @@ function ENT:StartTouch(ent)
 			ent:SetArmor(2920)
 			timer.Create("Speed"..ent:EntIndex(), 0.01, 0, function()
 				if ent:Alive() then
-					ent:SetClassSpeed(3*112)
+					ent:ResetClassSpeed()
+					ent:SetClassSpeed(ent:GetClassSpeed() * 1.3)
 				else
 					timer.Stop("Speed"..ent:EntIndex())
 					return

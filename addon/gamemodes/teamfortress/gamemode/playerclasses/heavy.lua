@@ -14,7 +14,7 @@ if CLIENT then
 end
 
 CLASS.Loadout = {"tf_weapon_minigun", "tf_weapon_shotgun_hwg", "tf_weapon_fists"}
-CLASS.DefaultLoadout = {"Minigun","TF_WEAPON_SHOTGUN_HWG","Fists"}
+CLASS.DefaultLoadout = {"TF_WEAPON_MINIGUN","TF_WEAPON_SHOTGUN_HWG","TF_WEAPON_FISTS"}
 CLASS.ModelName = "heavy"
 CLASS.Gibs = {
 	[GIB_LEFTLEG]		= GIBS_HEAVY_START,

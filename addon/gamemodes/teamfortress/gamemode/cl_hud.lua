@@ -1,3 +1,7 @@
+include("cl_crosshairs.lua")
+include("cl_scoreboard.lua")
+include("cl_chatprefix.lua")
+
 function IsCustomHUDVisible(name)
 	for _,v in pairs(LocalPlayer():GetTFItems()) do
 		local gch = v.GlobalCustomHUD
@@ -101,9 +105,6 @@ concommand.Add("reload_vgui", function()
 end)
 
 LoadVGUI()
-include("cl_crosshairs.lua")
-include("cl_scoreboard.lua")
-include("cl_chatprefix.lua")
 
 local W = ScrW()
 local H = ScrH()

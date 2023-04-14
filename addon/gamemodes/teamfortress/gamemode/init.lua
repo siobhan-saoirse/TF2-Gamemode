@@ -1,8 +1,12 @@
+
 include("sv_clientfiles.lua")
 include("sv_resource.lua")
 include("sv_response_rules.lua")
 include("sv_ctf_bots.lua")
 PrecacheParticleSystem( "bot_impact_heavy" )
+PrecacheParticleSystem( "bot_impact_light" )
+PrecacheParticleSystem( "water_playerdive" )
+PrecacheParticleSystem( "water_playeremerge" )
 include("shared.lua")
 include("sv_gamelogic.lua")
 include("sv_hl2replace.lua")
@@ -591,7 +595,9 @@ hook.Add("Think", "CanYouSetMovea_XParameterToThePlayers?", function()
 			end
 		end
 		if (pl:WaterLevel() > 1) then
-			pl:Extinguish()
+			if (pl:IsOnFire()) then
+				pl:Extinguish()
+			end
 		end
 	end
 end)
@@ -1711,7 +1717,7 @@ local function PlayerGiantBotSpawn( ply, mv )
 			end
 		end
 	end)
-end
+end 
 
 concommand.Add("check_save_table_for_entity", function(ply)
 	PrintTable(ply:GetEyeTrace().Entity:GetSaveTable())
@@ -1754,6 +1760,7 @@ hook.Add( "OnEntityWaterLevelChanged", "UnderwaterAmbience", function(ent,old,ne
 					ent:EmitSound("Player.DrownStart")
 					ent.IsDrowning = false
 				end
+				ParticleEffectAttach("water_playeremerge", PATTACH_ABSORIGIN_FOLLOW, ent, 0)
 			end
 			ent:SetDSP(0)
 			ent:SendLua('LocalPlayer():StopSound("Player.AmbientUnderWater")')

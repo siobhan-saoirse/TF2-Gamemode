@@ -123,15 +123,21 @@ function SWEP:Deploy()
 end
 
 function SWEP:Holster()
-	
-	if self.Owner:GetPlayerClass() == "spy" then
-		if self.Owner:GetModel() == "models/player/scout.mdl" or  self.Owner:GetModel() == "models/player/soldier.mdl" or  self.Owner:GetModel() == "models/player/pyro.mdl" or  self.Owner:GetModel() == "models/player/demo.mdl" or  self.Owner:GetModel() == "models/player/heavy.mdl" or  self.Owner:GetModel() == "models/player/engineer.mdl" or  self.Owner:GetModel() == "models/player/medic.mdl" or  self.Owner:GetModel() == "models/player/sniper.mdl" or  self.Owner:GetModel() == "models/player/hwm/spy.mdl" then
-			self:SetHoldType("PRIMARY")			
-			self.HoldType = "PRIMARY"
-		else
-			self:SetHoldType("SECONDARY")			
-			self.HoldType = "SECONDARY"
+	if (IsValid(self.Owner)) then
+		if self.Owner:GetPlayerClass() == "spy" then
+			if self.Owner:GetModel() == "models/player/scout.mdl" or  self.Owner:GetModel() == "models/player/soldier.mdl" or  self.Owner:GetModel() == "models/player/pyro.mdl" or  self.Owner:GetModel() == "models/player/demo.mdl" or  self.Owner:GetModel() == "models/player/heavy.mdl" or  self.Owner:GetModel() == "models/player/engineer.mdl" or  self.Owner:GetModel() == "models/player/medic.mdl" or  self.Owner:GetModel() == "models/player/sniper.mdl" or  self.Owner:GetModel() == "models/player/hwm/spy.mdl" then
+				self:SetHoldType("PRIMARY")			
+				self.HoldType = "PRIMARY"
+			else
+				self:SetHoldType("SECONDARY")			
+				self.HoldType = "SECONDARY"
+			end
 		end
+	else
+
+		self:SetHoldType("SECONDARY")			
+		self.HoldType = "SECONDARY"
+		
 	end
 	self:StopTimers()
 	if IsValid(self.Owner) then

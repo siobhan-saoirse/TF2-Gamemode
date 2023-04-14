@@ -16,8 +16,6 @@ end
 
 local ico_friend_indicator_scoreboard = surface.GetTextureID("vgui/ico_friend_indicator_scoreboard")
 
-CreateClientConVar("tf_scoreboard_text_ping", "0", {FCVAR_ARCHIVE})
-
 local NameLabel = {
 	text="Name",
 	font="ScoreboardSmallest",

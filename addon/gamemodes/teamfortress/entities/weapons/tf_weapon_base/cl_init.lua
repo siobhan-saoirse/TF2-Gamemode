@@ -349,23 +349,25 @@ usermessage.Hook("TF2ShellEject", function(msg)
 	if IsValid(w) then
 		if (string.find(w:GetClass(),"smg") or string.find(w:GetClass(),"pistol") or string.find(w:GetClass(),"revolver")) then 
 			--PrintTable(self.CModel:GetAttachments())
-			if (w.CModel:GetAttachment(w.CModel:LookupAttachment("eject_brass"))) then
-				local effectdata = EffectData()
-				if (LocalPlayer():ShouldDrawLocalPlayer()) then
+			if (IsValid(w.CModel)) then
+				if (w.CModel:GetAttachment(w.CModel:LookupAttachment("eject_brass"))) then
+					local effectdata = EffectData()
+					if (LocalPlayer():ShouldDrawLocalPlayer()) then
 
-					effectdata:SetEntity( w.Owner:GetViewModel() )
-					effectdata:SetOrigin( w.WModel:GetAttachment(w.WModel:LookupAttachment("eject_brass")).Pos )
-					effectdata:SetAngles( Angle(w.WModel:GetAttachment(w.WModel:LookupAttachment("eject_brass")).Ang.x,w.WModel:GetAttachment(w.WModel:LookupAttachment("eject_brass")).Ang.y,w.WModel:GetAttachment(w.CModel:LookupAttachment("eject_brass")).Ang.z) )
+						effectdata:SetEntity( w.Owner:GetViewModel() )
+						effectdata:SetOrigin( w.WModel:GetAttachment(w.WModel:LookupAttachment("eject_brass")).Pos )
+						effectdata:SetAngles( Angle(w.WModel:GetAttachment(w.WModel:LookupAttachment("eject_brass")).Ang.x,w.WModel:GetAttachment(w.WModel:LookupAttachment("eject_brass")).Ang.y,w.WModel:GetAttachment(w.CModel:LookupAttachment("eject_brass")).Ang.z) )
 
-				else
+					else
 
-					effectdata:SetEntity( w.Owner:GetViewModel() )
-					effectdata:SetOrigin( w.CModel:GetAttachment(w.CModel:LookupAttachment("eject_brass")).Pos )
-					effectdata:SetAngles( Angle(w.CModel:GetAttachment(w.CModel:LookupAttachment("eject_brass")).Ang.x,w.CModel:GetAttachment(w.CModel:LookupAttachment("eject_brass")).Ang.y,w.CModel:GetAttachment(w.CModel:LookupAttachment("eject_brass")).Ang.z) )
+						effectdata:SetEntity( w.Owner:GetViewModel() )
+						effectdata:SetOrigin( w.CModel:GetAttachment(w.CModel:LookupAttachment("eject_brass")).Pos )
+						effectdata:SetAngles( Angle(w.CModel:GetAttachment(w.CModel:LookupAttachment("eject_brass")).Ang.x,w.CModel:GetAttachment(w.CModel:LookupAttachment("eject_brass")).Ang.y,w.CModel:GetAttachment(w.CModel:LookupAttachment("eject_brass")).Ang.z) )
 
+					end
+					util.Effect( "ShellEject", effectdata )
 				end
-				util.Effect( "ShellEject", effectdata )
-			end
+			end 
 		end
 	end
 end)

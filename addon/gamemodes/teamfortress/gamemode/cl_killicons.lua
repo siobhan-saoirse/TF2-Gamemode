@@ -205,7 +205,7 @@ prop_physics = "d_hl_physics",
 
 -- STOP MAKING THESE MOTHERFUCKING NEXTBOTS YOU FAHGET!!! (no homophobia, just mocking those idiots)
 npc_obunga = "d_vehicle",
-npc_quandale = "d_vehicle",
+npc_quandale = "d_vehicle", 
 npc_sanic = "d_vehicle", 
 npc_lwsky = "d_mannpower_plague",
 }
