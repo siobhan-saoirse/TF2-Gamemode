@@ -345,28 +345,51 @@ usermessage.Hook("SendPlayerDominations", function(um)
 	end
 end)
 
-local function DoHealthBonusEffect(ent, positive)
+local function DoHealthBonusEffect(ent, positive, islargerthan100)
 	if not IsValid(ent) then return end
-	
+	if (!islargerthan100) then 
+		islargerthan100 = false
+	end
+
 	local col = "red"
 	if ent:EntityTeam()==TEAM_BLU then col = "blu" end
 	if ent:EntityTeam()==TF_TEAM_PVE_INVADERS then col = "blu" end
 	
 	local pos = ent:GetPos() + Vector(0,0,75) + math.Rand(0,4) * Angle(math.Rand(-180,180),math.Rand(-180,180),0):Forward()
-	
-	if positive then
-		ParticleEffect("healthgained_"..col, pos, Angle(0,0,0))
+	if (ent:IsPlayer()) then
+		pos = ent:GetPos() + ent:GetCurrentViewOffset()
+	end
+
+	if (ent:IsMiniBoss()) then
+		if positive then
+			if (islargerthan100) then
+				ParticleEffect("healthgained_"..col.."_giant", pos, Angle(0,0,0))
+			else
+				ParticleEffect("healthgained_"..col.."_large", pos, Angle(0,0,0))
+			end
+		else
+			if (islargerthan100) then
+				ParticleEffect("healthlost_"..col.."_giant", pos, Angle(0,0,0))
+			else
+				ParticleEffect("healthlost_"..col.."_large", pos, Angle(0,0,0))
+			end
+		end
 	else
-		ParticleEffect("healthlost_"..col, pos, Angle(0,0,0))
+		if positive then
+			ParticleEffect("healthgained_"..col, pos, Angle(0,0,0))
+		else
+			ParticleEffect("healthlost_"..col, pos, Angle(0,0,0))
+		end
 	end
 end
 
 usermessage.Hook("PlayerHealthBonusEffect", function(um)
 	local ent = GetPlayerByUserID(um:ReadLong())
 	local positive = um:ReadBool()
+	local healnumber = um:ReadBool()
 	
 	if ent ~= LocalPlayer() or ent:ShouldDrawLocalPlayer() then
-		DoHealthBonusEffect(ent, positive)
+		DoHealthBonusEffect(ent, positive, healnumber)
 	end
 end)
 

@@ -26,13 +26,19 @@ end
 
 function ENT:InitEffects()
 	local effect = ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner()))
-	ParticleEffectAttach("rockettrail", PATTACH_POINT_FOLLOW, self, self:LookupAttachment("trail"))
-	
-	if self:GetOwner():GetClass() == "eyeball_boss" then
-		ParticleEffectAttach("eyeboss_projectile", PATTACH_POINT_FOLLOW, self, self:LookupAttachment("trail"))
+	-- gotta love the accuracy :P
+	if (GAMEMODE:EntityTeam(self:GetOwner()) != TEAM_RED and GAMEMODE:EntityTeam(self:GetOwner()) != TEAM_BLU) then
+		ParticleEffectAttach("rockettrail_underwater", PATTACH_POINT_FOLLOW, self, self:LookupAttachment("trail"))
+	else
+		ParticleEffectAttach("rockettrail", PATTACH_POINT_FOLLOW, self, self:LookupAttachment("trail"))
 	end
+	
 	if self.dt.Critical then
-		ParticleEffectAttach("critical_rocket_"..effect, PATTACH_POINT_FOLLOW, self, self:LookupAttachment("trail"))
+		if (GAMEMODE:EntityTeam(self:GetOwner()) != TEAM_RED and GAMEMODE:EntityTeam(self:GetOwner()) != TEAM_BLU) then
+			ParticleEffectAttach("eyeboss_projectile", PATTACH_POINT_FOLLOW, self, self:LookupAttachment("trail"))
+		else
+			ParticleEffectAttach("critical_rocket_"..effect, PATTACH_POINT_FOLLOW, self, self:LookupAttachment("trail"))
+		end
 	end
 end
 

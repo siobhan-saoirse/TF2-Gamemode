@@ -733,7 +733,9 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 	elseif IsValid(bot.TargetEnt) then
 		-- move to our target
 		local distance = bot.TargetEnt:GetPos():Distance(bot:GetPos())
-		bot.botPos = bot.TargetEnt:GetPos()
+		if (ent:IsPlayer()) then
+			pos = ent:GetPos() + ent:GetCurrentViewOffset() + math.Rand(0,4) * Angle(math.Rand(-180,180),math.Rand(-180,180),0):Forward()
+		end
 
 		-- back up if the target is really close
 		-- TODO: find a random spot rather than trying to back up into what could just be a wall
@@ -956,6 +958,8 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 		local controller = bot.ControllerBot
 		local lerpc = FrameTime() * 8
 
+		bot.ControllerBot.PosGen = bot.botPos
+
 		if bot:GetPos():Distance(curgoal.pos) < 50 * bot:GetModelScale() then
 			bot.LastSegmented = CurTime()
 			if bot.LastPath[bot.CurSegment + 1] then
@@ -1000,6 +1004,8 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			local shouldvegoneforthehead = bot.TargetEnt:EyePos()
 			local bone = 1
 			shouldvegoneforthehead = bot.TargetEnt:GetBonePosition(bone)
+
+			bot.botPos = bot.TargetEnt:GetPos()
 
 			local lerp = 1.2
 			if bot.Difficulty == 0 then

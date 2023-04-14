@@ -175,6 +175,13 @@ function meta:GetMaxOverheal()
 	return h
 end
 
+function meta:IsMiniBoss()
+	if (string.find(self:GetModel(),"_boss.mdl")) then
+		return true
+	else
+		return false
+	end
+end
 function meta:GiveHealth(c, is_fraction, allow_overheal)
 	if c==0 then return 0 end
 	

@@ -54,19 +54,18 @@ function ENT:Initialize()
 				if (table.Count(self.spawnsblu) == 0) then
 					spawn = self
 				end
-				bot:SetPos(spawn:GetPos())
+				bot:SetPos(spawn:GetPos() + Vector(0,0,45))
 				table.insert(self.bots,bot) 
 				bot:SetOwner(self)
 				bot:Spawn()
-				ParticleEffect("teleportedout_blue", self:GetPos(), self:GetAngles(), bot)
 				bot:EmitSound("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav",85,100)
-				ParticleEffect("teleportedin_blue", bot:GetPos(), bot:GetAngles(), bot)
 				bot.TargetEnt = table.Random(team.GetPlayers(TEAM_RED))
 				print("Creating robot #"..bot:EntIndex())
 			else
 				print("We have reached the limits! Not spawning MVM bots...")
 			end
 		end
+		ParticleEffect("teleportedin_blue", self:GetPos(), self:GetAngles(), self)
 	end)
 end
 

@@ -2597,11 +2597,13 @@ function GM:HealPlayer(healer, pl, h, effect, allowoverheal)
 			umsg.Start("PlayerHealthBonusEffect")
 				umsg.Long(pl:UserID())
 				umsg.Bool(h>0)
+				umsg.Bool(h>100)
 			umsg.End()
 		else
 			umsg.Start("EntityHealthBonusEffect")
 				umsg.Entity(pl)
 				umsg.Bool(h>0)
+				umsg.Bool(h>100)
 			umsg.End()
 		end
 	end
