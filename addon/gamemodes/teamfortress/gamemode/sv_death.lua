@@ -444,7 +444,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		
 		local item = ents.Create("npc_tf_zombie_old")
 		if (IsValid(item)) then
-			local a, b = ply:WorldSpaceAABB()
+			local a, b = ply:WorldSpaceAABB() 
 			item:SetPos((a+b) * 0.5)
 			item.playerclassdefined = true
 			item.playerclass = ply.playerclass

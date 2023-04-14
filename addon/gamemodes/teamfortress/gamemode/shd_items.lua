@@ -19,7 +19,7 @@ local classtranslate = {
 	["tf_weapon_rocketlauncher_directhit"] = "tf_weapon_rocketlauncher_dh",
 	["tf_weapon_handgun_scout_primary"] = "tf_weapon_handgun_scout",
 	["tf_weapon_bet_rocketlauncher"] = "tf_weapon_rocketlauncher_qrl",
-}
+} 
 
 -- Adds an unique number before each attribute name so we can enumerate attributes in the right order
 local function FormatAttributesBlock(a, str)

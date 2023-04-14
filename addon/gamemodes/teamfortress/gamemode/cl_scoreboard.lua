@@ -31,7 +31,7 @@ function GM:ScoreboardHide()
 	if Scoreboard then
 		Scoreboard:SetVisible(false)
 	end
-end
+end 
 
 function GM:HUDDrawScoreBoard()
 end

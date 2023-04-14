@@ -263,6 +263,12 @@ function PANEL:Paint()
 	
 	tab2 = team.GetPlayers(TEAM_NEUTRAL)
 	num2 = #tab2
+	tab3 = team.GetPlayers(TEAM_FRIENDLY)
+	num3 = #tab3
+	tab4 = team.GetPlayers(TEAM_GREEN)
+	num4 = #tab4
+	tab5 = team.GetPlayers(TEAM_YELLOW)
+	num5 = #tab5
 
 	if num > 0 then
 		SpectatorsInQueue.pos = {115*Scale, 358*Scale}
@@ -275,7 +281,7 @@ function PANEL:Paint()
 		for k,v in ipairs(tab2) do
 			t[k] = v:GetName()
 		end
-		t = string.Implode(", ", t)
+		t = string.Implode(", ", t) 
 		
 		--[[if num == 1 then
 			SpectatorsInQueue.text = tf_lang.GetFormatted("#TF_Arena_ScoreBoard_Spectator", num, t)
@@ -288,7 +294,6 @@ function PANEL:Paint()
 		else
 			SpectatorsInQueue.text = "Neutral: "..t
 		end
-		
 		draw.Text(SpectatorsInQueue)
 	end
 	

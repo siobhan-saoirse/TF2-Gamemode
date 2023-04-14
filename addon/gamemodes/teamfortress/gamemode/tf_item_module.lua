@@ -217,7 +217,7 @@ function ITEM:InitAttributes(owner, attributes)
 	if CLIENT then
 		HudInspectPanel:Update()
 		self.FormattedAttributes = nil
-		if (IsValid(self.Owner) and IsValid(self.Owner:GetActiveWeapon())) then
+		if (IsValid(self.Owner:GetActiveWeapon())) then
 			if not self:IsWeapon() or self==self.Owner:GetActiveWeapon() then
 				self:ResetParticles()
 			end
@@ -732,7 +732,7 @@ usermessage.Hook("TF_SetExtraAttributes", function(msg)
 end)
 
 hook.Add("Think", "TFCheckUpdateItems", function()
-	for _,v in pairs(ents.FindByClass("tf_*")) do
+	for _,v in pairs(ents.GetAll()) do
 		if v.IsRootLocator and not IsValid(v:GetParent()) then
 			v:Remove()
 		elseif v.CheckUpdateItem then

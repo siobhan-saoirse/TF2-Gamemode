@@ -2187,9 +2187,9 @@ function GM:PlayerSpawn(ply)
 			if (v:GetName() == "cam_black") then
 				v:Fire("Disable","",0)
 			end
-		end
+		end 
 	end
-	ply:SetGravity(0)
+	ply:SetGravity(0) 
 	if ply.CPPos and ply.CPAng then
 		ply:SetPos(ply.CPPos) 
 		ply:SetEyeAngles(ply.CPAng)

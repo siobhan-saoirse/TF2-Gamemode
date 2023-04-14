@@ -17,7 +17,7 @@ local TEXT_ALIGN_CENTER = TEXT_ALIGN_CENTER
 
 local Colors = Colors
 
-module("tf_draw")
+module("tf_draw") 
 
 -- Useful drawing functions
 

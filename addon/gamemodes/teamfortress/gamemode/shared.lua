@@ -1269,7 +1269,7 @@ hook.Add("Think", "PlayerStuff", function()
 			
 			if pl:WaterLevel() >= 2 or --[[(CurTime() - pl.anim_JumpStartTime > 0.2 and]] pl:OnGround() --[[)]] then
 				pl.anim_Jumping = false
-				pl.anim_GroundTime = nil
+				pl.anim_GroundTime = nil 
 				
 				if pl:OnGround() then
 					pl:AnimRestartGesture(GESTURE_SLOT_JUMP, ACT_MP_JUMP_LAND, true)

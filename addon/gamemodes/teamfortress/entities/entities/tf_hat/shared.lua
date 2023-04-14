@@ -273,12 +273,14 @@ if CLIENT then
 end
 
 hook.Add( "PlayerSwitchWeapon", "SetTF2Hands", function( ply, oldWeapon, newWeapon )
-	if (!ply:IsHL2() and !ply:IsL4D()) then
-		timer.Simple(0.1, function()
-		
-			GAMEMODE:PlayerSetHandsModel( ply, ply:GetHands() )
+	if SERVER then
+		if (!ply:IsHL2() and !ply:IsL4D()) then
+			timer.Simple(0.1, function()
+			
+				GAMEMODE:PlayerSetHandsModel( ply, ply:GetHands() )
 
-		end)
+			end)
+		end
 	end
 end)
 

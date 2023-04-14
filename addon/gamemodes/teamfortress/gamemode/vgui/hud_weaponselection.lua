@@ -156,7 +156,7 @@ specialslots["gmod_tool"] = 6
 local physgunIcon = Material("entities/weapon_physgun.png")
 DEFAULT_ICONS["weapon_physgun"] = physgunIcon
 
-function PANEL:UpdateLoadout()
+function PANEL:UpdateLoadout()  
 	self.Loadout = {}
 	
 	local maxslot = 0
