@@ -449,7 +449,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 			item.playerclassdefined = true
 			item.playerclass = ply.playerclass
 			item:Spawn()
-		end
+		end 
 	end
 	if (IsValid(ply.ControllingPlayer)) then
 		if (ply.ControllingPlayer.WasTFBot) then

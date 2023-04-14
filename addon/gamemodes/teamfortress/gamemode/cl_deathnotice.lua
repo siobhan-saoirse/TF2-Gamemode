@@ -20,9 +20,9 @@ local hud_deathnotice_time_local = CreateClientConVar("hud_deathnotice_time_loca
 
 local Deaths = {}
 
-local NOTICE_NORMAL = 1
+local NOTICE_NORMAL = 1  
 local NOTICE_HUMILIATION = 2
-local NOTICE_DOMINATION = 3
+local NOTICE_DOMINATION = 3 
 local NOTICE_HUMILIATION2 = 4
 
 function TranslateKilliconName(name)

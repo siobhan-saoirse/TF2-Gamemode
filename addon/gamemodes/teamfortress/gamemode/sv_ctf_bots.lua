@@ -1111,7 +1111,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			bot.movingAway = false
 			local moveawayrange = 80
 				for k,v in ipairs(ents.FindInSphere(bot:GetPos(),moveawayrange)) do
-					if (IsValid(v) and v:IsPlayer() and v:EntIndex() != bot:EntIndex()) then
+					if (IsValid(v) and v:IsTFPlayer() and v:EntIndex() != bot:EntIndex()) then
 						local forward = bot:EyeAngles():Forward()
 						local right = bot:EyeAngles():Right()
 						local avoidVector = bot:GetPos()

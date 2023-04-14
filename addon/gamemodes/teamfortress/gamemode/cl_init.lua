@@ -52,7 +52,7 @@ include("cl_conflict.lua")
 
 include("shared.lua")
 include("cl_entclientinit.lua")
-include("cl_deathnotice.lua")
+include("cl_deathnotice.lua") 
 include("cl_scheme.lua")
 
 include("cl_player_other.lua")
@@ -1470,7 +1470,5 @@ hook.Add( "PlayerSay", "Change Team Blu", function( ply, text, public )
 		return false
 	end
 end )
-
-include("cl_hud.lua")
 
 file.Append(LOGFILE, Format("Done loading, time = %f\n", SysTime() - load_time))	

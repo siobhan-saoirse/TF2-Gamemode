@@ -14,7 +14,7 @@ function META:SetProxyVar(k, v)
 end
 
 function META:ClearProxyVars()
-	self.__ProxyVars = {}
+	self.__ProxyVars = {} 
 end
 if true then MsgN("Skipping Material Proxies") return end
 if not matproxy then
