@@ -177,14 +177,16 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 					if (v:IsPlayer()) then
 						if (ent:IsBot()) then
 							local args = {"TLK_PLAYER_HELP"}
-							if ent:Speak(args[1])  and !string.find(v:GetModel(),"/bot_") then
-								ent:DoAnimationEvent(ACT_MP_GESTURE_VC_HANDMOUTH, true)
-						
-								umsg.Start("TFPlayerVoice")
-									umsg.Entity(ent)
-									umsg.String(args[1])
-								umsg.End()
-							end
+							if (!string.find(v:GetModel(),"/bot_")) then
+								if ent:Speak(args[1]) then
+									ent:DoAnimationEvent(ACT_MP_GESTURE_VC_HANDMOUTH, true)
+							
+									umsg.Start("TFPlayerVoice")
+										umsg.Entity(ent)
+										umsg.String(args[1])
+									umsg.End()
+								end
+							end 
 						end
 						if (v:IsBot()) then
 							if (math.random(1,5) == 1 and !string.find(v:GetModel(),"/bot_")) then
@@ -322,6 +324,10 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (dmginfo:GetDamage()) * 0.5)
 	end
 	
+	if (ent:IsPlayer() and ent:IsBot() and string.find(ent:GetModel(),"_boss.mdl")) then
+		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * 0.3)
+	end
+
 	return dontscaledamage
 end
 
@@ -477,7 +483,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	if dmginfo:IsExplosionDamage() then
 		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (inflictor.BlastForceMultiplier or 1) * BlastForceMultiplier)
 	end
-	
 	if gamemode.Call("ShouldCrit", ent, inflictor, attacker, hitgroup, dmginfo) then
 		if att == ent then
 			-- Self damage, don't scale the damage, but still notify the player that they critted themselves
@@ -613,7 +618,12 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	if dmginfo:GetDamage()<1 then
 		return
 	end
-	
+	if (ent:IsPlayer() and ent.TFBot and attacker:IsTFPlayer()) then
+
+        ent.ControllerBot.LookAtTime = CurTime() + 2
+        ent.ControllerBot.LookAt = ((ent:GetPos() + VectorRand() * 128) - attacker:GetPos()):Angle()
+
+	end
 	if ent:IsTFPlayer() and attacker:IsPlayer() and attacker~=ent and dmginfo:GetDamage()>=1 then
 		--MsgFN("%s Health = %d", tostring(ent), ent:Health())
 		if attacker:Visible(ent) then

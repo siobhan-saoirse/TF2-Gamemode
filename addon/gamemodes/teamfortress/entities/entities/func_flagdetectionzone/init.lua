@@ -5,6 +5,8 @@ function ENT:Initialize()
 	self.Team = 0
 	self.Players = {}
 	self.Opened = false
+	
+	timer.Stop("Warning!")
 end
 
 function ENT:KeyValue(key,value)
@@ -34,7 +36,7 @@ function ENT:StartTouch(ent)
 				if string.find(game.GetMap(), "mvm_") then
 					for _,ply in ipairs(player.GetAll()) do
 						ply:SendLua([[surface.PlaySound("vo/mvm_bomb_alerts0"..math.random(4,5)..".mp3")]])
-						timer.Create("Warning!"..ply:EntIndex(), 3, 0, function()
+						timer.Create("Warning!", 3, 0, function()
 							ply:SendLua([[surface.PlaySound("mvm/mvm_bomb_warning.wav")]]) 
 						end)
 					end
@@ -58,9 +60,7 @@ function ENT:EndTouch(ent)
 		end
 		for k,v in pairs(ents.FindByClass("item_teamflag_mvm")) do
 			if string.find(game.GetMap(), "mvm_") then
-				for _,ply in ipairs(player.GetAll()) do
-					timer.Stop("Warning!"..ply:EntIndex())
-				end
+				timer.Stop("Warning!")
 			end
 		end
 	end

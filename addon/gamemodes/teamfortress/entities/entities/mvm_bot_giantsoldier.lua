@@ -13,5 +13,6 @@ list.Set( "NPC", "mvm_bot_giantsoldier", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot_giantsoldier",
 	Category = ENT.Category,
-	AdminOnly = true
-} )
+	--AdminOnly = true
+	AdminOnly = false
+} ) 

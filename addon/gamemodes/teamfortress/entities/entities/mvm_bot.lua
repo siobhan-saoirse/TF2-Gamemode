@@ -69,6 +69,7 @@ local function LeadBot_S_Add_Zombie(team,class,pos,ent)
 	bot.IsMVMRobot = true
 	bot.IsBoss = ent.IsBoss
 	bot.Difficulty = ent.Difficulty
+	
 	timer.Simple(0.1, function()
 		if IsValid(bot) then
 			--bot:SetPlayerClass(class) 
@@ -93,7 +94,7 @@ local function LeadBot_S_Add_Zombie(team,class,pos,ent)
 			elseif (string.find(class,"demoknight")) then
 				class = "demo"
 			end
-			ent:CustomOnInitialize(npc)
+			ent:CustomOnInitialize(bot)
 		end
 	end)
 

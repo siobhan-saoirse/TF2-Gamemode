@@ -717,7 +717,9 @@ function SWEP:Deploy()
 				end
 			end
 		else
-			owner:SetBodygroup(self:GetItemData().hide_bodygroups_deployed_only, 1)
+			if (!string.find(owner:GetModel(), "/bot_")) then
+				owner:SetBodygroup(self:GetItemData().hide_bodygroups_deployed_only, 1)
+			end
 		end
 	end
 	
@@ -1097,6 +1099,20 @@ function SWEP:PrimaryAttack(noscene)
 	if self.Owner:GetNWBool("Bonked") == true then
 		return false
 	end
+	
+	if (IsValid(self.Owner)) then
+		if (self.Owner:IsBot()) then
+			if (self.Reloading || self.StartedReloading) then
+				if (self.Owner:GetPlayerClass() == "giantrapidfiresoldier" || self.Owner:GetPlayerClass() == "giantburstsoldier" || self.Owner:GetPlayerClass() == "colonelbarrage") then
+					return false
+				end
+			end
+		end
+	end
+
+	if not self:CanPrimaryAttack() then
+		return
+	end
 	//if self.Reloading then return false end
 	
 	self.NextDeployed = nil
@@ -1111,10 +1127,6 @@ function SWEP:PrimaryAttack(noscene)
 	
 	self.Delay =  CurTime() + self.Primary.Delay
 	self.QuickDelay =  CurTime() + self.Primary.QuickDelay
-	
-	if not self:CanPrimaryAttack() then
-		return
-	end
 	
 	
 	if SERVER then
@@ -1186,7 +1198,7 @@ end
 
 function SWEP:CheckAutoReload()
 	if self then
-		if self.Owner:GetInfoNum("tf_autoreload", 1) == 1 then
+		if self.Owner:GetInfoNum("tf_autoreload", 1) == 1 || self.Owner:IsBot() then
 			if self.Owner:Alive() then
 				if self.Primary.ClipSize >= 0 and self:Ammo1() > 0 and not self:CanPrimaryAttack() then
 				--MsgFN("Deployed with empty clip, reloading")
@@ -1240,7 +1252,9 @@ function SWEP:Reload()
 						self.Owner:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_STAND, true)
 					end]]
 					self.NextReloadStart = CurTime() + (self:SequenceDuration() or self.ReloadStartTime ) 
-
+					if (self:Clip1() == 0) then
+						self.Reloading = true
+					end
 					self.Owner:GetViewModel():SetPlaybackRate(0.6)
 				else
 					if SERVER then
@@ -1254,6 +1268,9 @@ function SWEP:Reload()
 					else
 						self.Owner:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_STAND, true)
 					end]]
+					if (self:Clip1() == 0) then
+						self.Reloading = true
+					end
 					if self.ReloadTime == 0.2 then
 						self.Owner:GetViewModel():SetPlaybackRate(2)
 						self.NextReloadStart = CurTime() + (self:SequenceDuration() or self.ReloadStartTime) - 0.25
@@ -1824,6 +1841,10 @@ function SWEP:Think()
 	if not self.IsDeployed and self.NextDeployed and CurTime()>=self.NextDeployed and self:GetClass() != "tf_weapon_grapplinghook" then
 		self.IsDeployed = true
 		self.CanInspect = true
+		self:CheckAutoReload()
+	end
+
+	if (IsValid(self.Owner) and self.Owner:IsBot()) then
 		self:CheckAutoReload()
 	end
 	if not self.IsDeployed and self:GetClass() == "tf_weapon_grapplinghook" then

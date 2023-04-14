@@ -214,6 +214,9 @@ concommand.Add("tf_mvm_wins", function(ply, cmd)
 			v:SendLua([[surface.PlaySound("misc/your_team_lost.wav")]])
 			v:PrintMessage( HUD_PRINTCENTER, "The robots deployed the bomb! Game over for Mann Co!" )
 		end
+		timer.Simple(4.9, function() 
+			RunConsoleCommand("gmod_admin_cleanup")
+		end)
 	end
 end)
 

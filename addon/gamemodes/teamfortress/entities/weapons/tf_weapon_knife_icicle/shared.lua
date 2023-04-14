@@ -133,6 +133,14 @@ hook.Add("PreScaleDamage", "BackstabSetDamageIcicle", function(ent, hitgroup, dm
 				inf.Owner:GetViewModel():SetPlaybackRate(0.5)
 				inf:SetNextPrimaryFire(CurTime() + 2)
 			end)
+		elseif ent:IsPlayer() and ent:GetPlayerClass() == "colonelbarrage" then
+			inf.BaseDamage = 20
+			inf.Owner:EmitSound("player/spy_shield_break.wav", 80, 100)
+			timer.Simple(0.04, function()
+				inf:SendWeaponAnimEx(ACT_MELEE_VM_STUN)
+				inf.Owner:GetViewModel():SetPlaybackRate(0.5)
+				inf:SetNextPrimaryFire(CurTime() + 2)
+			end)
 		elseif ent:IsPlayer() and ent:GetInfoNum("tf_sentrybuster", 0) == 1 then
 			inf.BaseDamage = 20
 			inf.Owner:EmitSound("player/spy_shield_break.wav", 80, 100)

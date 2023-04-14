@@ -501,7 +501,7 @@ hook.Add("PlayerDeath", "PlayerRobotDeath", function( ply, attacker, inflictor)
 			end
 		end
 	end
-	if ply:GetPlayerClass() == "giantheavy" and ply:GetPlayerClass() == "giantscout" and  ply:GetPlayerClass() == "superscout" and ply:GetPlayerClass() == "giantdemoman" and ply:GetPlayerClass() == "giantdemoknight" and ply:GetPlayerClass() == "giantsoldier" and ply:GetPlayerClass() == "giantpyro" then
+	if ply:GetPlayerClass() == "giantheavy" and ply:GetPlayerClass() == "giantscout" and  ply:GetPlayerClass() == "superscout" and ply:GetPlayerClass() == "giantdemoman" and ply:GetPlayerClass() == "giantdemoknight" and ply:GetPlayerClass() == "giantsoldier" and ply:GetPlayerClass() == "colonelbarrage" and ply:GetPlayerClass() == "giantpyro" then
 		ply:EmitSound( "MVM.GiantCommonExplodes" ) -- Play the footsteps hunter is using
 		ply:EmitSound( "MVM.GiantCommonExplodes" ) -- Play the footsteps hunter is using
 
@@ -1775,8 +1775,8 @@ concommand.Add( "changeteam", function( pl, cmd, args )
 	if ( tonumber( args[ 1 ] ) == 0 or tonumber( args[ 1 ] ) < 0 or tonumber( args[ 1 ] ) > TEAM_FRIENDLY) then pl:ChatPrint("Invalid Team!") return end
 	if ( pl:Team() == tonumber( args[ 1 ] ) ) then return false end
 	if ( GetConVar("tf_competitive"):GetBool() and tonumber( args[ 1 ] ) == 4 ) then pl:ChatPrint("Competitive mode is on!") return end
-	if ( string.find(game.GetMap(), "mvm_") and tonumber( args[ 1 ] ) == 4 ) then pl:ChatPrint("Neutral Team is disabled!") return end
-	if ( string.find(game.GetMap(), "mvm_") and tonumber( args[ 1 ] ) == 5 ) then pl:ChatPrint("Friendlyz Team is disabled!") return end
+	if ( string.find(game.GetMap(), "mvm_") and tonumber( args[ 1 ] ) == 6 ) then pl:ChatPrint("Friendly Team is disabled!") return end
+	if ( string.find(game.GetMap(), "mvm_") and !pl:IsAdmin() and tonumber( args[ 1 ] ) == 5 ) then pl:ChatPrint("Neutral Team is disabled!") return end
 
 	if ( GetConVar("tf_disable_nonred_mvm"):GetBool() and string.find(game.GetMap(), "syn_") and tonumber( args[ 1 ] ) == 2 ) and !pl:IsAdmin() then pl:ChatPrint("Blue Team is disabled!") return end
 	if ( GetConVar("tf_disable_nonred_mvm"):GetBool() and string.find(game.GetMap(), "bb_coop_") and tonumber( args[ 1 ] ) == 2 ) and !pl:IsAdmin() then pl:ChatPrint("Blue Team is disabled!") return end

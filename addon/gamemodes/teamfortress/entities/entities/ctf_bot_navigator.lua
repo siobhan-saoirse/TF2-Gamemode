@@ -10,9 +10,11 @@ function ENT:Initialize()
 	self:SetNoDraw(true)
 	self:SetSolid( SOLID_NONE )
 	self.PosGen = nil
+	self.LookAtTime = 0
+	self.LookAt = Angle(0, 0, 0)
 end
 
-function ENT:ChasePos( options )
+function ENT:ChasePos( options ) 
 	self.P = Path("Follow")
 	self.P:SetMinLookAheadDistance(300)
 	self.P:SetGoalTolerance(20)

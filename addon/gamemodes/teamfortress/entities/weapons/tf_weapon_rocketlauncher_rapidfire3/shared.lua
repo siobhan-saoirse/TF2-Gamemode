@@ -5,7 +5,7 @@ end
 
 if CLIENT then
 
-SWEP.PrintName			= "Rapid Fire Rocket Launcher for Giant Soldier"
+SWEP.PrintName			= "Colonel Barrage Rocket Launcher"
 SWEP.Slot				= 0
 SWEP.RenderGroup 		= RENDERGROUP_BOTH
 
@@ -36,7 +36,7 @@ SWEP.ViewModel			= "models/weapons/c_models/c_soldier_arms_empty.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_rocketlauncher/c_rocketlauncher.mdl"
 SWEP.Crosshair = "tf_crosshair3"
 
-SWEP.Spawnable = true
+SWEP.Spawnable = false
 SWEP.AdminOnly = true
 SWEP.Category = "Team Fortress 2"
 
@@ -48,9 +48,9 @@ SWEP.ShootCritSound = Sound("MVM.GiantSoldierRocketShootCrit")
 SWEP.ChargeSound = Sound("Weapon_StickyBombLauncher.ChargeUp")
 SWEP.ReloadSound = Sound("")
 
-SWEP.Primary.ClipSize		= 20
+SWEP.Primary.ClipSize		= 28
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
-SWEP.Primary.Delay          = 0.4
+SWEP.Primary.Delay          = 0.2
 
 SWEP.IsRapidFire = false
 SWEP.ReloadSingle = true
@@ -66,16 +66,16 @@ SWEP.Properties = {}
 
 SWEP.ChargeTime = 2
 SWEP.MinForce = 150
-SWEP.MaxForce = 2800
+SWEP.MaxForce = 2800 * 0.4
 
 SWEP.MinAddPitch = -1
 SWEP.MaxAddPitch = -6
 
 SWEP.MinGravity = 1
 SWEP.MaxGravity = 1
-SWEP.BulletSpread = 7 
-SWEP.ReloadTime = 0.8 * -0.8
-SWEP.ReloadStartTime = 0.8 * -0.8
+SWEP.BulletSpread = 7
+SWEP.ReloadTime = 0.8 * 0.22
+SWEP.ReloadStartTime = 0.8 * 0.22
 SWEP.VM_DRAW = ACT_PRIMARY_VM_DRAW
 SWEP.VM_IDLE = ACT_PRIMARY_VM_IDLE
 SWEP.VM_PRIMARYATTACK = ACT_PRIMARY_VM_PRIMARYATTACK
@@ -154,19 +154,19 @@ function SWEP:ShootProjectile()
 		rocket:SetPos(self:ProjectileShootPos())
 		local ang = self.Owner:EyeAngles()
 		
-		rocket:SetAngles(ang)
+		rocket:SetAngles(ang + Angle(math.random(-5,5),math.random(-5,5),math.random(-5,5)))
 		if self:Critical() then
 			rocket.critical = true
 		end
-		
 		for k,v in pairs(self.Properties) do
 			rocket[k] = v
 		end
 		
 		rocket:SetOwner(self.Owner)
+		rocket.BaseDamage = 95 * 1.5
+		rocket.BaseSpeed = 1100 * 0.4
 		self:InitProjectileAttributes(rocket)
 		
-		rocket.BaseSpeed = 1100 * 0.65
 		rocket:Spawn()
 		rocket:Activate() 
 	end

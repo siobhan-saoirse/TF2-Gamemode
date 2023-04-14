@@ -210,8 +210,8 @@ end
 
 function ENT:Capture()
 	self:Return(true)
-	self.Prop2 :SetNoDraw(false)
-	self.Prop2 :SetNoDraw(true)
+	self.Prop2:SetNoDraw(false)
+	self.Prop2:SetNoDraw(true)
 	if IsValid(self.Carrier) then
 		self:TriggerOutput("OnCapture", self.Carrier)
 	end
@@ -249,7 +249,7 @@ function ENT:Pickup(ply)
 		
 		self:SetNWBool("TimerActive", false)
 		self.NextReturn = nil
-		
+	
 		self.State = 1
 		self.Trail:Fire("Start")
 		self.Carrier = ply
@@ -273,7 +273,7 @@ function ENT:Pickup(ply)
 	
 		timer.Create("DropIfCarrierNotAlive", 0.001, 0, function()
 			if ply:Alive() then
-				if !string.find(ply:GetModel(),"_boss") then
+				if !string.find(ply:GetModel(),"_boss.mdl") then
 					ply:SetClassSpeed(ply:GetPlayerClassTable().Speed * 0.5)		
 				end  
 				if ply:HasGodMode() then
@@ -283,11 +283,9 @@ function ENT:Pickup(ply)
 				end
 			end
 	
-			ply:SetClassSpeed(ply:GetPlayerClassTable().Speed - 60) 
-
 			if not ply:Alive() then
 				ply:Freeze(false)
-				ply :SetNoDraw(false)
+				ply:SetNoDraw(false)
 				self:SetNoDraw(false)
 				timer.Stop("Warning1")
 				timer.Stop("Warning2")
@@ -299,15 +297,7 @@ function ENT:Pickup(ply)
 				timer.Stop("CarrierGetsResistance") 
 				for k,v in pairs(player.GetAll()) do 
 					if not ply:IsFriendly(v) then
-						if v:GetPlayerClass() == "heavy" then
-							v:EmitSound("vo/heavy_mvm_bomb_destroyed0"..math.random(1,2)..".wav", 80, 100, 1, CHAN_VOICE)
-						elseif v:GetPlayerClass() == "medic" then
-							v:EmitSound("vo/medic_mvm_bomb_destroyed0"..math.random(1,2)..".wav", 80, 100, 1, CHAN_VOICE)
-						elseif v:GetPlayerClass() == "soldier" then
-							v:EmitSound("vo/soldier_mvm_bomb_destroyed0"..math.random(1,2)..".wav", 80, 100, 1, CHAN_VOICE)
-						elseif v:GetPlayerClass() == "engineer" then
-							v:EmitSound("vo/engineer_mvm_bomb_destroyed0"..math.random(1,2)..".wav", 80, 100, 1, CHAN_VOICE)
-						end
+						v:Speak("TLK_MVM_BOMB_DROPPED")
 					end
 				end
 				self:Drop()
@@ -319,21 +309,15 @@ function ENT:Pickup(ply)
 			if ply:GetPlayerClass() == "pyro" then
 				ply:EmitSound("vo/mvm/norm/pyro_mvm_laughlong01.wav", 80, 100)
 			end
-				ParticleEffect( "mvm_levelup1", ply:GetPos() + (Vector(0, 0, 70) * ply:GetModelScale()) , ply:GetAngles(), ply )
-			ply:Freeze(true)
+			ParticleEffect( "mvm_levelup1", ply:GetPos() + (Vector(0, 0, 70) * ply:GetModelScale()) , ply:GetAngles(), ply )
 			ply:EmitSound("mvm/mvm_warning.wav", 0, 100)
-			ply:ConCommand("tf_thirdperson")
-			ply:DoAnimationEvent(ACT_DOD_CROUCH_AIM_C96, true)
+			--ply:TFTaunt(tostring(ply:GetActiveWeapon():GetSlot() + 1))
 			timer.Create("CarrierGetsHealed", 0.5, 0, function()
 				ply:SetArmor( 150 )
 			end)
 		
 		end)
 		
-		timer.Create("WarningEnd1", 10 + ply:SequenceDuration(ply:LookupSequence("taunt01")), 1, function()
-			ply:Freeze(false)
-			ply:ConCommand("tf_firstperson")
-		end)
 		timer.Create("Warning2", 45, 1, function()
 			if ply:GetPlayerClass() == "pyro" then
 				ply:EmitSound("vo/mvm/norm/pyro_mvm_laughlong01.wav", 80, 100)
@@ -344,11 +328,9 @@ function ENT:Pickup(ply)
 				ParticleEffect( "mvm_levelup2", ply:GetPos() + Vector(0, 0, 70) , ply:GetAngles(), ply )
 			end
 			ply:EmitSound("mvm/mvm_warning.wav", 0, 100)
-			ply:Freeze(true)
-			ply:ConCommand("tf_thirdperson")
-			ply:DoAnimationEvent(ACT_DOD_CROUCH_AIM_C96, true)
+			--ply:TFTaunt(tostring(ply:GetActiveWeapon():GetSlot() + 1))
 			timer.Create("CarrierGetsResistance", 1, 0, function()
-				GAMEMODE:HealPlayer(self.Carrier, self.Carrier, 30, true, true) 
+				GAMEMODE:HealPlayer(self.Carrier, self.Carrier, 8, true, true) 
 			end)
 			for k,v in pairs(player.GetAll()) do
 				if not v:IsFriendly(ply) then
@@ -364,10 +346,6 @@ function ENT:Pickup(ply)
 				end
 			end
 		end)
-		timer.Create("WarningEnd2", 45 + ply:SequenceDuration(ply:LookupSequence("taunt01")), 1, function()
-			ply:ConCommand("tf_firstperson")
-			ply:Freeze(false)
-		end)
 		timer.Create("Warning3", 65, 1, function()
 			if ply:GetPlayerClass() == "pyro" then
 				ply:EmitSound("vo/mvm/norm/pyro_mvm_laughlong01.wav", 80, 100)
@@ -378,9 +356,7 @@ function ENT:Pickup(ply)
 				ParticleEffect( "mvm_levelup3", ply:GetPos() + Vector(0, 0, 70) , ply:GetAngles(), ply )
 			end
 			ply:EmitSound("mvm/mvm_warning.wav", 0, 100)
-			ply:Freeze(true)
-			ply:ConCommand("tf_thirdperson")
-			ply:DoAnimationEvent(ACT_DOD_CROUCH_AIM_C96, true)
+			--ply:TFTaunt(tostring(ply:GetActiveWeapon():GetSlot() + 1))
 			for _,pl in pairs(player.GetAll()) do
 				if not pl:IsFriendly(ply) then
 					if pl:GetPlayerClass() == "heavy" then
@@ -431,15 +407,7 @@ function ENT:Drop(nosound)
 		self:GetNWEntity("prop2", self):SetNoDraw(false)
 		for _, ply in pairs(player.GetAll()) do
 			if ply:Team() == self.TeamNum then
-				if ply:GetPlayerClass() == "soldier" then
-					ply:EmitSound("vo/soldier_mvm_bomb_destroyed0"..math.random(1,2)..".wav", 80, 100)
-				elseif ply:GetPlayerClass() == "heavy" then
-					ply:EmitSound("vo/heavy_mvm_bomb_destroyed0"..math.random(1,2)..".wav", 80, 100)
-				elseif ply:GetPlayerClass() == "medic" then
-					ply:EmitSound("vo/medic_mvm_bomb_destroyed0"..math.random(1,2)..".wav", 80, 100)
-				elseif ply:GetPlayerClass() == "engineer" then
-					ply:EmitSound("vo/engineer_mvm_bomb_destroyed0"..math.random(1,2)..".wav", 80, 100)
-				end
+				ply:Speak("TLK_MVM_BOMB_DROPPED")
 			end
 		end
 	end

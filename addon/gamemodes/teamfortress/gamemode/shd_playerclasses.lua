@@ -16,6 +16,642 @@ local randomizerit = CreateConVar( "tf_randomizer_class_specific", "0", {FCVAR_S
 local dgmod = CreateConVar( "tf_disable_fun_classes", "0", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY, FCVAR_ARCHIVE} )
 local botrobot = CreateConVar( "tf_bots_are_robots", "0", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_NOTIFY, FCVAR_ARCHIVE} )
 
+local function UpgradePlayerIfBot(self)
+	if (self:IsBot() and self:Team() != TEAM_RED and string.find(game.GetMap(),"mvm_")) then return end
+	if (self:IsBot() and self:Team() != TEAM_RED and !string.find(game.GetMap(),"mvm_")) then return end
+	if (!self:IsBot()) then return end 
+	if SERVER then
+
+			if self:GetPlayerClass() == "scout" then
+				self:SetHealth(125 + 150)
+				self:SetMaxHealth(125 + 150)
+				self:SetArmor(2000)
+				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
+					if self:Alive() then
+						self:ResetClassSpeed()
+						self:SetClassSpeed(self:GetPlayerClassTable().Speed * 1.2)
+					else
+						timer.Stop("Speed"..self:EntIndex())
+						return
+					end
+				end)
+			elseif self:GetPlayerClass() == "soldier" then
+				self:SetHealth(200 + 150)
+				self:SetMaxHealth(200 + 150)
+				self:SetArmor(2950)
+				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
+					if self:Alive() then
+						self:ResetClassSpeed()
+						self:SetClassSpeed(self:GetPlayerClassTable().Speed * 1.2)
+					else
+						timer.Stop("Speed"..self:EntIndex())
+						return
+					end
+				end)
+			elseif self:GetPlayerClass() == "gmodplayer" then
+				self:SetHealth(100 + 350)
+				self:SetMaxHealth(100 + 350)
+				self:SetArmor(2950)
+				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
+					if self:Alive() then
+						self:ResetClassSpeed()
+						self:SetClassSpeed(self:GetPlayerClassTable().Speed * 1.2)
+					else
+						timer.Stop("Speed"..self:EntIndex())
+						return
+					end
+				end)
+			elseif self:GetPlayerClass() == "pyro" then
+				self:SetHealth(175 + 150)
+				self:SetMaxHealth(175 + 150)
+				self:SetArmor(2220)
+				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
+					if self:Alive() then
+						self:ResetClassSpeed()
+						self:SetClassSpeed(self:GetPlayerClassTable().Speed * 1.2)
+					else
+						timer.Stop("Speed"..self:EntIndex())
+						return
+					end
+				end)
+			elseif self:GetPlayerClass() == "demoman" then
+				self:SetHealth(150 + 175)
+				self:SetMaxHealth(150 + 175)
+				self:SetArmor(2220)
+				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
+					if self:Alive() then
+						self:ResetClassSpeed()
+						self:SetClassSpeed(self:GetPlayerClassTable().Speed * 1.2)
+					else
+						timer.Stop("Speed"..self:EntIndex())
+						return
+					end
+				end)
+			elseif self:GetPlayerClass() == "heavy" then
+				self:SetHealth(300 + 175)
+				self:SetMaxHealth(300 + 175)
+				self:SetArmor(2320)
+				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
+					if self:Alive() then
+						self:ResetClassSpeed()
+						self:SetClassSpeed(self:GetPlayerClassTable().Speed * 1.2)
+					else
+						timer.Stop("Speed"..self:EntIndex())
+						return
+					end
+				end)
+			elseif self:GetPlayerClass() == "engineer" then
+				self:SetHealth(125 + 150)
+				self:SetMaxHealth(125 + 150)
+				self:SetArmor(2420)
+				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
+					if self:Alive() then
+						self:ResetClassSpeed()
+						self:SetClassSpeed(self:GetPlayerClassTable().Speed * 1.2)
+					else
+						timer.Stop("Speed"..self:EntIndex())
+						return
+					end
+				end)
+			elseif self:GetPlayerClass() == "medic" then
+				self:SetHealth(175 + 150)
+				self:SetMaxHealth(175 + 150)
+				self:SetArmor(2620)
+				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
+					if self:Alive() then
+						self:ResetClassSpeed()
+						self:SetClassSpeed(self:GetPlayerClassTable().Speed * 1.2)
+					else
+						timer.Stop("Speed"..self:EntIndex())
+						return
+					end
+				end)
+			elseif self:GetPlayerClass() == "sniper" then
+				self:SetHealth(125 + 150)
+				self:SetMaxHealth(125 + 150)
+				self:SetArmor(2420)
+				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
+					if self:Alive() then
+						self:ResetClassSpeed()
+						self:SetClassSpeed(self:GetPlayerClassTable().Speed * 1.2)
+					else
+						timer.Stop("Speed"..self:EntIndex())
+						return
+					end
+				end)
+			elseif self:GetPlayerClass() == "spy" then
+				self:SetHealth(125 + 150)
+				self:SetMaxHealth(125 + 150)
+				self:SetArmor(2920)
+				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
+					if self:Alive() then
+						self:ResetClassSpeed()
+						self:SetClassSpeed(self:GetPlayerClassTable().Speed * 1.2)
+					else
+						timer.Stop("Speed"..self:EntIndex())
+						return
+					end
+				end)
+			end
+			currselfweapon = self:GetActiveWeapon()
+			if currselfweapon:GetClass() == "tf_weapon_rocketlauncher" then
+				currselfweapon.Primary.Delay          = 0.5
+				currselfweapon.Primary.ClipSize		= 12
+				currselfweapon.ReloadTime = 0.2
+				self.AmmoMax[TF_PRIMARY] = 120
+				self:ConCommand("tf_upgradewep05cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $300 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_particle_launcher" then
+				currselfweapon.Primary.Delay          = 0.5
+				currselfweapon.Primary.ClipSize		= 12
+				currselfweapon.ReloadTime = 0.2
+				self.AmmoMax[TF_PRIMARY] = 120
+				self:ConCommand("tf_upgradewep05cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $300 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_rocketlauncher_bbox" then
+				currselfweapon.Primary.Delay          = 0.5
+				currselfweapon.Primary.ClipSize		= 12
+				currselfweapon.ReloadTime = 0.2
+				self:ConCommand("tf_upgradewep05cliselfonly")
+				self.AmmoMax[TF_PRIMARY] = 120
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $300 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_rocketlauncher_qrl" then
+				currselfweapon.Primary.Delay          = 0.5
+				currselfweapon.Primary.ClipSize		= 12
+				currselfweapon.ReloadTime = 0.2
+				self:ConCommand("tf_upgradewep05cliselfonly")
+				self.AmmoMax[TF_PRIMARY] = 120
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $300 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_rocketlauncher_dh" then
+				currselfweapon.Primary.Delay          = 0.5
+				currselfweapon.Primary.ClipSize		= 12
+				currselfweapon.ReloadTime = 0.2
+				self:ConCommand("tf_upgradewep05cliselfonly")
+				self.AmmoMax[TF_PRIMARY] = 120
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $300 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_rocketlauncher_airstrike" then
+				currselfweapon.Primary.Delay          = 0.2
+				currselfweapon.Primary.ClipSize		= 12
+				currselfweapon.ReloadTime = 0.2
+				self:ConCommand("tf_upgradewep03cliselfonly")
+				self.AmmoMax[TF_PRIMARY] = 120
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $300 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_minigun" then
+				currselfweapon.Primary.Delay          = 0.06
+				--currselfweapon.BaseDamage = 18
+				currselfweapon.MaxDamageRampUp = 0.75
+				currselfweapon.MaxDamageFalloff = 0.6
+				self.AmmoMax[TF_PRIMARY] = 600
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $300 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_minigun_assaultcannon" then
+				currselfweapon.Primary.Delay          = 0.06
+				--currselfweapon.BaseDamage = 18
+				currselfweapon.MaxDamageRampUp = 0.75
+				currselfweapon.MaxDamageFalloff = 0.6
+				self.AmmoMax[TF_PRIMARY] = 400
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $300 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_pda_engineer_build" then
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $300 dollars for their existing Buildings" )
+				for k,v in pairs(selfs.FindByClass("obj_sselfrygun")) do
+					if v:GetOwner() == self then
+						v.FireRate = 0.065
+						v.MaxAmmo1 = 1200
+						v.MaxAmmo2 = 30
+						v:SetHealth(862)
+						v:SetMaxHealth(862)
+					end
+				end
+				for k,v in pairs(selfs.FindByClass("obj_dispenser")) do
+					if v:GetOwner() == self then
+						v.Range = 320
+						v:SetHealth(862)
+						v:SetMaxHealth(862)
+					end
+				end
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_minifun" then
+				currselfweapon.Primary.Delay          = 0.06
+				--currselfweapon.BaseDamage = 18
+				self.AmmoMax[TF_PRIMARY] = 400
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $300 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_minigun_tomislav" then
+				currselfweapon.Primary.Delay          = 0.06
+				--currselfweapon.BaseDamage = 14
+				self.AmmoMax[TF_PRIMARY] = 400
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $300 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_minigun_burner" then
+				currselfweapon.Primary.Delay          = 0.06
+				--currselfweapon.BaseDamage = 18
+				self.AmmoMax[TF_PRIMARY] = 400
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $300 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_minigun_bb" then
+				currselfweapon.Primary.Delay          = 0.06
+				--currselfweapon.BaseDamage = 18
+				self.AmmoMax[TF_PRIMARY] = 400
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $300 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_minigun_ic" then
+				currselfweapon.Primary.Delay          = 0.06
+				--currselfweapon.BaseDamage = 18
+				self.AmmoMax[TF_PRIMARY] = 400
+				
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $300 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_shotgun" then
+				currselfweapon.Primary.Delay          = 0.3
+				--currselfweapon.BaseDamage = 6
+				currselfweapon.Primary.ClipSize         = 12
+				currselfweapon.ReloadTime = 0.2
+				self:ConCommand("tf_upgradewep03cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $600 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_revolver" then
+				currselfweapon.Primary.Delay          = 0.3
+				--currselfweapon.BaseDamage = 6
+				currselfweapon.Primary.ClipSize         = 11
+				currselfweapon.ReloadTime = 0.71
+				self.AmmoMax[TF_PRIMARY] = 400
+				self:ConCommand("tf_upgradewep03cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $600 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_sselfry_revenge" then
+				currselfweapon.Primary.Delay          = 0.3
+				--currselfweapon.BaseDamage = 6
+				currselfweapon.Primary.ClipSize         = 12
+				currselfweapon.ReloadTime = 0.2
+				self:ConCommand("tf_upgradewep03cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $600 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_shotgun_imalreadywidowmaker" then
+				currselfweapon.Primary.Delay          = 0.3
+				--currselfweapon.BaseDamage = 6
+				currselfweapon.ReloadTime = 0.2
+				self:ConCommand("tf_upgradewep03cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $600 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_shotgun_hwg" then
+				currselfweapon.Primary.Delay          = 0.3
+				--currselfweapon.BaseDamage = 40
+				currselfweapon.Primary.ClipSize         = 12
+				currselfweapon.ReloadTime = 0.2
+				self:ConCommand("tf_upgradewep03cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $600 dollars for their S"..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_flaregun" then
+				currselfweapon.Primary.Delay          = 0.5
+				self:ConCommand("tf_upgradewep05cliselfonly")
+				self.AmmoMax[TF_SECONDARY] = 400
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $600 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_shotgun_pyro" then
+				currselfweapon.Primary.Delay          = 0.3
+				--currselfweapon.BaseDamage = 6
+				currselfweapon.Primary.ClipSize         = 12
+				currselfweapon.ReloadTime = 0.2
+				self:ConCommand("tf_upgradewep03cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $500 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_shotgun_primary" then
+				currselfweapon.Primary.Delay          = 0.3
+				--currselfweapon.BaseDamage = 6
+				currselfweapon.Primary.ClipSize         = 12
+				currselfweapon.ReloadTime = 0.2
+				self:ConCommand("tf_upgradewep03cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			
+			if currselfweapon:GetClass() == "tf_weapon_shotgun_building_rescue" then
+				currselfweapon.Primary.Delay          = 0.3
+				--currselfweapon.BaseDamage = 60
+				currselfweapon.Primary.ClipSize         = 8
+				currselfweapon.ReloadTime = 0.2
+				self:ConCommand("tf_upgradewep03cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_flamethrower" then
+				
+			currselfweapon.Primary.Delay          = 0.015
+				--currselfweapon.BaseDamage = 6
+				self.AmmoMax[TF_PRIMARY] = 600
+				self.AmmoMax[TF_PRIMARY] = 600
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_flamethrower_bb" then
+				
+			currselfweapon.Primary.Delay          = 0.015
+				--currselfweapon.BaseDamage = 6
+				self.AmmoMax[TF_PRIMARY] = 600
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_flamethrower_degreaser" then
+				
+			currselfweapon.Primary.Delay          = 0.015
+				--currselfweapon.BaseDamage = 6
+				self.AmmoMax[TF_PRIMARY] = 600
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_flamethrower_rb" then
+				
+			currselfweapon.Primary.Delay          = 0.015
+				--currselfweapon.BaseDamage = 6
+				self.AmmoMax[TF_PRIMARY] = 600
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_phlogistinator" then
+				
+			currselfweapon.Primary.Delay          = 0.015
+				--currselfweapon.BaseDamage = 6
+				self.AmmoMax[TF_PRIMARY] = 600
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_scattergun" then
+				currselfweapon.Primary.Delay          = 0.3
+				--currselfweapon.BaseDamage = 6
+				currselfweapon.Primary.ClipSize         = 12
+				currselfweapon.ReloadTime = 0.2
+				self:ConCommand("tf_upgradewep03cliselfonly")
+				self.AmmoMax[TF_PRIMARY] = 120 
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $600 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_handgun_scout" then
+				currselfweapon.Primary.Delay          = 0.22
+				--currselfweapon.BaseDamage = 23
+				currselfweapon.Primary.ClipSize         = 8
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $600 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_sniperrifle" then
+				currselfweapon.Primary.Delay          = 0.7
+				--currselfweapon.BaseDamage = 60
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $600 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_smg" then
+				currselfweapon.Primary.Delay          = 0.08
+				currselfweapon.Primary.ClipSize          = 35	
+				--currselfweapon.BaseDamage = 30
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $600 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_grenadelauncher" then
+				currselfweapon.Primary.Delay          = 0.3
+				--currselfweapon.BaseDamage = 150
+				currselfweapon.Primary.ClipSize         = 12
+				currselfweapon.ReloadTime = 0.2
+				self:ConCommand("tf_upgradewep03cliselfonly")
+				self.AmmoMax[TF_PRIMARY] = 80
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_cannon" then
+				currselfweapon.Primary.Delay          = 0.5
+				--currselfweapon.BaseDamage = 80
+				currselfweapon.Primary.ClipSize         = 12
+				currselfweapon.ReloadTime = 0.2
+				self:ConCommand("tf_upgradewep03cliselfonly")
+				self.AmmoMax[TF_PRIMARY] = 80
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_pipebomblauncher" then
+				currselfweapon.Primary.Delay          = 0.3
+				currselfweapon.Primary.ClipSize         = 12
+				currselfweapon.ReloadTime = 0.2
+				currselfweapon.MaxBombs = 12
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $1200 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_pistol_scout" then
+				currselfweapon.Primary.Delay          = 0.08
+				currselfweapon.Primary.ClipSize         = 12
+				currselfweapon.ReloadTime = 0.71
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_shortcircuit" then
+				currselfweapon.Primary.Delay          = 0.08
+				currselfweapon.Secondary.Delay          = 0.4
+				--currselfweapon.BaseDamage = 140
+				self.AmmoMax[TF_METAL] = 550
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name))
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_pistol" then
+				currselfweapon.Primary.Delay          = 0.08
+				--currselfweapon.BaseDamage = 6
+				currselfweapon.Primary.ClipSize         = 12
+				currselfweapon.ReloadTime = 0.71
+				self:ConCommand("tf_upgradewep01cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_bat" then
+				currselfweapon.Primary.Delay          = 0.2
+				--currselfweapon.BaseDamage = 95
+				self:ConCommand("tf_upgradewep01cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_bat_wood" then
+				currselfweapon.Primary.Delay          = 0.25
+				currselfweapon.Secondary.Delay          = 2
+				--currselfweapon.BaseDamage = 95
+				self:ConCommand("tf_upgradewep01cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_club" then
+				currselfweapon.Primary.Delay          = 0.43
+				--currselfweapon.BaseDamage = 95
+				self:ConCommand("tf_upgradewep05cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_wrench" then
+				currselfweapon.Primary.Delay          = 0.5
+				--currselfweapon.BaseDamage = 95
+				self:ConCommand("tf_upgradewep05cliselfonly")
+				self.AmmoMax[TF_METAL] = 450
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_robot_arm" then
+				currselfweapon.Primary.Delay          = 0.5
+				--currselfweapon.BaseDamage = 95
+				self:ConCommand("tf_upgradewep05cliselfonly")
+				self.AmmoMax[TF_METAL] = 450
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_engi_fist" then
+				currselfweapon.Primary.Delay          = 0.5
+				--currselfweapon.BaseDamage = 95
+				self:ConCommand("tf_upgradewep05cliselfonly")
+				self.AmmoMax[TF_METAL] = 450
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_bottle" then
+				currselfweapon.Primary.Delay          = 0.5
+				--currselfweapon.BaseDamage = 95
+				self:ConCommand("tf_upgradewep05cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_fireaxe" then
+				currselfweapon.Primary.Delay          = 0.5
+				--currselfweapon.BaseDamage = 95
+				self:ConCommand("tf_upgradewep05cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their	"..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_syringegun_medic" then
+				currselfweapon.Primary.Delay          = 0.07
+				--currselfweapon.BaseDamage = 65
+				currselfweapon.Primary.ClipSize			= 80
+				currselfweapon.ReloadTime = 0.71
+				self:ConCommand("tf_upgradeweprapidfire2cliselfonly")
+				self.AmmoMax[TF_PRIMARY] = 400
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_medigun" then
+				currselfweapon.MinHealRate = 250
+				currselfweapon.MaxHealRate = 252
+				currselfweapon.MinLastDamageTime = 18
+				currselfweapon.MaxLastDamageTime = 19
+				currselfweapon.UberchargeRate = 6
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Medigun upgrades for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				timer.Simple(0.1, function()
+					self:EmitSound("mvm/mvm_bought_upgrade.wav", 80, 100)
+				end)
+			end
+			if currselfweapon:GetClass() == "tf_weapon_medigun_vaccinator" then
+				currselfweapon.MinHealRate = 300
+				currselfweapon.MaxHealRate = 300
+				currselfweapon.MinLastDamageTime = 18
+				currselfweapon.MaxLastDamageTime = 19
+				currselfweapon.UberchargeRate = 16
+				currselfweapon.Overpowered = true
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Medigun upgrades for their Vaccinator" )
+				timer.Simple(0.1, function()
+					self:EmitSound("mvm/mvm_bought_upgrade.wav", 80, 100)
+				end)
+			end
+			if currselfweapon:GetClass() == "tf_weapon_medigun_quickfix" then
+				currselfweapon.MinHealRate = 330
+				currselfweapon.MaxHealRate = 332
+				currselfweapon.MinLastDamageTime = 18
+				currselfweapon.MaxLastDamageTime = 19
+				currselfweapon.UberchargeRate = 16
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Medigun upgrades for their Quick-Fix" )
+				timer.Simple(0.1, function()
+					self:EmitSound("mvm/mvm_bought_upgrade.wav", 80, 100)
+				end)
+			end
+			if currselfweapon:GetClass() == "tf_weapon_bonesaw" then
+				currselfweapon.Primary.Delay          = 0.5
+				--currselfweapon.BaseDamage = 95
+				self:ConCommand("tf_upgradewep05cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_fists" then
+				currselfweapon.Primary.Delay          = 0.5
+				--currselfweapon.BaseDamage = 95
+				self:ConCommand("tf_upgradewep05cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_knife" then
+				currselfweapon.Primary.Delay          = 0.5
+				self:ConCommand("tf_upgradewep05cliselfonly")
+				--currselfweapon.BaseDamage = 95
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_shovel" then
+				currselfweapon.Primary.Delay          = 0.5
+				--currselfweapon.BaseDamage = 95
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_sword" then
+				currselfweapon.Primary.Delay          = 0.5
+				--currselfweapon.BaseDamage = 150
+				self:ConCommand("tf_upgradewep05cliselfonly")
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_katana" then
+				currselfweapon.Primary.Delay          = 0.5
+				--currselfweapon.BaseDamage = 150
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_allclass" and self:GetPlayerClass() != "scout" then
+				currselfweapon.Primary.Delay	= 0.5
+				--currselfweapon.BaseDamage = 100
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				
+			end
+			if currselfweapon:GetClass() == "tf_weapon_allclass" and self:GetPlayerClass() == "scout" then
+				currselfweapon.Primary.Delay	= 0.2
+				--currselfweapon.BaseDamage = 100
+				--PrintMessage( HUD_PRINTTALK, "Player "..self:Nick().." bought Upgrades with $400 dollars for their "..tf_lang.GetRaw(currselfweapon:GetItemData().item_name) )
+				timer.Simple(0.1, function()
+					self:EmitSound("mvm/mvm_bought_upgrade.wav", 80, 100)
+				end)
+				timer.Simple(0.4, function()
+					self:EmitSound("mvm/mvm_bought_upgrade.wav", 80, 100)
+				end)
+				timer.Simple(0.6, function() 
+					self:EmitSound("mvm/mvm_bought_upgrade.wav", 80, 100)
+				end)
+			end
+	end	
+end
+
 cvars.AddChangeCallback("tf_disable_fun_classes", function(_, _, val)
 	if SERVER and val == "1" then
 		for k, v in pairs(player.GetAll()) do
@@ -199,7 +835,7 @@ function meta:SetPlayerClass(class)
 		self.playerclass = "Scout"
 	elseif (self:GetPlayerClass() == "demoknight" || self:GetPlayerClass() == "samuraidemo" || self:GetPlayerClass() == "sentrybuster" || self:GetPlayerClass() == "giantdemoman" || self:GetPlayerClass() == "wtfdemoman" || self:GetPlayerClass() == "giantdemoknight") then
 		self.playerclass = "Demoman"
-	elseif (self:GetPlayerClass() == "soldierblackbox" || self:GetPlayerClass() == "soldierbuffed" || self:GetPlayerClass() == "giantsoldier" || self:GetPlayerClass() == "giantsoldiercharged" || self:GetPlayerClass() == "giantsoldierrapidfire") then
+	elseif (self:GetPlayerClass() == "soldierblackbox" || self:GetPlayerClass() == "soldierbuffed" || self:GetPlayerClass() == "giantsoldier" || self:GetPlayerClass() == "colonelbarrage" || self:GetPlayerClass() == "giantsoldiercharged" || self:GetPlayerClass() == "giantsoldierrapidfire") then
 		self.playerclass = "Soldier"
 	elseif (self:GetPlayerClass() == "giantheavy" || self:GetPlayerClass() == "giantheavyheater" || self:GetPlayerClass() == "giantheavyshotgun" || self:GetPlayerClass() == "heavyshotgun" || self:GetPlayerClass() == "heavyweightchamp" || self:GetPlayerClass() == "steelgauntlet" || self:GetPlayerClass() == "steelgauntletpusher" || self:GetPlayerClass() == "captain_punch" || self:GetPlayerClass() == "superheavyweightchamp") then
 		self.playerclass = "Heavy"
@@ -371,6 +1007,8 @@ function meta:SetPlayerClass(class)
 		end
 	end
 	tf_util.ReadActivitiesFromModel(self) 
+	--UpgradePlayerIfBot(self)
+	self:ResetClassSpeed()
 end
 
 

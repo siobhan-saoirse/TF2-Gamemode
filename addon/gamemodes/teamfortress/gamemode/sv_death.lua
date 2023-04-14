@@ -914,6 +914,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		timer.Simple(0.25, function()
 			if (math.random(1,2) == 1) then
 				if (!string.find(attacker:GetModel(),"_boss.mdl")) then
+					if (attacker:Team() == TEAM_RED and string.find(game.GetMap(),"mvm_")) then return end
 					attacker:TFTaunt(tostring(attacker:GetActiveWeapon():GetSlot() + 1))
 				end
 			end
