@@ -103,6 +103,7 @@ function ENT:Initialize()
 	local max = Vector( self.HitboxSize,  self.HitboxSize,  self.HitboxSize)
 	
 	self:SetModel(self.Model)
+	self:AddEffects(EF_NOSHADOW)
 	
 	if self.Nuke then
 		local bomb = ents.Create("prop_dynamic")
