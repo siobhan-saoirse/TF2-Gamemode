@@ -35,7 +35,7 @@ function GM:LoadEntityClientFunctions()
 		for _,luafile in ipairs(file.Find(path..class.."/*", "GAME")) do
 			if luafile == "cl_init.lua" then
 				ENT = {}
-				include(luapath..class.."/"..luafile)
+				--include(luapath..class.."/"..luafile)
 				
 				if ENT.Type == "ai" then
 					scripted_ents.Register(ENT, class, false)

@@ -1141,7 +1141,7 @@ sound.Add( {
 	sound = { "music/tank/onebadtank.wav","music/tank/midnighttank.wav" }
 } )
 
-
+ 
 
 hook.Add("PlayerFootstep", "RoboStep", function( ply, pos, foot, sound, volume, rf)
 	if (GetConVar("tf_enable_server_footsteps"):GetBool() or (CLIENT and !LocalPlayer():IsHL2() and LocalPlayer():ShouldDrawLocalPlayer())) then
@@ -1368,38 +1368,7 @@ hook.Add("PostPlayerDraw", "LeadBot_VoiceIcon", function(ply)
         surface.DrawTexturedRect(-8, -8, 16, 16)
     cam.End3D2D()
 end)
-
-hook.Add("Think", "IntentionallySpeakingRagdoll", function()
-	--[[
-	for k,pl in ipairs(player.GetAll()) do
-
-		local ply = pl
-		if (IsValid(pl.RagdollEntity)) then
-			if (pl:IsHL2()) then
-				local flexes = {
-					pl.RagdollEntity:GetFlexIDByName( "jaw_drop" ),
-					pl.RagdollEntity:GetFlexIDByName( "left_part" ),
-					pl.RagdollEntity:GetFlexIDByName( "right_part" ),
-					pl.RagdollEntity:GetFlexIDByName( "left_mouth_drop" ),
-					pl.RagdollEntity:GetFlexIDByName( "right_mouth_drop" )
-				}
-				
-				for k, v in pairs( flexes ) do
-					pl.RagdollEntity:SetFlexWeight( v, pl:GetFlexWeight(v) )
-				end
-			else
-				local flexes = {
-					pl.RagdollEntity:GetFlexIDByName( "AH" )
-				}
-				
-				for k, v in pairs( flexes ) do
-					pl.RagdollEntity:SetFlexWeight( v, pl:GetFlexWeight(v) )
-				end
-			end
-		end
-		
-	end]]
-end)
+ 
 sound.Add( {
 	name = "MVM.GiantWTFDemomanLoop",
 	channel = CHAN_STATIC,
@@ -1804,7 +1773,7 @@ GM.Email 		= "N/A"
 GM.Website 		= "N/A"
 GM.TeamBased 	= true
 
-GM.Data = {}
+GM.Data = {} 
 
 DEFINE_BASECLASS("gamemode_sandbox")
 DeriveGamemode("sandbox")
@@ -2463,9 +2432,6 @@ include("ent_extension.lua")
 include("shd_playerstates.lua")
 
 include("shd_maphooks.lua")
-hook.Add("PlayerSpawn","TFPlayerSpawn",function(ply)
-
-end)
 concommand.Add("+inspect", function(pl)
 	pl:SetNWString("inspect", "inspecting_start")
 end)
@@ -2474,7 +2440,3 @@ concommand.Add("-inspect", function(pl)
 	pl:SetNWString("inspect", "inspecting_released")
 	timer.Simple( 0.02, function() pl:SetNWString("inspect", "inspecting_done") end )
 end)
-
-concommand.Add("cl_ent_create", function(pl,args)
-	print("tf u doing m8, this ain't sorse 2")
-end) 

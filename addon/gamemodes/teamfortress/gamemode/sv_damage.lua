@@ -170,6 +170,44 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 
 	local is_normal_damage = true
 	if (ent.TFBot and ent:EntIndex() != att:EntIndex() and att:IsTFPlayer() and !att:IsFriendly(ent)) then
+		ent.TargetEnt = att
+		for k,v in ipairs(ents.FindInSphere(ent:GetPos(),1200)) do
+			if (v:IsTFPlayer() and (v:IsFriendly(ent)) and v:EntIndex() != ent:EntIndex()) then
+				if (math.random(1,5) == 1 and v:Health() > 0) then
+					if (v:IsPlayer()) then
+						if (ent:IsBot()) then
+							local args = {"TLK_PLAYER_HELP"}
+							if ent:Speak(args[1])  and !string.find(v:GetModel(),"/bot_") then
+								ent:DoAnimationEvent(ACT_MP_GESTURE_VC_HANDMOUTH, true)
+						
+								umsg.Start("TFPlayerVoice")
+									umsg.Entity(ent)
+									umsg.String(args[1])
+								umsg.End()
+							end
+						end
+						if (v:IsBot()) then
+							if (math.random(1,5) == 1 and !string.find(v:GetModel(),"/bot_")) then
+								local args = {"TLK_PLAYER_BATTLECRY"}
+								if v:Speak(args[1]) then
+									v:DoAnimationEvent(ACT_MP_GESTURE_VC_FISTPUMP, true)
+							
+									umsg.Start("TFPlayerVoice")
+										umsg.Entity(v)
+										umsg.String(args[1])
+									umsg.End()
+								end
+							end
+							v.TargetEnt = att
+						end
+					elseif (v:IsNPC()) then
+						v:SetEnemy(att)
+					end
+				end
+			end
+		end
+	end
+	if (ent.TFBot and ent:EntIndex() != att:EntIndex() and att:IsTFPlayer() and !att:IsFriendly(ent)) then
 		for k,v in ipairs(ents.FindInSphere(ent:GetPos(),1200)) do
 			if (v:IsTFPlayer() and (v:IsFriendly(ent)) and v:EntIndex() != ent:EntIndex()) then
 				if (math.random(1,3) == 1 and !att:IsPlayer() and ent.TFBot and (!IsValid(ent.TargetEnt) or ent.TargetEnt:EntIndex() != att:EntIndex())) then

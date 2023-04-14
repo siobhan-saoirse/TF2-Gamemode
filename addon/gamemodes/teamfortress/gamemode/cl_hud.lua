@@ -327,7 +327,7 @@ function GM:HUDDrawTargetID()
 		local x = MouseX
 		local y = MouseY
 		
-		x = x - ScrW() / 2
+		x = x - w / 2
 		y = y + 30
 		
 		-- The fonts internal drop shadow looks lousy with AA on
@@ -342,7 +342,7 @@ function GM:HUDDrawTargetID()
 		
 		surface.SetFont( font )
 		local w, h = surface.GetTextSize( text )
-		local x = MouseX - ScrW() / 2
+		local x = MouseX - w / 2
 		
 		draw.SimpleText( text, font, x + 1, y + 1, Color( 0, 0, 0, 120 ) )
 		draw.SimpleText( text, font, x + 2, y + 2, Color( 0, 0, 0, 50 ) )

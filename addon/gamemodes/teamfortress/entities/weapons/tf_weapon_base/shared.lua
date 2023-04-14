@@ -702,7 +702,7 @@ function SWEP:Deploy()
 		local visuals = self:GetVisuals()
 		local owner = self.Owner
 		
-		if visuals.hide_player_bodygroup_names then
+		if visuals.hide_player_bodygroup_names and !string.find(owner:GetModel(), "/bot_") then
 			for _,group in ipairs(visuals.hide_player_bodygroup_names) do
 				local b = PlayerNamedBodygroups[owner:GetPlayerClass()]
 				if b and b[group] then

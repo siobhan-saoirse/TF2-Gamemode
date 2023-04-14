@@ -149,6 +149,12 @@ function SWEP:Think()
 		self.ShootSound = Sound("weapons/rocket_jumper_shoot.wav")
 		self.ShootCritSound = Sound("weapons/rocket_jumper_shoot.wav")
 	end
+	if self:GetItemData().model_player == "models/weapons/c_models/c_rocketlauncher/c_rocketlauncher.mdl" then
+		if (IsValid(self.Owner) and string.find(self.Owner:GetModel(),"_boss.mdl")) then
+			self.ShootSound = Sound("MVM.GiantSoldierRocketShoot")
+			self.ShootCritSound = Sound("MVM.GiantSoldierRocketShootCrit")
+		end
+	end
 	if self.WeaponMode ~= 1 then return end
 	if CLIENT then
 		if self.ClientCharging and self.ClientChargeStart then

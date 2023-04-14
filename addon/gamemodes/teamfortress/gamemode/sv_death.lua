@@ -443,7 +443,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	if (!ply:IsHL2() and !ply:IsL4D() and attacker:IsNPC() and attacker:Classify() == CLASS_HEADCRAB) then
 		
 		local item = ents.Create("npc_tf_zombie_old")
-		if (IsValid(item)) then
+		if (IsValid(item)) then 
 			local a, b = ply:WorldSpaceAABB() 
 			item:SetPos((a+b) * 0.5)
 			item.playerclassdefined = true
@@ -913,7 +913,9 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	if (attacker.TFBot) then
 		timer.Simple(0.25, function()
 			if (math.random(1,2) == 1) then
-				attacker:TFTaunt(tostring(attacker:GetActiveWeapon():GetSlot() + 1))
+				if (!string.find(attacker:GetModel(),"_boss.mdl")) then
+					attacker:TFTaunt(tostring(attacker:GetActiveWeapon():GetSlot() + 1))
+				end
 			end
 		end)
 	end

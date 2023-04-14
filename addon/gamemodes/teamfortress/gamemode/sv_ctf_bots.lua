@@ -445,7 +445,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		
 		local mva = ((curgoal.pos) - bot:GetShootPos()):Angle()
 
-		if (!GetConVar("nb_blind"):GetBool() and !bot:GetNWBool("Taunting",false) and bot:GetPos():Distance(curgoal.pos) > 20) then
+		if (!GetConVar("nb_blind"):GetBool() and !bot:GetNWBool("Taunting",false) and bot:GetPos():Distance(curgoal.pos) > 20 and !IsValid(bot.TargetEnt)) then
 		   mv:SetMoveAngles(LerpAngle(FrameTime() * 65, mv:GetMoveAngles(), mva))
 		end
 	end
@@ -1109,7 +1109,10 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			local intelcap
 			local fintelcap
 			bot.movingAway = false
-			local moveawayrange = 80
+			local moveawayrange = 80 * bot:GetModelScale()
+			if (string.find(bot:GetModel(),"/bot_")) then
+				moveawayrange = 150
+			end
 				for k,v in ipairs(ents.FindInSphere(bot:GetPos(),moveawayrange)) do
 					if (IsValid(v) and v:IsTFPlayer() and v:EntIndex() != bot:EntIndex()) then
 						local forward = bot:EyeAngles():Forward()
@@ -1368,7 +1371,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 						end
 					end
 				end
-				if math.random(1,200) == 1 then
+				if math.random(1,200) == 1  and !string.find(bot:GetModel(),"/bot_") then
 					local args = {"TLK_PLAYER_MEDIC"}
 					if bot:Speak(args[1]) then
 						bot:DoAnimationEvent(ACT_MP_GESTURE_VC_HANDMOUTH, true)
