@@ -1062,9 +1062,9 @@ function SWEP:PrimaryAttack()
 			end
 			if SERVER then	
 				if self.Owner:GetInfoNum("tf_robot", 0) == 1 then
-					self.Owner:EmitSound("vo/mvm/norm/engineer_mvm_sentryplanting0"..math.random(1,3)..".wav", 80, 100)
+					--self.Owner:EmitSound("vo/mvm/norm/engineer_mvm_sentryplanting0"..math.random(1,3)..".wav", 80, 100)
 				else
-					self.Owner:EmitSound("vo/engineer_sentryplanting0"..math.random(1,3)..".wav", 80, 100)		
+					--self.Owner:EmitSound("vo/engineer_sentryplanting0"..math.random(1,3)..".wav", 80, 100)		
 				end
 			end
 
@@ -1363,9 +1363,9 @@ concommand.Add("move", function(pl, cmd, args)
 	local group = tonumber(args[1])
 	local sub = tonumber(args[2]) 
 	if pl:GetInfoNum("tf_robot", 0) == 1 then
-		pl:EmitSound("vo/mvm/norm/engineer_mvm_sentrypacking0"..math.random(1,3)..".wav", 80, 100)
+		--pl:EmitSound("vo/mvm/norm/engineer_mvm_sentrypacking0"..math.random(1,3)..".wav", 80, 100)
 	else
-		pl:EmitSound("vo/engineer_sentrypacking0"..math.random(1,3)..".wav", 80, 100)		
+		--pl:EmitSound("vo/engineer_sentrypacking0"..math.random(1,3)..".wav", 80, 100)		
 	end
 	local builder = pl:GetWeapon("tf_weapon_builder")
 	
