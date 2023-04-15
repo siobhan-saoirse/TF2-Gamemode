@@ -250,6 +250,9 @@ function ENT:Pickup(ply)
 		self:SetNWBool("TimerActive", false)
 		self.NextReturn = nil
 	
+		for _,capturezone in ipairs(ents.FindByClass("func_capturezone")) do
+			ply.botPos = capturezone.Pos
+		end
 		self.State = 1
 		self.Trail:Fire("Start")
 		self.Carrier = ply

@@ -79,7 +79,6 @@ function ENT:Initialize()
 	self.Trail:SetParent(self)
 	
 	self.PickupLock = {}
-	--[[
 	timer.Simple(0.1, function()
 		if (string.find(game.GetMap(),"mvm_")) then
 		
@@ -93,7 +92,7 @@ function ENT:Initialize()
 			end)
 
 		end
-	end)]]
+	end)
 	--[[
 	0 : home
 	1 : carried

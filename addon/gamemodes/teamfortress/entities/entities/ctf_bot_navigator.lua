@@ -10,7 +10,7 @@ function ENT:Initialize()
 	self:SetNoDraw(true)
 	self:SetSolid( SOLID_NONE )
 	self.PosGen = nil
-	self.LookAtTime = CurTime() + 2
+	self.LookAtTime = 0
 	self.LookAt = Angle(0, 0, 0)
 end
 
@@ -35,7 +35,7 @@ function ENT:ChasePos( options )
 			self:HandleStuck()
 			return
 		end
-		
+		coroutine.wait(2)
 		coroutine.yield()
 	end
 end
@@ -45,7 +45,7 @@ function ENT:OnInjured()
 end
 
 function ENT:OnKilled()
-	return false
+	return false 
 end
 
 function ENT:HandleStuck()
@@ -61,8 +61,7 @@ function ENT:RunBehaviour()
 		if self.PosGen then
 			self:ChasePos({})
 		end
-		coroutine.wait(1)
-		
+		coroutine.wait(2)
 		coroutine.yield()
 	end
 end

@@ -13,8 +13,20 @@ local stock_bots = {
 	"mvm_bot_pyro",
 	"mvm_bot_demoman",
 	"mvm_bot_heavy",
-	"mvm_bot_medic",
-	"mvm_bot_sniper",
+}
+local unlock_bots = {
+	"mvm_bot_scout_minor_league",
+	"mvm_bot_heavyweightchamp",
+	"mvm_bot_heavyweightchampfast",
+	"mvm_bot_melee_scout",
+	"mvm_bot_scout_sun_stick",
+	"mvm_bot_melee_scout_sandman",
+	"mvm_bot_samurai_demo",
+	"mvm_bot_steelgauntlet",
+	"mvm_bot_melee_scout_fanwar",
+	"mvm_bot_pyro_flare",
+	"mvm_bot_scoutfan",
+	"mvm_bot_demoknight"
 }
 
 list.Set( "NPC", "mvm_robot_spawner", {
@@ -44,8 +56,11 @@ function ENT:Initialize()
 	end
 	timer.Create("BotSpawner", 10, 0, function()
 		if SERVER then
-			if (table.Count(self.bots) < 5) then 
+			if (!self.bots or table.Count(self.bots) < 5) then 
 				local bot = ents.Create(table.Random(stock_bots))
+				if (math.random(1,10) == 1) then -- unlocked bots
+					bot = ents.Create(table.Random(unlock_bots))
+				end
 				if (!IsValid(bot)) then 
 					coroutine.wait(0.1)
 					return

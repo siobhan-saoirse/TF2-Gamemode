@@ -124,6 +124,19 @@ function ENT:Initialize()
 	timer.Simple(0.3, function()
 	
 		npc:SetSkin(1)
+		timer.Simple(0.1, function()
+		
+			for k,v in ipairs(ents.FindByClass("item_teamflag_mvm")) do
+				if (!IsValid(v.Carrier) and !v.NextReturn) then
+					v:Pickup(npc)
+					for _,capturezone in ipairs(ents.FindByClass("func_capturezone")) do
+						npc.botPos = capturezone.Pos
+					end
+					
+				end
+			end
+			
+		end)
 		local class = npc:GetPlayerClass()
 		if (class != "scout" and 
 			class != "soldier" and 

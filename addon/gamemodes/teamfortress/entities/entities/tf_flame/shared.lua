@@ -255,7 +255,7 @@ function ENT:Hit(ent)
 			elseif (b < 4) then
 				b = 1
 			end 
-			ent:SetColor(Color(r,g,b,a))
+			--ent:SetColor(Color(r,g,b,a))
 			
 		end
 		GAMEMODE:IgniteEntity(ent, self, owner, 10)
