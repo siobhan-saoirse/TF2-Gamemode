@@ -2386,12 +2386,21 @@ function GM:PlayerSpawn(ply)
 	
 	if !ply:IsHL2() then
 		timer.Simple(0.1, function()
-		
+			
 			ply:GiveLoadout()
 		
 		end)
 	end
 
+	timer.Simple(0.3, function()
+	
+		for k,v in ipairs(team.GetPlayers(TEAM_RED)) do
+			if ply:IsMiniBoss() then
+				v:Speak("TLK_MVM_GIANT_CALLOUT")
+			end
+		end
+
+	end)
 	umsg.Start("ExitFreezecam", ply)
 	umsg.End()
 

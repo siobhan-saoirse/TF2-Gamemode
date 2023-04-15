@@ -1263,7 +1263,6 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			end
 
 			if IsValid(bot.TargetEnt) then
-				if (string.find(game.GetMap(), "mvm_") and bot:Team() != TEAM_RED) then return end
 				targetpos2 = bot.TargetEnt:GetPos()
 			end
 			--[[for k, v in pairs(ents.FindInSphere(bot:GetPos(),8800)) do

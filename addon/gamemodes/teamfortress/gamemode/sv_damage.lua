@@ -289,6 +289,9 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 			end
 		end
 	end]]
+	if (ent.TFBot and ent:EntIndex() != att:EntIndex() and att:IsTFPlayer() and !att:IsFriendly(ent)) then
+		ent.TargetEnt = att
+	end
 	is_normal_damage = true
 	-- if the entity can receive crits
 	
