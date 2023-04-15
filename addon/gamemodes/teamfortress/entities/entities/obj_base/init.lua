@@ -176,65 +176,65 @@ function ENT:Enable()
 	self:PostEnable(prevstate)
 	
 			
-			self.IsEnabled = 1
+	self.IsEnabled = 1
 
 	
-		if self.IsEnabled == 1 then
+	if self.IsEnabled == 1 then
+		
+		if self:GetKeyValues()[defaultupgrade] == 0 then
+			self:SetLevel(1)
+		elseif self:GetKeyValues()[defaultupgrade] == 1 then
+			if self:GetLevel()>=self.NumLevels then return false end
+			self:SetLevel(2)
+			self:OnStartUpgrade()
 			
-			if self:GetKeyValues()[defaultupgrade] == 0 then
-				self:SetLevel(1)
-			elseif self:GetKeyValues()[defaultupgrade] == 1 then
-				if self:GetLevel()>=self.NumLevels then return false end
-				self:SetLevel(2)
-				self:OnStartUpgrade()
+			if not self.NoUpgradedModel then
+				self:SetModel(self.Levels[self:GetLevel()][1])
+				self.Model:SetModel(self.Levels[self:GetLevel()][1])
+				self:SetCollisionBounds(unpack(self.CollisionBox))
 				
-				if not self.NoUpgradedModel then
-					self:SetModel(self.Levels[self:GetLevel()][1])
-					self.Model:SetModel(self.Levels[self:GetLevel()][1])
-					self:SetCollisionBounds(unpack(self.CollisionBox))
-					
-					self:PreUpgradeAnim()
-					self:SetNoDraw(true)
-					self.Model:SetNoDraw(false)
-					self.Model:ResetSequence(self:SelectWeightedSequence(ACT_OBJ_UPGRADING))
-					self.Model:SetCycle(0) 
-					self.Model:SetPlaybackRate(1)
-					self.Duration = self.Model:SequenceDuration()
-					self.TimeLeft = self.Model:SequenceDuration()
-					timer.Simple(self.Model:SequenceDuration() + 0.1, function()
-						self:EmitSound("Building_Sentrygun.Built")
-					end) 
-				end
-				
-				self:SetState(2)
-				self.StartTime = CurTime() 
-			elseif self:GetKeyValues()[defaultupgrade] == 2 then
-				if self:GetLevel()>=self.NumLevels then return false end
-				self:SetLevel(3)
-				self:OnStartUpgrade()
-				
-				if not self.NoUpgradedModel then
-					self:SetModel(self.Levels[self:GetLevel()][1])
-					self.Model:SetModel(self.Levels[self:GetLevel()][1])
-					self:SetCollisionBounds(unpack(self.CollisionBox))
-					
-					self:PreUpgradeAnim()
-					self:SetNoDraw(true)
-					self.Model:SetNoDraw(false)
-					self.Model:ResetSequence(self:SelectWeightedSequence(ACT_OBJ_UPGRADING))
-					self.Model:SetCycle(0) 
-					self.Model:SetPlaybackRate(1)
-					self.Duration = self.Model:SequenceDuration()
-					self.TimeLeft = self.Model:SequenceDuration()
-					timer.Simple(self.Model:SequenceDuration() + 0.1, function()
-						self:EmitSound("Building_Sentrygun.Built")
-					end) 
-				end
-				
-				self:SetState(2)
-				self.StartTime = CurTime() 
+				self:PreUpgradeAnim()
+				self:SetNoDraw(true)
+				self.Model:SetNoDraw(false)
+				self.Model:ResetSequence(self:SelectWeightedSequence(ACT_OBJ_UPGRADING))
+				self.Model:SetCycle(0) 
+				self.Model:SetPlaybackRate(1)
+				self.Duration = self.Model:SequenceDuration()
+				self.TimeLeft = self.Model:SequenceDuration()
+				timer.Simple(self.Model:SequenceDuration() + 0.1, function()
+					self:EmitSound("Building_Sentrygun.Built")
+				end) 
 			end
+			
+			self:SetState(2)
+			self.StartTime = CurTime() 
+		elseif self:GetKeyValues()[defaultupgrade] == 2 then
+			if self:GetLevel()>=self.NumLevels then return false end
+			self:SetLevel(3)
+			self:OnStartUpgrade()
+			
+			if not self.NoUpgradedModel then
+				self:SetModel(self.Levels[self:GetLevel()][1])
+				self.Model:SetModel(self.Levels[self:GetLevel()][1])
+				self:SetCollisionBounds(unpack(self.CollisionBox))
+				
+				self:PreUpgradeAnim()
+				self:SetNoDraw(true)
+				self.Model:SetNoDraw(false)
+				self.Model:ResetSequence(self:SelectWeightedSequence(ACT_OBJ_UPGRADING))
+				self.Model:SetCycle(0) 
+				self.Model:SetPlaybackRate(1)
+				self.Duration = self.Model:SequenceDuration()
+				self.TimeLeft = self.Model:SequenceDuration()
+				timer.Simple(self.Model:SequenceDuration() + 0.1, function()
+					self:EmitSound("Building_Sentrygun.Built")
+				end) 
+			end
+			
+			self:SetState(2)
+			self.StartTime = CurTime() 
 		end
+	end
 end
 
 function ENT:Explode()
@@ -335,7 +335,7 @@ function ENT:Think()
 		
 		if not self.DisableDuringUpgrade then
 			self:OnThinkActive()
-		end
+		end 
 	elseif state==3 then
 		self:OnThinkActive()
 	end
@@ -400,64 +400,6 @@ function ENT:AddMetal(owner, max)
 	
 	if metal_spent > 0 then
 		self:SetHealth(math.Clamp(self:Health() + 5 * metal_spent, 0, self:GetMaxHealth()))
-		
-		max = max - metal_spent
-		repaired = true
-	end
-	
-	-- Upgrade
-	if self:GetLevel()<self.NumLevels then
-		local current = self:GetMetal()
-		metal_spent = math.Clamp(self.UpgradeCost - current, 0, math.min(max, self.UpgradeRate))
-		current = current + metal_spent
-		
-		if current>=self.UpgradeCost then
-			self:SetMetal(0)
-			self:Upgrade()
-			-- Upgrading already resupplies ammo so we don't need to do anything else
-			upgraded = true
-		elseif not repaired or not self:NeedsResupply() then
-			-- Add to the upgrade status only if no metal was spent repairing the building or if the building doesn't need to be resupplied first
-			self:SetMetal(current)
-		end
-		
-		max = max - metal_spent
-	end
-	
-	-- Resupply (todo)
-	if self:NeedsResupply() and not upgraded then
-		metal_spent = self:Resupply(max)
-		
-		if metal_spent then
-			max = max - metal_spent
-			resupplied = true
-		end
-	end
-	
-	return max0 - max
-end
-function ENT:AddMetal2(owner, max)
-	if not self.BuildBoost then
-		self.BuildBoost = {}
-	end
-	
-	local mult = 1
-	
-	self.BuildBoost[owner] = {val=mult, endtime=CurTime() + 0.8}
-	
-	-- Building or upgrading
-	if self:GetState()~=3 then return 0 end
-	
-	local max0 = max
-	local metal_spent
-	
-	local repaired, resupplied, upgraded
-	
-	-- Repair
-	metal_spent = math.Clamp(math.ceil((self:GetMaxHealth() - self:Health()) * 0.2), 0, math.min(max, self.RepairRate))
-	
-	if metal_spent > 0 then
-		GAMEMODE:HealPlayer(owner, self, 5 * metal_spent, true, false)
 		
 		max = max - metal_spent
 		repaired = true
