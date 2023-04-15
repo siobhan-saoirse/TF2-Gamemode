@@ -29,7 +29,7 @@ SWEP.HoldType = "PRIMARY"
 
 SWEP.AutoReloadTime = 0.01
 
-SWEP.CriticalChance = 14
+SWEP.CriticalChance = 1.5
 idle_timer = 1
 end_timer = 1
 post_timer = 5.30

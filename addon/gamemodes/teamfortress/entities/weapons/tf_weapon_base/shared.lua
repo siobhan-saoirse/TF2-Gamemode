@@ -1102,8 +1102,8 @@ function SWEP:PrimaryAttack(noscene)
 	
 	if (IsValid(self.Owner)) then
 		if (self.Owner:IsBot()) then
-			if (self.Reloading || self.StartedReloading) then
-				if (self.Owner:GetPlayerClass() == "giantrapidfiresoldier" || self.Owner:GetPlayerClass() == "giantburstsoldier" || self.Owner:GetPlayerClass() == "colonelbarrage") then
+			if (self.Reloading or self.StartedReloading) then
+				if (self.Owner:GetPlayerClass() == "giantrapidfiresoldier" or self.Owner:GetPlayerClass() == "giantburstsoldier" or self.Owner:GetPlayerClass() == "colonelbarrage") then 
 					return false
 				end
 			end

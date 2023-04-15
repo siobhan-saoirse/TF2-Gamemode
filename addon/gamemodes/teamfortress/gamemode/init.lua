@@ -501,7 +501,7 @@ hook.Add("PlayerDeath", "PlayerRobotDeath", function( ply, attacker, inflictor)
 			end
 		end
 	end
-	if ply:GetPlayerClass() == "giantheavy" and ply:GetPlayerClass() == "giantscout" and  ply:GetPlayerClass() == "superscout" and ply:GetPlayerClass() == "giantdemoman" and ply:GetPlayerClass() == "giantdemoknight" and ply:GetPlayerClass() == "giantsoldier" and ply:GetPlayerClass() == "colonelbarrage" and ply:GetPlayerClass() == "giantpyro" then
+	if ply:GetPlayerClass() == "giantheavy" and ply:GetPlayerClass() == "giantscout" and  ply:GetPlayerClass() == "superscout" and ply:GetPlayerClass() == "giantdemoman" and ply:GetPlayerClass() == "giantdemoknight" and ply:GetPlayerClass() == "giantsoldier" and ply:GetPlayerClass() == "giantburstfiresoldier" and ply:GetPlayerClass() == "colonelbarrage" and ply:GetPlayerClass() == "giantpyro" then
 		ply:EmitSound( "MVM.GiantCommonExplodes" ) -- Play the footsteps hunter is using
 		ply:EmitSound( "MVM.GiantCommonExplodes" ) -- Play the footsteps hunter is using
 

@@ -10,15 +10,17 @@ ENT.Base 			= "base_anim"
 ENT.Explosive = true
 
 PrecacheParticleSystem("rockettrail")
+PrecacheParticleSystem("rockettrail_underwater")
 PrecacheParticleSystem("eyeboss_projectile")
 PrecacheParticleSystem("critical_rocket_red")
 PrecacheParticleSystem("critical_rocket_blue")
 PrecacheParticleSystem("cinefx_goldrush")
+PrecacheParticleSystem("mvm_soldier_shockwave")
 
 PrecacheParticleSystem("ExplosionCore_MidAir")
 PrecacheParticleSystem("ExplosionCore_MidAir_underwater")
 PrecacheParticleSystem("ExplosionCore_Wall")
-PrecacheParticleSystem("ExplosionCore_Wall_underwater")
+PrecacheParticleSystem("ExplosionCore_Wall_underwater") 
 
 function ENT:SetupDataTables()  
 	self:DTVar("Bool", 0, "Critical")
@@ -259,18 +261,26 @@ function ENT:DoExplosion(ent)
 		end
 		if (self:Critical()) then
 
-			ParticleEffect("Explosion_ShockWave_01", self:GetPos(), self:GetAngles())
+			-- lets not do this, please
 
-		
+			--ParticleEffect("Explosion_ShockWave_01", self:GetPos(), self:GetAngles())
+ 
 			if self:GetOwner():Team() == TEAM_BLU then
-				ParticleEffect("drg_cow_explosioncore_charged_blue", self:GetPos(), self:GetAngles())		
+				--ParticleEffect("drg_cow_explosioncore_charged_blue", self:GetPos(), self:GetAngles())		
 			elseif self:GetOwner():Team() == TF_TEAM_PVE_INVADERS then
-				ParticleEffect("drg_cow_explosioncore_charged_blue", self:GetPos(), self:GetAngles())		
+				--ParticleEffect("drg_cow_explosioncore_charged_blue", self:GetPos(), self:GetAngles())		
 			else
-				ParticleEffect("drg_cow_explosioncore_charged", self:GetPos(), self:GetAngles())
+				--ParticleEffect("drg_cow_explosioncore_charged", self:GetPos(), self:GetAngles())
 			end
 			
 			--self:EmitSound("explode_8")
+		end
+		for k,v in ipairs(ents.FindInSphere(self:GetPos(),300)) do
+			if (v:IsPlayer()) then
+				if (string.find(v:GetModel(),"/bot_")) then
+					ParticleEffect("mvm_soldier_shockwave", self:GetPos(), self:GetAngles())
+				end
+			end
 		end
 		local effectdata = EffectData()
 			effectdata:SetOrigin(self:GetPos())

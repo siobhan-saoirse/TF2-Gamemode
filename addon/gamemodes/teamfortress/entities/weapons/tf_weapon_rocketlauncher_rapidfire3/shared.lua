@@ -50,7 +50,7 @@ SWEP.ReloadSound = Sound("")
 
 SWEP.Primary.ClipSize		= 28
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
-SWEP.Primary.Delay          = 0.2
+SWEP.Primary.Delay          = 0.8 * 0.2
 
 SWEP.IsRapidFire = false
 SWEP.ReloadSingle = true
@@ -154,7 +154,8 @@ function SWEP:ShootProjectile()
 		rocket:SetPos(self:ProjectileShootPos())
 		local ang = self.Owner:EyeAngles()
 		
-		rocket:SetAngles(ang + Angle(math.random(-5,5),math.random(-5,5),math.random(-5,5)))
+		rocket:SetAngles(ang + Angle(math.random(-5,5),math.random(-5,5),0))
+		rocket.ExplosionSound = "MVM.GiantSoldierRocketExplode"
 		if self:Critical() then
 			rocket.critical = true
 		end

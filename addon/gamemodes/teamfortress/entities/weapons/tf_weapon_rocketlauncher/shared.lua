@@ -237,6 +237,13 @@ function SWEP:ShootProjectile()
 			rocket[k] = v
 		end
 		
+		if self:GetItemData().model_player == "models/weapons/c_models/c_rocketlauncher/c_rocketlauncher.mdl" then
+			if (IsValid(self.Owner) and string.find(self.Owner:GetModel(),"_boss.mdl")) then
+
+				rocket.ExplosionSound = "MVM.GiantSoldierRocketExplode"
+				
+			end
+		end
 		rocket:SetOwner(self.Owner)
 		self:InitProjectileAttributes(rocket)
 		

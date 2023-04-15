@@ -909,7 +909,11 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	if ply:GetPlayerClass() == "witch" then
 		ply:EmitSound("vj_l4d/witch/voice/die/headshot_death_"..math.random(1,3)..".wav", 95, 100, 1, CHAN_VOICE)
 	end
-	attacker.TargetEnt = nil
+	if (attacker.LastPath) then
+		attacker.LastPath = nil
+	elseif (attacker.TargetEnt) then
+		attacker.TargetEnt = nil
+	end
 	if (attacker.TFBot) then
 		timer.Simple(0.25, function()
 			if (math.random(1,2) == 1) then
@@ -1565,7 +1569,11 @@ function GM:OnNPCKilled(ent, attacker, inflictor)
 	if inflictor and inflictor.OnPlayerKilled then
 		inflictor:OnPlayerKilled(ent)
 	end
-	attacker.TargetEnt = nil
+	if (attacker.LastPath) then
+		attacker.LastPath = nil
+	elseif (attacker.TargetEnt) then
+		attacker.TargetEnt = nil
+	end
 	if (ent:HasDeathFlag(DF_DECAP)) then
 		ent:EmitSound("TFPlayer.Decapitated")
 	end

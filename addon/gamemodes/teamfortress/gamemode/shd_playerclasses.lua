@@ -835,7 +835,7 @@ function meta:SetPlayerClass(class)
 		self.playerclass = "Scout"
 	elseif (self:GetPlayerClass() == "demoknight" || self:GetPlayerClass() == "samuraidemo" || self:GetPlayerClass() == "sentrybuster" || self:GetPlayerClass() == "giantdemoman" || self:GetPlayerClass() == "wtfdemoman" || self:GetPlayerClass() == "giantdemoknight") then
 		self.playerclass = "Demoman"
-	elseif (self:GetPlayerClass() == "soldierblackbox" || self:GetPlayerClass() == "soldierbuffed" || self:GetPlayerClass() == "giantsoldier" || self:GetPlayerClass() == "colonelbarrage" || self:GetPlayerClass() == "giantsoldiercharged" || self:GetPlayerClass() == "giantsoldierrapidfire") then
+	elseif (self:GetPlayerClass() == "soldierblackbox" || self:GetPlayerClass() == "soldierbuffed" || self:GetPlayerClass() == "giantsoldier" || self:GetPlayerClass() == "giantburstfiresoldier" || self:GetPlayerClass() == "giantburstfiresoldier2" || self:GetPlayerClass() == "giantblastsoldier" || self:GetPlayerClass() == "colonelbarrage" || self:GetPlayerClass() == "giantsoldiercharged" || self:GetPlayerClass() == "giantsoldierrapidfire") then
 		self.playerclass = "Soldier"
 	elseif (self:GetPlayerClass() == "giantheavy" || self:GetPlayerClass() == "giantheavyheater" || self:GetPlayerClass() == "giantheavyshotgun" || self:GetPlayerClass() == "heavyshotgun" || self:GetPlayerClass() == "heavyweightchamp" || self:GetPlayerClass() == "steelgauntlet" || self:GetPlayerClass() == "steelgauntletpusher" || self:GetPlayerClass() == "captain_punch" || self:GetPlayerClass() == "superheavyweightchamp") then
 		self.playerclass = "Heavy"

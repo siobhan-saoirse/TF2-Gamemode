@@ -409,6 +409,24 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			end
 		end
 	end
+	if (attacker:IsPlayer() and (attacker:GetPlayerClass() == "giantblastsoldier" || attacker:GetPlayerClass() == "steelgauntletpusher")) then
+
+		local dir = -ent:GetAimVector() * 6
+		local dir2 = dir:Angle()
+		dir2.p = math.Clamp(-dir2.p - 45,-90,90)
+		dir2 = dir2:Forward()
+		ent:RemoveFlags(FL_ONGROUND)
+		timer.Simple(0.1, function()
+			ent:SetVelocity(dir2 + Vector(0,0,80))
+		end)
+		--ent:SetThrownByExplosion(true)
+	end
+	if (ent:IsPlayer() and ent.TFBot) then
+
+        ent.ControllerBot.LookAtTime = CurTime() + 2
+        ent.ControllerBot.LookAt = ((ent:GetPos() + VectorRand() * 128) - attacker:GetPos()):Angle()
+
+	end
 
 	if (ent:IsPlayer() and ent:GetInfoNum("tf_robot",0) != 1) then
 		ent:SetBloodColor(BLOOD_COLOR_RED)
@@ -486,14 +504,14 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	if gamemode.Call("ShouldCrit", ent, inflictor, attacker, hitgroup, dmginfo) then
 		if att == ent then
 			-- Self damage, don't scale the damage, but still notify the player that they critted themselves
-			if ent:IsPlayer() and ent.NextSpeak<CurTime() then
+			if ent:IsPlayer() and (!ent.NextSpeak or ent.NextSpeak<CurTime()) then
 				SendUserMessage("CriticalHitReceived", ent)
 			end
 		else
 			-- Modify the damage
 			dmginfo:ScaleDamage(3)
 
-			if ent:IsPlayer() and ent.NextSpeak<CurTime() then
+			if ent:IsPlayer() and (!ent.NextSpeak or ent.NextSpeak<CurTime()) then
 				SendUserMessage("CriticalHitReceived", ent)
 			end
 			DispatchCritEffect(ent, inflictor, attacker, false)
@@ -503,7 +521,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	elseif gamemode.Call("ShouldMiniCrit", ent, inflictor, attacker, hitgroup, dmginfo) then
 		local mul
 
-		if ent:IsPlayer() and ent.NextSpeak<CurTime() then
+		if ent:IsPlayer() and (!ent.NextSpeak or ent.NextSpeak<CurTime()) then
 			SendUserMessage("CriticalHitReceived", ent)
 		end
 		
@@ -617,12 +635,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	end
 	if dmginfo:GetDamage()<1 then
 		return
-	end
-	if (ent:IsPlayer() and ent.TFBot and attacker:IsTFPlayer()) then
-
-        ent.ControllerBot.LookAtTime = CurTime() + 2
-        ent.ControllerBot.LookAt = ((ent:GetPos() + VectorRand() * 128) - attacker:GetPos()):Angle()
-
 	end
 	if ent:IsTFPlayer() and attacker:IsPlayer() and attacker~=ent and dmginfo:GetDamage()>=1 then
 		--MsgFN("%s Health = %d", tostring(ent), ent:Health())

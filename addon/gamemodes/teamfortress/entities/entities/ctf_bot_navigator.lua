@@ -10,7 +10,7 @@ function ENT:Initialize()
 	self:SetNoDraw(true)
 	self:SetSolid( SOLID_NONE )
 	self.PosGen = nil
-	self.LookAtTime = 0
+	self.LookAtTime = CurTime() + 2
 	self.LookAt = Angle(0, 0, 0)
 end
 
@@ -18,11 +18,13 @@ function ENT:ChasePos( options )
 	self.P = Path("Follow")
 	self.P:SetMinLookAheadDistance(300)
 	self.P:SetGoalTolerance(20)
+	if (self.PosGen == nil) then return end
 	self.P:Compute(self, self.PosGen)
 	
 	if !self.P:IsValid() then return end
 	while self.P:IsValid() do
 		if self.P:GetAge() > 0.3 then
+			if (self.PosGen == nil) then return end
 			self.P:Compute(self, self.PosGen)
 		end
 		if GetConVar("developer"):GetFloat() > 0 then
