@@ -56,13 +56,12 @@ function ENT:Initialize()
 	end
 	timer.Create("BotSpawner", 10, 0, function()
 		if SERVER then
-			if (!self.bots or table.Count(self.bots) < 5) then 
+			if (!self.bots or table.Count(self.bots) < 8) then 
 				local bot = ents.Create(table.Random(stock_bots))
 				if (math.random(1,10) == 1) then -- unlocked bots
 					bot = ents.Create(table.Random(unlock_bots))
 				end
-				if (!IsValid(bot)) then 
-					coroutine.wait(0.1)
+				if (!IsValid(bot)) then
 					return
 				end
 				local spawn = table.Random(self.spawnsblu) 
@@ -114,20 +113,13 @@ function ENT:OnRemove()
 		end
 	end
 end
-
-function ENT:ChasePos()
-end
+  
 function ENT:Think()
-	if (self:GetCycle() == 1) then
-		self:ResetSequence(self:SelectWeightedSequence(ACT_IDLE))
-		self:SetCycle(0)
-	end
 	if SERVER then
 		if (self.bots and table.Count(self.bots) > 0) then
 			for k,v in ipairs(self.bots) do
-				if (!IsValid(v)) then
-					table.remove(self.bots,k)
-				end
+				table.remove(self.bots,k)
+				print("Removed robot #"..v:EntIndex())
 			end
 		end
 	end

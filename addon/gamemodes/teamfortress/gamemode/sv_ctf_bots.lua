@@ -454,6 +454,74 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		cmd:ClearMovement()
 		cmd:ClearButtons()
 
+		bot.movingAway = false
+		local moveawayrange = 80 * bot:GetModelScale()
+		if (string.find(bot:GetModel(),"/bot_")) then
+			moveawayrange = 150
+		end
+			for k,v in ipairs(ents.FindInSphere(bot:GetPos(),moveawayrange)) do
+				if (IsValid(v) and v:IsFriendly(bot) and GAMEMODE:EntityTeam(v) != TEAM_SPECTATOR and v:IsTFPlayer() and v:EntIndex() != bot:EntIndex()) then
+					local forward = bot:EyeAngles():Forward()
+					local right = bot:EyeAngles():Right()
+					local avoidVector = bot:GetPos()
+					local between = bot:GetPos() - v:GetPos()
+					local between2 = between:GetNormalized()
+					avoidVector = avoidVector + ( Vector(1,1,1) - ( between2 / moveawayrange ) ) * between
+					local vecDelta = v:WorldSpaceCenter() - bot:GetPos() + Vector(0.5,0.5,0.5) + Vector(0,0,72)
+					local vRad = v:WorldSpaceAABB()
+					vRad.z = 0
+					local flAvoidRadius = vRad:Length()
+					local flPushStrength = math.Remap(vecDelta:Length(), flAvoidRadius, 0, 0, 256)
+					
+					local vecPush
+					if (bot:GetVelocity():Length2DSqr() > 0.1) then
+						local vecVelocity = bot:GetVelocity()
+						vecVelocity.z = 0.0
+						local vecUp = Vector( 0, 0, 1 )
+						vecPush = vecUp:Cross(vecVelocity)
+					else
+						local angView = bot:EyeAngles()
+						angView.x = 0.0
+						vecPush = angView:Right()
+					end
+					local vecSeparationVelocity = avoidVector * 50
+					if (vecDelta:Dot(vecPush) < 0) then
+						local vel = vecPush * flPushStrength
+						vecSeparationVelocity = vel
+					else
+						local vel = vecPush * -flPushStrength
+						vecSeparationVelocity = vel
+					end
+					local flMaxPlayerSpeed = bot:GetMaxSpeed()
+					local flCropFraction = 1.33333333
+					if (bot:Crouching() and bot:IsOnGround()) then
+						flMaxPlayerSpeed = flMaxPlayerSpeed * flCropFraction
+					end
+					local flMaxPlayerSpeedSqr = flMaxPlayerSpeed * flMaxPlayerSpeed
+
+					if ( vecSeparationVelocity:LengthSqr() > flMaxPlayerSpeedSqr ) then
+						vecSeparationVelocity:Normalize()
+						vecSeparationVelocity = vecSeparationVelocity * flMaxPlayerSpeed
+					end
+					local vAngles = bot:EyeAngles()
+					vAngles.x = 0 
+					local currentdir = vAngles:Forward()
+					local rightdir = vAngles:Right()
+					local vDirection = vecSeparationVelocity:GetNormalized()
+					
+					local fwd = vDirection:Dot( currentdir )
+					local rt = vDirection:Dot( rightdir )
+
+					local forward2 = fwd * flPushStrength
+					local side = rt * flPushStrength
+					
+					avoidVector:Normalize()
+					bot.movingAway = true
+					bot.pushAwayMove = mv:GetForwardSpeed() + forward2
+					mv:SetForwardSpeed(mv:GetForwardSpeed() + forward2)
+					mv:SetSideSpeed(mv:GetSideSpeed() + side)
+				end
+			end
 		local BotCanTarget = tf_bot_notarget:GetBool()
 --[[
 		if ( bot:IsBot() and !BotCanTarget and !IsValid(bot.TargetEnt) ) then 
@@ -700,59 +768,40 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 		------------------------------
 		 -----[[ENTITY DETECTION]]-----
 		------------------------------
+		if (math.random(1,4) == 1) then 
+			for k, v in pairs(ents.FindInSphere(bot:GetPos(),6000)) do
+				if (!IsValid(bot.TargetEnt)) then
+					if v:IsNPC() and v:GetPos():Distance(bot:GetPos()) < 2500 and !IsValid(bot.TargetEnt) then
+						if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
+							local targetpos = v:EyePos() - Vector(0, 0, 10) -- bot eye check, don't start shooting targets just because we barely see their head
+							local trace = util.TraceLine({start = bot:GetShootPos(), endpos = targetpos, filter = function( ent ) return ent == v end})
+	
+							if trace.Entity == v then -- TODO: FOV Check
+								if (!IsValid(bot.TargetEnt)) then
+									if (v:EntIndex() == bot.ControllerBot:EntIndex()) then return end
+									bot.TargetEnt = v
+								end
+							end
+						end
+					elseif v:IsNextBot() and !v:IsPlayer() and v:GetPos():Distance(bot:GetPos()) < 2500 and !IsValid(bot.TargetEnt) then
+						if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
+							local targetpos = v:EyePos() - Vector(0, 0, 10) -- bot eye check, don't start shooting targets just because we barely see their head
+							local trace = util.TraceLine({start = bot:GetShootPos(), endpos = targetpos, filter = function( ent ) return ent == v end})
+	
+							if trace.Entity == v then -- TODO: FOV Check
+								if (!IsValid(bot.TargetEnt)) then
+									if (v:EntIndex() == bot:EntIndex()) then return end
+									if (v:EntIndex() == bot.ControllerBot:EntIndex()) then return end
+									bot.TargetEnt = v
+								end
+							end
+						end
+					end
+				end
+			end
+		end
 		if (math.random(1,4) == 1) then
-			for k, v in pairs(ents.FindInSphere(bot:GetPos(),8800)) do
-				if (!IsValid(bot.TargetEnt)) then
-					if v:IsNPC() and v:GetPos():Distance(bot:GetPos()) < 3600 and !IsValid(bot.TargetEnt) then
-						if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
-							local targetpos = v:EyePos() - Vector(0, 0, 10) -- bot eye check, don't start shooting targets just because we barely see their head
-							local trace = util.TraceLine({start = bot:GetShootPos(), endpos = targetpos, filter = function( ent ) return ent == v end})
-	
-							if trace.Entity == v then -- TODO: FOV Check
-								if (!IsValid(bot.TargetEnt)) then
-									if (v:EntIndex() == bot.ControllerBot:EntIndex()) then return end
-									bot.TargetEnt = v
-								end
-							end
-						end
-					elseif v:IsNextBot() and !v:IsPlayer() and v:GetPos():Distance(bot:GetPos()) < 3600 and !IsValid(bot.TargetEnt) then
-						if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
-							local targetpos = v:EyePos() - Vector(0, 0, 10) -- bot eye check, don't start shooting targets just because we barely see their head
-							local trace = util.TraceLine({start = bot:GetShootPos(), endpos = targetpos, filter = function( ent ) return ent == v end})
-	
-							if trace.Entity == v then -- TODO: FOV Check
-								if (!IsValid(bot.TargetEnt)) then
-									if (v:EntIndex() == bot:EntIndex()) then return end
-									if (v:EntIndex() == bot.ControllerBot:EntIndex()) then return end
-									bot.TargetEnt = v
-								end
-							end
-						end
-					end
-				end
-			end
-		end
-		for k, v in pairs(player.GetBots()) do
-			if (!IsValid(bot.TargetEnt)) then
-				if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:GetPos():Distance(bot:GetPos()) < 3600 and !IsValid(bot.TargetEnt) then
-					if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
-						local targetpos = v:EyePos() - Vector(0, 0, 10) -- bot eye check, don't start shooting targets just because we barely see their head
-						local trace = util.TraceLine({start = bot:GetShootPos(), endpos = targetpos, filter = function( ent ) return ent == v end})
-	
-						if trace.Entity == v and !trace.Entity:IsFlagSet(FL_NOTARGET) then -- TODO: FOV Check
-							if (!IsValid(bot.TargetEnt)) then
-								if (v:EntIndex() == bot:EntIndex()) then return end
-								if (v:EntIndex() == bot.ControllerBot:EntIndex()) then return end
-								bot.TargetEnt = v
-							end
-						end
-					end
-				end
-			end
-		end
-		if (string.find(bot:GetModel(),"/bot_") and bot:Team() == TEAM_BLU) then
-	
-			for k, v in pairs(team.GetPlayers(TEAM_RED)) do
+			for k, v in pairs(player.GetBots()) do
 				if (!IsValid(bot.TargetEnt)) then
 					if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:GetPos():Distance(bot:GetPos()) < 3600 and !IsValid(bot.TargetEnt) then
 						if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
@@ -770,27 +819,48 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 					end
 				end
 			end
-		elseif (string.find(game.GetMap(),"mvm_") and bot:Team() == TEAM_RED) then
-	
-			for k, v in pairs(team.GetPlayers(TEAM_BLU)) do
-				if (!IsValid(bot.TargetEnt)) then
-					if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:GetPos():Distance(bot:GetPos()) < 3600 and !IsValid(bot.TargetEnt) then
-						if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
-							local targetpos = v:EyePos() - Vector(0, 0, 10) -- bot eye check, don't start shooting targets just because we barely see their head
-							local trace = util.TraceLine({start = bot:GetShootPos(), endpos = targetpos, filter = function( ent ) return ent == v end})
+			if (string.find(bot:GetModel(),"/bot_") and bot:Team() == TEAM_BLU) then
 		
-							if trace.Entity == v and !trace.Entity:IsFlagSet(FL_NOTARGET) then -- TODO: FOV Check
-								if (!IsValid(bot.TargetEnt)) then
-									if (v:EntIndex() == bot:EntIndex()) then return end
-									if (v:EntIndex() == bot.ControllerBot:EntIndex()) then return end
-									bot.TargetEnt = v
+				for k, v in pairs(team.GetPlayers(TEAM_RED)) do
+					if (!IsValid(bot.TargetEnt)) then
+						if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:GetPos():Distance(bot:GetPos()) < 3600 and !IsValid(bot.TargetEnt) then
+							if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
+								local targetpos = v:EyePos() - Vector(0, 0, 10) -- bot eye check, don't start shooting targets just because we barely see their head
+								local trace = util.TraceLine({start = bot:GetShootPos(), endpos = targetpos, filter = function( ent ) return ent == v end})
+			
+								if trace.Entity == v and !trace.Entity:IsFlagSet(FL_NOTARGET) then -- TODO: FOV Check
+									if (!IsValid(bot.TargetEnt)) then
+										if (v:EntIndex() == bot:EntIndex()) then return end
+										if (v:EntIndex() == bot.ControllerBot:EntIndex()) then return end
+										bot.TargetEnt = v
+									end
 								end
 							end
 						end
 					end
 				end
+			elseif (string.find(game.GetMap(),"mvm_") and bot:Team() == TEAM_RED) then
+		
+				for k, v in pairs(team.GetPlayers(TEAM_BLU)) do
+					if (!IsValid(bot.TargetEnt)) then
+						if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:GetPos():Distance(bot:GetPos()) < 3600 and !IsValid(bot.TargetEnt) then
+							if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
+								local targetpos = v:EyePos() - Vector(0, 0, 10) -- bot eye check, don't start shooting targets just because we barely see their head
+								local trace = util.TraceLine({start = bot:GetShootPos(), endpos = targetpos, filter = function( ent ) return ent == v end})
+			
+								if trace.Entity == v and !trace.Entity:IsFlagSet(FL_NOTARGET) then -- TODO: FOV Check
+									if (!IsValid(bot.TargetEnt)) then
+										if (v:EntIndex() == bot:EntIndex()) then return end
+										if (v:EntIndex() == bot.ControllerBot:EntIndex()) then return end
+										bot.TargetEnt = v
+									end
+								end
+							end
+						end
+					end
+				end
+		
 			end
-	
 		end
 		------------------------------
 		--------[[BOT LOGIC]]---------
@@ -1347,7 +1417,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 				bot:Give("nz_quickknife_crowbar")
 				bot:SelectWeapon("nz_quickknife_crowbar")
 			end]]
-			if (bot.TargetEnt:Health() > 0) then
+			if (bot.TargetEnt:Health() > 0) then 
 
 					if (!IsValid(bot:GetActiveWeapon())) then return end
 					if bot:GetPlayerClass() == "melee_scout_sandman" then 
@@ -1358,42 +1428,32 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 						end
 					end
 					if bot:GetActiveWeapon():GetClass() == "tf_weapon_bat_wood" then 
-						for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 540)) do
-							if v == bot.TargetEnt then
-								buttons = buttons + IN_ATTACK2
-							end
+						if (bot.TargetEnt:GetPos():Distance(bot:GetPos()) < 540) then
+							buttons = buttons + IN_ATTACK2 
 						end
 					end
 					if bot:GetPlayerClass() == "demoknight" or bot:GetPlayerClass() == "samuraidemo" or bot:GetPlayerClass() == "giantdemoknight" then
-						for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 500)) do
-							if v == bot.TargetEnt then
-								buttons = buttons + IN_ATTACK2
-							end
+						if (bot.TargetEnt:GetPos():Distance(bot:GetPos()) < 500) then
+							buttons = buttons + IN_ATTACK2
 						end
 					end
 					if bot:GetPlayerClass() == "charger" then
-						for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 240)) do
-							if v == bot.TargetEnt then
-								buttons = buttons + IN_ATTACK2
-							end
+						if (bot.TargetEnt:GetPos():Distance(bot:GetPos()) < 240) then
+							buttons = buttons + IN_ATTACK2
 						end
 					elseif bot:GetPlayerClass() == "smoker" then
-						for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 1000)) do
-							if v == bot.TargetEnt then
-								buttons = buttons + IN_ATTACK2
-							end
+						if (bot.TargetEnt:GetPos():Distance(bot:GetPos()) < 1000) then
+							buttons = buttons + IN_ATTACK2
 						end
 					elseif bot:GetPlayerClass() == "hunter" then
 						if (bot:GetActiveWeapon().ReadyToPounce) then
-							for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 400)) do
-								if v == bot.TargetEnt and !bot:GetNWBool("Taunting",false) then
+							if (bot.TargetEnt:GetPos():Distance(bot:GetPos()) < 800) then
 									if (!bot:IsFlagSet(FL_DUCKING)) then
 										bot:AddFlags(FL_DUCKING)
 									end
-								end
 							end
-							for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 240)) do
-								if v == bot.TargetEnt and !bot:GetNWBool("Taunting") then
+							if (bot.TargetEnt:GetPos():Distance(bot:GetPos()) < 240) then
+								if (bot:Visible(bot.TargetEnt)) then
 									buttons = buttons + IN_ATTACK2
 								end
 							end
@@ -1405,8 +1465,8 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 						
 					elseif bot:IsL4D() then
 
-						for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 240)) do
-							if v == bot.TargetEnt then
+						if (bot.TargetEnt:GetPos():Distance(bot:GetPos()) < 240) then
+							if (bot:Visible(bot.TargetEnt)) then
 								if (bot:GetNWBool("Taunting",false) != true) then
 									if (bot:Visible(v)) then
 										buttons = buttons + IN_ATTACK
@@ -1419,9 +1479,21 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 
 						if (bot:GetNWBool("Taunting",false) != true) then
 							if (bot:Visible(bot.TargetEnt)) then
-								if (IsValid(bot:GetActiveWeapon())) then
-									if (!bot:GetActiveWeapon().Reloading) then
-										buttons = buttons + IN_ATTACK
+								if (bot:GetPlayerClass() == "gmodplayer" or bot.playerclass == "Sniper") then
+									if (IsValid(bot:GetActiveWeapon())) then
+										if (math.random(1,3) == 1) then
+											buttons = buttons + IN_ATTACK
+										end
+									end
+								else
+									if (IsValid(bot:GetActiveWeapon())) then
+										if (bot:GetActiveWeapon().ReloadSingle and !bot:GetActiveWeapon().Reloading) then
+											if (math.random(1,2) == 1) then
+												buttons = buttons + IN_ATTACK
+											end
+										elseif (!bot:GetActiveWeapon().ReloadSingle) then
+											buttons = buttons + IN_ATTACK
+										end
 									end
 								end
 							end

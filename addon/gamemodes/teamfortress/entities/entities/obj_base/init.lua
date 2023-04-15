@@ -61,10 +61,8 @@ function ENT:Initialize()
 	self:SetCollisionBounds(unpack(self.CollisionBox))
 	--self:PhysicsInitShadow(true, true)
 	self:PhysicsInitBox(unpack(self.CollisionBox))
-	self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:PhysicsInit(SOLID_BBOX)
-	self:SetHealth(1)
-	self:SetCollisionGroup(COLLISION_GROUP_NPC)
+	self:SetSolid(SOLID_BBOX)
+	self:SetMoveType(MOVETYPE_NONE)
 	
 	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
@@ -401,7 +399,7 @@ function ENT:AddMetal(owner, max)
 	metal_spent = math.Clamp(math.ceil((self:GetMaxHealth() - self:Health()) * 0.2), 0, math.min(max, self.RepairRate))
 	
 	if metal_spent > 0 then
-		GAMEMODE:HealPlayer(owner, self, 5 * metal_spent, true, false)
+		self:SetHealth(math.Clamp(self:Health() + 5 * metal_spent, 0, self:GetMaxHealth()))
 		
 		max = max - metal_spent
 		repaired = true

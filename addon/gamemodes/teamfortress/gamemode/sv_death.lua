@@ -513,7 +513,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 				ply:SetModel(string.Replace(ply:GetModel(),"/player/","/lkskin/hwm/"))
 			end
 		end
-		if (!ply:IsL4D() and !ply:IsHL2() and !dmginfo:IsDamageType(DMG_BLAST) && !dmginfo:IsDamageType(DMG_ALWAYSGIB) and ply:GetPlayerClass() != "boomer" && ply:GetPlayerClass() != "tank_l4d" and !(string.find(ply:GetModel(),"bot_") and string.find(ply:GetModel(),"_boss") or ply:GetModelScale() > 1.0)) then
+		if (!ply:IsL4D() and !ply:IsHL2() and (!dmginfo:IsDamageType(DMG_BLAST) or string.find(ply:GetModel(),"bot_")) && (!dmginfo:IsDamageType(DMG_ALWAYSGIB) or string.find(ply:GetModel(),"bot_")) and ply:GetPlayerClass() != "boomer" && ply:GetPlayerClass() != "tank_l4d" and !(string.find(ply:GetModel(),"bot_") and string.find(ply:GetModel(),"_boss") or ply:GetModelScale() > 1.0)) then
 			timer.Simple(0.02, function()
 				if ply:GetRagdollEntity():IsValid() then
 					ply:GetRagdollEntity():Remove()
@@ -1484,10 +1484,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 			if (!(string.find(ply:GetModel(),"bot_"))) then
 				ply:Explode(dmginfo)
 				ply:EmitSound("physics/flesh/flesh_squishy_impact_hard2.wav", 80, 100)
-				shouldgib = true
-			elseif (string.find(ply:GetModel(),"bot_")) then
-				ply:GibBreakServer( dmginfo:GetDamageForce() )
-				shouldgib = true
+				shouldgib = true	
 			end
 		else
 			ply:Explode(dmginfo)

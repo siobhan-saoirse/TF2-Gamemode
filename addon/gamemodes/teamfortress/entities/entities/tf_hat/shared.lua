@@ -3060,25 +3060,25 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		snd.Pitch = math.random(95,105)
 		if (snd.Entity:IsPlayer()) then
 			if (snd.Entity:GetMoveType() == MOVETYPE_LADDER) then
-				snd.Volume = 1 * (groundspeed * 0.000006)
+				snd.Volume = 1 * (groundspeed * 0.000006) * 0.2
 			elseif (snd.Entity:IsPlayer() and snd.Entity:Crouching()) then
-				snd.Volume = 1 * (groundspeed * 0.000006)
+				snd.Volume = 1 * (groundspeed * 0.000006) * 0.2
 			else
 				if (CLIENT and snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
 					if (LocalPlayer():ShouldDrawLocalPlayer()) then
 						if (snd.Entity:GetNWBool("Taunting",false) == true) then
 							snd.Volume = 0
 						else
-							snd.Volume = 1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.008))
+							snd.Volume = ((1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.008)))) * 0.3
 						end
 					else
-						snd.Volume = 1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.008))
+						snd.Volume = ((1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.008)))) * 0.03
 					end
 				else
 					if (snd.Entity:GetNWBool("Taunting",false) == true) then
 						snd.Volume = 0
 					else
-						snd.Volume = 1 * (groundspeed * 0.000009 * (snd.Entity:GetRunSpeed() * 0.008))
+						snd.Volume = ((1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.008)))) * 0.02
 					end
 				end
 			end

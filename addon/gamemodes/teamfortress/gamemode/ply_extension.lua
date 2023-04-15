@@ -825,7 +825,7 @@ function meta:Build(number1,number2)
 	
 	timer.Simple(25, function()
 		if ( builder:IsValid() and builder.Moving != false and self:KeyPressed( IN_FORWARD ) ) then 
-			self:EmitSound("vo/engineer_sentrymoving0"..math.random(1,2)..".wav", 80, 100)
+			--self:EmitSound("vo/engineer_sentrymoving0"..math.random(1,2)..".wav", 80, 100)
 		else
 			return
 		end
@@ -888,9 +888,9 @@ function meta:Move(number1,number2)
 	local group = tonumber(number1)
 	local sub = tonumber(number2) 
 	if self:GetInfoNum("tf_robot", 0) == 1 then
-		self:EmitSound("vo/mvm/norm/engineer_mvm_sentrypacking0"..math.random(1,3)..".wav", 80, 100)
+		--self:EmitSound("vo/mvm/norm/engineer_mvm_sentrypacking0"..math.random(1,3)..".wav", 80, 100)
 	else
-		self:EmitSound("vo/engineer_sentrypacking0"..math.random(1,3)..".wav", 80, 100)		
+		--self:EmitSound("vo/engineer_sentrypacking0"..math.random(1,3)..".wav", 80, 100)		
 	end
 	local builder = self:GetWeapon("tf_weapon_builder")
 	
