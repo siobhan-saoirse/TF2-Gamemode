@@ -559,6 +559,12 @@ end
 function SWEP:OnRemove()
 	self.Owner = self.CurrentOwner
 	self.Removed = true
+	self:StopSound(self.ShootSound2)
+	self:StopSound(self.ShootCritSound2)
+	self:StopSound(self.SpecialSound1)
+	self:StopSound(self.SpecialSound2)
+	self:StopSound(self.SpecialSound3)
+	self:StopSound(self.SpinSound)
 	self:Holster()
 end
 

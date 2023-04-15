@@ -49,34 +49,6 @@ function GM:PreScaleDamage(ent, hitgroup, dmginfo)
 
 	ApplyAttributesFromEntity(dmginfo:GetInflictor(), "pre_damage", ent, hitgroup, dmginfo)
 
-	if (!att:IsL4D() and !ent:IsL4D()) then
-		if att~=ent and att:IsTFPlayer() and att:IsFriendly(ent) and !GetConVar("mp_friendlyfire"):GetBool() then
-			dmginfo:SetDamageType(DMG_GENERIC)
-			dmginfo:SetDamage(0)
-			if (ent:IsPlayer()) then
-				ent:SetBloodColor(DONT_BLEED)
-			end
-			return
-		else
-			if (ent:IsPlayer()) then
-				if (!string.find(ent:GetModel(),"/bot_")) then
-					ent:SetBloodColor(BLOOD_COLOR_RED)
-				else
-					ent:SetBloodColor(DONT_BLEED)
-					if (dmginfo:IsDamageType(DMG_BULLET)) then
-						if (ent:IsMiniBoss()) then
-							ent:EmitSound("MVM_Giant.BulletImpact")
-							ParticleEffect("bot_impact_light",dmginfo:GetDamagePosition(), Angle(0,0,0), nil)
-						else
-							ent:EmitSound("MVM_Robot.BulletImpact")
-							ParticleEffect("bot_impact_heavy",dmginfo:GetDamagePosition(), Angle(0,0,0), nil)
-						end
-					end
-				end
-			end
-		end
-	end
-
 	if att:IsPlayer() then
 		ApplyGlobalAttributesFromPlayer(att, "pre_damage", ent, hitgroup, dmginfo)
 	end
@@ -427,6 +399,36 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	local attacker = dmginfo:GetAttacker()
 	local amount = dmginfo:GetDamage()
 	
+	local att = dmginfo:GetAttacker()
+	
+	if (!att:IsL4D() and !ent:IsL4D()) then
+		if att~=ent and att:IsTFPlayer() and att:IsFriendly(ent) and !GetConVar("mp_friendlyfire"):GetBool() then
+			dmginfo:SetDamageType(DMG_GENERIC)
+			dmginfo:SetDamage(0)
+			if (ent:IsPlayer()) then
+				ent:SetBloodColor(DONT_BLEED)
+			end
+			return
+		else
+			if (ent:IsPlayer()) then
+				if (!string.find(ent:GetModel(),"/bot_")) then
+					ent:SetBloodColor(BLOOD_COLOR_RED)
+				else
+					ent:SetBloodColor(DONT_BLEED)
+					if (dmginfo:IsDamageType(DMG_BULLET)) then
+						if (ent:IsMiniBoss()) then
+							ent:EmitSound("MVM_Giant.BulletImpact")
+							ParticleEffect("bot_impact_light",dmginfo:GetDamagePosition(), Angle(0,0,0), nil)
+						else
+							ent:EmitSound("MVM_Robot.BulletImpact")
+							ParticleEffect("bot_impact_heavy",dmginfo:GetDamagePosition(), Angle(0,0,0), nil)
+						end
+					end
+				end
+			end
+		end
+	end
+
 	-- Friendly fire
 	if (attacker:IsPlayer() and (attacker:GetPlayerClass() == "giantblastsoldier" || attacker:GetPlayerClass() == "steelgauntletpusher")) then
 

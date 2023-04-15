@@ -201,9 +201,10 @@ function SWEP:SpinDown()
 	self.Spinning = false
 	
 	self:StopSound(self.ShootSound2)
+	self:StopSound(self.ShootCritSound)
 	self:StopSound(self.SpecialSound1)
+	self:StopSound(self.SpecialSound2)
 	self:StopSound(self.SpecialSound3)
-	self:EmitSound(self.SpecialSound2)
 	if SERVER then
 		--self.WModel2:StopParticles()
 	end
@@ -313,6 +314,7 @@ function SWEP:PrimaryAttack(vampire)
 			self.Owner:SetAnimation(PLAYER_ATTACK1)
 			self:SendWeaponAnim(self.VM_PRIMARYATTACK)
 			timer.Create("AttackAnim"..self.Owner:EntIndex(), self.Owner:SequenceDuration(self.Owner:LookupSequence("attackStand_PRIMARY")), 0,function()
+				if (!IsValid(self.Owner)) then return end
 				self.Owner:SetAnimation(PLAYER_ATTACK1)
 				self:SendWeaponAnim(self.VM_PRIMARYATTACK)
 			end)
@@ -567,7 +569,7 @@ function SWEP:Holster()
 	self:StopSound(self.SpecialSound3)
 	self:StopSound(self.SpecialSound2)
 	self:StopSound(self.SpecialSound3)
-	self:StopSound(self.SpecialSound1)
+	self:StopSound(self.SpinSound)
 	self.Spinning = nil
 	self.Ready = nil
 	self.NextEndSpinUp = nil
@@ -598,6 +600,11 @@ end
 function SWEP:OnRemove()
 	self.Owner = self.CurrentOwner
 	self.Removed = true
+	self:StopSound(self.ShootSound2)
+	self:StopSound(self.ShootCritSound2)
+	self:StopSound(self.SpecialSound1)
+	self:StopSound(self.SpecialSound2)
+	self:StopSound(self.SpecialSound3)
 	self:Holster()
 end
 

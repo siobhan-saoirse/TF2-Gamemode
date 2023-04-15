@@ -873,9 +873,13 @@ function SWEP:InspectAnimCheck()
 	if (self:Ammo1() < 1 and self:Clip1() < 1 and self.Primary.ClipSize ~= -1) then
 		if (CurTime() > self:GetNextPrimaryFire()) then
 			if (self.HoldType == "PRIMARY") then
-				self.Owner:SelectWeapon(self.Owner:GetWeapons()[2]:GetClass())
+				if (IsValid(self.Owner:GetWeapons()[2])) then
+					self.Owner:SelectWeapon(self.Owner:GetWeapons()[2]:GetClass())
+				end
 			elseif ((self.HoldType == "SECONDARY" or (self:GetClass() == "tf_weapon_jar" or self:GetClass() == "tf_weapon_jar_milk")) and self.Owner:GetPlayerClass() != "medic") then
-				self.Owner:SelectWeapon(self.Owner:GetWeapons()[3]:GetClass())
+				if (IsValid(self.Owner:GetWeapons()[3])) then
+					self.Owner:SelectWeapon(self.Owner:GetWeapons()[3]:GetClass())
+				end
 			end
 		end
 	end

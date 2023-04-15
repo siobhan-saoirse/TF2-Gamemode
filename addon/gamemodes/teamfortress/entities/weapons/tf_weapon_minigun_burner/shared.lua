@@ -107,12 +107,13 @@ PrecacheParticleSystem("bullet_tracer01_red_crit")
 PrecacheParticleSystem("bullet_tracer01_blue")
 PrecacheParticleSystem("bullet_tracer01_blue_crit")
 
-SWEP.BaseDamage = 3
-SWEP.DamageRandomize = 0
-SWEP.MaxDamageRampUp = 1
-SWEP.MaxDamageFalloff = 0.2
-SWEP.BulletsPerShot = 6
-SWEP.BulletSpread = 0.08
+SWEP.BaseDamage = 9
+SWEP.DamageRandomize = 2
+SWEP.MaxDamageRampUp = 1.5
+SWEP.MaxDamageFalloff = 0.5
+
+SWEP.BulletsPerShot = 1
+SWEP.BulletSpread = 0.1
 
 SWEP.Primary.ClipSize		= -1
 SWEP.Primary.Ammo			= TF_PRIMARY
@@ -568,6 +569,11 @@ end
 function SWEP:OnRemove()
 	self.Owner = self.CurrentOwner
 	self.Removed = true
+	self:StopSound(self.ShootSound2)
+	self:StopSound(self.ShootCritSound)
+	self:StopSound(self.SpecialSound1)
+	self:StopSound(self.SpecialSound2)
+	self:StopSound(self.SpecialSound3)
 	self:Holster()
 end
 
