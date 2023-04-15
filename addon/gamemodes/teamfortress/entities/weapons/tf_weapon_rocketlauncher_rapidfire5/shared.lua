@@ -5,7 +5,7 @@ end
 
 if CLIENT then
 
-SWEP.PrintName			= "Giant Burst Fire Rocket Launcher"
+SWEP.PrintName			= "Giant Burst Fire 2 Rocket Launcher"
 SWEP.Slot				= 0
 SWEP.RenderGroup 		= RENDERGROUP_BOTH
 
@@ -67,7 +67,7 @@ SWEP.Properties = {}
 SWEP.ChargeTime = 2
 SWEP.MinForce = 150
 SWEP.MaxForce = 2800 * 0.65
-
+SWEP.CriticalChance = 100
 SWEP.MinAddPitch = -1
 SWEP.MaxAddPitch = -6
 
@@ -156,9 +156,7 @@ function SWEP:ShootProjectile()
 		
 		rocket:SetAngles(ang + Angle(math.Rand(-1.6,1.6),math.Rand(-1.6,1.6),0))
 		rocket.ExplosionSound = "MVM.GiantSoldierRocketExplode"
-		if self:Critical() then
-			rocket.critical = true
-		end
+		rocket.critical = true
 		for k,v in pairs(self.Properties) do
 			rocket[k] = v
 		end

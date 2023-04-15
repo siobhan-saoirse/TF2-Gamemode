@@ -49,6 +49,34 @@ function GM:PreScaleDamage(ent, hitgroup, dmginfo)
 
 	ApplyAttributesFromEntity(dmginfo:GetInflictor(), "pre_damage", ent, hitgroup, dmginfo)
 
+	if (!att:IsL4D() and !ent:IsL4D()) then
+		if att~=ent and att:IsTFPlayer() and att:IsFriendly(ent) and !GetConVar("mp_friendlyfire"):GetBool() then
+			dmginfo:SetDamageType(DMG_GENERIC)
+			dmginfo:SetDamage(0)
+			if (ent:IsPlayer()) then
+				ent:SetBloodColor(DONT_BLEED)
+			end
+			return
+		else
+			if (ent:IsPlayer()) then
+				if (!string.find(ent:GetModel(),"/bot_")) then
+					ent:SetBloodColor(BLOOD_COLOR_RED)
+				else
+					ent:SetBloodColor(DONT_BLEED)
+					if (dmginfo:IsDamageType(DMG_BULLET)) then
+						if (ent:IsMiniBoss()) then
+							ent:EmitSound("MVM_Giant.BulletImpact")
+							ParticleEffect("bot_impact_light",dmginfo:GetDamagePosition(), Angle(0,0,0), nil)
+						else
+							ent:EmitSound("MVM_Robot.BulletImpact")
+							ParticleEffect("bot_impact_heavy",dmginfo:GetDamagePosition(), Angle(0,0,0), nil)
+						end
+					end
+				end
+			end
+		end
+	end
+
 	if att:IsPlayer() then
 		ApplyGlobalAttributesFromPlayer(att, "pre_damage", ent, hitgroup, dmginfo)
 	end
@@ -169,6 +197,7 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 	gamemode.Call("PreScaleDamage", ent, hitgroup, dmginfo)
 
 	local is_normal_damage = true
+	--[[
 	if (ent.TFBot and ent:EntIndex() != att:EntIndex() and att:IsTFPlayer() and !att:IsFriendly(ent)) then
 		ent.TargetEnt = att
 		for k,v in ipairs(ents.FindInSphere(ent:GetPos(),1200)) do
@@ -212,6 +241,7 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 	if (ent.TFBot and ent:EntIndex() != att:EntIndex() and att:IsTFPlayer() and !att:IsFriendly(ent)) then
 		for k,v in ipairs(ents.FindInSphere(ent:GetPos(),1200)) do
 			if (v:IsTFPlayer() and (v:IsFriendly(ent)) and v:EntIndex() != ent:EntIndex()) then
+				if (string.find(ent:GetModel(),"/bot_")) then return end
 				if (math.random(1,3) == 1 and !att:IsPlayer() and ent.TFBot and (!IsValid(ent.TargetEnt) or ent.TargetEnt:EntIndex() != att:EntIndex())) then
 					ent.TargetEnt = att
 					local args = {"TLK_PLAYER_BATTLECRY"}
@@ -258,7 +288,7 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 				end
 			end
 		end
-	end
+	end]]
 	is_normal_damage = true
 	-- if the entity can receive crits
 	
@@ -395,20 +425,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	local amount = dmginfo:GetDamage()
 	
 	-- Friendly fire
-	if (!attacker:IsL4D() and !ent:IsL4D()) then
-		if attacker~=ent and attacker:IsTFPlayer() and attacker:IsFriendly(ent) and !GetConVar("mp_friendlyfire"):GetBool() then
-			dmginfo:SetDamageType(DMG_GENERIC)
-			dmginfo:SetDamage(0)
-			if (ent:IsPlayer()) then
-				ent:SetBloodColor(DONT_BLEED)
-			end
-			return
-		else
-			if (ent:IsPlayer()) then
-				ent:SetBloodColor(BLOOD_COLOR_RED)
-			end
-		end
-	end
 	if (attacker:IsPlayer() and (attacker:GetPlayerClass() == "giantblastsoldier" || attacker:GetPlayerClass() == "steelgauntletpusher")) then
 
 		local dir = -ent:GetAimVector() * 6
@@ -666,7 +682,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		--ent.LastDamageInfo = CopyDamageInfo(dmginfo)
 	elseif not dmginfo:IsFallDamage() and not dmginfo:IsDamageType(DMG_DIRECT) and ent:WaterLevel() < 1 then
 		if 2*ent:Health()<ent:GetMaxHealth() or ent == attacker then
-			if ent:HasGodMode() == false then
+			if ent:HasGodMode() == false and !ent:IsMiniBoss() then
 				ent:Speak("TLK_PLAYER_ATTACKER_PAIN")
 			else
 				if ent:GetPlayerClass() == "scout" then
@@ -675,7 +691,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 				ent:EmitSound("tf/weapons/fx/rics/ric"..math.random(1,4)..".wav", 80, math.random(92, 106))
 			end
 		else
-			if ent:HasGodMode() == false then
+			if ent:HasGodMode() == false and !ent:IsMiniBoss() then
 				ent:Speak("TLK_PLAYER_PAIN")
 			else
 				if ent:GetPlayerClass() == "scout" then
@@ -689,7 +705,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			umsg.Vector(dmginfo:GetDamagePosition()-ent:GetPos())
 			umsg.Float(dmginfo:GetDamage())
 		umsg.End()
-	elseif dmginfo:IsFallDamage() then 
+	elseif dmginfo:IsFallDamage() and !ent:IsMiniBoss() then 
 		ent:Speak("TLK_PLAYER_ATTACKER_PAIN")
 	end
 	end

@@ -961,10 +961,13 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 		if (math.random(1,100) == 1) then
 			if ( CurTime() > bot.ControllerBot.LookAtTime ) then
 				bot.ControllerBot.LookAtTime = CurTime() + 2
-				bot.ControllerBot.LookAt = ((bot:GetShootPos() + VectorRand() * 128)):Angle()
+				bot.ControllerBot.LookAt = (bot:EyeAngles():Forward() + VectorRand() * 128):Angle()
 			end
 		end
 
+		if ( CurTime() < bot.ControllerBot.LookAtTime ) then
+
+		end
 		local mva = ((goalpos + bot:GetCurrentViewOffset()) - bot:GetShootPos()):Angle()
 
 		if bot.botPos and curgoal.area:GetAttributes() != NAV_MESH_CLIFF and bot:GetPos():Distance(curgoal.pos) > 50 * bot:GetModelScale() then
@@ -993,7 +996,11 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			if (bot:IsL4D()) then
 				bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):Angle()))
 			else
-				bot:SetEyeAngles(LerpAngle(FrameTime() * math.random(8, 10) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):Angle()))
+				if (bot:GetPlayerClass() == "soldier" and (bot:GetActiveWeapon().HoldType == "PRIMARY" or bot:GetActiveWeapon().HoldType == "PRIMARY2")) then
+					bot:SetEyeAngles(LerpAngle(FrameTime() * math.random(8, 10) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos() - Vector(0,0,25)):Angle()))
+				else
+					bot:SetEyeAngles(LerpAngle(FrameTime() * math.random(8, 10) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):Angle()))
+				end
 			end
 			return
 		elseif !IsValid(bot.TargetEnt) and curgoal and bot:GetPos():Distance(curgoal.pos) > 50 * bot:GetModelScale() then
