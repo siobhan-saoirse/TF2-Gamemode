@@ -12,9 +12,10 @@ function ENT:Initialize()
 	self.PosGen = nil
 	self.LookAtTime = 0
 	self.LookAt = Angle(0, 0, 0)
+	self.NextCenter = 0
 end
 
-function ENT:ChasePos( options ) 
+function ENT:ChasePos( options )  
 	self.P = Path("Follow")
 	self.P:SetMinLookAheadDistance(300)
 	self.P:SetGoalTolerance(20)
@@ -23,9 +24,11 @@ function ENT:ChasePos( options )
 	
 	if !self.P:IsValid() then return end
 	while self.P:IsValid() do
-		if self.P:GetAge() > 0.3 then
-			if (self.PosGen == nil) then return end
-			self.P:Compute(self, self.PosGen)
+		if (math.random(1,5) == 1) then
+			if self.P:GetAge() > 0.3 then
+				if (self.PosGen == nil) then return end
+				self.P:Compute(self, self.PosGen)
+			end
 		end
 		if GetConVar("developer"):GetFloat() > 0 then
 			self.P:Draw()
@@ -35,7 +38,7 @@ function ENT:ChasePos( options )
 			self:HandleStuck()
 			return
 		end
-		coroutine.wait(2)
+		coroutine.wait(10)
 		coroutine.yield()
 	end
 end
@@ -61,7 +64,7 @@ function ENT:RunBehaviour()
 		if self.PosGen then
 			self:ChasePos({})
 		end
-		coroutine.wait(2)
+		coroutine.wait(10)
 		coroutine.yield()
 	end
 end

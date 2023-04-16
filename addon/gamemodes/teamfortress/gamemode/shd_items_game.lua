@@ -6,7 +6,7 @@ end
 local items_game = util.KeyValuesToTable(file.Read("scripts/items/items_game.txt", "GAME")) 
 local prefabs = items_game["prefabs"]
 local attributes = items_game["attributes"]
-local items = items_game["items"]
+local items = items_game["items"] 
 for k, v in pairs(items_game["attributes"]) do
     v.id = k
     tf_items.AttributesByID[v.id] = v

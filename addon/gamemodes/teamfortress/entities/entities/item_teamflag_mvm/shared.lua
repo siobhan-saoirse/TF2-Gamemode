@@ -16,8 +16,6 @@ PrecacheParticleSystem( "mvm_levelup1" )
 PrecacheParticleSystem( "mvm_levelup2" )
 PrecacheParticleSystem( "mvm_levelup3" )  
 
-ENT.Model = "models/flag/briefcase.mdl"
-
 local FlagReturnTime = 60
 
 if SERVER then
@@ -85,7 +83,7 @@ function ENT:Initialize()
 	self.Prop2:SetAngles(self:GetAngles())
 	self.Prop2:Spawn()
 	self.Prop2:SetParent(self.Prop)
-	
+	ParticleEffectAttach( "cart_flashinglight", PATTACH_POINT_FOLLOW, self.Prop2, self.Prop2:LookupAttachment("siren") )
 	self:SetNWEntity("prop2", self.Prop2)
 	self:SetNWEntity("prop", self.Prop)
 	
@@ -228,14 +226,13 @@ function ENT:Return(nosound)
 		print(self.HomePosition)
 		self:TriggerOutput("OnReturn")
 
+		ParticleEffectAttach( "cart_flashinglight", PATTACH_POINT_FOLLOW, self.Prop2, self.Prop2:LookupAttachment("siren") )
 		if nosound then
 			return
 		end
 
 		for _, ply in pairs(player.GetAll()) do
-			if ply:Team() == self.TeamNum then
-				ply:SendLua([[surface.PlaySound("vo/mvm_bomb_back02.wav")]])
-			end
+			ply:SendLua([[LocalPlayer():EmitSound("MVM.AttackDefend.EnemyReturned")]])
 		end
 	end
 end
@@ -246,6 +243,7 @@ function ENT:Pickup(ply)
 			self.HomePosition = self:GetPos()
 			self.HomeAngles = self:GetAngles()
 		end
+		self.isCarryingIntel = true
 		
 		self:SetNWBool("TimerActive", false)
 		self.NextReturn = nil
@@ -270,7 +268,7 @@ function ENT:Pickup(ply)
 
 		for _, ply in pairs(player.GetAll()) do
 			if ply:Team() == self.TeamNum then
-				ply:Speak("TLK_MVM_BOMB_PICKUP")
+				ply:Speak("TLK_MVM_BOMB_PICKUP") 
 			end
 		end  
 	
@@ -309,31 +307,25 @@ function ENT:Pickup(ply)
 			end
 		end)
 		timer.Create("Warning1", 10, 1, function()
-			if ply:GetPlayerClass() == "pyro" then
-				ply:EmitSound("vo/mvm/norm/pyro_mvm_laughlong01.wav", 80, 100)
-			end
-			ParticleEffect( "mvm_levelup1", ply:GetPos() + (Vector(0, 0, 70) * ply:GetModelScale()) , ply:GetAngles(), ply )
+			ParticleEffectAttach( "mvm_levelup1", PATTACH_POINT_FOLLOW, ply, ply:LookupAttachment("head") )
 			ply:EmitSound("mvm/mvm_warning.wav", 0, 100)
-			--ply:TFTaunt(tostring(ply:GetActiveWeapon():GetSlot() + 1))
-			timer.Create("CarrierGetsHealed", 0.5, 0, function()
-				ply:SetArmor( 150 )
+			if (!ply:IsMiniBoss()) then
+				ply:TFTaunt(tostring(ply:GetActiveWeapon():GetSlot() + 1))
+			end
+			timer.Create("CarrierGetsHealed", 5.0, 0, function()
+				ply:SetArmor( 50 )
 			end)
 		
 		end)
 		
 		timer.Create("Warning2", 45, 1, function()
-			if ply:GetPlayerClass() == "pyro" then
-				ply:EmitSound("vo/mvm/norm/pyro_mvm_laughlong01.wav", 80, 100)
-			end
-			if ply:GetInfoNum("tf_giant_robot", 0) == 1 then
-				ParticleEffect( "mvm_levelup2", ply:GetPos() + Vector(0, 0, 135) , ply:GetAngles(), ply )
-			else
-				ParticleEffect( "mvm_levelup2", ply:GetPos() + Vector(0, 0, 70) , ply:GetAngles(), ply )
-			end
+			ParticleEffectAttach( "mvm_levelup2", PATTACH_POINT_FOLLOW, ply, ply:LookupAttachment("head") )
 			ply:EmitSound("mvm/mvm_warning.wav", 0, 100)
-			--ply:TFTaunt(tostring(ply:GetActiveWeapon():GetSlot() + 1))
+			if (!ply:IsMiniBoss()) then
+				ply:TFTaunt(tostring(ply:GetActiveWeapon():GetSlot() + 1))
+			end
 			timer.Create("CarrierGetsResistance", 1, 0, function()
-				GAMEMODE:HealPlayer(self.Carrier, self.Carrier, 8, true, true) 
+				GAMEMODE:HealPlayer(self.Carrier, self.Carrier, 10, true, false) 
 			end)
 			for k,v in pairs(player.GetAll()) do
 				if not v:IsFriendly(ply) then
@@ -350,16 +342,11 @@ function ENT:Pickup(ply)
 			end
 		end)
 		timer.Create("Warning3", 65, 1, function()
-			if ply:GetPlayerClass() == "pyro" then
-				ply:EmitSound("vo/mvm/norm/pyro_mvm_laughlong01.wav", 80, 100)
-			end
-			if ply:GetInfoNum("tf_giant_robot", 0) == 1 then
-				ParticleEffect( "mvm_levelup3", ply:GetPos() + Vector(0, 0, 135) , ply:GetAngles(), ply )
-			else
-				ParticleEffect( "mvm_levelup3", ply:GetPos() + Vector(0, 0, 70) , ply:GetAngles(), ply )
-			end
+			ParticleEffectAttach( "mvm_levelup3", PATTACH_POINT_FOLLOW, ply, ply:LookupAttachment("head") )
 			ply:EmitSound("mvm/mvm_warning.wav", 0, 100)
-			--ply:TFTaunt(tostring(ply:GetActiveWeapon():GetSlot() + 1))
+			if (!ply:IsMiniBoss()) then
+				ply:TFTaunt(tostring(ply:GetActiveWeapon():GetSlot() + 1))
+			end
 			for _,pl in pairs(player.GetAll()) do
 				if not pl:IsFriendly(ply) then
 					if pl:GetPlayerClass() == "heavy" then
@@ -404,6 +391,7 @@ function ENT:Drop(nosound)
 		self:DropToFloor()
 		self:TriggerOutput("OnDrop", ply)
 
+		ParticleEffectAttach( "cart_flashinglight", PATTACH_POINT_FOLLOW, self.Prop2, self.Prop2:LookupAttachment("siren") )
 		if nosound then
 			return
 		end
@@ -484,7 +472,7 @@ function ENT:Draw()
 
 	if not self:GetNWBool("TimerActive") then return end
 	
-	local s = self:GetSkin()
+	local s = 1
 	if self.OldSkin~=s then
 		self.Progress:SetBackgroundColor(colors[s])
 		self.Progress:SetForegroundColor(colors[s])
@@ -513,7 +501,13 @@ function ENT:Think()
 	if self.NextReturn then
 		self.Progress:SetProgress((self.NextReturn - CurTime())/FlagReturnTime)
 	end
-	
+	if (self.Carrier and self.Carrier.TFBot) then
+
+		for _,capturezone in ipairs(ents.FindByClass("func_capturezone")) do
+			self.Carrier.botPos = capturezone.Pos
+		end
+
+	end
 	self:NextThink(CurTime())
 end
 

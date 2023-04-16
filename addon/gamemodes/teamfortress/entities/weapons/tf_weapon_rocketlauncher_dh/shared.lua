@@ -63,6 +63,10 @@ function SWEP:ShootProjectile()
 		rocket.NameOverride = "tf_projectile_rocket_direct"
 		rocket.ExplosionSound = self.CustomExplosionSound
 		
+		if (self.ProjectileDamageMultiplier) then
+			rocket.OldBaseDamage = rocket.BaseDamage
+			rocket.BaseDamage = rocket.OldBaseDamage * self.ProjectileDamageMultiplier
+		end
 		rocket:Spawn()
 		rocket:Activate()
 	end

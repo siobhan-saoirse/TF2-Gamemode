@@ -3,10 +3,6 @@ include("sv_clientfiles.lua")
 include("sv_resource.lua")
 include("sv_response_rules.lua")
 include("sv_ctf_bots.lua")
-PrecacheParticleSystem( "bot_impact_heavy" )
-PrecacheParticleSystem( "bot_impact_light" )
-PrecacheParticleSystem( "water_playerdive" )
-PrecacheParticleSystem( "water_playeremerge" )
 include("shared.lua")
 include("sv_gamelogic.lua")
 include("sv_hl2replace.lua")
@@ -2413,6 +2409,7 @@ end
 function GM:PlayerSetHandsModel( ply, ent )
 	local simplemodel = player_manager.TranslateToPlayerModelName( ply:GetModel() )
 	local info = player_manager.TranslatePlayerHands( simplemodel )
+	if (!IsValid(ent)) then return end
 	if ( info ) then
 		if ply:IsHL2() then
 			ent:SetModel( info.model )

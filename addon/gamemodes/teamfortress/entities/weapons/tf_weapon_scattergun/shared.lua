@@ -68,7 +68,6 @@ function SWEP:OnEquipAttribute(a, owner)
 	elseif a.attribute_class == "set_scattergun_has_knockback" then
 		self.ScattergunHasKnockback = true
 		self.ReloadTime = 1.6
-		self.ReloadSound = Sound("")
 	end
 end
 
@@ -85,9 +84,6 @@ function SWEP:SetupCModelActivities(item)
 		for _,a in pairs(item.attributes or {}) do
 			if a.attribute_class == "set_scattergun_no_reload_single" and a.value == 1 then
 				item = table.Copy(item)
-				item.anim_slot = "ITEM2"
-				self.HoldType = "ITEM2"
-				self:SetWeaponHoldType("ITEM2")
 				break
 			end
 		end

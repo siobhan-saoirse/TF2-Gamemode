@@ -262,7 +262,21 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 		end
 	end]]
 	if (ent.TFBot and ent:EntIndex() != att:EntIndex() and att:IsTFPlayer() and !att:IsFriendly(ent)) then
-		ent.TargetEnt = att
+		if (!IsValid(ent.TargetEnt)) then
+			ent.TargetEnt = att
+				
+			for k,v in ipairs(ents.FindInSphere(ent:GetPos(),6000)) do
+				if (v:IsTFPlayer() and (v:IsFriendly(ent)) and v:EntIndex() != ent:EntIndex()) then
+						if (v:IsPlayer()) then
+							if (v:IsBot()) then
+								v.TargetEnt = att
+							end
+						elseif (v:IsNPC()) then
+							v:SetEnemy(att)
+						end
+				end
+			end
+		end
 	end
 	is_normal_damage = true
 	-- if the entity can receive crits
@@ -283,7 +297,9 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 					else
 						dmginfo:SetDamage(inf.BaseDamage)
 					end
-					dmginfo:SetDamageForce(dmginfo:GetDamageForce() * 2)
+					if (!string.find(ent:GetModel(),"_boss.mdl")) then
+						dmginfo:SetDamageForce(dmginfo:GetDamageForce() * 2)
+					end
 				elseif ent.IsTFBuilding then
 					damage = 0
 					dmginfo:SetDamageForce(vector_origin)
@@ -327,10 +343,6 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 	
 	if dmginfo:IsBulletDamage() and (inf.IsTFWeapon or inf.IsTFBuilding) and inf.CalculateDamage then
 		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (dmginfo:GetDamage()) * 0.5)
-	end
-	
-	if (ent:IsPlayer() and ent:IsBot() and string.find(ent:GetModel(),"_boss.mdl")) then
-		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * 0.3)
 	end
 
 	return dontscaledamage
@@ -400,7 +412,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	local amount = dmginfo:GetDamage()
 	
 	local att = dmginfo:GetAttacker()
-	
+
 	if (!att:IsL4D() and !ent:IsL4D()) then
 		if att~=ent and att:IsTFPlayer() and att:IsFriendly(ent) and !GetConVar("mp_friendlyfire"):GetBool() then
 			dmginfo:SetDamageType(DMG_GENERIC)
@@ -441,18 +453,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			ent:SetVelocity(dir2 + Vector(0,0,80))
 		end)
 		--ent:SetThrownByExplosion(true)
-	end
-	if (ent:IsPlayer() and ent.TFBot) then
-
-        ent.ControllerBot.LookAtTime = CurTime() + 2
-        ent.ControllerBot.LookAt = ((ent:GetPos() + VectorRand() * 128) - attacker:GetPos()):Angle()
-
-	end
-
-	if (ent:IsPlayer() and ent:GetInfoNum("tf_robot",0) != 1) then
-		ent:SetBloodColor(BLOOD_COLOR_RED)
-	elseif (ent:IsPlayer() and ent:GetInfoNum("tf_robot",0) == 1) then
-		ent:SetBloodColor(DONT_BLEED)
 	end
 
 	if ent:IsTFPlayer() and ent:Health() <= 0 then
@@ -522,6 +522,10 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	if dmginfo:IsExplosionDamage() then
 		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (inflictor.BlastForceMultiplier or 1) * BlastForceMultiplier)
 	end
+	
+	if (ent:IsPlayer() and ent:IsBot() and string.find(ent:GetModel(),"_boss.mdl")) then
+		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * 0.3)
+	end
 	if gamemode.Call("ShouldCrit", ent, inflictor, attacker, hitgroup, dmginfo) then
 		if att == ent then
 			-- Self damage, don't scale the damage, but still notify the player that they critted themselves
@@ -529,7 +533,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 				SendUserMessage("CriticalHitReceived", ent)
 			end
 		else
-			-- Modify the damage
+			-- Modify the damage 
 			dmginfo:ScaleDamage(3)
 
 			if ent:IsPlayer() and (!ent.NextSpeak or ent.NextSpeak<CurTime()) then
@@ -563,7 +567,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		end
 		
 		-- Overexaggerated explosion force
-		if (ent:IsNPC() or ent:IsPlayer()) and ent:ShouldReceiveDamageForce() and dmginfo:IsExplosionDamage() then
+		if (ent:IsNPC() or ent:IsPlayer()) and ent:ShouldReceiveDamageForce() and dmginfo:IsExplosionDamage() and !string.find(ent:GetModel(),"_boss.mdl") then
 			local force = dmginfo:GetDamageForce() * BlastForceToVelocityMultiplier
 			
 			ent:SetGroundEntity(NULL)
@@ -690,19 +694,23 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			if ent:HasGodMode() == false and !ent:IsMiniBoss() then
 				ent:Speak("TLK_PLAYER_ATTACKER_PAIN")
 			else
-				if ent:GetPlayerClass() == "scout" then
-					ent:EmitSound("Scout.BeingShotInvincible"..math.random(10,36))
+				if (!ent:IsMiniBoss()) then
+					if ent:GetPlayerClass() == "scout" then
+						ent:EmitSound("Scout.BeingShotInvincible"..math.random(10,36))
+					end
+					ent:EmitSound("tf/weapons/fx/rics/ric"..math.random(1,4)..".wav", 80, math.random(92, 106))
 				end
-				ent:EmitSound("tf/weapons/fx/rics/ric"..math.random(1,4)..".wav", 80, math.random(92, 106))
 			end
 		else
 			if ent:HasGodMode() == false and !ent:IsMiniBoss() then
 				ent:Speak("TLK_PLAYER_PAIN")
 			else
-				if ent:GetPlayerClass() == "scout" then
-					ent:EmitSound("Scout.BeingShotInvincible"..math.random(10,36))
+				if (!ent:IsMiniBoss()) then
+					if ent:GetPlayerClass() == "scout" then
+						ent:EmitSound("Scout.BeingShotInvincible"..math.random(10,36))
+					end
+					ent:EmitSound("tf/weapons/fx/rics/ric"..math.random(1,4)..".wav", 80, math.random(92, 106), 1, CHAN_BODY)
 				end
-				ent:EmitSound("tf/weapons/fx/rics/ric"..math.random(1,4)..".wav", 80, math.random(92, 106), 1, CHAN_BODY)
 			end
 		end
 		

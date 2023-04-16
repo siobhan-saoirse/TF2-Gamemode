@@ -664,7 +664,6 @@ hook.Add("Move", "TFPlayerSlowdown", function(pl, move)
 	end
 end)
 ]]
-
 hook.Add("Think", "TFPlayerThink", function()
 	for v,_ in pairs(entset.GetTFPlayers()) do
 		--------------------------------------------------------

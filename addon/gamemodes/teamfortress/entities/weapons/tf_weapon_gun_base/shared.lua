@@ -70,7 +70,11 @@ function SWEP:PrimaryAttack()
 		end
 		
 		self.Owner:SetAnimation(PLAYER_ATTACK1)
-		self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+		if (self.Primary.FastDelay) then
+			self:SetNextPrimaryFire(CurTime() + self.Primary.FastDelay)
+		else
+			self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+		end
 		self:ShootEffects()
 	end
 	if not self:CallBaseFunction("PrimaryAttack") then return false end

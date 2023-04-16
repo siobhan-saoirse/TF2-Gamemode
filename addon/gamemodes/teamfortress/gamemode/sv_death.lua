@@ -36,6 +36,9 @@ function GM:DoTFPlayerDeath(ent, attacker, dmginfo)
 	if (dmginfo:IsDamageType(DMG_DISSOLVE)) then
 		ent:EmitSound("TFPlayer.Dissolve")
 	end
+	if (attacker.TFBot) then
+		attacker.botPos = nil
+	end
 	ent:StopSound("Weapon_Minifun.Fire")
 	ent:StopSound("Weapon_Minigun.Fire")
 	ent:StopSound("Weapon_Tomislav.ShootLoop")
@@ -437,6 +440,9 @@ end
 function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	ply:SetNWBool("Taunting",false)
 	
+	if (string.find(ply:GetModel(),"/bot_")) then
+		ParticleEffect("bot_death",ply:GetPos(),ply:GetAngles(),nil)
+	end
 	net.Start("DeActivateTauntCam")
 	net.Send(ply)
 
@@ -600,7 +606,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 			end
 			local phys = ragdoll:GetPhysicsObject()
 			if (IsValid(phys)) then
-				phys:AddVelocity(ply:GetVelocity() * 8 + dmginfo:GetDamageForce())
+				phys:AddVelocity(ply:GetVelocity() * 8 + dmginfo:GetDamageForce() * 8)
 			end
 			if (dmginfo:IsDamageType(DMG_DISSOLVE)) then
 				timer.Simple(0.15, function()
@@ -642,7 +648,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 					ragdoll:Fire("FadeAndRemove","",math.random(5,30))
 					local phys = ragdoll:GetPhysicsObject()
 					if (IsValid(phys)) then
-						phys:AddVelocity(ply:GetVelocity() * 8 + dmginfo:GetDamageForce())
+						phys:AddVelocity(ply:GetVelocity() * 8 + dmginfo:GetDamageForce() * 8)
 					end
 					timer.Simple(0.15, function()
 						local dissolver = ents.Create( "env_entity_dissolver" )

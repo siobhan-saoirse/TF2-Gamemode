@@ -244,6 +244,10 @@ function SWEP:ShootProjectile()
 				
 			end
 		end
+		if (self.ProjectileDamageMultiplier) then
+			rocket.OldBaseDamage = rocket.BaseDamage
+			rocket.BaseDamage = rocket.OldBaseDamage * self.ProjectileDamageMultiplier
+		end
 		rocket:SetOwner(self.Owner)
 		self:InitProjectileAttributes(rocket)
 		

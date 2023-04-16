@@ -53,3 +53,8 @@ PrecacheParticleSystem("particle_nemesis_blue")
 
 PrecacheParticleSystem("muzzle_raygun_red")
 PrecacheParticleSystem("bullet_tracer_raygun_red")
+PrecacheParticleSystem( "bot_impact_heavy" )
+PrecacheParticleSystem( "bot_impact_light" )
+PrecacheParticleSystem( "bot_death" )
+PrecacheParticleSystem( "water_playerdive" )
+PrecacheParticleSystem( "water_playeremerge" )

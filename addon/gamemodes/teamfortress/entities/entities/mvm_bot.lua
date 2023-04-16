@@ -66,6 +66,7 @@ local function LeadBot_S_Add_Zombie(team,class,pos,ent)
 	bot:SetTeam(teamv)
 	bot:SetPlayerClass(class)
 	bot:SetPos(pos)
+	bot.botPos = pos
 	bot.IsMVMRobot = true
 	bot.IsBoss = ent.IsBoss
 	bot.Difficulty = ent.Difficulty
@@ -127,7 +128,7 @@ function ENT:Initialize()
 		timer.Simple(0.1, function()
 		
 			for k,v in ipairs(ents.FindByClass("item_teamflag_mvm")) do
-				if (!IsValid(v.Carrier) and !v.NextReturn) then
+				if (!IsValid(v.Carrier) and !v.NextReturn and k == 1) then
 					v:Pickup(npc)
 					for _,capturezone in ipairs(ents.FindByClass("func_capturezone")) do
 						npc.botPos = capturezone.Pos

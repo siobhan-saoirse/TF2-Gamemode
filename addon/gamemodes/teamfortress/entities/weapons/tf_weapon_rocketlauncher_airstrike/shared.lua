@@ -58,7 +58,7 @@ end
 
 function SWEP:ShootProjectile()
 	if SERVER then
-		local rocket = ents.Create("tf_projectile_rocket_airstrike")
+		local rocket = ents.Create("tf_projectile_rocket")
 		rocket:SetPos(self:ProjectileShootPos())
 		local ang = self.Owner:EyeAngles()
 		

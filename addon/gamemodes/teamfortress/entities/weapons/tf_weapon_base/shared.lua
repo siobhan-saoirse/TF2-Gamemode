@@ -1128,9 +1128,13 @@ function SWEP:PrimaryAttack(noscene)
 	or (self.Primary.QuickDelay>=0 and self.Owner:KeyPressed(IN_ATTACK) and QuickDelay>=0 and CurTime()<QuickDelay) then
 		return
 	end
-	
-	self.Delay =  CurTime() + self.Primary.Delay
-	self.QuickDelay =  CurTime() + self.Primary.QuickDelay
+	if (self.Primary.FastDelay) then
+		self.Delay =  CurTime() + self.Primary.FastDelay
+		self.QuickDelay =  CurTime() + self.Primary.QuickDelay
+	else
+		self.Delay =  CurTime() + self.Primary.Delay
+		self.QuickDelay =  CurTime() + self.Primary.QuickDelay
+	end
 	
 	
 	if SERVER then
@@ -1285,6 +1289,10 @@ function SWEP:Reload()
 			else
 				self:SendWeaponAnimEx(self.VM_RELOAD)
 				self.Owner:SetAnimation(PLAYER_RELOAD)
+				if self.FastReloadTime then  
+					self.Owner:GetViewModel():SetPlaybackRate(1.0 / self.FastReloadTime)
+					self.ReloadTime = self.FastReloadTime
+				end
 				self.NextIdle = CurTime() + (self.ReloadTime or self:SequenceDuration())
 				self.NextReload = self.NextIdle
 				
@@ -1295,9 +1303,6 @@ function SWEP:Reload()
 					umsg.Start("PlayTFWeaponWorldReload")
 						umsg.Entity(self)
 					umsg.End()
-				end
-				if self.ReloadTime == 0.71 then  
-					self.Owner:GetViewModel():SetPlaybackRate(1.51)
 				end
 				--self.reload_cur_start = CurTime()
 			end
@@ -1621,8 +1626,14 @@ function SWEP:Think()
 			end
 			self.NextReload = nil
 		else
+			if self.FastReloadTime then  
+				self.ReloadTime = self.FastReloadTime
+			end
 			if SERVER then
 			self:SendWeaponAnimEx(self.VM_RELOAD)
+			end
+			if self.FastReloadTime then  
+				self.Owner:GetViewModel():SetPlaybackRate(1.0 / self.FastReloadTime)
 			end
 			if CLIENT then
 				if self:GetItemData().model_player == "models/weapons/c_models/c_scattergun.mdl" then
@@ -1648,16 +1659,12 @@ function SWEP:Think()
 						end
 					end
 				end
-			if self.ReloadTime == 0.2 then
-				self.Owner:GetViewModel():SetPlaybackRate(2)
-			end
 			if self.ReloadTime == 1.1 then 
 				if self:GetItemData().model_player == "models/weapons/c_models/c_dumpster_device/c_dumpster_device.mdl" then
 					if CLIENT then
 						self.Owner:EmitSound("Weapon_DumpsterRocket.Reload")
 					end
 				end
-				self.Owner:GetViewModel():SetPlaybackRate(0.7)
 			end
 			self.NextReload = CurTime() + (self.ReloadTime)
 			if (self:GetClass() == "tf_weapon_grenadelauncher" or self:GetClass() == "tf_weapon_cannon") then
@@ -1706,8 +1713,14 @@ function SWEP:Think()
 	end
 	
 	if self.NextReloadStart and CurTime()>=self.NextReloadStart then
+		if self.FastReloadTime then  
+			self.ReloadTime = self.FastReloadTime
+		end
 		if SERVER then
 		self:SendWeaponAnimEx(self.VM_RELOAD)
+		end
+		if self.FastReloadTime then  
+			self.Owner:GetViewModel():SetPlaybackRate(1.0 / self.FastReloadTime)
 		end
 		if CLIENT then
 			if self:GetItemData().model_player == "models/weapons/c_models/c_scattergun.mdl" then
