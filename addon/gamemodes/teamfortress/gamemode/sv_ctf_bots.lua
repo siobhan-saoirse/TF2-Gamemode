@@ -1319,9 +1319,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 											if (bot:GetActiveWeapon().ReloadSingle and !bot:GetActiveWeapon().Reloading) then
 												buttons = buttons + IN_ATTACK
 											elseif (!bot:GetActiveWeapon().ReloadSingle) then
-												if (math.random(1,2) == 1) then
-													buttons = buttons + IN_ATTACK
-												end
+												buttons = buttons + IN_ATTACK
 											end
 										end
 									end
