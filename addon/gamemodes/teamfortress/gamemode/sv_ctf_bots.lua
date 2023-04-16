@@ -540,9 +540,9 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					
 					avoidVector:Normalize()
 					bot.movingAway = true
-					bot.pushAwayMove = mv:GetForwardSpeed() + forward2
-					mv:SetForwardSpeed(mv:GetForwardSpeed() + forward2)
-					mv:SetSideSpeed(mv:GetSideSpeed() + side)
+					bot.pushAwayMove = mv:GetForwardSpeed() + (forward2 * 0.5)
+					mv:SetForwardSpeed(mv:GetForwardSpeed() + (forward2 * 0.5))
+					mv:SetSideSpeed(mv:GetSideSpeed() + (side * 0.5))
 				end
 			end
 			 --[[
@@ -929,7 +929,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				end
 			end
 	
-			if targetply ~= fintel.Carrier and targetply:Health() > targetply:GetMaxHealth() / 2 then
+			if IsValid(fintel) and targetply ~= fintel.Carrier and targetply:Health() > targetply:GetMaxHealth() / 2 then
 				targetply = nil
 			end
 	
@@ -941,7 +941,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				if trace.Entity == targetply and targetply:IsFriendly(bot) then
 					bot.TargetEnt = targetply
 				else 
-					if (targetply ~= fintel.Carrier) then
+					if (IsValid(fintel) and targetply ~= fintel.Carrier) then
 						bot.TargetEnt = nil
 					end
 				end
@@ -1317,11 +1317,11 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 										else
 											if (bot:GetActiveWeapon().IsMeleeWeapon and bot.TargetEnt:GetPos():Distance(bot:GetPos()) > 400 * bot:GetModelScale()) then return end
 											if (bot:GetActiveWeapon().ReloadSingle and !bot:GetActiveWeapon().Reloading) then
+												buttons = buttons + IN_ATTACK
+											elseif (!bot:GetActiveWeapon().ReloadSingle) then
 												if (math.random(1,2) == 1) then
 													buttons = buttons + IN_ATTACK
 												end
-											elseif (!bot:GetActiveWeapon().ReloadSingle) then
-												buttons = buttons + IN_ATTACK
 											end
 										end
 									end
