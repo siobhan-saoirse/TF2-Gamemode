@@ -275,7 +275,7 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 							v:SetEnemy(att)
 						end
 				end
-			end
+			end	
 		end
 	end
 	is_normal_damage = true
@@ -427,7 +427,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 					ent:SetBloodColor(BLOOD_COLOR_RED)
 				else
 					ent:SetBloodColor(DONT_BLEED)
-					if (dmginfo:IsDamageType(DMG_BULLET)) then
+					if (dmginfo:IsDamageType(DMG_BULLET) or dmginfo:IsDamageType(DMG_GENERIC)) then
 						if (ent:IsMiniBoss()) then
 							ent:EmitSound("MVM_Giant.BulletImpact")
 							ParticleEffect("bot_impact_light",dmginfo:GetDamagePosition(), Angle(0,0,0), nil)
@@ -680,7 +680,9 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	if ent:GetInfoNum("tf_robot",0) != 1 or ent:IsBot() and GetConVar("tf_bots_are_robots"):GetBool() then
 	ent:Speak("TLK_PLAYER_EXPRESSION", true)
 	if ((inflictor:GetClass()=="tf_entityflame" or inflictor:GetClass()=="entityflame") and math.random(1,3) == 1) then
-		ent:Speak("TLK_ONFIRE")
+		if (!ent:IsMiniBoss()) then
+			ent:Speak("TLK_ONFIRE")
+		end
 	end
 	
 	if not ent.NextFlinch or CurTime() > ent.NextFlinch and !ent:IsL4D() then

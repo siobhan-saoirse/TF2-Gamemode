@@ -233,13 +233,6 @@ hook.Add("PlayerHurt", "RoboIsHurt", function( ply, pos, foot, sound, volume, rf
 	if ply:GetPlayerClass() == "metrocop" then
 		EmitSentence( "METROPOLICE_PAIN" .. math.random( 0, 3 ), ply:GetPos(), 1, CHAN_AUTO, 1, 75, 0, 100 )
 	end
-	if not ply:IsHL2() and ply:GetInfoNum("tf_robot", 0) == 1 then
-				
-		ply:EmitSound( "MVM_Robot.BulletImpact" )
-	end
-	if not ply:IsHL2() and ply:Team() == TEAM_BLU and string.find(game.GetMap(), "mvm_") then	
-		ply:EmitSound( "MVM_Robot.BulletImpact" )
-	end
 	
 	if not ply:IsHL2() and ply:GetInfoNum("tf_hhh", 0) == 1 then
 		ply:EmitSound( "Halloween.HeadlessBossPain" ) -- Play the footsteps hunter is using
@@ -260,9 +253,6 @@ hook.Add("PlayerHurt", "RoboIsHurt", function( ply, pos, foot, sound, volume, rf
 	end
 	
 	
-	if not ply:IsHL2() and ply:GetInfoNum("tf_mvm_voodoo", 0) == 1 then
-		ply:EmitSound( "MVM_Robot.BulletImpact" )
-	end
 	if not ply:IsHL2() and ply:GetInfoNum("jakey_antlionfbii", 0) == 1 then
 		ply:EmitSound("npc/antlion/shell_impact"..math.random(1,4)..".wav", 80, 100)
 		if ( shouldOccur ) then
@@ -436,15 +426,6 @@ hook.Add("PlayerDeath", "PlayerRobotDeath", function( ply, attacker, inflictor)
 	if attacker:IsPlayer() and victim ~= attacker and attacker:GetInfoNum("tf_merasmus", 0) == 1 and victim:IsNPC() then
 		attacker:EmitSound("Halloween.MerasmusBombTaunt")
 	end
-	if not ply:IsHL2() and ply:Team() == TEAM_BLU and string.find(game.GetMap(), "mvm_") then			
-		ply:EmitSound( "MVM_Robot.BulletImpact" )
-	end
-	if not ply:IsHL2() and ply:GetInfoNum("tf_giant_robot", 0) == 1 then
-		ply:EmitSound( "MVM_Giant.BulletImpact" )
-	end   
-	if not ply:IsHL2() and ply:GetInfoNum("tf_robot", 0) == 1 then
-		ply:EmitSound( "MVM_Robot.BulletImpact" ) -- Play the footsteps hunter is using
-	end
 	if not ply:IsHL2() and ply:GetInfoNum("tf_robot", 0) == 1 then
 		if eyeparticle1:IsValid() then
 			eyeparticle1:Fire("kill", 0.001)
@@ -471,9 +452,6 @@ hook.Add("PlayerDeath", "PlayerRobotDeath", function( ply, attacker, inflictor)
 		elseif ply:GetPlayerClass() == "spy" then
 			ply:EmitSound("vo/mvm/norm/spy_mvm_painsevere0"..math.random(1,5)..".mp3", 95, 100, 1, CHAN_VOICE)
 		end
-	end
-	if not ply:IsHL2() and ply:GetInfoNum("tf_mvm_voodoo", 0) == 1 then
-		ply:EmitSound( "MVM_Robot.BulletImpact" ) -- Play the footsteps hunter is using
 	end
 	ply:StopSound("BusterLoop")
 	if not ply:IsHL2() and ply:GetPlayerClass() == "sentrybuster" then

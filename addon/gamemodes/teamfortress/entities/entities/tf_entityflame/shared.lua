@@ -131,7 +131,9 @@ function ENT:Initialize()
 			self:Remove()
 			return
 		else
-			self.Target:AddPlayerState(PLAYERSTATE_ONFIRE, true)
+			if (self.Target:IsTFPlayer()) then
+				self.Target:AddPlayerState(PLAYERSTATE_ONFIRE, true)
+			end
 			if not self:TargetIsFireproof() then
 				--self.Target:SetNWBool("ShouldDropBurningRagdoll", true)
 				self.Target:AddDeathFlag(DF_FIRE)
@@ -146,7 +148,7 @@ function ENT:Initialize()
 		end
 	end
 	
-	if self.Target:IsNPC() or self.Target:IsPlayer() then
+	if self.Target:IsNPC() then
 		self:EmitSound("General.BurningFlesh")
 	else
 		self:EmitSound("General.BurningObject")

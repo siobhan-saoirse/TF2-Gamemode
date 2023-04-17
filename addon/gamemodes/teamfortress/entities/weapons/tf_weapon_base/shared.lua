@@ -1160,6 +1160,14 @@ function SWEP:RustyBulletHole()
 	--print(self.ProjectileShootOffset)
 	if self.Base ~= "tf_weapon_melee_base" and self.GetClass ~= "tf_weapon_builder" and not self.IsPDA and self.ProjectileShootOffset == Vector(0,0,0) or self.ProjectileShootOffset == Vector(3,8,-5) and self.IsDeployed == true then
 		--self:ShootBullet(0, self.BulletsPerShot, self.BulletSpread)
+		if (self.Owner:GetEyeTrace()) then  
+			if (self.Owner:GetEyeTrace().Entity) then
+				local ent = self.Owner:GetEyeTrace().Entity
+				if (ent:IsPlayer() and string.find(ent:GetModel(),"/bot_")) then 
+					return
+				end
+			end
+		end
 		self:FireBullets({Num = self.BulletsPerShot, Src = self.Owner:GetShootPos(), Dir = self.Owner:GetAimVector(), Spread = Vector(self.BulletSpread, self.BulletSpread, 0), Tracer = 0, Force = 0, Damage = 0, AmmoType = ""})
 	end
 end
