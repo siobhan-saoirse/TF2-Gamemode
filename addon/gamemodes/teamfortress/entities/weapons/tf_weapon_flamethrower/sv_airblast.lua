@@ -270,7 +270,10 @@ function SWEP:DoAirblast()
 						end
 					end
 				else
-					if(v:EntIndex()!=self.Owner:EntIndex()) then
+					if(v:EntIndex()~=self.Owner:EntIndex()) then
+						if (v.TFBot) then -- bots HATE getting airblasted
+							v.TargetEnt = self.Owner
+						end
 						v:SetPos(v:GetPos() + Vector(0,0,12))
 						v:SetGroundEntity(NULL)
 						v:SetVelocity(dir2 * 400)
