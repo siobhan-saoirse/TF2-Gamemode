@@ -48,10 +48,10 @@ SWEP.ShootCritSound = Sound("Weapon_Does_Dumpster.SingleCrit")
 SWEP.ChargeSound = Sound("Weapon_StickyBombLauncher.ChargeUp")
 SWEP.ReloadSound = Sound("Weapon_DumpsterRocket.Reload")
 
-SWEP.Primary.ClipSize		= 3
+SWEP.Primary.ClipSize		= 4
 SWEP.Primary.DefaultClip	= 0
 SWEP.Primary.Ammo			= TF_PRIMARY
-SWEP.Primary.Delay          = 0.25
+SWEP.Primary.Delay          = 0.8
 
 SWEP.ReloadSingle = true
 
@@ -67,7 +67,7 @@ SWEP.Properties = {}
 SWEP.ChargeTime = 2
 SWEP.MinForce = 150
 SWEP.MaxForce = 2800
-SWEP.ReloadTime = 1.1
+SWEP.ReloadTime = 0.8
 SWEP.MinAddPitch = -1
 SWEP.MaxAddPitch = -6
 
@@ -159,8 +159,8 @@ function SWEP:ShootProjectile()
 			rocket.BaseSpeed = Lerp(charge, self.MinForce, self.MaxForce)
 			ang.p = ang.p + Lerp(1 - charge, self.MinAddPitch, self.MaxAddPitch)
 		end
-		
-		rocket:SetAngles(ang)
+		 
+		rocket:SetAngles(ang + Angle(math.random(-3,3),math.random(-3,3),0))
 		
 		for k,v in pairs(self.Properties) do
 			rocket[k] = v

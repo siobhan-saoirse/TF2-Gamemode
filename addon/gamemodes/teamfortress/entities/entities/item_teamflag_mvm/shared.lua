@@ -226,7 +226,7 @@ function ENT:Return(nosound)
 		print(self.HomePosition)
 		self:TriggerOutput("OnReturn")
 
-		ParticleEffectAttach( "cart_flashinglight", PATTACH_POINT_FOLLOW, self.Prop2, self.Prop2:LookupAttachment("siren") )
+		--ParticleEffectAttach( "cart_flashinglight", PATTACH_POINT_FOLLOW, self.Prop2, self.Prop2:LookupAttachment("siren") )
 		if nosound then
 			return
 		end
@@ -252,7 +252,6 @@ function ENT:Pickup(ply)
 			ply.botPos = capturezone.Pos
 		end
 		self.State = 1
-		self.Trail:Fire("Start")
 		self.Carrier = ply
 		self.Prop:ResetSequence(self.Prop:LookupSequence("idle"))
 		self.Prop:SetPlaybackRate(1)
@@ -377,7 +376,6 @@ function ENT:Drop(nosound)
 		local ply = self.Carrier
 		self.PickupLock[ply] = 1 -- Prevent the player who dropped it to pick it up immediately again
 		self.State = 2
-		self.Trail:Fire("Stop")
 		self.Carrier = nil
 		self.Prop:ResetSequence(self.Prop:LookupSequence("spin"))
 		self.Prop:SetPlaybackRate(1)
@@ -391,7 +389,10 @@ function ENT:Drop(nosound)
 		self:DropToFloor()
 		self:TriggerOutput("OnDrop", ply)
 
-		ParticleEffectAttach( "cart_flashinglight", PATTACH_POINT_FOLLOW, self.Prop2, self.Prop2:LookupAttachment("siren") )
+		self:SetMoveType(MOVETYPE_FLYGRAVITY)
+		self:SetMoveCollide(MOVECOLLIDE_FLY_BOUNCE)
+		
+		--ParticleEffectAttach( "cart_flashinglight", PATTACH_POINT_FOLLOW, self.Prop2, self.Prop2:LookupAttachment("siren") )
 		if nosound then
 			return
 		end

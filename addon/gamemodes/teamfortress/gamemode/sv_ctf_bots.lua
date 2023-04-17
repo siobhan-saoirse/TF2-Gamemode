@@ -339,6 +339,7 @@ hook.Add("PostPlayerDeath", "LeadBot_S_Death", function(bot)
 					else
 						bot:Kick("No longer needed")
 					end
+					 
 				else
 					if (!string.find(bot:GetModel(),"/bot_")) then
 						if (!bot.IsL4DZombie) then
@@ -431,9 +432,9 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 					
 						bot:SetPlayerClass(oldclass)
 						if (bot.IsL4DZombie and !string.find(bot:GetModel(),"/bot_")) then
-							--RandomWeapon2(bot, "primary")
-							--RandomWeapon2(bot, "secondary")
-							--RandomWeapon2(bot, "melee")
+							RandomWeapon2(bot, "primary")
+							RandomWeapon2(bot, "secondary")
+							RandomWeapon2(bot, "melee")
 							RandomCosmetic(bot, "hat")
 							RandomCosmetic(bot, "misc")
 							RandomCosmetic(bot, "head")
@@ -466,6 +467,9 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			bot.ControllerBot:Spawn()
 			bot.ControllerBot:SetOwner(bot)
 			controller = bot.ControllerBot
+		else
+			controller:SetPos(bot:GetPos())
+			controller:SetAngles(bot:GetAngles())
 		end
 	
 		local moveawayrange = 80
@@ -483,7 +487,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			end
 		end
 			for k,v in ipairs(ents.FindInSphere(bot:GetPos(),moveawayrange)) do
-				if (IsValid(v) and GAMEMODE:EntityTeam(v) != TEAM_SPECTATOR and v:IsTFPlayer() and v:EntIndex() != bot:EntIndex()) then
+				if (IsValid(v) and GAMEMODE:EntityTeam(v) != TEAM_SPECTATOR and v:IsTFPlayer() and v:EntIndex() != bot:EntIndex() and bot:GetNWBool("Taunting",false) != true) then
 					local forward = bot:EyeAngles():Forward()
 					local right = bot:EyeAngles():Right()
 					local avoidVector = bot:GetPos()
@@ -618,40 +622,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		end 
 
 
-	
-			if IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 6000 and bot.TargetEnt:Health() > 1 then
-				if (bot:GetPlayerClass() != "tank_l4d") then
-					if (bot:GetNWBool("Taunting",false) == true) then 
-						return 
-					end 
-				end	
-			
-				local shouldvegoneforthehead = bot.TargetEnt:EyePos()
-				local bone = 1
-				shouldvegoneforthehead = bot.TargetEnt:GetBonePosition(bone)
-				if (!bot.isCarryingIntel) then
-					bot.botPos = bot.TargetEnt:GetPos()
-				end
-
-				local lerp = 1.2
-				if bot.Difficulty == 0 then
-					lerp = 0.9
-				elseif bot.Difficulty == 2 then
-					lerp = 2
-				elseif bot.Difficulty == 3 then
-					lerp = 4
-				end
-				if (bot:IsL4D()) then
-					bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):Angle()))
-				else
-					if (bot:GetPlayerClass() == "soldier" and (bot:GetActiveWeapon().HoldType == "PRIMARY" or bot:GetActiveWeapon().HoldType == "PRIMARY2")) then
-						bot:SetEyeAngles(LerpAngle(FrameTime() * math.random(8, 10) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos() - Vector(0,0,25)):Angle()))
-					else
-						bot:SetEyeAngles(LerpAngle(FrameTime() * math.random(8, 10) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):Angle()))
-					end
-				end
-			end
-
 		
 		if bot:GetVelocity():Length2DSqr() <= 225 then
 			if controller.NextCenter < CurTime() then
@@ -685,6 +655,38 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			bot.ControllerBot.PosGen = bot.botPos
 		end
 
+			if IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 6000 and bot.TargetEnt:Health() > 1 then
+				if (bot:GetPlayerClass() != "tank_l4d") then
+					if (bot:GetNWBool("Taunting",false) == true) then 
+						return 
+					end 
+				end	
+			
+				local shouldvegoneforthehead = bot.TargetEnt:EyePos()
+				local bone = 1
+				shouldvegoneforthehead = bot.TargetEnt:GetBonePosition(bone)
+				if (!bot.isCarryingIntel) then
+					bot.botPos = bot.TargetEnt:GetPos()
+				end
+
+				local lerp = 1.2
+				if bot.Difficulty == 0 then
+					lerp = 0.9
+				elseif bot.Difficulty == 2 then
+					lerp = 2
+				elseif bot.Difficulty == 3 then
+					lerp = 4
+				end
+				if (bot:IsL4D()) then
+					bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):Angle()))
+				else
+					if (bot:GetPlayerClass() == "soldier" and (bot:GetActiveWeapon().HoldType == "PRIMARY" or bot:GetActiveWeapon().HoldType == "PRIMARY2")) then
+						bot:SetEyeAngles(LerpAngle(FrameTime() * math.random(8, 10) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos() - Vector(0,0,25)):Angle()))
+					else
+						bot:SetEyeAngles(LerpAngle(FrameTime() * math.random(8, 10) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):Angle()))
+					end
+				end
+			end
 		if bot.ControllerBot.P then
 			bot.LastPath = bot.ControllerBot.P:GetAllSegments()
 		end
@@ -735,7 +737,9 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			end
 		end
 		
-			if (!IsValid(bot.TargetEnt) and curgoal and bot:GetPos():Distance(curgoal.pos) > 50 * bot:GetModelScale()) then
+
+	
+			if ((!IsValid(bot.TargetEnt) or bot.isCarryingIntel) and curgoal and bot:GetPos():Distance(curgoal.pos) > 50 * bot:GetModelScale()) then
 				if (bot:GetPlayerClass() != "tank_l4d") then
 					if (bot:GetNWBool("Taunting",false) == true) then
 						return
@@ -749,16 +753,17 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				elseif bot.Difficulty == 3 then
 					lerp = 4
 				end
-				
-				if (bot:IsL4D()) then
-					bot:SetEyeAngles(LerpAngle(FrameTime() * 8, bot:EyeAngles(), ((curgoal.pos + Vector(0, 0, 65)) - bot:GetShootPos()):Angle()))
-				else
-					if controller.LookAtTime > CurTime() then
-						local ang = LerpAngle(lerpc, bot:EyeAngles(), controller.LookAt)
-						bot:SetEyeAngles(Angle(ang.p, ang.y, 0))
+				if (!IsValid(bot.TargetEnt)) then
+					if (bot:IsL4D()) then
+						bot:SetEyeAngles(LerpAngle(FrameTime() * 8, bot:EyeAngles(), ((curgoal.pos + Vector(0, 0, 65)) - bot:GetShootPos()):Angle()))
 					else
-						local ang = LerpAngle(lerpc, bot:EyeAngles(), mva)
-						bot:SetEyeAngles(Angle(ang.p, ang.y, 0))
+						if controller.LookAtTime > CurTime() then
+							local ang = LerpAngle(lerpc, bot:EyeAngles(), controller.LookAt)
+							bot:SetEyeAngles(Angle(ang.p, ang.y, 0))
+						else
+							local ang = LerpAngle(lerpc, bot:EyeAngles(), mva)
+							bot:SetEyeAngles(Angle(ang.p, ang.y, 0))
+						end
 					end
 				end
 			end
@@ -778,7 +783,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 
 		for _, intel in pairs(ents.FindByClass("item_teamflag_mvm")) do
 				
-			if intel.Carrier and bot:GetPos():Distance(intel.Carrier:GetPos()) < 150 and bot:EntIndex() != intel.Carrier:EntIndex() then -- dont move if too close!
+			if IsValid(intel.Carrier) and bot:GetPos():Distance(intel.Carrier:GetPos()) < 180 and bot:EntIndex() != intel.Carrier:EntIndex() then -- dont move if too close!
 				bot.tooclose = true
 			else
 				bot.tooclose = false
@@ -864,13 +869,12 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				fintelcap = v
 			end
 			if (IsValid(intel)) then
-				if !intel.Carrier and intel.Returning then -- neither intel has a capture
+				bot.isCarryingIntel = true
+				if !intel.Carrier then -- neither intel has a capture
 					targetpos2 = intel:GetPos() -- goto enemy intel
 				elseif intel.Carrier and intel.Carrier:EntIndex() == bot:EntIndex() then -- or if friendly intelligence has capture
 					targetpos2 = fintelcap.Pos -- goto friendly cap spot
-					bot.isCarryingIntel = true
-				elseif intel.Carrier and bot:EntIndex() != intel.Carrier:EntIndex() then -- or else if we have it already carried
-
+				elseif IsValid(intel.Carrier) and bot:EntIndex() != intel.Carrier:EntIndex() then -- or else if we have it already carried
 					targetpos2 = intel.Carrier:GetPos() -- follow that man
 				else
 					targetpos2 = fintelcap.Pos -- move to the bomb, the flag is currently invalid until a bot gets it
@@ -880,6 +884,21 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			end
 
 			bot.botPos = targetpos2
+			bot.LastSegmented = CurTime() + math.Rand(0.5, 1)
+		elseif string.find(game.GetMap(), "mvm_") and bot:Team() != TEAM_BLU and bot:GetPlayerClass() != "engineer" and bot:GetPlayerClass() != "sentrybuster" then -- CTF AI in MVM Maps
+			for k, v in pairs(ents.FindByClass("item_teamflag_mvm")) do
+				if v.TeamNum ~= bot:Team() and k == 1 then 
+					intel = v
+				end
+			end
+			if (IsValid(intel)) then
+				if intel.Carrier and bot:EntIndex() != intel.Carrier:EntIndex() then -- or else if we have it already carried
+					if (!IsValid(bot.TargetEnt) and intel.Carrier:Health() > 0) then
+						bot.TargetEnt = intel.Carrier
+					end
+				end	
+			end
+
 			bot.LastSegmented = CurTime() + math.Rand(0.5, 1)
 		else
 			-- find a random spot on the map, and in 10 seconds do it again!
@@ -1023,7 +1042,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 		
 				for k, v in pairs(team.GetPlayers(TEAM_BLU)) do
 					if (!IsValid(bot.TargetEnt)) then
-						if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:GetPos():Distance(bot:GetPos()) < 3600 and v:Visible(bot) and !IsValid(bot.TargetEnt) then
+						if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:GetPos():Distance(bot:GetPos()) < 6000 and v:Visible(bot) and !IsValid(bot.TargetEnt) then
 							if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
 								local targetpos = v:EyePos() - Vector(0, 0, 10) -- bot eye check, don't start shooting targets just because we barely see their head
 								local trace = util.TraceLine({start = bot:GetShootPos(), endpos = targetpos, filter = function( ent ) return ent == v end})
@@ -1245,7 +1264,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			if (bot.TargetEnt:Health() > 0) then 
 
 					if (!IsValid(bot:GetActiveWeapon())) then return end
-					if bot:GetPlayerClass() == "melee_scout_sandman" then 
+					if bot:GetPlayerClass() == "melee_scout_sandman" or bot:GetPlayerClass() == "melee_scout" then 
 						for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 240)) do
 							if v == bot.TargetEnt then
 								buttons = buttons + IN_ATTACK2

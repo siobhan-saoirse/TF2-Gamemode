@@ -1,0 +1,41 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"advancedweaponiser/nailgun/c_nailgun"
+	"$bumpmap"     "advancedweaponiser/nailgun/c_nailgun_normal"
+	"$phong" "1"
+	"$phongexponent" "2"
+	"$phongboost" "0.4"	
+	//"$lightwarptexture" "models/player/pyro/pyro_lightwarp"
+	"$phongfresnelranges"	"[.1 .3 .2]"
+	"$halflambert" "1"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "1"	
+	"$rimlightboost" "1"
+
+	"$glowcolor" "1"
+
+	// Cloaking
+	"$cloakPassEnabled" "1"
+	"Proxies"
+	{
+		"weapon_invis"
+		{
+		}
+		"ModelGlowColor"
+		{
+			"resultVar" "$glowcolor"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$selfillumtint"
+		}
+		"Equals"
+		{
+			"srcVar1"  "$glowcolor"
+			"resultVar" "$color2"
+		}
+	}
+}
+								

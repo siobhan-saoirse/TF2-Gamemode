@@ -1263,7 +1263,7 @@ function SWEP:Reload()
 					if (self:Clip1() == 0) then
 						self.Reloading = true
 					end
-					self.Owner:GetViewModel():SetPlaybackRate(0.6)
+					
 				else
 					if SERVER then
 					self:SendWeaponAnimEx(self.VM_RELOAD_START)
@@ -1279,22 +1279,41 @@ function SWEP:Reload()
 					if (self:Clip1() == 0) then
 						self.Reloading = true
 					end
-					if self.ReloadTime == 0.2 then
-						self.Owner:GetViewModel():SetPlaybackRate(2)
-						self.NextReloadStart = CurTime() + (self:SequenceDuration() or self.ReloadStartTime) - 0.25
-					else
-						self.NextReloadStart = CurTime() + (self:SequenceDuration() or self.ReloadStartTime)
-					end
+					self.NextReloadStart = CurTime() + (self:SequenceDuration() or self.ReloadStartTime)
 				end
 			else
-				self:SendWeaponAnimEx(self.VM_RELOAD)
-				self.Owner:SetAnimation(PLAYER_RELOAD)
-				if self.FastReloadTime then  
-					self.Owner:GetViewModel():SetPlaybackRate(1.0 / self.FastReloadTime)
-					self.ReloadTime = self.FastReloadTime
+				if SERVER then
+					self:SendWeaponAnimEx(self.VM_RELOAD)
 				end
-				self.NextIdle = CurTime() + (self.ReloadTime or self:SequenceDuration())
-				self.NextReload = self.NextIdle
+				self.Owner:SetAnimation(PLAYER_RELOAD)
+				
+				if self.FastReloadTime and self.OldReloadTime then  
+					if (!self.ReloadTimeMultiplier) then
+						
+						self.Owner:GetViewModel():SetPlaybackRate(1.0 / self.FastReloadTime)
+						self.ReloadTime = self.OldReloadTime * self.FastReloadTime
+						self.NextIdle = CurTime() + self.ReloadTime
+						self.NextReload = self.NextIdle
+					
+					else
+					
+						self.Owner:GetViewModel():SetPlaybackRate(1.0 / self.FastReloadTime / self.ReloadTimeMultiplier)
+						self.ReloadTime = self.OldReloadTime * (self.FastReloadTime * self.ReloadTimeMultiplier)
+						self.NextIdle = CurTime() + self.ReloadTime
+						self.NextReload = self.NextIdle
+						
+					end
+				elseif !self.FastReloadTime and self.ReloadTimeMultiplier then  
+					self.Owner:GetViewModel():SetPlaybackRate(1.0 / self.ReloadTimeMultiplier)
+					if (!self.OriginalReloadTime) then
+						self.OriginalReloadTime = self.ReloadTime
+					end
+					self.NextIdle = self.OriginalReloadTime * self.ReloadTimeMultiplier
+					self.NextReload = self.NextIdle
+				else
+					self.NextIdle = CurTime() + (self.ReloadTime or self:SequenceDuration())
+					self.NextReload = self.NextIdle
+				end
 				
 				self.AmmoAdded = math.min(self.Primary.ClipSize - ammo, available)
 				self.Reloading = true
@@ -1320,6 +1339,31 @@ end
 
 function SWEP:Think() 
 	self:Inspect()
+	if (((self.NextReload and self.NextReload>=CurTime()) or ((self.NextReloadStart and self.NextReloadStart>=CurTime()) or self.Reloading)) and self.ReloadSingle) then
+	
+		if self.FastReloadTime and SERVER then  
+			if (!self.ReloadTimeMultiplier) then
+			
+				self.Owner:GetViewModel():SetPlaybackRate(1.0 / self.FastReloadTime)
+				self.ReloadTime = self.FastReloadTime
+			
+			else
+			
+				self.Owner:GetViewModel():SetPlaybackRate(1.0 / self.FastReloadTime / self.ReloadTimeMultiplier)
+				self.ReloadTime = self.FastReloadTime / self.ReloadTimeMultiplier
+				
+			end
+		end
+		
+		if !self.FastReloadTime and self.ReloadTimeMultiplier and SERVER and self.ReloadTime then  
+			self.Owner:GetViewModel():SetPlaybackRate(1.0 / self.ReloadTimeMultiplier)
+			if (!self.OriginalReloadTime) then 
+				self.OriginalReloadTime = self.ReloadTime
+			end
+			self.ReloadTime = self.OriginalReloadTime * self.ReloadTimeMultiplier
+		end
+			
+	end
 	if CLIENT then
 		if (self:GetItemData().item_name) then
 			self.PrintName = self:GetItemData().name
@@ -1632,9 +1676,6 @@ function SWEP:Think()
 			if SERVER then
 			self:SendWeaponAnimEx(self.VM_RELOAD)
 			end
-			if self.FastReloadTime then  
-				self.Owner:GetViewModel():SetPlaybackRate(1.0 / self.FastReloadTime)
-			end
 			if CLIENT then
 				if self:GetItemData().model_player == "models/weapons/c_models/c_scattergun.mdl" then
 					--PrintTable(self.CModel:GetAttachments())
@@ -1733,16 +1774,12 @@ function SWEP:Think()
 			end
 		end
 		--self.Owner:SetAnimation(10000) -- reload loop	 	
-		if self.ReloadTime == 0.2 then
-			self.Owner:GetViewModel():SetPlaybackRate(2)
-		end
 		if self.ReloadTime == 1.1 then 
 			if self:GetItemData().model_player == "models/weapons/c_models/c_dumpster_device/c_dumpster_device.mdl" then
 				if CLIENT then
 					self.Owner:EmitSound("Weapon_DumpsterRocket.Reload")
 				end
 			end
-			self.Owner:GetViewModel():SetPlaybackRate(0.7)
 		end
 		self.NextReload = CurTime() + (self.ReloadTime)
 		

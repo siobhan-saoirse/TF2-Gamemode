@@ -443,7 +443,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 
 	-- Friendly fire
 	if (attacker:IsPlayer() and (attacker:GetPlayerClass() == "giantblastsoldier" || attacker:GetPlayerClass() == "steelgauntletpusher")) then
-
+	
 		local dir = -ent:GetAimVector() * 6
 		local dir2 = dir:Angle()
 		dir2.p = math.Clamp(-dir2.p - 45,-90,90)
@@ -520,7 +520,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	
 	-- Increased explosion force
 	if dmginfo:IsExplosionDamage() then
-		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (inflictor.BlastForceMultiplier or 1) * BlastForceMultiplier)
+		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (inflictor.BlastForceMultiplier or 1) * BlastForceMultiplier * 0.7)
 	end
 	
 	if (ent:IsPlayer() and ent:IsBot() and string.find(ent:GetModel(),"_boss.mdl")) then

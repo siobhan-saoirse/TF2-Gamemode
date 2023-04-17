@@ -90,24 +90,21 @@ function ENT:StartTouch(ply)
 		--print(self.Team, v.te, self.Pos:Distance(ply) <= 50)
 		--print(self.Team ~= v.te, v.Carrier == ply, v:GetPos():Distance(ply:GetPos()) <= 50)
 		if v.Carrier==ply and self.Team ~= v.Team then
-				timer.Create("UnfreezePlayer", 0.0001, 0, function()
-					if not v.Carrier:Alive() then v.Carrier:Freeze(false) v.Model2self.WModel2:SetNoDraw(false) timer.Stop("UnfreezePlayer") return end
-				end) 
-				timer.Simple(1, function()
-					if v.Carrier:GetInfoNum("tf_giant_robot", 0) == 1 then
-						v:EmitSound("mvm/mvm_deploy_giant.wav", 70, 100)
+				timer.Simple(0.1, function()
+					if string.find(v.Carrier:GetModel(),"_boss.mdl") then
+						v:EmitSound("mvm/mvm_deploy_giant.wav", 95, 100)
 					else
-						v:EmitSound("mvm/mvm_deploy_small.wav", 70, 100)
+						v:EmitSound("mvm/mvm_deploy_small.wav", 95, 100)
 					end
 					for _, player in ipairs(player.GetAll()) do
-						player:SendLua([[surface.PlaySound("vo/mvm_bomb_alerts0"..math.random(8,9)..".mp3")]])
+						player:SendLua([[LocalPlayer():EmitSound("Announcer.MVM_Bomb_Alert_Deploying")]])
 					end
-					v.Carrier:Freeze(true)
-					v.Carrierself.WModel2:SetNoDraw(true)
+					v.Carrier:SetNWBool("Taunting",true)
+					v.Carrier:SetNoDraw(true)
 					
 					v.Carrier:ConCommand("tf_thirdperson")
 					
-					v.Prop2self.WModel2:SetNoDraw(true)
+					v.Prop2:SetNoDraw(true)	
 					local animent = ents.Create( 'base_gmodentity' ) -- The entity used for the death animation	
 					animent:SetModel(v.Carrier:GetModel()) 
 					animent:SetSkin(v.Carrier:GetSkin())
@@ -142,11 +139,11 @@ function ENT:StartTouch(ply)
 						animent2:Remove()
 					end)
 				end)
-				timer.Simple(4, function()
+				timer.Simple(3, function()
 					if not v.Carrier:Alive() then v.Carrier:Freeze(false) return end
 					for _,pl in pairs(player.GetAll()) do
 						if pl:Team() == TEAM_RED then
-							pl:SendLua([[surface.PlaySound("vo/mvm_wave_lose0"..math.random(1,8)..".mp3", 50, 100)]])
+							pl:SendLua([[LocalPlayer():EmitSound("Announcer.MVM_Wave_Lose")]])
 						end
 					end
 					RunConsoleCommand("tf_mvm_wins")
@@ -158,9 +155,9 @@ function ENT:StartTouch(ply)
 				end)
 				timer.Simple(5, function()
 					if not v.Carrier:Alive() then v.Carrier:Freeze(false) return end
-					vself.WModel2:SetNoDraw(false)
+					v.WModel2:SetNoDraw(false)
 					v.Carrier:Freeze(false)
-					v.Carrierself.WModel2:SetNoDraw(false)
+					v.Carrier:SetNoDraw(false)
 					v.Carrier:ConCommand("tf_firstperson")
 				end)
 				timer.Simple(5.3, function()

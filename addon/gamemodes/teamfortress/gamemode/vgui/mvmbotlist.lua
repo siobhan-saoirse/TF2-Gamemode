@@ -112,57 +112,88 @@ function PANEL:Paint()
 		PlayerName.pos[2] = ypos
 		draw.Text(PlayerName)
 
-		surface.DrawTexturedRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
+		--surface.DrawTexturedRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
 		
 		if c and c.ScoreboardImage then
-			local tex
-			if d then
-				tex = c.ScoreboardImage[2]
+			if (pl:GetNWString("PreferredIcon") != "") then
+
+				local tex
+				if d then
+					tex = surface.GetTextureID(pl:GetNWString("PreferredIcon"),nil) or c.ScoreboardImage[2]
+				else
+					tex = surface.GetTextureID(pl:GetNWString("PreferredIcon"),nil)
+				end
+				if tex then
+					if pl:IsMiniBoss() then
+						surface.SetDrawColor( 255, 0, 0, 255 )
+						surface.DrawRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
+					end
+					surface.SetDrawColor(Colors.White)
+					surface.SetTexture(tex)
+					surface.DrawTexturedRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
+				end
 			else
-				tex = c.ScoreboardImage[1]
-			end
-			if tex then
-				surface.SetTexture(tex)
-				surface.DrawTexturedRect(30*Scale, ypos-7*Scale, 13*Scale, 13*Scale)
+				local tex
+				if d then
+					tex = c.ScoreboardImage[2]
+				else
+					tex = c.ScoreboardImage[1]
+				end
+				if tex then
+					if pl:IsMiniBoss() then
+						surface.SetDrawColor( 255, 0, 0, 255 )
+						surface.DrawRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
+					end
+					surface.SetDrawColor(Colors.White)
+					surface.SetTexture(tex)
+					surface.DrawTexturedRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
+				end 
 			end
 		end
 		if pl:GetPlayerClass() == "heavyweightchamp" or pl:GetPlayerClass() == "soldierbuffed" or pl:GetPlayerClass() == "melee_scout_expert" or pl:GetPlayerClass() == "giantsoldiercharged" then
 			local crit = surface.GetTextureID("hud/leaderboard_class_critical")
 			surface.SetTexture(crit)
-			surface.DrawTexturedRect(30*Scale, ypos-7*Scale, 13*Scale, 13*Scale)
+			surface.DrawTexturedRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
 			
 			surface.SetDrawColor( 255, 255, 255, 100 )
 			if c and c.ScoreboardImage then
-				local tex
-				if d then
-					tex = c.ScoreboardImage[2]
+				if (pl:GetNWString("PreferredIcon") != "") then
+
+					local tex
+					if d then
+						tex = surface.GetTextureID(pl:GetNWString("PreferredIcon"),nil) or c.ScoreboardImage[2]
+					else
+						tex = surface.GetTextureID(pl:GetNWString("PreferredIcon"),nil)
+					end
+					if tex then
+						if pl:IsMiniBoss() then
+							surface.SetDrawColor( 255, 0, 0, 255 )
+							surface.DrawRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
+						end
+						surface.SetDrawColor(Colors.White)
+						surface.SetTexture(tex)
+						surface.DrawTexturedRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
+					end
 				else
-					tex = c.ScoreboardImage[1]
-				end
-				if tex then
-					surface.SetTexture(tex)
-					surface.DrawTexturedRect(30*Scale, ypos-7*Scale, 13*Scale, 13*Scale)
+					local tex
+					if d then
+						tex = c.ScoreboardImage[2]
+					else
+						tex = c.ScoreboardImage[1]
+					end
+					if tex then
+						if pl:IsMiniBoss() then
+							surface.SetDrawColor( 255, 0, 0, 255 )
+							surface.DrawRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
+						end
+						surface.SetDrawColor(Colors.White)
+						surface.SetTexture(tex)
+						surface.DrawTexturedRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
+					end 
 				end
 			end
 		end
 		
-		if pl:GetPlayerClass() == "heavyweightchamp" or pl:GetPlayerClass() == "soldierbuffed" or pl:GetPlayerClass() == "giantsoldiercharged" then
-			local crit = surface.GetTextureID("hud/leaderboard_class_critical")
-			surface.SetTexture(crit)
-			surface.DrawTexturedRect(30*Scale, ypos-7*Scale, 13*Scale, 13*Scale)
-			if c and c.ScoreboardImage then
-				local tex
-				if d then
-					tex = c.ScoreboardImage[2]
-				else
-					tex = c.ScoreboardImage[1]
-				end
-				if tex then
-					surface.SetTexture(tex)
-					surface.DrawTexturedRect(30*Scale, ypos-7*Scale, 13*Scale, 13*Scale)
-				end
-			end
-		end	
 		ypos = ypos + math.floor(22*Scale) 
 	end
 	

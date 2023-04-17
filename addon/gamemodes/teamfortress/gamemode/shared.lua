@@ -93,16 +93,22 @@ resource.AddFile("materials/models/player/civilian_vip/civilian_hands_red_invun.
 resource.AddFile("materials/models/player/civilian_vip/civilian_hands_blue_invun.vmt")
 resource.AddFile("materials/models/player/civilian_vip/civilian_hands_ylw_invun.vmt")
 resource.AddFile("materials/models/player/civilian_vip/civilian_hands_grn_invun.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_red_invun.vmt")
+resource.AddFile("materials/models/player/civilian_vip/civilian_red_invun.vmt") 
 resource.AddFile("materials/models/player/civilian_vip/civilian_blue_invun.vmt")
 resource.AddFile("materials/models/player/civilian_vip/civilian_ylw_invun.vmt")
 resource.AddFile("materials/models/player/civilian_vip/civilian_grn_invun.vmt")
 resource.AddFile("materials/models/player/civilian_vip/civilian_normal.vtf")
 
+if CLIENT then
+	language.Add("tool.turn_into_gatebot.name", "Gate-Botizer")
+	language.Add("tool.turn_into_gatebot.desc", "Turn MvM TFBots into GateBots")
+	language.Add("tool.turn_into_gatebot.left", "Left-click: Turn a MvM Bot into a GateBot.")
+end  
+
 sound.Add( {
 	name = "Player.AmbientUnderWater",
 	volume = 0.22,
-	level = 75,
+	level = 75, 
 	channel = CHAN_STATIC, 
 	pitch = { 100 },
 	sound = { "ambient/water/underwater.wav" } 

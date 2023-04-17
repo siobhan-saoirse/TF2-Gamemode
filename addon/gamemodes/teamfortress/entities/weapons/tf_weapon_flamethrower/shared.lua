@@ -141,6 +141,14 @@ SWEP.ProjectileShootOffset = Vector(3, 8, -5)
 function SWEP:CreateSounds(owner)
 	if not IsValid(owner) then return end
 	
+	if (IsValid(self.Owner) and string.find(self.Owner:GetModel(),"_boss.mdl")) then
+				
+		self.ShootSound = Sound("MVM.GiantPyro_FlameStart")
+		self.SpecialSound1 = Sound("MVM.GiantPyro_FlameLoop")
+		self.ShootCritSound = Sound("MVM.GiantPyro_FlameLoop") 
+		
+	end
+	
 	self.SpinUpSound = CreateSound(owner, self.ShootSound)
 	self.SpinDownSound = CreateSound(owner, self.ShootSoundEnd)
 	self.FireSound = CreateSound(owner, self.SpecialSound1)
@@ -148,17 +156,6 @@ function SWEP:CreateSounds(owner)
 	self.PilotSound = CreateSound(owner, self.PilotLoop)
 	
 	self.SoundsCreated = true 
-	
-	if (string.find(self.Owner:GetModel(),"_boss")) then
-				
-		self.ShootSound = Sound("MVM.GiantPyro_FlameStart")
-		self.SpecialSound1 = Sound("MVM.GiantPyro_FlameLoop")
-		self.ShootCritSound = Sound("MVM.GiantPyro_FlameLoop")
-		self.ShootSoundEnd = Sound("Weapon_FlameThrower.FireEnd")
-		self.FireHit = Sound("Weapon_FlameThrower.FireHit")
-		self.PilotLoop = Sound("Weapon_FlameThrower.PilotLoop")
-		
-	end
 end
 
 function SWEP:PrimaryAttack()
@@ -186,7 +183,7 @@ function SWEP:PrimaryAttack()
 		if self.Primary.Delay == 0.015 then
 			self.SpinUpSound:ChangePitch(120)
 		end
-		if (string.find(self.Owner:GetModel(),"_boss")) then
+		if (string.find(self.Owner:GetModel(),"_boss.mdl")) then
 			self.NextEndSpinUp = CurTime() + 1.5
 		else
 			self.NextEndSpinUp = CurTime() + 3
@@ -332,12 +329,15 @@ function SWEP:StopFiring()
 end
 
 function SWEP:Think()
-	if (self.Owner:GetInfoNum("tf_giant_robot",0)) then
-			self.ShootSound = Sound("MVM.GiantPyro_FlameStart")
-			self.SpecialSound1 = Sound("MVM.GiantPyro_FlameLoop")
-			self.ShootCritSound = Sound("MVM.GiantPyro_FlameLoop")
-	end
 	self:TFViewModelFOV()
+	
+	if (IsValid(self.Owner) and string.find(self.Owner:GetModel(),"_boss.mdl")) then
+				
+		self.ShootSound = Sound("MVM.GiantPyro_FlameStart")
+		self.SpecialSound1 = Sound("MVM.GiantPyro_FlameLoop")
+		self.ShootCritSound = Sound("MVM.GiantPyro_FlameLoop") 
+		
+	end
 	if SERVER and self.NextReplayDeployAnim then
 		if CurTime() > self.NextReplayDeployAnim then
 			--MsgFN("Replaying deploy animation %d", self.VM_DRAW)

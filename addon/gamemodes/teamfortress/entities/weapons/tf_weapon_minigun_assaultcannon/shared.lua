@@ -117,13 +117,4 @@ SWEP.Secondary.Delay          = 0.1
 SWEP.IsRapidFire = true
 
 SWEP.HoldType = "PRIMARY"
-SWEP.HoldTypeHL2 = "crossbow"
-
-SWEP.ReloadSound = Sound("Weapon_Minigun.Reload")
-SWEP.EmptySound = Sound("Weapon_Minigun.ClipEmpty")
-SWEP.ShootSound2 = Sound("Weapon_Minigun.Fire")
-SWEP.SpecialSound1 = Sound("Weapon_Minigun.WindUp")
-SWEP.SpecialSound2 = Sound("Weapon_Minigun.WindDown")
-SWEP.SpecialSound3 = Sound("Weapon_Minigun.Spin")
-SWEP.ShootCritSound = Sound("Weapon_Minigun.FireCrit")
-SWEP.DeploySound = Sound("weapons/draw_default.wav")
+SWEP.HoldTypeHL2 = "crossbow" 

@@ -125,7 +125,7 @@ function ENT:Initialize()
 	timer.Simple(0.3, function()
 	
 		npc:SetSkin(1)
-		timer.Simple(0.1, function()
+		timer.Simple(0.5, function()
 		
 			for k,v in ipairs(ents.FindByClass("item_teamflag_mvm")) do
 				if (!IsValid(v.Carrier) and !v.NextReturn and k == 1) then

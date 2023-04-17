@@ -468,7 +468,7 @@ function ITEM:ClearParticles()
 	if IsValid(self.RootLocator) then self.RootLocator:StopParticles() end
 	
 	if self:IsWeapon() then
-		if IsValid(self.Owner:GetViewModel()) then
+		if IsValid(self.Owner) and IsValid(self.Owner:GetViewModel()) then
 			self.Owner:GetViewModel():StopParticles()
 			if IsValid(self.Owner:GetViewModel().RootLocator) then self.Owner:GetViewModel().RootLocator:StopParticles() end
 		end

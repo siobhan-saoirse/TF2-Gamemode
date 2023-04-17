@@ -2819,7 +2819,7 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 		snd.Volume = 0.6
 		return true
 	elseif string.StartWith(snd.SoundName,"physics/body/") and string.find(snd.SoundName, "impact") and GetConVar("tf_enable_hl2_ragdoll_sounds"):GetBool() == false then
-		snd.SoundName = string.Replace(snd.SoundName, "physics/", "tf/physics/")
+		snd.SoundName = string.Replace(snd.SoundName, "physics", "tf/physics")
 		return true
 	end
 	--[[
@@ -3078,7 +3078,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					if (snd.Entity:GetNWBool("Taunting",false) == true) then
 						snd.Volume = 0
 					else
-						snd.Volume = ((1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.008)))) * 0.02
+						snd.Volume = ((1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.008)))) * 0.3
 					end
 				end
 			end

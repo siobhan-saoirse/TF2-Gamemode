@@ -24,6 +24,24 @@ local ATTRIBUTES = {
 	equip = function(v,weapon,owner)
 		weapon.ChargeTime = weapon.ChargeTime * v
 	end,
+}, 
+
+["mult_reload_time_hidden"] = {
+	equip = function(v,weapon,owner)
+		weapon.ReloadTimeMultiplier = v
+	end,
+},
+
+["mult_reload_time"] = {
+	equip = function(v,weapon,owner)
+		weapon.ReloadTimeMultiplier = v
+	end,
+},
+
+["hwn_mult_reload_time"] = {
+	equip = function(v,weapon,owner)
+		weapon.ReloadTimeMultiplier = v
+	end,
 },
 
 ["charge_turn_control"] = {
