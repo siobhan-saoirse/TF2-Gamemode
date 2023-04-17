@@ -221,6 +221,12 @@ function SWEP:Think()
 		self.NextIdle = nil
 		self.IsDeployed = true
 	end
+	if (IsValid(self.Owner) and self.Owner:GetPlayerClass() == "giantflarepyro") then
+		if (!self.Primary.OldDelay) then
+			self.Primary.OldDelay = self.Primary.Delay
+		end
+		self.Primary.Delay = self.Primary.OldDelay * 0.3
+	end
 	if self:GetItemData().model_player == "models/workshop/weapons/c_models/c_scorch_shot/c_scorch_shot.mdl" then
 		for k,v in ipairs(ents.FindByClass("tf_projectile_flare")) do
 			if v:GetOwner() == self.Owner then

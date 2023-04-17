@@ -884,7 +884,20 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	ply:StopSound("MVM.GiantPyroLoop")
 	ply:StopSound("MVM.GiantDemomanLoop")
 	ply:StopSound("MVM.GiantHeavyLoop")
-
+	if (ply:IsMiniBoss()) then
+		for k,v in ipairs(player.GetAll()) do
+			if (!v:IsFriendly(ply)) then
+				v:Speak("TLK_MVM_GIANT_KILLED")
+			end
+		end
+	end
+	if (attacker:IsMiniBoss()) then
+		for k,v in ipairs(player.GetAll()) do
+			if (!v:IsFriendly(attacker)) then
+				v:Speak("TLK_MVM_GIANT_KILLED_TEAMMATE")
+			end
+		end
+	end
 	if ply:GetPlayerClass() == "merc_dm" then
 		if dmginfo:GetInflictor().Critical and dmginfo:GetInflictor():Critical() then
 			if not inflictor.IsSilentKiller then	

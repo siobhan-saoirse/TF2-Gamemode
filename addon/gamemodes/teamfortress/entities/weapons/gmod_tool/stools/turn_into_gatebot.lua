@@ -13,7 +13,8 @@ TOOL.Information = {
 function TOOL:LeftClick( trace )
 
 	if ( !IsValid( trace.Entity ) ) then return false end  
-	if ( !trace.Entity:IsPlayer() and !trace.Entity:IsBot() and !trace.Entity.TFBot) then return false end
+	if ( !trace.Entity:IsPlayer() ) then return false end
+	if ( !trace.Entity:IsBot() ) then return false end
 	if (!string.find(trace.Entity:GetModel(),"models/bots")) then return end
 	if ( CLIENT ) then return true end
 	
@@ -36,7 +37,7 @@ function TOOL:LeftClick( trace )
 end
 
 function TOOL.BuildCPanel( CPanel )
-
+ 
 	CPanel:AddControl( "Header", { Description = "#tool.turn_into_gatebot.desc" } )
 
 end

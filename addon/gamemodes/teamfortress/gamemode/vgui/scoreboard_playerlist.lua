@@ -181,13 +181,11 @@ function PANEL:Paint()
 			surface.DrawTexturedRect(math.floor(3*Scale), ypos-math.floor(8.5*Scale), 30*Scale, 30*Scale)
 		end
 
-		if pl:IsBot() then
-			surface.SetTexture(bot_avatar)
-		else
+		if !pl:IsBot() then
 			surface.SetTexture(default_avatar)
+			surface.DrawTexturedRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
 		end
 
-		surface.DrawTexturedRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
 		
 		local num_dominations = 0
 		if pl.DominationsList then
@@ -225,6 +223,11 @@ function PANEL:Paint()
 					tex = surface.GetTextureID(pl:GetNWString("PreferredIcon"),nil)
 				end
 				if tex then
+					if pl:IsMiniBoss() then
+						surface.SetDrawColor( 255, 0, 0, 255 )
+						surface.DrawRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
+					end
+					surface.SetDrawColor(Colors.White)
 					surface.SetTexture(tex)
 					surface.DrawTexturedRect(199*Scale, ypos-7*Scale, 13*Scale, 13*Scale)
 				end
@@ -236,6 +239,11 @@ function PANEL:Paint()
 					tex = c.ScoreboardImage[1]
 				end
 				if tex then
+					if pl:IsMiniBoss() then
+						surface.SetDrawColor( 255, 0, 0, 255 )
+						surface.DrawRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
+					end
+					surface.SetDrawColor(Colors.White)
 					surface.SetTexture(tex)
 					surface.DrawTexturedRect(199*Scale, ypos-7*Scale, 13*Scale, 13*Scale)
 				end

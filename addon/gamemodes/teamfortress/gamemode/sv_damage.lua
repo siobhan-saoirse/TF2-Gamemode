@@ -679,7 +679,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	local hp = ent:Health() - dmginfo:GetDamage()
 	if ent:GetInfoNum("tf_robot",0) != 1 or ent:IsBot() and GetConVar("tf_bots_are_robots"):GetBool() then
 	ent:Speak("TLK_PLAYER_EXPRESSION", true)
-	if ((inflictor:GetClass()=="tf_entityflame" or inflictor:GetClass()=="entityflame") and math.random(1,3) == 1) then
+	if ((inflictor:GetClass()=="tf_entityflame" or inflictor:GetClass()=="entityflame") and (!ent.NextSpeak or CurTime()>ent.NextSpeak)) then
 		if (!ent:IsMiniBoss()) then
 			ent:Speak("TLK_ONFIRE")
 		end

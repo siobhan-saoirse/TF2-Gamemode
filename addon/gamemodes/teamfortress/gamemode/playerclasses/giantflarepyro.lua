@@ -1,4 +1,4 @@
-CLASS.Name = "Giant Pyro"
+CLASS.Name = "Pyro"
 CLASS.Speed = 300 * 0.5
 CLASS.Health = 3000
 
@@ -14,7 +14,7 @@ if CLIENT then
 end
 
 CLASS.Loadout = {"tf_weapon_minigun", "tf_weapon_shotgun_hwg", "tf_weapon_fists"}
-CLASS.DefaultLoadout = {"TF_WEAPON_FLAMETHROWER","TF_WEAPON_FIREAXE"}
+CLASS.DefaultLoadout = {"Detonator"}
 CLASS.ModelName = "pyro"
 
 ----------------------------------------

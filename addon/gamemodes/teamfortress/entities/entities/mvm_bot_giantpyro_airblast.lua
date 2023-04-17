@@ -4,16 +4,17 @@ if SERVER then AddCSLuaFile() end
 ENT.Base = "mvm_bot"
 ENT.PZClass = "giantpyro"
 ENT.Spawnable = false
-ENT.AdminOnly = true		
+ENT.AdminOnly = true
 ENT.IsBoss = true
-ENT.PrintName		= "Giant Pyro"
-ENT.Items = {"MvM GateBot Light Pyro","Flame Thrower","Fire Axe"}
-ENT.Category		= "TF2: MVM GateBots"
+ENT.Difficulty = 3
+ENT.PrintName		= "Giant Airblast Pyro"
+ENT.Category		= "TF2: MVM Bots"
+ENT.Items = {"Degreaser","Dead Cone"}
 
-list.Set( "NPC", "mvm_bot_giantpyro_gatebot", {
+list.Set( "NPC", "mvm_bot_giantpyro_airblast", {
 	Name = ENT.PrintName,
-	Class = "mvm_bot_giantpyro_gatebot",
+	Class = "mvm_bot_giantpyro_airblast",
 	Category = ENT.Category,
 	--AdminOnly = true
 	AdminOnly = false
-} )
+} ) 

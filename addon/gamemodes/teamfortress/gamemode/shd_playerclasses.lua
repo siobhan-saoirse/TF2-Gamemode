@@ -376,7 +376,7 @@ function meta:SetPlayerClass(class)
 		self.playerclass = "Heavy"
 	elseif (self:GetPlayerClass() == "bowman" or self:GetPlayerClass() == "bowman_rapid_fire") then		
 		self.playerclass = "Sniper"
-	elseif (self:GetPlayerClass() == "giantpyro" || self:GetPlayerClass() == "pyro_flare") then
+	elseif (self:GetPlayerClass() == "giantpyro" || self:GetPlayerClass() == "pyro_flare" || self:GetPlayerClass() == "giantflarepyro") then
 		self.playerclass = "Pyro"
 	elseif (self:GetPlayerClass() == "giantmedic" || self:GetPlayerClass() == "kritzmedic") then
 		self.playerclass = "Medic"
@@ -437,7 +437,7 @@ function meta:SetPlayerClass(class)
 			c.Model = "models/bots/"..(c.ModelName or "scout").."/bot_"..(c.ModelName or "scout")..".mdl"
 		elseif self:GetInfoNum("tf_player_use_female_models", 0) == 1 && self:GetPlayerClass() == "soldier" then
 			c.Model = "models/player/"..(c.ModelName or "scout").."_female.mdl"
-		elseif self:GetInfoNum("tf_tfc_model_override", 0) == 1 then--or self:IsBot() then
+		elseif self:GetInfoNum("tf_tfc_model_override", 0) == 1 and file.Exists("models/player/tfc_"..(c.ModelName or "scout")..".mdl", "WORKSHOP") then--or self:IsBot() then
 			c.Model = "models/player/tfc_"..(c.ModelName or "scout")..".mdl"
 		elseif self:GetInfoNum("tf_usehwmmodels", 0) == 1 then--or self:IsBot() then
 			c.Model = "models/player/hwm/"..(c.ModelName or "scout")..".mdl"
@@ -462,7 +462,7 @@ function meta:SetPlayerClass(class)
 			elseif (self:GetPlayerClass() == "soldier") then
 				self:EmitSound("MVM.GiantSoldierLoop")
 			elseif (self:GetPlayerClass() == "pyro") then
-				self:EmitSound("MVM.GiantPyroLoop")
+				self:EmitSound("MVM.GiantPyroLoop") 
 			elseif (self:GetPlayerClass() == "demoman") then
 				self:EmitSound("MVM.GiantDemomanLoop")
 			elseif (self:GetPlayerClass() == "heavy") then

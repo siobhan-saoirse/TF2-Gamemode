@@ -64,8 +64,8 @@ AddCSLuaFile( "shared.lua" )
 ENT.HitSound = Sound("Weapon_FlameThrower.FireHit")
 ENT.HitLoopSound = Sound("Weapon_FlameThrower.FireHit")
 
-ENT.MaxDamage = 1
-ENT.MinDamage = 5
+ENT.MaxDamage = 5
+ENT.MinDamage = 1
 ENT.CritDamageMultiplier = 3
 
 ENT.Force = 800
@@ -226,7 +226,11 @@ function ENT:Hit(ent)
 		local dmginfo = DamageInfo()
 			dmginfo:SetAttacker(owner)
 			dmginfo:SetInflictor(self)
-			dmginfo:SetDamage(damage)
+			if (owner:Nick() == "Giant Airblast Pyro" and owner:IsBot() and owner.TFBot) then
+				dmginfo:SetDamage(damage * 0.05)
+			else
+				dmginfo:SetDamage(damage)
+			end
 			if ent:IsTFPlayer() then
 				if IsValid(self:GetOwner():GetActiveWeapon():GetItemData()) and self:GetOwner():GetActiveWeapon():GetItemData().model_player == "models/workshop/weapons/c_models/c_drg_phlogistinator/c_drg_phlogistinator.mdl" then
 					dmginfo:SetDamageType(DMG_DISSOLVE)
@@ -258,7 +262,9 @@ function ENT:Hit(ent)
 			--ent:SetColor(Color(r,g,b,a))
 			
 		end
-		GAMEMODE:IgniteEntity(ent, self, owner, 10)
+		if (ent:IsTFPlayer() and !ent:IsFriendly(owner)) then
+			GAMEMODE:IgniteEntity(ent, self, owner, 10)
+		end
 	end
 	
 	self:StopParticles()

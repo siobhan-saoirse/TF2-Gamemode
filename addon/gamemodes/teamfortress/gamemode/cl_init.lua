@@ -650,7 +650,7 @@ local icon = vgui.Create( "DModelPanel", ClassFrame )
 icon:SetSize(ScrW() * 0.412, ScrH() * 0.571)
 icon:SetPos(ScrW() * 0.012, ScrH() * 0.301)
 icon:SetCamPos( Vector( 140, 0, 40 ) )
-if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1) then
+if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1  and file.Exists("models/player/tfc_"..(c.ModelName or "scout")..".mdl", "WORKSHOP") ) then
 	icon:SetModel( "models/player/tfc_heavy.mdl" ) -- you can only change colors on playermodels
 elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 	icon:SetModel( "models/bots/heavy/bot_heavy.mdl" ) -- you can only change colors on playermodels
@@ -787,7 +787,7 @@ SpyButton:SetText("Spy") --Set the name of the button
 SpyButton.DoClick = function()  RunConsoleCommand("changeclass", "spy") surface.PlaySound( "/music/class_menu_09.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 
 ScoutButton.OnCursorEntered = function() 
-	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1) then
+	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1  and file.Exists("models/player/tfc_"..(c.ModelName or "scout")..".mdl", "WORKSHOP") ) then
 		icon:SetModel( "models/player/tfc_scout.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/scout/bot_scout.mdl" ) -- you can only change colors on playermodels
@@ -808,7 +808,7 @@ ScoutButton.OnCursorEntered = function()
 end
 SoldierButton.OnCursorEntered = function() 
 
-	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1) then
+	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1  and file.Exists("models/player/tfc_"..(c.ModelName or "scout")..".mdl", "WORKSHOP") ) then
 		icon:SetModel( "models/player/tfc_soldier.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/soldier/bot_soldier.mdl" ) -- you can only change colors on playermodels
@@ -829,7 +829,7 @@ SoldierButton.OnCursorEntered = function()
 end
 PyroButton.OnCursorEntered = function() 
 
-	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1) then
+	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1  and file.Exists("models/player/tfc_"..(c.ModelName or "scout")..".mdl", "WORKSHOP") ) then
 		icon:SetModel( "models/player/tfc_pyro.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/pyro/bot_pyro.mdl" ) -- you can only change colors on playermodels
@@ -850,7 +850,7 @@ PyroButton.OnCursorEntered = function()
 end
 DemomanButton.OnCursorEntered = function() 
 
-	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1) then
+	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1  and file.Exists("models/player/tfc_"..(c.ModelName or "scout")..".mdl", "WORKSHOP") ) then
 		icon:SetModel( "models/player/tfc_demo.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/demo/bot_demo.mdl" ) -- you can only change colors on playermodels
@@ -871,7 +871,7 @@ DemomanButton.OnCursorEntered = function()
 end
 HeavyButton.OnCursorEntered = function() 
 
-	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1) then
+	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1  and file.Exists("models/player/tfc_"..(c.ModelName or "scout")..".mdl", "WORKSHOP") ) then
 		icon:SetModel( "models/player/tfc_heavy.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/heavy/bot_heavy.mdl" ) -- you can only change colors on playermodels
@@ -894,7 +894,7 @@ EngineerButton.DoClick = function()  RunConsoleCommand("changeclass", "engineer"
 
 EngineerButton.OnCursorEntered = function() 
 
-	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1) then
+	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1  and file.Exists("models/player/tfc_"..(c.ModelName or "scout")..".mdl", "WORKSHOP") ) then
 		icon:SetModel( "models/player/tfc_engineer.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/engineer/bot_engineer.mdl" ) -- you can only change colors on playermodels
@@ -917,7 +917,7 @@ MedicButton.DoClick = function()  RunConsoleCommand("changeclass", "medic") surf
 
 MedicButton.OnCursorEntered = function() 
 
-	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1) then
+	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1  and file.Exists("models/player/tfc_"..(c.ModelName or "scout")..".mdl", "WORKSHOP") ) then
 		icon:SetModel( "models/player/tfc_medic.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/medic/bot_medic.mdl" ) -- you can only change colors on playermodels
@@ -940,7 +940,7 @@ SniperButton.DoClick = function()  RunConsoleCommand("changeclass", "sniper") su
 
 SniperButton.OnCursorEntered = function() 
 
-	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1) then
+	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1  and file.Exists("models/player/tfc_"..(c.ModelName or "scout")..".mdl", "WORKSHOP") ) then
 		icon:SetModel( "models/player/tfc_sniper.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/sniper/bot_sniper.mdl" ) -- you can only change colors on playermodels
@@ -961,7 +961,7 @@ SniperButton.OnCursorEntered = function()
 end
 SpyButton.OnCursorEntered = function() 
 
-	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1) then
+	if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1  and file.Exists("models/player/tfc_"..(c.ModelName or "scout")..".mdl", "WORKSHOP") ) then
 		icon:SetModel( "models/player/tfc_spy.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/spy/bot_spy.mdl" ) -- you can only change colors on playermodels

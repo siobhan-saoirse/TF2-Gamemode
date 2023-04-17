@@ -157,6 +157,7 @@ function ENT:Hit(ent)
 	if self.IsSpecial then
 		for k,v in ipairs(ents.FindInSphere(self:GetPos(), 350)) do 
 			if v:IsFlammable() then 
+				if (v:IsTFPlayer() and v:IsFriendly(self:GetOwner())) then return end
 				GAMEMODE:IgniteEntity(ent, self, owner, 10)
 				local dmginfo = DamageInfo()
 				dmginfo:SetDamageType(DMG_GENERIC)
@@ -168,6 +169,7 @@ function ENT:Hit(ent)
 		end
 	else
 		if ent:IsFlammable() then
+			if (ent:IsTFPlayer() and ent:IsFriendly(self:GetOwner())) then return end
 			GAMEMODE:IgniteEntity(ent, self, owner, 10)
 			local dmginfo = DamageInfo() 
 			dmginfo:SetDamageType(DMG_GENERIC)
@@ -276,6 +278,7 @@ end
 
 function ENT:Touch(ent)
 	if ent:IsSolid() then
+		if (ent:IsTFPlayer() and ent:IsFriendly(self:GetOwner())) then return end
 		self:Hit(ent)
 	end
 end
