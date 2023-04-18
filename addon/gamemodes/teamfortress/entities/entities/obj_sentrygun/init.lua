@@ -671,11 +671,7 @@ function ENT:Think()
 				self:Explode()
 			end
 		end
-	if IsValid(self:GetBuilder()) then
-		if self:GetBuilder():IsPlayer() and self:GetBuilder():GetPlayerClass() != "engineer" then
-			self:Explode()
-		end
-	end
+	
 	self:OnThink()
 	if state==0 then
 		if CurTime()-self.StartTime>=self.TimeLeft then
@@ -695,7 +691,6 @@ function ENT:Think()
 					total = total + data.val * mul
 				end
 			end
-			
 			self.Model:SetPlaybackRate(self.BuildRate * total)
 			time_added = time_added * total
 		end
@@ -716,15 +711,23 @@ function ENT:Think()
 			self:OnDoneUpgrade()
 			self:Enable()
 		end
-		
+			
 		if not self.DisableDuringUpgrade then
 			self:OnThinkActive()
 		end
 	elseif state==3 then
 		self:OnThinkActive()
+		if (string.find(game.GetMap(),"mvm_")) then
+				
+			if CurTime()>=self.TimeLeft and self:GetLevel()<=self.NumLevels then
+				self:Upgrade()
+			end
+					
+		end
+
 	end
 	
-	self:NextThink(CurTime())
+	self:NextThink(FrameTime())
 	return true
 end
 end

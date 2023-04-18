@@ -420,24 +420,32 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 						else
 							bot:SetPlayerClass(table.Random(classtb))
 						end
+					else
+					
 					end
 				end
-				timer.Simple(0.1, function()
+				timer.Simple(0.2, function()
 					local oldclass = bot:GetPlayerClass()
 					
-					bot:SetPlayerClass(table.Random(classtb)) -- change to different class unrelated to the regular classes
+					bot:SetPlayerClass(class) -- change to different class unrelated to the regular classes
 					timer.Simple(0.5, function()
 					
 						bot:SetPlayerClass(oldclass)
-						if (bot.IsL4DZombie and !string.find(bot:GetModel(),"/bot_")) then
-							RandomWeapon2(bot, "primary")
-							RandomWeapon2(bot, "secondary")
-							RandomWeapon2(bot, "melee")
-							RandomCosmetic(bot, "hat")
-							RandomCosmetic(bot, "misc")
-							RandomCosmetic(bot, "head")
+						RandomWeapon2(bot, "primary")
+						RandomWeapon2(bot, "secondary")
+						RandomWeapon2(bot, "melee")
+						RandomCosmetic(bot, "hat")
+						RandomCosmetic(bot, "misc")
+						RandomCosmetic(bot, "head")
+						local ply = bot
+						if ply:GetPlayerClass() == "engineer" and ply.TFBot then 
+							timer.Simple(0.1, function()
+								ply:SelectWeapon(ply:GetWeapons()[3]:GetClass())
+							end) 
+							timer.Simple(0.8, function() 
+								ply:Build(2,0)
+							end)
 						end
-
 					end)
 				end)
 				timer.Simple(1, function()
@@ -601,7 +609,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 						if (!IsValid(v.TargetEnt)) then
 							if (bot:Health() < bot:GetMaxHealth()) then
 								v.TargetEnt = bot
-								v:SelectWeapon(v:GetWeapons()[2])
+								v:SelectWeapon(v:GetWeapons()[2]:GetClass())
 							end
 						end
 					end
@@ -654,7 +662,8 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			bot.ControllerBot.PosGen = bot.botPos
 		end
 
-			if IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 25000 and bot.TargetEnt:Health() > 1 and !bot.TargetEnt:HasGodMode() then
+			if IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 25000 and bot.TargetEnt:Health() > 1 then
+				if (bot.TargetEnt:IsPlayer() and bot.TargetEnt:HasGodMode()) then return end
 				if (bot:GetPlayerClass() != "tank_l4d") then
 					if (bot:GetNWBool("Taunting",false) == true) then 
 						return 
@@ -709,7 +718,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		end
 		
 		-- think one step ahead!
-		if bot:GetPos():Distance(curgoal.pos) < 50 * bot:GetModelScale() and bot.LastPath[bot.CurSegment + 1] then
+		if bot:GetPos():Distance(curgoal.pos) < 50 and bot.LastPath[bot.CurSegment + 1] then
 			curgoal = bot.LastPath[bot.CurSegment + 1]
 		end
 		
@@ -726,7 +735,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		
 		local mva = ((goalpos + bot:GetCurrentViewOffset()) - bot:GetShootPos()):Angle()
 		
-		if bot.botPos and curgoal.area:GetAttributes() != NAV_MESH_CLIFF and bot:GetPos():Distance(curgoal.pos) > 50 * bot:GetModelScale() then
+		if bot.botPos and curgoal.area:GetAttributes() != NAV_MESH_CLIFF then
 			if (IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging) then
 
 			else
@@ -855,7 +864,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 
 			bot.botPos = targetpos2
 		]]
-		elseif string.find(game.GetMap(), "mvm_") and (bot:Team() == TEAM_BLU or bot:Team() == TF_TEAM_PVE_INVADERS) and bot:GetPlayerClass() != "engineer" and bot:GetPlayerClass() != "sentrybuster" then -- CTF AI in MVM Maps
+		elseif string.find(game.GetMap(), "mvm_") and (bot:Team() == TEAM_BLU or bot:Team() == TF_TEAM_PVE_INVADERS) and bot:GetPlayerClass() != "engineer" and bot:GetPlayerClass() != "medic" and bot:GetPlayerClass() != "sentrybuster" then -- CTF AI in MVM Maps
 			for k, v in pairs(ents.FindByClass("item_teamflag_mvm")) do
 				if v.TeamNum ~= bot:Team() and k == 1 then 
 					intel = v
@@ -997,6 +1006,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 					end
 				end
 			end
+			if (bot:GetPlayerClass() != "sentrybuster") then
 				for k, v in pairs(player.GetBots()) do
 					if (!IsValid(bot.TargetEnt)) then
 						if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:GetPos():Distance(bot:GetPos()) < 6000 and !IsValid(bot.TargetEnt) then
@@ -1015,25 +1025,53 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 						end
 					end
 				end
-			if (string.find(game.GetMap(),"mvm_") and bot:Team() == TEAM_BLU) then
-		
-				for k, v in pairs(team.GetPlayers(TEAM_RED)) do
-					if (!IsValid(bot.TargetEnt)) then
-						if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:Visible(bot) and v:GetPos():Distance(bot:GetPos()) < 6000 then
-							if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
-								local targetpos = v:EyePos() - Vector(0, 0, 10) -- bot eye check, don't start shooting targets just because we barely see their head
-								local trace = util.TraceLine({start = bot:GetShootPos(), endpos = targetpos, filter = function( ent ) return ent == v end})
+			else
 			
-								if trace.Entity == v and !trace.Entity:IsFlagSet(FL_NOTARGET) then -- TODO: FOV Check
-									if (!IsValid(bot.TargetEnt)) then
-										if (v:EntIndex() == bot:EntIndex()) then return end
-										if (v:EntIndex() == bot.ControllerBot:EntIndex()) then return end
-										bot.TargetEnt = v
+					for k, v in pairs(ents.FindByClass("obj_*")) do
+						if (!IsValid(bot.TargetEnt)) then
+							if IsValid(v) and v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:Visible(bot) then
+								if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
+									local targetpos = v:EyePos() - Vector(0, 0, 10) -- bot eye check, don't start shooting targets just because we barely see their head
+									local trace = util.TraceLine({start = bot:GetShootPos(), endpos = targetpos, filter = function( ent ) return ent == v end})
+				
+									if trace.Entity == v and !trace.Entity:IsFlagSet(FL_NOTARGET) then -- TODO: FOV Check
+										if (!IsValid(bot.TargetEnt)) then
+											if (v:EntIndex() == bot:EntIndex()) then return end
+											if (v:EntIndex() == bot.ControllerBot:EntIndex()) then return end
+											bot.TargetEnt = v
+										end
+									end
+								end
+							else
+								bot.TargetEnt = nil
+							end
+						end
+					end
+					
+			end
+			if (string.find(game.GetMap(),"mvm_") and bot:Team() == TEAM_BLU) then
+				
+				if (bot:GetPlayerClass() != "sentrybuster") then
+				
+					for k, v in pairs(team.GetPlayers(TEAM_RED)) do
+						if (!IsValid(bot.TargetEnt)) then
+							if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:Visible(bot) and v:GetPos():Distance(bot:GetPos()) < 6000 then
+								if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
+									local targetpos = v:EyePos() - Vector(0, 0, 10) -- bot eye check, don't start shooting targets just because we barely see their head
+									local trace = util.TraceLine({start = bot:GetShootPos(), endpos = targetpos, filter = function( ent ) return ent == v end})
+				
+									if trace.Entity == v and !trace.Entity:IsFlagSet(FL_NOTARGET) then -- TODO: FOV Check
+										if (!IsValid(bot.TargetEnt)) then
+											if (v:EntIndex() == bot:EntIndex()) then return end
+											if (v:EntIndex() == bot.ControllerBot:EntIndex()) then return end
+											bot.TargetEnt = v
+										end
 									end
 								end
 							end
 						end
 					end
+					
 				end
 			elseif (string.find(game.GetMap(),"mvm_") and bot:Team() == TEAM_RED) then
 		
@@ -1071,7 +1109,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			-- back up if the target is really close
 			-- TODO: find a random spot rather than trying to back up into what could just be a wall
 			-- something like controller.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350, radius = 1000})?
-			if distance <= 90000 * bot.TargetEnt:GetModelScale() then
+			if distance <= 90000 * bot.TargetEnt:GetModelScale() and !bot.isCarryingIntel then
 				if ((IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) or !bot.TargetEnt:IsFriendly(bot)) then   
 					if (IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) then
 					

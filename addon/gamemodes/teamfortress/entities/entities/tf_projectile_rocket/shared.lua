@@ -344,8 +344,12 @@ function ENT:ModifyInitialDamage(ent, dmginfo)
 end]]
 
 function ENT:Touch(ent)
-	if not ent:IsTrigger() and ent:IsSolid() then
-		self:DoExplosion(ent)
+	if not ent:IsTrigger() and ent:IsSolid() then	
+		if (ent:IsTFPlayer() and ent:IsFriendly(self:GetOwner()) then
+		
+		else
+			self:DoExplosion(ent)
+		end
 	end
 end
 

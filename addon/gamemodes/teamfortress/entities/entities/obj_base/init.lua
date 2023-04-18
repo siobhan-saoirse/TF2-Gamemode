@@ -121,9 +121,17 @@ function ENT:Build()
 	self:SetState(1)
 	self.StartTime = CurTime()
 	
-	self.BuildProgress = 0
-	self.BuildProgressMax = self.Model:SequenceDuration() / self.BuildRate
-	self:SetBuildProgress(0)
+	if (string.find(game.GetMap(),"mvm_")) then
+	
+		self.BuildProgress = 0
+		self.BuildProgressMax = 0
+		self:SetBuildProgress(0)
+		
+	else
+		self.BuildProgress = 0
+		self.BuildProgressMax = self.Model:SequenceDuration() / self.BuildRate
+		self:SetBuildProgress(0)
+	end
 end
 
 function ENT:Upgrade()
@@ -141,12 +149,19 @@ function ENT:Upgrade()
 		self.Model:SetNoDraw(false)
 		self.Model:ResetSequence(self:SelectWeightedSequence(ACT_OBJ_UPGRADING))
 		self.Model:SetCycle(0) 
-		self.Model:SetPlaybackRate(1)
-		self.Duration = self.Model:SequenceDuration()
-		self.TimeLeft = self.Model:SequenceDuration()
-		timer.Simple(self.Model:SequenceDuration() + 0.1, function()
-			self:EmitSound("Building_Sentrygun.Built")
-		end) 
+			
+			if (string.find(game.GetMap(),"mvm_")) then
+				self.Model:SetPlaybackRate(1)
+				self.Duration = 0.1
+				self.TimeLeft = 0.1
+			else
+				self.Model:SetPlaybackRate(0.00001)
+				self.Duration = self.Model:SequenceDuration()
+				self.TimeLeft = self.Model:SequenceDuration()
+				timer.Simple(self.Model:SequenceDuration(), function()
+					self:EmitSound("Building_Sentrygun.Built")
+				end) 
+			end
 	end
 	
 	self:SetState(2)
@@ -199,11 +214,16 @@ function ENT:Enable()
 				self.Model:ResetSequence(self:SelectWeightedSequence(ACT_OBJ_UPGRADING))
 				self.Model:SetCycle(0) 
 				self.Model:SetPlaybackRate(1)
+			if (string.find(game.GetMap(),"mvm_")) then
+				self.Duration = 0.1
+				self.TimeLeft = 0.1
+			else
 				self.Duration = self.Model:SequenceDuration()
 				self.TimeLeft = self.Model:SequenceDuration()
-				timer.Simple(self.Model:SequenceDuration() + 0.1, function()
+				timer.Simple(self.Model:SequenceDuration(), function()
 					self:EmitSound("Building_Sentrygun.Built")
 				end) 
+			end
 			end
 			
 			self:SetState(2)
@@ -224,11 +244,16 @@ function ENT:Enable()
 				self.Model:ResetSequence(self:SelectWeightedSequence(ACT_OBJ_UPGRADING))
 				self.Model:SetCycle(0) 
 				self.Model:SetPlaybackRate(1)
+			if (string.find(game.GetMap(),"mvm_")) then
+				self.Duration = 0.1
+				self.TimeLeft = 0.1
+			else
 				self.Duration = self.Model:SequenceDuration()
 				self.TimeLeft = self.Model:SequenceDuration()
-				timer.Simple(self.Model:SequenceDuration() + 0.1, function()
+				timer.Simple(self.Model:SequenceDuration(), function()
 					self:EmitSound("Building_Sentrygun.Built")
 				end) 
+			end
 			end
 			
 			self:SetState(2)
@@ -285,14 +310,10 @@ function ENT:Think()
 		deltatime = CurTime() - self.LastThink
 	end
 	self.LastThink = CurTime()
-	if self:GetBuilder():IsPlayer() and !IsValid(self:GetBuilder()) then
-		self:Explode()
-	end
-	if self:GetBuilder():IsPlayer() and self:GetBuilder():GetPlayerClass() != "engineer" then
-		self:Explode()
-	end
+	
 	self.Model:SetModelScale(self:GetModelScale())
 	self:OnThink()
+	
 	if state==0 then
 		if CurTime()-self.StartTime>=self.TimeLeft then
 			self:Build()
@@ -324,6 +345,7 @@ function ENT:Think()
 		
 		if self.BuildProgress >= self.BuildProgressMax then
 			self:OnDoneBuilding()
+			self:EmitSound("Building_Sentrygun.Built")
 			self:SetHealth(self:GetMaxHealth() - (self.BuildSubstractHealth or 0))
 			self:Enable()
 		end
@@ -338,9 +360,16 @@ function ENT:Think()
 		end 
 	elseif state==3 then
 		self:OnThinkActive()
+		if (string.find(game.GetMap(),"mvm_")) then
+				
+			if self:GetLevel()<=self.NumLevels then
+				self:Upgrade()
+			end
+					
+		end
 	end
 	
-	self:NextThink(CurTime())
+	self:NextThink(FrameTime())
 	return true
 end
 

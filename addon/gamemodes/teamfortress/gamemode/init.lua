@@ -2128,7 +2128,7 @@ function GM:PlayerSpawn(ply)
 	ply:PrecacheGibs()
 	
 	ply:DoAnimationEvent(ACT_MP_ATTACK_STAND_POSTFIRE, true)
-	ply:ScreenFade( SCREENFADE.IN, Color( 0, 0, 0, 255 ), 0.01, 0 ) 
+	--ply:ScreenFade( SCREENFADE.IN, Color( 0, 0, 0, 255 ), 0.01, 0 ) 
 
 	-- Fix the blackness glitch in TSP maps 
 	if (game.GetMap() == "map1") then
@@ -2160,7 +2160,7 @@ function GM:PlayerSpawn(ply)
 			end
 		end)
 	end 	 
-	if ply:GetPlayerClass() == "engineer" and ply:IsBot() and string.find(game.GetMap(), "mvm_") then 
+	if ply:GetPlayerClass() == "engineer" and ply.TFBot then 
 		timer.Simple(0.1, function()
 			ply:SelectWeapon("tf_weapon_wrench")
 		end) 

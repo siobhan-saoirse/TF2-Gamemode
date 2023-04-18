@@ -79,11 +79,13 @@ if SERVER then
 					end
 				end
 			end
-			for k,v in ipairs(player.GetAll()) do
-				v:EmitSound("Announcer.MVM_Sentry_Buster_Alert")
-			end
+			umsg.Start("TF_PlayGlobalSound")
+				umsg.String("Announcer.MVM_Sentry_Buster_Alert")
+			umsg.End()
+			self:StopSound("MVM.SentryBusterIntro")
+			self:StopSound("MVM.SentryBusterLoop")
 			self:EmitSound("MVM.SentryBusterIntro")
-			self:EmitSound("BusterLoop")
+			self:EmitSound("MVM.SentryBusterLoop")
 			self:SetModel("models/bots/demo/bot_sentry_buster.mdl")
 			self:SetHealth(3600)
 			self:StripWeapon("tf_weapon_grenadelauncher")
@@ -97,10 +99,9 @@ if SERVER then
 			end)
 		
 			timer.Create("SentryBusterExplodeNearSentry"..self:EntIndex(), 0.1, 0, function()
-				if !self:Alive() then timer.Stop("SentryBusterExplodeNearSentry"..self:EntIndex()) return end
 				if self:GetPlayerClass() != "sentrybuster"	then timer.Stop("SentryBusterExplodeNearSentry"..self:EntIndex()) return end
 				if self:GetPlayerClass() != "sentrybuster"	then return end
-				for _,building in pairs(ents.FindInSphere(self:GetPos(), 80)) do
+				for _,building in pairs(ents.FindInSphere(self:GetPos(), 44)) do
 					if building:GetClass() == "obj_sentrygun" then	
 					self:SetNoDraw(true)
 					self:EmitSound("MVM.SentryBusterSpin")
@@ -111,11 +112,8 @@ if SERVER then
 					local animent = ents.Create( 'base_gmodentity' ) -- The entity used as a reference for the bone positioning
 					animent:SetModel( self:GetModel() )
 					animent:SetModelScale( self:GetModelScale() )
-					timer.Create("SetAnimPos", 0.01, 0, function()
-						if not animent:IsValid() then timer.Stop("SetAnimPos") return end
-						animent:SetPos( self:GetPos() )
-						animent:SetAngles( self:GetAngles() )
-					end )
+					animent:SetPos( self:GetPos() + Vector(0,0,10) )
+					animent:SetAngles( self:GetAngles() )
 					animent:SetNoDraw( false ) -- The ragdoll is the thing getting seen
 					animent:Spawn()
 										
@@ -167,14 +165,14 @@ if SERVER then
 						if self:GetRagdollEntity():IsValid() then
 							self:GetRagdollEntity():Remove()
 						end
-						for k,v in pairs(ents.FindInSphere(self:GetPos(), 800)) do 
+						for k,v in pairs(ents.FindInSphere(self:GetPos(), 500)) do 
 							if !v:IsPlayer() and v:Health() >= 0 and not v:IsFriendly(self) then
 								v:TakeDamage( v:Health(), self, self:GetActiveWeapon() )
 							elseif v:IsPlayer() and not v:IsFriendly(self) and v:Alive() and v:Nick() != self:Nick() then
 								v:TakeDamage( v:Health(), self, self:GetActiveWeapon() )
 							end
 						end
-						self:TakeDamage( self:Health(), self, self:GetActiveWeapon() )
+						self:Kill(self)
 					end)
 					timer.Stop("SentryBusterExplodeNearSentry"..self:EntIndex())
 					end
@@ -185,6 +183,7 @@ if SERVER then
 				if self:GetPlayerClass() != "sentrybuster"	then timer.Stop("SentryBusterExplodeOnDeath"..self:EntIndex()) return end
 				if self:GetPlayerClass() != "sentrybuster"	then return end
 				if self:Health() <= 30 then
+				self:EmitSound("MVM.SentryBusterLoop")
 				self:EmitSound("MVM.SentryBusterSpin")
 				timer.Simple(0.1, function()
 				self:GodEnable()
@@ -195,11 +194,8 @@ if SERVER then
 				local animent = ents.Create( 'base_gmodentity' ) -- The entity used as a reference for the bone positioning
 				animent:SetModel( self:GetModel() )
 				animent:SetModelScale( self:GetModelScale() )
-				timer.Create("SetAnimPos", 0.01, 0, function()
-					if not animent:IsValid() then timer.Stop("SetAnimPos") return end
-					animent:SetPos( self:GetPos() )
-					animent:SetAngles( self:GetAngles() )
-				end )
+				animent:SetPos( self:GetPos() + Vector(0,0,10) )
+				animent:SetAngles( self:GetAngles() )
 				animent:SetNoDraw( false ) -- The ragdoll is the thing getting seen
 				animent:Spawn()
 	
@@ -214,7 +210,7 @@ if SERVER then
 				animent:PhysWake()
 	
 				function animent:Think() -- This makes the animation work
-					self:NextThink( CurTime() - 5 )
+					self:NextThink( CurTime() )
 					return true
 				end
 				timer.Simple(2, function()
@@ -249,10 +245,10 @@ if SERVER then
 					if self:GetRagdollEntity():IsValid() then
 						self:GetRagdollEntity():Remove()
 					end
-					for k,v in pairs(ents.FindInSphere(self:GetPos(), 800)) do 
+					for k,v in pairs(ents.FindInSphere(self:GetPos(), 500)) do 
 						if v:IsNPC() and not v:IsFriendly(self) then
 							v:TakeDamage( v:Health(), self, self:GetActiveWeapon() )
-						elseif v:IsPlayer() and not v:IsFriendly(self) and self:Alive() then
+						elseif v:IsPlayer() and not v:IsFriendly(self) then
 							v:TakeDamage( v:Health(), self, self:GetActiveWeapon() )
 						end
 					end

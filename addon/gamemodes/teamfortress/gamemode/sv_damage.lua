@@ -259,9 +259,9 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 			end
 		end
 	end]]
-	if (ent.TFBot and ent:EntIndex() != att:EntIndex() and att:IsTFPlayer() and !att:IsFriendly(ent)) then
+	if (ent.TFBot and ent:GetPlayerClass() != "sentrybuster" and ent:EntIndex() != att:EntIndex() and att:IsTFPlayer() and !att:IsFriendly(ent)) then
 		if (!IsValid(ent.TargetEnt)) then
-			ent.TargetEnt = att
+			ent.TargetEnt = att 
 				
 			for k,v in ipairs(ents.FindInSphere(ent:GetPos(),6000)) do
 				if (v:IsTFPlayer() and (v:IsFriendly(ent)) and v:EntIndex() != ent:EntIndex()) then

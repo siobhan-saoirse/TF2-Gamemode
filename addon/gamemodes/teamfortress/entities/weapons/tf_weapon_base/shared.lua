@@ -493,9 +493,9 @@ function SWEP:Deploy()
 
 	local wmodel = self:GetItemData().model_player or self.WorldModel
 	if (self.Owner:GetNWBool("NoWeapon")) then
-		self.WorldModel = "models/empty.mdl"
+		--self.WorldModel = "models/empty.mdl"
 	else
-		self.WorldModel = wmodel
+		--self.WorldModel = wmodel
 	end
 	local vm = self.Owner:GetViewModel()
 	if (self:GetItemData()) then
@@ -663,9 +663,9 @@ function SWEP:Deploy()
 	local hold = self.HoldType
 	--MsgN(Format("SetupCModelActivities %s", tostring(self)))
 	if (self.Owner:GetNWBool("NoWeapon")) then
-		self.WorldModel = "models/empty.mdl"
+		--self.WorldModel = "models/empty.mdl"
 	else
-		self.WorldModel = wmodel;
+		--self.WorldModel = wmodel;
 	end
 	--self:InitializeWModel2()
 	--self:InitializeAttachedModels()()
@@ -1581,10 +1581,16 @@ function SWEP:Think()
 	end
 	local wmodel = self:GetItemData().model_player or self.WorldModel
 	if (self.Owner:GetNWBool("NoWeapon")) then
-		self.WorldModel = "models/empty.mdl"
+		--self.WorldModel = "models/empty.mdl"
 	else
-		self.WorldModel = wmodel;
+		--self.WorldModel = wmodel;
 	end
+	if (self.Owner:IsHL2()) then
+		self:SetWeaponHoldType(self.HoldTypeHL2 or self.HoldType)
+	else
+		self:SetWeaponHoldType(self.HoldType)
+	end
+	self:AddFlags(EF_NOSHADOW)
 	if (self.Owner:GetPlayerClass() == "pyro" and self:GetClass() == "tf_weapon_rocketlauncher_qrl") then
 		self:SetHoldType("ITEM1")
 		self.HoldType = "ITEM1"

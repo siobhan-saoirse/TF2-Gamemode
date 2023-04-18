@@ -176,7 +176,7 @@ function meta:GetMaxOverheal()
 end
 
 function meta:IsMiniBoss()
-	if (string.find(self:GetModel(),"_boss.mdl")) then
+	if (string.find(self:GetModel(),"_boss.mdl") or self:GetModel() == "models/bots/demo/bot_sentry_buster.mdl") then
 		return true
 	else
 		return false

@@ -880,6 +880,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	end
 	
 	ply:StopSound("MVM.GiantScoutLoop")
+	ply:StopSound("MVM.SentryBusterLoop")
 	ply:StopSound("MVM.GiantSoldierLoop")
 	ply:StopSound("MVM.GiantPyroLoop")
 	ply:StopSound("MVM.GiantDemomanLoop")

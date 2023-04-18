@@ -32,6 +32,7 @@ ENT.RechargeTime = 10
 ENT.RechargeTime2 = 7
 ENT.RechargeTime3 = 5
 ENT.MinRechargingSpinSpeed = 0.2
+ENT.SpinSpeed = 0
 
 ENT.Acceleration = 0
 
@@ -111,7 +112,6 @@ end
 
 function ENT:OnUnlink(ent)
 	self:SetAcceleration(-0.003)
-	self:SetLevel(1)
 end
 
 function ENT:OnStartUpgrade()
@@ -186,18 +186,11 @@ function ENT:AddMetal(owner, max)
 		if current>=self.UpgradeCost then
 			self:SetMetal(0)
 			self:Upgrade()
-			if (IsValid(exit)) then
-				exit:SetMetal(0)
-				exit:Upgrade()
-			end
 			-- Upgrading already resupplies ammo so we don't need to do anything else
 			upgraded = true
 		elseif not repaired or not self:NeedsResupply() then
 			-- Add to the upgrade status only if no metal was spent repairing the building or if the building doesn't need to be resupplied first
 			self:SetMetal(current)
-			if (IsValid(exit)) then
-				exit:SetMetal(current)
-			end
 		end
 		
 		max = max - metal_spent

@@ -129,11 +129,12 @@ function ENT:Initialize()
 			
 				for k,v in ipairs(ents.FindByClass("item_teamflag_mvm")) do
 					if (!IsValid(v.Carrier) and !v.NextReturn and k == 1) then
-						v:Pickup(npc)
-						for _,capturezone in ipairs(ents.FindByClass("func_capturezone")) do
-							npc.botPos = capturezone.Pos
+						if (npc:GetPlayerClass() != "engineer" and npc:GetPlayerClass() != "medic" and npc:GetPlayerClass() != "sentrybuster") then
+							v:Pickup(npc)
+							for _,capturezone in ipairs(ents.FindByClass("func_capturezone")) do
+								npc.botPos = capturezone.Pos
+							end
 						end
-						
 					end
 				end
 				
@@ -203,7 +204,18 @@ function ENT:Initialize()
 							elseif (npc.playerclass == "Pyro") then
 								npc:EmitSound("MVM.GiantPyroLoop")
 							elseif (npc.playerclass == "Demoman") then
-								npc:EmitSound("MVM.GiantDemomanLoop")
+							
+								if (!string.find(npc:GetPlayerClass(),"sentry")) then
+								
+									npc:EmitSound("MVM.GiantDemomanLoop")
+									
+								else
+									
+									npc:EmitSound("MVM.SentryBusterLoop")
+									npc:EmitSound("MVM.SentryBusterIntro")
+									
+								end
+								
 							elseif (npc.playerclass == "Heavy") then
 								npc:EmitSound("MVM.GiantHeavyLoop")
 							end	
@@ -281,7 +293,7 @@ end
 function ENT:Think()
 	if SERVER then
 		for k,v in ipairs(team.GetPlayers(TEAM_BLU)) do
-			if (v:EntIndex() == self.Bot:EntIndex() and !v:Alive() and !self.Removing) then
+			if (v:EntIndex() == self.Bot:EntIndex() and !v:Alive() and !self.Removing and self.PZClass != "sentrybuster") then
 				timer.Simple(1.5, function()
 					self:Remove()
 				end)

@@ -94,6 +94,7 @@ function ENT:Initialize()
 	self.spawnsblu = {}	
 	self:SetSkin(1)
 	if SERVER then
+		self:EmitSound("MVM.Robot_Engineer_Spawn")
 		if (string.find(game.GetMap(),"mvm_")) then
 			for k, v in pairs(ents.FindByClass("team_round_timer")) do
 				v.IsSetupPhase = true
@@ -187,19 +188,47 @@ function ENT:Use( activator, caller )
 								end
 							end
 							self.WaveStarted = false
-							timer.Stop("WaitUntilAllBotsDead")
-							for k,v in ipairs(ents.FindByClass("item_teamflag")) do
+							for k,v in ipairs(ents.FindByClass("item_teamflag_mvm")) do
 								v:Return()
 							end
+							timer.Stop("SentryBusterSpawner")
+							timer.Stop("WaitUntilAllBotsDead")
 						end
 					end)
 				end)
 		timer.Simple(10, function()
+			self:EmitSound("MVM.Robot_Teleporter_Deliver")
 			for k,v in ipairs(player.GetAll()) do
 				if (v:Team() != TEAM_BLU) then
-				
 					v:Speak("TLK_ROUND_START")
 				end
+			end
+		end)
+		timer.Create("SentryBusterSpawner", 30, 0, function()
+			if SERVER then
+				local count = #ents.FindByClass("obj_sentrygun")
+				for k,v in ipairs(ents.FindByClass("obj_sentrygun")) do
+					if (IsValid(v)) then
+						local spawn = table.Random(self.spawnsblu) 
+						if (table.Count(self.spawnsblu) == 0) then
+							spawn = self
+						end
+						for i=1,count do
+							local bot = ents.Create("mvm_bot_sentrybuster")
+							if (!IsValid(bot)) then
+								return
+							end
+							bot:SetPos(spawn:GetPos() + Vector(0,0,45))
+							table.insert(self.bots,bot) 
+							bot:SetOwner(self)
+							bot:Spawn() 
+							bot:EmitSound("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav",70,100)
+							ParticleEffect("teleportedin_blue", bot:GetPos(), bot:GetAngles(), self)
+							print("Creating robot #"..bot:EntIndex())
+						end
+					end
+				end
+						
 			end
 		end)
 		timer.Create("BotSpawner", 9, count, function()
@@ -224,6 +253,8 @@ function ENT:Use( activator, caller )
 							bot:SetOwner(self)
 							bot:Spawn()
 							bot.TargetEnt = table.Random(team.GetPlayers(TEAM_RED))
+							bot:EmitSound("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav",70,100)
+							ParticleEffect("teleportedin_blue", bot:GetPos(), bot:GetAngles(), self)
 							print("Creating horde robot #"..bot:EntIndex())
 						end
 					else
@@ -246,7 +277,7 @@ function ENT:Use( activator, caller )
 							bot:SetOwner(self)
 							bot:Spawn() 
 							bot:EmitSound("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav",70,100)
-							ParticleEffect("teleportedin_blue", self:GetPos(), self:GetAngles(), self)
+							ParticleEffect("teleportedin_blue", bot:GetPos(), bot:GetAngles(), self)
 							bot.TargetEnt = table.Random(team.GetPlayers(TEAM_RED))
 							print("Creating robot #"..bot:EntIndex())
 						end
