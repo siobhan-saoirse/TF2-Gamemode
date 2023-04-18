@@ -64,15 +64,25 @@ end
 function ENT:StartTouch(ent) 
 end
 
-function ENT:StartTouch(ent)
-	if ent:IsPlayer() and ent:Team() == TEAM_BLU then
-		self.Players[ent] = -1
-		print(self.Team)
+function ENT:Touch(ent)
+	if ent:IsPlayer() and string.find(game.GetMap(),"mvm_") and ent:Team() == TEAM_BLU then
+		self.Players[ent] = ent:EntIndex()
+		--print(self.Team)
+		ent:GodEnable()
+		ent:SetSkin(3)
 	end
 end
 
 function ENT:EndTouch(ent)
 	if ent:IsPlayer() then
 		self.Players[ent] = nil
+		if (ent.TFBot and string.find(game.GetMap(),"mvm_") and ent:Team() == TEAM_BLU) then
+			ent:GodDisable()
+			ent:SetSkin(1)
+		end
+		if (ent.TFBot and ent:Team() == TEAM_RED and string.find(game.GetMap(),"mvm_")) then
+			ent:GodDisable()
+			ent:SetSkin(0)
+		end
 	end
 end

@@ -222,29 +222,28 @@ function ENT:Think()
 		end
 		return
 	end
-	
-	for k,v in ipairs(TimeRemainingToOutput) do
-		if k == self.LastPlayedTimeSignal then
-			break
-		end
-		
-		if t <= v[1] then
-			self:TriggerOutput(v[2])
-			self.LastPlayedTimeSignal = k
-			if (!self.WaitingForPlayers) then
-				if self.IsSetupPhase and v[3] then
-					umsg.Start("TF_PlayGlobalSound")
-						umsg.String(v[3])
-					umsg.End()
-				elseif not self.IsSetupPhase and self.AutoCountdown and v[4] then
-					umsg.Start("TF_PlayGlobalSound")
-						umsg.String(v[4])
-					umsg.End()
-				end
+		for k,v in ipairs(TimeRemainingToOutput) do
+			if k == self.LastPlayedTimeSignal then
+				break
 			end
-			break
+			
+			if t <= v[1] then
+				self:TriggerOutput(v[2])
+				self.LastPlayedTimeSignal = k
+				if (!self.WaitingForPlayers) then
+					if self.IsSetupPhase and v[3] then
+						umsg.Start("TF_PlayGlobalSound")
+							umsg.String(v[3])
+						umsg.End()
+					elseif not self.IsSetupPhase and self.AutoCountdown and v[4] then
+						umsg.Start("TF_PlayGlobalSound")
+							umsg.String(v[4])
+						umsg.End()
+					end
+				end
+				break
+			end
 		end
-	end
 end
 
 function ENT:Input_Pause(activator, caller, data)

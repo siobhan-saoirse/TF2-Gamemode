@@ -200,9 +200,14 @@ npc_combine_s = {
 	flags=NPC_HUMAN,
 	vplayer=VPLAYER_COMBINE
 },
+tank_boss = {
+	team=TEAM_BLU,
+	flags=NPC_MECH,
+	vplayer=VPLAYER_COMBINE
+},
 npc_metropolice = {
 	team=TEAM_BLU,
-	health=80,
+	health=80, 
 	flags=NPC_HUMAN,
 	vplayer=VPLAYER_METROCOP
 },

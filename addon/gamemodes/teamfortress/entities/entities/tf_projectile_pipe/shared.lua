@@ -201,6 +201,9 @@ function ENT:OnRemove()
 end
 
 function ENT:Think()
+	if SERVER and not IsValid(self:GetOwner()) then
+		self:Remove()
+	end
 	if self.NextExplode and CurTime()>=self.NextExplode then
 		self:DoExplosion()
 		self.NextExplode = nil

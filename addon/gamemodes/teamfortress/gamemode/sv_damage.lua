@@ -15,8 +15,7 @@ obj_sentrygun = true,
 obj_dispenser = true,
 }
 local ForceDamageClasses = {
-npc_combinegunship = true,
-npc_helcopter = true,
+npc_combinegunship = true
 }
 
 --[[
@@ -64,10 +63,9 @@ function GM:PreScaleDamage(ent, hitgroup, dmginfo)
 
 	-- Used for recalculating custom damage falloff
 	-- (especially for the Direct Hit which does not do enough damage due to its poor blast radius)
-	--[[if inf.ModifyInitialDamage then
+	if inf.ModifyInitialDamage then
 		dmginfo:SetDamage(inf:ModifyInitialDamage(ent, dmginfo))
-	end]]
-	--[[
+	end 
 	if dmginfo:GetAttacker() ~= ent and inf.ExplosionRadiusMultiplier and inf.ExplosionRadiusMultiplier < 1 then
 		local frac = dmginfo:GetDamage() * 0.01
 		local saturate = 1 / inf.ExplosionRadiusMultiplier
@@ -80,7 +78,7 @@ function GM:PreScaleDamage(ent, hitgroup, dmginfo)
 		else
 			dmginfo:SetDamage(frac * 100)
 		end
-	end]]
+	end
 end
 
 function GM:PostScaleDamage(ent, hitgroup, dmginfo)
@@ -384,7 +382,7 @@ function GM:ScaleNPCDamage(npc, hitgroup, dmginfo)
 	
 	if not dmginfo:IsDamageType(DMG_DIRECT) then
 		-- make NPCs a bit harder to kill
-		--dmginfo:ScaleDamage(0.7)
+		dmginfo:ScaleDamage(0.7)
 	end
 	
 	--Msg(tostring(npc).." - "..tostring(dmginfo).." > Calculated damage : "..dmginfo:GetDamage().."  Attacker : "..tostring(dmginfo:GetAttacker()).."\n")
@@ -558,7 +556,12 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		
 		ent.LastDamageWasCrit = true
 	else
-		dmginfo:ScaleDamage(1)
+	
+		if (string.find(ent:GetModel(),"/bot_") and ent:IsPlayer() and ent.TFBot and ent:Team() == TEAM_BLU and attacker:GetPlayerClass() == "gmodplayer") then
+			dmginfo:ScaleDamage(1.75)
+		else
+			dmginfo:ScaleDamage(1)
+		end
 	end
 	if ent:IsTFPlayer() then
 		-- Increased bullet force
@@ -677,7 +680,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	
 	-- Pain and death sounds
 	local hp = ent:Health() - dmginfo:GetDamage()
-	if ent:GetInfoNum("tf_robot",0) != 1 or ent:IsBot() and GetConVar("tf_bots_are_robots"):GetBool() then
 	ent:Speak("TLK_PLAYER_EXPRESSION", true)
 	if ((inflictor:GetClass()=="tf_entityflame" or inflictor:GetClass()=="entityflame") and (!ent.NextSpeak or CurTime()>ent.NextSpeak)) then
 		if (!ent:IsMiniBoss()) then
@@ -722,7 +724,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		umsg.End()
 	elseif dmginfo:IsFallDamage() and !ent:IsMiniBoss() then 
 		ent:Speak("TLK_PLAYER_ATTACKER_PAIN")
-	end
 	end
 end
 

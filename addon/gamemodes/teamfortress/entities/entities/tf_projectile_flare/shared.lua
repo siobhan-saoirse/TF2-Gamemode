@@ -117,6 +117,9 @@ function ENT:Think()
 	else
 		self:SetAngles(self:GetVelocity():Angle())
 	end
+	if SERVER and not IsValid(self:GetOwner()) then
+		self:Remove()
+	end
 	self:NextThink(CurTime())
 	return true
 end

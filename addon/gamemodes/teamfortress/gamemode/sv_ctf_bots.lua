@@ -601,14 +601,15 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				if (v:IsPlayer() and v:IsBot() and v:EntIndex() != bot:EntIndex()) then
 					if (v.TFBot and (v:GetPlayerClass() == "medic") and v:IsFriendly(bot)) then
 						if (!IsValid(v.TargetEnt)) then
-							if (bot:Health() < bot:GetMaxHealth() - 1) then
+							if (bot:Health() < bot:GetMaxHealth()) then
 								v.TargetEnt = bot
+								v:SelectWeapon(v:GetWeapons()[2])
 							end
 						end
 					end
 				end
 			end
-			if math.random(1,200) == 1  and !string.find(bot:GetModel(),"/bot_") then
+			if math.random(1,500) == 1  and !string.find(bot:GetModel(),"/bot_") then
 				local args = {"TLK_PLAYER_MEDIC"}
 				if bot:Speak(args[1]) then
 					bot:DoAnimationEvent(ACT_MP_GESTURE_VC_HANDMOUTH, true)
@@ -924,7 +925,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			end
 		end
 			
-		if (bot:GetNWBool("Taunting",false) != true and bot.botPos) then
+		if (bot:GetNWBool("Taunting",false) != true and bot.LastPath) then
 			if (!bot.tooclose) then 
 				mv:SetForwardSpeed(1200)
 			end
@@ -1075,8 +1076,12 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			-- TODO: find a random spot rather than trying to back up into what could just be a wall
 			-- something like controller.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350, radius = 1000})?
 			if distance <= 90000 * bot.TargetEnt:GetModelScale() then
-				if (IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) then
-				
+				if ((IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) or !bot.TargetEnt:IsFriendly(bot)) then   
+					if (IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) then
+					
+					else
+						mv:SetForwardSpeed(0)
+					end
 				else
 					mv:SetForwardSpeed(-1200)
 				end
@@ -1243,9 +1248,6 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			cmd:ClearMovement()
 			cmd:ClearButtons()
 				
-			if (!bot:IsInWorld() or !bot:IsOnGround()) then
-				buttons = buttons + IN_DUCK
-			end
 			if (IsValid(bot.TargetEnt)) then
 				if (bot.TargetEnt:EntIndex() == bot:EntIndex()) then
 					bot.LastPath = nil
@@ -1335,6 +1337,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 										
 										else
 											if (bot:GetActiveWeapon().IsMeleeWeapon and bot.TargetEnt:GetPos():Distance(bot:GetPos()) > 400 * bot:GetModelScale()) then return end
+											if (bot:Team() == TEAM_BLU and string.find(bot:GetModel(),"/bot_") and bot:HasGodMode()) then return end
 											if (bot:GetActiveWeapon().ReloadSingle and !bot:GetActiveWeapon().Reloading) then
 												buttons = buttons + IN_ATTACK
 											elseif (!bot:GetActiveWeapon().ReloadSingle) then

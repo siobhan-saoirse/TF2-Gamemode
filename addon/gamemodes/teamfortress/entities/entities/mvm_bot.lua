@@ -1,7 +1,7 @@
 if SERVER then AddCSLuaFile() end
 
-ENT.Base = "base_nextbot"
-ENT.Type = "nextbot"
+ENT.Base = "base_entity"
+ENT.Type = "anim"
 ENT.PZClass = "scout"
 ENT.Spawnable = false
 ENT.AdminOnly = false
@@ -110,156 +110,157 @@ function ENT:Initialize()
 	self:ResetSequence(self:SelectWeightedSequence(ACT_MP_STAND_MELEE))
 	self:SetSolid(SOLID_NONE)
 	self:SetModelScale(1)
-	self:SetFOV(90)
+	--self:SetFOV(90)
 	self.bots = {}
 	self.infected = {}
-	
-    local npc = LeadBot_S_Add_Zombie(1,self.PZClass,self:GetPos(),self)
-    if (!IsValid(npc)) then 
-        ErrorNoHalt("The bot could not spawn because you are in singleplayer!") 
-        return 
-    end
-    self:SetModel(npc:GetModel())
-	self:ResetSequence(self:SelectWeightedSequence(ACT_MP_STAND_MELEE))
-	npc:SetNWString("PreferredIcon",self.PreferredIcon)
-	timer.Simple(0.3, function()
-	
-		npc:SetSkin(1)
-		timer.Simple(0.5, function()
+	if SERVER then
+		local npc = LeadBot_S_Add_Zombie(1,self.PZClass,self:GetPos(),self)
+		if (!IsValid(npc)) then 
+			ErrorNoHalt("The bot could not spawn because you are in singleplayer!") 
+			return 
+		end
+		self:SetModel(npc:GetModel())
+		self:ResetSequence(self:SelectWeightedSequence(ACT_MP_STAND_MELEE))
+		npc:SetNWString("PreferredIcon",self.PreferredIcon)
+		timer.Simple(0.3, function()
 		
-			for k,v in ipairs(ents.FindByClass("item_teamflag_mvm")) do
-				if (!IsValid(v.Carrier) and !v.NextReturn and k == 1) then
-					v:Pickup(npc)
-					for _,capturezone in ipairs(ents.FindByClass("func_capturezone")) do
-						npc.botPos = capturezone.Pos
-					end
-					
-				end
-			end
+			npc:SetSkin(1)
+			timer.Simple(0.5, function()
 			
-		end)
-		local class = npc:GetPlayerClass()
-		if (class != "scout" and 
-			class != "soldier" and 
-			class != "pyro" and 
-			class != "demoman" and 
-			class != "heavy" and 
-			class != "engineer" and 
-			class != "medic" and 
-			class != "sniper" and 
-			class != "spy" and 
-			class != "gmodplayer") 
-		then
-			
-			local class = npc.playerclass
-			if (string.find(class,"demoman")) then
-				class = "demo"
-			elseif (string.find(class,"Demoman")) then
-				class = "demo"
-			elseif (string.find(class,"demoknight")) then
-				class = "demo"
-			end
-			if (self.IsBoss) then
-				if (self.PZClass == "wtfdemoman") then
-					
-					npc:SetModel("models/bots/"..class.."/bot_"..class..".mdl")
-					npc:SetModelScale(0.45	)	
-					npc:StopSound("MVM.GiantScoutLoop")
-					npc:StopSound("MVM.GiantSoldierLoop")
-					npc:StopSound("MVM.GiantPyroLoop")
-					npc:StopSound("MVM.GiantDemomanLoop")
-					npc:StopSound("MVM.GiantHeavyLoop")
-					npc:StopSound("MVM.GiantWTFDemomanLoop")
-					npc:EmitSound("MVM.GiantWTFDemomanLoop")
-					
-				else
-					
-					if (npc:GetPlayerClass() != "sentrybuster") then
-						if (npc:GetPlayerClass() == "engineer" or npc:GetPlayerClass() == "medic" or npc:GetPlayerClass() == "giantmedic" or npc:GetPlayerClass() == "sniper" or npc:GetPlayerClass() == "spy") then
-							npc:SetModel("models/bots/"..class.."/bot_"..class..".mdl")
-							npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.7, 0.7, 0.7))
-						else
-							npc:SetModel("models/bots/"..class.."_boss/bot_"..class.."_boss.mdl")
+				for k,v in ipairs(ents.FindByClass("item_teamflag_mvm")) do
+					if (!IsValid(v.Carrier) and !v.NextReturn and k == 1) then
+						v:Pickup(npc)
+						for _,capturezone in ipairs(ents.FindByClass("func_capturezone")) do
+							npc.botPos = capturezone.Pos
 						end
-					else
-						npc:SetModel("models/bots/demo/bot_sentry_buster.mdl")
+						
 					end
-					if (self.PZClass == "captain_punch") then
-						npc:SetModelScale(1.9)	
-					else
-						npc:SetModelScale(1.75)	
-					end
-					npc:StopSound("MVM.GiantScoutLoop")
-					npc:StopSound("MVM.GiantSoldierLoop")
-					npc:StopSound("MVM.GiantPyroLoop")
-					npc:StopSound("MVM.GiantDemomanLoop")
-					npc:StopSound("MVM.GiantHeavyLoop")
-					timer.Simple(0.2, function()
-					
-						if (npc.playerclass == "Scout") then
-							npc:EmitSound("MVM.GiantScoutLoop")
-						elseif (npc.playerclass == "Soldier") then
-							npc:EmitSound("MVM.GiantSoldierLoop")
-						elseif (npc.playerclass == "Pyro") then
-							npc:EmitSound("MVM.GiantPyroLoop")
-						elseif (npc.playerclass == "Demoman") then
-							npc:EmitSound("MVM.GiantDemomanLoop")
-						elseif (npc.playerclass == "Heavy") then
-							npc:EmitSound("MVM.GiantHeavyLoop")
-						end	
-					end)
 				end
 				
-			else
-				npc:SetModel("models/bots/"..class.."/bot_"..class..".mdl")
-				if (npc:GetPlayerClass() == "bowman_rapid_fire") then
-					npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.7, 0.7, 0.7))
-				elseif (npc:GetPlayerClass() == "scout_shortstop") then
-					npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.75, 0.75, 0.75))
-				end
-			end	
-		else
+			end)
 			local class = npc:GetPlayerClass()
-			if (string.find(class,"demoman")) then
-				class = "demo"
-			elseif (string.find(class,"Demoman")) then
-				class = "demo"
-			elseif (string.find(class,"demoknight")) then
-				class = "demo"
-			end
-			if (self.IsBoss) then
-				if (npc:GetPlayerClass() == "engineer" or npc:GetPlayerClass() == "medic" or npc:GetPlayerClass() == "giantmedic" or npc:GetPlayerClass() == "sniper" or npc:GetPlayerClass() == "spy") then
-					npc:SetModel("models/bots/"..class.."/bot_"..class..".mdl")
-					npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.7, 0.7, 0.7))
+			if (class != "scout" and 
+				class != "soldier" and 
+				class != "pyro" and 
+				class != "demoman" and 
+				class != "heavy" and 
+				class != "engineer" and 
+				class != "medic" and 
+				class != "sniper" and 
+				class != "spy" and 
+				class != "gmodplayer") 
+			then
+				
+				local class = npc.playerclass
+				if (string.find(class,"demoman")) then
+					class = "demo"
+				elseif (string.find(class,"Demoman")) then
+					class = "demo"
+				elseif (string.find(class,"demoknight")) then
+					class = "demo"
+				end
+				if (self.IsBoss) then
+					if (self.PZClass == "wtfdemoman") then
+						
+						npc:SetModel("models/bots/"..class.."/bot_"..class..".mdl")
+						npc:SetModelScale(0.45	)	
+						npc:StopSound("MVM.GiantScoutLoop")
+						npc:StopSound("MVM.GiantSoldierLoop")
+						npc:StopSound("MVM.GiantPyroLoop")
+						npc:StopSound("MVM.GiantDemomanLoop")
+						npc:StopSound("MVM.GiantHeavyLoop")
+						npc:StopSound("MVM.GiantWTFDemomanLoop")
+						npc:EmitSound("MVM.GiantWTFDemomanLoop")
+						
+					else
+						
+						if (npc:GetPlayerClass() != "sentrybuster") then
+							if (npc:GetPlayerClass() == "engineer" or npc:GetPlayerClass() == "medic" or npc:GetPlayerClass() == "giantmedic" or npc:GetPlayerClass() == "sniper" or npc:GetPlayerClass() == "spy") then
+								npc:SetModel("models/bots/"..class.."/bot_"..class..".mdl")
+								npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.7, 0.7, 0.7))
+							else
+								npc:SetModel("models/bots/"..class.."_boss/bot_"..class.."_boss.mdl")
+							end
+						else
+							npc:SetModel("models/bots/demo/bot_sentry_buster.mdl")
+						end
+						if (self.PZClass == "captain_punch") then
+							npc:SetModelScale(1.9)	
+						else
+							npc:SetModelScale(1.75)	
+						end
+						npc:StopSound("MVM.GiantScoutLoop")
+						npc:StopSound("MVM.GiantSoldierLoop")
+						npc:StopSound("MVM.GiantPyroLoop")
+						npc:StopSound("MVM.GiantDemomanLoop")
+						npc:StopSound("MVM.GiantHeavyLoop")
+						timer.Simple(0.2, function()
+						
+							if (npc.playerclass == "Scout") then
+								npc:EmitSound("MVM.GiantScoutLoop")
+							elseif (npc.playerclass == "Soldier") then
+								npc:EmitSound("MVM.GiantSoldierLoop")
+							elseif (npc.playerclass == "Pyro") then
+								npc:EmitSound("MVM.GiantPyroLoop")
+							elseif (npc.playerclass == "Demoman") then
+								npc:EmitSound("MVM.GiantDemomanLoop")
+							elseif (npc.playerclass == "Heavy") then
+								npc:EmitSound("MVM.GiantHeavyLoop")
+							end	
+						end)
+					end
+					
 				else
-					npc:SetModel("models/bots/"..class.."_boss/bot_"..class.."_boss.mdl")
-				end
-				npc:SetModelScale(1.75)
+					npc:SetModel("models/bots/"..class.."/bot_"..class..".mdl")
+					if (npc:GetPlayerClass() == "bowman_rapid_fire") then
+						npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.7, 0.7, 0.7))
+					elseif (npc:GetPlayerClass() == "scout_shortstop") then
+						npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.75, 0.75, 0.75))
+					end
+				end	
 			else
-				npc:SetModel("models/bots/"..class.."/bot_"..class..".mdl")
-				if (npc:GetPlayerClass() == "bowman_rapid_fire") then
-					npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.7, 0.7, 0.7))
-				elseif (npc:GetPlayerClass() == "scout_shortstop") then
-					npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.75, 0.75, 0.75))
+				local class = npc:GetPlayerClass()
+				if (string.find(class,"demoman")) then
+					class = "demo"
+				elseif (string.find(class,"Demoman")) then
+					class = "demo"
+				elseif (string.find(class,"demoknight")) then
+					class = "demo"
 				end
-			end		
-			
-		end
-	end)
-	self:SetNoDraw(true)
-	self.Bot = npc
-	timer.Simple(0.1, function()
-		if (self.Items and !table.IsEmpty(self.Items)) then
-			npc:StripWeapons() 
-			for k,v in ipairs(self.Items) do
-				npc:EquipInLoadout(v)
-				timer.Simple(0.1, function()
-					local wep = npc:GetWeapons()[1] or npc:GetWeapons()[2] or npc:GetWeapons()[3]
-					npc:SelectWeapon(wep) 
-				end)
+				if (self.IsBoss) then
+					if (npc:GetPlayerClass() == "engineer" or npc:GetPlayerClass() == "medic" or npc:GetPlayerClass() == "giantmedic" or npc:GetPlayerClass() == "sniper" or npc:GetPlayerClass() == "spy") then
+						npc:SetModel("models/bots/"..class.."/bot_"..class..".mdl")
+						npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.7, 0.7, 0.7))
+					else
+						npc:SetModel("models/bots/"..class.."_boss/bot_"..class.."_boss.mdl")
+					end
+					npc:SetModelScale(1.75)
+				else
+					npc:SetModel("models/bots/"..class.."/bot_"..class..".mdl")
+					if (npc:GetPlayerClass() == "bowman_rapid_fire") then
+						npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.7, 0.7, 0.7))
+					elseif (npc:GetPlayerClass() == "scout_shortstop") then
+						npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.75, 0.75, 0.75))
+					end
+				end		
+				
 			end
-		end
-	end)
+		end)
+		self.Bot = npc
+		timer.Simple(0.1, function()
+			if (self.Items and !table.IsEmpty(self.Items)) then
+				npc:StripWeapons() 
+				for k,v in ipairs(self.Items) do
+					npc:EquipInLoadout(v)
+					timer.Simple(0.1, function()
+						local wep = npc:GetWeapons()[1] or npc:GetWeapons()[2] or npc:GetWeapons()[3]
+						npc:SelectWeapon(wep) 
+					end)
+				end
+			end
+		end)
+	end	
+	self:SetNoDraw(true)
 end
 
 function ENT:SpawnFunction( ply, tr, ClassName )
@@ -277,15 +278,24 @@ function ENT:SpawnFunction( ply, tr, ClassName )
 
 end
 
-function ENT:RunBehaviour()
-	while ( true ) do
-		coroutine.yield()
-	end
+function ENT:Think()
+	if SERVER then
+		for k,v in ipairs(team.GetPlayers(TEAM_BLU)) do
+			if (v:EntIndex() == self.Bot:EntIndex() and !v:Alive() and !self.Removing) then
+				timer.Simple(0.2, function()
+					self:Remove()
+				end)
+				self.Removing = true
+			end
+		end
+	end 
+	self:NextThink(CurTime())
+	return true
 end
 
 function ENT:OnRemove()
 	if SERVER then
-		self.Bot:Kick()
+		self.Bot:Kick("Removed by creator")
 	end
 end
 function ENT:OnInjured()

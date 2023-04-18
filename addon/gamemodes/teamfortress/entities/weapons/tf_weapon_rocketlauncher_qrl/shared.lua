@@ -75,6 +75,10 @@ function SWEP:Deploy()
 	self.VM_RELOAD = ACT_VM_RELOAD_QRL
 	self.VM_RELOAD_START = ACT_VM_RELOAD_START_QRL
 	self.VM_RELOAD_FINISH = ACT_VM_RELOAD_FINISH_QRL
+	if (self.Owner:GetPlayerClass() == "giantchargedsoldier") then
+		self.Primary.Delay = self.Primary.Delay * 0.2
+		self.ReloadTimeMultiplier = 0.2
+	end
 end
 
 function SWEP:ShootProjectile()

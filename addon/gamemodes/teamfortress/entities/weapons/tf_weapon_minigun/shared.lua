@@ -415,8 +415,8 @@ function SWEP:Think()
 	if SERVER then
 		if self.Spinning then
 			if !self.Owner:IsMiniBoss() then
-				self.Owner:SetClassSpeed(3 * 37 * (self.DeployMoveSpeedMultiplier or 1))
-				self.Owner:SetCrouchedWalkSpeed(0)
+			self.Owner:SetClassSpeed(3 * 37 * (self.DeployMoveSpeedMultiplier or 1))
+			self.Owner:SetCrouchedWalkSpeed(0)
 			end
 		else
 			if self.Owner:GetInfoNum("tf_giant_robot",0) != 1 then

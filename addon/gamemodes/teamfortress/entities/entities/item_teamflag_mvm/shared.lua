@@ -312,7 +312,7 @@ function ENT:Pickup(ply)
 				ply:TFTaunt(tostring(ply:GetActiveWeapon():GetSlot() + 1))
 			end
 			timer.Create("CarrierGetsHealed", 5.0, 0, function()
-				ply:SetArmor( 50 )
+				--ply:SetArmor( 50 )
 			end)
 		
 		end)
