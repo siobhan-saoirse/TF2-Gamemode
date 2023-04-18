@@ -558,7 +558,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	else
 	
 		if (string.find(ent:GetModel(),"/bot_") and ent:IsPlayer() and ent.TFBot and ent:Team() == TEAM_BLU and attacker:GetPlayerClass() == "gmodplayer") then
-			dmginfo:ScaleDamage(1.75)
+			dmginfo:ScaleDamage(2.5)
 		else
 			dmginfo:ScaleDamage(1)
 		end

@@ -157,22 +157,33 @@ local function UpgradePlayerIfBot(self)
 			for _,currentweapon in ipairs(ent:GetWeapons()) do
 				if (IsValid(currentweapon)) then
 					if (currentweapon.Primary and currentweapon.Secondary and currentweapon.ReloadTime) then
-						currentweapon.Primary.OldDelay          = currentweapon.Primary.Delay
-						currentweapon.Secondary.OldDelay          = currentweapon.Secondary.Delay 
+						if (!currentweapon.Primary.OldDelay and !currentweapon.Secondary.OldDelay and !currentweapon.OldReloadTime) then
+							currentweapon.Primary.OldDelay          = currentweapon.Primary.Delay
+							currentweapon.Secondary.OldDelay          = currentweapon.Secondary.Delay 
+							currentweapon.OldReloadTime          = currentweapon.ReloadTime
+						end
 						currentweapon.Primary.FastDelay          = currentweapon.Primary.OldDelay * 0.6 
 						currentweapon.Secondary.FastDelay          = currentweapon.Secondary.OldDelay * 0.6
 						currentweapon.Primary.Delay          = currentweapon.Primary.FastDelay
 						currentweapon.Secondary.Delay          = currentweapon.Secondary.FastDelay
-						currentweapon.FastReloadTime          = currentweapon.ReloadTime * 0.4
-						if (currentweapon.BaseDamage and !string.find(currentweapon:GetClass(),"minigun") and !string.find(currentweapon:GetClass(),"shotgun") and !string.find(currentweapon:GetClass(),"pistol") and !string.find(currentweapon:GetClass(),"smg") and !string.find(currentweapon:GetClass(),"revolver") and !string.find(currentweapon:GetClass(),"rocketlauncher") and !currentweapon.IsMeleeWeapon) then
-							currentweapon.ProjectileDamageMultiplier = 2.0
-							currentweapon.OldBaseDamage = currentweapon.BaseDamage
-							currentweapon.BaseDamage = currentweapon.OldBaseDamage * 2.0
+						currentweapon.FastReloadTime          = currentweapon.OldReloadTime * 0.4
+						if (currentweapon.BaseDamage) then
+							if (!currentweapon.OldBaseDamage) then
+								currentweapon.ProjectileDamageMultiplier = 2.0
+								currentweapon.OldBaseDamage = currentweapon.BaseDamage
+								currentweapon.BaseDamage = currentweapon.OldBaseDamage * 2.0
+							end
 						end
 						if (currentweapon.ReloadStartTime) then
-							currentweapon.FastReloadStartTime          = currentweapon.ReloadStartTime * 0.6
+							if (!currentweapon.FastReloadStartTime) then
+								currentweapon.FastReloadStartTime          = currentweapon.ReloadStartTime * 0.6
+							end
 						elseif (currentweapon.Primary.ClipSize) then
-							currentweapon.Primary.ClipSize          = currentweapon.Primary.ClipSize * 3.0
+							if (!currentweapon.Primary.OldClipSize) then
+								currentweapon.Primary.OldClipSize          = currentweapon.Primary.ClipSize
+								currentweapon.Primary.ClipSize          = currentweapon.Primary.OldClipSize * 3.0
+							end
+							currentweapon:SetClip1(currentweapon.Primary.ClipSize)
 						end
 					end
 				end
