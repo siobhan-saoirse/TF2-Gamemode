@@ -17,6 +17,27 @@ end
 function ENT:StartTouch(ent)
 	if ent:IsPlayer() and ent:Team() == TEAM_RED then
 		self.Players[ent] = -1
+		if ent:GetPlayerClass() == "scout" then
+			ent:SetArmor(2000)
+		elseif ent:GetPlayerClass() == "soldier" then
+			ent:SetArmor(2950)
+		elseif ent:GetPlayerClass() == "gmodplayer" then
+			ent:SetArmor(2950)
+		elseif ent:GetPlayerClass() == "pyro" then
+			ent:SetArmor(2220)
+		elseif ent:GetPlayerClass() == "demoman" then
+			ent:SetArmor(2220)
+		elseif ent:GetPlayerClass() == "heavy" then
+			ent:SetArmor(2320)
+		elseif ent:GetPlayerClass() == "engineer" then
+			ent:SetArmor(2420)
+		elseif ent:GetPlayerClass() == "medic" then
+			ent:SetArmor(2620)
+		elseif ent:GetPlayerClass() == "sniper" then
+			ent:SetArmor(2420)
+		elseif ent:GetPlayerClass() == "spy" then
+			ent:SetArmor(2920)
+		end
 		for _,currentweapon in ipairs(ent:GetWeapons()) do
 			if (IsValid(currentweapon)) then
 				if (currentweapon.Primary and currentweapon.Secondary and currentweapon.ReloadTime) then

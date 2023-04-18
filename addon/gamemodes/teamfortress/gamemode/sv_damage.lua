@@ -477,6 +477,31 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		if (IsValid(ent:GetEnemy())) then
 			dmginfo:SetAttacker(ent:GetEnemy())
 		end
+		
+				
+		if ent:GetClass()=="npc_zombie" or ent:GetClass()=="npc_zombine" then
+			-- For some reason, zombies don't immediately perform the "walk on fire" animation, so we'll just do it manually here
+			if (ent:GetActivity() == ACT_IDLE) then
+						
+				ent:SetActivity(ACT_IDLE_ON_FIRE)
+							
+			else
+						
+				ent:SetMovementActivity(ACT_WALK_ON_FIRE)
+							
+			end
+		elseif ent:GetClass()=="npc_fastzombie" then
+			-- For some reason, zombies don't immediately perform the "walk on fire" animation, so we'll just do it manually here
+			if (ent:GetActivity() == ACT_IDLE) then
+						
+				ent:SetActivity(ACT_IDLE_ON_FIRE)
+							
+			end
+		elseif ent:GetClass()=="npc_poisonzombie" then
+			-- For some reason, zombies don't immediately perform the "walk on fire" animation, so we'll just do it manually here
+			
+			ent:SetMovementActivity(ent:GetSequenceActivity(ent:LookupSequence("firewalk")))
+		end
 	elseif inflictor:GetClass()=="entityflame" and ent:IsPlayer() then
 		dmginfo:SetDamageType(DMG_GENERIC)
 	end
@@ -557,7 +582,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		ent.LastDamageWasCrit = true
 	else
 	
-		if (string.find(ent:GetModel(),"/bot_") and ent:IsPlayer() and ent.TFBot and ent:Team() == TEAM_BLU and attacker:GetPlayerClass() == "gmodplayer") then
+		if (string.find(ent:GetModel(),"/bot_") and ent:IsPlayer() and ent.TFBot and ent:Team() == TEAM_BLU and attacker:IsPlayer() and attacker:GetPlayerClass() == "gmodplayer") then
 			dmginfo:ScaleDamage(2.5)
 		else
 			dmginfo:ScaleDamage(1)
@@ -566,11 +591,11 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	if ent:IsTFPlayer() then
 		-- Increased bullet force
 		if dmginfo:IsBulletDamage() then
-			--dmginfo:SetDamageForce(dmginfo:GetDamageForce() * BulletForceMultiplier)
+			dmginfo:SetDamageForce(dmginfo:GetDamageForce() * BulletForceMultiplier)
 		end
 		
 		-- Overexaggerated explosion force
-		if (ent:IsNPC() or ent:IsPlayer()) and ent:ShouldReceiveDamageForce() and dmginfo:IsExplosionDamage() and !string.find(ent:GetModel(),"_boss.mdl") then
+		if (ent:IsTFPlayer()) and ent:ShouldReceiveDamageForce() and dmginfo:IsExplosionDamage() and !string.find(ent:GetModel(),"_boss.mdl") then
 			local force = dmginfo:GetDamageForce() * BlastForceToVelocityMultiplier
 			
 			ent:SetGroundEntity(NULL)
@@ -745,16 +770,16 @@ function GM:IgniteEntity(ent, inf, att, dur)
 		fl.Owner = att
 		ent.FireEntity:Update(fl)
 	else
-		fl = ents.Create("tf_entityflame")
-		fl.Target = ent
-		fl.Inflictor = inf
-		fl.LifeTime = dur
-		fl:SetOwner(att)
-		fl:Spawn()
-		fl:Activate()
-		
-		if not ent:IsTFPlayer() then -- No need to spawn unnecessary entityflames on players
-			ent:Fire("ignite","",0.05) -- Ignite it using the classic method, gamemode hooks like the one below will take care of the rest
+		if not ent:IsTFPlayer() or ent:IsNPC() then -- No need to spawn unnecessary entityflames on players
+			ent:Ignite(dur) -- Ignite it using the classic method, gamemode hooks like the one below will take care of the rest
+		else
+			fl = ents.Create("tf_entityflame")
+			fl.Target = ent
+			fl.Inflictor = inf
+			fl.LifeTime = dur
+			fl:SetOwner(att)
+			fl:Spawn()
+			fl:Activate()
 		end
 	end
 end
@@ -824,11 +849,6 @@ hook.Add("OnEntityCreated", "TFDisableHL2Fire", function(ent)
 				-- Don't kill it, just make it invisible so NPCs like zombies still believe they are on fire
 				ent:EmitSound("General.StopBurning")
 				ent:AddEffects(EF_NODRAW)
-				
-				if p:GetClass()=="npc_zombie" then
-					-- For some reason, zombies don't immediately perform the "walk on fire" animation, so we'll just do it manually here
-					p:SetMovementActivity(ACT_WALK_ON_FIRE)
-				end
 			else
 				ent:Remove()
 			end

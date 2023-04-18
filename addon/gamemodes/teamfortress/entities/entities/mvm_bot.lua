@@ -282,7 +282,7 @@ function ENT:Think()
 	if SERVER then
 		for k,v in ipairs(team.GetPlayers(TEAM_BLU)) do
 			if (v:EntIndex() == self.Bot:EntIndex() and !v:Alive() and !self.Removing) then
-				timer.Simple(0.2, function()
+				timer.Simple(1.5, function()
 					self:Remove()
 				end)
 				self.Removing = true

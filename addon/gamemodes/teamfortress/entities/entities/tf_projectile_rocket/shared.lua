@@ -191,12 +191,12 @@ function ENT:FindTarget()
 end
 
 function ENT:Think()
+	if SERVER and !IsValid(self:GetOwner()) then
+		self:Remove()
+	end
 	if not self.Homing then
 		self:SetAngles(self:GetVelocity():Angle())
 		return
-	end
-	if SERVER and not IsValid(self:GetOwner()) then
-		self:Remove()
 	end
 	if not IsValid(self.Target) or self.Target:Health()<=0 then
 		if (not self.NextTargetSearch or CurTime()>self.NextTargetSearch) then

@@ -96,6 +96,7 @@ function ENT:Initialize()
 	if SERVER then
 		if (string.find(game.GetMap(),"mvm_")) then
 			for k, v in pairs(ents.FindByClass("team_round_timer")) do
+				v.IsSetupPhase = true
 				v:SetAndPauseTimer(v.SetupLength, true)
 			end
 		end
@@ -175,6 +176,16 @@ function ENT:Use( activator, caller )
 							umsg.Start("TF_PlayGlobalSound")
 								umsg.String("Announcer.MVM_Wave_End")
 							umsg.End()
+							
+							for k, v in pairs(ents.FindByClass("team_round_timer")) do
+								v.IsSetupPhase = true
+								v:SetAndPauseTimer(v.SetupLength, true)
+							end
+							for k,v in ipairs(ents.FindByClass("func_door")) do
+								if (v:GetName() == "cave_door") then
+									v:Fire("Close","",0)
+								end
+							end
 							self.WaveStarted = false
 							timer.Stop("WaitUntilAllBotsDead")
 							for k,v in ipairs(ents.FindByClass("item_teamflag")) do
@@ -186,6 +197,7 @@ function ENT:Use( activator, caller )
 		timer.Simple(10, function()
 			for k,v in ipairs(player.GetAll()) do
 				if (v:Team() != TEAM_BLU) then
+				
 					v:Speak("TLK_ROUND_START")
 				end
 			end

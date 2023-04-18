@@ -425,10 +425,8 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 				timer.Simple(0.1, function()
 					local oldclass = bot:GetPlayerClass()
 					
-					if (!bot.IsL4DZombie) then
-						bot:SetPlayerClass(table.Random(classtb)) -- change to different class unrelated to the regular classes
-					end
-					timer.Simple(0.1, function()
+					bot:SetPlayerClass(table.Random(classtb)) -- change to different class unrelated to the regular classes
+					timer.Simple(0.5, function()
 					
 						bot:SetPlayerClass(oldclass)
 						if (bot.IsL4DZombie and !string.find(bot:GetModel(),"/bot_")) then
@@ -656,7 +654,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			bot.ControllerBot.PosGen = bot.botPos
 		end
 
-			if IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 6000 and bot.TargetEnt:Health() > 1 then
+			if IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 25000 and bot.TargetEnt:Health() > 1 and !bot.TargetEnt:HasGodMode() then
 				if (bot:GetPlayerClass() != "tank_l4d") then
 					if (bot:GetNWBool("Taunting",false) == true) then 
 						return 
@@ -666,9 +664,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				local shouldvegoneforthehead = bot.TargetEnt:EyePos()
 				local bone = 1
 				shouldvegoneforthehead = bot.TargetEnt:GetBonePosition(bone)
-				if (!bot.isCarryingIntel) then
-					bot.botPos = bot.TargetEnt:GetPos()
-				end
+				bot.botPos = bot.TargetEnt:GetPos()
 
 				local lerp = 1.2
 				if bot.Difficulty == 0 then
@@ -925,7 +921,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			end
 		end
 			
-		if (bot:GetNWBool("Taunting",false) != true and bot.LastPath) then
+		if (bot:GetNWBool("Taunting",false) != true and bot.ControllerBot.PosGen != nil) then
 			if (!bot.tooclose) then 
 				mv:SetForwardSpeed(1200)
 			end
@@ -938,7 +934,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				
 				for _, intel in pairs(ents.FindByClass("item_teamflag_mvm")) do
 					fintel = intel
-					if (intel.Carrier) then
+					if (IsValid(intel.Carrier)) then
 						if intel.Carrier ~= bot and bot:IsFriendly(intel.Carrier) then
 							targetply = v
 						end
@@ -1019,11 +1015,11 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 						end
 					end
 				end
-			if (string.find(bot:GetModel(),"/bot_") and bot:Team() == TEAM_BLU) then
+			if (string.find(game.GetMap(),"mvm_") and bot:Team() == TEAM_BLU) then
 		
 				for k, v in pairs(team.GetPlayers(TEAM_RED)) do
 					if (!IsValid(bot.TargetEnt)) then
-						if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:GetPos():Distance(bot:GetPos()) < 6000 and v:Visible(bot) and !IsValid(bot.TargetEnt) then
+						if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:Visible(bot) and v:GetPos():Distance(bot:GetPos()) < 6000 then
 							if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
 								local targetpos = v:EyePos() - Vector(0, 0, 10) -- bot eye check, don't start shooting targets just because we barely see their head
 								local trace = util.TraceLine({start = bot:GetShootPos(), endpos = targetpos, filter = function( ent ) return ent == v end})
@@ -1043,17 +1039,15 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 		
 				for k, v in pairs(team.GetPlayers(TEAM_BLU)) do
 					if (!IsValid(bot.TargetEnt)) then
-						if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:GetPos():Distance(bot:GetPos()) < 6000 and v:Visible(bot) and !IsValid(bot.TargetEnt) then
+						if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:GetPos():Distance(bot:GetPos()) < 25000 and !IsValid(bot.TargetEnt) and !v:HasGodMode() then
 							if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
 								local targetpos = v:EyePos() - Vector(0, 0, 10) -- bot eye check, don't start shooting targets just because we barely see their head
 								local trace = util.TraceLine({start = bot:GetShootPos(), endpos = targetpos, filter = function( ent ) return ent == v end})
 			
-								if trace.Entity == v and !trace.Entity:IsFlagSet(FL_NOTARGET) then -- TODO: FOV Check
-									if (!IsValid(bot.TargetEnt)) then
-										if (v:EntIndex() == bot:EntIndex()) then return end
-										if (v:EntIndex() == bot.ControllerBot:EntIndex()) then return end
-										bot.TargetEnt = v
-									end
+								if (!IsValid(bot.TargetEnt)) then
+									if (v:EntIndex() == bot:EntIndex()) then return end
+									if (v:EntIndex() == bot.ControllerBot:EntIndex()) then return end
+									bot.TargetEnt = v
 								end
 							end 
 						end
@@ -1070,7 +1064,9 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			
 			-- move to our target
 			local distance = bot.TargetEnt:GetPos():DistToSqr(bot:GetPos())
-			controller.PosGen = bot.TargetEnt:GetPos()
+			if (!bot.isCarryingIntel) then
+				bot.botPos = bot.TargetEnt:GetPos()
+			end
 
 			-- back up if the target is really close
 			-- TODO: find a random spot rather than trying to back up into what could just be a wall
@@ -1338,6 +1334,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 										else
 											if (bot:GetActiveWeapon().IsMeleeWeapon and bot.TargetEnt:GetPos():Distance(bot:GetPos()) > 400 * bot:GetModelScale()) then return end
 											if (bot:Team() == TEAM_BLU and string.find(bot:GetModel(),"/bot_") and bot:HasGodMode()) then return end
+											if (bot.TargetEnt:Team() == TEAM_BLU and string.find(bot.TargetEnt:GetModel(),"/bot_") and bot.TargetEnt:HasGodMode()) then return end
 											if (bot:GetActiveWeapon().ReloadSingle and !bot:GetActiveWeapon().Reloading) then
 												buttons = buttons + IN_ATTACK
 											elseif (!bot:GetActiveWeapon().ReloadSingle) then

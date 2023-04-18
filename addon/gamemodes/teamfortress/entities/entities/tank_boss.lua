@@ -17,11 +17,9 @@ PrecacheParticleSystem( "halloween_boss_axe_hit_world" );
 PrecacheParticleSystem( "halloween_boss_injured" );
 PrecacheParticleSystem( "halloween_boss_death" );
 PrecacheParticleSystem( "halloween_boss_foot_impact" );
-PrecacheParticleSystem( "halloween_boss_eye_glow" );
-ENT.Type 			= "nextbot"
-ENT.Base 			= "base_nextbot"
+PrecacheParticleSystem( "halloween_boss_eye_glow" ); 
+ENT.Base 			= "base_nextbot" 
 ENT.Spawnable		= false
-ENT.Model = "models/bots/boss_bot/boss_tank.mdl"
 ENT.AttackDelay = 50
 ENT.AttackDamage = 30
 ENT.AttackRange = 2500
@@ -34,7 +32,7 @@ function ENT:Initialize()
 		killicon.Add( "headtaker", "backpack/weapons/c_models/c_headtaker/c_headtaker", Color( 255, 255, 255, 255 ) )
 	
 	end
-	self:SetModel( self.Model )
+	self:SetModel( "models/bots/boss_bot/boss_tank.mdl" )
 	self:AddFlags(FL_OBJECT)
 	if SERVER then
 		local axe = ents.Create("gmod_button")
@@ -61,49 +59,25 @@ function ENT:Initialize()
 		axe3:AddEffects(bit.bor(EF_BONEMERGE,EF_BONEMERGE_FASTCULL))
 	end
 	local seq = "spawn"
-	timer.Simple(0.1, function()
-		self.Ready = true
-		self:EmitSound("Building_Sentrygun.Built")
-		if SERVER then
-			self:EmitSound("MVM.TankEngineLoop")
-			self:EmitSound("MVM.TankStart")
-			timer.Create("TankPing"..self:EntIndex(), 5, 0, function()
-				self:EmitSound("MVM.TankPing")
-			end)
-		end
-	end)
+	if SERVER then
+		self:EmitSound("MVM.TankEngineLoop")
+		self:EmitSound("MVM.TankStart")
+		timer.Create("TankPing"..self:EntIndex(), 5, 0, function()
+			self:EmitSound("MVM.TankPing")
+		end)
+	end
 	self.Ready = false
 	self.LoseTargetDist	= 5400	-- How far the enemy has to be before we lose them
 	self.SearchRadius 	= 4000	-- How far to search for enemies
 	self:SetHealth(30000)
 	self:SetSolid(SOLID_BBOX) 
 	self:SetCollisionBounds(Vector(-100,-100,0),Vector(100,100,140))
-	self:SetCollisionGroup(COLLISION_GROUP_NPC)
-	self:SetCustomCollisionCheck(true)
 	self:ResetSequence("movement")
 	
-	umsg.Start("TF_PlayGlobalSound")
-		umsg.String("Announcer.MVM_Tank_Alert_Spawn")
-	umsg.End()
-	timer.Simple(0.1, function()
-	
-		for _,track in ipairs(ents.FindByClass("path_track")) do 	
-			if (track:GetName() == "boss_path_1")  then
-				
-				for _,track2 in ipairs(ents.FindByClass("path_track")) do 	
-					if (track2:GetName() == track:GetKeyValues()["target"]) then
-						for _,track3 in ipairs(ents.FindByClass("path_track")) do 	
-							if (track3:GetName() == track2:GetKeyValues()["target"]) then
-								self:SetPos(track3:GetPos())
-							end
-						end
-					end
-				end
-			end
-		end
-	
-	end)
 	if SERVER then
+		umsg.Start("TF_PlayGlobalSound")
+			umsg.String("Announcer.MVM_Tank_Alert_Spawn")
+		umsg.End() 
 		ParticleEffectAttach( "smoke_train", PATTACH_POINT_FOLLOW, self, self:LookupAttachment("smoke_attachment") );
 		self:SetBloodColor(DONT_BLEED)
 	end
@@ -365,6 +339,13 @@ function ENT:OnKilled( dmginfo )
 	ParticleEffect("fireSmoke_Collumn_mvmAcres_sm", self:GetPos() + Vector(-50,-50,25), self:GetAngles())
 	ParticleEffect("fireSmoke_Collumn_mvmAcres_sm", self:GetPos() + Vector(-50,50,25), self:GetAngles())
 	ParticleEffect("fireSmoke_Collumn_mvmAcres_sm", self:GetPos() + Vector(50,-50,25), self:GetAngles())
+	if SERVER then
+	
+		umsg.Start("TF_PlayGlobalSound")
+			umsg.String("Announcer.MVM_General_Destruction")
+		umsg.End() 
+		
+	end
 	timer.Simple(0.1, function()
 				
 		if (!IsValid(self)) then return end

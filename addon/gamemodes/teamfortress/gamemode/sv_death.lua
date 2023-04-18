@@ -1470,7 +1470,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	local shouldgib = false
 	
 	ply:Speak("PlayerDeath") 
-	if (string.find(ply:GetModel(),"bot_") and (string.find(ply:GetModel(),"_boss") or ply:GetModelScale() > 1.0)) then
+	if ((string.find(ply:GetModel(),"bot_") and ply:GetModelScale() > 1.0) or ply:IsMiniBoss()) then
 		ply:GibBreakServer( dmginfo:GetDamageForce() )
 		if (string.find(ply:GetModel(),"_boss")) then
 			for k,v in ipairs(player.GetAll()) do

@@ -54,15 +54,21 @@ function ENT:RestartTimer(endsetup)
 		else
 			self:SetAndResumeTimer(self.SetupLength, true)
 		end
-		self:TriggerOutput("OnSetupStart")
+		self:TriggerOutput("OnSetupStart",self)
 	else
 		
 		self.IsSetupPhase = false
 		timer.Simple(1, function()
-			if (!self.WaitingForPlayers) then
+			if (string.find(game.GetMap(),"mvm")) then
 				umsg.Start("TF_PlayGlobalSound")
-					umsg.String("Ambient.Siren")
+					umsg.String("MVM.Siren")
 				umsg.End()
+			els
+				if (!self.WaitingForPlayers) thene
+					umsg.Start("TF_PlayGlobalSound")
+						umsg.String("Ambient.Siren")
+					umsg.End()
+				end
 			end
 			if self.StartPaused then
 				self:SetAndPauseTimer(self.TimerLength, true)
@@ -72,12 +78,14 @@ function ENT:RestartTimer(endsetup)
 			if (string.find(game.GetMap(),"mvm")) then
 				self.StartPaused = true
 				self:SetAndPauseTimer(0,true)
+				for k,v in ipairs(ents.FindByClass("func_door")) do
+					if (v:GetName() == "cave_door") then
+						v:Fire("Open","",0)
+					end
+				end
 			end
-			self:TriggerOutput("OnRoundStart")
-			if endsetup then
-				self:TriggerOutput("OnSetupFinished")
-			end
-
+			self:TriggerOutput("OnRoundStart",self)
+			self:TriggerOutput("OnSetupFinished",self)
 		end)
 	end
 end
@@ -97,22 +105,32 @@ function ENT:RestartTimer2(endsetup)
 	else
 		
 		self.IsSetupPhase = false
-		umsg.Start("TF_PlayGlobalSound")
-			umsg.String("Ambient.Siren")
-		umsg.End()
+		if (string.find(game.GetMap(),"mvm")) then
+			umsg.Start("TF_PlayGlobalSound")
+				umsg.String("MVM.Siren")
+			umsg.End()
+		else
+			umsg.Start("TF_PlayGlobalSound")
+				umsg.String("Ambient.Siren")
+			umsg.End()
+		end
 		if self.StartPaused then
 			self:SetAndPauseTimer(self.TimerLength, true)
 		else
 			self:SetAndResumeTimer2(self.TimerLength, true)
 		end
-		if (string.find(game.GetMap(),"mvm")) then
-			self.StartPaused = true
-			self:SetAndPauseTimer(0,true)
-		end
-		self:TriggerOutput("OnRoundStart")
-		if endsetup then
-			self:TriggerOutput("OnSetupFinished")
-		end
+			if (string.find(game.GetMap(),"mvm")) then
+				self.StartPaused = true
+				self:SetAndPauseTimer(0,true)
+				for k,v in ipairs(ents.FindByClass("func_door")) do
+					if (v:GetName() == "cave_door") then
+						v:Fire("Open","",0)
+					end
+				end
+			end
+			self:TriggerOutput("OnRoundStart",self)
+			self:TriggerOutput("OnSetupFinished",self)
+		
 	end
 end
 
@@ -192,7 +210,9 @@ function ENT:PauseTimer()
 end
 
 function ENT:KeyValue(key,value)
-	self:StoreOutput(key, value)
+	if ( string.Left( key, 2 ) == "On" ) then
+		self:StoreOutput( key, value )
+	end
 	
 	key = string.lower(key)
 	

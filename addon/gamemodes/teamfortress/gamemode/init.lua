@@ -460,38 +460,6 @@ hook.Add("PlayerDeath", "PlayerRobotDeath", function( ply, attacker, inflictor)
 	if not ply:IsHL2() and ply:GetInfoNum("tf_sentrybuster", 0) == 1 then
 		ply:EmitSound("MVM.SentryBusterExplode")
 	end
-	if not ply:IsHL2() and ply:GetInfoNum("tf_giant_robot", 0) == 1 then
-		ply:EmitSound( "MVM.GiantCommonExplodes" ) -- Play the footsteps hunter is using
-		ply:PrecacheGibs()
-		ply:GibBreakClient( Vector(math.random(1,4), math.random(1,4), math.random(1,4)) )
-		ply:GetRagdollEntity():Remove()	
-		for k,v in pairs(player.GetAll()) do
-			if not v:IsFriendly(ply) and v:Alive() and not v:IsHL2() then
-				if v:GetPlayerClass() == "heavy" then
-					v:EmitSound("vo/heavy_mvm_giant_robot02.wav", 85, 100, 1, CHAN_REPLACE)
-				elseif v:GetPlayerClass() == "medic" then
-					v:EmitSound("vo/medic_mvm_giant_robot02.wav", 85, 100, 1, CHAN_REPLACE)
-				end
-			end
-		end
-	end
-	if ply:GetPlayerClass() == "giantheavy" and ply:GetPlayerClass() == "giantscout" and  ply:GetPlayerClass() == "superscout" and ply:GetPlayerClass() == "giantdemoman" and ply:GetPlayerClass() == "giantdemoknight" and ply:GetPlayerClass() == "giantsoldier" and ply:GetPlayerClass() == "giantburstfiresoldier" and ply:GetPlayerClass() == "colonelbarrage" and ply:GetPlayerClass() == "giantpyro" and ply:GetPlayerClass() == "giantflarepyro" then
-		ply:EmitSound( "MVM.GiantCommonExplodes" ) -- Play the footsteps hunter is using
-		ply:EmitSound( "MVM.GiantCommonExplodes" ) -- Play the footsteps hunter is using
-
-		ply:PrecacheGibs()
-		ply:GibBreakClient( Vector(math.random(1,4), math.random(1,4), math.random(1,4)) )
-		ply:GetRagdollEntity():Remove()	
-		for k,v in pairs(player.GetAll()) do
-			if not v:IsFriendly(ply) and v:Alive() and not v:IsHL2() then
-				if v:GetPlayerClass() == "heavy" then
-					v:EmitSound("vo/heavy_mvm_giant_robot02.wav", 85, 100, 1, CHAN_REPLACE)
-				elseif v:GetPlayerClass() == "medic" then
-					v:EmitSound("vo/medic_mvm_giant_robot02.wav", 85, 100, 1, CHAN_REPLACE)
-				end
-			end
-		end
-	end
 	if ply:GetPlayerClass() == "giantheavyheater" and ply:GetPlayerClass() == "giantheavyshotgun" and ply:GetPlayerClass() == "giantsoldierrapidfire" and ply:GetPlayerClass() == "giantsoldiercharged" then
 		ply:EmitSound( "MVM.GiantCommonExplodes" ) -- Play the footsteps hunter is using
 		ply:EmitSound( "MVM.GiantCommonExplodes" ) -- Play the footsteps hunter is using
