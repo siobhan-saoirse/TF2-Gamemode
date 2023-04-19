@@ -262,9 +262,9 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 	if (ent.TFBot and ent:GetPlayerClass() != "sentrybuster" and ent:EntIndex() != att:EntIndex() and att:IsTFPlayer() and !att:IsFriendly(ent)) then
 		if (!IsValid(ent.TargetEnt)) then
 			ent.TargetEnt = att 
-				
-			for k,v in ipairs(ents.FindInSphere(ent:GetPos(),6000)) do
-				if (v:IsTFPlayer() and (v:IsFriendly(ent)) and v:EntIndex() != ent:EntIndex()) then
+			if (math.random(1,7) == 1) then
+				for k,v in ipairs(ents.FindInSphere(ent:GetPos(),6000)) do
+					if (v:IsTFPlayer() and (v:IsFriendly(ent)) and v:EntIndex() != ent:EntIndex()) then
 						if (v:IsPlayer()) then
 							if (v:IsBot()) then
 								v.TargetEnt = att
@@ -272,8 +272,9 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 						elseif (v:IsNPC()) then
 							v:SetEnemy(att)
 						end
-				end
-			end	
+					end
+				end	
+			end
 		end
 	end
 	is_normal_damage = true

@@ -112,9 +112,10 @@ if SERVER then
 					local animent = ents.Create( 'base_gmodentity' ) -- The entity used as a reference for the bone positioning
 					animent:SetModel( self:GetModel() )
 					animent:SetModelScale( self:GetModelScale() )
-					animent:SetPos( self:GetPos() + Vector(0,0,10) )
+					animent:SetPos( self:GetPos() )
 					animent:SetAngles( self:GetAngles() )
 					animent:SetNoDraw( false ) -- The ragdoll is the thing getting seen
+					animent:SetParent(self)
 					animent:Spawn()
 										
 					animent:SetSequence( "sentry_buster_preexplode" ) -- If the sequence isn't valid, the sequence length is 0, so the timer takes care of things
@@ -182,7 +183,7 @@ if SERVER then
 				if !self:Alive() then timer.Stop("SentryBusterExplodeOnDeath"..self:EntIndex()) return end
 				if self:GetPlayerClass() != "sentrybuster"	then timer.Stop("SentryBusterExplodeOnDeath"..self:EntIndex()) return end
 				if self:GetPlayerClass() != "sentrybuster"	then return end
-				if self:Health() <= 30 then
+				if self:Health() <= 100 then
 				self:EmitSound("MVM.SentryBusterLoop")
 				self:EmitSound("MVM.SentryBusterSpin")
 				timer.Simple(0.1, function()

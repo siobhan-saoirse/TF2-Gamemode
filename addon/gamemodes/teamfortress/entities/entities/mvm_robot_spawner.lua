@@ -13,7 +13,6 @@ local stock_bots = {
 	"mvm_bot_soldier",
 	"mvm_bot_demoman",
 	"mvm_bot_heavy",
-	"mvm_bot_pyro",
 	"mvm_bot_medic",
 }
 local horde_bots = {
@@ -21,7 +20,6 @@ local horde_bots = {
 	"mvm_bot_soldier",
 	"mvm_bot_demoman",
 	"mvm_bot_heavy",
-	"mvm_bot_pyro",
 	"mvm_bot_demoknight",
 	"mvm_bot_melee_scout",
 	"mvm_bot_melee_scout_sandman",
@@ -208,24 +206,23 @@ function ENT:Use( activator, caller )
 			if SERVER then
 				local count = #ents.FindByClass("obj_sentrygun")
 				for k,v in ipairs(ents.FindByClass("obj_sentrygun")) do
-					if (IsValid(v)) then
+					if (IsValid(v) and k == 1) then
 						local spawn = table.Random(self.spawnsblu) 
 						if (table.Count(self.spawnsblu) == 0) then
 							spawn = self
+						end 
+						local bot = ents.Create("mvm_bot_sentrybuster")
+						if (!IsValid(bot)) then
+							return
 						end
-						for i=1,count do
-							local bot = ents.Create("mvm_bot_sentrybuster")
-							if (!IsValid(bot)) then
-								return
-							end
-							bot:SetPos(spawn:GetPos() + Vector(0,0,45))
-							table.insert(self.bots,bot) 
-							bot:SetOwner(self)
-							bot:Spawn() 
-							bot:EmitSound("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav",70,100)
-							ParticleEffect("teleportedin_blue", bot:GetPos(), bot:GetAngles(), self)
-							print("Creating robot #"..bot:EntIndex())
-						end
+						bot:SetPos(spawn:GetPos() + Vector(0,0,45))
+						table.insert(self.bots,bot) 
+						bot:SetOwner(self)
+						bot:Spawn() 
+						bot:EmitSound("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav",70,100)
+						bot.TargetEnt = v
+						ParticleEffect("teleportedin_blue", bot:GetPos(), bot:GetAngles(), self)
+						print("Creating robot #"..bot:EntIndex())
 					end
 				end
 						

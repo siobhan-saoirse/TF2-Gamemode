@@ -144,7 +144,7 @@ function ENT:Initialize()
 	self:SetCollisionBounds(min, max)
 	self:SetSolid(SOLID_BBOX)
 	
-	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+	self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 	
 	self:SetLocalVelocity(self:GetForward() * self.BaseSpeed)
 	
@@ -345,9 +345,9 @@ end]]
 
 function ENT:Touch(ent)
 	if not ent:IsTrigger() and ent:IsSolid() then	
-		if (ent:IsTFPlayer() and ent:IsFriendly(self:GetOwner()) then
-		
-		else
+		if (ent:IsTFPlayer() and ent:IsFriendly(self:GetOwner())) then
+			self:DoExplosion(ent)
+		else 
 			self:DoExplosion(ent)
 		end
 	end
