@@ -1419,7 +1419,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 									end
 								else 
 									if (IsValid(bot:GetActiveWeapon()) and bot:Visible(bot.TargetEnt) and bot.TargetEnt:Health() > 0) then
-										if (IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging) then
+										if (bot:GetPlayerClass() != "samuraidemo" and IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging) then
 										
 										else
 											if (bot:GetActiveWeapon().IsMeleeWeapon and bot.TargetEnt:GetPos():Distance(bot:GetPos()) > 400 * bot:GetModelScale()) then return end

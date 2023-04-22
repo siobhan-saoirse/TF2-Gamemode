@@ -389,6 +389,8 @@ function meta:SetPlayerClass(class)
 		self.playerclass = "Sniper"
 	elseif (self:GetPlayerClass() == "giantpyro" || self:GetPlayerClass() == "chiefpyro" || self:GetPlayerClass() == "pyro_flare" || self:GetPlayerClass() == "giantflarepyro") then
 		self.playerclass = "Pyro"
+	elseif (self:GetPlayerClass() == "giantengineer") then
+		self.playerclass = "Engineer" 
 	elseif (self:GetPlayerClass() == "giantmedic" || self:GetPlayerClass() == "kritzmedic") then
 		self.playerclass = "Medic"
 	else

@@ -245,8 +245,9 @@ function ENT:Initialize()
 				elseif (string.find(class,"demoknight")) then
 					class = "demo"
 				end
-				if (self.IsBoss and !self.OverrideModelScale) then
-					if (npc:GetPlayerClass() == "engineer" or npc:GetPlayerClass() == "medic" or npc:GetPlayerClass() == "giantmedic" or npc:GetPlayerClass() == "sniper" or npc:GetPlayerClass() == "spy") then
+				if (self.IsBoss and !self.OverrideModelScale) then 
+					if (npc.playerclass == "Engineer" or npc:GetPlayerClass() == "medic" or npc:GetPlayerClass() == "giantmedic" or npc:GetPlayerClass() == "sniper" or npc:GetPlayerClass() == "spy") then
+
 						npc:SetModel("models/bots/"..class.."/bot_"..class..".mdl")
 						npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.7, 0.7, 0.7))
 					else
@@ -260,7 +261,7 @@ function ENT:Initialize()
 						npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.75, 0.75, 0.75))
 					end
 					if (self.IsBoss) then
-						if (npc:GetPlayerClass() == "engineer" or npc:GetPlayerClass() == "medic" or npc:GetPlayerClass() == "giantmedic" or npc:GetPlayerClass() == "sniper" or npc:GetPlayerClass() == "spy") then
+						if (npc:GetPlayerClass() == "engineer" or npc:GetPlayerClass() == "medic" or npc:GetPlayerClass() == "giantengineer" or npc:GetPlayerClass() == "giantmedic" or npc:GetPlayerClass() == "sniper" or npc:GetPlayerClass() == "spy") then
 							npc:SetModel("models/bots/"..class.."/bot_"..class..".mdl")
 							npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.7, 0.7, 0.7))
 						else

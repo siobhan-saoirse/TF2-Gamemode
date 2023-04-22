@@ -1516,7 +1516,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	elseif inflictor.Critical and inflictor:Critical() then -- Critical damage
 		if not inflictor.IsSilentKiller then
 			if ply:GetMaterial() == "models/shadertest/predator" then return end
-			if (!ply:HasDeathFlag(DF_SILENCED)) then
+			if (!ply:HasDeathFlag(DF_SILENCED) and !ply:IsMiniBoss()) then
 				ply:RandomSentence("CritDeath")
 			end
 		end
@@ -1526,7 +1526,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 			if ply:GetPlayerClass() == "engineer" and GetConVar("tf_pyrovision"):GetBool() then
 				ply:Speak("TLK_PLAYER_LAUGH_DEATH")
 			else
-				if (!ply:HasDeathFlag(DF_SILENCED)) then
+				if (!ply:HasDeathFlag(DF_SILENCED) and !ply:IsMiniBoss()) then
 					ply:RandomSentence("MeleeDeath")
 				end
 			end
@@ -1535,7 +1535,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		if not inflictor.IsSilentKiller then
 			if ply:GetMaterial() == "models/shadertest/predator" then return end
 			if not ply:IsHL2() and ply:Team() == TEAM_BLU and string.find(game.GetMap(), "mvm_") then return end
-			if (!ply:HasDeathFlag(DF_SILENCED)) then
+			if (!ply:HasDeathFlag(DF_SILENCED) and !ply:IsMiniBoss()) then
 				ply:RandomSentence("Death")
 			end
 		end

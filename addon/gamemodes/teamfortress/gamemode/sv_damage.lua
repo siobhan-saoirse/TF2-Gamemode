@@ -713,7 +713,10 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	ent:Speak("TLK_PLAYER_EXPRESSION", true)
 	if ((inflictor:GetClass()=="tf_entityflame" or inflictor:GetClass()=="entityflame") and (!ent.NextSpeak or CurTime()>ent.NextSpeak)) then
 		if (!ent:IsMiniBoss()) then
-			ent:Speak("TLK_ONFIRE")
+			if not ent.NextOnFire or CurTime() > ent.NextOnFire then
+				ent:Speak("TLK_ONFIRE")
+				ent.NextOnFire = CurTime() + 5
+			end
 		end
 	end
 	
