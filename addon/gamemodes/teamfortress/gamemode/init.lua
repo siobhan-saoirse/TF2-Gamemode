@@ -2171,11 +2171,15 @@ function GM:PlayerSpawn(ply)
 			ply:EmitSound("MVM.Robot_Engineer_Spawn")
 			
 			umsg.Start("TF_PlayGlobalSound")
-				umsg.String("Announcer.MVM_First_Engineer_Teleport_Spawned	")
+				umsg.String("Announcer.MVM_First_Engineer_Teleport_Spawned")
 			umsg.End()
 		end
 	end)
-	ply:ShouldDropWeapon(true)
+	if (ply:IsHL2()) then
+		ply:ShouldDropWeapon(true)
+	else
+		ply:ShouldDropWeapon(false)
+	end
 	--[[ply:SetNWBool("ShouldDropBurningRagdoll", false)
 	ply:SetNWBool("ShouldDropDecapitatedRagdoll", false)
 	ply:SetNWBool("DeathByHeadshot", false)]]

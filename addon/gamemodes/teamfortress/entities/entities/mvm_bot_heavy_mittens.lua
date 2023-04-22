@@ -8,7 +8,8 @@ ENT.AdminOnly = false
 ENT.IsBoss = false
 ENT.PrintName		= "Heavy Mittens"
 ENT.Category		= "TF2: MVM Bots" 
-ENT.Items = {"Holiday Punch","All-Father","Point and Shoot"}
+ENT.Items = {"Holiday Punch"}
+ENT.OverrideModelScale = 0.65  
 ENT.PreferredIcon = "hud/leaderboard_class_heavy_mittens"
 
 function ENT:CustomOnInitialize(bot)

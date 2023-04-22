@@ -224,13 +224,6 @@ function PANEL:Paint()
 	surface.SetDrawColor(team.GetColor(playerteam))
 	surface.DrawRect(115*Scale, 397*Scale, 465*Scale, 1*Scale)
 	
-	if playerclass and playerclass.CharacterImage and playerclass.CharacterImage[1] then
-		tex = playerclass.CharacterImage[playerteam] or playerclass.CharacterImage[1]
-		surface.SetTexture(tex)
-		surface.SetDrawColor(255,255,255,255)
-		surface.DrawTexturedRect(22*Scale, 350*Scale, 92*Scale, 92*Scale)
-	end 
-	
 	ServerName.text = tf_lang.GetFormatted("#Scoreboard_Server", GetHostName())
 	draw.Text(ServerName)
 	

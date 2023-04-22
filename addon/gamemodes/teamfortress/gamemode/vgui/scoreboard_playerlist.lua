@@ -120,9 +120,12 @@ function PANEL:Paint()
 			surface.SetDrawColor(255, 255, 255, 255)
 		end
 		if self then
-			if self.Avatars then
+			if self.Avatars and !pl:IsBot() then
 				self.Avatars[i]:SetPlayer(pl)
 				self.Avatars[i]:SetVisible(true)
+			else
+				self.Avatars[i]:SetPlayer(pl)
+				self.Avatars[i]:SetVisible(false)
 			end
 		end
 		if d then
@@ -214,7 +217,7 @@ function PANEL:Paint()
 		end
 		
 		if c and c.ScoreboardImage then
-			if (pl:GetNWString("PreferredIcon")) then
+			if (pl:GetNWString("PreferredIcon") != "") then
 
 				local tex
 				if d then
@@ -225,7 +228,7 @@ function PANEL:Paint()
 				if tex then
 					if pl:IsMiniBoss() then
 						surface.SetDrawColor( 255, 0, 0, 255 )
-						surface.DrawRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
+						surface.DrawRect(199*Scale, ypos-7*Scale, 13*Scale, 13*Scale)
 					end
 					surface.SetDrawColor(Colors.White)
 					surface.SetTexture(tex)
@@ -241,12 +244,12 @@ function PANEL:Paint()
 				if tex then
 					if pl:IsMiniBoss() then
 						surface.SetDrawColor( 255, 0, 0, 255 )
-						surface.DrawRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
+						surface.DrawRect(199*Scale, ypos-7*Scale, 13*Scale, 13*Scale)
 					end
 					surface.SetDrawColor(Colors.White)
 					surface.SetTexture(tex)
 					surface.DrawTexturedRect(199*Scale, ypos-7*Scale, 13*Scale, 13*Scale)
-				end
+				end 
 			end
 		end
 		

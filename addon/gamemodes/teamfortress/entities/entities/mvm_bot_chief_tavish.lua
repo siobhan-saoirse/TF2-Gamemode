@@ -10,6 +10,7 @@ ENT.Difficulty = 3
 ENT.PrintName		= "Chief Tavish"
 ENT.Category		= "TF2: MVM Bots"
 ENT.OverrideModelScale = 1.9 
+ENT.PreferredIcon = "hud/leaderboard_class_demoknight_giant"
 
 list.Set( "NPC", "mvm_bot_chief_tavish", {
 	Name = ENT.PrintName,

@@ -225,6 +225,10 @@ function ENT:Initialize()
 					end
 					
 				else
+					if (self.OverrideModelScale) then
+						npc.OverrideModelScale = self.OverrideModelScale
+						npc:SetModelScale(self.OverrideModelScale)	
+					end
 					npc:SetModel("models/bots/"..class.."/bot_"..class..".mdl")
 					if (npc:GetPlayerClass() == "bowman_rapid_fire") then
 						npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.7, 0.7, 0.7))
