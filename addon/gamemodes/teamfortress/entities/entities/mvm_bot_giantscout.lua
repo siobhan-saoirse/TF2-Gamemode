@@ -8,6 +8,7 @@ ENT.AdminOnly = true
 ENT.IsBoss = true
 ENT.PrintName		= "Giant Scout"
 ENT.Category		= "TF2: MVM Bots"
+ENT.PreferredIcon = "hud/leaderboard_class_scout"
 
 list.Set( "NPC", "mvm_bot_giantscout", {
 	Name = ENT.PrintName,

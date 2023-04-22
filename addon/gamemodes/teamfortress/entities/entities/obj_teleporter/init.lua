@@ -57,9 +57,6 @@ function ENT:SetAcceleration(a)
 end
 
 function ENT:OnStartBuilding()
-	if self:GetBuilder():GetClass() == "npc_engineer_mvm" then
-		self.Spawnpoint = true
-	end
 	if self.Entrance == true then
 		self:SetBuildMode(0)
 	elseif self.Exit == true then
@@ -83,18 +80,6 @@ function ENT:PostEnable(laststate)
 		self.SpinSpeed = 0
 		self:SetPlaybackRate(0)
 	end
-	if self.Spawnpoint == true then
-		self:SetLinkedTeleporter(self)
-		self:OnLink(self)
-		self.SpinSpeed = 0
-		self:SetPlaybackRate(0)
-		for k,v in pairs(player.GetAll()) do
-			if !v:IsFriendly(self) then
-				v:SendLua([[surface.PlaySound("vo/announcer_mvm_eng_tele_activated0"..math.random(1,4)..".mp3")]])
-			end
-			v:SendLua([[surface.PlaySound("mvm/mvm_tele_activate.wav")]])
-		end
-	end
 end
 
 function ENT:OnLink(ent)
@@ -111,7 +96,9 @@ function ENT:OnLink(ent)
 end
 
 function ENT:OnUnlink(ent)
-	self:SetAcceleration(-0.003)
+	if (!self.Spawnpoint) then
+		self:SetAcceleration(-0.003)
+	end
 end
 
 function ENT:OnStartUpgrade()
@@ -301,8 +288,26 @@ function ENT:OnThinkActive()
 		self:SetBodygroup(2, 0)
 		self.Model:SetBodygroup(2, 0)
 	end
+	if string.find(game.GetMap(),"mvm_") and self:GetBuilder():Team() == TEAM_BLU then
+		self.Spawnpoint = true
+	end
 	if !IsValid(self:GetLinkedTeleporter()) then
 		self:OnUnlink(self:GetLinkedTeleporter())
+	end
+	
+	if (self.Spawnpoint) then
+	 
+		if (!IsValid(self:GetLinkedTeleporter())) then 
+			self:SetLinkedTeleporter(self)
+			self:OnLink(self)
+			self:SetAcceleration(0.0025)
+			for k,v in pairs(player.GetAll()) do
+				if !v:IsFriendly(self) then
+					v:SendLua([[surface.PlaySound("vo/announcer_mvm_eng_tele_activated0"..math.random(1,4)..".mp3")]])
+				end
+				v:SendLua([[surface.PlaySound("mvm/mvm_tele_activate.wav")]])
+			end
+		end
 	end
 	if self.NextRecharge then
 		local r = math.Clamp(1 - (self.NextRecharge - CurTime()) / self.RechargeTime, 0, 1)

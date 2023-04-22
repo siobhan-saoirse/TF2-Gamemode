@@ -99,45 +99,8 @@ function ENT:StartTouch(ply)
 					for _, player in ipairs(player.GetAll()) do
 						player:SendLua([[LocalPlayer():EmitSound("Announcer.MVM_Bomb_Alert_Deploying")]])
 					end
-					v.Carrier:SetNWBool("Taunting",true)
-					v.Carrier:SetNoDraw(true)
-					
-					v.Carrier:ConCommand("tf_thirdperson")
-					
-					v.Prop2:SetNoDraw(true)	
-					local animent = ents.Create( 'base_gmodentity' ) -- The entity used for the death animation	
-					animent:SetModel(v.Carrier:GetModel()) 
-					animent:SetSkin(v.Carrier:GetSkin())
-					animent:SetPos(v.Carrier:GetPos())
-					animent:SetModelScale(v.Carrier:GetModelScale())
-					animent:SetAngles(v.Carrier:GetAngles())
-					animent:Spawn()
-					animent:Activate()
-	
-					local animent2 = ents.Create( 'base_gmodentity' ) -- The entity used for the death animation	 
-					animent2:SetModel("models/props_td/atom_bomb.mdl") 
-					animent2:SetAngles(v.Carrier:GetAngles())
-					animent2:Spawn()
-					animent2:Activate()
-					animent2:SetParent(animent)
-					animent2:Fire("SetParentAttachment", "flag", 0)
-	
-					animent:SetSolid( SOLID_OBB ) -- This stuff isn't really needed, but just for physics
-					animent:PhysicsInit( SOLID_OBB )
-					animent:SetMoveType( MOVETYPE_NONE )
-					animent:SetCollisionGroup( COLLISION_GROUP_DEBRIS )
-					animent:SetSequence( "primary_deploybomb" )
-					animent:SetPlaybackRate( 1 )
-					animent.AutomaticFrameAdvance = true
-					function animent:Think() -- This makes the animation work
-						self:NextThink( CurTime() )
-						return true
-					end
-	
-					timer.Simple( animent:SequenceDuration( "primary_deploybomb" ), function() -- After the sequence is done, spawn the ragdoll
-						animent:Remove()
-						animent2:Remove()
-					end)
+					v.Carrier:SetNWBool("Taunting",true) 
+					v.Carrier:DoAnimationEvent(v.Carrier:LookupSequence("primary_deploybomb"))
 				end)
 				timer.Simple(3, function()
 					if not v.Carrier:Alive() then v.Carrier:Freeze(false) return end

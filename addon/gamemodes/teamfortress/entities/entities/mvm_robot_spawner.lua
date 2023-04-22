@@ -49,6 +49,7 @@ local unlock_bots = {
 	"mvm_bot_bowman",
 	"mvm_bot_samurai_demo",
 	"mvm_bot_scout_shortstop",
+	"mvm_bot_engineer"
 }
 
 local giant_bots = {
@@ -71,8 +72,7 @@ local giant_bots = {
 	"mvm_bot_bowman_rapid_fire",
 	"mvm_bot_superscout",
 	"mvm_bot_superscoutfan",
-	"mvm_bot_scout_major_league",
-	"tank_boss"
+	"mvm_bot_scout_major_league"
 }
 
 list.Set( "NPC", "mvm_robot_spawner", {
@@ -235,6 +235,8 @@ function ENT:Use( activator, caller )
 						local bottable = table.Random(horde_bots)
 						if (math.random(1,4) == 1) then -- unlocked bots
 							bottable = table.Random(unlock_bots)
+						elseif (math.random(1,20) == 1) then
+							bot = ents.Create(table.Random(giant_bots)) 
 						end
 						local spawn = table.Random(self.spawnsblu) 
 						if (table.Count(self.spawnsblu) == 0) then

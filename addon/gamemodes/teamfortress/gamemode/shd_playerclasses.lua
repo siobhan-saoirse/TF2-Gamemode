@@ -377,9 +377,9 @@ function meta:SetPlayerClass(class)
 	
 	-- Capitalize player class because the talker system wants to :/
 	-- This is used for playing scenes
-	if (self:GetPlayerClass() == "superscout" || self:GetPlayerClass() == "melee_scout" || self:GetPlayerClass() == "melee_scout_expert" || self:GetPlayerClass() == "melee_scout_sandman" || self:GetPlayerClass() == "giantscout" || self:GetPlayerClass() == "scoutfan" || self:GetPlayerClass() == "scout_shortstop" || self:GetPlayerClass() == "superscoutfan" || self:GetPlayerClass() == "bonk_scout") then
+	if (self:GetPlayerClass() == "superscout" || self:GetPlayerClass() == "chiefscout" || self:GetPlayerClass() == "melee_scout" || self:GetPlayerClass() == "melee_scout_expert" || self:GetPlayerClass() == "melee_scout_sandman" || self:GetPlayerClass() == "giantscout" || self:GetPlayerClass() == "scoutfan" || self:GetPlayerClass() == "scout_shortstop" || self:GetPlayerClass() == "superscoutfan" || self:GetPlayerClass() == "bonk_scout") then
 		self.playerclass = "Scout"
-	elseif (self:GetPlayerClass() == "demoknight" || self:GetPlayerClass() == "samuraidemo" || self:GetPlayerClass() == "sentrybuster" || self:GetPlayerClass() == "giantdemoman" || self:GetPlayerClass() == "wtfdemoman" || self:GetPlayerClass() == "giantdemoknight") then
+	elseif (self:GetPlayerClass() == "demoknight" || self:GetPlayerClass() == "samuraidemo" || self:GetPlayerClass() == "sentrybuster" || self:GetPlayerClass() == "giantdemoman" || self:GetPlayerClass() == "wtfdemoman" || self:GetPlayerClass() == "giantdemoknight" || self:GetPlayerClass() == "chieftavish") then
 		self.playerclass = "Demoman"
 	elseif (self:GetPlayerClass() == "soldierblackbox" || self:GetPlayerClass() == "soldierbuffed" || self:GetPlayerClass() == "giantsoldier" || self:GetPlayerClass() == "giantburstfiresoldier" || self:GetPlayerClass() == "giantburstfiresoldier2" || self:GetPlayerClass() == "giantblastsoldier" || self:GetPlayerClass() == "colonelbarrage" || self:GetPlayerClass() == "giantsoldiercharged" || self:GetPlayerClass() == "giantsoldierrapidfire") then
 		self.playerclass = "Soldier"
@@ -387,7 +387,7 @@ function meta:SetPlayerClass(class)
 		self.playerclass = "Heavy"
 	elseif (self:GetPlayerClass() == "bowman" or self:GetPlayerClass() == "bowman_rapid_fire") then		
 		self.playerclass = "Sniper"
-	elseif (self:GetPlayerClass() == "giantpyro" || self:GetPlayerClass() == "pyro_flare" || self:GetPlayerClass() == "giantflarepyro") then
+	elseif (self:GetPlayerClass() == "giantpyro" || self:GetPlayerClass() == "chiefpyro" || self:GetPlayerClass() == "pyro_flare" || self:GetPlayerClass() == "giantflarepyro") then
 		self.playerclass = "Pyro"
 	elseif (self:GetPlayerClass() == "giantmedic" || self:GetPlayerClass() == "kritzmedic") then
 		self.playerclass = "Medic"
@@ -567,14 +567,16 @@ function meta:SetClassSpeed(sp)
 			self:SetModelScale(1.75)
 		end
 		self:SetWalkSpeed(sp) 
-		self:SetRunSpeed(sp + 65) 
+		self:SetRunSpeed(sp * 1.2) 
 		--self:SetJumpPower(self.PlayerJumpPower)
 		self:SetCrouchedWalkSpeed(0.33)
+		self:SetMaxSpeed(450) 
 		self:SetNWFloat("ClassSpeed", sp) 
 	else
 		self:SetWalkSpeed(240)
-		self:SetRunSpeed(400)
+		self:SetRunSpeed(450) 
 		self:SetCrouchedWalkSpeed(0.30)
+		self:SetMaxSpeed(450) 
 		self:SetNWFloat("ClassSpeed", sp)
 	end
 end

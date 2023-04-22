@@ -584,14 +584,18 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	else
 	
 		if (string.find(ent:GetModel(),"/bot_") and ent:IsPlayer() and ent.TFBot and ent:Team() == TEAM_BLU and attacker:IsPlayer() and attacker:GetPlayerClass() == "gmodplayer") then
-			dmginfo:ScaleDamage(2.5)
+			dmginfo:ScaleDamage(3)
 		else
-			dmginfo:ScaleDamage(1)
+			if (attacker:GetPlayerClass() == "captainpunch" || attacker:GetPlayerClass() == "chieftavish" || attacker:GetPlayerClass() == "chiefpyro") then
+				dmginfo:ScaleDamage(5)
+			else
+				dmginfo:ScaleDamage(1)
+			end
 		end
 	end
 	if ent:IsTFPlayer() then
 		-- Increased bullet force
-		if dmginfo:IsBulletDamage() then
+		if dmginfo:IsBulletDamage() and !string.find(ent:GetModel(),"_boss.mdl")then
 			dmginfo:SetDamageForce(dmginfo:GetDamageForce() * BulletForceMultiplier)
 		end
 		

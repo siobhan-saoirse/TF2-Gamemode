@@ -36,6 +36,9 @@ function ENT:StartTouch(ent)
 				if string.find(game.GetMap(), "mvm_") then
 					for _,ply in ipairs(player.GetAll()) do
 						ply:SendLua([[surface.PlaySound("vo/mvm_bomb_alerts0"..math.random(4,5)..".mp3")]])
+						if (ply.TFBot and !ply:IsFriendly(ent)) then
+							ply.TargetEnt = ent
+						end
 						timer.Create("Warning!", 3, 0, function()
 							ply:SendLua([[surface.PlaySound("mvm/mvm_bomb_warning.wav")]]) 
 						end)

@@ -1,6 +1,6 @@
 CLASS.Name = "Scout"
 CLASS.Speed = 500
-CLASS.Health = 1200
+CLASS.Health = 5000
 
 if CLIENT then
 	CLASS.CharacterImage = {
@@ -14,7 +14,7 @@ if CLIENT then
 end
 
 CLASS.Loadout = {"tf_weapon_scattergun", "tf_weapon_bat"}
-CLASS.DefaultLoadout = {"Holy Mackerel","Bonk Boy"}
+CLASS.DefaultLoadout = {"Soda Popper","Bonk Boy","Fed-Fightin' Fedora","Flight of the Monarch"}
 CLASS.ModelName = "scout"
 
 CLASS.Gibs = {
@@ -69,7 +69,7 @@ if SERVER then
 
 function CLASS:Initialize()
 	self:SetModel("models/bots/scout_boss/bot_scout_boss.mdl")
-	self:SetModelScale(1.75)
+	self:SetModelScale(1.9)
 	self:SetViewOffset(Vector(0, 0, 126))
 end
 

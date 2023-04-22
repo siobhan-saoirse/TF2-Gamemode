@@ -2836,7 +2836,7 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 		end
 	end]]
 	if CLIENT and !IsValid(snd.Entity) then return end
-	if IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.Entity:GetModel(),"bot_") and !string.find(snd.Entity:GetModel(),"boss") and string.find(snd.SoundName, "step") then
+	if IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.Entity:GetModel(),"bot_") and !string.find(snd.Entity:GetModel(),"_boss.mdl") and string.find(snd.SoundName, "step") then
 		
 		if (string.find(snd.Entity:GetModel(),"demo") and string.find(snd.Entity:GetModel(),"buster")) then
 			snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/sentrybuster/mvm_sentrybuster_step_0"..math.random(1,4)..".wav")
@@ -4073,7 +4073,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 
 		
 		return true
-	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.Entity:GetModel(),"bot_") and (!snd.Entity:IsPlayer() and string.find(snd.Entity:GetModel(),"boss") or (snd.Entity:IsPlayer() and snd.Entity:GetInfoNum("tf_giant_robot",0) == 1 or (string.find(snd.Entity:GetModel(),"bot") and string.find(snd.Entity:GetModel(),"boss")))) and string.find(snd.SoundName, "step") then
+	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.Entity:GetModel(),"bot_") and snd.Entity:IsMiniBoss() and string.find(snd.SoundName, "step") then
 		if (GetConVar("tf_enable_unused_mvm_sounds"):GetBool()) then
 			if (string.find(snd.Entity:GetModel(),"scout") || string.find(snd.Entity:GetModel(),"superscout") || string.find(snd.Entity:GetModel(),"superscoutfan") || string.find(snd.Entity:GetModel(),"gianscout")) then
 				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_scout/giant_scout_step_0"..math.random(1,4)..".wav")

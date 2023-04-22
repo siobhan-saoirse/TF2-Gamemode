@@ -61,14 +61,14 @@ function ENT:RestartTimer(endsetup)
 		timer.Simple(1, function()
 			if (string.find(game.GetMap(),"mvm")) then
 				umsg.Start("TF_PlayGlobalSound")
-					umsg.String("MVM.Siren")
+					umsg.String("Ambient.Siren")
 				umsg.End()
-			els
-				if (!self.WaitingForPlayers) thene
+			else
+				if (!self.WaitingForPlayers) then
 					umsg.Start("TF_PlayGlobalSound")
 						umsg.String("Ambient.Siren")
 					umsg.End()
-				end
+				end 
 			end
 			if self.StartPaused then
 				self:SetAndPauseTimer(self.TimerLength, true)
@@ -76,7 +76,7 @@ function ENT:RestartTimer(endsetup)
 				self:SetAndResumeTimer(self.TimerLength, true)
 			end
 			if (string.find(game.GetMap(),"mvm")) then
-				self.StartPaused = true
+				self.StartPaused = true 
 				self:SetAndPauseTimer(0,true)
 				for k,v in ipairs(ents.FindByClass("func_door")) do
 					if (v:GetName() == "cave_door") then

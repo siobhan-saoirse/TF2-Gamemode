@@ -8,6 +8,7 @@ ENT.AdminOnly = false
 ENT.IsBoss = false
 ENT.PrintName		= "Engineer"
 ENT.Category		= "TF2: MVM Bots"
+ENT.PreferredIcon 	= "hud/leaderboard_class_teleporter"
 
 list.Set( "NPC", "mvm_bot_engineer", {
 	Name = ENT.PrintName,

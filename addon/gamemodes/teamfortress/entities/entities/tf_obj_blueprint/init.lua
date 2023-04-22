@@ -78,6 +78,13 @@ function ENT:Build()
 	ent:SetBuilder(self.Player)
 	ent:Spawn()
 	ent:SetAngles(ang)
+	if (obj.class_name == "obj_sentrygun") then
+		self.Player.Sentry = ent
+	elseif (obj.class_name == "obj_dispenser") then
+		self.Player.Dispenser = ent
+	elseif (obj.class_name == "obj_teleporter") then
+		self.Player.Teleporter = ent
+	end
 	if self.Player:GetWeapon("tf_weapon_builder").MovedBuildingLevel == 2 and obj.class_name == "obj_sentrygun" and self.Player:GetWeapon("tf_weapon_builder").Moving != false then 
 
 		timer.Create("SEtModel", 0.1, 15, function()

@@ -2152,9 +2152,7 @@ function GM:PlayerSpawn(ply)
 					if ply:Team() == TEAM_BLU then
 						ply:SetPos(v:GetPos())
 						v:Teleport(ply)
-						for _,pl in ipairs(player.GetAll()) do 
-							pl:SendLua([[surface.PlaySound("mvm/mvm_tele_deliver.wav")]])
-						end
+						v:EmitSound("MVM.Robot_Teleporter_Deliver")
 					end
 				end
 			end
@@ -2168,7 +2166,16 @@ function GM:PlayerSpawn(ply)
 			ply:Build(2,0)
 		end)
 	end
-	--ply:ShouldDropWeapon(true)
+	timer.Simple(0.5, function()
+		if ply:GetPlayerClass() == "engineer" and (string.find(ply:GetModel(),"/bot_") or (bot.TFBot and bot:Team() == TEAM_BLU and string.find(game.GetMap(),"mvm_"))) then 
+			ply:EmitSound("MVM.Robot_Engineer_Spawn")
+			
+			umsg.Start("TF_PlayGlobalSound")
+				umsg.String("Announcer.MVM_First_Engineer_Teleport_Spawned	")
+			umsg.End()
+		end
+	end)
+	ply:ShouldDropWeapon(true)
 	--[[ply:SetNWBool("ShouldDropBurningRagdoll", false)
 	ply:SetNWBool("ShouldDropDecapitatedRagdoll", false)
 	ply:SetNWBool("DeathByHeadshot", false)]]

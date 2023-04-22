@@ -14,7 +14,7 @@ if CLIENT then
 end
 
 CLASS.Loadout = {"tf_weapon_syringegun_medic", "tf_weapon_medigun", "tf_weapon_bonesaw"}
-CLASS.DefaultLoadout = {"TF_WEAPON_MEDIGUN"}
+CLASS.DefaultLoadout = {"TF_WEAPON_SYRINGEGUN_MEDIC","TF_WEAPON_MEDIGUN"}
 CLASS.ModelName = "medic"
 
 CLASS.Gibs = {

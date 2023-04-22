@@ -10,7 +10,7 @@ ENT.Difficulty = 3
 ENT.Items = {"War Head","Fists of Steel"}
 ENT.PrintName		= "Captain Punch"
 ENT.Category		= "TF2: MVM Bots"
-
+ENT.OverrideModelScale = 1.9
 
 list.Set( "NPC", "mvm_bot_captain_punch", {
 	Name = ENT.PrintName,

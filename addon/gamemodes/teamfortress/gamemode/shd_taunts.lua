@@ -181,7 +181,7 @@ concommand.Add("tf_mvm_wins", function(ply, cmd)
 			else
 				v:SendLua([[surface.PlaySound("music/mvm_lost_wave.wav")]])
 				v:StripWeapons()	
-				timer.Simple(5, function() 
+				timer.Simple(5.5, function() 
 					v:Spawn()
 	 
 

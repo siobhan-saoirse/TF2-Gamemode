@@ -176,7 +176,7 @@ function meta:GetMaxOverheal()
 end
 
 function meta:IsMiniBoss()
-	if (string.find(self:GetModel(),"_boss.mdl") or self:GetModel() == "models/bots/demo/bot_sentry_buster.mdl") then
+	if (string.find(self:GetModel(),"_boss.mdl") or self:GetModel() == "models/bots/demo/bot_sentry_buster.mdl" or (string.find(self:GetModel(),"/bot_") and !string.find(self:GetModel(),"_boss.mdl") and self:LookupBone("bip_head") != nil and self:GetManipulateBoneScale(self:LookupBone("bip_head")) == Vector(0.7, 0.7, 0.7))) then
 		return true
 	else
 		return false

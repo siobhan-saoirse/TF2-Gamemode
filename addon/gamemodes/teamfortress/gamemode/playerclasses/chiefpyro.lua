@@ -1,21 +1,21 @@
-CLASS.Name = "Giant Heavy"
-CLASS.Speed = 230 * 0.5
-CLASS.Health = 60000
+CLASS.Name = "Pyro"
+CLASS.Speed = 300 * 0.4
+CLASS.Health = 55000
 
 if CLIENT then
 	CLASS.CharacterImage = {
-		surface.GetTextureID("hud/class_heavyred"),
-		surface.GetTextureID("hud/class_heavyblue")
+		surface.GetTextureID("hud/class_pyrored"),
+		surface.GetTextureID("hud/class_pyroblue")
 	}
 	CLASS.ScoreboardImage = {
-		surface.GetTextureID("hud/leaderboard_class_heavy_chief"),
-		surface.GetTextureID("hud/leaderboard_class_heavy_chief")
+		surface.GetTextureID("hud/leaderboard_class_pyro"),
+		surface.GetTextureID("hud/leaderboard_class_pyro_d")
 	}
 end
 
 CLASS.Loadout = {"tf_weapon_minigun", "tf_weapon_shotgun_hwg", "tf_weapon_fists"}
-CLASS.DefaultLoadout = {"Fists of Steel","War Head"}
-CLASS.ModelName = "heavy"
+CLASS.DefaultLoadout = {"TF_WEAPON_FLAMETHROWER","TF_WEAPON_FIREAXE"}
+CLASS.ModelName = "pyro"
 
 ----------------------------------------
 
@@ -131,11 +131,11 @@ end
 if SERVER then
 
 function CLASS:Initialize()
-	self:SetModel("models/bots/heavy_boss/bot_heavy_boss.mdl")
-	self:SetModelScale(1.9)
+	self:SetModel("models/bots/pyro_boss/bot_pyro_boss.mdl")
+	
 	timer.Create("ColonelBarrage"..self:EntIndex(), 1, 0, function()
-		if (self:GetPlayerClass() == "captain_punch") then
-			GAMEMODE:HealPlayer(self, self, 250, true, false)
+		if (self:GetPlayerClass() == "chiefpyro") then
+			GAMEMODE:HealPlayer(self, self, 500, true, false)
 		end
 	end)
 end
