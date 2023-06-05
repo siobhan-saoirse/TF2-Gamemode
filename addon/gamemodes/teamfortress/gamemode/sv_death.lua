@@ -438,6 +438,8 @@ end
 
 
 function GM:DoPlayerDeath(ply, attacker, dmginfo)
+	local shouldgib = false
+	local inflictor = dmginfo:GetInflictor()
 	ply:SetNWBool("Taunting",false)
 	
 	if (string.find(ply:GetModel(),"/bot_")) then
@@ -842,8 +844,26 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 				end
 			end
 		end
+	else
+		
+		if (((!ply:IsHL2() and !ply:IsL4D() and not (dmginfo:IsDamageType(DMG_ALWAYSGIB) or dmginfo:IsDamageType(DMG_BLAST) or dmginfo:IsExplosionDamage() or inflictor.Explosive)) or (ply:IsHL2() || ply:IsL4D())) or string.find(ply:GetModel(),"/bot_") and ply:GetModelScale() == 1.0 and !string.find(ply:GetModel(),"_boss.mdl")) then
+			if (GetConVar("tf_use_client_ragdolls"):GetBool()) then
+				ply:CreateRagdoll()
+				timer.Simple(0.1, function()
+					local ragdoll = ply:GetRagdollEntity()
+					TransferBones(ply,ragdoll)
+					ply.RagdollEntity = ragdoll
+					ply:SetNWEntity("RagdollEntity",ply.RagdollEntity)
+					local phys = ply:GetRagdollEntity():GetPhysicsObject()
+					if (IsValid(phys)) then
+						phys:SetVelocity(Vector(0,0,0))
+						phys:AddVelocity(ply:GetVelocity() * 8 + dmginfo:GetDamageForce())
+					end
+				end)
+			end
+		end
+
 	end
-	local inflictor = dmginfo:GetInflictor()
 	gamemode.Call("DoTFPlayerDeath", ply, attacker, dmginfo)
 	ply:StopSound( "GrappledFlesh" )
 	ply:StopSound("Grappling")
@@ -934,7 +954,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	elseif (attacker.TargetEnt) then
 		attacker.TargetEnt = nil
 	end
-	if (attacker.TFBot) then
+	if (attacker.TFBot and !ply:IsBot()) then
 		timer.Simple(0.25, function()
 			if (math.random(1,2) == 1) then
 				if (!string.find(attacker:GetModel(),"_boss.mdl")) then
@@ -1468,9 +1488,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	end
 	
 	--print("DoPlayerDeath", dmginfo:GetInflictor(), dmginfo:GetAttacker(), dmginfo:GetDamage(), dmginfo:GetDamageType())
-	local shouldgib = false
 	
-	ply:Speak("PlayerDeath") 
 	if ((string.find(ply:GetModel(),"bot_") and ply:GetModelScale() > 1.0) or ply:IsMiniBoss()) then
 		ply:GibBreakServer( dmginfo:GetDamageForce() )
 		if (string.find(ply:GetModel(),"_boss")) then
@@ -1523,20 +1541,15 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	elseif dmginfo:IsDamageType(DMG_CLUB) or dmginfo:IsDamageType(DMG_SLASH) or inflictor.HoldType=="MELEE" then -- Melee damage
 		if not inflictor.IsSilentKiller then	
 			if ply:GetMaterial() == "models/shadertest/predator" then return end
-			if ply:GetPlayerClass() == "engineer" and GetConVar("tf_pyrovision"):GetBool() then
-				ply:Speak("TLK_PLAYER_LAUGH_DEATH")
-			else
 				if (!ply:HasDeathFlag(DF_SILENCED) and !ply:IsMiniBoss()) then
 					ply:RandomSentence("MeleeDeath")
 				end
-			end
 		end
 	else -- Bullet/fire damage
 		if not inflictor.IsSilentKiller then
 			if ply:GetMaterial() == "models/shadertest/predator" then return end
-			if not ply:IsHL2() and ply:Team() == TEAM_BLU and string.find(game.GetMap(), "mvm_") then return end
 			if (!ply:HasDeathFlag(DF_SILENCED) and !ply:IsMiniBoss()) then
-				ply:RandomSentence("Death")
+				ply:RandomSentence("Death") 
 			end
 		end
 	end
@@ -1559,12 +1572,6 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		end
 	end
 
-
-	if not shouldgib then
-		if (GetConVar("tf_use_client_ragdolls"):GetBool()) then
-			ply:CreateRagdoll()
-		end
-	end
 	timer.Simple(0.015, function()
 	
 		if (IsValid(ply.RagdollEntity)) then
@@ -1647,7 +1654,8 @@ function GM:PlayerDeath(ent, inflictor, attacker)
 			
 	end
 	
-	timer.Simple(6.5, function()
+	timer.Stop("Respawn"..ent:EntIndex())
+	timer.Create("Respawn"..ent:EntIndex(), 6.5, 1, function()
 		if IsValid(animent) then
 			animent:Fire("Kill", "", 0.1)
 		end

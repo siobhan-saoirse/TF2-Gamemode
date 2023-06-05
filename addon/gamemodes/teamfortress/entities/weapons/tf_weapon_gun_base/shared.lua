@@ -199,12 +199,12 @@ function SWEP:ShootProjectile(num_bullets, aimcone)
 		
 		Team = GAMEMODE:EntityTeam(self.Owner),
 		Damage = self.BaseDamage,
-		RampUp = 0,
-		Falloff = 0,
+		RampUp = self.MaxDamageRampUp,
+		Falloff = self.MaxDamageFalloff,
 		Critical = self:Critical(),
 		CritMultiplier = 0,
-		DamageModifier = 0,
-		DamageRandomize = 0,
+		DamageModifier = self.DamageModifier,
+		DamageRandomize = self.DamageRandomize,
 		
 		Tracer = 1,
 		TracerName = self.TracerEffect,
@@ -219,18 +219,22 @@ end
 
 function SWEP:ShootEffects()
 	if (!self:CanPrimaryAttack()) then return end
-			if (self:Critical()) then
-				self:EmitSound(self.ShootCritSound)
-			else
-				self:EmitSound(self.ShootSound)
-			end
-	local wmodel = self.WorldModelOverride or self.WorldModel
+	local wmodel = self:GetItemData().model_player or self.WorldModelOverride or self.WorldModel
 	if (self.Owner:GetNWBool("NoWeapon")) then
 		self.WorldModel = "models/empty.mdl"
 	else
 		self.WorldModel = wmodel;
 	end;
 	local vm = self.Owner:GetViewModel()
+	if SERVER then
+	
+			if (self:Critical()) then
+				self.Owner:EmitSound(self.ShootCritSound)
+			else
+				self.Owner:EmitSound(self.ShootSound)
+			end
+			
+	end
 	if CLIENT then
 		if IsValid(self.CModel) then
 			self.CModel:SetModel(wmodel) 

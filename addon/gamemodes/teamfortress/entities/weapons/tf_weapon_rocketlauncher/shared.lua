@@ -244,6 +244,9 @@ function SWEP:ShootProjectile()
 				
 			end
 		end
+		if (self:GetVisuals() != nil and self:GetVisuals().sound_special1) then
+			rocket.ExplosionSound = self:GetVisuals().sound_special1
+		end
 		if (self.ProjectileDamageMultiplier) then
 			rocket.OldBaseDamage = rocket.BaseDamage
 			rocket.BaseDamage = rocket.OldBaseDamage * self.ProjectileDamageMultiplier
@@ -251,6 +254,7 @@ function SWEP:ShootProjectile()
 		rocket:SetOwner(self.Owner)
 		self:InitProjectileAttributes(rocket)
 		
+		rocket.NameOverride = self:GetItemData().item_iconname or self.NameOverride
 		rocket:Spawn()
 		rocket:Activate()
 	end

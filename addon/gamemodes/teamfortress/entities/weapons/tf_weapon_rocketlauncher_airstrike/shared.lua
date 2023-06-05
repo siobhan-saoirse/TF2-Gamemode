@@ -79,13 +79,13 @@ function SWEP:ShootProjectile()
 			rocket[k] = v
 		end
 		
-		rocket:SetModel("models/weapons/w_models/w_rocket_airstrike/w_rocket_airstrike.mdl")
 		
 		rocket:SetOwner(self.Owner)
 		self:InitProjectileAttributes(rocket)
 		rocket.ExplosionSound = self.CustomExplosionSound
 		
 		rocket:Spawn()
+		rocket:SetModel("models/weapons/w_models/w_rocket_airstrike/w_rocket_airstrike.mdl")
 		rocket:Activate()
 	end
 	

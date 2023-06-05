@@ -330,7 +330,11 @@ end)
 
 hook.Add("PostPlayerDeath", "LeadBot_S_Death", function(bot)
 	if bot.TFBot then
-		timer.Simple(6, function()
+		local time = 6
+		if (GetConVar("civ2_allow_respawn_with_key_press"):GetBool() and !string.find(bot:GetModel(),"/bot_")) then
+			time = 2
+		end
+		timer.Simple(2, function()
 			if IsValid(bot) and !bot:Alive() then
 				if (bot_respawn:GetBool() and !bot:IsL4D()) then
 
@@ -432,12 +436,12 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 					
 						bot:SetPlayerClass(oldclass)
 						if (bot.IsL4DZombie and !string.find(bot:GetModel(),"/bot_")) then
-							RandomWeapon2(bot, "primary")
-							RandomWeapon2(bot, "secondary")
-							RandomWeapon2(bot, "melee")
-							RandomCosmetic(bot, "hat")
-							RandomCosmetic(bot, "misc")
-							RandomCosmetic(bot, "head")
+							--RandomWeapon2(bot, "primary")
+							--RandomWeapon2(bot, "secondary")
+							--RandomWeapon2(bot, "melee")
+							--RandomCosmetic(bot, "hat")
+							--RandomCosmetic(bot, "misc")
+							--RandomCosmetic(bot, "head")
 						end
 
 					end)
@@ -464,7 +468,9 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		if (bot.OverrideModelScale) then
 			bot:SetModelScale(bot.OverrideModelScale)
 		end
-		
+		if (!bot:IsOnGround()) then
+			buttons = buttons + IN_DUCK
+		end
 		if !IsValid(controller) then
 			bot.ControllerBot = ents.Create("leadbot_navigator")
 			bot.ControllerBot:Spawn()
@@ -490,7 +496,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			end
 		end
 			for k,v in ipairs(ents.FindInSphere(bot:GetPos(),moveawayrange)) do
-				if (IsValid(v) and GAMEMODE:EntityTeam(v) != TEAM_SPECTATOR and v:IsTFPlayer() and v:EntIndex() != bot:EntIndex() and bot:GetNWBool("Taunting",false) != true) then
+				if (IsValid(v) and GAMEMODE:EntityTeam(v) == bot:Team() and v:IsTFPlayer() and v:EntIndex() != bot:EntIndex() and bot:GetNWBool("Taunting",false) != true) then
 					local forward = bot:EyeAngles():Forward()
 					local right = bot:EyeAngles():Right()
 					local avoidVector = bot:GetPos()
@@ -1049,7 +1055,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 		
 				for k, v in pairs(team.GetPlayers(TEAM_BLU)) do
 					if (!IsValid(bot.TargetEnt)) then
-						if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:GetPos():Distance(bot:GetPos()) < 6000 and !IsValid(bot.TargetEnt) then
+						if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:GetPos():Distance(bot:GetPos()) < 6000 and !IsValid(bot.TargetEnt) and !v:HasGodMode() then
 							if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
 								local targetpos = v:EyePos() - Vector(0, 0, 10) -- bot eye check, don't start shooting targets just because we barely see their head
 								local trace = util.TraceLine({start = bot:GetShootPos(), endpos = targetpos, filter = function( ent ) return ent == v end})

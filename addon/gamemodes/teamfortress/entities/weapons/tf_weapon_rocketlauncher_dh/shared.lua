@@ -60,7 +60,7 @@ function SWEP:ShootProjectile()
 		rocket:SetOwner(self.Owner)
 		self:InitProjectileAttributes(rocket)
 		
-		rocket.NameOverride = "tf_projectile_rocket_direct"
+		rocket.NameOverride = self:GetItemData().item_iconname or self.NameOverride 
 		rocket.ExplosionSound = self.CustomExplosionSound
 		
 		if (self.ProjectileDamageMultiplier) then

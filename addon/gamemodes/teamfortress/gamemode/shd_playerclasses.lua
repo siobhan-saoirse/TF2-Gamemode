@@ -394,29 +394,7 @@ function meta:SetPlayerClass(class)
 	elseif (self:GetPlayerClass() == "giantmedic" || self:GetPlayerClass() == "kritzmedic") then
 		self.playerclass = "Medic"
 	else
-		if (self:GetPlayerClass() == "spy") then
-			if (self:GetModel() == "models/player/scout.mdl") then
-				self.playerclass = "Scout"
-			elseif (self:GetModel() == "models/player/soldier.mdl") then
-				self.playerclass = "Soldier"
-			elseif (self:GetModel() == "models/player/pyro.mdl") then
-				self.playerclass = "Pyro"
-			elseif (self:GetModel() == "models/player/demo.mdl") then
-				self.playerclass = "Demoman"
-			elseif (self:GetModel() == "models/player/heavy.mdl") then
-				self.playerclass = "Heavy"
-			elseif (self:GetModel() == "models/player/engineer.mdl") then
-				self.playerclass = "Engineer"
-			elseif (self:GetModel() == "models/player/medic.mdl") then
-				self.playerclass = "Medic"
-			elseif (self:GetModel() == "models/player/sniper.mdl") then
-				self.playerclass = "Sniper"
-			else
-				self.playerclass = string.upper(string.sub(class,1,1))..string.sub(class,2)	
-			end
-		else
-			self.playerclass = string.upper(string.sub(class,1,1))..string.sub(class,2)	
-		end
+		self.playerclass = string.upper(string.sub(class,1,1))..string.sub(class,2)	
 	end
 	if (class == "nick") then
 		self.Who = "Gambler"

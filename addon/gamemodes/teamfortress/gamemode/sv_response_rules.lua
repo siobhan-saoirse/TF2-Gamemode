@@ -344,6 +344,117 @@ function PlayResponse(ent, response, nospeech)
 	
 	return false
 end
+function PainfulResponse(ent, response, nospeech, attacker)
+	if ent.NextPainSound and CurTime()<ent.NextPainSound and not nospeech then
+		return false
+	end
+
+	--PrintTable(response) 
+	
+	local num = #response
+	local i = math.random(1,num)
+	local j = i
+	
+	while response[j][1]==ent.LastScene and not nospeech do
+		j = j+1
+		if j>num then j=1 end
+		if j==i then break end
+	end
+	
+	local r = response[j]
+	
+	local delay
+	if r.predelay then
+		if r.predelay[2] then
+			delay = math.Rand(r.predelay[1], r.predelay[2])
+		else
+			delay = r.predelay[1]
+		end
+	end
+	if not nospeech then
+		if delay then
+			timer.Simple(delay, function()
+				time = playscene_delayed(ent, r[1])
+				ent:SetNWBool("SpeechTime", time) 
+			end)
+		else
+			if (string.find(ent:GetModel(),"hwm")) then
+				if (ent:GetInfoNum("tf_usehwmvcds ",0) == 1) then
+					r[1] = string.Replace(r[1],"low","high")
+				end
+			end
+			time = ent:PlayScene(r[1], 0)
+
+		end
+		
+		ent.LastScene = r[1]
+		if not nospeech then
+			print("vcd time: "..time)
+				if (ent:GetPlayerClass() == "scout" or ent:GetPlayerClass() == "soldier") then
+					ent.NextPainSound = CurTime() + math.random(0.2,1.2)
+				else
+					ent.NextPainSound = CurTime() + 1.5
+				end
+		end
+		return true
+	end
+	
+	return false
+end
+function FlamingResponse(ent, response, nospeech)
+	if ent.NextFireSound and CurTime()<ent.NextFireSound and not nospeech then
+		return false
+	end
+
+	--PrintTable(response) 
+	
+	local num = #response
+	local i = math.random(1,num)
+	local j = i
+	
+	while response[j][1]==ent.LastScene and not nospeech do
+		j = j+1
+		if j>num then j=1 end
+		if j==i then break end
+	end
+	
+	local r = response[j]
+	
+	local delay
+	if r.predelay then
+		if r.predelay[2] then
+			delay = math.Rand(r.predelay[1], r.predelay[2])
+		else
+			delay = r.predelay[1]
+		end
+	end
+	if not nospeech then
+		if delay then
+			timer.Simple(delay, function()
+				time = playscene_delayed(ent, r[1])
+				ent:SetNWBool("SpeechTime", time) 
+			end)
+		else
+			if (string.find(ent:GetModel(),"hwm")) then
+				if (ent:GetInfoNum("tf_usehwmvcds ",0) == 1) then
+					r[1] = string.Replace(r[1],"low","high")
+				end
+			end
+			time = ent:PlayScene(r[1], 0)
+			ent:SetNWBool("SpeechTime", time)
+		end
+		
+		ent.LastScene = r[1]
+		if not nospeech then
+			print("vcd time: "..2.5)
+			ent.NextFireSound = CurTime() + 2.5
+			if delay then ent.NextFireSound = ent.NextFireSound + delay end
+		end
+		return true
+	end
+	
+	return false
+end
 function PlayResponse2(ent, response, nospeech)
 	if ent.NextSpeak and CurTime()<ent.NextSpeak and not nospeech then
 		return false
@@ -735,6 +846,405 @@ function META:Speak(concept, nospeech, dbg)
 	return false
 end
 
+function META:PainSound(concept, nospeech, dbg, attacker)
+	if not self:Alive() then
+		return false
+	end
+	--[[
+	if not nospeech then
+		Msg("Concept : "..concept.."\n")
+	end]]
+	
+	----------------------------------------------------------------
+	
+	-- Which concept we want to play
+	self.Concept = tostring(concept)
+	
+	-- Random number
+	self.randomnum = math.random(0,100)
+	
+	-- Current weapon
+	if IsValid(self:GetActiveWeapon()) then
+		if (self:GetActiveWeapon():GetClass() == "tf_weapon_allclass") then
+			if (self:GetPlayerClass() == "engineer") then
+				self.playerweapon = "tf_weapon_wrench"
+			elseif (self:GetPlayerClass() == "heavy") then
+				self.playerweapon = "tf_weapon_fists"
+			elseif (self:GetPlayerClass() == "pyro") then
+				self.playerweapon = "tf_weapon_fireaxe"
+			elseif (self:GetPlayerClass() == "demoman") then
+				self.playerweapon = "tf_weapon_bottle"
+			elseif (self:GetPlayerClass() == "scout") then
+				self.playerweapon = "tf_weapon_bat"
+			elseif (self:GetPlayerClass() == "soldier") then
+				self.playerweapon = "tf_weapon_shovel"
+			elseif (self:GetPlayerClass() == "medic") then
+				self.playerweapon = "tf_weapon_bonesaw"
+			elseif (self:GetPlayerClass() == "sniper") then
+				self.playerweapon = "tf_weapon_club"
+			elseif (self:GetPlayerClass() == "spy") then
+				self.playerweapon = "tf_weapon_knife"
+			end
+		elseif (self:GetActiveWeapon():GetClass() == "tf_weapon_katana") then
+			if (self:GetPlayerClass() == "engineer") then
+				self.playerweapon = "tf_weapon_wrench"
+			elseif (self:GetPlayerClass() == "heavy") then
+				self.playerweapon = "tf_weapon_fists"
+			elseif (self:GetPlayerClass() == "pyro") then
+				self.playerweapon = "tf_weapon_fireaxe"
+			elseif (self:GetPlayerClass() == "demoman") then
+				self.playerweapon = "tf_weapon_sword"
+			elseif (self:GetPlayerClass() == "scout") then
+				self.playerweapon = "tf_weapon_bat" 
+			elseif (self:GetPlayerClass() == "soldier") then
+				self.playerweapon = "tf_weapon_rocketlauncher_dh"
+			elseif (self:GetPlayerClass() == "medic") then
+				self.playerweapon = "tf_weapon_bonesaw"
+			elseif (self:GetPlayerClass() == "sniper") then
+				self.playerweapon = "tf_weapon_club"
+			elseif (self:GetPlayerClass() == "spy") then
+				self.playerweapon = "tf_weapon_knife"
+			end
+		elseif (self:GetActiveWeapon():GetClass() == "tf_weapon_bat_giftwrap") then
+			if (self:GetPlayerClass() == "scout") then
+				self.playerweapon = "tf_weapon_bat"
+			end
+		elseif (string.find(self:GetActiveWeapon():GetClass(),"minigun") || string.find(self:GetActiveWeapon():GetClass(),"minifun") || string.find(self:GetActiveWeapon():GetClass(),"gatling")) then
+			self.playerweapon = "tf_weapon_minigun"
+		else
+			self.playerweapon = self:GetActiveWeapon():GetClass() 
+		end
+		if self:GetActiveWeapon().GetItemData then
+			self.item_name = self:GetActiveWeapon():GetItemData().name or ""
+			self.item_type_name = self:GetActiveWeapon():GetItemData().item_type_name or ""
+		else
+			self.item_name = ""
+			self.item_type_name = ""
+		end
+	else
+		self.playeranim = ""
+	end
+	
+	-- Health fraction
+	self.playerhealthfrac = self:Health()/self:GetMaxHealth()
+	
+	-- What class the player is looking at
+	self.crosshair_on = ""
+	self.crosshair_enemy = "No"
+	
+	local start = self:GetShootPos()
+	local endpos = start + self:GetAimVector() * 10000
+	local tr = util.TraceHull{
+		start = start,
+		endpos = endpos,
+		filter = self,
+		mins = Vector(-10, -10, -10),
+		maxs = Vector(10, 10, 10),
+	}
+	
+	local class = ""
+	if tr.Entity and tr.Entity:IsPlayer() then
+		if tr.Entity:GetPlayerClass() == "gmodplayer" then
+			class = "sniper"
+		elseif tr.Entity:GetPlayerClass() == "medicshotgun" then
+			class = "medic"
+		else
+			class = tr.Entity:GetPlayerClass()
+		end
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() and tr.Entity:GetClass() == "npc_combine_s" then
+		class = "soldier"
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() and tr.Entity:GetClass() == "npc_metropolice" then
+		class = "metrocop"
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() and tr.Entity:GetClass() == "npc_kleiner" then
+		class = "medic"
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() and tr.Entity:GetClass() == "npc_eli" then
+		class = "medic"
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() and tr.Entity:GetClass() == "npc_barney" then
+		class = "medic"
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() and tr.Entity:GetClass() == "npc_citizen" then
+		class = "engineer"
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() and tr.Entity:GetClass() == "npc_breen" then
+		class = "scout"
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() and tr.Entity:GetClass() == "npc_vortigaunt" then
+		class = "heavy"
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() then
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	end
+	self.crosshair_on = class
+	
+	-- Temporary
+	self.GameRound = 5
+	if self:IsLoser() then
+		self.OnWinningTeam = 0
+	else
+		self.OnWinningTeam = 1
+	end
+	----------------------------------------------------------------
+	
+	local response = SelectResponse(self, dbg)
+	
+	if response then
+		return PainfulResponse(self, response, nospeech, dbg, attacker)
+	end
+	
+	return false
+end
+function META:FireSound(concept, nospeech, dbg)
+	if not self:Alive() then
+		return false
+	end
+	--[[
+	if not nospeech then
+		Msg("Concept : "..concept.."\n")
+	end]]
+	
+	----------------------------------------------------------------
+	
+	-- Which concept we want to play
+	self.Concept = tostring(concept)
+	
+	-- Random number
+	self.randomnum = math.random(0,100)
+	
+	-- Current weapon
+	if IsValid(self:GetActiveWeapon()) then
+		if (self:GetActiveWeapon():GetClass() == "tf_weapon_allclass") then
+			if (self:GetPlayerClass() == "engineer") then
+				self.playerweapon = "tf_weapon_wrench"
+			elseif (self:GetPlayerClass() == "heavy") then
+				self.playerweapon = "tf_weapon_fists"
+			elseif (self:GetPlayerClass() == "pyro") then
+				self.playerweapon = "tf_weapon_fireaxe"
+			elseif (self:GetPlayerClass() == "demoman") then
+				self.playerweapon = "tf_weapon_bottle"
+			elseif (self:GetPlayerClass() == "scout") then
+				self.playerweapon = "tf_weapon_bat"
+			elseif (self:GetPlayerClass() == "soldier") then
+				self.playerweapon = "tf_weapon_shovel"
+			elseif (self:GetPlayerClass() == "medic") then
+				self.playerweapon = "tf_weapon_bonesaw"
+			elseif (self:GetPlayerClass() == "sniper") then
+				self.playerweapon = "tf_weapon_club"
+			elseif (self:GetPlayerClass() == "spy") then
+				self.playerweapon = "tf_weapon_knife"
+			end
+		elseif (self:GetActiveWeapon():GetClass() == "tf_weapon_katana") then
+			if (self:GetPlayerClass() == "engineer") then
+				self.playerweapon = "tf_weapon_wrench"
+			elseif (self:GetPlayerClass() == "heavy") then
+				self.playerweapon = "tf_weapon_fists"
+			elseif (self:GetPlayerClass() == "pyro") then
+				self.playerweapon = "tf_weapon_fireaxe"
+			elseif (self:GetPlayerClass() == "demoman") then
+				self.playerweapon = "tf_weapon_sword"
+			elseif (self:GetPlayerClass() == "scout") then
+				self.playerweapon = "tf_weapon_bat" 
+			elseif (self:GetPlayerClass() == "soldier") then
+				self.playerweapon = "tf_weapon_rocketlauncher_dh"
+			elseif (self:GetPlayerClass() == "medic") then
+				self.playerweapon = "tf_weapon_bonesaw"
+			elseif (self:GetPlayerClass() == "sniper") then
+				self.playerweapon = "tf_weapon_club"
+			elseif (self:GetPlayerClass() == "spy") then
+				self.playerweapon = "tf_weapon_knife"
+			end
+		elseif (self:GetActiveWeapon():GetClass() == "tf_weapon_bat_giftwrap") then
+			if (self:GetPlayerClass() == "scout") then
+				self.playerweapon = "tf_weapon_bat"
+			end
+		elseif (string.find(self:GetActiveWeapon():GetClass(),"minigun") || string.find(self:GetActiveWeapon():GetClass(),"minifun") || string.find(self:GetActiveWeapon():GetClass(),"gatling")) then
+			self.playerweapon = "tf_weapon_minigun"
+		else
+			self.playerweapon = self:GetActiveWeapon():GetClass() 
+		end
+		if self:GetActiveWeapon().GetItemData then
+			self.item_name = self:GetActiveWeapon():GetItemData().name or ""
+			self.item_type_name = self:GetActiveWeapon():GetItemData().item_type_name or ""
+		else
+			self.item_name = ""
+			self.item_type_name = ""
+		end
+	else
+		self.playeranim = ""
+	end
+	
+	-- Health fraction
+	self.playerhealthfrac = self:Health()/self:GetMaxHealth()
+	
+	-- What class the player is looking at
+	self.crosshair_on = ""
+	self.crosshair_enemy = "No"
+	
+	local start = self:GetShootPos()
+	local endpos = start + self:GetAimVector() * 10000
+	local tr = util.TraceHull{
+		start = start,
+		endpos = endpos,
+		filter = self,
+		mins = Vector(-10, -10, -10),
+		maxs = Vector(10, 10, 10),
+	}
+	
+	local class = ""
+	if tr.Entity and tr.Entity:IsPlayer() then
+		if tr.Entity:GetPlayerClass() == "gmodplayer" then
+			class = "sniper"
+		elseif tr.Entity:GetPlayerClass() == "medicshotgun" then
+			class = "medic"
+		else
+			class = tr.Entity:GetPlayerClass()
+		end
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() and tr.Entity:GetClass() == "npc_combine_s" then
+		class = "soldier"
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() and tr.Entity:GetClass() == "npc_metropolice" then
+		class = "metrocop"
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() and tr.Entity:GetClass() == "npc_kleiner" then
+		class = "medic"
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() and tr.Entity:GetClass() == "npc_eli" then
+		class = "medic"
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() and tr.Entity:GetClass() == "npc_barney" then
+		class = "medic"
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() and tr.Entity:GetClass() == "npc_citizen" then
+		class = "engineer"
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() and tr.Entity:GetClass() == "npc_breen" then
+		class = "scout"
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() and tr.Entity:GetClass() == "npc_vortigaunt" then
+		class = "heavy"
+		-- Capitalize player class because the talker system wants to :/
+		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
+		
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	elseif tr.Entity and tr.Entity:IsNPC() then
+		if self:IsValidEnemy(tr.Entity) then
+			self.crosshair_enemy = "Yes"
+		end
+	end
+	self.crosshair_on = class
+	
+	-- Temporary
+	self.GameRound = 5
+	if self:IsLoser() then
+		self.OnWinningTeam = 0
+	else
+		self.OnWinningTeam = 1
+	end
+	----------------------------------------------------------------
+	
+	local response = SelectResponse(self, dbg)
+	
+	if response then
+		return FlamingResponse(self, response, nospeech, dbg)
+	end
+	
+	return false
+end
+
 function META:SpeakWithEnemyCrosshair(concept, nospeech, dbg)
 	if not self:Alive() then
 		return false
@@ -927,7 +1437,7 @@ function META:Taunt(concept, nospeech, dbg)
 	----------------------------------------------------------------
 	
 	-- Which concept we want to play
-	self.Concept = concept
+	self.Concept = tostring(concept)
 	
 	-- Random number
 	self.randomnum = math.random(0,100)

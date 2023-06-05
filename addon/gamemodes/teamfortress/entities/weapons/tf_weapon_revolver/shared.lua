@@ -66,7 +66,7 @@ function SWEP:Deploy()
 	--MsgFN("Deploy %s", tostring(self))
 	
 		if self.Owner:GetModel() == "models/player/scout.mdl" or  self.Owner:GetModel() == "models/player/soldier.mdl" or  self.Owner:GetModel() == "models/player/pyro.mdl" or  self.Owner:GetModel() == "models/player/demo.mdl" or  self.Owner:GetModel() == "models/player/heavy.mdl" or  self.Owner:GetModel() == "models/player/engineer.mdl" or  self.Owner:GetModel() == "models/player/medic.mdl" or  self.Owner:GetModel() == "models/player/sniper.mdl" or  self.Owner:GetModel() == "models/player/hwm/spy.mdl" then
-			self:SetHoldType("PRIMARY")			
+			self:SetWeaponHoldType("PRIMARY")			
 			self.HoldType = "PRIMARY"
 		end
 	if self.Owner:GetPlayerClass() == "spy" then
@@ -101,7 +101,7 @@ function SWEP:Deploy()
 				animent2:SetName("SpyWeaponModel"..self.Owner:EntIndex())
 				animent2:SetSkin(self.Owner:GetSkin())
 				timer.Create("SpyCloakDetector"..self.Owner:EntIndex(), 0.01, 0, function()
-					if self.Owner:GetPlayerClass() == "spy" then
+					if IsValid(self.Owner) and self.Owner:GetPlayerClass() == "spy" then
 						if self.Owner:GetNoDraw() == true then
 							if IsValid(animent2) then
 								animent2:SetNoDraw(true)
@@ -126,16 +126,16 @@ function SWEP:Holster()
 	if (IsValid(self.Owner)) then
 		if self.Owner:GetPlayerClass() == "spy" then
 			if self.Owner:GetModel() == "models/player/scout.mdl" or  self.Owner:GetModel() == "models/player/soldier.mdl" or  self.Owner:GetModel() == "models/player/pyro.mdl" or  self.Owner:GetModel() == "models/player/demo.mdl" or  self.Owner:GetModel() == "models/player/heavy.mdl" or  self.Owner:GetModel() == "models/player/engineer.mdl" or  self.Owner:GetModel() == "models/player/medic.mdl" or  self.Owner:GetModel() == "models/player/sniper.mdl" or  self.Owner:GetModel() == "models/player/hwm/spy.mdl" then
-				self:SetHoldType("PRIMARY")			
+				self:SetWeaponHoldType("PRIMARY")			
 				self.HoldType = "PRIMARY"
 			else
-				self:SetHoldType("SECONDARY")			
+				self:SetWeaponHoldType("SECONDARY")			
 				self.HoldType = "SECONDARY"
 			end
 		end
 	else
 
-		self:SetHoldType("SECONDARY")			
+		self:SetWeaponHoldType("SECONDARY")			
 		self.HoldType = "SECONDARY"
 		
 	end
@@ -245,7 +245,7 @@ end
 
 function SWEP:Think()
 	if self.Owner:GetModel() == "models/player/scout.mdl" or  self.Owner:GetModel() == "models/player/soldier.mdl" or  self.Owner:GetModel() == "models/player/pyro.mdl" or  self.Owner:GetModel() == "models/player/demo.mdl" or  self.Owner:GetModel() == "models/player/heavy.mdl" or  self.Owner:GetModel() == "models/player/engineer.mdl" or  self.Owner:GetModel() == "models/player/medic.mdl" or  self.Owner:GetModel() == "models/player/sniper.mdl" or  self.Owner:GetModel() == "models/player/hwm/spy.mdl" then
-		self:SetHoldType("PRIMARY")			
+		self:SetWeaponHoldType("PRIMARY")			
 		self.HoldType = "PRIMARY"
 	end
 	if self.WeaponMode == 1 then

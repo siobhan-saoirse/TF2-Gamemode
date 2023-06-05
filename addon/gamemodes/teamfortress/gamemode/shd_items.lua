@@ -159,7 +159,6 @@ function ParseGameItems(data, silent)
 				--vis.attached_models = {}
 				--vis.hide_player_bodygroup_names = {}
 				--vis.show_player_bodygroup_names = {}
-				
 				vis.animations = {}
 				vis.hide_player_bodygroup_names = {}
 				vis.attached_particlesystems = {}
@@ -217,12 +216,19 @@ function ParseGameItems(data, silent)
 						PrecacheParticleSystem(w.system)
 					end
 					
-					num = string.match(a, "(%d)%-material_overide")
+					num = string.match(a, "(%d)%-material_override")
 					if num then
 						vis[a] = nil
 						table.insert(vis.materials_overidded, w)
 						PrecacheParticleSystem(w.system)
 					end
+				end
+				if (name == "visuals_red") then
+					v.visuals_red = vis
+				elseif (name == "visuals_blu") then
+					v.visuals_blu = vis
+				elseif (name == "visuals") then
+					v.visuals = vis
 				end
 			end
 		end

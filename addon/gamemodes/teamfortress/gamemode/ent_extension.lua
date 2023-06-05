@@ -16,6 +16,11 @@ function meta:SetTrigger(b)
 	self.__IsTrigger = b
 end
 
+function meta:PlaySceneToClient(b)
+	if CLIENT then
+		ClientsideScene( b, self )
+	end
+end
 -- NPCs are considered as players in this gamemode
 function meta:IsTFPlayer() 
 	if (self:GetClass() == "ctf_bot_navigator") then

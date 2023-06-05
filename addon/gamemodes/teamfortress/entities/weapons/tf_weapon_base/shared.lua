@@ -25,9 +25,20 @@ function SWEP:DrawWorldModel(  )
 
 		if (!IsValid(self.WModel)) then
 			self.WModel = ents.CreateClientProp()
+			self.WModel:Spawn()
 		end
 		self.WModel:SetNoDraw(true)
 		self.WModel:SetModel(self:GetItemData().model_world or self:GetItemData().model_player or self.WorldModel)
+		if (_Owner:HasGodMode() and _Owner:GetNWBool("NoWeapon",false) != true) then
+			self.WModel:SetMaterial("models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())))
+		elseif (_Owner:GetNWBool("NoWeapon",false) == true) then
+			self.WModel:SetMaterial("color")
+		else
+			local mat = self.CustomMaterialOverride2 or self.MaterialOverride or self.WeaponMaterial or ""
+			if (self.WModel:GetMaterial() != mat or string.find(self.WModel:GetMaterial(),"invuln")) then
+				self.WModel:SetMaterial(mat)
+			end
+		end
 		if (IsValid(_Owner)) then
             -- Specify a good position
 			self.WModel:SetSkin(self.WeaponSkin or _Owner:GetSkin())
@@ -57,7 +68,6 @@ function SWEP:DrawWorldModel(  )
 			self.WModel:SetAngles(self:GetAngles())
 		end
 	
-		self.WModel:Spawn()
 		self.WModel:DrawModel()
 end
 
@@ -128,14 +138,13 @@ SWEP.BulletSpread = 0.00
 
 SWEP.BaseDamage = 0
 SWEP.DamageRandomize = 0
-SWEP.MaxDamageRampUp = 0.2
-SWEP.MaxDamageFalloff = 0.5
-SWEP.DamageModifier = 1
+SWEP.MaxDamageRampUp = 0.0
+SWEP.MaxDamageFalloff = 0.0
+SWEP.DamageModifier = 0
 
 SWEP.IsRapidFire = false
 SWEP.CriticalChance = 1
 SWEP.CritSpreadDuration = 2
-SWEP.CritDamageMultiplier = 3
 
 SWEP.HasSecondaryFire = false
 
@@ -260,16 +269,16 @@ end
 
 
 
-function SWEP:PreCalculateDamage(ent)
+function SWEP:PreCalculateDamage(ent) 
 	
-end
+end 
 
 function SWEP:PostCalculateDamage(dmg, ent)
 	return dmg
 end
 
 function SWEP:CalculateDamage(hitpos, ent)
-	return self.BaseDamage
+	return tf_util.CalculateDamage(self, self:GetPos(), ownerpos)
 end
 
 function SWEP:Equip()
@@ -670,9 +679,9 @@ function SWEP:Deploy()
 	--self:InitializeWModel2()
 	--self:InitializeAttachedModels()()
 	if SERVER then
-		if IsValid(self.WModel2) then
-			--self.WModel2:SetSkin(self.Owner:GetSkin() or self.WeaponSkin)
-			--self.WModel2:SetMaterial(self.MaterialOverride or self.WeaponMaterial or 0)
+		if IsValid(self.WModel) then 
+			self.WModel:SetSkin(self.WeaponSkin or self.Owner:GetSkin())
+			self.WModel:SetMaterial(self.MaterialOverride or self.WeaponMaterial or 0)
 		end
 	end
 	if self.Owner:IsPlayer() and not self.Owner:IsHL2() and self.Owner:Team() == TEAM_BLU and string.find(game.GetMap(), "mvm_") then

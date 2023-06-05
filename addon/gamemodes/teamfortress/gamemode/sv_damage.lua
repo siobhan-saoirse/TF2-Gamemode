@@ -294,11 +294,9 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 					if inf.OwnerDamage then
 						damage = inf.BaseDamage * inf.OwnerDamage
 					else
-						dmginfo:SetDamage(inf.BaseDamage)
+						dmginfo:SetDamage(inf.BaseDamage * 0.8)
 					end
-					if (!string.find(ent:GetModel(),"_boss.mdl")) then
-						dmginfo:SetDamageForce(dmginfo:GetDamageForce() * 2)
-					end
+					dmginfo:SetDamageForce(dmginfo:GetDamageForce() * 2)
 				elseif ent.IsTFBuilding then
 					damage = 0
 					dmginfo:SetDamageForce(vector_origin)
@@ -306,29 +304,24 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 			end
 			
 			if not damage then
-				if inf.CalculateDamage then
-					local owner = inf:GetOwner()
-					if not owner or not owner:IsValid() then owner = inf end
-					
-					--damage = inf:CalculateDamage(owner:GetPos()+Vector(0,0,1))
-					
-					--inf.CalculatedDamage = damage
-					damage = inf.BaseDamage or 0
-				else
-					damage = inf.BaseDamage or 0
-				end
+				damage = inf.BaseDamage or 0
 			end
 			
-			--dmginfo:SetDamage(damage)
-			dmginfo:SetDamage(inf.BaseDamage)
+			dmginfo:SetDamage(damage)
 			
 		elseif dmginfo:IsBulletDamage() and (inf:IsWeapon() or inf.IsTFBuilding) then
 			if (inf.IsTFWeapon or inf.IsTFBuilding) and inf.CalculateDamage then
 				-- Bullet damage inflicted from a TF2 weapon
 				local damage = inf:CalculateDamage(dmginfo:GetDamagePosition(), ent)
 				
-				--dmginfo:SetDamage(damage)
-				dmginfo:SetDamage(inf.BaseDamage)
+				-- Entities that aren't players or NPCs (such as props) do not process every bullet from a shotgun blast as individual
+				-- Instead, they take a single damage info, which is the sum of the damage inflicted by every bullet received
+				if not ent:IsTFPlayer() then
+					-- that's quite convenient since bullets fired from TF2 weapons initially inflict only 1 damage
+					damage = damage * dmginfo:GetDamage()
+				end
+				
+				dmginfo:SetDamage(damage)
 				dontscaledamage = true
 			else
 				-- Bullet damage inflicted from another weapon
@@ -383,7 +376,7 @@ function GM:ScaleNPCDamage(npc, hitgroup, dmginfo)
 	
 	if not dmginfo:IsDamageType(DMG_DIRECT) then
 		-- make NPCs a bit harder to kill
-		dmginfo:ScaleDamage(0.7)
+		--dmginfo:ScaleDamage(0.7)
 	end
 	
 	--Msg(tostring(npc).." - "..tostring(dmginfo).." > Calculated damage : "..dmginfo:GetDamage().."  Attacker : "..tostring(dmginfo:GetAttacker()).."\n")
@@ -547,7 +540,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (inflictor.BlastForceMultiplier or 1) * BlastForceMultiplier * 0.7)
 	end
 	
-	if (ent:IsPlayer() and ent:IsBot() and string.find(ent:GetModel(),"_boss.mdl")) then
+	if ((ent:IsPlayer() and ent:IsBot() and string.find(ent:GetModel(),"_boss.mdl")) or (attacker:IsPlayer() and IsValid(attacker:GetActiveWeapon()) and attacker:GetActiveWeapon().IsMeleeWeapon)) then
 		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * 0.3)
 	end
 	if gamemode.Call("ShouldCrit", ent, inflictor, attacker, hitgroup, dmginfo) then
@@ -586,7 +579,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		if (string.find(ent:GetModel(),"/bot_") and ent:IsPlayer() and ent.TFBot and ent:Team() == TEAM_BLU and attacker:IsPlayer() and attacker:GetPlayerClass() == "gmodplayer") then
 			dmginfo:ScaleDamage(3)
 		else
-			if (attacker:GetPlayerClass() == "captainpunch" || attacker:GetPlayerClass() == "chieftavish" || attacker:GetPlayerClass() == "chiefpyro") then
+			if (IsValid(attacker) and attacker:IsPlayer() and (attacker:GetPlayerClass() == "captainpunch" || attacker:GetPlayerClass() == "chieftavish" || attacker:GetPlayerClass() == "chiefpyro")) then
 				dmginfo:ScaleDamage(5)
 			else
 				dmginfo:ScaleDamage(1)
@@ -596,7 +589,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	if ent:IsTFPlayer() then
 		-- Increased bullet force
 		if dmginfo:IsBulletDamage() and !string.find(ent:GetModel(),"_boss.mdl")then
-			dmginfo:SetDamageForce(dmginfo:GetDamageForce() * BulletForceMultiplier)
+			dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (BulletForceMultiplier * 0.5))
 		end
 		
 		-- Overexaggerated explosion force
@@ -713,10 +706,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	ent:Speak("TLK_PLAYER_EXPRESSION", true)
 	if ((inflictor:GetClass()=="tf_entityflame" or inflictor:GetClass()=="entityflame") and (!ent.NextSpeak or CurTime()>ent.NextSpeak)) then
 		if (!ent:IsMiniBoss()) then
-			if not ent.NextOnFire or CurTime() > ent.NextOnFire then
-				ent:Speak("TLK_ONFIRE")
-				ent.NextOnFire = CurTime() + 5
-			end
+			ent:FireSound("TLK_ONFIRE")
 		end
 	end
 	
@@ -727,9 +717,9 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	if hp<=0 then
 		--ent.LastDamageInfo = CopyDamageInfo(dmginfo)
 	elseif not dmginfo:IsFallDamage() and not dmginfo:IsDamageType(DMG_DIRECT) and ent:WaterLevel() < 1 then
-		if 2*ent:Health()<ent:GetMaxHealth() or ent == attacker then
+		if attacker:IsPlayer() then
 			if ent:HasGodMode() == false and !ent:IsMiniBoss() then
-				ent:Speak("TLK_PLAYER_ATTACKER_PAIN")
+				ent:PainSound("TLK_PLAYER_ATTACKER_PAIN")
 			else
 				if (!ent:IsMiniBoss()) then
 					if ent:GetPlayerClass() == "scout" then
@@ -740,7 +730,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			end
 		else
 			if ent:HasGodMode() == false and !ent:IsMiniBoss() then
-				ent:Speak("TLK_PLAYER_PAIN")
+				ent:PainSound("TLK_PLAYER_PAIN")
 			else
 				if (!ent:IsMiniBoss()) then
 					if ent:GetPlayerClass() == "scout" then
@@ -756,7 +746,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			umsg.Float(dmginfo:GetDamage())
 		umsg.End()
 	elseif dmginfo:IsFallDamage() and !ent:IsMiniBoss() then 
-		ent:Speak("TLK_PLAYER_ATTACKER_PAIN")
+		ent:RandomSentence("Death")
 	end
 end
 

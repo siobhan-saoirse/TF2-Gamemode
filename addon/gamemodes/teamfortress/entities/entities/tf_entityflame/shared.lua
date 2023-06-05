@@ -139,7 +139,7 @@ function ENT:Initialize()
 				self.Target:AddDeathFlag(DF_FIRE)
 			end
 			if self.Target:IsPlayer() and !self.Target:IsMiniBoss() then
-				self.Target:Speak("TLK_ONFIRE")
+				--self.Target:Speak("TLK_ONFIRE")
 			end
 			
 			--print("ignite",self.Target)

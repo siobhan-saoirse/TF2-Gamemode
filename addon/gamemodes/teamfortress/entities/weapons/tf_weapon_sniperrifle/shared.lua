@@ -206,7 +206,7 @@ function SWEP:ZoomIn()
 		self.Owner:DoAnimationEvent(ACT_MP_DEPLOYED, true)
 		--self.Owner:DrawViewModel(false)
 		self.ChargeTimerStart = CurTime()
-		self.Owner:SetFOV(20, 0.1)
+		self.Owner:SetFOV(20, 0.2	)
 	end
 	
 	if not self.DisableZoomSpeedPenalty then
@@ -244,7 +244,7 @@ function SWEP:ZoomOut()
 			umsg.Bool(false)
 		umsg.End()
 		
-		self.Owner:SetFOV(0, 0.1)
+		self.Owner:SetFOV(0, 0.2)
 		--self.Owner:DrawViewModel(true)
 		self.ChargeTimerStart = nil
 	end
@@ -272,11 +272,6 @@ function SWEP:PrimaryAttack()
 	self:TakePrimaryAmmo(1)
 	self:RustyBulletHole()
 	end
-	if (self.ZoomStatus) then
-		self.NameOverride = self.HeadshotName
-	else
-		self.NameOverride = nil
-	end
 	if not self:CanPrimaryAttack() then
 		return
 	end
@@ -295,12 +290,6 @@ function SWEP:PrimaryAttack()
 	self.CritsOnHeadshot = self.ZoomStatus
 	
 	self:RollCritical()
-	if self.ChargeTimerStart and not self.DisableSniperCharge then
-		local chargetime = self.ChargeTime / (self.SniperChargeRateMultiplier or 1)
-		self.BaseDamage = Lerp(math.Clamp((CurTime()-self.ChargeTimerStart)/chargetime, 0, 1), self.MinDamage, self.MaxDamage - 50 - 30)
-	else
-		self.BaseDamage = self.MinDamage
-	end
 	--print(self.BaseDamage)
 	
 	timer.Simple(0.7, function()
@@ -368,6 +357,11 @@ function SWEP:Think()
 			end
 		end
 	end
+	if (self.ZoomStatus) then
+		self.NameOverride = "headshot"
+	else
+		self.NameOverride = nil
+	end
 	for k, v in pairs(player.GetAll()) do
 		if v == self.Owner then
 			if v:IsHL2() then
@@ -380,6 +374,13 @@ function SWEP:Think()
 		end
 	end
 
+	if self.ChargeTimerStart and not self.DisableSniperCharge then
+		local chargetime = self.ChargeTime / (self.SniperChargeRateMultiplier or 1)
+		self.BaseDamage = math.Clamp((CurTime()-self.ChargeTimerStart)/chargetime, 50, 150)
+	else
+		self.BaseDamage = 50
+	end
+	
 	if SERVER and self.NextReplayDeployAnim then
 		if CurTime() > self.NextReplayDeployAnim then
 			--MsgFN("Replaying deploy animation %d", self.VM_DRAW)

@@ -106,6 +106,7 @@ function SWEP:ShootProjectile()
 		end
 		
 		rocket:SetOwner(self.Owner)
+		rocket.NameOverride = self:GetItemData().item_iconname or self.NameOverride
 		self:InitProjectileAttributes(rocket)
 		
 		rocket:Spawn()

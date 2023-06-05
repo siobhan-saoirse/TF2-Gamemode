@@ -82,7 +82,7 @@ SWEP.Primary.Ammo			= "none"
 SWEP.Primary.Delay = 0.8
 SWEP.ReloadTime = 0.8
 
-SWEP.CriticalChance = 25
+SWEP.CriticalChance = 11
 SWEP.NoCModelOnStockWeapon = false
 
 SWEP.HoldType = "MELEE_ALLCLASS"

@@ -100,7 +100,7 @@ PrecacheParticleSystem("bullet_tracer01_blue_crit")
 SWEP.barrelRotation 		= 0
 SWEP.barrelSpeed 			= 1
 SWEP.barrelValue1 			= 0
-SWEP.BaseDamage = 9
+SWEP.BaseDamage = 5
 SWEP.DamageRandomize = 2
 SWEP.MaxDamageRampUp = 1.5
 SWEP.MaxDamageFalloff = 0.5

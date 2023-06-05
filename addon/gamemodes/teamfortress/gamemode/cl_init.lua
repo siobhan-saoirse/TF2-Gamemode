@@ -3,26 +3,81 @@ hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
 		if (IsValid(ply:GetNWEntity("RagdollEntity"))) then
 			if ((ply:GetObserverMode() == OBS_MODE_DEATHCAM or (!ply:Alive() and !IsValid(ply:GetObserverTarget()))) and ply:GetObserverMode() != OBS_MODE_FREEZECAM) then
 				ply:SetViewOffset(Vector(0, 0, 48 * ply:GetModelScale()))
+				local ragdoll = ply:GetNWEntity("RagdollEntity")
 				local newdist = 115
-				local origin = ply:GetNWEntity("RagdollEntity"):GetPos()
+				local origin = ragdoll:GetPos()
 				if GetConVar("cam_collision"):GetBool() then
-					local tr = util.TraceHull{
-						start = origin,
-						endpos = origin - newdist * angles:Forward(),
-						filter = {ply,ply:GetNWEntity("RagdollEntity")},
-						mins = Vector(-3,-3,-3),
-						maxs = Vector( 3, 3, 3)
-					}
-					newdist = newdist * tr.Fraction
+					if (GetConVar("civ2_first_person_deathcam"):GetBool()) then
+						local ang = angles
+						if (ragdoll:LookupBone("bip_head") != nil) then
+						
+							local origin2 = ragdoll:GetBonePosition(ragdoll:LookupBone("bip_head"))
+							ang = ragdoll:GetBoneAngles(ragdoll:LookupBone("bip_head"))
+														
+							local tr = util.TraceHull{
+								start = origin2,
+								endpos = origin2,
+								angles = ang,
+								filter = {ply,ragdoll},
+								mins = Vector(-3,-3,-3),
+								maxs = Vector( 3, 3, 3)
+							}
+							newdist = 20 * tr.Fraction
+							
+							local newangles = ang
+							local view = {
+								origin = origin2,
+								angles = newangles,
+								fov = fov,
+								drawviewer = true
+							}	
+							return view
+
+						elseif (ragdoll:LookupBone("ValveBiped_Bip01.Head1") != nil) then
+						
+							local origin2 = ragdoll:GetBonePosition(ragdoll:LookupBone("ValveBiped_Bip01.Head1"))
+							ang = ragdoll:GetBoneAngles(ragdoll:LookupBone("ValveBiped_Bip01.Head1"))
+							
+							local tr = util.TraceHull{
+								start = origin2,
+								endpos = origin2,
+								angles = ang,
+								filter = {ply,ragdoll},
+								mins = Vector(-3,-3,-3),
+								maxs = Vector( 3, 3, 3)
+							}
+							newdist = 20 * tr.Fraction
+							
+							local newangles = ang
+							local view = {
+								origin = origin2,
+								angles = newangles,
+								fov = fov,
+								drawviewer = true
+							}	
+							return view
+						end
+
+					else
+						local tr = util.TraceHull{
+							start = origin,
+							endpos = origin - newdist * angles:Forward(),
+							filter = {ply,ragdoll},
+							mins = Vector(-3,-3,-3),
+							maxs = Vector( 3, 3, 3)
+						}
+						newdist = 115 * tr.Fraction
+						local newangles = angles
+						local view = {
+							origin = ragdoll:GetPos() - ( angles:Forward() * newdist ),
+							angles = newangles,
+							fov = fov,
+							drawviewer = true
+						}	
+						return view
+
+					end				
 				end
-				local newangles = angles
-				local view = {
-					origin = ply:GetNWEntity("RagdollEntity"):GetPos() - ( angles:Forward() * newdist ),
-					angles = newangles,
-					fov = fov,
-					drawviewer = true
-				}	
-				return view
 			end
 		end
 	end
@@ -74,6 +129,7 @@ include("proxies/weapon_invis.lua")
 include("shd_gravitygun.lua")
 
 CreateClientConVar("civ2_enable_survivor_steps", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE})
+CreateClientConVar("civ2_first_person_deathcam", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE})
 CreateClientConVar( "tf_haltinspect", "1", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Whether or not players can inspect while no-clipping." )
 CreateClientConVar( "tf_maxhealth_hud", "1", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Enable maxhealth above health when hurt." )
 CreateClientConVar( "tf_robot", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Become a robot after respawning." )
@@ -305,7 +361,7 @@ end)
 concommand.Add("joinclass", function(pl, cmd, args)
 	RunConsoleCommand("changeclass "..args)
 end, function() return GAMEMODE.PlayerClassesAutoComplete end)
-
+RunConsoleCommand("snd_restart")
 usermessage.Hook("PlayerResetDominations", function(um)
 	local pl = um:ReadEntity()
 	if not IsValid(pl) then return end
@@ -383,6 +439,10 @@ local function DoHealthBonusEffect(ent, positive, islargerthan100)
 	end
 end
 
+net.Receive("TFRagdollCreate", function()
+    local ply = net.ReadEntity()
+	ply:BecomeRagdollOnClient()
+end)
 usermessage.Hook("PlayerHealthBonusEffect", function(um)
 	local ent = GetPlayerByUserID(um:ReadLong())
 	local positive = um:ReadBool()

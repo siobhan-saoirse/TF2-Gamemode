@@ -884,8 +884,10 @@ RegisterAttribute("material_override", {
 		//weapon.CustomColorOverride = Color(255,30,150,255)
 		if SERVER then
 			weapon.CustomMaterialOverride = v
+			weapon.CustomMaterialOverride2 = v
 		else
 			weapon.CustomMaterialOverride = Material(v)
+			weapon.CustomMaterialOverride2 = v
 		end
 		
 		if CLIENT then
@@ -913,8 +915,10 @@ RegisterAttribute("material_override_team", {
 	end
 		if SERVER then
 			weapon.CustomMaterialOverride = v..team_skin
+			weapon.CustomMaterialOverride2 = v..team_skin
 		else
 			weapon.CustomMaterialOverride = Material(v..team_skin)
+			weapon.CustomMaterialOverride2 = v..team_skin
 		end
 		
 		if CLIENT then
@@ -948,8 +952,10 @@ RegisterAttribute("material_override_skin", {
 		
 		if SERVER then
 			weapon.CustomMaterialOverride = v..wear_types[wear_number]
+			weapon.CustomMaterialOverride2 = v..wear_types[wear_number]
 		else
 			weapon.CustomMaterialOverride = Material(v..wear_types[wear_number])
+			weapon.CustomMaterialOverride2 = v..wear_types[wear_number]
 		end
 		
 		if CLIENT then
@@ -994,8 +1000,10 @@ RegisterAttribute("material_override_skin_team", {
 	
 		if SERVER then
 			weapon.CustomMaterialOverride = v..wear_types[wear_number]
+			weapon.CustomMaterialOverride2 = v..wear_types[wear_number]
 		else
 			weapon.CustomMaterialOverride = Material(v..wear_types[wear_number])
+			weapon.CustomMaterialOverride2 = v..wear_types[wear_number]
 		end
 		
 		if CLIENT then

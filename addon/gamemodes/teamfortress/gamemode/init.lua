@@ -26,6 +26,8 @@ response_rules.Load("talker/tf_response_rules.txt")
 response_rules.Load("talker/demoman_custom.txt") 
 response_rules.Load("talker/heavy_custom.txt") 
 
+util.AddNetworkString("TFRagdollCreate")
+
 CreateConVar('tf_opentheorangebox', 0, FCVAR_ARCHIVE + FCVAR_SERVER_CAN_EXECUTE, 'Enables 2007 mode')
 -- Quickfix for Valve's typo in tf_reponse_rules.txt
 response_rules.AddCriterion([[criterion "WeaponIsScattergunDouble" "item_name" "The Force-a-Nature" "required" weight 10]])
@@ -2347,6 +2349,9 @@ function GM:PlayerSpawn(ply)
 
 	timer.Simple(0.3, function()
 	
+		if (ply:IsBot() and !ply.TFBot) then
+			ply:SetPlayerClass(table.Random({"scout","soldier","pyro","demoman","heavy","engineer","medic","sniper","spy"}))
+		end
 		for k,v in ipairs(team.GetPlayers(TEAM_RED)) do
 			if ply:IsMiniBoss() then
 				v:Speak("TLK_MVM_GIANT_CALLOUT")

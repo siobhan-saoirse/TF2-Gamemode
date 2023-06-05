@@ -21,14 +21,14 @@ SWEP.HitFlesh = Sound("")
 SWEP.HitRobot = Sound("MVM_Weapon_Default.HitFlesh")
 SWEP.HitWorld = Sound("")
 
-SWEP.MeleeAttackDelay = 0.2
+SWEP.MeleeAttackDelay = 0.2	
 --SWEP.MeleeAttackDelayCritical = 0.25
 SWEP.MeleeRange = 48
 
 SWEP.MaxDamageRampUp = 0
 SWEP.MaxDamageFalloff = 0
 
-SWEP.CriticalChance = 15
+SWEP.CriticalChance = 8
 SWEP.HasThirdpersonCritAnimation = false
 SWEP.NoHitSound = false
 
@@ -891,8 +891,6 @@ function SWEP:PrimaryAttack()
 		end
 		if self.HasThirdpersonCritAnimation then
 			self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_SECONDARYFIRE, true)
-		elseif self.HasThirdpersonCritAnimation2 then
-			self.Owner:DoAnimationEvent(ACT_DOD_PRONE_ZOOMED, true)
 		else
 			self.Owner:SetAnimation(PLAYER_ATTACK1)
 		end

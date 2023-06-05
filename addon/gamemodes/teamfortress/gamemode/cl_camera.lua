@@ -256,13 +256,17 @@ hook.Add("CalcView", "TFCalcView", function(pl, pos, ang, fov)
 		if pl:IsHL2() then
 			pos = pl:GetBonePosition(pl:LookupBone("ValveBiped.Bip01_Head1"))+(ang:Up()*10)+(ang:Forward()*5)
 			pl:ManipulateBoneScale(pl:LookupBone("ValveBiped.Bip01_Head1"), Vector(0,0,0))
-			pos = pl:GetBonePosition(pl:LookupBone("ValveBiped.Bip01_Head1"))+(ang:Up()*10)+(ang:Forward()*5)
 		elseif (pl:IsL4D()) then
 			pl:ManipulateBoneScale(0, Vector(0,0,0))
-			pos = pl:GetBonePosition(0)+(ang:Up()*10)+(ang:Forward()*5)
+			pos = pl:GetBonePosition(0)+(ang:Up()*10)+(ang:Forward()*5) - pl:EyeAngles():Forward()
 		else
 			pl:ManipulateBoneScale(pl:LookupBone("bip_head"), Vector(0,0,0))
-			pos = pl:GetBonePosition(pl:LookupBone("bip_head"))+(ang:Up()*10)+(ang:Forward()*5)
+			if (pl:LookupBone( "prp_helmet" ) != nil) then				
+				pl:ManipulateBoneScale(pl:LookupBone("prp_helmet"), Vector(0,0,0))
+			elseif (pl:LookupBone( "prp_hat" ) != nil) then
+				pl:ManipulateBoneScale(pl:LookupBone("prp_hat"), Vector(0,0,0))
+			end
+			pos = pl:GetBonePosition(pl:LookupBone("bip_head"))+(ang:Up()*10)	+(ang:Forward()*5)
 		end
 	end
 	
@@ -299,6 +303,12 @@ hook.Add("CalcView", "TFCalcView", function(pl, pos, ang, fov)
 					pl:ManipulateBoneScale(0, Vector(1,1,1)) -- we can't let them see a shrunk head when transferring back!
 				else
 					pl:ManipulateBoneScale(pl:LookupBone("bip_head"), Vector(1,1,1))
+				end
+					
+				if (pl:LookupBone( "prp_helmet" ) != nil) then				
+					pl:ManipulateBoneScale(pl:LookupBone("prp_helmet"), Vector(1,1,1))
+				elseif (pl:LookupBone( "prp_hat" ) != nil) then
+					pl:ManipulateBoneScale(pl:LookupBone("prp_hat"), Vector(1,1,1))
 				end
 				return {angles = pl.CurrentView.angles, origin = pos - pl.CurrentView.distance * pl.CurrentView.angles:Forward(), drawviewer = true}
 			end

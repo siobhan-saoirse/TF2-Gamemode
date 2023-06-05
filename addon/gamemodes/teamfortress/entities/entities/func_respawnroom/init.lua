@@ -76,7 +76,7 @@ end
 function ENT:EndTouch(ent)
 	if ent:IsPlayer() then
 		self.Players[ent] = nil
-		if (ent.TFBot and string.find(game.GetMap(),"mvm_") and ent:Team() == TEAM_BLU) then
+		if (string.find(game.GetMap(),"mvm_") and ent:Team() == TEAM_BLU) then
 			ent:GodDisable()
 			ent:SetSkin(1)
 		end

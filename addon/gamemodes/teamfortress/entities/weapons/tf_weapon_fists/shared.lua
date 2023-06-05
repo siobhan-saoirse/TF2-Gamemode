@@ -12,7 +12,7 @@ if CLIENT then
 end
 SWEP.ReadyToPounce		= true
 SWEP.Base				= "tf_weapon_melee_base"
-	SWEP.Slot				= 2
+SWEP.Slot				= 2
 SWEP.ViewModel			= "models/weapons/c_models/c_heavy_arms_empty.mdl"
 SWEP.WorldModel			= "models/empty.mdl"
 SWEP.Crosshair = "tf_crosshair3"

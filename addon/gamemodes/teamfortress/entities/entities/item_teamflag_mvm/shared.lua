@@ -323,8 +323,8 @@ function ENT:Pickup(ply)
 			if (!ply:IsMiniBoss()) then
 				ply:TFTaunt(tostring(ply:GetActiveWeapon():GetSlot() + 1))
 			end
-			timer.Create("CarrierGetsResistance", 1, 0, function()
-				GAMEMODE:HealPlayer(self.Carrier, self.Carrier, 10, true, false) 
+			timer.Create("CarrierGetsResistance", 2, 0, function()
+				GAMEMODE:HealPlayer(self.Carrier, self.Carrier, 5, true, false) 
 			end)
 			for k,v in pairs(player.GetAll()) do
 				if not v:IsFriendly(ply) then

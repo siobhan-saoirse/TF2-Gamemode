@@ -47,10 +47,9 @@ can be called either using tf_util.CalculateDamage(table) or tf_util.CalculateDa
 local tf_damage_disablespread = CreateConVar("tf_damage_disablespread", 0, {FCVAR_NOTIFY})
 
 function CalculateDamage(data, hitpos, srcpos)
-	--if tf_damage_disablespread:GetBool() then
+	if tf_damage_disablespread:GetBool() then
 		return data.BaseDamage
-	--end
-	--[[
+	end
 	local dist, falloff, damage
 	local src, hit, crit
 	
@@ -64,11 +63,26 @@ function CalculateDamage(data, hitpos, srcpos)
 		crit = data.Critical
 	end
 	
+	if hit then
+		dist = src:Distance(hit)
+		falloff = math.Clamp((dist / 512)-1, -1, 1)
+		
+		if falloff>0 then falloff = falloff * (data.MaxDamageFalloff or 0)
+		else falloff = falloff * (data.MaxDamageRampUp or 0)
+		end
+	else
+		falloff = 0
+	end
+
 	--if crit then return data.BaseDamage * (data.CritDamageMultiplier or 3) end
 	
-	damage = data.BaseDamage
+	if data.DamageRandomize then
+		damage = math.random(data.BaseDamage * (1-data.DamageRandomize), data.BaseDamage * (1+data.DamageRandomize))
+	else
+		damage = data.BaseDamage
+	end
 	
-	return damage]]
+	return 1 * damage * (1 - falloff)
 end
 function IsHL1SwepsMounted()
 	for k, v in pairs(engine.GetAddons()) do 
