@@ -85,15 +85,35 @@ function SWEP:PrimaryAttack()
 			end
 			self.Owner:SetNWBool("Taunting", false) 
 			self.Owner:SetNWBool("Bonked", true) 
-			ParticleEffectAttach( 'warp_version', PATTACH_POINT_FOLLOW, self.Owner, 3)
-			ParticleEffectAttach( 'scout_dodge_socks', PATTACH_ABSORIGIN_FOLLOW, self.Owner, 2 )
-			ParticleEffectAttach( 'scout_dodge_pants', PATTACH_ABSORIGIN_FOLLOW, self.Owner, 2 )
-			if self.Owner:Team() == TEAM_BLU then
-				ParticleEffectAttach( 'scout_dodge_blue', PATTACH_POINT_FOLLOW, self.Owner, 3 )
-			elseif self.Owner:Team() == TF_TEAM_PVE_INVADERS then
-				ParticleEffectAttach( 'scout_dodge_blue', PATTACH_POINT_FOLLOW, self.Owner, 3 )
-			else
-				ParticleEffectAttach( 'scout_dodge_red', PATTACH_POINT_FOLLOW, self.Owner, 3 )
+			if SERVER then
+				ParticleEffectAttach( 'warp_version', PATTACH_ABSORIGIN_FOLLOW, self.Owner, 0)
+				local att = 0
+				local att2 = 0
+				local att3 = 0
+				local att4 = 0
+				local att5 = 0
+				if (self:GetOwner():LookupAttachment("back_upper")) then
+
+					att = self:GetOwner():LookupAttachment("back_upper")
+					att2 = self:GetOwner():LookupAttachment("back_lower")
+					att3 = self:GetOwner():LookupAttachment("foot_R")
+					att4 = self:GetOwner():LookupAttachment("foot_L")
+					att5 = self:GetOwner():LookupAttachment("hand_L")
+
+				end
+				if self:GetOwner():Team() == TEAM_BLU then
+					self:GetOwner().trail = util.SpriteTrail( self:GetOwner(), att, Color( 255, 255, 255 ), false, 12, 12, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blue" )
+					self:GetOwner().trail2 = util.SpriteTrail( self:GetOwner(), att2, Color( 255, 255, 255 ), false, 16, 16, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blue" )
+					self:GetOwner().trail3 = util.SpriteTrail( self:GetOwner(), att3, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blue" )
+					self:GetOwner().trail4 = util.SpriteTrail( self:GetOwner(), att4, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blue" )
+					self:GetOwner().trail5 = util.SpriteTrail( self:GetOwner(), att5, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blue" )
+				else
+					self:GetOwner().trail = util.SpriteTrail( self:GetOwner(), att, Color( 255, 255, 255 ), false, 12, 12, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
+					self:GetOwner().trail2 = util.SpriteTrail( self:GetOwner(), att2, Color( 255, 255, 255 ), false, 16, 16, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
+					self:GetOwner().trail3 = util.SpriteTrail( self:GetOwner(), att3, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
+					self:GetOwner().trail4 = util.SpriteTrail( self:GetOwner(), att4, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
+					self:GetOwner().trail5 = util.SpriteTrail( self:GetOwner(), att5, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
+				end
 			end
 			if SERVER then
 			self.Owner:GodEnable()
@@ -110,6 +130,15 @@ function SWEP:PrimaryAttack()
 			self.Owner:ConCommand("tf_firstperson")
 			self.Owner:GodDisable()
 			self.Owner:StopParticles() 
+			if SERVER then
+				if (IsValid(self:GetOwner().trail)) then
+					self:GetOwner().trail:Remove()
+					self:GetOwner().trail2:Remove()
+					self:GetOwner().trail3:Remove()
+					self:GetOwner().trail4:Remove()
+					self:GetOwner().trail5:Remove()
+				end
+			end
 			self.Owner:SetNWBool("Bonked", false)
 			end
 		end)

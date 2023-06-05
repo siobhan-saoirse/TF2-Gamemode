@@ -341,15 +341,35 @@ function ENT:StartCharging()
 	self:GetOwner():SetJumpPower(0)
 	
 
-	ParticleEffectAttach( 'warp_version', PATTACH_ABSORIGIN_FOLLOW, self:GetOwner(), 0)
-	ParticleEffectAttach( 'scout_dodge_socks', PATTACH_POINT_FOLLOW, self:GetOwner(), 0 )
-	ParticleEffectAttach( 'scout_dodge_pants', PATTACH_POINT_FOLLOW, self:GetOwner(), 0 )
-	if self:GetOwner():Team() == TEAM_BLU then
-		ParticleEffectAttach( 'scout_dodge_blue', PATTACH_POINT_FOLLOW, self:GetOwner(), 3 )
-	elseif self:GetOwner():Team() == TF_TEAM_PVE_INVADERS then
-		ParticleEffectAttach( 'scout_dodge_blue', PATTACH_POINT_FOLLOW, self:GetOwner(), 3 )
-	else
-		ParticleEffectAttach( 'scout_dodge_red', PATTACH_POINT_FOLLOW, self:GetOwner(), 3 )
+	if SERVER then
+		ParticleEffectAttach( 'warp_version', PATTACH_ABSORIGIN_FOLLOW, self.Owner, 0)
+		local att = 0
+		local att2 = 0
+		local att3 = 0
+		local att4 = 0
+		local att5 = 0
+		if (self:GetOwner():LookupAttachment("back_upper")) then
+
+			att = self:GetOwner():LookupAttachment("back_upper")
+			att2 = self:GetOwner():LookupAttachment("back_lower")
+			att3 = self:GetOwner():LookupAttachment("foot_R")
+			att4 = self:GetOwner():LookupAttachment("foot_L")
+			att5 = self:GetOwner():LookupAttachment("hand_L")
+
+		end
+		if self:GetOwner():Team() == TEAM_BLU then
+			self:GetOwner().trail = util.SpriteTrail( self:GetOwner(), att, Color( 255, 255, 255 ), false, 12, 12, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blue" )
+			self:GetOwner().trail2 = util.SpriteTrail( self:GetOwner(), att2, Color( 255, 255, 255 ), false, 16, 16, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blue" )
+			self:GetOwner().trail3 = util.SpriteTrail( self:GetOwner(), att3, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blue" )
+			self:GetOwner().trail4 = util.SpriteTrail( self:GetOwner(), att4, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blue" )
+			self:GetOwner().trail5 = util.SpriteTrail( self:GetOwner(), att5, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blue" )
+		else
+			self:GetOwner().trail = util.SpriteTrail( self:GetOwner(), att, Color( 255, 255, 255 ), false, 12, 12, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
+			self:GetOwner().trail2 = util.SpriteTrail( self:GetOwner(), att2, Color( 255, 255, 255 ), false, 16, 16, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
+			self:GetOwner().trail3 = util.SpriteTrail( self:GetOwner(), att3, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
+			self:GetOwner().trail4 = util.SpriteTrail( self:GetOwner(), att4, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
+			self:GetOwner().trail5 = util.SpriteTrail( self:GetOwner(), att5, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
+		end
 	end
 	if not self.ChargeSoundEnt then
 		self.ChargeSoundEnt = CreateSound(self:GetOwner(), "DemoCharge.Charging")
@@ -375,7 +395,15 @@ function ENT:StopCharging()
 	if self.ChargeSoundEnt then
 		self.ChargeSoundEnt = nil
 	end
-	
+	if SERVER then
+		if (IsValid(self:GetOwner().trail)) then
+			self:GetOwner().trail:Remove()
+			self:GetOwner().trail2:Remove()
+			self:GetOwner().trail3:Remove()
+			self:GetOwner().trail4:Remove()
+			self:GetOwner().trail5:Remove()
+		end
+	end
 	if self.ChargeState then
 		if self.ChargeState == 2 then
 			if self.CritStartSoundEnt then

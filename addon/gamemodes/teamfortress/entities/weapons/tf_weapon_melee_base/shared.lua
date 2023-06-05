@@ -32,8 +32,8 @@ SWEP.CriticalChance = 8
 SWEP.HasThirdpersonCritAnimation = false
 SWEP.NoHitSound = false
 
-SWEP.ForceMultiplier = 5000
-SWEP.CritForceMultiplier = 10000
+SWEP.ForceMultiplier = 1000
+SWEP.CritForceMultiplier = 1000
 SWEP.ForceAddPitch = 0
 SWEP.CritForceAddPitch = 0
 
@@ -638,11 +638,11 @@ function SWEP:MeleeAttack(dummy)
 						dmginfo:SetDamage(dmg)
 						dmginfo:SetDamageType(dmgtype)
 						dmginfo:SetDamagePosition(hitpos)
-						dmginfo:SetDamageForce(dmg * force_dir * (mul * 0.2))
+						dmginfo:SetDamageForce((self.BaseDamage * force_dir * (mul)) * 0.2)
 					if damagedself then
 						force_dir.x = -force_dir.x
 						force_dir.y = -force_dir.y
-						dmginfo:SetDamageForce(dmg * force_dir * (mul * 0.5))
+						dmginfo:SetDamageForce((self.BaseDamage * force_dir * (mul)) * 0.5)
 						v:DispatchBloodEffect()
 						v:TakeDamageInfo(dmginfo)
 					else
@@ -731,11 +731,11 @@ function SWEP:MeleeAttack(dummy)
 					dmginfo:SetDamage(dmg)
 					dmginfo:SetDamageType(dmgtype)
 					dmginfo:SetDamagePosition(hitpos)
-					dmginfo:SetDamageForce(dmg * force_dir * (mul * 0.2))
+					dmginfo:SetDamageForce(self.BaseDamage * force_dir * (mul) * 0.2)
 				if damagedself then
 					force_dir.x = -force_dir.x
 					force_dir.y = -force_dir.y
-					dmginfo:SetDamageForce(dmg * force_dir * (mul * 0.5))
+					dmginfo:SetDamageForce(self.BaseDamage * force_dir * (mul) * 0.5)
 					tr.Entity:DispatchBloodEffect()
 					tr.Entity:TakeDamageInfo(dmginfo)
 				else

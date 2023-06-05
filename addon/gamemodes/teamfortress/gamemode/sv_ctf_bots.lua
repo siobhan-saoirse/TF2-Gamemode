@@ -330,11 +330,11 @@ end)
 
 hook.Add("PostPlayerDeath", "LeadBot_S_Death", function(bot)
 	if bot.TFBot then
-		local time = 6
+		local time = 6 
 		if (GetConVar("civ2_allow_respawn_with_key_press"):GetBool() and !string.find(bot:GetModel(),"/bot_")) then
 			time = 2
 		end
-		timer.Simple(2, function()
+		timer.Simple(time, function()
 			if IsValid(bot) and !bot:Alive() then
 				if (bot_respawn:GetBool() and !bot:IsL4D()) then
 
@@ -769,15 +769,14 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			if bot.LastPath[bot.CurSegment + 1] then
 				curgoal = bot.LastPath[bot.CurSegment + 1] 
 			end
-			mv:SetForwardSpeed(0)
 		end
 		
-		if (bot.LastPath[bot.CurSegment + 1]) then
+		if (!bot:GetNWBool("Taunting",false) and bot.botPos) then
 			if ((bot.intelcarrier and bot.intelcarrier.movingAway)) then
 				mv:SetForwardSpeed(0)
 				return
 			else
-				mv:SetForwardSpeed(bot:GetRunSpeed())
+				mv:SetForwardSpeed(1200)
 			end
 		end
 		local mva = ((goalpos + bot:GetCurrentViewOffset()) - bot:GetShootPos()):Angle()
@@ -1135,6 +1134,15 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 	
 			-- back up if the target is really close
 			-- TODO: find a random spot rather than trying to back up into what could just be a wall
+			if (tf_bot_melee_only:GetBool()) then
+				if (IsValid(bot:GetWeapons()[3])) then
+					bot:SelectWeapon(bot:GetWeapons()[3])
+				elseif (IsValid(bot:GetWeapons()[2])) then
+					bot:SelectWeapon(bot:GetWeapons()[2])
+				else
+					bot:SelectWeapon(bot:GetWeapons()[1])
+				end
+			end
 			if (!tf_bot_melee_only:GetBool()) then
 				if (bot:IsL4D()) then
 					if IsValid(bot:GetActiveWeapon()) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 70 and bot.playerclass != "medic" then 
@@ -1464,6 +1472,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 										else
 											if (bot:GetActiveWeapon().IsMeleeWeapon and bot.TargetEnt:GetPos():Distance(bot:GetPos()) > 400 * bot:GetModelScale()) then return end
 											if (bot:Team() == TEAM_BLU and string.find(bot:GetModel(),"/bot_") and bot:HasGodMode()) then return end
+											if (IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging and ply:GetPlayerClass() != "samuraidemo") then return end
 											if (bot:GetActiveWeapon().ReloadSingle and !bot:GetActiveWeapon().Reloading) then
 												buttons = buttons + IN_ATTACK
 											elseif (!bot:GetActiveWeapon().ReloadSingle) then

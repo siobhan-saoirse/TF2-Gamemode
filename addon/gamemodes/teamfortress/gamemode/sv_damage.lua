@@ -282,7 +282,6 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 	
 	if is_normal_damage then
 		-- Not a crit, calculate the damage properly here
-		
 		if inf.Explosive then
 			-- Explosive damage
 			
@@ -295,11 +294,13 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 					else
 						dmginfo:SetDamage(inf.BaseDamage * 0.8)
 					end
-					dmginfo:SetDamageForce(dmginfo:GetDamageForce() * 2)
+					dmginfo:SetDamageForce(dmginfo:GetDamageForce() * 1.2)
 				elseif ent.IsTFBuilding then
 					damage = 0
 					dmginfo:SetDamageForce(vector_origin)
 				end
+			else
+				dmginfo:SetDamageForce(dmginfo:GetDamageForce() * 0.5)
 			end
 			
 			if not damage then
@@ -336,8 +337,14 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (dmginfo:GetDamage()) * 0.5)
 	end
 
-	if (string.find(game.GetMap(),"mvm_") and ent:Team() == TEAM_RED) then
-		ent:SetVelocity(dmginfo:GetDamageForce() * (dmginfo:GetDamage()) * 0.5))	
+	if (dmginfo:IsDamageType(DMG_CLUB)) then
+
+		dmginfo:SetDamagePosition(dmginfo:GetDamageForce())
+		
+	end
+	
+	if (string.find(game.GetMap(),"mvm_") and GAMEMODE:EntityTeam(ent) == TEAM_RED) then
+		ent:SetVelocity(dmginfo:GetDamageForce() * (dmginfo:GetDamage()) * 0.5)
 	end
 	return dontscaledamage
 end
@@ -542,13 +549,11 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (inflictor.BlastForceMultiplier or 1) * BlastForceMultiplier * 0.7)
 	end
 	
-	if ((ent:IsPlayer() and ent:IsBot() and string.find(ent:GetModel(),"_boss.mdl")) or (attacker:IsPlayer() and IsValid(attacker:GetActiveWeapon()) and attacker:GetActiveWeapon().IsMeleeWeapon)) then
-		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * 0.3)
-	end
+	dmginfo:SetDamageForce(dmginfo:GetDamageForce() / ent:GetModelScale())
 	if gamemode.Call("ShouldCrit", ent, inflictor, attacker, hitgroup, dmginfo) then
 		if att == ent then
 			-- Self damage, don't scale the damage, but still notify the player that they critted themselves
-			if ent:IsPlayer() and (!ent.NextSpeak or ent.NextSpeak<CurTime()) then
+			if ent:IsPlayer() and (!ent.NextPainSound or ent.NextPainSound<CurTime()) then
 				SendUserMessage("CriticalHitReceived", ent)
 			end
 		else
@@ -721,7 +726,19 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	elseif not dmginfo:IsFallDamage() and not dmginfo:IsDamageType(DMG_DIRECT) and ent:WaterLevel() < 1 then
 		if attacker:IsPlayer() then
 			if ent:HasGodMode() == false and !ent:IsMiniBoss() then
-				ent:PainSound("TLK_PLAYER_ATTACKER_PAIN")
+				if (!ent.NextPainSound or ent.NextPainSound<CurTime()) then
+
+					ent:PainSound("TLK_PLAYER_PAIN")
+					
+					if SERVER and ent.playerclass then
+						timer.Simple(0.0002, function()
+						
+							attacker:SendLua("Entity("..ent:EntIndex().."):EmitSound(\""..ent.playerclass..".Death\")")
+
+						end)
+					end
+
+				end
 			else
 				if (!ent:IsMiniBoss()) then
 					if ent:GetPlayerClass() == "scout" then
@@ -788,7 +805,7 @@ function GM:ExtinguishEntity(ent)
 	if IsValid(ent.FireEntity) then
 		ent.FireEntity:Remove()
 	end
-	ent:Extinguish()
+	ent:Extinguish() 
 end
 
 function GM:EntityStartBleeding(ent, inf, att, dur)

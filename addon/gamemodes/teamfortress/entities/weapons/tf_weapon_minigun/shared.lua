@@ -363,7 +363,7 @@ function SWEP:Think()
 			end
 		end
 	end
-	if (string.find(self.Owner:GetModel(),"_boss") and string.find(self.WorldModel, "_minigun")) then
+	if (string.find(self.Owner:GetModel(),"_boss") and (self:GetItemData().name == "Deflector" or self:GetItemData().name == "TF_WEAPON_MINIGUN")) then
 		self.ShootSound2 = Sound("MVM.GiantHeavyGunFire")
 		self.SpecialSound1 = Sound("MVM.GiantHeavyGunWindUp")
 		self.SpecialSound2 = Sound("MVM.GiantHeavyGunWindDown")

@@ -437,17 +437,17 @@ function meta:SetPlayerClass(class)
 		else 
 			c.Model = "models/player/"..(c.ModelName or "scout")..".mdl"
 		end
+		self:StopSound("MVM.GiantScoutLoop")
+		self:StopSound("MVM.GiantSoldierLoop")
+		self:StopSound("MVM.GiantPyroLoop")
+		self:StopSound("MVM.GiantDemomanLoop")
+		self:StopSound("MVM.GiantHeavyLoop")
 		if self:GetInfoNum("tf_giant_robot", 0) == 1 then
 			if self:GetPlayerClass() != "medic" and self:GetPlayerClass() != "sniper" and self:GetPlayerClass() != "engineer" and self:GetPlayerClass() != "spy" then
 				c.Model = "models/bots/"..(c.ModelName or "scout").."_boss/bot_"..(c.ModelName or "scout").."_boss.mdl"
 			else
 				c.Model = "models/bots/"..(c.ModelName or "scout").."/bot_"..(c.ModelName or "scout")..".mdl"
 			end
-			self:StopSound("MVM.GiantScoutLoop")
-			self:StopSound("MVM.GiantSoldierLoop")
-			self:StopSound("MVM.GiantPyroLoop")
-			self:StopSound("MVM.GiantDemomanLoop")
-			self:StopSound("MVM.GiantHeavyLoop")
 			if (self:GetPlayerClass() == "scout") then
 				self:EmitSound("MVM.GiantScoutLoop")
 			elseif (self:GetPlayerClass() == "soldier") then
@@ -561,6 +561,22 @@ function meta:SetPlayerClass(class)
 	tf_util.ReadActivitiesFromModel(self) 
 	UpgradePlayerIfBot(self)
 	self:ResetClassSpeed()
+	local ply = self
+	if (ply:IsBot() and ply:GetPlayerClass() == "scout" and ply:GetWeapons()[2]:GetClass() == "tf_weapon_lunchbox_drink") then
+
+		timer.Simple(0.8, function()
+			self:SelectWeapon("tf_weapon_lunchbox_drink")
+			self:GetActiveWeapon():PrimaryAttack()
+		end)
+		
+	elseif (ply:IsBot() and ply:GetPlayerClass() == "heavy" and ply:GetWeapons()[2]:GetClass() == "tf_weapon_lunchbox") then
+
+		timer.Simple(0.8, function()
+			self:SelectWeapon("tf_weapon_lunchbox")
+			self:GetActiveWeapon():PrimaryAttack()
+		end)
+		
+	end
 end
 
 

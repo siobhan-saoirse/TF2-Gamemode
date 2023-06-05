@@ -33,7 +33,7 @@ function GM:DoTFPlayerDeath(ent, attacker, dmginfo)
 			end)
 		end
 	end
-	if (dmginfo:IsDamageType(DMG_DISSOLVE)) then
+	if (dmginfo and dmginfo:IsDamageType(DMG_DISSOLVE)) then
 		ent:EmitSound("TFPlayer.Dissolve")
 	end
 	if (attacker.TFBot) then
