@@ -20,6 +20,26 @@ local TimeRemainingToOutput = {
 {300, "On5MinRemain"	, nil										, Sound("Announcer.RoundEnds5minutes")},
 }
 
+
+local TimeRemainingToOutputMVM = {
+	{1	, "On1SecRemain"	, Sound("Announcer.RoundBegins1Seconds")	, Sound("Announcer.RoundEnds1seconds")},
+	{2	, "On2SecRemain"	, Sound("Announcer.RoundBegins2Seconds")	, Sound("Announcer.RoundEnds2seconds")},
+	{3	, "On3SecRemain"	, Sound("Announcer.RoundBegins3Seconds")	, Sound("Announcer.RoundEnds3seconds")},
+	{4	, "On4SecRemain"	, Sound("Announcer.RoundBegins4Seconds")	, Sound("Announcer.RoundEnds4seconds")},
+	{5	, "On5SecRemain"	, Sound("Announcer.RoundBegins5Seconds")	, Sound("Announcer.RoundEnds5seconds")},
+	{6	, "On6SecRemain"	, nil	, nil},
+	{7	, "On7SecRemain"	, nil	, nil},
+	{8	, "On8SecRemain"	, nil	, nil},
+	{9	, "On9SecRemain"	, nil	, nil},
+	{10	, "On10SecRemain"	, "Announcer.MVM_Wave_Start", nil},
+	{20	, "On20SecRemain"	, nil	, nil},
+	{30	, "On30SecRemain"	, nil, nil},
+	{60	, "On1MinRemain"	, nil, nil},
+	{120, "On2MinRemain"	, nil										, nil},
+	{180, "On3MinRemain"	, nil										, nil},
+	{240, "On4MinRemain"	, nil										, nil},
+	{300, "On5MinRemain"	, nil										, Sound("Announcer.RoundEnds5minutes")},
+	}
 function ENT:Initialize()
 end
 
@@ -242,6 +262,32 @@ function ENT:Think()
 		end
 		return
 	end
+	if (string.find(game.GetMap(),"mvm_")) then
+
+		for k,v in ipairs(TimeRemainingToOutputMVM) do
+			if k == self.LastPlayedTimeSignal then
+				break
+			end
+			
+			if t <= v[1] then
+				self:TriggerOutput(v[2])
+				self.LastPlayedTimeSignal = k
+				if (!self.WaitingForPlayers) then
+					if self.IsSetupPhase and v[3] then
+						umsg.Start("TF_PlayGlobalSound")
+							umsg.String(v[3])
+						umsg.End()
+					elseif not self.IsSetupPhase and self.AutoCountdown and v[4] then
+						umsg.Start("TF_PlayGlobalSound")
+							umsg.String(v[4])
+						umsg.End()
+					end
+				end
+				break
+			end
+		end
+
+	else
 		for k,v in ipairs(TimeRemainingToOutput) do
 			if k == self.LastPlayedTimeSignal then
 				break
@@ -264,6 +310,7 @@ function ENT:Think()
 				break
 			end
 		end
+	end
 end
 
 function ENT:Input_Pause(activator, caller, data)

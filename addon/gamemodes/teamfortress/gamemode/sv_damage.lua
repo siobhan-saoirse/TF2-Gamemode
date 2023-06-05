@@ -287,7 +287,6 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 			-- Explosive damage
 			
 			local damage = inf.CalculatedDamage
-			
 			-- Self damage
 			if att==ent then
 				if ent:IsPlayer() and inf.BaseDamage then
@@ -337,6 +336,9 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (dmginfo:GetDamage()) * 0.5)
 	end
 
+	if (string.find(game.GetMap(),"mvm_") and ent:Team() == TEAM_RED) then
+		ent:SetVelocity(dmginfo:GetDamageForce() * (dmginfo:GetDamage()) * 0.5))	
+	end
 	return dontscaledamage
 end
 

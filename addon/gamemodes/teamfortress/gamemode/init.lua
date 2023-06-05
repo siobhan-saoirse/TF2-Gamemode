@@ -1325,7 +1325,7 @@ local function PlayerGiantBotSpawn( ply, mv )
 					timer.Create("GiantRobotSpeed"..ply:EntIndex(), 0.01, 0, function()
 						if not ply:Alive() then timer.Stop("GiantRobotSpeed"..ply:EntIndex()) return end
 						if ply:GetInfoNum("tf_giant_robot", 0) == 0 then timer.Stop("GiantRobotSpeed"..ply:EntIndex()) return end
-						ply:SetPoseParameter("move_x", 1)
+						//ply:SetPoseParameter("move_x", 1)
 					end)
 					ply:SetModel("models/bots/demo_boss/bot_demo_boss.mdl")
 					ply:SetModelScale(1.75)
@@ -1335,7 +1335,7 @@ local function PlayerGiantBotSpawn( ply, mv )
 					timer.Create("GiantRobotSpeed"..ply:EntIndex(), 0.01, 0, function()
 						if not ply:Alive() then timer.Stop("GiantRobotSpeed"..ply:EntIndex()) return end
 						if ply:GetInfoNum("tf_giant_robot", 0) == 0 then timer.Stop("GiantRobotSpeed"..ply:EntIndex()) return end
-						ply:SetPoseParameter("move_x", 1)
+						//ply:SetPoseParameter("move_x", 1)
 					end)
 					ply:EmitSound("MVM.GiantHeavyEntrance")
 					ply:SetModel("models/bots/heavy_boss/bot_heavy_boss.mdl")
@@ -1345,7 +1345,7 @@ local function PlayerGiantBotSpawn( ply, mv )
 					timer.Create("GiantRobotSpeed"..ply:EntIndex(), 0.01, 0, function()
 						if not ply:Alive() then timer.Stop("GiantRobotSpeed"..ply:EntIndex()) return end
 						if ply:GetInfoNum("tf_giant_robot", 0) == 0 then timer.Stop("GiantRobotSpeed"..ply:EntIndex()) return end
-						ply:SetPoseParameter("move_x", 1)
+						//ply:SetPoseParameter("move_x", 1)
 					end)
 					ply:SetModel("models/bots/pyro_boss/bot_pyro_boss.mdl")
 					ply:SetModelScale(1.75)
@@ -1355,7 +1355,7 @@ local function PlayerGiantBotSpawn( ply, mv )
 					timer.Create("GiantRobotSpeed"..ply:EntIndex(), 0.01, 0, function()
 						if not ply:Alive() then timer.Stop("GiantRobotSpeed"..ply:EntIndex()) return end
 						if ply:GetInfoNum("tf_giant_robot", 0) == 0 then timer.Stop("GiantRobotSpeed"..ply:EntIndex()) return end
-						ply:SetPoseParameter("move_x", 1)
+						//ply:SetPoseParameter("move_x", 1)
 					end)
 					ply:SetModel("models/bots/medic/bot_medic.mdl")
 					ply:SetModelScale(1.75)
@@ -1365,7 +1365,7 @@ local function PlayerGiantBotSpawn( ply, mv )
 					timer.Create("GiantRobotSpeed"..ply:EntIndex(), 0.01, 0, function()
 						if not ply:Alive() then timer.Stop("GiantRobotSpeed"..ply:EntIndex()) return end
 						if ply:GetInfoNum("tf_giant_robot", 0) == 0 then timer.Stop("GiantRobotSpeed"..ply:EntIndex()) return end
-						ply:SetPoseParameter("move_x", 1)
+						//ply:SetPoseParameter("move_x", 1)
 					end)
 					ply:SetModel("models/bots/engineer/bot_engineer.mdl")
 					ply:SetModelScale(1.75)
@@ -1375,7 +1375,7 @@ local function PlayerGiantBotSpawn( ply, mv )
 					timer.Create("GiantRobotSpeed"..ply:EntIndex(), 0.01, 0, function()
 						if not ply:Alive() then timer.Stop("GiantRobotSpeed"..ply:EntIndex()) return end
 						if ply:GetInfoNum("tf_giant_robot", 0) == 0 then timer.Stop("GiantRobotSpeed"..ply:EntIndex()) return end
-						ply:SetPoseParameter("move_x", 1)
+						//ply:SetPoseParameter("move_x", 1)
 					end)
 					ply:SetModel("models/bots/sniper/bot_sniper.mdl")
 					ply:SetModelScale(1.75)
@@ -1385,7 +1385,7 @@ local function PlayerGiantBotSpawn( ply, mv )
 					timer.Create("GiantRobotSpeed"..ply:EntIndex(), 0.01, 0, function()
 						if not ply:Alive() then timer.Stop("GiantRobotSpeed"..ply:EntIndex()) return end
 						if ply:GetInfoNum("tf_giant_robot", 0) == 0 then timer.Stop("GiantRobotSpeed"..ply:EntIndex()) return end
-						ply:SetPoseParameter("move_x", 1)
+						//ply:SetPoseParameter("move_x", 1)
 					end)
 					ply:SetModel("models/bots/spy/bot_spy.mdl")
 					ply:SetModelScale(1.75)

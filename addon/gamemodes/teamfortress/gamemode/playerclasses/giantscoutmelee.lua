@@ -1,5 +1,5 @@
 CLASS.Name = "Scout"
-CLASS.Speed = 520
+CLASS.Speed = 400
 CLASS.Health = 1200
 
 if CLIENT then

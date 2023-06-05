@@ -8,6 +8,7 @@ ENT.AdminOnly = false
 ENT.IsBoss = false
 ENT.Difficulty = 2
 ENT.PrintName		= "Minor League Scout"
+ENT.PreferredIcon = "hud/leaderboard_class_scout_stun"
 ENT.Items = {"Batter's Helmet","Sandman"}
 ENT.Category		= "TF2: MVM Bots"
 

@@ -27,23 +27,7 @@ if not meta.EmitSoundOLD then
 	meta.EmitSoundOLD = meta.EmitSound
 end
 function meta:EmitSound(snd, lvl, pitch)
-	local s = tf_soundscript.Sounds[string.lower(snd)]
-	--print(snd)
-	if s then
-		snd = table.Random(s.wave)
-		local pitch
-		if s.rndpitch then
-			pitch = math.random(unpack(s.rndpitch))
-		else
-			pitch = s.pitch
-		end
-		
-		local lvl = s.soundlevel
-		
-		self:EmitSoundOLD(snd, lvl, pitch)
-	else
-		self:EmitSoundOLD(snd, lvl, pitch)
-	end
+	self:EmitSoundOLD(snd, lvl, pitch)
 end
 
 if not util.PrecacheSoundOLD then

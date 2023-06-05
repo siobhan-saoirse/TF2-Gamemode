@@ -377,7 +377,7 @@ function meta:SetPlayerClass(class)
 	
 	-- Capitalize player class because the talker system wants to :/
 	-- This is used for playing scenes
-	if (self:GetPlayerClass() == "superscout" || self:GetPlayerClass() == "chiefscout" || self:GetPlayerClass() == "melee_scout" || self:GetPlayerClass() == "melee_scout_expert" || self:GetPlayerClass() == "melee_scout_sandman" || self:GetPlayerClass() == "giantscout" || self:GetPlayerClass() == "scoutfan" || self:GetPlayerClass() == "scout_shortstop" || self:GetPlayerClass() == "superscoutfan" || self:GetPlayerClass() == "bonk_scout") then
+	if (self:GetPlayerClass() == "superscout" || self:GetPlayerClass() == "giantscoutmelee" || self:GetPlayerClass() == "chiefscout" || self:GetPlayerClass() == "melee_scout" || self:GetPlayerClass() == "melee_scout_expert" || self:GetPlayerClass() == "melee_scout_sandman" || self:GetPlayerClass() == "giantscout" || self:GetPlayerClass() == "scoutfan" || self:GetPlayerClass() == "scout_shortstop" || self:GetPlayerClass() == "superscoutfan" || self:GetPlayerClass() == "bonk_scout") then
 		self.playerclass = "Scout"
 	elseif (self:GetPlayerClass() == "demoknight" || self:GetPlayerClass() == "samuraidemo" || self:GetPlayerClass() == "sentrybuster" || self:GetPlayerClass() == "giantdemoman" || self:GetPlayerClass() == "wtfdemoman" || self:GetPlayerClass() == "giantdemoknight" || self:GetPlayerClass() == "chieftavish") then
 		self.playerclass = "Demoman"
@@ -531,6 +531,32 @@ function meta:SetPlayerClass(class)
 		else
 				self:ManipulateBoneScale(self:LookupBone("bip_head"),Vector(1, 1, 1))
 		end
+	end
+	if (self:IsMiniBoss()) then
+		local npc = self
+		if (npc.playerclass == "Scout") then
+			npc:EmitSound("MVM.GiantScoutLoop")
+		elseif (npc.playerclass == "Soldier") then
+			npc:EmitSound("MVM.GiantSoldierLoop")
+		elseif (npc.playerclass == "Pyro") then
+			npc:EmitSound("MVM.GiantPyroLoop")
+		elseif (npc.playerclass == "Demoman") then
+		
+			if (!string.find(npc:GetPlayerClass(),"sentry")) then
+			
+				npc:EmitSound("MVM.GiantDemomanLoop")
+				
+			else
+				
+				npc:EmitSound("MVM.SentryBusterLoop")
+				npc:EmitSound("MVM.SentryBusterIntro")
+				
+			end
+			
+		elseif (npc.playerclass == "Heavy") then
+			npc:EmitSound("MVM.GiantHeavyLoop")
+		end	
+
 	end
 	tf_util.ReadActivitiesFromModel(self) 
 	UpgradePlayerIfBot(self)

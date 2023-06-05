@@ -242,6 +242,13 @@ function GM:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 		vel:Rotate(Angle(0,-pl:EyeAngles().y,0))
 		vel:Rotate(Angle(-vel:Angle().p,0,0))
 			
+		local maxspeed = pl:GetRunSpeed()
+		
+		if SERVER then
+			pl:SetPoseParameter("move_x", vel.x / maxspeed)
+			pl:SetPoseParameter("move_y", -vel.y / maxspeed)
+		end
+
 		if not pl.PlayerBodyYaw or not pl.TargetBodyYaw then
 			pl.TargetBodyYaw = pl:EyeAngles().y
 			pl.PlayerBodyYaw = pl.TargetBodyYaw
@@ -305,7 +312,11 @@ function GM:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 	local vel = 1 * velocity
 	vel:Rotate(Angle(0,-pl:EyeAngles().y,0))
 	vel:Rotate(Angle(-vel:Angle().p,0,0))
-		
+	if SERVER then
+		pl:SetPoseParameter("move_x", vel.x / maxspeed)
+		pl:SetPoseParameter("move_y", -vel.y / maxspeed)
+	end
+
 	local maxspeed2 =  pl:GetClassSpeed()
 		
 	

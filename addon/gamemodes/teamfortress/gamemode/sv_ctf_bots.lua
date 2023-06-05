@@ -699,6 +699,38 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					end
 				end
 			end
+			if IsValid(bot.intelcarrier) and !IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.intelcarrier:GetPos()) < 6000 and bot.intelcarrier:Health() > 1 then
+				if (bot:GetPlayerClass() != "tank_l4d") then
+					if (bot:GetNWBool("Taunting",false) == true) then 
+						return 
+					end 
+				end	
+			
+				local shouldvegoneforthehead = bot.intelcarrier:EyePos()
+				local bone = 1
+				shouldvegoneforthehead = bot.intelcarrier:GetBonePosition(bone)
+				if (!bot.isCarryingIntel) then
+					bot.botPos = bot.intelcarrier:GetPos()
+				end
+
+				local lerp = 1.2
+				if bot.Difficulty == 0 then
+					lerp = 0.9
+				elseif bot.Difficulty == 2 then
+					lerp = 2
+				elseif bot.Difficulty == 3 then
+					lerp = 4
+				end
+				if (bot:IsL4D()) then
+					bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):Angle()))
+				else
+					if (bot:GetPlayerClass() == "soldier" and (bot:GetActiveWeapon().HoldType == "PRIMARY" or bot:GetActiveWeapon().HoldType == "PRIMARY2")) then
+						bot:SetEyeAngles(LerpAngle(FrameTime() * math.random(8, 10) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos() - Vector(0,0,25)):Angle()))
+					else
+						bot:SetEyeAngles(LerpAngle(FrameTime() * math.random(8, 10) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):Angle()))
+					end
+				end
+			end
 		if bot.ControllerBot.P then
 			bot.LastPath = bot.ControllerBot.P:GetAllSegments()
 		end
@@ -737,8 +769,17 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			if bot.LastPath[bot.CurSegment + 1] then
 				curgoal = bot.LastPath[bot.CurSegment + 1] 
 			end
+			mv:SetForwardSpeed(0)
 		end
 		
+		if (bot.LastPath[bot.CurSegment + 1]) then
+			if ((bot.intelcarrier and bot.intelcarrier.movingAway)) then
+				mv:SetForwardSpeed(0)
+				return
+			else
+				mv:SetForwardSpeed(bot:GetRunSpeed())
+			end
+		end
 		local mva = ((goalpos + bot:GetCurrentViewOffset()) - bot:GetShootPos()):Angle()
 		
 		if bot.botPos and curgoal.area:GetAttributes() != NAV_MESH_CLIFF and bot:GetPos():Distance(curgoal.pos) > 50 * bot:GetModelScale() then
@@ -793,15 +834,6 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			bot.ControllerBot:SetPos(bot:GetPos())
 		end
 
-		for _, intel in pairs(ents.FindByClass("item_teamflag_mvm")) do
-				
-			if IsValid(intel.Carrier) and bot:GetPos():Distance(intel.Carrier:GetPos()) < 180 and bot:EntIndex() != intel.Carrier:EntIndex() then -- dont move if too close!
-				bot.tooclose = true
-			else
-				bot.tooclose = false
-			end
-
-		end
 		if (IsValid(bot.TargeEntity) and bot.TargeEntity:GetClass() == "tf_wearable_item_demoshield" and bot.TargeEntity.dt.Ready and bot.botPos) then
 			bot.TargeEntity:StartCharging()
 		end
@@ -836,11 +868,6 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				targetpos2 = fintelcap.Pos -- goto friendly cap spot
 				ignoreback = true
 			elseif intel.Carrier and bot:EntIndex() != intel.Carrier:EntIndex() then -- or else if we have it already carried
-				
-				if bot:GetPos():Distance(intel.Carrier:GetPos()) < 80 then -- dont move if too close!
-					mv:SetForwardSpeed(0)
-					mv:SetSideSpeed(0)
-				end
 				
 				targetpos2 = intel.Carrier:GetPos() -- follow that man
 			elseif fintel.Carrier and bot:EntIndex() != fintel.Carrier:EntIndex() then -- if our intel is being stolen...
@@ -883,12 +910,17 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				bot.isCarryingIntel = true
 				if !intel.Carrier then -- neither intel has a capture
 					targetpos2 = intel:GetPos() -- goto enemy intel
+					bot.intelcarrier = nil
 				elseif intel.Carrier and intel.Carrier:EntIndex() == bot:EntIndex() then -- or if friendly intelligence has capture
 					targetpos2 = fintelcap.Pos -- goto friendly cap spot
+					bot.intelcarrier = nil
 				elseif IsValid(intel.Carrier) and bot:EntIndex() != intel.Carrier:EntIndex() then -- or else if we have it already carried
+
 					targetpos2 = intel.Carrier:GetPos() -- follow that man
+					bot.intelcarrier = intel.carrier
 				else
 					targetpos2 = fintelcap.Pos -- move to the bomb, the flag is currently invalid until a bot gets it
+					bot.intelcarrier = nil
 				end	
 			else
 				targetpos2 = fintelcap.Pos -- goto friendly cap spot
@@ -920,12 +952,14 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			end
 		end
 			
-		if (bot:GetNWBool("Taunting",false) != true and bot.botPos) then
-			if (!bot.tooclose) then 
-				mv:SetForwardSpeed(1200)
+		for _, intel in pairs(ents.FindByClass("item_teamflag_mvm")) do
+						
+			if IsValid(intel.Carrier) and bot:GetPos():Distance(intel.Carrier:GetPos()) < 180 and bot:EntIndex() != intel.Carrier:EntIndex() then -- dont move if too close!
+				bot.tooclose = true
 			else
-				mv:SetForwardSpeed(0)
+				bot.tooclose = false
 			end
+
 		end
 		if bot.playerclass == "Medic" or bot:GetPlayerClass() == "giantmedic" then
 				--print(intel)

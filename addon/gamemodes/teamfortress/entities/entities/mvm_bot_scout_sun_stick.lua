@@ -8,7 +8,7 @@ ENT.AdminOnly = false
 ENT.PrintName		= "Scout (Sun-on-a-Stick)"
 ENT.Category		= "TF2: MVM Bots"
 ENT.Items = {"Sun-on-a-Stick","Bolt Boy"}
-ENT.PreferredIcon = "hud/leaderboard_class_scout_bat"
+ENT.PreferredIcon = "hud/leaderboard_class_scout"
 
 list.Set( "NPC", "mvm_bot_scout_sun_stick", {
 	Name = ENT.PrintName,

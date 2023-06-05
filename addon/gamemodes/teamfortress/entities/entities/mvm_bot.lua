@@ -274,11 +274,22 @@ function ENT:Initialize()
 					end
 					npc:SetModelScale(self.OverrideModelScale) 
 				else
-					npc:SetModel("models/bots/"..class.."/bot_"..class..".mdl")
-					if (npc:GetPlayerClass() == "bowman_rapid_fire") then
-						npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.7, 0.7, 0.7))
-					elseif (npc:GetPlayerClass() == "scout_shortstop") then
-						npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.75, 0.75, 0.75))
+					if (self.IsBoss) then
+
+						if (npc:GetPlayerClass() == "engineer" or npc:GetPlayerClass() == "medic" or npc:GetPlayerClass() == "giantengineer" or npc:GetPlayerClass() == "giantmedic" or npc:GetPlayerClass() == "sniper" or npc:GetPlayerClass() == "spy") then
+							npc:SetModel("models/bots/"..class.."/bot_"..class..".mdl")
+							npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.7, 0.7, 0.7))
+						else
+							npc:SetModel("models/bots/"..class.."_boss/bot_"..class.."_boss.mdl")
+						end
+						
+					else
+						npc:SetModel("models/bots/"..class.."/bot_"..class..".mdl")
+						if (npc:GetPlayerClass() == "bowman_rapid_fire") then
+							npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.7, 0.7, 0.7))
+						elseif (npc:GetPlayerClass() == "scout_shortstop") then
+							npc:ManipulateBoneScale(npc:LookupBone("bip_head"),Vector(0.75, 0.75, 0.75))
+						end
 					end
 				end		
 				
