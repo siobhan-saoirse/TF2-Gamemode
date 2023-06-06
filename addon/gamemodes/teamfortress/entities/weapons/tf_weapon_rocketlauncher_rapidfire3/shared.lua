@@ -155,7 +155,7 @@ function SWEP:ShootProjectile()
 		local ang = self.Owner:EyeAngles()
 		
 		rocket:SetAngles(ang + Angle(math.random(-5,5),math.random(-5,5),0))
-		rocket.ExplosionSound = "MVM.GiantSoldierRocketExplode"
+		--rocket.ExplosionSound = "MVM.GiantSoldierRocketExplode"
 		if self:Critical() then
 			rocket.critical = true
 		end

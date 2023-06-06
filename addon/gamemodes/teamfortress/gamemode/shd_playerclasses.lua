@@ -442,6 +442,8 @@ function meta:SetPlayerClass(class)
 		self:StopSound("MVM.GiantPyroLoop")
 		self:StopSound("MVM.GiantDemomanLoop")
 		self:StopSound("MVM.GiantHeavyLoop")
+		self:StopSound("MVM.SentryBusterLoop")
+		self:StopSound("MVM.SentryBusterIntro")
 		if self:GetInfoNum("tf_giant_robot", 0) == 1 then
 			if self:GetPlayerClass() != "medic" and self:GetPlayerClass() != "sniper" and self:GetPlayerClass() != "engineer" and self:GetPlayerClass() != "spy" then
 				c.Model = "models/bots/"..(c.ModelName or "scout").."_boss/bot_"..(c.ModelName or "scout").."_boss.mdl"

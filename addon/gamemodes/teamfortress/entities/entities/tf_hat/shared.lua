@@ -4112,7 +4112,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 				snd.SoundLevel = 95
 			else
 				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_common/giant_common_step_0"..math.random(1,8)..".wav")
-				if (string.find(snd.Entity:GetModel(),"scout") || string.find(snd.Entity:GetModel(),"superscout") || string.find(snd.Entity:GetModel(),"superscoutfan") || string.find(snd.Entity:GetModel(),"gianscout")) then
+				if (string.find(snd.Entity:GetModel(),"scout") || string.find(snd.Entity:GetModel(),"scout_boss")) then
 					snd.SoundLevel = 87
 				elseif (string.find(snd.Entity:GetModel(),"soldier")) then
 					snd.SoundLevel = 95
