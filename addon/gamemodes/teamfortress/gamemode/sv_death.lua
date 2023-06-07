@@ -973,6 +973,13 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	if (attacker:IsPlayer() and (attacker:GetPlayerClass() == "demoknight" || attacker:GetPlayerClass() == "giantdemoknight")) then
 		GAMEMODE:AddCritBoostTime(attacker, 3)
 	end
+	if (IsValid(ply.trail)) then
+		ply.trail:Remove()
+		ply.trail2:Remove()
+		ply.trail3:Remove()
+		ply.trail4:Remove()
+		ply.trail5:Remove()
+	end
 	if (GetConVar("tf_use_client_ragdolls"):GetBool()) then
 		if (ply:HasDeathFlag(DF_DECAP)) then
 			ply:Decap()
