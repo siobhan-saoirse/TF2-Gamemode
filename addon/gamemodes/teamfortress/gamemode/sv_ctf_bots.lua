@@ -667,7 +667,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			bot.ControllerBot.PosGen = bot.botPos
 		end
 
-			if IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 6000 and bot.TargetEnt:Health() > 1 then
+			if IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 6000 and bot.TargetEnt:Health() > 0 then
 				if (bot:GetPlayerClass() != "tank_l4d") then
 					if (bot:GetNWBool("Taunting",false) == true) then 
 						return 
@@ -701,7 +701,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					end
 				end
 			end
-			if IsValid(bot.intelcarrier) and !IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.intelcarrier:GetPos()) < 6000 and bot.intelcarrier:Health() > 1 then
+			if IsValid(bot.intelcarrier) and !IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.intelcarrier:GetPos()) < 6000 and bot.intelcarrier:Health() > 0 then
 				if (bot:GetPlayerClass() != "tank_l4d") then
 					if (bot:GetNWBool("Taunting",false) == true) then 
 						return 
@@ -1119,23 +1119,23 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			-- back up if the target is really close
 			-- TODO: find a random spot rather than trying to back up into what could just be a wall
 			-- something like controller.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350, radius = 1000})?
-			if distance <= 90000 * bot.TargetEnt:GetModelScale() and bot:Visible(bot.TargetEnt) then
+			if distance <= 90000 * bot:GetModelScale() and bot:Visible(bot.TargetEnt) then
 				if (((IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) or !bot.TargetEnt:IsFriendly(bot)) and !bot:GetNWBool("Taunting",false)) then   
 					if (IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) then
 						mv:SetForwardSpeed(bot:GetRunSpeed())
 						if (math.random(1,10) == 1) then
-							bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() + bot:GetForward() * 350, radius = 300})
+							bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * (110 * bot:GetModelScale()), radius = 120 * bot:GetModelScale()})
 						end
 					else
 						mv:SetForwardSpeed(bot:GetRunSpeed())
 						if (math.random(1,10) == 1) then
-							bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350, radius = 3000})
+							bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350 * bot:GetModelScale(), radius = 3000 * bot:GetModelScale()})
 						end
 					end
 				else
 					mv:SetForwardSpeed(bot:GetRunSpeed())
 					if (math.random(1,10) == 1) then
-						bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350, radius = 3000})
+						bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350 * bot:GetModelScale(), radius = 3000 * bot:GetModelScale()})
 					end
 				end
 			else
@@ -1481,7 +1481,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 										end
 									end
 								else 
-									if (IsValid(bot:GetActiveWeapon()) and bot:Visible(bot.TargetEnt) and bot.TargetEnt:Health() > 0 and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 600 * bot:GetModelScale()) then
+									if (IsValid(bot:GetActiveWeapon()) and bot:Visible(bot.TargetEnt) and bot.TargetEnt:Health() > 0 and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 2600 * bot:GetModelScale()) then
 										if (bot:GetPlayerClass() != "samuraidemo" and IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging) then
 										
 										else
