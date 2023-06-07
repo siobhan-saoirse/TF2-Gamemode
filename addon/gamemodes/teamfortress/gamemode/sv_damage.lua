@@ -300,7 +300,7 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 					dmginfo:SetDamageForce(vector_origin)
 				end
 			else
-				dmginfo:SetDamageForce(dmginfo:GetDamageForce() * 0.5)
+				dmginfo:SetDamageForce(dmginfo:GetDamageForce())
 			end
 			
 			if not damage then
@@ -334,7 +334,7 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 	end
 	
 	if dmginfo:IsBulletDamage() and (inf.IsTFWeapon or inf.IsTFBuilding) and inf.CalculateDamage then
-		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (dmginfo:GetDamage()) * 0.5)
+		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (dmginfo:GetDamage()))
 	end
 
 	if (dmginfo:IsDamageType(DMG_CLUB)) then
@@ -346,6 +346,7 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 	if (string.find(game.GetMap(),"mvm_") and GAMEMODE:EntityTeam(ent) == TEAM_RED) then
 		ent:SetVelocity(dmginfo:GetDamageForce() * (dmginfo:GetDamage()) * 0.5)
 	end
+	dmginfo:SetDamageForce(dmginfo:GetDamageForce() / ent:GetModelScale())
 	return dontscaledamage
 end
 
@@ -549,7 +550,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (inflictor.BlastForceMultiplier or 1) * BlastForceMultiplier * 0.7)
 	end
 	
-	dmginfo:SetDamageForce(dmginfo:GetDamageForce() / ent:GetModelScale())
 	if gamemode.Call("ShouldCrit", ent, inflictor, attacker, hitgroup, dmginfo) then
 		if att == ent then
 			-- Self damage, don't scale the damage, but still notify the player that they critted themselves

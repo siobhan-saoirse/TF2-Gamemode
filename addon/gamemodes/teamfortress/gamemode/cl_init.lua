@@ -439,9 +439,38 @@ local function DoHealthBonusEffect(ent, positive, islargerthan100)
 	end
 end
 
+local function TransferBones( base, ragdoll ) -- Transfers the bones of one entity to a ragdoll's physics bones (modified version of some of RobotBoy655's code)
+	if !IsValid( base ) or !IsValid( ragdoll ) then return end
+	for i = 0, ragdoll:GetPhysicsObjectCount() - 1 do
+		local bone = ragdoll:GetPhysicsObjectNum( i )
+		if ( IsValid( bone ) ) then
+			local pos, ang = base:GetBonePosition( ragdoll:TranslatePhysBoneToBone( i ) )
+			if ( pos ) then bone:SetPos( pos ) end
+			if ( ang ) then bone:SetAngles( ang ) end
+		end
+	end
+end
+
 net.Receive("TFRagdollCreate", function()
     local ply = net.ReadEntity()
-	ply:BecomeRagdollOnClient()
+	local ragdoll = ClientsideRagdoll( ply:GetModel() )
+	if (!IsValid(ragdoll)) then return end
+	ply:SetNWEntity("RagdollEntity",ragdoll)
+	ragdoll:SetSkin(ply:GetSkin())
+	ragdoll:SetNoDraw( false )
+	ragdoll:DrawShadow( true )
+	TransferBones(ply,ragdoll)
+	if (IsValid(ragdoll:GetPhysicsObject())) then
+		local phys = ragdoll:GetPhysicsObject()
+		phys:Sleep()
+		phys:SetPos(ply:GetPos())
+		phys:SetVelocity(Vector(0,0,0))
+		phys:AddVelocity(net.ReadVector() * 0.05)
+		phys:Wake()
+	end
+	timer.Simple(15, function()
+		ragdoll:SetSaveValue( "m_bFadingOut", true )
+	end)
 end)
 usermessage.Hook("PlayerHealthBonusEffect", function(um)
 	local ent = GetPlayerByUserID(um:ReadLong())

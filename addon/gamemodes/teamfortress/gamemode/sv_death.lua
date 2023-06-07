@@ -848,7 +848,11 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		
 		if (((!ply:IsHL2() and !ply:IsL4D() and not (dmginfo:IsDamageType(DMG_ALWAYSGIB) or dmginfo:IsDamageType(DMG_BLAST) or dmginfo:IsExplosionDamage() or inflictor.Explosive)) or (ply:IsHL2() || ply:IsL4D())) or string.find(ply:GetModel(),"/bot_") and ply:GetModelScale() == 1.0 and !string.find(ply:GetModel(),"_boss.mdl")) then
 			if (GetConVar("tf_use_client_ragdolls"):GetBool()) then
-				ply:CreateRagdoll()
+				net.Start("TFRagdollCreate")
+					net.WriteEntity(ply)
+					net.WriteVector(ply:GetVelocity() * 8 + dmginfo:GetDamageForce())
+				net.Broadcast()
+				/*
 				timer.Simple(0.1, function()
 					local ragdoll = ply:GetRagdollEntity()
 					TransferBones(ply,ragdoll)
@@ -860,6 +864,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 						phys:AddVelocity(ply:GetVelocity() * 8 + dmginfo:GetDamageForce())
 					end
 				end)
+				*/
 			end
 		end
 
