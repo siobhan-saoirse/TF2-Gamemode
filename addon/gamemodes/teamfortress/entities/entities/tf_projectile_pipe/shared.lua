@@ -205,7 +205,7 @@ function ENT:Think()
 		self:Remove()
 	end
 	for k,v in ipairs(ents.FindInSphere(self:GetPos(),90)) do
-		if (v:IsValid() and v:IsTFPlayer()) then
+		if (v:IsValid() and v:IsTFPlayer() and v:EntIndex() != self:GetOwner():EntIndex()) then
 			if self.BouncesLeft>0 then
 				self:DoExplosion()
 			end

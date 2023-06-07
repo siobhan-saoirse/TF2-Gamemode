@@ -972,10 +972,10 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	timer.Stop("VoiceL4d"..ply:EntIndex(), 2.5)
 	if (GetConVar("tf_use_client_ragdolls"):GetBool()) then
 		if (ply:HasDeathFlag(DF_DECAP)) then
+			ply:Decap()
 			timer.Simple(0.1, function()
 			
 				ply:GetRagdollEntity():EmitSound("TFPlayer.Decapitated")
-				ply:Decap()
 				if (!ply:IsHL2()) then
 					local b1 = ply:GetRagdollEntity():LookupBone("bip_head")
 					local b2 = ply:GetRagdollEntity():LookupBone("bip_neck")

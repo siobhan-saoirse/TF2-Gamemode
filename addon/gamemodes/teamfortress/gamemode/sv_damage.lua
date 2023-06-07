@@ -347,6 +347,9 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 		ent:SetVelocity(dmginfo:GetDamageForce() * (dmginfo:GetDamage()) * 0.5)
 	end
 	dmginfo:SetDamageForce(dmginfo:GetDamageForce() / ent:GetModelScale())
+	if (inf.IsTFWeapon and (string.find(inf:GetClass(),"sword") or string.find(inf:GetClass(),"katana"))) then
+		ent:AddDeathFlag(DF_DECAP)
+	end
 	return dontscaledamage
 end
 
