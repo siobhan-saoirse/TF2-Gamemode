@@ -465,7 +465,7 @@ net.Receive("TFRagdollCreate", function()
 		phys:Sleep()
 		phys:SetPos(ply:GetPos())
 		phys:SetVelocity(Vector(0,0,0))
-		phys:AddVelocity(net.ReadVector() * 0.05)
+		phys:AddVelocity(net.ReadVector())
 		phys:Wake()
 	end
 	timer.Simple(15, function()
