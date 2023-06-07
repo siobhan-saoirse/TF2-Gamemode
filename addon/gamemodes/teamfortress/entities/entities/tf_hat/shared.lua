@@ -2894,8 +2894,9 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 				"18",
 			})..".wav")
 			
-			snd.Channel = CHAN_BODY
+			snd.Channel = CHAN_STATIC
 			snd.Pitch = math.random(95,100)
+			snd.SoundLevel = 87
 			if (snd.Entity:IsPlayer()) then
 				if (snd.Entity:GetMoveType() == MOVETYPE_LADDER) then
 					snd.Volume = 1 * (groundspeed * 0.000006)
@@ -2921,6 +2922,7 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 					end
 				end
 			end
+			snd.Volume = snd.Volume * 0.35
 			if (snd.Entity:GetClass() == "infected") then
 				if (string.find(snd.Entity:GetModel(),"clown")) then
 	
@@ -4106,6 +4108,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_scout/giant_scout_step_0"..math.random(1,4)..".wav")
 				snd.SoundLevel = 95
 			end
+			snd.Channel = CHAN_STATIC
 		else
 			if (string.find(snd.Entity:GetModel(),"buster")) then
 				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/sentrybuster/mvm_sentrybuster_step_0"..math.random(1,4)..".wav")
@@ -4114,10 +4117,13 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_common/giant_common_step_0"..math.random(1,8)..".wav")
 				if (string.find(snd.Entity:GetModel(),"scout") || string.find(snd.Entity:GetModel(),"scout_boss")) then
 					snd.SoundLevel = 87
+					snd.Volume = snd.Volume * 0.6
 				elseif (string.find(snd.Entity:GetModel(),"soldier")) then
 					snd.SoundLevel = 95
+					snd.Volume = snd.Volume * 0.65
 				elseif (string.find(snd.Entity:GetModel(),"pyro")) then
 					snd.SoundLevel = 95
+					snd.Volume = snd.Volume * 0.65
 				elseif (string.find(snd.Entity:GetModel(),"demo")) then
 					snd.SoundLevel = 95
 				elseif (string.find(snd.Entity:GetModel(),"heavy")) then
@@ -4132,6 +4138,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					snd.SoundLevel = 87
 				end
 			end
+			snd.Channel = CHAN_STATIC
 		end
 		snd.Volume = 1
 		snd.Channel = CHAN_BODY

@@ -40,6 +40,10 @@ function SWEP:DrawWorldModel(  )
 			end
 		end
 		if (IsValid(_Owner)) then
+			local t2 = _Owner:GetProxyVar("CritTeam") 
+			local s2 = _Owner:GetProxyVar("CritStatus")
+			self.WModel:SetProxyVar("CritTeam",t2)
+			self.WModel:SetProxyVar("CritStatus",s2)
             -- Specify a good position
 			if (self.WModel:GetMaterial() != mat or string.find(self.WModel:GetMaterial(),"invuln")) then
 				self.WModel:SetSkin(self.WeaponSkin or _Owner:GetSkin())
@@ -69,10 +73,6 @@ function SWEP:DrawWorldModel(  )
 			self.WModel:SetPos(self:GetPos())
 			self.WModel:SetAngles(self:GetAngles())
 			self.WModel:SetParent(self.Owner)
-			local t2 = _Owner:GetProxyVar("CritTeam") 
-			local s2 = _Owner:GetProxyVar("CritStatus")
-			self.WModel:SetProxyVar("CritTeam",t2)
-			self.WModel:SetProxyVar("CritStatus",s2)
 		else	
 			self.WModel:SetPos(self:GetPos())
 			self.WModel:SetAngles(self:GetAngles())
