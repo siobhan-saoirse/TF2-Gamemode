@@ -321,10 +321,10 @@ function meta:SetPlayerClass(class)
 		self.PlayerJumpPower = 200
 	else
 
-		self.PlayerJumpPower = 240
+		self.PlayerJumpPower = 289
 	end
 	self:SetJumpPower(self.PlayerJumpPower)
-
+	self.NextCritBoostExpire = 0
 	-- Hull and view offset
 	if self:ShouldUseDefaultHull() then -- In HL2 maps, all players should have a normal collision hull so they can go through doors properly...
 		-- Default hull
@@ -601,7 +601,7 @@ function meta:SetClassSpeed(sp)
 		end
 		self:SetWalkSpeed(sp) 
 		self:SetRunSpeed(sp * 1.2) 
-		--self:SetJumpPower(self.PlayerJumpPower)
+		self:SetJumpPower(self.PlayerJumpPower)
 		self:SetCrouchedWalkSpeed(0.33)
 		self:SetMaxSpeed(450) 
 		self:SetNWFloat("ClassSpeed", sp) 

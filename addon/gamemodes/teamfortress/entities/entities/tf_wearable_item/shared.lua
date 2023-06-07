@@ -138,14 +138,6 @@ function ENT:Think()
 				end
 			end
 		end
-	elseif self.Model then
-		if (IsValid(self.Owner)) then
-			if (self.Owner:Team() == TEAM_BLU) then
-				self:SetSkin(1)
-			else
-				self:SetSkin(0)
-			end
-		end
 	end
 end
 function ENT:Initialize()

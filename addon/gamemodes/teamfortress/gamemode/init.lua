@@ -113,7 +113,7 @@ concommand.Add("addcond", function(pl, cmd, args)
 			end
 		end
 		if a == 11 or a == 37 or a == 35 then
-			GAMEMODE:StartCritBoost(pl, 1)
+			GAMEMODE:StartCritBoost(pl)
 		end
 		if a == 91 then
 			pl:GetWeapons()[1].Primary.ClipSize = pl:GetWeapons()[1].Primary.ClipSize + 6
@@ -2276,7 +2276,7 @@ function GM:PlayerSpawn(ply)
 	if ply:GetObserverMode() ~= OBS_MODE_NONE then
 		ply:UnSpectate()
 	end
-	
+
 	if ply:Team()==TEAM_SPECTATOR then
 		GAMEMODE:PlayerSpawnAsSpectator( ply )
 	end
@@ -2656,13 +2656,13 @@ elseif file.Exists("maps/"..game.GetMap()..".lua", "LUA") then
 end
 
 RunConsoleCommand("sk_player_head", "1")
-RunConsoleCommand("sv_friction", "4")
+RunConsoleCommand("sv_friction", "8")
 RunConsoleCommand("sv_stopspeed", "100")
 --Disables use key on objects (Can Be Re-enabled)
 -- WHAT WERE YOU THINKING
 RunConsoleCommand("sv_playerpickupallowed", "1")
 --Sets the gravity to 800 (Can be set back to default "600")
-RunConsoleCommand("sv_gravity", "700")
+RunConsoleCommand("sv_gravity", "800")
 --Sets to a impact force similar to TF2 so things to go flying balls of the walls!
 RunConsoleCommand("phys_impactforcescale", "0.05")
 --Ditto

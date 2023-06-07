@@ -21,7 +21,7 @@ SWEP.HitFlesh = Sound("")
 SWEP.HitRobot = Sound("MVM_Weapon_Default.HitFlesh")
 SWEP.HitWorld = Sound("")
 
-SWEP.MeleeAttackDelay = 0.2	
+SWEP.MeleeAttackDelay = 0.15
 --SWEP.MeleeAttackDelayCritical = 0.25
 SWEP.MeleeRange = 48
 
@@ -360,77 +360,53 @@ function SWEP:MeleeHitSound(tr)
 	if tr.Entity and IsValid(tr.Entity) then
 		if tr.Entity:IsTFPlayer() then
 			if tr.Entity:IsBuilding() then
-				--self:EmitSound(self.HitWorld)
+				--self.Owner:EmitSound(self.HitWorld)
 				--sound.Play(self.HitWorld, tr.HitPos)
 				if SERVER then
 				sound.Play(self.HitWorld, self:GetPos())
 				end
 			else
-				--self:EmitSound(self.HitFlesh)
+				--self.Owner:EmitSound(self.HitFlesh)
 				--sound.Play(self.HitFlesh, tr.HitPos)
 				if tr.Entity:IsPlayer() and not tr.Entity:IsHL2() and tr.Entity:GetInfoNum("tf_robot",0) == 1 then
-					
-					if SERVER then
-						sound.Play(self.HitRobot, self:GetPos())
-					end
+					self.Owner:EmitSound(self.HitFlesh)
 				elseif tr.Entity:IsPlayer() and not tr.Entity:IsHL2() and tr.Entity:GetInfoNum("tf_giant_robot",0) == 1 then
-					
-					if SERVER then
-						sound.Play(self.HitRobot, self:GetPos())
-					end
+					self.Owner:EmitSound(self.HitFlesh)
 
 					
 				elseif tr.Entity:IsPlayer() and not tr.Entity:IsHL2() and tr.Entity:Team() == TEAM_BLU and string.find(game.GetMap(), "mvm_") then
-					if SERVER then
-						sound.Play(self.HitRobot, self:GetPos())
-					end
+					self.Owner:EmitSound(self.HitFlesh)
 					
 				elseif tr.Entity:IsPlayer() and not tr.Entity:IsHL2() and tr.Entity:Team() == TF_TEAM_PVE_INVADERS then
-					if SERVER then
-						sound.Play(self.HitRobot, self:GetPos())
-					end
+					self.Owner:EmitSound(self.HitFlesh)
 
 					
 
 				elseif tr.Entity:IsPlayer() and not tr.Entity:IsHL2() and tr.Entity:GetInfoNum("tf_sentrybuster",0) == 1 then
-					if SERVER then
-						sound.Play(self.HitRobot, self:GetPos())
-					end
+					self.Owner:EmitSound(self.HitFlesh)
 
 
 				elseif tr.Entity:IsPlayer() and tr.Entity:IsHL2() then
-					if SERVER then
-						sound.Play(self.HitFlesh, self:GetPos())
-					end
+					self.Owner:EmitSound(self.HitFlesh)
 
 				elseif tr.Entity:IsPlayer() and not tr.Entity:IsHL2() and tr.Entity:GetInfoNum("tf_robot",0) != 1 and tr.Entity:GetInfoNum("tf_giant_robot",0) != 1 and tr.Entity:GetInfoNum("tf_sentrybuster",0) != 1 then
 				
-					if SERVER then
-						sound.Play(self.HitFlesh, self:GetPos())
-					end
+					self.Owner:EmitSound(self.HitFlesh)
 				
 				elseif tr.Entity:IsNPC() then
 				
-					if SERVER then
-						sound.Play(self.HitFlesh, self:GetPos())
-					end
+					self.Owner:EmitSound(self.HitFlesh)
 					
 				elseif tr.Entity.Base == "npc_tf2base" or tr.Entity.Base == "npc_demo_red" or tr.Entity.Base == "npc_hwg_red" or tr.Entity.Base == "npc_soldier_red" or tr.Entity.Base == "npc_sniper_red" or tr.Entity.Base == "npc_spy_red" or tr.Entity.Base == "npc_scout_red" or tr.Entity.Base == "npc_pyro_red" or tr.Entity.Base == "npc_medic_red" or tr.Entity.Base == "npc_engineer_red" or tr.Entity:GetClass() == "headless_hatman" then
 				
-					if SERVER then
-						sound.Play(self.HitFlesh, self:GetPos())
-					end
+					self.Owner:EmitSound(self.HitFlesh)
 					
-				elseif tr.Entity:GetClass() == "tf_zombie" then 				
-					if SERVER then
-						sound.Play(self.HitFlesh, self:GetPos())
-					end
+				elseif tr.Entity:GetClass() == "tf_zombie" then 		
+					self.Owner:EmitSound(self.HitFlesh)
 					
 				elseif tr.Entity.Base == "npc_tf2base_mvm" or tr.Entity.Base == "npc_heavy_mvm" then
 				
-					if SERVER then
-						sound.Play(self.HitRobot, self:GetPos())
-					end
+					self.Owner:EmitSound(self.HitFlesh)
 					
 				end
 					
@@ -438,27 +414,27 @@ function SWEP:MeleeHitSound(tr)
 		else
 			if not self.NoHitSound then
 				if FleshMaterials[tr.Entity:GetMaterialType()] then
-					--self:EmitSound(self.HitFlesh)
+					--self.Owner:EmitSound(self.HitFlesh)
 					--sound.Play(self.HitFlesh, tr.HitPos)
-					sound.Play(self.HitFlesh, self:GetPos())
+					self.Owner:EmitSound(self.HitFlesh)
 				else
-					--self:EmitSound(self.HitWorld)
+					--self.Owner:EmitSound(self.HitWorld)
 					--sound.Play(self.HitWorld, tr.HitPos)
 					
 					if (string.find(tr.Entity:GetModel(),"door")) then
-						sound.Play(self.HitWorld, self:GetPos())
+						self.Owner:EmitSound(self.HitWorld)
 						self.Owner:EmitSound("physics/wood/wood_panel_impact_hard1.wav",95)
 					else
-						sound.Play(self.HitWorld, self:GetPos())
+						self.Owner:EmitSound(self.HitWorld)
 					end
 				end
 			end
 		end
 	else
 		if not self.NoHitSound then
-			--self:EmitSound(self.HitWorld)
+			--self.Owner:EmitSound(self.HitWorld)
 			--sound.Play(self.HitWorld, tr.HitPos)
-			sound.Play(self.HitWorld, self:GetPos())
+			self.Owner:EmitSound(self.HitWorld)
 		end
 	end
 end

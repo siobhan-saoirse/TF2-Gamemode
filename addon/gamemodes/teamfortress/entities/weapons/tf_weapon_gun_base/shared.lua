@@ -78,9 +78,10 @@ function SWEP:PrimaryAttack()
 		self:ShootEffects()
 	end
 	if not self:CallBaseFunction("PrimaryAttack") then return false end
-	if ( IsFirstTimePredicted() ) then
+	--if ( IsFirstTimePredicted() ) then
 		self:ShootProjectile(self.BulletsPerShot, self.BulletSpread)
 		self.Owner:DoAttackEvent()
+		self.Owner:SetAnimation(PLAYER_ATTACK1)
 		if self:GetVisuals() and self:GetVisuals()["sound_single_shot"] then
 			self.ShootSound = self:GetVisuals()["sound_single_shot"]
 			self.ShootCritSound = self:GetVisuals()["sound_burst"]
@@ -97,7 +98,7 @@ function SWEP:PrimaryAttack()
 				end
 			end
 		end)
-	end
+	--end
 	
 
 	if self then

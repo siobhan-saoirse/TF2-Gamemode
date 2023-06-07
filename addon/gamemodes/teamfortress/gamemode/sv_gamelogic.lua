@@ -397,8 +397,10 @@ function GM:AddCritBoostTime(pl, time)
 			w:OnCritBoostAdded()
 		end
 	end
-	
-	pl.NextCritBoostExpire = pl.NextCritBoostExpire + time
+	timer.Stop("CritEnd"..pl:EntIndex())
+	timer.Create("CritEnd"..pl:EntIndex(),time,1,function()
+		GAMEMODE:StopCritBoost(pl)
+	end)
 end
 
 function GM:StartCritBoost(pl, slotconstraint)
@@ -420,7 +422,7 @@ function GM:StopCritBoost(pl)
 	pl.CritBoostType = nil
 	pl.CritBoostSlotConstraint = nil
 	if (pl:HasPlayerState(PLAYERSTATE_CRITBOOST)) then
-		pl:EmitSound("TFPlayer.CritBoostOff")
+		--pl:EmitSound("TFPlayer.CritBoostOff")
 	end
 	pl:StopSound("Weapon_General.CritPower")
 	pl:RemovePlayerState(bit.bor(PLAYERSTATE_CRITBOOST,PLAYERSTATE_MINICRIT), true)
@@ -754,7 +756,7 @@ hook.Add("Think", "TFPlayerThink", function()
 		-- Critical boost expired, remove the crit effect
 		
 		if v:IsPlayer() and v.NextCritBoostExpire and CurTime()>v.NextCritBoostExpire then
-			GAMEMODE:StopCritBoost(v)
+			--GAMEMODE:StopCritBoost(v)
 		end
 		
 		--------------------------------------------------------

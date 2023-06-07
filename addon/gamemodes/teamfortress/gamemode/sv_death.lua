@@ -850,7 +850,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 			if (GetConVar("tf_use_client_ragdolls"):GetBool()) then
 				net.Start("TFRagdollCreate")
 					net.WriteEntity(ply)
-					net.WriteVector(ply:GetVelocity() * 8 + dmginfo:GetDamageForce())
+					net.WriteVector(ply:GetVelocity() + dmginfo:GetDamageForce())
 				net.Broadcast()
 				/*
 				timer.Simple(0.1, function()

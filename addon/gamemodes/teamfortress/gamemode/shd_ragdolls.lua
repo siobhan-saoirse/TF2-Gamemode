@@ -579,8 +579,8 @@ hook.Add("CreateEntityRagdoll", "TFServersideNPCRagdoll", function(npc, rag)
 		end
 		
 		rag:SetMaterial("models/player/shared/gold_player")
-	--elseif npc:HasDeathFlag(DF_DECAP) then
-	--	PlayDeathPose(rag, DecapDeathPose)
+	elseif npc:HasDeathFlag(DF_DECAP) then
+		PlayDeathPose(rag, DecapDeathPose)
 	elseif npc:HasDeathFlag(DF_HEADSHOT) then
 		PlayDeathPose(rag, HeadshotDeathPose)
 	end

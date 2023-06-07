@@ -472,7 +472,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	
 	if (ent:GetClass() == "npc_helicopter") then
 		dmginfo:SetDamageType(DMG_AIRBOAT)
-		dmginfo:SetDamage(dmginfo:GetDamage() * 3)
+		dmginfo:SetDamage(dmginfo:GetDamage() * 26)
 	end
 	--print("EntityTakeDamage",ent,dmginfo)
 	

@@ -26,13 +26,12 @@ function SWEP:DrawWorldModel(  )
 		if (!IsValid(self.WModel)) then
 			self.WModel = ents.CreateClientProp()
 			self.WModel:Spawn()
+			self.WModel:AddEffects(EF_BONEMERGE)
 		end
 		self.WModel:SetNoDraw(true)
-		self.WModel:SetModel(self:GetItemData().model_world or self:GetItemData().model_player or self.WorldModel)
-		self.WModel:SetRenderMode( RENDERMODE_TRANSCOLOR )
-		if (_Owner:HasGodMode() and _Owner:GetNWBool("NoWeapon",false) != true) then
+		if (self.WModel:GetMaterial() != "models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())) and _Owner:HasGodMode() and _Owner:GetNWBool("NoWeapon",false) != true) then
 			self.WModel:SetMaterial("models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())))
-		elseif (_Owner:GetNWBool("NoWeapon",false) == true) then
+		elseif (self.WModel:GetMaterial() != "color" and _Owner:GetNWBool("NoWeapon",false) == true) then
 			self.WModel:SetMaterial("color")
 		else
 			local mat = self.CustomMaterialOverride2 or self.MaterialOverride or self.WeaponMaterial or ""
@@ -42,9 +41,15 @@ function SWEP:DrawWorldModel(  )
 		end
 		if (IsValid(_Owner)) then
             -- Specify a good position
-			self.WModel:SetSkin(self.WeaponSkin or _Owner:GetSkin())
+			if (self.WModel:GetMaterial() != mat or string.find(self.WModel:GetMaterial(),"invuln")) then
+				self.WModel:SetSkin(self.WeaponSkin or _Owner:GetSkin())
+			end
 			self.WModel:SetBodyGroups(self:GetBodyGroups())
 			
+			local model = self:GetItemData().model_world or self:GetItemData().model_player or self.WorldModel
+			if (self.WModel:GetModel() != model) then
+				self.WModel:SetModel(model)
+			end
 			local offsetVec = Vector(4, -2, 0)
 			local offsetAng = Angle(170, 180, 0)
 			if (_Owner:IsHL2()) then
@@ -64,23 +69,16 @@ function SWEP:DrawWorldModel(  )
 			self.WModel:SetPos(self:GetPos())
 			self.WModel:SetAngles(self:GetAngles())
 			self.WModel:SetParent(self.Owner)
-			self.WModel:AddEffects(EF_BONEMERGE)
+			local t2 = _Owner:GetProxyVar("CritTeam") 
+			local s2 = _Owner:GetProxyVar("CritStatus")
+			self.WModel:SetProxyVar("CritTeam",t2)
+			self.WModel:SetProxyVar("CritStatus",s2)
 		else	
 			self.WModel:SetPos(self:GetPos())
 			self.WModel:SetAngles(self:GetAngles())
 		end
-	
-		if (_Owner:HasPlayerState(PLAYERSTATE_CRITBOOST)) then
-			self.WModel:SetColor(team.GetColor(_Owner:Team()))
-		else
-			self.WModel:SetColor(Color(255,255,255,255))
-		end
-		
 		self.WModel:DrawModel()
-		local t2 = _Owner:GetProxyVar("CritTeam") 
-		local s2 = _Owner:GetProxyVar("CritStatus")
-		self.WModel:SetProxyVar("CritTeam",t2)
-		self.WModel:SetProxyVar("CritStatus",s2)
+		
 end
 
 end
@@ -1427,7 +1425,10 @@ function SWEP:Think()
 		end
 		if IsValid(self.WModel) then
 			self.WModel:DrawModel()
-			self.WModel:SetSkin(self.WeaponSkin or self.Owner:GetSkin())
+			local skin = self.WeaponSkin or self.Owner:GetSkin()
+			if (self.WModel:GetSkin() != skin) then
+				self.WModel:SetSkin(skin)	
+			end
 			if (self.WModel:GetMaterial() != self.WeaponMaterial) then
 				self.WModel:SetMaterial(self.WeaponMaterial)
 			end

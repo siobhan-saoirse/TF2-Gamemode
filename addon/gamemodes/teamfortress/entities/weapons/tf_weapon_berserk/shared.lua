@@ -50,14 +50,14 @@ SWEP.HasSecondaryFire = true
 SWEP.UsesLeftRightAnim = true
 
 SWEP.ShouldOccurFists = true
-SWEP.DamageType = DMG_BLAST
+SWEP.DamageType = DMG_BLAST 
 
 function SWEP:OnCritBoostStarted()
-	self.Owner:EmitSound(self.CritEnabled)
+	--self.Owner:EmitSound(self.CritEnabled)
 end
 
 function SWEP:OnCritBoostAdded()
-	self.Owner:EmitSound(self.CritHit)
+	--self.Owner:EmitSound(self.CritHit)
 end
 
 

@@ -462,41 +462,13 @@ net.Receive("TFRagdollCreate", function()
 	TransferBones(ply,ragdoll)
 	if (IsValid(ragdoll:GetPhysicsObject())) then
 		local phys = ragdoll:GetPhysicsObject()
-		phys:SetPos(ply:GetPos())
+		phys:SetPos(ply:GetPos() + Vector(0,0,40))
 		phys:AddVelocity(net.ReadVector())
 	end
-	
-		if (ply:HasDeathFlag(DF_DECAP)) then
-				ragdoll:EmitSound("TFPlayer.Decapitated")
-					local b1 = ragdoll:LookupBone("bip_head")
-					local b2 = ragdoll:LookupBone("bip_neck")
-					local b3 = ragdoll:LookupBone("prp_helmet")
-					local b4 = ragdoll:LookupBone("jaw_bone")
-					if (b1 and b2) then
-						ragdoll:ManipulateBoneScale(b1, Vector(0,0,0))
-						ragdoll:ManipulateBoneScale(b2, Vector(0,0,0))	
-					end
-					if b3 then
-						ragdoll:ManipulateBoneScale(b3, Vector(0,0,0))
-					end
-					if b4 then
-						ragdoll:ManipulateBoneScale(b4, Vector(0,0,0))
-					end
-			local b
-			--print("decap3")
-			b = ragdoll:LookupBone("bip_head")
-			if b and b>0 then
-				ragdoll.NextDecapEnd = CurTime() + 5
-				ragdoll.DecapLocator = ClientsideModel("models/props_junk/watermelon01.mdl")
-				ragdoll.DecapLocator:SetNoDraw(true)
-				ragdoll.DecapLocator:SetParent(ragdoll)
-				
-				ParticleEffectAttach("blood_decap", PATTACH_ABSORIGIN_FOLLOW, ragdoll.DecapLocator, 0)
-			end
-		end
 	timer.Simple(15, function()
 		ragdoll:SetSaveValue( "m_bFadingOut", true )
 	end)
+	gamemode.Call("SetupPlayerRagdoll", ply, ragdoll)
 end)
 usermessage.Hook("PlayerHealthBonusEffect", function(um)
 	local ent = GetPlayerByUserID(um:ReadLong())

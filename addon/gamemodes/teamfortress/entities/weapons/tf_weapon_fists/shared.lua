@@ -58,11 +58,11 @@ SWEP.Force = 0
 SWEP.AddPitch = -2
 
 function SWEP:OnCritBoostStarted()
-	self.Owner:EmitSound(self.CritEnabled)
+	--self.Owner:EmitSound(self.CritEnabled)
 end
 
 function SWEP:OnCritBoostAdded()
-	self.Owner:EmitSound(self.CritHit)
+	--self.Owner:EmitSound(self.CritHit)
 end
 
 function SWEP:Deploy() 
@@ -941,23 +941,28 @@ function SWEP:SecondaryAttack()
 			self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 		end
 		self.NextIdle = CurTime() + self:SequenceDuration() 
-		table.insert(self.NextMeleeAttack, CurTime() + self.MeleeAttackDelay)
+		if (IsFirstTimePredicted()) then
+			table.insert(self.NextMeleeAttack, CurTime() + self.MeleeAttackDelay)
+		end
 		if self.HasCustomMeleeBehaviour then return true end
 			
 		local vm = self.Owner:GetViewModel()	
 		if self:CriticalEffect() then
 			self:EmitSound(self.SwingCrit, 100, 100)
-			self:SendWeaponAnimEx(self.VM_SWINGHARD)
-			if self.HasThirdpersonCritAnimation then
-				self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_SECONDARYFIRE, true)
-			else
-				self.Owner:SetAnimation(PLAYER_ATTACK1)
+			if SERVER then
+				self:SendWeaponAnimEx(self.VM_SWINGHARD)
 			end
 		else
 			self:EmitSound(self.Swing, 100, 100)
+			if SERVER then
+				self:SendWeaponAnim(self.VM_HITRIGHT)
+			end
 		end
-		self:SendWeaponAnim(self.VM_HITLEFT)
-		self.Owner:SetAnimation(PLAYER_ATTACK1)
+		if self:CriticalEffect() and self.HasThirdpersonCritAnimation then
+			self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_SECONDARYFIRE, true)
+		else
+			self.Owner:SetAnimation(PLAYER_ATTACK1)
+		end
 		if self.Owner:GetPlayerClass() == "tank_l4d" or self.Owner:GetPlayerClass() == "boomer"or self.Owner:GetPlayerClass() == "spitter"or self.Owner:GetPlayerClass() == "boomette"  or self.Owner:GetPlayerClass() == "smoker" or self.Owner:GetPlayerClass() ==  "hunter" or self.Owner:GetPlayerClass() ==  "jockey" or self.Owner:GetPlayerClass() ==  "witch" then
 			timer.Adjust("VoiceL4d"..self.Owner:EntIndex(), 1.5)
 			self.Owner:DoAnimationEvent(ACT_MELEE_ATTACK1)
@@ -1046,8 +1051,7 @@ function SWEP:SecondaryAttack()
 		elseif self.Owner:GetPlayerClass() == "L4D1_zombie" then
 			self.Owner:DoAnimationEvent(ACT_MELEE_ATTACK2)
 		end
-	end
-	if (self.Owner:IsBot() && self.Owner:GetPlayerClass() == "smoker" and !self.Smoking) then
+	elseif (self.Owner:IsBot() && self.Owner:GetPlayerClass() == "smoker" and !self.Smoking) then
 		self.Owner:EmitSound("SmokerZombie.Warn")
 		self.Owner:PlaySequence("tongue_attack_antic")
 		self:SetNextSecondaryFire(CurTime() + 8)
@@ -1206,8 +1210,7 @@ function SWEP:SecondaryAttack()
 				end)
 			end
 		end)
-	end
-	if self.Owner:GetPlayerClass() == "poisonzombie" then
+	elseif self.Owner:GetPlayerClass() == "poisonzombie" then
 	
 		local pos = self.Owner:GetShootPos()
 			self:SetNextSecondaryFire(CurTime() + 3)
@@ -1807,15 +1810,6 @@ function SWEP:SecondaryAttack()
 				end)
 			end
 		end)
-	else
-		if (IsFirstTimePredicted()) then
-			self:PrimaryAttack()
-		end
-		if self:CriticalEffect() then
-			self:SendWeaponAnim(self.VM_SWINGHARD)
-		else
-			self:SendWeaponAnim(self.VM_HITRIGHT)
-		end
 	end
 	self.NextIdle = CurTime() + self:SequenceDuration() 
 end
@@ -2489,6 +2483,7 @@ function SWEP:PrimaryAttack()
 		if not self.NextMeleeAttack then
 			self.NextMeleeAttack = {}
 		end
+		self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
 		self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 		if (self.Owner:GetPlayerClass() != "boomer" && self.Owner:GetPlayerClass() != "spitter") then
 			self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
@@ -2500,17 +2495,18 @@ function SWEP:PrimaryAttack()
 		local vm = self.Owner:GetViewModel()	
 		if self:CriticalEffect() then
 			self:EmitSound(self.SwingCrit, 100, 100)
-			self:SendWeaponAnimEx(self.VM_SWINGHARD)
-			if self.HasThirdpersonCritAnimation then
-				self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_SECONDARYFIRE, true)
-			else
-				self.Owner:SetAnimation(PLAYER_ATTACK1)
+			if SERVER then
+				self:SendWeaponAnimEx(self.VM_SWINGHARD)
 			end
 		else
 			self:EmitSound(self.Swing, 100, 100)
+			self:SendWeaponAnim(self.VM_HITLEFT)
 		end
-		self:SendWeaponAnim(self.VM_HITLEFT)
-		self.Owner:SetAnimation(PLAYER_ATTACK1)
+		if self:CriticalEffect() and self.HasThirdpersonCritAnimation then
+			self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_SECONDARYFIRE, true)
+		else
+			self.Owner:SetAnimation(PLAYER_ATTACK1)
+		end
 		if self.Owner:GetPlayerClass() == "tank_l4d" or self.Owner:GetPlayerClass() == "boomer"or self.Owner:GetPlayerClass() == "spitter"or self.Owner:GetPlayerClass() == "boomette"  or self.Owner:GetPlayerClass() == "smoker" or self.Owner:GetPlayerClass() ==  "hunter" or self.Owner:GetPlayerClass() ==  "jockey" or self.Owner:GetPlayerClass() ==  "witch" then
 			timer.Adjust("VoiceL4d"..self.Owner:EntIndex(), 1.5)
 			self.Owner:DoAnimationEvent(ACT_MELEE_ATTACK1)
@@ -2529,8 +2525,11 @@ function SWEP:PrimaryAttack()
 			self:SendWeaponAnim(vm:GetSequenceActivity(table.Random({vm:LookupSequence("claw_melee_layer"),vm:LookupSequence("claw_melee_layer2"),vm:LookupSequence("claw_melee_layer3")})))
 		end
 	else
-		self:SendWeaponAnim(self.VM_HITLEFT)
-		self.Owner:SetAnimation(PLAYER_ATTACK1)
+		if self:CriticalEffect() and self.HasThirdpersonCritAnimation then
+			self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_SECONDARYFIRE, true)
+		else
+			self.Owner:SetAnimation(PLAYER_ATTACK1)
+		end
 		
 		if self.Owner:GetPlayerClass() == "zombie" then
 			self.Owner:DoAnimationEvent(ACT_MELEE_ATTACK1)
@@ -2571,10 +2570,8 @@ function SWEP:PrimaryAttack()
 		if not self.NextMeleeAttack then
 			self.NextMeleeAttack = {}
 		end
+		self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
 		self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
-		if (self.Owner:GetPlayerClass() != "boomer") then
-			self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
-		end
 		self.NextIdle = CurTime() + self:SequenceDuration() 
 		if (IsFirstTimePredicted()) then
 			table.insert(self.NextMeleeAttack, CurTime() + self.MeleeAttackDelay)
@@ -2583,14 +2580,20 @@ function SWEP:PrimaryAttack()
 				
 		if self:CriticalEffect() then
 			self:EmitSound(self.SwingCrit, 100, 100)
-			self:SendWeaponAnimEx(self.VM_SWINGHARD)
-			if self.HasThirdpersonCritAnimation then
+			
+			if SERVER then
+				self:SendWeaponAnimEx(self.VM_SWINGHARD)
+			end
+			if self:CriticalEffect() and self.HasThirdpersonCritAnimation then
 				self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_SECONDARYFIRE, true)
 			else
 				self.Owner:SetAnimation(PLAYER_ATTACK1)
 			end
 		else
 			self:EmitSound(self.Swing, 100, 100)
+			if SERVER then
+				self:SendWeaponAnim(self.VM_HITLEFT)
+			end
 		end
 	end
 end
