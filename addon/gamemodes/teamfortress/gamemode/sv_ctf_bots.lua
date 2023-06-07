@@ -1131,13 +1131,13 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 							bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * (110 * bot:GetModelScale()), radius = 120 * bot:GetModelScale()})
 						end
 					else
-						mv:SetForwardSpeed(bot:GetRunSpeed())
+						mv:SetForwardSpeed(-bot:GetRunSpeed())
 						if (math.random(1,18 + table.Count(player.GetAll())) == 1) then
 							bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350 * bot:GetModelScale(), radius = 3000 * bot:GetModelScale()})
 						end
 					end
 				else
-					mv:SetForwardSpeed(bot:GetRunSpeed())
+					mv:SetForwardSpeed(-bot:GetRunSpeed())
 					if (math.random(1,18 + table.Count(player.GetAll())) == 1) then
 						bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350 * bot:GetModelScale(), radius = 3000 * bot:GetModelScale()})
 					end
