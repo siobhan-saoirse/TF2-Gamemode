@@ -221,9 +221,9 @@ function SWEP:ShootEffects()
 	if (!self:CanPrimaryAttack()) then return end
 	local wmodel = self:GetItemData().model_player or self.WorldModelOverride or self.WorldModel
 	if (self.Owner:GetNWBool("NoWeapon")) then
-		self.WorldModel = "models/empty.mdl"
+		--self.WorldModel = "models/empty.mdl"
 	else
-		self.WorldModel = wmodel;
+		--self.WorldModel = wmodel;
 	end;
 	local vm = self.Owner:GetViewModel()
 	if SERVER then

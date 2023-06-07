@@ -13,6 +13,8 @@ function ENT:Initialize()
 	self.LookAtTime = 0
 	self.LookAt = Angle(0, 0, 0)
 	self.NextCenter = 0
+	self.nextStuckJump = 0
+	self.NextJump = 0
 end
 
 function ENT:ChasePos( options )  

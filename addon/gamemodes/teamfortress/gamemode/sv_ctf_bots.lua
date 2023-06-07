@@ -641,15 +641,16 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			if controller.NextCenter < CurTime() then
 				controller.strafeAngle = ((controller.strafeAngle == 1 and 2) or 1)
 				controller.NextCenter = CurTime() + math.Rand(0.3, 0.65)
-				--[[
 			elseif controller.nextStuckJump < CurTime() then
 				if !bot:Crouching() then
 					controller.NextJump = 0
 				end
-				controller.nextStuckJump = CurTime() + math.Rand(1, 2)]]
+				controller.nextStuckJump = CurTime() + math.Rand(1, 2)
 			end
 		end
-	
+		if (controller.nextStuckJump > CurTime()) then
+			buttons = buttons + IN_JUMP
+		end
 		if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 1) then
 			bot.TargetEnt = nil
 			bot.LastPath = nil
@@ -787,7 +788,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		
 		if bot.botPos and curgoal.area:GetAttributes() != NAV_MESH_CLIFF and bot:GetPos():Distance(curgoal.pos) > 50 * bot:GetModelScale() then
 			if (IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging) then
-
+				--mv:SetMoveAngles(mva)
 			else
 				mv:SetMoveAngles(mva)
 			end
@@ -1152,48 +1153,13 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			-- back up if the target is really close
 			-- TODO: find a random spot rather than trying to back up into what could just be a wall
 			
-			if (tf_bot_melee_only:GetBool()) then
-				if (IsValid(bot:GetWeapons()[3])) then
+			if (tf_bot_melee_only:GetBool() and !string.find(bot:GetModel(),"/bots")) then
+				if (IsValid(bot:GetWeapons()[3]) and bot:GetWeapons()[3].IsMeleeWeapon) then
 					bot:SelectWeapon(bot:GetWeapons()[3])
-				elseif (IsValid(bot:GetWeapons()[2])) then
+				elseif (IsValid(bot:GetWeapons()[2]) and bot:GetWeapons()[2].IsMeleeWeapon) then
 					bot:SelectWeapon(bot:GetWeapons()[2])
-				else
+				elseif (IsValid(bot:GetWeapons()[1]) and bot:GetWeapons()[1].IsMeleeWeapon) then
 					bot:SelectWeapon(bot:GetWeapons()[1])
-				end
-			end
-			if (!tf_bot_melee_only:GetBool()) then
-				if (bot:IsL4D()) then
-					if IsValid(bot:GetActiveWeapon()) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 70 and bot.playerclass != "medic" then 
-						if (!bot:GetActiveWeapon().IsMeleeWeapon) then
-							mv:SetForwardSpeed(-100)
-						else
-							mv:SetForwardSpeed(0)
-						end
-					elseif IsValid(bot:GetActiveWeapon()) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 80 and bot.playerclass == "Medic" and bot.TargetEnt:IsFriendly(bot) then 
-						mv:SetForwardSpeed(0) 
-					elseif IsValid(bot:GetActiveWeapon()) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 50 and bot.playerclass == "Medic" and !bot.TargetEnt:IsFriendly(bot) then 
-						if (!bot:GetActiveWeapon().IsMeleeWeapon) then
-							mv:SetForwardSpeed(-100)
-						else
-							mv:SetForwardSpeed(0)
-						end
-					end
-				else
-					if IsValid(bot:GetActiveWeapon()) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 50 and bot.playerclass != "medic" then 
-						if (!bot:GetActiveWeapon().IsMeleeWeapon) then
-							mv:SetForwardSpeed(-100)
-						else
-							mv:SetForwardSpeed(0)
-						end
-					elseif IsValid(bot:GetActiveWeapon()) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 80 and bot.playerclass == "Medic" and bot.TargetEnt:IsFriendly(bot) then 
-						mv:SetForwardSpeed(0)
-					elseif IsValid(bot:GetActiveWeapon()) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 50 and bot.playerclass == "Medic" and !bot.TargetEnt:IsFriendly(bot) then 
-						if (!bot:GetActiveWeapon().IsMeleeWeapon) then
-							mv:SetForwardSpeed(-100)
-						else
-							mv:SetForwardSpeed(0)
-						end
-					end
 				end
 			end
 			if bot:GetPlayerClass() == "sniper" then

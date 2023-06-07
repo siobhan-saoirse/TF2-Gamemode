@@ -469,6 +469,11 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		dmginfo:SetDamage(0)
 		return true
 	end
+	
+	if (ent:GetClass() == "npc_helicopter") then
+		dmginfo:SetDamageType(DMG_AIRBOAT)
+		dmginfo:SetDamage(dmginfo:GetDamage() * 3)
+	end
 	--print("EntityTakeDamage",ent,dmginfo)
 	
 	-- Some HL2 projectiles seem to keep the original attacker, even though their owner got changed (by Pyro's airblast, for instance)

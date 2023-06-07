@@ -504,10 +504,6 @@ local function TFBulletCallback(attacker, trace, dmginfo)
 			--local damage = tf_util.CalculateDamage(dmg)
 			--local dir = (trace.HitPos - dmg.Src):GetNormal()
 			
-			if (trace.Entity:GetClass() == "npc_helicopter") then
-				dmginfo:SetDamageType(DMG_AIRBOAT)
-				dmginfo:SetDamage(dmginfo:GetDamage() * 26)
-			end
 			-- Some NPCs such as the combine gunship completely ignore bullet damage, so let's force the gamemode to process this damage
 			if ForceDamageClasses[trace.Entity:GetClass()] then
 				trace.Entity:TakeDamageInfo(dmginfo)

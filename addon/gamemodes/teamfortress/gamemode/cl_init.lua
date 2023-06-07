@@ -460,7 +460,7 @@ net.Receive("TFRagdollCreate", function()
 	ragdoll:SetNoDraw( false )
 	ragdoll:DrawShadow( true )
 	TransferBones(ply,ragdoll)
-	for i = 0, ragdoll:GetPhysicsObjectCount() - 1 do
+	if (IsValid(ragdoll:GetPhysicsObject())) then
 		local phys = ragdoll:GetPhysicsObject()
 		phys:SetPos(ply:GetPos())
 		phys:AddVelocity(net.ReadVector())

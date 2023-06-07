@@ -587,6 +587,7 @@ function meta:SetPlayerClass(class)
 		ply.trail4:Remove()
 		ply.trail5:Remove()
 	end
+	ply.TargetEnt = nil
 end
 
 

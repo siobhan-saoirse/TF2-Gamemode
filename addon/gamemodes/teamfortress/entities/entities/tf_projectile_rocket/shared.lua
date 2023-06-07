@@ -194,6 +194,14 @@ function ENT:Think()
 	if SERVER and !IsValid(self:GetOwner()) then
 		self:Remove()
 	end
+	
+	for k,v in ipairs(ents.FindInSphere(self:GetPos(),90)) do
+		if (self:GetCollisionGroup() == COLLISION_GROUP_DEBRIS and v:IsValid() and v:IsTFPlayer() and v:EntIndex() != self:GetOwner():EntIndex() and !v:IsFriendly(self:GetOwner())) then
+			if self.BouncesLeft>0 then
+				self:DoExplosion()
+			end
+		end
+	end
 	if not self.Homing then
 		self:SetAngles(self:GetVelocity():Angle())
 		return
@@ -363,7 +371,12 @@ end]]
 
 function ENT:Touch(ent)
 	if not ent:IsTrigger() and ent:IsSolid() then	
+		if (ent:IsTFPlayer() and IsValid(self:GetOwner()) and ent:IsFriendly(self:GetOwner())) then
+			self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+			return
+		end
 		self:DoExplosion(ent)
+		self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
 	end
 end
 
