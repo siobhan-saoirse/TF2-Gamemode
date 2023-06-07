@@ -7,8 +7,8 @@ ENT.Type = "nextbot"
 
 function ENT:Initialize()
 	self:SetModel("models/gman.mdl")
-	self:SetNoDraw(true)
 	self:SetSolid( SOLID_NONE )
+	self:SetNoDraw(true)
 	self.PosGen = nil
 	self.LookAtTime = 0
 	self.LookAt = Angle(0, 0, 0)
@@ -16,29 +16,50 @@ function ENT:Initialize()
 end
 
 function ENT:ChasePos( options )  
-	self.P = Path("Follow")
-	self.P:SetMinLookAheadDistance(300)
-	self.P:SetGoalTolerance(20)
-	if (self.PosGen == nil) then return end
-	self.P:Compute(self, self.PosGen)
-	
-	if !self.P:IsValid() then return end
-	while self.P:IsValid() do
-		if (math.random(1,5) == 1) then
-			if self.P:GetAge() > 0.3 then
-				if (self.PosGen == nil) then return end
-				self.P:Compute(self, self.PosGen)
-			end
-		end
-		if GetConVar("developer"):GetFloat() > 0 then
-			self.P:Draw()
-		end
-		
-		if self.loco:IsStuck() then
+
+	local options = options or {}
+	self.P = Path( "Follow" )
+	local path = self.P
+	path:SetMinLookAheadDistance( options.lookahead or 300 )
+	path:SetGoalTolerance( options.tolerance or 20 )
+	path:Compute( self, self.PosGen )
+
+	if ( !path:IsValid() ) then return "failed" end
+
+	while ( path:IsValid() ) do
+
+		path:Update( self )
+
+		-- If we're stuck then call the HandleStuck function and abandon
+		if ( self.loco:IsStuck() ) then
+
 			self:HandleStuck()
-			return
+
+			return "stuck"
+
 		end
+
+		if GetConVar("developer"):GetFloat() > 0 then
+			path:Draw()
+		end
+
+		--
+		-- If they set maxage on options then make sure the path is younger than it
+		--
+		if ( options.maxage ) then
+			if ( path:GetAge() > options.maxage ) then return "timeout" end
+		end
+
+		--
+		-- If they set repath then rebuild the path every x seconds
+		--
+		if ( options.repath ) then
+			if ( path:GetAge() > options.repath ) then path:Compute( self, pos ) end
+		end
+
+		coroutine.wait(10)
 		coroutine.yield()
+
 	end
 end
 
@@ -53,13 +74,18 @@ end
 function ENT:HandleStuck()
 	for k,v in ipairs(player.GetBots()) do
 		if (v.ControllerBot:EntIndex() == self:EntIndex()) then
-			self:SetModel(v:GetModel())
-			v:SetPos(v.LastPath[v.CurSegment + 1])
+			v:SetPos(self.P:GetCurrentGoal().pos)
 		end
 	end
 end
 function ENT:RunBehaviour()
 	while (true) do
+		for k,v in ipairs(player.GetBots()) do
+			if (v.ControllerBot:EntIndex() == self:EntIndex()) then
+				self:SetModel(v:GetModel())
+				self:SetModelScale(v:GetModelScale())
+			end
+		end
 		if self.PosGen then
 			self:ChasePos({})
 		end

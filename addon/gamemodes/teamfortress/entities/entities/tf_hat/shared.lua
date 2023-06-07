@@ -196,7 +196,7 @@ if CLIENT then
 			
 			local tr = util.TraceLine( {
 				start = pl:GetPos() + Vector(0,0,72),
-				endpos = pl:GetPos() - Vector(0,0,4) * 16,
+				endpos = pl:GetPos() - Vector(0,0,4) * 8,
 				mask = MASK_PLAYERSOLID_BRUSHONLY,
 				collisiongroup = COLLISION_GROUP_PLAYER_MOVEMENT
 			} )

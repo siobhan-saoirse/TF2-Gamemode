@@ -678,7 +678,9 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				local bone = 1
 				shouldvegoneforthehead = bot.TargetEnt:GetBonePosition(bone)
 				if (!bot.isCarryingIntel) then
-					bot.botPos = bot.TargetEnt:GetPos()
+					if (math.random(1,10) == 1) then
+						bot.botPos = bot.ControllerBot:FindSpot("near", {pos=bot.TargetEnt:GetPos(),radius = 12000,type="hiding",stepup=800,stepdown=800})
+					end
 				end
 
 				local lerp = 1.2
@@ -1048,7 +1050,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 					end
 				end
 			end
-				for k, v in pairs(player.GetBots()) do
+				for k, v in pairs(player.GetAll()) do
 					if (!IsValid(bot.TargetEnt)) then
 						if v:IsPlayer() and v:EntIndex() != bot:EntIndex() and v:GetPos():Distance(bot:GetPos()) < 6000 and !IsValid(bot.TargetEnt) then
 							if (!v:IsFriendly(bot)) then -- TODO: find a better way to do this
@@ -1056,7 +1058,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 								local trace = util.TraceLine({start = bot:GetShootPos(), endpos = targetpos, filter = function( ent ) return ent == v end})
 			
 								if trace.Entity == v and !trace.Entity:IsFlagSet(FL_NOTARGET) then -- TODO: FOV Check
-									if (!IsValid(bot.TargetEnt)) then
+									if (!IsValid(bot.TargetEnt) and v:Team() != TEAM_NEUTRAL) then
 										if (v:EntIndex() == bot:EntIndex()) then return end
 										if (v:EntIndex() == bot.ControllerBot:EntIndex()) then return end
 										bot.TargetEnt = v
@@ -1113,27 +1115,40 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			
 			-- move to our target
 			local distance = bot.TargetEnt:GetPos():DistToSqr(bot:GetPos())
-			if (!bot.isCarryingIntel) then
-				bot.botPos = bot.TargetEnt:GetPos()
-			end
 
 			-- back up if the target is really close
 			-- TODO: find a random spot rather than trying to back up into what could just be a wall
 			-- something like controller.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350, radius = 1000})?
-			if distance <= 90000 * bot.TargetEnt:GetModelScale() then
-				if ((IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) or !bot.TargetEnt:IsFriendly(bot)) then   
+			if distance <= 90000 * bot.TargetEnt:GetModelScale() and bot:Visible(bot.TargetEnt) then
+				if (((IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) or !bot.TargetEnt:IsFriendly(bot)) and !bot:GetNWBool("Taunting",false)) then   
 					if (IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) then
-					
+						mv:SetForwardSpeed(bot:GetRunSpeed())
+						if (math.random(1,10) == 1) then
+							bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() + bot:GetForward() * 350, radius = 300})
+						end
 					else
-						mv:SetForwardSpeed(0)
+						mv:SetForwardSpeed(bot:GetRunSpeed())
+						if (math.random(1,10) == 1) then
+							bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350, radius = 3000})
+						end
 					end
 				else
-					mv:SetForwardSpeed(-1200)
+					mv:SetForwardSpeed(bot:GetRunSpeed())
+					if (math.random(1,10) == 1) then
+						bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350, radius = 3000})
+					end
 				end
+			else
+
+				if (!bot.isCarryingIntel) then
+					bot.botPos = bot.TargetEnt:GetPos()
+				end
+
 			end
 	
 			-- back up if the target is really close
 			-- TODO: find a random spot rather than trying to back up into what could just be a wall
+			
 			if (tf_bot_melee_only:GetBool()) then
 				if (IsValid(bot:GetWeapons()[3])) then
 					bot:SelectWeapon(bot:GetWeapons()[3])
@@ -1466,7 +1481,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 										end
 									end
 								else 
-									if (IsValid(bot:GetActiveWeapon()) and bot:Visible(bot.TargetEnt) and bot.TargetEnt:Health() > 0) then
+									if (IsValid(bot:GetActiveWeapon()) and bot:Visible(bot.TargetEnt) and bot.TargetEnt:Health() > 0 and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 600 * bot:GetModelScale()) then
 										if (bot:GetPlayerClass() != "samuraidemo" and IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging) then
 										
 										else
