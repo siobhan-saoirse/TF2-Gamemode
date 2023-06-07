@@ -2841,7 +2841,7 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 		if (string.find(snd.Entity:GetModel(),"demo") and string.find(snd.Entity:GetModel(),"buster")) then
 			snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/sentrybuster/mvm_sentrybuster_step_0"..math.random(1,4)..".wav")
 			snd.SoundLevel = 95
-			snd.Channel = CHAN_BODY
+			snd.Channel = CHAN_STATIC
 			snd.Pitch = 100
 			local speed = snd.Entity:GetVelocity():Length()
 			local groundspeed = snd.Entity:GetVelocity():Length2DSqr()
@@ -2873,6 +2873,24 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 		else
 			local speed = snd.Entity:GetVelocity():Length()
 			local groundspeed = snd.Entity:GetVelocity():Length2DSqr()
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_01.wav")
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_02.wav")
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_03.wav")
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_04.wav")
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_05.wav")
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_06.wav")
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_07.wav")
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_08.wav")
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_09.wav")
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_10.wav")
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_11.wav")
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_12.wav")
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_13.wav")
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_14.wav")
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_15.wav")
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_16.wav")
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_17.wav")
+			snd.Entity:StopSound("mvm/player/footsteps/robostep_18.wav")
 			snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "mvm/player/footsteps/robostep_"..table.Random({
 				"01",
 				"02",
@@ -4076,7 +4094,30 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		
 		return true
 	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.Entity:GetModel(),"bot_") and snd.Entity:IsMiniBoss() and string.find(snd.SoundName, "step") then
+		snd.Volume = 1
+		snd.Channel = CHAN_BODY
+		snd.Pitch = 100
 		if (GetConVar("tf_enable_unused_mvm_sounds"):GetBool()) then
+			snd.Entity:StopSound("^mvm/giant_scout/giant_scout_step_01.wav")
+			snd.Entity:StopSound("^mvm/giant_scout/giant_scout_step_02.wav")
+			snd.Entity:StopSound("^mvm/giant_scout/giant_scout_step_03.wav")
+			snd.Entity:StopSound("^mvm/giant_scout/giant_scout_step_04.wav")
+			snd.Entity:StopSound("^mvm/giant_soldier/giant_soldier_step01.wav")
+			snd.Entity:StopSound("^mvm/giant_soldier/giant_soldier_step02.wav")
+			snd.Entity:StopSound("^mvm/giant_soldier/giant_soldier_step03.wav")
+			snd.Entity:StopSound("^mvm/giant_soldier/giant_soldier_step04.wav")
+			snd.Entity:StopSound("^mvm/giant_pyro/giant_pyro_step_01.wav")
+			snd.Entity:StopSound("^mvm/giant_pyro/giant_pyro_step_02.wav")
+			snd.Entity:StopSound("^mvm/giant_pyro/giant_pyro_step_03.wav")
+			snd.Entity:StopSound("^mvm/giant_pyro/giant_pyro_step_04.wav")
+			snd.Entity:StopSound("^mvm/giant_demoman/giant_demoman_step_01.wav")
+			snd.Entity:StopSound("^mvm/giant_demoman/giant_demoman_step_02.wav")
+			snd.Entity:StopSound("^mvm/giant_demoman/giant_demoman_step_03.wav")
+			snd.Entity:StopSound("^mvm/giant_demoman/giant_demoman_step_04.wav")
+			snd.Entity:StopSound("^mvm/giant_heavy/giant_heavy_step01.wav")
+			snd.Entity:StopSound("^mvm/giant_heavy/giant_heavy_step02.wav")
+			snd.Entity:StopSound("^mvm/giant_heavy/giant_heavy_step03.wav")
+			snd.Entity:StopSound("^mvm/giant_heavy/giant_heavy_step04.wav")
 			if (string.find(snd.Entity:GetModel(),"scout") || string.find(snd.Entity:GetModel(),"superscout") || string.find(snd.Entity:GetModel(),"superscoutfan") || string.find(snd.Entity:GetModel(),"gianscout")) then
 				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_scout/giant_scout_step_0"..math.random(1,4)..".wav")
 				snd.SoundLevel = 87
@@ -4111,9 +4152,22 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 			snd.Channel = CHAN_STATIC
 		else
 			if (string.find(snd.Entity:GetModel(),"buster")) then
+				snd.Entity:StopSound("^mvm/sentrybuster/mvm_sentrybuster_step_01.wav")
+				snd.Entity:StopSound("^mvm/sentrybuster/mvm_sentrybuster_step_02.wav")
+				snd.Entity:StopSound("^mvm/sentrybuster/mvm_sentrybuster_step_03.wav")
+				snd.Entity:StopSound("^mvm/sentrybuster/mvm_sentrybuster_step_04.wav")
 				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/sentrybuster/mvm_sentrybuster_step_0"..math.random(1,4)..".wav")
 				snd.SoundLevel = 95
+				snd.Channel = CHAN_STATIC
 			else
+				snd.Entity:StopSound("^mvm/giant_common/giant_common_step_01.wav")
+				snd.Entity:StopSound("^mvm/giant_common/giant_common_step_02.wav")
+				snd.Entity:StopSound("^mvm/giant_common/giant_common_step_03.wav")
+				snd.Entity:StopSound("^mvm/giant_common/giant_common_step_04.wav")
+				snd.Entity:StopSound("^mvm/giant_common/giant_common_step_05.wav")
+				snd.Entity:StopSound("^mvm/giant_common/giant_common_step_06.wav")
+				snd.Entity:StopSound("^mvm/giant_common/giant_common_step_07.wav")
+				snd.Entity:StopSound("^mvm/giant_common/giant_common_step_08.wav")
 				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_common/giant_common_step_0"..math.random(1,8)..".wav")
 				if (string.find(snd.Entity:GetModel(),"scout") || string.find(snd.Entity:GetModel(),"scout_boss")) then
 					snd.SoundLevel = 87
@@ -4140,9 +4194,6 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 			end
 			snd.Channel = CHAN_STATIC
 		end
-		snd.Volume = 1
-		snd.Channel = CHAN_BODY
-		snd.Pitch = 100
 		if (snd.Entity:GetClass() == "infected") then
 			if (string.find(snd.Entity:GetModel(),"clown")) then
 
