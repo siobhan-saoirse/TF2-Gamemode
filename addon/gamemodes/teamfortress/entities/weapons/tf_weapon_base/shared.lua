@@ -717,6 +717,14 @@ function SWEP:Deploy()
 			end
 		end
 	end)
+	if IsValid(self.CModel) then
+
+		local t2 = self.Owner:GetProxyVar("CritTeam") 
+		local s2 = self.Owner:GetProxyVar("CritStatus")
+		self.CModel:SetProxyVar("CritTeam",t2)
+		self.CModel:SetProxyVar("CritStatus",s2)
+
+	end
 	self:StopTimers()
 	self.DeployPlayed = nil
 	if self:GetItemData().hide_bodygroups_deployed_only then
@@ -987,6 +995,14 @@ function SWEP:ResetInspect()
 end
 
 function SWEP:Inspect()
+	if IsValid(self.CModel) then
+
+		local t2 = self.Owner:GetProxyVar("CritTeam") 
+		local s2 = self.Owner:GetProxyVar("CritStatus")
+		self.CModel:SetProxyVar("CritTeam",t2)
+		self.CModel:SetProxyVar("CritStatus",s2)
+
+	end
 end	
 
 --[[function SWEP:Inspect()

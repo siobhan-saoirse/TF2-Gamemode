@@ -579,6 +579,14 @@ function meta:SetPlayerClass(class)
 		end)
 		
 	end
+	
+	if (IsValid(ply.trail)) then
+		ply.trail:Remove()
+		ply.trail2:Remove()
+		ply.trail3:Remove()
+		ply.trail4:Remove()
+		ply.trail5:Remove()
+	end
 end
 
 

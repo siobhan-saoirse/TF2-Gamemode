@@ -20,7 +20,7 @@ matproxy.Add({
 	end,
 
 	bind = function(self, mat, ent)
-		if (IsValid(ent.Owner)) then
+		if (IsValid(ent) and IsValid(ent.Owner)) then
 
 			local t2 = ent.Owner:GetProxyVar("CritTeam") 
 			local s2 = ent.Owner:GetProxyVar("CritStatus")

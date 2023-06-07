@@ -87,11 +87,11 @@ function SWEP:PrimaryAttack()
 			self.Owner:SetNWBool("Bonked", true) 
 			if SERVER then
 				ParticleEffectAttach( 'warp_version', PATTACH_ABSORIGIN_FOLLOW, self.Owner, 0)
-				local att = 0
-				local att2 = 0
-				local att3 = 0
-				local att4 = 0
-				local att5 = 0
+				local att = 1
+				local att2 = 1
+				local att3 = 1
+				local att4 = 1
+				local att5 = 1
 				if (self:GetOwner():LookupAttachment("back_upper")) then
 
 					att = self:GetOwner():LookupAttachment("back_upper")

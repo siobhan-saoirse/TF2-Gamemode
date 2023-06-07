@@ -2267,16 +2267,16 @@ function GM:PlayerSpawn(ply)
 				ply:SetModel("models/player/yeti.mdl")
 			end
 		end)
-	else
-		timer.Simple(0.1, function() -- god i'm such a timer whore
-			ply:SetPlayerClass(ply:GetPlayerClass())
-		end)
-
-		if ply:GetObserverMode() ~= OBS_MODE_NONE then
-			ply:UnSpectate()
-		end
 	end
 
+	timer.Simple(0.02, function() -- god i'm such a timer whore
+		ply:SetPlayerClass(ply:GetPlayerClass())
+	end)
+
+	if ply:GetObserverMode() ~= OBS_MODE_NONE then
+		ply:UnSpectate()
+	end
+	
 	if ply:Team()==TEAM_SPECTATOR then
 		GAMEMODE:PlayerSpawnAsSpectator( ply )
 	end

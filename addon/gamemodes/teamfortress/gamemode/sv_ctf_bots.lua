@@ -434,7 +434,9 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 					end
 					timer.Simple(0.2, function()
 					
-						bot:SetPlayerClass(oldclass)
+						if (!bot.IsL4DZombie) then
+							bot:SetPlayerClass(oldclass)
+						end
 						if (bot.IsL4DZombie and !string.find(bot:GetModel(),"/bot_")) then
 							--RandomWeapon2(bot, "primary")
 							--RandomWeapon2(bot, "secondary")
