@@ -311,11 +311,11 @@ function ENT:DoExplosion(ent)
 			if ((string.find(v:GetModel(),"/bot_") or (string.find(game.GetMap(), "mvm_") and self:GetOwner():Team() != TEAM_BLU and v:Team() != self:GetOwner():Team())) and !v:IsFriendly(self:GetOwner())) then
 				ParticleEffect("mvm_soldier_shockwave", self:GetPos(), self:GetAngles())
 				if (!v:HasPlayerState(PLAYERSTATE_STUNNED)) then
-					v:EmitSound("TFPlayer.StunImpact")
+					--v:EmitSound("TFPlayer.StunImpact")
 				end
 				timer.Stop("StunnedReset"..v:EntIndex())
 				timer.Stop("Stunned"..v:EntIndex())
-				timer.Create("Stunned"..v:EntIndex(), 0.1, 40, function()
+				timer.Create("Stunned"..v:EntIndex(), 0.1, 10, function()
 					if (v:IsMiniBoss()) then
 						v:SetClassSpeed(v:GetPlayerClassTable().Speed * 0.8)
 					else
@@ -323,7 +323,7 @@ function ENT:DoExplosion(ent)
 					end
 					v:AddPlayerState(PLAYERSTATE_STUNNED)
 				end)
-				timer.Create("StunnedReset"..v:EntIndex(), 4, 0, function()
+				timer.Create("StunnedReset"..v:EntIndex(), 1, 0, function()
 					v:ResetClassSpeed()
 					v:RemovePlayerState(PLAYERSTATE_STUNNED)
 				end)

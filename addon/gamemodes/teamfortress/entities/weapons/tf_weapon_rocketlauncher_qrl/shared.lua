@@ -104,10 +104,13 @@ function SWEP:ShootProjectile()
 		for k,v in pairs(self.Properties) do
 			rocket[k] = v
 		end
-		
 		rocket:SetOwner(self.Owner)
 		rocket.NameOverride = self:GetItemData().item_iconname or self.NameOverride
 		self:InitProjectileAttributes(rocket)
+		
+		if (self.Owner:GetPlayerClass() == "giantsoldiercharged") then
+			rocket.BaseSpeed = 1100 * 0.5
+		end 
 		
 		rocket:Spawn()
 		rocket:Activate()

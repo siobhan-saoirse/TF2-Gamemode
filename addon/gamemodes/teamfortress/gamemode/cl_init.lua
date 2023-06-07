@@ -1637,6 +1637,9 @@ include("cl_pac.lua")
 include("cl_loadout.lua")
 
 include("proxies/itemtintcolor.lua")
+include("proxies/yellowlevel.lua")
+include("proxies/modelglowcolor.lua")
+include("proxies/burnlevel.lua")
 
 include("proxies/sniperriflecharge.lua")
 include("proxies/weapon_invis.lua")

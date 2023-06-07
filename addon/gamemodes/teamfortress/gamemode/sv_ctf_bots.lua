@@ -678,8 +678,8 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				local bone = 1
 				shouldvegoneforthehead = bot.TargetEnt:GetBonePosition(bone)
 				if (!bot.isCarryingIntel) then
-					if (math.random(1,10) == 1) then
-						bot.botPos = bot.ControllerBot:FindSpot("near", {pos=bot.TargetEnt:GetPos(),radius = 12000,type="hiding",stepup=800,stepdown=800})
+					if (math.random(1,18 + table.Count(player.GetAll())) == 1) then
+						bot.botPos = bot.ControllerBot:FindSpot("random", {pos=bot.TargetEnt:GetPos(),radius = 12000,type="hiding",stepup=800,stepdown=800})
 					end
 				end
 
@@ -1123,18 +1123,19 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				if (((IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) or !bot.TargetEnt:IsFriendly(bot)) and !bot:GetNWBool("Taunting",false)) then   
 					if (IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) then
 						mv:SetForwardSpeed(bot:GetRunSpeed())
-						if (math.random(1,10) == 1) then
+						
+						if (math.random(1,18 + table.Count(player.GetAll())) == 1) then
 							bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * (110 * bot:GetModelScale()), radius = 120 * bot:GetModelScale()})
 						end
 					else
 						mv:SetForwardSpeed(bot:GetRunSpeed())
-						if (math.random(1,10) == 1) then
+						if (math.random(1,18 + table.Count(player.GetAll())) == 1) then
 							bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350 * bot:GetModelScale(), radius = 3000 * bot:GetModelScale()})
 						end
 					end
 				else
 					mv:SetForwardSpeed(bot:GetRunSpeed())
-					if (math.random(1,10) == 1) then
+					if (math.random(1,18 + table.Count(player.GetAll())) == 1) then
 						bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350 * bot:GetModelScale(), radius = 3000 * bot:GetModelScale()})
 					end
 				end

@@ -970,6 +970,9 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		end)
 	end
 	timer.Stop("VoiceL4d"..ply:EntIndex(), 2.5)
+	if (attacker:IsPlayer() and (attacker:GetPlayerClass() == "demoknight" || attacker:GetPlayerClass() == "giantdemoknight")) then
+		GAMEMODE:AddCritBoostTime(attacker, 3)
+	end
 	if (GetConVar("tf_use_client_ragdolls"):GetBool()) then
 		if (ply:HasDeathFlag(DF_DECAP)) then
 			ply:Decap()

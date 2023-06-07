@@ -273,7 +273,7 @@ PlayerStates = {
 		},
 	},
 	[PLAYERSTATE_STUNNED] = {
-		particle = "peejar_drips",
+		--particle = "peejar_drips",
 		color = {0,0,-255,0},
 	},
 	[PLAYERSTATE_MARKED] = {

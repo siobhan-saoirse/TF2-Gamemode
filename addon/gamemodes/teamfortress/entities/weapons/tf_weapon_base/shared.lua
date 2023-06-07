@@ -29,6 +29,7 @@ function SWEP:DrawWorldModel(  )
 		end
 		self.WModel:SetNoDraw(true)
 		self.WModel:SetModel(self:GetItemData().model_world or self:GetItemData().model_player or self.WorldModel)
+		self.WModel:SetRenderMode( RENDERMODE_TRANSCOLOR )
 		if (_Owner:HasGodMode() and _Owner:GetNWBool("NoWeapon",false) != true) then
 			self.WModel:SetMaterial("models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())))
 		elseif (_Owner:GetNWBool("NoWeapon",false) == true) then
@@ -43,6 +44,7 @@ function SWEP:DrawWorldModel(  )
             -- Specify a good position
 			self.WModel:SetSkin(self.WeaponSkin or _Owner:GetSkin())
 			self.WModel:SetBodyGroups(self:GetBodyGroups())
+			
 			local offsetVec = Vector(4, -2, 0)
 			local offsetAng = Angle(170, 180, 0)
 			if (_Owner:IsHL2()) then
@@ -68,7 +70,17 @@ function SWEP:DrawWorldModel(  )
 			self.WModel:SetAngles(self:GetAngles())
 		end
 	
+		if (_Owner:HasPlayerState(PLAYERSTATE_CRITBOOST)) then
+			self.WModel:SetColor(team.GetColor(_Owner:Team()))
+		else
+			self.WModel:SetColor(Color(255,255,255,255))
+		end
+		
 		self.WModel:DrawModel()
+		local t2 = _Owner:GetProxyVar("CritTeam") 
+		local s2 = _Owner:GetProxyVar("CritStatus")
+		self.WModel:SetProxyVar("CritTeam",t2)
+		self.WModel:SetProxyVar("CritStatus",s2)
 end
 
 end
@@ -1388,6 +1400,14 @@ function SWEP:Think()
 		if IsValid(self.CModel) then
 			self.CModel:DrawModel()
 			self.CModel:SetSkin(self.WeaponSkin or self.Owner:GetSkin())
+		end
+		if IsValid(self.CModel) then
+	
+			local t2 = self.Owner:GetProxyVar("CritTeam") 
+			local s2 = self.Owner:GetProxyVar("CritStatus")
+			self.CModel:SetProxyVar("CritTeam",t2)
+			self.CModel:SetProxyVar("CritStatus",s2)
+	
 		end
 		if IsValid(self.WModel) then
 			self.WModel:DrawModel()

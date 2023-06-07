@@ -6,8 +6,10 @@ ENT.PZClass = "demoknight"
 ENT.Spawnable = false
 ENT.AdminOnly = false		
 ENT.IsBoss = false
+ENT.Difficulty = 2
 ENT.PrintName		= "Demoknight"
 ENT.Category		= "TF2: MVM Bots"
+ENT.Items = {"Chargin' Targe","Eyelander"}	
 ENT.PreferredIcon = "hud/leaderboard_class_demoknight"
 
 list.Set( "NPC", "mvm_bot_demoknight", {

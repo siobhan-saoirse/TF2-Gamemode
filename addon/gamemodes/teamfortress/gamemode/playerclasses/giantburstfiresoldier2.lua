@@ -72,6 +72,7 @@ function CLASS:Initialize()
 	self:SetModelScale(1.75)
 	self:Give("tf_weapon_rocketlauncher_rapidfire5")
 	self:SelectWeapon("tf_weapon_rocketlauncher_rapidfire5")
+	GAMEMODE:StartCritBoost(self)
 end
 
 end

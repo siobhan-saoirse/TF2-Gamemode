@@ -20,14 +20,26 @@ matproxy.Add({
 	end,
 
 	bind = function(self, mat, ent)
-		if (IsValid(LocalPlayer():GetActiveWeapon().CModel) and IsValid(LocalPlayer():GetActiveWeapon().WModel)) then
-			local t2 = LocalPlayer():GetProxyVar("CritTeam") 
-			local s2 = LocalPlayer():GetProxyVar("CritStatus")
-			if s2 and t2 and GlowColorTable[t] and GlowColorTable[t][s] then
-				mat:SetVector(self.ResultTo,GlowColorTable[t][s])
+		if (IsValid(ent.Owner)) then
+
+			local t2 = ent.Owner:GetProxyVar("CritTeam") 
+			local s2 = ent.Owner:GetProxyVar("CritStatus")
+			if s2 and t2 then
+				mat:SetVector(self.ResultTo,GlowColorTable[t2][s2])
 			else
 				mat:SetVector(self.ResultTo,DefaultGlowColor)
 			end
+
+		elseif (IsValid(ent)) then
+
+			local t2 = ent:GetProxyVar("CritTeam") 
+			local s2 = ent:GetProxyVar("CritStatus")
+			if s2 and t2 then
+				mat:SetVector(self.ResultTo,GlowColorTable[t2][s2])
+			else
+				mat:SetVector(self.ResultTo,DefaultGlowColor)
+			end
+
 		end
 	end
 

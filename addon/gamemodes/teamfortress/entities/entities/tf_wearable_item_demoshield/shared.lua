@@ -498,6 +498,7 @@ function ENT:Think()
 	end
 	
 	if self:GetOwner():KeyDown(IN_ATTACK2) and self.dt.Ready then
+		if (self:GetOwner():HasPlayerState(PLAYERSTATE_STUNNED)) then return end
 			if self:GetOwner():Crouching() then
 				self:GetOwner():ConCommand("-duck")
 			end

@@ -72,6 +72,10 @@ function CLASS:Initialize()
 	self:SetModelScale(1.75)
 	self:SetViewOffset(Vector(0, 0, 126))
 	GAMEMODE:StartCritBoost(self)
+	timer.Simple(0.1, function()
+		self:GetActiveWeapon().Primary.Delay = 0.8 * 2
+		self:GetActiveWeapon().ReloadTime = 0.8 * 0.2
+	end)
 end
 
 end
