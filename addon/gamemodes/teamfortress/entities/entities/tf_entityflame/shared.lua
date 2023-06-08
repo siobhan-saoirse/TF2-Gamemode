@@ -15,7 +15,7 @@ AddCSLuaFile( "shared.lua" )
 ENT.NoDamageCooperation = true
 
 local DamagePeriod = 0.5
-local DamagePerTick = 1
+local DamagePerTick = 4
 
 function ENT:ShouldExtinguishInWater()
 	if not IsValid(self.Target) then return false end
@@ -49,7 +49,9 @@ function ENT:TargetIsFireproof()
 		if self.Target.TempAttributes.Fireproof then
 			return true
 		end
-		
+		if (self.Target.playerclass == "Pyro") then
+			return true
+		end
 		local c = self.Target:GetPlayerClassTable()
 		if c and c.Fireproof then
 			return true

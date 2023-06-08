@@ -470,9 +470,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		if (bot.OverrideModelScale) then
 			bot:SetModelScale(bot.OverrideModelScale)
 		end
-		if (!bot:IsOnGround()) then
-			buttons = buttons + IN_DUCK
-		end
 		if !IsValid(controller) then
 			bot.ControllerBot = ents.Create("leadbot_navigator")
 			bot.ControllerBot:Spawn()
@@ -670,7 +667,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			bot.ControllerBot.PosGen = bot.botPos
 		end
 
-			if IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 6000 and bot.TargetEnt:Health() > 0 then
+			if IsValid(bot.TargetEnt) and !IsValid(bot.intelcarrier) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 6000 and bot.TargetEnt:Health() > 0 then
 				if (bot:GetPlayerClass() != "tank_l4d") then
 					if (bot:GetNWBool("Taunting",false) == true) then 
 						return 
@@ -913,14 +910,16 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			if (IsValid(intel)) then
 				bot.isCarryingIntel = true
 				if !intel.Carrier then -- neither intel has a capture
-					targetpos2 = intel:GetPos() -- goto enemy intel
+					targetpos2 = intel:GetPos()
 					bot.intelcarrier = nil
 				elseif intel.Carrier and intel.Carrier:EntIndex() == bot:EntIndex() then -- or if friendly intelligence has capture
 					targetpos2 = fintelcap.Pos -- goto friendly cap spot
 					bot.intelcarrier = nil
 				elseif IsValid(intel.Carrier) and bot:EntIndex() != intel.Carrier:EntIndex() then -- or else if we have it already carried
 
-					targetpos2 = intel.Carrier:GetPos() -- follow that man
+					if (math.random(1,28 + table.Count(player.GetAll())) == 1) then
+						targetpos2 = intel.Carrier:GetPos()
+					end
 					bot.intelcarrier = intel.carrier
 				else
 					targetpos2 = fintelcap.Pos -- move to the bomb, the flag is currently invalid until a bot gets it

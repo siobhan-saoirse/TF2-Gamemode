@@ -772,8 +772,11 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			umsg.Vector(dmginfo:GetDamagePosition()-ent:GetPos())
 			umsg.Float(dmginfo:GetDamage())
 		umsg.End()
-	elseif dmginfo:IsFallDamage() and !ent:IsMiniBoss() then 
+	elseif dmginfo:IsFallDamage() and !string.find(ent:GetModel(),"/bot_") and !ent:IsMiniBoss() then 
 		ent:RandomSentence("Death")
+	end
+	if (dmginfo:IsFallDamage() and string.find(ent:GetModel(),"/bot_")) then
+		dmginfo:ScaleDamage(0)
 	end
 end
 

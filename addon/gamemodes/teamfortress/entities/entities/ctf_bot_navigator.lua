@@ -7,8 +7,8 @@ ENT.Type = "nextbot"
 
 function ENT:Initialize()
 	self:SetModel("models/gman.mdl")
-	self:SetSolid( SOLID_NONE )
-	self:SetNoDraw(true)
+	self:SetCollisionGroup(COLLISION_GROUP_PLAYER_MOVEMENT)
+	self:SetNoDraw(GetConVar("developer"):GetFloat() == 0)
 	self.PosGen = nil
 	self.LookAtTime = 0
 	self.LookAt = Angle(0, 0, 0)
@@ -20,17 +20,32 @@ end
 function ENT:ChasePos( options )  
 
 	local options = options or {}
-	self.P = Path( "Follow" )
+	self.P = Path( "Chase" )
 	local path = self.P
-	path:SetMinLookAheadDistance( options.lookahead or 300 )
+	path:SetMinLookAheadDistance( 300 )
 	path:SetGoalTolerance( options.tolerance or 20 )
-	path:Compute( self, self.PosGen )
+	for k,v in ipairs(player.GetBots()) do
+		if (v.ControllerBot:EntIndex() == self:EntIndex()) then
+			path:Compute( v, self.PosGen )
+		end
+	end
 
 	if ( !path:IsValid() ) then return "failed" end
 
 	while ( path:IsValid() ) do
 
-		path:Update( self )
+		self.loco:SetDesiredSpeed( 100 )
+		self.loco:Approach(self.PosGen,1)
+		for k,v in ipairs(player.GetBots()) do
+			if (v.ControllerBot:EntIndex() == self:EntIndex()) then
+				path:Compute( v, self.PosGen )
+			end
+		end
+		for k,v in ipairs(player.GetBots()) do
+			if (v.ControllerBot:EntIndex() == self:EntIndex()) then
+				path:Update( v )
+			end
+		end
 
 		-- If we're stuck then call the HandleStuck function and abandon
 		if ( self.loco:IsStuck() ) then
@@ -55,11 +70,8 @@ function ENT:ChasePos( options )
 		--
 		-- If they set repath then rebuild the path every x seconds
 		--
-		if ( options.repath ) then
-			if ( path:GetAge() > options.repath ) then path:Compute( self, pos ) end
-		end
+		if ( path:GetAge() > 0.02 ) then path:Compute( self, pos ) end
 
-		coroutine.wait(10)
 		coroutine.yield()
 
 	end
@@ -82,15 +94,8 @@ function ENT:HandleStuck()
 end
 function ENT:RunBehaviour()
 	while (true) do
-		for k,v in ipairs(player.GetBots()) do
-			if (v.ControllerBot:EntIndex() == self:EntIndex()) then
-				self:SetModel(v:GetModel())
-				self:SetModelScale(v:GetModelScale())
-			end
-		end
 		if self.PosGen then
 			self:ChasePos({})
-			coroutine.wait(10)
 		end
 		coroutine.yield()
 	end

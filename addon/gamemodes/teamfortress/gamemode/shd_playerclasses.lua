@@ -160,13 +160,13 @@ local function UpgradePlayerIfBot(self)
 						if (!currentweapon.Primary.OldDelay and !currentweapon.Secondary.OldDelay and !currentweapon.OldReloadTime) then
 							currentweapon.Primary.OldDelay          = currentweapon.Primary.Delay
 							currentweapon.Secondary.OldDelay          = currentweapon.Secondary.Delay 
+							currentweapon.Primary.FastDelay          = currentweapon.Primary.OldDelay * 0.6 
+							currentweapon.Secondary.FastDelay          = currentweapon.Secondary.OldDelay * 0.6
+							currentweapon.Primary.Delay          = currentweapon.Primary.FastDelay
+							currentweapon.Secondary.Delay          = currentweapon.Secondary.FastDelay
 							currentweapon.OldReloadTime          = currentweapon.ReloadTime
+							currentweapon.FastReloadTime          = currentweapon.OldReloadTime * 0.4
 						end
-						currentweapon.Primary.FastDelay          = currentweapon.Primary.OldDelay * 0.6 
-						currentweapon.Secondary.FastDelay          = currentweapon.Secondary.OldDelay * 0.6
-						currentweapon.Primary.Delay          = currentweapon.Primary.FastDelay
-						currentweapon.Secondary.Delay          = currentweapon.Secondary.FastDelay
-						currentweapon.FastReloadTime          = currentweapon.OldReloadTime * 0.4
 						if (currentweapon.BaseDamage) then
 							if (!currentweapon.OldBaseDamage) then
 								currentweapon.ProjectileDamageMultiplier = 2.0
@@ -593,12 +593,6 @@ end
 
 function meta:SetClassSpeed(sp)
 	if !self:IsHL2() then
-		if (self:GetPlayerClass() != "scout" and self:GetInfoNum("tf_giant_robot",0) == 1) then
-			self:SetModelScale(1.75)
-			sp = sp * 0.5
-		elseif (self:GetPlayerClass() == "scout" and self:GetInfoNum("tf_giant_robot",0) == 1) then
-			self:SetModelScale(1.75)
-		end
 		self:SetWalkSpeed(sp) 
 		self:SetRunSpeed(sp * 1.2) 
 		self:SetJumpPower(self.PlayerJumpPower)

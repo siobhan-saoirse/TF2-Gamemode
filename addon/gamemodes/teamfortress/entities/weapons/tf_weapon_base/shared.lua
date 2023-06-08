@@ -29,16 +29,6 @@ function SWEP:DrawWorldModel(  )
 			self.WModel:AddEffects(EF_BONEMERGE)
 		end
 		self.WModel:SetNoDraw(true)
-		if (self.WModel:GetMaterial() != "models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())) and _Owner:HasGodMode() and _Owner:GetNWBool("NoWeapon",false) != true) then
-			self.WModel:SetMaterial("models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())))
-		elseif (self.WModel:GetMaterial() != "color" and _Owner:GetNWBool("NoWeapon",false) == true) then
-			self.WModel:SetMaterial("color")
-		else
-			local mat = self.CustomMaterialOverride2 or self.MaterialOverride or self.WeaponMaterial or ""
-			if (self.WModel:GetMaterial() != mat or string.find(self.WModel:GetMaterial(),"invuln")) then
-				self.WModel:SetMaterial(mat)
-			end
-		end
 		if (IsValid(_Owner)) then
 			local t2 = _Owner:GetProxyVar("CritTeam") 
 			local s2 = _Owner:GetProxyVar("CritStatus")
@@ -69,6 +59,14 @@ function SWEP:DrawWorldModel(  )
 				self.WModel:SetAngles(newAng)
 
 				self.WModel:SetupBones()
+			end
+			if (self.WModel:GetMaterial() != "models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())) and _Owner:HasGodMode() and !_Owner:GetNWBool("NoWeapon",false)) then
+				self.WModel:SetMaterial("models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())))
+			elseif (self.WModel:GetMaterial() != "color" and _Owner:GetNWBool("NoWeapon",false) == true) then
+				self.WModel:SetMaterial("color")
+			else
+				local mat = self.CustomMaterialOverride2 or self.MaterialOverride or self.WeaponMaterial or ""
+				self.WModel:SetMaterial(mat)
 			end
 			self.WModel:SetPos(self:GetPos())
 			self.WModel:SetAngles(self:GetAngles())

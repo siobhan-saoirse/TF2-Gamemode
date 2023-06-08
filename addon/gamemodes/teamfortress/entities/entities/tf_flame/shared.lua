@@ -8,7 +8,7 @@ PrecacheParticleSystem("drg_phlo_stream_new_flame")
 game.AddParticles("particles/flamethrower.pcf")
 ENT.IsTFWeapon = true
 
-ENT.Size = 3
+ENT.Size = 10
 
 function ENT:InitEffects()
 end
@@ -64,16 +64,16 @@ AddCSLuaFile( "shared.lua" )
 ENT.HitSound = Sound("Weapon_FlameThrower.FireHit")
 ENT.HitLoopSound = Sound("Weapon_FlameThrower.FireHit")
 
-ENT.MaxDamage = 5
-ENT.MinDamage = 1
+ENT.MaxDamage = 10
+ENT.MinDamage = 6
 ENT.CritDamageMultiplier = 3
 
-ENT.Force = 800
+ENT.Force = 1100
 ENT.DragCoefficient = 2
 ENT.Buoyancy = 60
 ENT.ThinkTime = 0
 
-ENT.BaseLifeTime = 0.6
+ENT.BaseLifeTime = 0.1
 
 ENT.BackCritAngle = 120
 
@@ -134,7 +134,7 @@ function ENT:Initialize()
 	
 	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
 	
-	self:SetLocalVelocity(self:GetForward() * self.Force)
+	self:SetLocalVelocity(self:GetForward() * self.Force * self:GetOwner():GetModelScale())
 	
 	if self:GetOwner():GetActiveWeapon():GetItemData().model_player == "models/workshop/weapons/c_models/c_drg_phlogistinator/c_drg_phlogistinator.mdl" then
 		timer.Create("Particle?"..self:EntIndex(), 0.0, 1, function()		
