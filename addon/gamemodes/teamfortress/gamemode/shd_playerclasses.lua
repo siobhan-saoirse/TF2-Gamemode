@@ -489,6 +489,7 @@ function meta:SetPlayerClass(class)
 		self:SetModel(c.Model)
 		self:SetNWString("PlayerClassModel",c.Model)
 	end
+	GAMEMODE:StopCritBoost(self)
 	-- If this class needs some special initialization, do it
 	if c.Initialize then c.Initialize(self) end
 	
@@ -568,13 +569,6 @@ function meta:SetPlayerClass(class)
 
 		timer.Simple(0.8, function()
 			self:SelectWeapon("tf_weapon_lunchbox_drink")
-			self:GetActiveWeapon():PrimaryAttack()
-		end)
-		
-	elseif (ply:IsBot() and ply:GetPlayerClass() == "heavy" and ply:GetWeapons()[2]:GetClass() == "tf_weapon_lunchbox") then
-
-		timer.Simple(0.8, function()
-			self:SelectWeapon("tf_weapon_lunchbox")
 			self:GetActiveWeapon():PrimaryAttack()
 		end)
 		

@@ -105,7 +105,7 @@ function ENT:Initialize()
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetHealth(1)
-	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+	self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 	
 	if self.GrenadeMode==1 then
 		self:SetMoveCollide(MOVECOLLIDE_FLY_BOUNCE)
@@ -205,7 +205,7 @@ function ENT:Think()
 		self:Remove()
 	end
 	for k,v in ipairs(ents.FindInSphere(self:GetPos(),90)) do
-		if (v:IsValid() and v:IsTFPlayer() and v:EntIndex() != self:GetOwner():EntIndex() and !v:IsFriendly(self:GetOwner())) then
+		if (v:IsValid() and v:IsTFPlayer() and v:EntIndex() != self:GetOwner():EntIndex() and !v:IsFriendly(self:GetOwner()) and v:Health() > 0) then
 			if self.BouncesLeft>0 then
 				self:DoExplosion()
 			end

@@ -346,7 +346,9 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 	if (string.find(game.GetMap(),"mvm_") and GAMEMODE:EntityTeam(ent) == TEAM_RED) then
 		ent:SetVelocity(dmginfo:GetDamageForce() * (dmginfo:GetDamage()) * 0.5)
 	end
-	dmginfo:SetDamageForce(dmginfo:GetDamageForce() / ent:GetModelScale())
+	if (ent:IsPlayer()) then
+		dmginfo:SetDamageForce(dmginfo:GetDamageForce() / ent:GetModelScale())
+	end
 	if (inf.IsTFWeapon and (string.find(inf:GetClass(),"sword") or string.find(inf:GetClass(),"katana"))) then
 		ent:AddDeathFlag(DF_DECAP)
 	end

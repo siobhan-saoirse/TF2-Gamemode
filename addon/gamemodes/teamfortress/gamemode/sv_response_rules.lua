@@ -26,12 +26,12 @@ Responses = {}
 Rules = {}
 
 local comparisons = {
-	[">"]  = function(a,b) return a>b end,
-	["<"]  = function(a,b) return a<b end,
-	["<="] = function(a,b) return a<=b end,
-	[">="] = function(a,b) return a>=b end,
-	["!="] = function(a,b) return a~=b end,
-	[""]   = function(a,b) return a==b end,
+	[">"]  = function(a,b) return a != nil && b != nil && a>b end,
+	["<"]  = function(a,b) return a != nil && b != nil && a<b end,
+	["<="] = function(a,b) return a != nil && b != nil && a<=b end,
+	[">="] = function(a,b) return a != nil && b != nil && a>=b end,
+	["!="] = function(a,b) return a != nil && b != nil && a~=b end,
+	[""]   = function(a,b) return a != nil && b != nil && a==b end,
 }
 
 function AddCriterion(str) 

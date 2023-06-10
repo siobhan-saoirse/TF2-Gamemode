@@ -144,7 +144,7 @@ function ENT:Initialize()
 	self:SetCollisionBounds(min, max)
 	self:SetSolid(SOLID_BBOX)
 	
-	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+	self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 	
 	self:SetLocalVelocity(self:GetForward() * self.BaseSpeed)
 	
@@ -196,10 +196,8 @@ function ENT:Think()
 	end
 	
 	for k,v in ipairs(ents.FindInSphere(self:GetPos(),90)) do
-		if (self:GetCollisionGroup() == COLLISION_GROUP_DEBRIS and v:IsValid() and v:IsTFPlayer() and v:EntIndex() != self:GetOwner():EntIndex() and !v:IsFriendly(self:GetOwner())) then
-			if self.BouncesLeft>0 then
-				self:DoExplosion()
-			end
+		if (v:IsValid() and v:IsTFPlayer() and v:EntIndex() != self:GetOwner():EntIndex() and !v:IsFriendly(self:GetOwner()) and v:Health() > 0) then
+			self:DoExplosion(v)
 		end
 	end
 	if not self.Homing then

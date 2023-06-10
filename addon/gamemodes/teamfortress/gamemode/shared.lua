@@ -104,9 +104,9 @@ if CLIENT then
 	language.Add("tool.turn_into_gatebot.desc", "Turn MvM TFBots into GateBots")
 	language.Add("tool.turn_into_gatebot.left", "Left-click: Turn a MvM Bot into a GateBot.")
 	language.Add("tool.reprogrammer.name", "Reprogrammer")
-	language.Add("tool.reprogrammer.desc", "Change the TFBot Team to the opposite team or your team.")
-	language.Add("tool.reprogrammer.left", "Left-click: Change TFBot team to the opposite team.")
-	language.Add("tool.reprogrammer.right", "Right-click: Change TFBot team to your team.")
+	language.Add("tool.reprogrammer.desc", "Change the TFBot or NPC Team to the opposite team or your team.")
+	language.Add("tool.reprogrammer.left", "Left-click: Change TFBot or NPC team to the opposite team.")
+	language.Add("tool.reprogrammer.right", "Right-click: Change TFBot or NPC team to your team.")
 end  
 
 sound.Add( {

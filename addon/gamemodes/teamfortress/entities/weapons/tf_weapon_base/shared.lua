@@ -461,7 +461,7 @@ function SWEP:Deploy()
 	if CLIENT then
 		if (self:GetItemData().image_inventory and self:GetItemData().item_iconname) then
 			killicon.Add( self:GetItemData().item_iconname, ""..self:GetItemData().image_inventory.."_large", Color( 255, 255, 255, 255 ) )
-		elseif (self:GetItemData().image_inventory) then
+		elseif (self:GetItemData().image_inventory and !self:GetItemData().item_iconname) then
 			killicon.Add( string.Replace(self:GetClass(),"tf_weapon_",""), ""..self:GetItemData().image_inventory.."_large", Color( 255, 255, 255, 255 ) )
 		end
 	end
