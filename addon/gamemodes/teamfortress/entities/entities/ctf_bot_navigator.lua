@@ -24,18 +24,13 @@ function ENT:ChasePos( options )
 	local path = self.P
 	path:SetMinLookAheadDistance( 300 )
 	path:SetGoalTolerance( options.tolerance or 20 )
-	for k,v in ipairs(player.GetBots()) do
-		if (v.ControllerBot:EntIndex() == self:EntIndex()) then
-			path:Compute( v, self.PosGen )
-		end
-	end
 
 	if ( !path:IsValid() ) then return "failed" end
 
 	while ( path:IsValid() ) do
 
 		self.loco:SetDesiredSpeed( 100 )
-		self.loco:Approach(self.PosGen,1)
+		self.loco:Approach(self.PosGen,1)  
 		for k,v in ipairs(player.GetBots()) do
 			if (v.ControllerBot:EntIndex() == self:EntIndex()) then
 				path:Compute( v, self.PosGen )
@@ -87,7 +82,7 @@ end
 
 function ENT:HandleStuck()
 	for k,v in ipairs(player.GetBots()) do
-		if (v.ControllerBot:EntIndex() == self:EntIndex()) then
+		if (v.ControllerBot:EntIndex() == self:EntIndex() and self.P:GetCurrentGoal().pos != nil) then
 			v:SetPos(self.P:GetCurrentGoal().pos)
 		end
 	end
