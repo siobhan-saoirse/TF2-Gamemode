@@ -143,7 +143,7 @@ CreateClientConVar( "boomer_l4d1_skin", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR
 CreateClientConVar( "hunter_l4d1_skin", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE} )
 CreateClientConVar( "smoker_l4d1_skin", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE} )
 CreateClientConVar( "tf_special_dsp_type", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Set your DSP for your Voice - Example: 154 - Engineer Fly Voice" )
-CreateClientConVar( "tf_tfc_model_override", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Become a TFC Merc after respawning." )
+CreateClientConVar( "tf_tfc_model_override", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, /*FCVAR_ARCHIVE*/ FCVAR_DEVELOPMENTONLY}, "Become a TFC Merc after respawning." )
 CreateClientConVar( "tf_giant_robot", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Become a mighty robot after respawning." )
 CreateClientConVar( "tf_sentrybuster", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Become a mighty bustah after respawning." )
 CreateClientConVar( "tf_skeleton", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Spooky... https://youtu.be/fPRMLk3jHX4" )
@@ -1130,10 +1130,6 @@ local Option3 = vgui.Create( "DCheckBox", ClassFrame )
 Option3:SetPos( 180, 110 )
 Option3:SetValue( GetConVar("tf_robot"):GetInt() )
 
-local Option4 = vgui.Create( "DCheckBox", ClassFrame )
-Option4:SetPos( 180, 140 )
-Option4:SetValue( GetConVar("tf_tfc_model_override"):GetInt() )
-
 local Option5 = vgui.Create( "DCheckBox", ClassFrame )
 Option5:SetPos( 180, 170 )
 Option5:SetValue( GetConVar("cl_hud_playerclass_use_playermodel"):GetInt() )
@@ -1152,19 +1148,6 @@ Option3text:SetPos( 200, 110 )
 Option3text:SetText( "Become a Robot" )
 Option3text:SizeToContents()
 
-local Option4text = vgui.Create( "DLabel", ClassFrame )
-Option4text:SetPos( 200, 140 )
-Option4text:SetText( "Become a TFC Mercenary" )
-Option4text:SizeToContents()
-
-function Option4:OnChange(new)
-	RunConsoleCommand("kill")
-	if new == false then
-		RunConsoleCommand("tf_tfc_model_override", 0)
-	else
-		RunConsoleCommand("tf_tfc_model_override", 1)
-	end
-end
 local Option5text = vgui.Create( "DLabel", ClassFrame )
 Option5text:SetPos( 200, 170 )
 Option5text:SetText( "Toggle 3D Class Icon" )
