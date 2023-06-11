@@ -20,7 +20,6 @@ function TOOL:LeftClick( trace )
 	local tr = trace 
 	local npc = trace.Entity
 	if (npc:IsPlayer() and npc.TFBot) then
-		GAMEMODE:StopCritBoost(npc)
 		if (trace.Entity:Team() == TEAM_RED) then
 			npc:SetTeam(TEAM_BLU)
 			npc:SetSkin(1)
@@ -70,7 +69,6 @@ function TOOL:RightClick( trace )
 	local npc = trace.Entity
 	if (npc:IsPlayer() and npc.TFBot) then
 		npc:SetTeam(self:GetOwner():Team())
-		GAMEMODE:StopCritBoost(npc)
 		if (self:GetOwner():Team() == TEAM_RED || self:GetOwner():Team() == TEAM_BLU) then
 			npc:SetSkin(self:GetOwner():Team() - 2)
 		elseif (self:GetOwner():Team() == TEAM_YELLOW || self:GetOwner():Team() == TEAM_GREEN) then

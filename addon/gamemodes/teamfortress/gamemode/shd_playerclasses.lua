@@ -489,7 +489,6 @@ function meta:SetPlayerClass(class)
 		self:SetModel(c.Model)
 		self:SetNWString("PlayerClassModel",c.Model)
 	end
-	GAMEMODE:StopCritBoost(self)
 	-- If this class needs some special initialization, do it
 	if c.Initialize then c.Initialize(self) end
 	
