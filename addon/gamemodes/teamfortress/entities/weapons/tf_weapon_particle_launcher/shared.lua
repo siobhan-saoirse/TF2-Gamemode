@@ -45,6 +45,7 @@ SWEP.Properties = {}
 
 function SWEP:ShootProjectile()
 	self.ShootCritSound = Sound("Weapon_CowMangler.Single")
+	self.Owner:DoAnimationEvent(self.Owner:LookupSequence("AttackStand_PRIMARY2"),true)
 	if SERVER then
 		local rocket = ents.Create("tf_drg_rocket")
 		rocket:SetPos(self:ProjectileShootPos())
@@ -105,15 +106,13 @@ function SWEP:SecondaryAttack()
 	if ( IsFirstTimePredicted() ) then
 		if SERVER then
 			self:GetOwner():SetClassSpeed(self:GetOwner():GetClassSpeed() * 0.25)
+			self.Owner:DoAnimationEvent(self.Owner:LookupSequence("AttackStand_PRIMARY2_SUPER"),true)
 		end
-		self:SetNextPrimaryFire(CurTime() + 2.2)
-		self:SetNextSecondaryFire(CurTime() + 2.2)
+		self:SetNextPrimaryFire(CurTime() + 2.8)
+		self:SetNextSecondaryFire(CurTime() + 2.8)
 	end
 	if ( IsFirstTimePredicted() ) then
 		self:ShootProjectile2()
-		if SERVER then
-			self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_PRIMARY_SUPER,true)
-		end
 		if self:GetVisuals() and self:GetVisuals()["sound_single_shot"] then
 			self.ShootSound = self:GetVisuals()["sound_single_shot"]
 			self.ShootCritSound = self:GetVisuals()["sound_burst"]
@@ -194,8 +193,9 @@ end
 
 function SWEP:ShootProjectile2()
 	if (self:Clip1() < 4) then return end
-	
-	self:EmitSound("Weapon_CowMangler.Charging")
+	if SERVER then
+		self.Owner:EmitSound("Weapon_CowMangler.Charging")
+	end
 	timer.Simple(2.1,function()
 		if SERVER then
 			self.Owner:ResetClassSpeed()

@@ -207,6 +207,9 @@ end
 --==================================================================
 
 function SWEP:SetWeaponHoldType(t)
+	if (t == "PRIMARY2") then
+		t = "PRIMARY"
+	end
 	if (t == "ITEM3") then
 		t = "MELEE"
 	end
@@ -697,73 +700,63 @@ function SWEP:SetWeaponHoldType(t)
 			self.ActivityTranslate[ACT_MP_SWIM_DEPLOYED] 				= getfenv()["ACT_MP_SWIM_DEPLOYED_"..t]
 		end
 
-	if (t == "PRIMARY2") then
-		self.ActivityTranslate[ ACT_MP_STAND_IDLE ]					= ACT_MP_STAND_PRIMARY
-		self.ActivityTranslate[ ACT_MP_WALK ]						= ACT_MP_RUN_PRIMARY
-		self.ActivityTranslate[ ACT_MP_RUN ]						= ACT_MP_RUN_PRIMARY
-		self.ActivityTranslate[ ACT_MP_CROUCH_IDLE ]				= ACT_MP_CROUCH_PRIMARY
-		self.ActivityTranslate[ ACT_MP_CROUCHWALK ]					= ACT_MP_CROUCHWALK_PRIMARY
-		self.ActivityTranslate[ ACT_MP_ATTACK_STAND_PRIMARYFIRE ]	= getfenv()["ACT_MP_ATTACK_STAND_PRIMARY_ALT"]
-		self.ActivityTranslate[ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE ]	= getfenv()["ACT_MP_ATTACK_CROUCH_PRIMARY_ALT"]
-		self.ActivityTranslate[ ACT_MP_ATTACK_SWIM_PRIMARYFIRE ]	= getfenv()["ACT_MP_ATTACK_CROUCH_PRIMARY_ALT"]
-		self.ActivityTranslate[ ACT_MP_RELOAD_STAND ]				= getfenv()["ACT_MP_RELOAD_STAND_PRIMARY_ALT"]
-		self.ActivityTranslate[ ACT_MP_RELOAD_CROUCH ]				= getfenv()["ACT_MP_RELOAD_CROUCH_PRIMARY_ALT"]
-		self.ActivityTranslate[ ACT_MP_RELOAD_SWIM ]				= getfenv()["ACT_MP_RELOAD_STAND_PRIMARY_ALT"]
-		self.ActivityTranslate[ ACT_MP_RELOAD_STAND_LOOP ]				= getfenv()["ACT_MP_RELOAD_STAND_PRIMARY_LOOP_ALT"]
-		self.ActivityTranslate[ ACT_MP_RELOAD_CROUCH_LOOP ]				= getfenv()["ACT_MP_RELOAD_CROUCH_PRIMARY_LOOP_ALT"]
-		self.ActivityTranslate[ ACT_MP_RELOAD_SWIM_LOOP ]				= getfenv()["ACT_MP_RELOAD_CROUCH_PRIMARY_LOOP_ALT"]
-		self.ActivityTranslate[ ACT_MP_RELOAD_STAND_END ]				= getfenv()["ACT_MP_RELOAD_STAND_PRIMARY_END_ALT"]
-		self.ActivityTranslate[ ACT_MP_RELOAD_CROUCH_END ]				= getfenv()["ACT_MP_RELOAD_CROUCH_PRIMARY_END_ALT"]
-		self.ActivityTranslate[ ACT_MP_RELOAD_SWIM_END ]				= getfenv()["ACT_MP_RELOAD_CROUCH_PRIMARY_END_ALT"]
-		self.ActivityTranslate[ ACT_MP_JUMP ]						= ACT_MP_JUMP_START_PRIMARY
-		self.ActivityTranslate[ ACT_RANGE_ATTACK1 ]					= getfenv()["ACT_MP_ATTACK_STAND_PRIMARY_ALT"]
-		self.ActivityTranslate[ ACT_MP_SWIM ]						= ACT_MP_SWIM_PRIMARY
-		self.ActivityTranslate[ACT_MP_JUMP_START] 						= ACT_MP_JUMP_START_PRIMARY
-		self.ActivityTranslate[ACT_MP_JUMP_FLOAT] 						= ACT_MP_JUMP_FLOAT_PRIMARY
-		self.ActivityTranslate[ACT_MP_JUMP_LAND] 						= ACT_MP_JUMP_LAND_PRIMARY
-	end
-	self.ActivityTranslate[ACT_MP_ATTACK_STAND_PRIMARYFIRE] 		= getfenv()["ACT_MP_ATTACK_STAND_"..t]
-	self.ActivityTranslate[ACT_MP_ATTACK_CROUCH_PRIMARYFIRE]		= getfenv()["ACT_MP_ATTACK_CROUCH_"..t]
-	self.ActivityTranslate[ACT_MP_ATTACK_SWIM_PRIMARYFIRE]			= getfenv()["ACT_MP_ATTACK_SWIM_"..t]
-	
-	self.ActivityTranslate[ACT_MP_ATTACK_STAND_SECONDARYFIRE] 		= getfenv()["ACT_MP_ATTACK_STAND_"..t.."_SECONDARY"]
-	self.ActivityTranslate[ACT_MP_ATTACK_CROUCH_SECONDARYFIRE]		= getfenv()["ACT_MP_ATTACK_CROUCH_"..t.."_SECONDARY"]
-	self.ActivityTranslate[ACT_MP_ATTACK_SWIM_SECONDARYFIRE]		= getfenv()["ACT_MP_ATTACK_SWIM_"..t.."_SECONDARY"]
-	
-	self.ActivityTranslate[ACT_MP_ATTACK_STAND_PRIMARY_DEPLOYED] 	= getfenv()["ACT_MP_ATTACK_STAND_"..t.."_DEPLOYED"]
-	self.ActivityTranslate[ACT_MP_ATTACK_CROUCH_PRIMARY_DEPLOYED] 	= getfenv()["ACT_MP_ATTACK_CROUCH_"..t.."_DEPLOYED"]
-	self.ActivityTranslate[ACT_MP_ATTACK_SWIM_PRIMARY_DEPLOYED or 0]= getfenv()["ACT_MP_ATTACK_SWIM_"..t.."_DEPLOYED"]
-	if (self:GetClass() == "tf_weapon_slap") then 
-		self.ActivityTranslate[ACT_MP_ATTACK_STAND_PRIMARYFIRE]			= getfenv()["ACT_MP_ATTACK_STAND_ITEM3"]
-		self.ActivityTranslate[ACT_MP_ATTACK_CROUCH_PRIMARYFIRE]			= getfenv()["ACT_MP_ATTACK_CROUCH_ITEM3"]
-		self.ActivityTranslate[ACT_MP_ATTACK_SWIM_PRIMARYFIRE]			= getfenv()["ACT_MP_ATTACK_SWIM_ITEM3"]
-	end
-	
-	self.ActivityTranslate[ACT_MP_ATTACK_STAND_PREFIRE]				= ACT_MP_ATTACK_STAND_PREFIRE
-	self.ActivityTranslate[ACT_MP_ATTACK_CROUCH_PREFIRE]			= ACT_MP_ATTACK_CROUCH_PREFIRE
-	self.ActivityTranslate[ACT_MP_ATTACK_SWIM_PREFIRE]				= ACT_MP_ATTACK_SWIM_PREFIRE
-	
-	self.ActivityTranslate[ACT_MP_ATTACK_STAND_POSTFIRE]			= ACT_MP_ATTACK_STAND_POSTFIRE
-	self.ActivityTranslate[ACT_MP_ATTACK_CROUCH_POSTFIRE]			= ACT_MP_ATTACK_CROUCH_POSTFIRE
-	self.ActivityTranslate[ACT_MP_ATTACK_SWIM_POSTFIRE]				= ACT_MP_ATTACK_SWIM_POSTFIRE
-	
-	self.ActivityTranslate[ACT_MP_RELOAD_STAND]		 				= getfenv()["ACT_MP_RELOAD_STAND_"..t]
-	self.ActivityTranslate[ACT_MP_RELOAD_CROUCH]		 			= getfenv()["ACT_MP_RELOAD_CROUCH_"..t]
-	self.ActivityTranslate[ACT_MP_RELOAD_SWIM]		 				= getfenv()["ACT_MP_RELOAD_SWIM_"..t]
-	
-	self.ActivityTranslate[ACT_MP_RELOAD_STAND_LOOP]		 		= getfenv()["ACT_MP_RELOAD_STAND_"..t.."_LOOP"]
-	self.ActivityTranslate[ACT_MP_RELOAD_CROUCH_LOOP]		 		= getfenv()["ACT_MP_RELOAD_CROUCH_"..t.."_LOOP"]
-	self.ActivityTranslate[ACT_MP_RELOAD_SWIM_LOOP]		 			= getfenv()["ACT_MP_RELOAD_SWIM_"..t.."_LOOP"]
- 
-	self.ActivityTranslate[ACT_MP_RELOAD_STAND_END]		 		= getfenv()["ACT_MP_RELOAD_STAND_"..t.."_END"]
-	self.ActivityTranslate[ACT_MP_RELOAD_CROUCH_END]		 		= getfenv()["ACT_MP_RELOAD_CROUCH_"..t.."_END"]
-	self.ActivityTranslate[ACT_MP_RELOAD_SWIM_END]		 			= getfenv()["ACT_MP_RELOAD_SWIM_"..t.."_END"]
+			self.ActivityTranslate[ACT_MP_ATTACK_STAND_PRIMARYFIRE] 		= getfenv()["ACT_MP_ATTACK_STAND_"..t]
+			self.ActivityTranslate[ACT_MP_ATTACK_CROUCH_PRIMARYFIRE]		= getfenv()["ACT_MP_ATTACK_CROUCH_"..t]
+			self.ActivityTranslate[ACT_MP_ATTACK_SWIM_PRIMARYFIRE]			= getfenv()["ACT_MP_ATTACK_SWIM_"..t]
+			
+			self.ActivityTranslate[ACT_MP_ATTACK_STAND_SECONDARYFIRE] 		= getfenv()["ACT_MP_ATTACK_STAND_"..t.."_SECONDARY"]
+			self.ActivityTranslate[ACT_MP_ATTACK_CROUCH_SECONDARYFIRE]		= getfenv()["ACT_MP_ATTACK_CROUCH_"..t.."_SECONDARY"]
+			self.ActivityTranslate[ACT_MP_ATTACK_SWIM_SECONDARYFIRE]		= getfenv()["ACT_MP_ATTACK_SWIM_"..t.."_SECONDARY"]
+			
+			self.ActivityTranslate[ACT_MP_ATTACK_STAND_PRIMARY_DEPLOYED] 	= getfenv()["ACT_MP_ATTACK_STAND_"..t.."_DEPLOYED"]
+			self.ActivityTranslate[ACT_MP_ATTACK_CROUCH_PRIMARY_DEPLOYED] 	= getfenv()["ACT_MP_ATTACK_CROUCH_"..t.."_DEPLOYED"]
+			self.ActivityTranslate[ACT_MP_ATTACK_SWIM_PRIMARY_DEPLOYED or 0]= getfenv()["ACT_MP_ATTACK_SWIM_"..t.."_DEPLOYED"]
+			if (self:GetClass() == "tf_weapon_slap") then 
+				self.ActivityTranslate[ACT_MP_ATTACK_STAND_PRIMARYFIRE]			= getfenv()["ACT_MP_ATTACK_STAND_ITEM3"]
+				self.ActivityTranslate[ACT_MP_ATTACK_CROUCH_PRIMARYFIRE]			= getfenv()["ACT_MP_ATTACK_CROUCH_ITEM3"]
+				self.ActivityTranslate[ACT_MP_ATTACK_SWIM_PRIMARYFIRE]			= getfenv()["ACT_MP_ATTACK_SWIM_ITEM3"]
+			end
+			
+			self.ActivityTranslate[ACT_MP_ATTACK_STAND_PREFIRE]				= ACT_MP_ATTACK_STAND_PREFIRE
+			self.ActivityTranslate[ACT_MP_ATTACK_CROUCH_PREFIRE]			= ACT_MP_ATTACK_CROUCH_PREFIRE
+			self.ActivityTranslate[ACT_MP_ATTACK_SWIM_PREFIRE]				= ACT_MP_ATTACK_SWIM_PREFIRE
+			
+			self.ActivityTranslate[ACT_MP_ATTACK_STAND_POSTFIRE]			= ACT_MP_ATTACK_STAND_POSTFIRE
+			self.ActivityTranslate[ACT_MP_ATTACK_CROUCH_POSTFIRE]			= ACT_MP_ATTACK_CROUCH_POSTFIRE
+			self.ActivityTranslate[ACT_MP_ATTACK_SWIM_POSTFIRE]				= ACT_MP_ATTACK_SWIM_POSTFIRE
+			
+			self.ActivityTranslate[ACT_MP_RELOAD_STAND]		 				= getfenv()["ACT_MP_RELOAD_STAND_"..t]
+			self.ActivityTranslate[ACT_MP_RELOAD_CROUCH]		 			= getfenv()["ACT_MP_RELOAD_CROUCH_"..t]
+			self.ActivityTranslate[ACT_MP_RELOAD_SWIM]		 				= getfenv()["ACT_MP_RELOAD_SWIM_"..t]
+			
+			self.ActivityTranslate[ACT_MP_RELOAD_STAND_LOOP]		 		= getfenv()["ACT_MP_RELOAD_STAND_"..t.."_LOOP"]
+			self.ActivityTranslate[ACT_MP_RELOAD_CROUCH_LOOP]		 		= getfenv()["ACT_MP_RELOAD_CROUCH_"..t.."_LOOP"]
+			self.ActivityTranslate[ACT_MP_RELOAD_SWIM_LOOP]		 			= getfenv()["ACT_MP_RELOAD_SWIM_"..t.."_LOOP"]
+		
+			self.ActivityTranslate[ACT_MP_RELOAD_STAND_END]		 		= getfenv()["ACT_MP_RELOAD_STAND_"..t.."_END"]
+			self.ActivityTranslate[ACT_MP_RELOAD_CROUCH_END]		 		= getfenv()["ACT_MP_RELOAD_CROUCH_"..t.."_END"]
+			self.ActivityTranslate[ACT_MP_RELOAD_SWIM_END]		 			= getfenv()["ACT_MP_RELOAD_SWIM_"..t.."_END"]
 
-	self.ActivityTranslate[ACT_MP_JUMP] 						= getfenv()["ACT_MP_JUMP_START_"..t]
-	self.ActivityTranslate[ACT_MP_JUMP_START] 						= getfenv()["ACT_MP_JUMP_START_"..t]
-	self.ActivityTranslate[ACT_MP_JUMP_FLOAT] 						= getfenv()["ACT_MP_JUMP_FLOAT_"..t]
-	self.ActivityTranslate[ACT_MP_JUMP_LAND] 						= getfenv()["ACT_MP_JUMP_LAND_"..t]
-	self.ActivityTranslate[ACT_LAND] 						= getfenv()["ACT_MP_JUMP_LAND_"..t]
+			self.ActivityTranslate[ACT_MP_JUMP] 						= getfenv()["ACT_MP_JUMP_START_"..t]
+			self.ActivityTranslate[ACT_MP_JUMP_START] 						= getfenv()["ACT_MP_JUMP_START_"..t]
+			self.ActivityTranslate[ACT_MP_JUMP_FLOAT] 						= getfenv()["ACT_MP_JUMP_FLOAT_"..t]
+			self.ActivityTranslate[ACT_MP_JUMP_LAND] 						= getfenv()["ACT_MP_JUMP_LAND_"..t]
+			self.ActivityTranslate[ACT_LAND] 						= getfenv()["ACT_MP_JUMP_LAND_"..t]
+			if (v:GetPlayerClass() == "soldier") then
+
+				self.ActivityTranslate[ACT_MP_RELOAD_STAND]		 				= getfenv()["ACT_MP_RELOAD_STAND_"..t]
+				self.ActivityTranslate[ACT_MP_RELOAD_CROUCH]		 			= getfenv()["ACT_MP_RELOAD_STAND_"..t]
+				self.ActivityTranslate[ACT_MP_RELOAD_SWIM]		 				= getfenv()["ACT_MP_RELOAD_STAND_"..t]
+				
+				self.ActivityTranslate[ACT_MP_RELOAD_STAND_LOOP]		 		= getfenv()["ACT_MP_RELOAD_STAND_"..t.."_LOOP"]
+				self.ActivityTranslate[ACT_MP_RELOAD_CROUCH_LOOP]		 		= getfenv()["ACT_MP_RELOAD_STAND_"..t.."_LOOP"]
+				self.ActivityTranslate[ACT_MP_RELOAD_SWIM_LOOP]		 			= getfenv()["ACT_MP_RELOAD_STAND_"..t.."_LOOP"]
+			 
+				self.ActivityTranslate[ACT_MP_RELOAD_STAND_END]		 			= getfenv()["ACT_MP_RELOAD_STAND_"..t.."_END"]
+				self.ActivityTranslate[ACT_MP_RELOAD_CROUCH_END]		 		= getfenv()["ACT_MP_RELOAD_STAND_"..t.."_END"]
+				self.ActivityTranslate[ACT_MP_RELOAD_SWIM_END]		 			= getfenv()["ACT_MP_RELOAD_STAND_"..t.."_END"]
+
+			end
 		end
 		end
 	end

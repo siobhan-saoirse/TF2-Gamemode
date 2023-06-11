@@ -69,7 +69,6 @@ function SWEP:PrimaryAttack()
 			self:SendWeaponAnim(self.VM_PRIMARYATTACK)
 		end
 		
-		self.Owner:SetAnimation(PLAYER_ATTACK1)
 		if (self.Primary.FastDelay) then
 			self:SetNextPrimaryFire(CurTime() + self.Primary.FastDelay)
 		else
@@ -81,7 +80,6 @@ function SWEP:PrimaryAttack()
 	--if ( IsFirstTimePredicted() ) then
 		self:ShootProjectile(self.BulletsPerShot, self.BulletSpread)
 		self.Owner:DoAttackEvent()
-		self.Owner:SetAnimation(PLAYER_ATTACK1)
 		if self:GetVisuals() and self:GetVisuals()["sound_single_shot"] then
 			self.ShootSound = self:GetVisuals()["sound_single_shot"]
 			self.ShootCritSound = self:GetVisuals()["sound_burst"]
@@ -235,6 +233,7 @@ function SWEP:ShootEffects()
 				self.Owner:EmitSound(self.ShootSound)
 			end
 			
+			self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_PRIMARYFIRE)
 	end
 	if CLIENT then
 		if IsValid(self.CModel) then

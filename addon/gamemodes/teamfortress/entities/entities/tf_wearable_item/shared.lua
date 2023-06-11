@@ -138,6 +138,22 @@ function ENT:Think()
 				end
 			end
 		end
+	else
+		if (IsValid(self.Owner)) then
+			if (self.Owner:GetPlayerClass() == "spy") then
+				if (self.Owner:Team() == TEAM_BLU) then
+					self:SetSkin(1)
+				else
+					self:SetSkin(0)
+				end
+			else
+				if (self.Owner:Team() == TEAM_BLU) then
+					self:SetSkin(1)
+				else
+					self:SetSkin(0)
+				end
+			end
+		end
 	end
 end
 function ENT:Initialize()

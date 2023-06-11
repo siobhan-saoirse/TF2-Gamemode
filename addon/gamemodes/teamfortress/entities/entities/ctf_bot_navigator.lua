@@ -7,7 +7,7 @@ ENT.Type = "nextbot"
 
 function ENT:Initialize()
 	self:SetModel("models/gman.mdl")
-	self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+	self:SetSolid(SOLID_NONE)
 	self:SetNoDraw(GetConVar("developer"):GetFloat() == 0)
 	self.PosGen = nil
 	self.LookAtTime = 0

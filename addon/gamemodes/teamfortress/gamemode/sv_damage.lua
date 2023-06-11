@@ -557,7 +557,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	
 	-- Increased explosion force
 	if dmginfo:IsExplosionDamage() then
-		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (inflictor.BlastForceMultiplier or 1) * BlastForceMultiplier * 0.7)
+		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (inflictor.BlastForceMultiplier or 1) * (BlastForceMultiplier * 0.7))
 	end
 	
 	if gamemode.Call("ShouldCrit", ent, inflictor, attacker, hitgroup, dmginfo) then
@@ -605,13 +605,11 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	end
 	if ent:IsTFPlayer() then
 		-- Increased bullet force
-		if dmginfo:IsBulletDamage() and !string.find(ent:GetModel(),"_boss.mdl")then
-			dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (BulletForceMultiplier * 0.5))
-		end
+		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * BulletForceMultiplier)
 		
 		-- Overexaggerated explosion force
-		if (ent:IsTFPlayer()) and ent:ShouldReceiveDamageForce() and dmginfo:IsExplosionDamage() and !string.find(ent:GetModel(),"_boss.mdl") then
-			local force = dmginfo:GetDamageForce() * BlastForceToVelocityMultiplier
+		if (ent:IsTFPlayer()) and ent:ShouldReceiveDamageForce() and dmginfo:IsExplosionDamage() then
+			local force = dmginfo:GetDamageForce() * (BlastForceToVelocityMultiplier * 0.5)
 			
 			ent:SetGroundEntity(NULL)
 			ent:SetThrownByExplosion(true)
@@ -659,7 +657,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			local realdmg = math.Clamp(dmginfo:GetDamage(), 0, ent:Health())
 			self:AddTotalDamage(attacker, realdmg)
 		end
-		
 		-- Reset the damage timer for the victim, for the medigun healing ramp
 		self:ResetLastDamaged(ent)
 		
@@ -776,6 +773,9 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		umsg.End()
 	elseif dmginfo:IsFallDamage() and !string.find(ent:GetModel(),"/bot_") and !ent:IsMiniBoss() then 
 		ent:RandomSentence("Death")
+	end
+	if (attacker:EntIndex() == ent:EntIndex() and dmginfo:IsExplosionDamage()) then
+		dmginfo:ScaleDamage(0.35)
 	end
 	if (dmginfo:IsFallDamage() and string.find(ent:GetModel(),"/bot_")) then
 		dmginfo:ScaleDamage(0)
