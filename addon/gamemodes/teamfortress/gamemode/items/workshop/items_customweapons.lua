@@ -347,7 +347,7 @@
 		"10000013"
 		{
 			"name"	"Pyro's Rocket Launcher"
-			"item_class"	"tf_weapon_rocketlauncher_qrl"
+			"item_class"	"tf_weapon_rocketlauncher"
 			"craft_class"	"weapon"
 			"show_in_armory"	"1"
 			"capabilities"

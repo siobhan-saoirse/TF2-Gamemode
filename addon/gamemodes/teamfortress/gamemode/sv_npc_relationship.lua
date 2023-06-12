@@ -32,9 +32,9 @@ local function CalcRelationship(ent1, ent2)
 		elseif (ent2:IsPlayer() and t2 == TEAM_FRIENDLY) then
 			return D_LI
 		elseif (ent1:IsPlayer() and !ent2.HatesNeutral and t1 == TEAM_NEUTRAL) then
-			return D_NU
+			return D_LI
 		elseif (ent2:IsPlayer() and !ent1.HatesNeutral and t2 == TEAM_NEUTRAL) then
-			return D_NU
+			return D_LI
 		elseif (ent1:IsPlayer() and ent2.HatesNeutral and t1 == TEAM_NEUTRAL) then
 			return D_HT
 		elseif (ent2:IsPlayer() and ent1.HatesNeutral and t2 == TEAM_NEUTRAL) then

@@ -732,7 +732,7 @@ function SWEP:SetWeaponHoldType(t)
 			self.ActivityTranslate[ACT_MP_RELOAD_STAND_LOOP]		 		= getfenv()["ACT_MP_RELOAD_STAND_"..t.."_LOOP"]
 			self.ActivityTranslate[ACT_MP_RELOAD_CROUCH_LOOP]		 		= getfenv()["ACT_MP_RELOAD_CROUCH_"..t.."_LOOP"]
 			self.ActivityTranslate[ACT_MP_RELOAD_SWIM_LOOP]		 			= getfenv()["ACT_MP_RELOAD_SWIM_"..t.."_LOOP"]
-		
+		 
 			self.ActivityTranslate[ACT_MP_RELOAD_STAND_END]		 		= getfenv()["ACT_MP_RELOAD_STAND_"..t.."_END"]
 			self.ActivityTranslate[ACT_MP_RELOAD_CROUCH_END]		 		= getfenv()["ACT_MP_RELOAD_CROUCH_"..t.."_END"]
 			self.ActivityTranslate[ACT_MP_RELOAD_SWIM_END]		 			= getfenv()["ACT_MP_RELOAD_SWIM_"..t.."_END"]
