@@ -450,32 +450,13 @@ function meta:SetPlayerClass(class)
 			else
 				c.Model = "models/bots/"..(c.ModelName or "scout").."/bot_"..(c.ModelName or "scout")..".mdl"
 			end
-			if (self:GetPlayerClass() == "scout") then
-				self:EmitSound("MVM.GiantScoutLoop")
-			elseif (self:GetPlayerClass() == "soldier") then
-				self:EmitSound("MVM.GiantSoldierLoop")
-			elseif (self:GetPlayerClass() == "pyro") then
-				self:EmitSound("MVM.GiantPyroLoop") 
-			elseif (self:GetPlayerClass() == "demoman") then
-				self:EmitSound("MVM.GiantDemomanLoop")
-			elseif (self:GetPlayerClass() == "heavy") then
-				self:EmitSound("MVM.GiantHeavyLoop")
-			elseif (self:GetPlayerClass() == "engineer") then
-				self:EmitSound("MVM.GiantHeavyLoop")
-			elseif (self:GetPlayerClass() == "medic") then
-				self:EmitSound("MVM.GiantSoldierLoop")
-			elseif (self:GetPlayerClass() == "sniper") then
-				self:EmitSound("MVM.GiantHeavyLoop")
-			elseif (self:GetPlayerClass() == "spy") then
-				self:EmitSound("MVM.GiantDemomanLoop")
-			end	
 			self:SetModelScale(1.75)
 			if self:GetPlayerClass() == "medic" and self:GetPlayerClass() == "pyro" and self:GetPlayerClass() == "soldier" and self:GetPlayerClass() == "demoman" and self:GetPlayerClass() == "engineer" and self:GetPlayerClass() == "sniper" then
 				self:SetHealth(3600)
 				self:SetMaxHealth(3600)
 			elseif self:GetPlayerClass() == "scout" and self:GetPlayerClass() == "spy" then
-				self:SetHealth(1300)
-				self:SetMaxHealth(1300)	
+				self:SetHealth(1600)
+				self:SetMaxHealth(1600)	
 			elseif self:GetPlayerClass() == "heavy" then
 				self:SetHealth(5000)
 				self:SetMaxHealth(5000)			
@@ -634,7 +615,11 @@ function meta:ResetClassSpeed()
 		sp = sp * mul_speedbonus + add_speedbonus
 	end
 	
-	self:SetClassSpeed(sp)
+	if (self.playerclass != "Scout" and self:IsMiniBoss()) then
+		self:SetClassSpeed(sp * 0.5)
+	else
+		self:SetClassSpeed(sp)
+	end
 	self:SetJumpPower(self.PlayerJumpPower)
 end
 

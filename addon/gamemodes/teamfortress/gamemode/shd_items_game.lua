@@ -174,18 +174,6 @@ for k, v in pairs(items_game["items"]) do
         v.name = tf_lang.GetRaw(v.item_name)
         tf_items.Items[v.name] = v
   
-        if v.name == "Natascha" then
-			v.item_class = "tf_weapon_minigun"
-		end
-        if v.name == "Deflector" then
-			v.item_class = "tf_weapon_minigun"
-		end
-        if v.name == "Huo-Long Heater" then
-			v.item_class = "tf_weapon_minigun_burner"
-		end
-        if v.name == "Brass Beast" then
-			v.item_class = "tf_weapon_minigun"
-		end
         if v.name == "Red-Tape Recorder" then
 			v.item_class = "tf_weapon_rtr" 
             v.item_slot = "primary"

@@ -174,9 +174,11 @@ function SWEP:SpinUp()
 	self.NextEndSpinDown = nil
 	self.NextIdle = nil
 	
-	self:StopSound(self.SpecialSound2)
-	self:StopSound(self.SpecialSound3)
-	self:EmitSound(self.SpecialSound1)
+	self.Owner:StopSound(self.SpecialSound2)
+	self.Owner:StopSound(self.SpecialSound3)
+	if SERVER then
+		self.Owner:EmitSound(self.SpecialSound1)
+	end
 	
 	if self.Primary.Delay != 0.08 then
 		self.SpinUpSound:ChangePitch(100 * self.Primary.Delay)
@@ -200,11 +202,13 @@ function SWEP:SpinDown()
 	self:SetNetworkedBool("Spinning", false)
 	self.Spinning = false
 	
-	self:StopSound(self.ShootSound2)
-	self:StopSound(self.ShootCritSound)
-	self:StopSound(self.SpecialSound1)
-	self:EmitSound(self.SpecialSound2)
-	self:StopSound(self.SpecialSound3)
+	self.Owner:StopSound(self.ShootSound2)
+	self.Owner:StopSound(self.ShootCritSound)
+	self.Owner:StopSound(self.SpecialSound1)
+	if SERVER then
+		self.Owner:EmitSound(self.SpecialSound2)
+	end
+	self.Owner:StopSound(self.SpecialSound3)
 	if SERVER then
 		--self.WModel2:StopParticles()
 	end
@@ -224,9 +228,11 @@ function SWEP:StopFiring()
 		self.Owner:SetAnimation(PLAYER_IDLE)
 	end
 	timer.Stop("AttackAnim"..self.Owner:EntIndex())
-	self:EmitSound(self.SpecialSound3)
-	self:StopSound(self.ShootSound2)
-	self:StopSound(self.ShootCritSound)
+	if SERVER then
+		self.Owner:EmitSound(self.SpecialSound3)
+	end
+	self.Owner:StopSound(self.ShootSound2)
+	self.Owner:StopSound(self.ShootCritSound)
 	if SERVER then
 		--self.WModel2:StopParticles()
 	end
@@ -236,7 +242,9 @@ end
 function SWEP:CanPrimaryAttack()
 	if self.Owner:GetAmmoCount(self.Primary.Ammo) <= 0 then
 	
-		self:EmitSound("weapons/shotgun_empty.wav", 80, 100)
+		if SERVER then
+			self.Owner:EmitSound("weapons/shotgun_empty.wav", 80, 100)
+		end
 		self:SetNextPrimaryFire( CurTime() + 0.2 )
 		self:Reload()
 		return false
@@ -286,9 +294,11 @@ function SWEP:PrimaryAttack(vampire)
 	if self:RollCritical() then
 		if not self.Critting or not self.Firing then
 			self:SetMinigunEffect(1)
-			self:StopSound(self.SpecialSound3)
-			self:StopSound(self.ShootSound2)
-			self:EmitSound(self.ShootCritSound)
+			self.Owner:StopSound(self.SpecialSound3)
+			self.Owner:StopSound(self.ShootSound2)
+			if SERVER then
+				self.Owner:EmitSound(self.ShootCritSound)
+			end
 			
 			if self.Primary.Delay != 0.08 then
 				self.ShootCritSoundLoop:ChangePitch(100 * self.Primary.Delay)
@@ -304,9 +314,11 @@ function SWEP:PrimaryAttack(vampire)
 	else
 		if self.Critting or not self.Firing then
 			self:SetMinigunEffect(1)
-			self:StopSound(self.SpecialSound3)
-			self:StopSound(self.ShootCritSound)
-			self:EmitSound(self.ShootSound2)
+			self.Owner:StopSound(self.SpecialSound3)
+			self.Owner:StopSound(self.ShootCritSound)
+			if SERVER then
+				self.Owner:EmitSound(self.ShootSound2)
+			end
 	
 			if self.Primary.Delay != 0.08 then
 				self.ShootSoundLoop:ChangePitch(100 * self.Primary.Delay)
@@ -363,7 +375,7 @@ function SWEP:Think()
 			end
 		end
 	end
-	if (string.find(self.Owner:GetModel(),"_boss") and (self:GetItemData().name == "Deflector" or self:GetItemData().name == "TF_WEAPON_MINIGUN")) then
+	if (self.Owner:IsMiniBoss() and (self:GetItemData().name == "Deflector" or string.find(self:GetItemData().model_player,"/c_minigun.mdl"))) then
 		self.ShootSound2 = Sound("MVM.GiantHeavyGunFire")
 		self.SpecialSound1 = Sound("MVM.GiantHeavyGunWindUp")
 		self.SpecialSound2 = Sound("MVM.GiantHeavyGunWindDown")
@@ -388,15 +400,6 @@ function SWEP:Think()
 	else
 		self.Owner:GetWeapons()[1]:ManipulateBoneAngles( 1, Angle(0,self.barrelRotation,0) )
 		
-	end
-	if (self.Owner:GetInfoNum("tf_giant_robot",0) == 1) then
-		if (self.WorldModel == "models/weapons/c_models/c_minigun/c_minigun.mdl") then
-			self.ShootSound2 = Sound("MVM.GiantHeavyGunFire")
-			self.SpecialSound1 = Sound("MVM.GiantHeavyGunWindUp")
-			self.SpecialSound2 = Sound("MVM.GiantHeavyGunWindDown")
-			self.SpecialSound3 = Sound("MVM.GiantHeavyGunSpin")
-			self.ShootCritSound = Sound("MVM.GiantHeavyGunFire")
-		end
 	end
 	self:TFViewModelFOV()
 
@@ -436,8 +439,10 @@ function SWEP:Think()
 	end
 	
 	if self.NextEndSpinUpSound and CurTime()>=self.NextEndSpinUpSound then
-		self:StopSound(self.SpecialSound1)
-		self:EmitSound(self.SpecialSound3)
+		self.Owner:StopSound(self.SpecialSound1)
+		if SERVER then
+			self.Owner:EmitSound(self.SpecialSound3)
+		end
 		if self.Primary.Delay != 0.08 then
 			self.SpinSound:ChangePitch(100 * self.Primary.Delay)
 		end
@@ -486,7 +491,7 @@ function SWEP:Think()
 			if self.barrelSpeed > 0 then
 			
 				self.barrelRotation = self.barrelRotation + self.barrelSpeed
-				self.barrelSpeed = self.barrelSpeed - ( CurTime() - self.barrelValue1 ) * 30
+				self.barrelSpeed = self.barrelSpeed - ( CurTime() - self.barrelValue1 ) * 10
 				
 			end
 			
@@ -512,8 +517,8 @@ function SWEP:Think()
 	
 	if self.barrelSpeed == 0 then
 		if self:GetItemData().attach_to_hands == 1 then
-			if CLIENT and IsValid(self.CModel) then
-				self:StopSound(self.SpecialSound2) 
+			if CLIENT and IsValid(self.CModel) and !self.Owner:ShouldDrawLocalPlayer() then
+				self.Owner:StopSound(self.SpecialSound2) 
 			end
 		else
 			--self.Owner:GetViewModel():ManipulateBoneAngles( 2, Angle(0,0,self.barrelRotation) )
@@ -522,8 +527,8 @@ function SWEP:Think()
 	--self.Owner:GetViewModel():ManipulateBoneAngles( 2, Angle(0,0,0) )
 	if self.barrelSpeed == 0 then
 		if self:GetItemData().attach_to_hands == 1 then
-			if CLIENT and IsValid(self.CModel) then
-				self:StopSound(self.SpecialSound2)
+			if CLIENT and IsValid(self.CModel) and !self.Owner:ShouldDrawLocalPlayer() then
+				self.Owner:StopSound(self.SpecialSound2)
 			end
 		else
 			--self.Owner:GetViewModel():ManipulateBoneAngles( 2, Angle(0,0,self.barrelRotation) )
@@ -564,11 +569,11 @@ function SWEP:Holster()
 		self.ShootCritSoundLoop:Stop()
 	end
 	
-	self:StopSound(self.ShootSound2)
-	self:StopSound(self.ShootCritSound)
-	self:StopSound(self.SpecialSound1)
-	self:StopSound(self.SpecialSound2)
-	self:StopSound(self.SpecialSound3)
+	self.Owner:StopSound(self.ShootSound2)
+	self.Owner:StopSound(self.ShootCritSound)
+	self.Owner:StopSound(self.SpecialSound1)
+	self.Owner:StopSound(self.SpecialSound2)
+	self.Owner:StopSound(self.SpecialSound3)
 	self.Spinning = nil
 	self.Ready = nil
 	self.NextEndSpinUp = nil
@@ -599,11 +604,11 @@ end
 function SWEP:OnRemove()
 	self.Owner = self.CurrentOwner
 	self.Removed = true
-	self:StopSound(self.ShootSound2)
-	self:StopSound(self.ShootCritSound)
-	self:StopSound(self.SpecialSound1)
-	self:StopSound(self.SpecialSound2)
-	self:StopSound(self.SpecialSound3)
+	self.Owner:StopSound(self.ShootSound2)
+	self.Owner:StopSound(self.ShootCritSound)
+	self.Owner:StopSound(self.SpecialSound1)
+	self.Owner:StopSound(self.SpecialSound2)
+	self.Owner:StopSound(self.SpecialSound3)
 	self:Holster()
 end
 
