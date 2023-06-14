@@ -1506,7 +1506,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	
 	if ((string.find(ply:GetModel(),"bot_") and ply:GetModelScale() > 1.0) or ply:IsMiniBoss()) then
 		ply:GibBreakServer( dmginfo:GetDamageForce() )
-		if (string.find(ply:GetModel(),"_boss")) then
+		if (ply:IsMiniBoss()) then
 			for k,v in ipairs(player.GetAll()) do
 				v:SendLua("LocalPlayer():EmitSound(\"MVM.GiantCommonExplodes\")")
 			end

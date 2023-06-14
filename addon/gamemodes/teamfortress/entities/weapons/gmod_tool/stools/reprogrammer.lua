@@ -39,6 +39,11 @@ function TOOL:LeftClick( trace )
 		timer.Simple(0.1, function()
 		
 			npc:SetPlayerClass(npc:GetPlayerClass())
+			for k,v in ipairs(ents.GetAll()) do
+				if (IsValid(v.Bot) and v.Bot:EntIndex() == npc:EntIndex()) then
+					npc:SetNWString("PreferredIcon",v.PreferredIcon)
+				end
+			end
 
 		end)
 	elseif (npc:IsNPC()) then
@@ -79,6 +84,11 @@ function TOOL:RightClick( trace )
 		timer.Simple(0.1, function()
 		
 			npc:SetPlayerClass(npc:GetPlayerClass())
+			for k,v in ipairs(ents.GetAll()) do
+				if (IsValid(v.Bot) and v.Bot:EntIndex() == npc:EntIndex()) then
+					npc:SetNWString("PreferredIcon",v.PreferredIcon)
+				end
+			end
 
 		end)
 	elseif (npc:IsNPC()) then

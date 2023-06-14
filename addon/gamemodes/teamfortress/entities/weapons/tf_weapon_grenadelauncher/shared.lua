@@ -107,7 +107,6 @@ function SWEP:ShootProjectile()
 	if SERVER then
 		grenade = ents.Create("tf_projectile_pipe")
 		grenade:SetPos(self:ProjectileShootPos())
-		grenade:SetAngles(self.Owner:EyeAngles())
 		if self:GetItemData().model_player == "models/workshop/weapons/c_models/c_quadball/c_quadball.mdl" then
 			grenade.Model = "models/workshop/weapons/c_models/c_quadball/w_quadball_grenade.mdl"
 		end
@@ -115,7 +114,8 @@ function SWEP:ShootProjectile()
 		if self:Critical() then
 			grenade.critical = true
 		end
-		
+		local ang = self.Owner:EyeAngles()
+		grenade:SetAngles(ang)
 		for k,v in pairs(self.Properties) do
 			grenade[k] = v
 		end
@@ -141,6 +141,9 @@ function SWEP:ShootProjectile()
 		end
 		
 		local vel = self.Owner:GetAimVector():Angle()
+		if (self.Owner.TFBot and self.Owner:Nick() == "Giant Burst Fire Demo") then	
+			vel = self.Owner:GetAimVector():Angle() + Angle(math.random(-5,5),math.random(-5,5),0)
+		end
 		vel.p = vel.p + self.AddPitch
 		vel = vel:Forward() * self.Force * (grenade.Mass or 10)
 		

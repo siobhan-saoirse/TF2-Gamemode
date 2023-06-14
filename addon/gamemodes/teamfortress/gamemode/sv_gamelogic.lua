@@ -447,9 +447,6 @@ function GM:StopMiniCritBoost(pl)
 	pl.CritBoostType = nil
 	pl.CritBoostSlotConstraint = nil
 	pl:StopSound("Weapon_General.CritPower")
-	if (pl:HasPlayerState(PLAYERSTATE_MINICRIT)) then
-		pl:EmitSound("TFPlayer.CritBoostOff")
-	end
 	pl:RemovePlayerState(PLAYERSTATE_MINICRIT, true)
 end
 

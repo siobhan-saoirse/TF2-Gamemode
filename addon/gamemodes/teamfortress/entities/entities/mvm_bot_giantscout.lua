@@ -6,6 +6,7 @@ ENT.PZClass = "giantscout"
 ENT.Spawnable = false
 ENT.AdminOnly = true
 ENT.IsBoss = true
+ENT.Difficulty = 3
 ENT.PrintName		= "Giant Scout"
 ENT.Category		= "TF2: MVM Bots"
 ENT.PreferredIcon = "hud/leaderboard_class_scout"

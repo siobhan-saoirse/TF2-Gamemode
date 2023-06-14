@@ -213,34 +213,27 @@ function SWEP:ViewModelDrawn()
 		end
 		
 		if self.Owner.TempAttributes and self.Owner.TempAttributes.DeployTimeMultiplier then
-			vm:SetPlaybackRate(1.2 / self.Owner.TempAttributes.DeployTimeMultiplier)
-		elseif self.DeployTimeMultiplier then
-			vm:SetPlaybackRate(1.2 / self.DeployTimeMultiplier)
+			vm:SetPlaybackRate(1 / self.Owner.TempAttributes.DeployTimeMultiplier)
 		else
-			vm:SetPlaybackRate(1.2)
+			vm:SetPlaybackRate(1)
 		end
 	else
 		if self.DeploySequence ~= true and vm:GetSequence() ~= self.DeploySequence then
+			vm:SetPlaybackRate(1)
 			self.DeploySequence = true
 		end
 	end	
-	 
+	
 	if self.FixViewModel then
 		if IsValid(self.CModel) then
 			self.CModel:SetParent(vm)
-			self.CModel:AddEffects(bit.bor(EF_BONEMERGE,EF_BONEMERGE_FASTCULL))
-		end
-		if IsValid(self.ExtraCModel) then
-			self.ExtraCModel:SetParent(self.CModel)
 		end
 		self.FixViewModel = false
 	end
-
-	if IsValid(self.ExtraCModel) then
-		self.ExtraCModel:SetParent(self.CModel)
-	end
-	if self.ViewModelOverride and (!string.StartWith(self.Owner:GetModel(), "models/infected/")) --[[and self:GetModel()~=self.ViewModelOverride]] then
+	
+	if self.ViewModelOverride --[[and self:GetModel()~=self.ViewModelOverride]] then
 		self.ViewModel = self.ViewModelOverride
+		self:SetModel(self.ViewModelOverride)
 		vm:SetModel(self.ViewModelOverride)
 	end
 	
@@ -249,6 +242,16 @@ function SWEP:ViewModelDrawn()
 	end
 	
 	self.DrawingViewModel = true
+	if IsValid(self.CModel) then
+		self.CModel:SetSkin(self.WeaponSkin or 0)
+		self.CModel:SetMaterial(self.WeaponMaterial or 0)
+	end
+	if IsValid(self.AttachedVModel) then
+		self.AttachedVModel:SetSkin(self.WeaponSkin or 0)
+		//self.AttachedVModel:SetMaterial(self.WeaponMaterial or 0)
+	end
+	self.Owner:GetViewModel():SetSkin(self.WeaponSkin or 0)
+	self.Owner:GetViewModel():SetMaterial(self.WeaponMaterial or 0)
 	
 	if self.ViewModelFlip then
 		render.CullMode(MATERIAL_CULLMODE_CW)

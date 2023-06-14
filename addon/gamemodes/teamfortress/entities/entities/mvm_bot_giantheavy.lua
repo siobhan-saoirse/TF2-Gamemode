@@ -6,6 +6,7 @@ ENT.PZClass = "giantheavy"
 ENT.Spawnable = false
 ENT.AdminOnly = true
 ENT.IsBoss = true
+ENT.Difficulty = 3
 ENT.PrintName		= "Giant Heavy"
 ENT.Category		= "TF2: MVM Bots"
 list.Set( "NPC", "mvm_bot_giantheavy", {

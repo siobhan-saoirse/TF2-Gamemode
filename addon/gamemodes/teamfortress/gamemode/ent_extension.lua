@@ -184,7 +184,11 @@ function meta:IsMiniBoss()
 	if (string.find(self:GetModel(),"_boss.mdl") or (string.find(self:GetModel(),"/bot_") and !string.find(self:GetModel(),"_boss.mdl") and self:LookupBone("bip_head") != nil and self:GetManipulateBoneScale(self:LookupBone("bip_head")) == Vector(0.7, 0.7, 0.7)) or self:GetModel() == "models/bots/demo/bot_sentry_buster.mdl") then
 		return true
 	else
-		return false
+		if (self:GetNWBool("IsBoss",false) == true) then
+			return true
+		else
+			return false
+		end
 	end
 end
 function meta:GiveHealth(c, is_fraction, allow_overheal)

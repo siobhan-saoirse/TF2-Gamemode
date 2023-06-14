@@ -233,6 +233,7 @@ list.Set( "NPC", "tf_red_bot", {
 	Category = ENT.Category
 } )
 
+
 function ENT:Initialize()
 	if CLIENT then return end	
 	self:SetModel("models/player/scout.mdl")
@@ -307,6 +308,14 @@ function ENT:Initialize()
 
 	end)
 	self.Bot = npc
+end
+
+function ENT:Think()
+	if (!IsValid(self.Bot) and SERVER) then
+		self:Remove() 
+	end
+	self:NextThink(CurTime())
+	return true
 end
 
 function ENT:OnRemove()

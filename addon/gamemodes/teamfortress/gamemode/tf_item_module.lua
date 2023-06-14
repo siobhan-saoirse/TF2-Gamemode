@@ -362,46 +362,21 @@ function ITEM:InitProjectileAttributes(proj)
 end
 
 function ITEM:SetupItem(item)
+
 	if SERVER then
-		if !GetConVar("tf_opentheorangebox"):GetBool() then
-			if self:IsWeapon() and self.SetupCModelActivities then
-				if item.attach_to_hands==1 then
-					local t = self.Owner:GetPlayerClassTable()
-					if t and t.ModelName then
-						if (self.Owner:GetPlayerClass() != "civilian_" && self.Owner:GetPlayerClass() != "tank" && self.Owner:GetPlayerClass() != "hunter" && self.Owner:GetPlayerClass() != "smoker" && self.Owner:GetPlayerClass() != "spitter" && self.Owner:GetPlayerClass() != "jockey" && self.Owner:GetPlayerClass() != "boomer" && self.Owner:GetPlayerClass() != "boomette" && self.Owner:GetPlayerClass() != "charger" && self.Owner:GetPlayerClass() != "witch" && self.Owner:GetPlayerClass() != "gmodplayer" ) then
-							self.ViewModelOverride = Format("models/weapons/c_models/c_%s_arms_empty.mdl", t.ModelName)
-							self.ViewModel = self.ViewModelOverride
-							self:SetModel(self.ViewModelOverride)
-							self.Owner:GetViewModel():SetModel(self.ViewModelOverride)
-							self:SetupCModelActivities(item)
-						end
-					end
-				else
-					self:SetupCModelActivities() 
-					self:InitializeWModel2()
-					self.WorldModelOverride2 = item.model_world
-					self.ViewModelOverride = nil
+		if self:IsWeapon() and self.SetupCModelActivities then
+			if item.attach_to_hands==1 then
+				local t = self.Owner:GetPlayerClassTable()
+				if t and t.ModelName then
+					self.ViewModelOverride = Format("models/weapons/c_models/c_%s_arms.mdl", t.ModelName)
+					self.ViewModel = self.ViewModelOverride
+					self:SetModel(self.ViewModelOverride)
+					self.Owner:GetViewModel():SetModel(self.ViewModelOverride)
+					self:SetupCModelActivities(item)
 				end
-			end
-		else
-			if self:GetClass() == "tf_weapon_flamethrower" and self:GetClass() == "tf_weapon_club" then
-				if item.attach_to_hands==1 then
-					local t = self.Owner:GetPlayerClassTable()
-					if t and t.ModelName then
-						if (self.Owner:GetPlayerClass() != "civilian_" && self.Owner:GetPlayerClass() != "tank" && self.Owner:GetPlayerClass() != "hunter" && self.Owner:GetPlayerClass() != "smoker" && self.Owner:GetPlayerClass() != "spitter" && self.Owner:GetPlayerClass() != "jockey" && self.Owner:GetPlayerClass() != "boomer" && self.Owner:GetPlayerClass() != "boomette" && self.Owner:GetPlayerClass() != "charger" && self.Owner:GetPlayerClass() != "witch" && self.Owner:GetPlayerClass() != "gmodplayer" ) then
-							self.ViewModelOverride = Format("models/weapons/c_models/c_%s_arms_empty.mdl", t.ModelName)
-							self.ViewModel = self.ViewModelOverride
-							self:SetModel(self.ViewModelOverride)
-							self.Owner:GetViewModel():SetModel(self.ViewModelOverride)
-							self:SetupCModelActivities(item)
-						end
-					end
-				else
-					self:SetupCModelActivities()
-					self:InitializeWModel2()
-					self:InitializeAttachedModels()
-					self.ViewModelOverride = nil
-				end
+			else
+				self:SetupCModelActivities()
+				self.ViewModelOverride = nil
 			end
 		end
 	else
@@ -410,14 +385,12 @@ function ITEM:SetupItem(item)
 			self:SetExtraAttributes(ExtraAttributesPending[self:EntIndex()])
 			ExtraAttributesPending[self:EntIndex()] = nil
 			
-			if (IsValid(self.Owner:GetActiveWeapon())) then
-				if self:IsWeapon() and self==self.Owner:GetActiveWeapon() then
-					HudInspectPanel:Update()
-				end
+			if self:IsWeapon() and self == self.Owner:GetActiveWeapon() then
+				HudInspectPanel:Update()
 			end
 		end
 		
-		self:InitAttributes(self.Owner, item.attributes)
+		self:InitAttributes(self.Owner, item.attributes_by_id)
 		
 		if self.Owner:EntityTeam() == TEAM_BLU then
 			self:InitVisuals(self.Owner, item.visuals_blu or item.visuals)
@@ -426,33 +399,33 @@ function ITEM:SetupItem(item)
 		end
 		
 		if self:IsWeapon() and self.SetupCModelActivities then
-				if item.attach_to_hands==1 then
-					local t = self.Owner:GetPlayerClassTable()
-					if t and t.ModelName then
-						if (self.Owner:GetPlayerClass() != "civilian_" && self.Owner:GetPlayerClass() != "tank" && self.Owner:GetPlayerClass() != "hunter" && self.Owner:GetPlayerClass() != "smoker" && self.Owner:GetPlayerClass() != "spitter" && self.Owner:GetPlayerClass() != "jockey" && self.Owner:GetPlayerClass() != "boomer" && self.Owner:GetPlayerClass() != "boomette" && self.Owner:GetPlayerClass() != "charger" && self.Owner:GetPlayerClass() != "witch" && self.Owner:GetPlayerClass() != "gmodplayer" ) then
-							self.ViewModelOverride = Format("models/weapons/c_models/c_%s_arms_empty.mdl", t.ModelName)
-							self:SetModel(self.ViewModelOverride)
-							self:SetupCModelActivities(item)
-						end
-					end
-					
-					if item.model_player then
-						self.HasCModel = true
-					end
-				else
-					self:SetupCModelActivities()
-					self.HasCModel = false
-					
-					-- won't be using the original worldmodel anymore, since it tends to randomly disappear when the player is near NPCs
-					if self.WorldModel ~= "" then
-						self.WorldModelOverride = self.WorldModel
-					end
+			if item.attach_to_hands==1 then
+				local t = self.Owner:GetPlayerClassTable()
+				if t and t.ModelName then
+					self.ViewModelOverride = Format("models/weapons/c_models/c_%s_arms.mdl", t.ModelName)
+					self:SetModel(self.ViewModelOverride)
+					self:SetupCModelActivities(item)
 				end
+				
+				if item.model_player then
+					self.HasCModel = true
+					self.WorldModelOverride = item.model_player
+				end
+			else
+				self:SetupCModelActivities()
+				self.HasCModel = false
+				
+				-- won't be using the original worldmodel anymore, since it tends to randomly disappear when the player is near NPCs
+				if self.WorldModel ~= "" then
+					self.WorldModelOverride = self.WorldModel
+				end
+			end
 			
-			
+			self.WorldModelOverride2 = item.model_world
 		
 			-- todo: optimize clientside models, certainly don't need to create up to 4 clientside entities for each weapon
 			--self:InitializeCModel()
+			--self:InitializeWModel2()
 			self:InitializeAttachedModels()
 		end
 	end
@@ -562,8 +535,9 @@ function ITEM:ResetParticles(state_override)
 	end
 	
 	-- Critical boost effect
-	if self:IsWeapon() and self.Owner:HasPlayerState(PLAYERSTATE_CRITBOOST, state_override) then
+	if self:IsWeapon() and (self.Owner:HasPlayerState(PLAYERSTATE_CRITBOOST, state_override) || self.Owner:HasPlayerState(PLAYERSTATE_MINICRIT, state_override)) then
 		local effect
+		local effect2
 		local t = self.Owner:EntityTeam()
 		
 		if t==2 then
@@ -572,7 +546,14 @@ function ITEM:ResetParticles(state_override)
 			effect = "critgun_weaponmodel_red"
 		end
 		
+		if t==2 then
+			effect2 = "critgun_weaponmodel_blu_glow"
+		else
+			effect2 = "critgun_weaponmodel_red_glow"
+		end
+		
 		ParticleEffectAttach(effect, PATTACH_ABSORIGIN_FOLLOW, ent, 0)
+		ParticleEffectAttach(effect2, PATTACH_ABSORIGIN_FOLLOW, ent, 0)
 	end
 end
 

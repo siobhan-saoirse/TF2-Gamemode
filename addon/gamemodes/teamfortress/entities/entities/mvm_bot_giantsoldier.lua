@@ -6,6 +6,7 @@ ENT.PZClass = "giantsoldier"
 ENT.Spawnable = false
 ENT.AdminOnly = true
 ENT.IsBoss = true
+ENT.Difficulty = 3
 ENT.PrintName		= "Giant Soldier"
 ENT.Category		= "TF2: MVM Bots"
 

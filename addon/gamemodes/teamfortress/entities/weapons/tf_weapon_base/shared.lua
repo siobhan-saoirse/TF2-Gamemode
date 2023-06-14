@@ -677,15 +677,16 @@ function SWEP:Deploy()
 		end
 	end	
 	
-	local hold = self.HoldType
+	local hold = self.HoldType 
 	--MsgN(Format("SetupCModelActivities %s", tostring(self)))
+
 	if (self.Owner:GetNWBool("NoWeapon")) then
 		--self.WorldModel = "models/empty.mdl"
 	else
 		--self.WorldModel = wmodel;
 	end
 	--self:InitializeWModel2()
-	--self:InitializeAttachedModels()()
+	--self:InitializeAttachedModels()
 	if SERVER then
 		if IsValid(self.WModel) then 
 			self.WModel:SetSkin(self.WeaponSkin or self.Owner:GetSkin())
@@ -723,36 +724,6 @@ function SWEP:Deploy()
 	end
 	self:StopTimers()
 	self.DeployPlayed = nil
-	if self:GetItemData().hide_bodygroups_deployed_only then
-		local visuals = self:GetVisuals()
-		local owner = self.Owner
-		
-		if visuals.hide_player_bodygroup_names and !string.find(owner:GetModel(), "/bot_") then
-			for _,group in ipairs(visuals.hide_player_bodygroup_names) do
-				local b = PlayerNamedBodygroups[owner:GetPlayerClass()]
-				if b and b[group] then
-					owner:SetBodygroup(b[group], 1)
-				end
-				
-				b = PlayerNamedViewmodelBodygroups[owner:GetPlayerClass()]
-				if b and b[group] then
-					if IsValid(owner:GetViewModel()) then
-						owner:GetViewModel():SetBodygroup(b[group], 1)
-					end
-				end
-			end
-		else
-			if (!string.find(owner:GetModel(), "/bot_")) then
-				owner:SetBodygroup(self:GetItemData().hide_bodygroups_deployed_only, 1)
-			end
-		end
-	end
-	
-	for k,v in pairs(self:GetVisuals()) do
-		if k=="hide_player_bodygroup" then
-			self.Owner:SetBodygroup(v,1)
-		end
-	end
 	if GetConVar("tf_righthand") and not self:GetClass() == "tf_weapon_compound_bow" then
 	if GetConVar("tf_righthand"):GetInt() == 0	then
 		self.ViewModelFlip = true
@@ -865,32 +836,7 @@ function SWEP:InspectAnimCheck()
 		if (self:GetItemData().model_player) then
 
 			if (self:GetItemData().model_player == "models/workshop/weapons/c_models/c_demo_sultan_sword/c_demo_sultan_sword.mdl") then
-				self:SetHoldType("MELEE_ALLCLASS")
-				self.HoldType = "MELEE_ALLCLASS" 
-				local hold = "MELEE_ALLCLASS"
-				self.VM_DRAW			= _G["ACT_"..hold.."_VM_DRAW"]
-				self.VM_IDLE			= _G["ACT_"..hold.."_VM_IDLE"]
-				self.VM_HITCENTER	= _G["ACT_"..hold.."_VM_HITCENTER"]
-				self.VM_SWINGHARD	= _G["ACT_"..hold.."_VM_SWINGHARD"]
-				self.VM_PRIMARYATTACK	= _G["ACT_"..hold.."_VM_PRIMARYATTACK"]
-				self.VM_SECONDARYATTACK	= _G["ACT_"..hold.."_VM_SECONDARYATTACK"]
-				self.VM_RELOAD			= _G["ACT_"..hold.."_VM_RELOAD"]
-				self.VM_RELOAD_START	= _G["ACT_"..hold.."_RELOAD_START"]
-				self.VM_RELOAD_FINISH	= _G["ACT_"..hold.."_RELOAD_FINISH"]
-				
-				-- Special activities
-				self.VM_CHARGE			= _G["ACT_"..hold.."_VM_CHARGE"]
-				self.VM_DRYFIRE			= _G["ACT_"..hold.."_VM_DRYFIRE"]
-				self.VM_IDLE_2			= _G["ACT_"..hold.."_VM_IDLE_2"]
-				self.VM_CHARGE_IDLE_3	= _G["ACT_"..hold.."_VM_CHARGE_IDLE_3"]
-				self.VM_IDLE_3			= _G["ACT_"..hold.."_VM_IDLE_3"]
-				self.VM_PULLBACK		= _G["ACT_"..hold.."_VM_PULLBACK"]
-				self.VM_PREFIRE			= _G["ACT_"..hold.."_ATTACK_STAND_PREFIRE"]
-				self.VM_POSTFIRE		= _G["ACT_"..hold.."_ATTACK_STAND_POSTFIRE"]
-				
-				self.VM_INSPECT_START	= _G["ACT_"..hold.."_VM_INSPECT_START"]
-				self.VM_INSPECT_IDLE	= _G["ACT_"..hold.."_VM_INSPECT_IDLE"]
-				self.VM_INSPECT_END		= _G["ACT_"..hold.."_VM_INSPECT_END"]
+				self:SetWeaponHoldType("MELEE_ALLCLASS")
 			end
 			
 		end
@@ -1633,6 +1579,36 @@ function SWEP:Think()
 		self:SetWeaponHoldType(self.HoldTypeHL2 or self.HoldType)
 	else
 		self:SetWeaponHoldType(self.HoldType)
+	end
+	if self:GetItemData().hide_bodygroups_deployed_only and self.IsDeployed then
+		local visuals = self:GetVisuals()
+		local owner = self.Owner
+		
+		if visuals.hide_player_bodygroup_names and !string.find(owner:GetModel(), "/bot_") then
+			for _,group in ipairs(visuals.hide_player_bodygroup_names) do
+				local b = PlayerNamedBodygroups[owner:GetPlayerClass()]
+				if b and b[group] then
+					owner:SetBodygroup(b[group], 1)
+				end
+				
+				b = PlayerNamedViewmodelBodygroups[owner:GetPlayerClass()]
+				if b and b[group] then
+					if IsValid(owner:GetViewModel()) then
+						owner:GetViewModel():SetBodygroup(b[group], 1)
+					end
+				end
+			end
+		else
+			if (!string.find(owner:GetModel(), "/bot_")) then
+				owner:SetBodygroup(self:GetItemData().hide_bodygroups_deployed_only, 1)
+			end
+		end
+	end
+	
+	for k,v in pairs(self:GetVisuals()) do
+		if k=="hide_player_bodygroup" then
+			self.Owner:SetBodygroup(v,1)
+		end
 	end
 	self:AddFlags(EF_NOSHADOW)
 	if (self.Owner:GetPlayerClass() == "pyro" and self:GetClass() == "tf_weapon_rocketlauncher_qrl") then

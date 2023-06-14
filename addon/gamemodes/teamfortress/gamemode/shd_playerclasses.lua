@@ -485,12 +485,21 @@ function meta:SetPlayerClass(class)
 	
 	if (class == "demoman") then
 		self:SetNWString("PreferredIcon","hud/leaderboard_class_demo")
+	elseif (class == "giantdemoman") then
+		self:SetNWString("PreferredIcon","hud/leaderboard_class_demo")
 	elseif (class == "gmodplayer") then
 		self:SetNWString("PreferredIcon","vgui/modicon")
 	elseif (class == "bonzi") then
 		self:SetNWString("PreferredIcon","icon16/monkey.png")
 	else
-		self:SetNWString("PreferredIcon","hud/leaderboard_class_"..class)
+		self:SetNWString("PreferredIcon","hud/leaderboard_class_"..string.Replace(class,"giant",""))
+	end
+	if (self.TFBot and self.IsL4DZombie) then
+		for k,v in ipairs(ents.GetAll()) do
+			if (IsValid(v.Bot) and v.Bot:EntIndex() == self:EntIndex()) then
+				v:CustomOnInitialize(self)
+			end
+		end
 	end
 	if (!self:IsHL2() and !self:IsL4D()) then
 		if (self:GetPlayerClass() == "bowman_rapid_fire") then
@@ -541,7 +550,6 @@ function meta:SetPlayerClass(class)
 		end	
 
 	end
-	tf_util.ReadActivitiesFromModel(self) 
 	UpgradePlayerIfBot(self)
 	self:ResetClassSpeed()
 	local ply = self
@@ -615,8 +623,8 @@ function meta:ResetClassSpeed()
 		sp = sp * mul_speedbonus + add_speedbonus
 	end
 	
-	if (self.playerclass != "Scout" and self:IsMiniBoss()) then
-		self:SetClassSpeed(sp * 0.5)
+	if (self.playerclass != "Scout" and self:IsMiniBoss() and !string.find(self:GetPlayerClass(),"giant")) then
+		self:SetClassSpeed(sp)
 	else
 		self:SetClassSpeed(sp)
 	end

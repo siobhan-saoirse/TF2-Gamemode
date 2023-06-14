@@ -53,16 +53,11 @@ SWEP.RangedMaxHealing = 85
 
 SWEP.HoldType = "ITEM1"
 
+SWEP.VM_DRAW = ACT_ITEM1_VM_DRAW
+SWEP.VM_IDLE = ACT_ITEM1_VM_IDLE
+SWEP.VM_PRIMARYATTACK = ACT_ITEM1_VM_RELOAD
+
 function SWEP:Deploy()
-	self:EmitSound("player/pl_scout_dodge_can_open.wav", 85)
-	if (self.Owner:GetPlayerClass() == "bonk_scout") then
-		self.Owner:SetNWBool("Taunting", true)
-	end
-	timer.Simple(0.8, function()
-		if (self.Owner:GetPlayerClass() == "bonk_scout") then
-			self:PrimaryAttack()
-		end
-	end)
 	self.BaseClass.Deploy(self)
 end
 
@@ -169,17 +164,15 @@ function SWEP:PrimaryAttack()
 		end)
 		timer.Simple(15, function()
 			if SERVER then
-			self.Owner:EmitSound("TFPlayer.StunImpact")
-			self.Owner:SetClassSpeed(self.Owner:GetClassSpeed() * 0.75)
-			ParticleEffectAttach("bonk_text", PATTACH_POINT_FOLLOW, self.Owner, self.Owner:LookupAttachment("head"))
 			timer.Simple(20, function()
 				self.Owner:ResetClassSpeed()
 			end)	
 			self.Owner:StopParticles() 
-			self.Owner:RemovePlayerState(PLAYERSTATE_MARKED)
+			timer.Simple(5, function()
+				self.Owner:RemovePlayerState(PLAYERSTATE_MARKED)
+			end)
 			GAMEMODE:StopMiniCritBoost(self.Owner)
 			self.Owner:StopSound("Weapon_General.CritPower")
-			self.Owner:EmitSound("TFPlayer.CritBoostOff")
 			end
 		end)
 	end

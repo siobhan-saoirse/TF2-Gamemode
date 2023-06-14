@@ -677,11 +677,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				local shouldvegoneforthehead = bot.TargetEnt:EyePos()
 				local bone = 1
 				shouldvegoneforthehead = bot.TargetEnt:GetBonePosition(bone)
-				if (!bot.isCarryingIntel) then
-					if (math.random(1,18 + table.Count(player.GetAll())) == 1) then
-						bot.botPos = bot.ControllerBot:FindSpot("random", {pos=bot.TargetEnt:GetPos(),radius = 12000,type="hiding",stepup=800,stepdown=800})
-					end
-				end
 
 				local lerp = 1.2
 				if bot.Difficulty == 0 then
@@ -1134,7 +1129,9 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			else
 
 				if (!bot.isCarryingIntel) then
+					
 					bot.botPos = bot.TargetEnt:GetPos()
+					
 				end
 
 			end

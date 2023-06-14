@@ -48,86 +48,50 @@ local ActIndex = {
 }
 
 function SWEP:SetupCModelActivities(item, noreplace)
-	tf_util.ReadActivitiesFromModel(self) 
-	if (self:GetItemData()) then
-
-		if (self:GetItemData().anim_slot == "ITEM1" and self.Owner:GetPlayerClass() == "soldier") then
-
-			self.HoldType = "MELEE"
-			self:SetWeaponHoldType("MELEE")
-	
-		elseif (self:GetItemData().anim_slot == "MELEE_ALLCLASS") then
-
-			self.HoldType = self:GetItemData().anim_slot
-			self:SetWeaponHoldType(self:GetItemData().anim_slot)
-
-		end
-
-	end
+	tf_util.ReadActivitiesFromModel(self)
 	
 	if item then
-			local hold = self.HoldType
-			--MsgN(Format("SetupCModelActivities %s", tostring(self)))
-			if (hold == "PRIMARY2") then
-				self.VM_DRAW			= getfenv()["ACT_PRIMARY_VM_DRAW"]
-				self.VM_IDLE			= getfenv()["ACT_PRIMARY_VM_IDLE"]
-				self.VM_PRIMARYATTACK	= getfenv()["ACT_PRIMARY_VM_PRIMARYATTACK"]
-				self.VM_SECONDARYATTACK	= getfenv()["ACT_PRIMARY_VM_SECONDARYATTACK"]
-				self.VM_RELOAD			= getfenv()["ACT_PRIMARY_VM_RELOAD_3"]
-				self.VM_RELOAD_START	= getfenv()["ACT_PRIMARY_RELOAD_START_3"]
-				self.VM_RELOAD_FINISH	= getfenv()["ACT_PRIMARY_RELOAD_FINISH_3"]
-				
-				-- Special activities
-				self.VM_CHARGE			= getfenv()["ACT_PRIMARY_VM_CHARGE"]
-				self.VM_DRYFIRE			= getfenv()["ACT_PRIMARY_VM_DRYFIRE"]
-				self.VM_IDLE_2			= getfenv()["ACT_PRIMARY_VM_IDLE_2"]
-				self.VM_CHARGE_IDLE_3	= getfenv()["ACT_PRIMARY_VM_CHARGE_IDLE_3"]
-				self.VM_IDLE_3			= getfenv()["ACT_PRIMARY_VM_IDLE_3"]
-				self.VM_PULLBACK		= getfenv()["ACT_PRIMARY_VM_PULLBACK"]
-				self.VM_PREFIRE			= getfenv()["ACT_PRIMARY_ATTACK_STAND_PREFIRE"]
-				self.VM_POSTFIRE		= getfenv()["ACT_PRIMARY_ATTACK_STAND_POSTFIRE"]
-				
-				self.VM_INSPECT_START	= getfenv()["ACT_PRIMARY_VM_INSPECT_START"]
-				self.VM_INSPECT_IDLE	= getfenv()["ACT_PRIMARY_VM_INSPECT_IDLE"]
-				self.VM_INSPECT_GND		= getfenv()["ACT_PRIMARY_VM_INSPECT_GND"]
-			else
-				self.VM_DRAW			= getfenv()["ACT_"..hold.."_VM_DRAW"]
-				self.VM_IDLE			= getfenv()["ACT_"..hold.."_VM_IDLE"]
-				self.VM_PRIMARYATTACK	= getfenv()["ACT_"..hold.."_VM_PRIMARYATTACK"]
-				self.VM_SECONDARYATTACK	= getfenv()["ACT_"..hold.."_VM_SECONDARYATTACK"]
-				self.VM_RELOAD			= getfenv()["ACT_"..hold.."_VM_RELOAD"]
-				self.VM_RELOAD_START	= getfenv()["ACT_"..hold.."_RELOAD_START"]
-				self.VM_RELOAD_FINISH	= getfenv()["ACT_"..hold.."_RELOAD_FINISH"]
-				
-				-- Special activities
-				self.VM_CHARGE			= getfenv()["ACT_"..hold.."_VM_CHARGE"]
-				self.VM_DRYFIRE			= getfenv()["ACT_"..hold.."_VM_DRYFIRE"]
-				self.VM_IDLE_2			= getfenv()["ACT_"..hold.."_VM_IDLE_2"]
-				self.VM_CHARGE_IDLE_3	= getfenv()["ACT_"..hold.."_VM_CHARGE_IDLE_3"]
-				self.VM_IDLE_3			= getfenv()["ACT_"..hold.."_VM_IDLE_3"]
-				self.VM_PULLBACK		= getfenv()["ACT_"..hold.."_VM_PULLBACK"]
-				self.VM_PREFIRE			= getfenv()["ACT_"..hold.."_ATTACK_STAND_PREFIRE"]
-				self.VM_POSTFIRE		= getfenv()["ACT_"..hold.."_ATTACK_STAND_POSTFIRE"]
-				
-				self.VM_INSPECT_START	= getfenv()["ACT_"..hold.."_VM_INSPECT_START"]
-				self.VM_INSPECT_IDLE	= getfenv()["ACT_"..hold.."_VM_INSPECT_IDLE"]
-				self.VM_INSPECT_GND		= getfenv()["ACT_"..hold.."_VM_INSPECT_GND"]
-			end
-			
-			self.VM_HITLEFT			= ACT_VM_HITLEFT
-			self.VM_HITRIGHT		= ACT_VM_HITRIGHT
-			
-			-- those melee activities are just so weird, sometimes it's ACT_VM_HITCENTER, sometimes it's ACT_MELEE_VM_HITCENTER
-			if self:SelectWeightedSequence(ACT_VM_HITCENTER) < 0 then
-				self.VM_HITCENTER		= getfenv()["ACT_"..hold.."_VM_HITCENTER"] or ACT_VM_HITCENTER
-				self.VM_SWINGHARD		= getfenv()["ACT_"..hold.."_VM_SWINGHARD"] or ACT_VM_SWINGHARD
-			else
-				self.VM_HITCENTER		= ACT_VM_HITCENTER
-				self.VM_SWINGHARD		= ACT_VM_SWINGHARD
-			end
-			if self:SelectWeightedSequence(self.VM_SWINGHARD) < 0 then
-				self.VM_SWINGHARD = self.VM_HITCENTER
-			end
+		local hold = "PRIMARY"
+		if item.anim_slot then
+			hold = string.upper(item.anim_slot)
+		elseif item.item_slot then
+			hold = string.upper(item.item_slot)
+		end
+		--MsgN(Format("SetupCModelActivities %s", tostring(self)))
+		
+		self.VM_DRAW			= _G["ACT_"..hold.."_VM_DRAW"]
+		self.VM_IDLE			= _G["ACT_"..hold.."_VM_IDLE"]
+		self.VM_PRIMARYATTACK	= _G["ACT_"..hold.."_VM_PRIMARYATTACK"]
+		self.VM_SECONDARYATTACK	= _G["ACT_"..hold.."_VM_SECONDARYATTACK"]
+		self.VM_RELOAD			= _G["ACT_"..hold.."_VM_RELOAD"]
+		self.VM_RELOAD_START	= _G["ACT_"..hold.."_RELOAD_START"]
+		self.VM_RELOAD_FINISH	= _G["ACT_"..hold.."_RELOAD_FINISH"]
+		
+		-- Special activities
+		self.VM_CHARGE			= _G["ACT_"..hold.."_VM_CHARGE"]
+		self.VM_DRYFIRE			= _G["ACT_"..hold.."_VM_DRYFIRE"]
+		self.VM_IDLE_2			= _G["ACT_"..hold.."_VM_IDLE_2"]
+		self.VM_CHARGE_IDLE_3	= _G["ACT_"..hold.."_VM_CHARGE_IDLE_3"]
+		self.VM_IDLE_3			= _G["ACT_"..hold.."_VM_IDLE_3"]
+		self.VM_PULLBACK		= _G["ACT_"..hold.."_VM_PULLBACK"]
+		self.VM_PREFIRE			= _G["ACT_"..hold.."_ATTACK_STAND_PREFIRE"]
+		self.VM_POSTFIRE		= _G["ACT_"..hold.."_ATTACK_STAND_POSTFIRE"]
+		
+		self.VM_INSPECT_START	= _G["ACT_"..hold.."_VM_INSPECT_START"]
+		self.VM_INSPECT_IDLE	= _G["ACT_"..hold.."_VM_INSPECT_IDLE"]
+		self.VM_INSPECT_END		= _G["ACT_"..hold.."_VM_INSPECT_END"]
+		
+		self.VM_HITLEFT			= ACT_VM_HITLEFT
+		self.VM_HITRIGHT		= ACT_VM_HITRIGHT
+		
+		-- those melee activities are just so weird, sometimes it's ACT_VM_HITCENTER, sometimes it's ACT_MELEE_VM_HITCENTER
+		if self:SelectWeightedSequence(ACT_VM_HITCENTER) < 0 then
+			self.VM_HITCENTER		= _G["ACT_"..hold.."_VM_HITCENTER"] or ACT_VM_HITCENTER
+			self.VM_SWINGHARD		= _G["ACT_"..hold.."_VM_SWINGHARD"] or ACT_VM_SWINGHARD
+		else
+			self.VM_HITCENTER		= ACT_VM_HITCENTER
+			self.VM_SWINGHARD		= ACT_VM_SWINGHARD
+		end
 	else
 		self.VM_DRAW			= ACT_VM_DRAW
 		self.VM_IDLE			= ACT_VM_IDLE
@@ -148,7 +112,7 @@ function SWEP:SetupCModelActivities(item, noreplace)
 		
 		self.VM_INSPECT_START	= ACT_PRIMARY_VM_INSPECT_START
 		self.VM_INSPECT_IDLE	= ACT_PRIMARY_VM_INSPECT_IDLE
-		self.VM_INSPECT_GND		= ACT_PRIMARY_VM_INSPECT_GND
+		self.VM_INSPECT_END		= ACT_PRIMARY_VM_INSPECT_END
 		
 		self.VM_HITLEFT			= ACT_VM_HITLEFT
 		self.VM_HITRIGHT		= ACT_VM_HITRIGHT
@@ -164,7 +128,7 @@ function SWEP:SetupCModelActivities(item, noreplace)
 		self.VM_HITCENTER = ACT_VM_HITCENTER_SPECIAL
 		self.VM_SWINGHARD = ACT_VM_SWINGHARD_SPECIAL
 	end
-	self:InspectAnimCheck()
+	
 	if not noreplace then
 		local visuals = self:GetVisuals()
 		if visuals and visuals.animations then
@@ -248,8 +212,10 @@ function SWEP:SetWeaponHoldType(t)
 		end
 
 		else	
-			
-	tf_util.ReadActivitiesFromModel(v) 
+		
+	if IsValid(v) then
+		tf_util.ReadActivitiesFromModel(v)
+	end	
 	self.ActivityTranslate = {}
 	self.ActivityTranslate[ACT_MP_STAND_IDLE] 						= getfenv()["ACT_MP_STAND_"..t]
 	self.ActivityTranslate[ACT_MP_RUN] 								= getfenv()["ACT_MP_RUN_"..t]

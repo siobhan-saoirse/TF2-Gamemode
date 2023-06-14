@@ -68,6 +68,7 @@ game.AddParticles("particles/teleport_status.pcf")
 game.AddParticles("particles/training.pcf")
 game.AddParticles("particles/water.pcf")
 game.AddParticles("particles/xms.pcf")
+game.AddParticles("particles/firstperson_weapon_fx.pcf")
 
 if (IsMounted("left4dead2")) then
 
@@ -83,7 +84,7 @@ if (IsMounted("left4dead2")) then
     game.AddParticles( "particles/l4d2/fire_01l4d.pcf" )
     game.AddParticles( "particles/l4d2/fire_01.pcf" )
     game.AddParticles( "particles/l4d2/fire_01l4d_garage.pcf" )
-    game.AddParticles( "particles/l4d2/fire_01l4d_river.pcf" )
+    game.AddParticles( "particles/l4d2/fire_01l4d_river.pcf" )	
     game.AddParticles( "particles/l4d2/fire_fx.pcf" )
     game.AddParticles( "particles/l4d2/fire_infected_fx.pcf" )
     game.AddParticles( "particles/l4d2/firework_crate_fx.pcf" )

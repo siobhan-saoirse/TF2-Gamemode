@@ -68,7 +68,7 @@ local function LeadBot_S_Add_Zombie(team,class,pos,ent)
 	bot:SetPos(pos)
 	bot.botPos = pos
 	bot.IsMVMRobot = true
-	bot.IsBoss = ent.IsBoss
+	bot:SetNWBool("IsBoss",ent.IsBoss)
 	bot.Difficulty = ent.Difficulty
 	
 	timer.Simple(0.1, function()
@@ -338,6 +338,9 @@ function ENT:Think()
 			end
 		end
 	end 
+	if (!IsValid(self.Bot) and SERVER) then
+		self:Remove() 
+	end
 	self:NextThink(CurTime())
 	return true
 end

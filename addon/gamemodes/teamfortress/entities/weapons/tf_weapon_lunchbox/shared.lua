@@ -38,9 +38,12 @@ SWEP.Force = 80
 SWEP.AddPitch = -4
 SWEP.HoldType = "ITEM1"
 
+SWEP.VM_DRAW = ACT_ITEM1_VM_DRAW
+SWEP.VM_IDLE = ACT_ITEM1_VM_IDLE
+SWEP.VM_PRIMARYATTACK = ACT_ITEM1_VM_RELOAD
 
 function SWEP:PrimaryAttack()
-	if self.Owner:Health() <= self.Owner:GetMaxHealth() - 1 then
+	if self.Owner:Health() <= self.Owner:GetMaxHealth() - 1 || self:GetItemData().name == "Buffalo Steak Sandvich" then
 		self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 	else
 		self:SetNextPrimaryFire( CurTime() + 5 )
@@ -53,51 +56,108 @@ function SWEP:PrimaryAttack()
 	self.Owner:SetNWBool("Taunting", true)
 	
 	if SERVER then
-	timer.Simple(1, function()
-		--self.WModel2:SetBodygroup(0, 1)
-		if self.Owner:GetInfoNum("tf_giant_robot",0) == 1 then
-			return
-		elseif self.Owner:GetInfoNum("tf_robot",0) == 1 then
-			return
-		else
-			self.Owner:EmitSound("Heavy.SandwichEat")
-			self:SetBodygroup(0, 1)
-			GAMEMODE:HealPlayer(self.Owner, self.Owner, 50, true, false)
-		end
-	end)
-	timer.Simple(2, function()
-		GAMEMODE:HealPlayer(self.Owner, self.Owner, 50, true, false)
-	end)
-	timer.Simple(3, function()
-		GAMEMODE:HealPlayer(self.Owner, self.Owner, 50, true, false)
-	end)
-	timer.Simple(4, function()
-		GAMEMODE:HealPlayer(self.Owner, self.Owner, 50, true, false)
-		net.Start("DeActivateTauntCam")
-		net.Send(self.Owner)
-		self.Owner:SetNWBool("Taunting", false)
-		if self.Owner:Health() <= self.Owner:GetMaxHealth() - 1 then
-			self.Owner:SelectWeapon(self.Owner:GetWeapons()[1])
-		end
-	end)
-	timer.Simple(5, function()
-		
-		if (self.Owner:Health() <= self.Owner:GetMaxHealth() - 1) then
+	
+	if (self:GetItemData().name != "Buffalo Steak Sandvich") then
+		timer.Simple(1, function()
+			--self.WModel2:SetBodygroup(0, 1)
+			if self.Owner:GetInfoNum("tf_giant_robot",0) == 1 then
+				return
+			elseif self.Owner:GetInfoNum("tf_robot",0) == 1 then
+				return
+			else
+				self.Owner:EmitSound("Heavy.SandwichEat")
+				self:SetBodygroup(0, 1)
+				GAMEMODE:HealPlayer(self.Owner, self.Owner, 50, true, false)
+			end
+		end)
+		timer.Simple(2, function()
+			GAMEMODE:HealPlayer(self.Owner, self.Owner, 100, true, false)
+		end)
+		timer.Simple(3, function()
+			GAMEMODE:HealPlayer(self.Owner, self.Owner, 100, true, false)
+		end)
+		timer.Simple(4, function()
+			GAMEMODE:HealPlayer(self.Owner, self.Owner, 100, true, false)
+			net.Start("DeActivateTauntCam")
+			net.Send(self.Owner)
+			self.Owner:SetNWBool("Taunting", false)
+			if self.Owner:Health() <= self.Owner:GetMaxHealth() - 1 then
+				self.Owner:SendLua("RunConsoleCommand('lastinv')")
+			end
+		end)
+		timer.Simple(5, function()
+			
+			if (self.Owner:Health() <= self.Owner:GetMaxHealth() - 1) then
+				
+				timer.Simple(self.Primary.Delay, function()
+					self:SetBodygroup(0, 0)
+				end)
+			else 
+				self:SetBodygroup(0, 0)
+			end
+			if self.Owner:GetInfoNum("tf_giant_robot",0) == 1 then
+				self.Owner:EmitSound("vo/mvm/mght/heavy_mvm_m_sandwichtaunt"..math.random(10,17)..".wav", 80, 100)
+			elseif self.Owner:GetInfoNum("tf_robot",0) == 1 then
+				self.Owner:EmitSound("vo/mvm/norm/heavy_mvm_sandwichtaunt"..math.random(10,17)..".wav", 80, 100)
+			else
+				self.Owner:PlayScene(table.Random(heavysandwichtaunt))
+			end
+		end)
+	else
+	
+		timer.Simple(1, function()
+			--self.WModel2:SetBodygroup(0, 1)
+			if self.Owner:GetInfoNum("tf_giant_robot",0) == 1 then
+				return
+			elseif self.Owner:GetInfoNum("tf_robot",0) == 1 then
+				return
+			else
+				self.Owner:EmitSound("Heavy.SandwichEat")
+				self:SetBodygroup(0, 1)
+				GAMEMODE:StartMiniCritBoost(self.Owner)
+				GAMEMODE:HealPlayer(self.Owner, self.Owner, 50, true, false)
+			end
+		end)
+		timer.Simple(2, function()
+			GAMEMODE:HealPlayer(self.Owner, self.Owner, 100, true, false)
+		end)
+		timer.Simple(3, function()
+			GAMEMODE:HealPlayer(self.Owner, self.Owner, 100, true, false)
+		end)
+		timer.Simple(4, function()
+			GAMEMODE:HealPlayer(self.Owner, self.Owner, 100, true, false)
+			net.Start("DeActivateTauntCam")
+			net.Send(self.Owner)
+			self.Owner:SetNWBool("Taunting", false)
+			self.Owner:SendLua("RunConsoleCommand('lastinv')")
+		end)
+		timer.Simple(5, function()
 			
 			timer.Simple(self.Primary.Delay, function()
 				self:SetBodygroup(0, 0)
 			end)
-		else 
-			self:SetBodygroup(0, 0)
-		end
-		if self.Owner:GetInfoNum("tf_giant_robot",0) == 1 then
-			self.Owner:EmitSound("vo/mvm/mght/heavy_mvm_m_sandwichtaunt"..math.random(10,17)..".wav", 80, 100)
-		elseif self.Owner:GetInfoNum("tf_robot",0) == 1 then
-			self.Owner:EmitSound("vo/mvm/norm/heavy_mvm_sandwichtaunt"..math.random(10,17)..".wav", 80, 100)
-		else
-			self.Owner:PlayScene(table.Random(heavysandwichtaunt))
-		end
-	end)
+			if self.Owner:GetInfoNum("tf_giant_robot",0) == 1 then
+				self.Owner:EmitSound("vo/mvm/mght/heavy_mvm_m_sandwichtaunt"..math.random(10,17)..".wav", 80, 100)
+			elseif self.Owner:GetInfoNum("tf_robot",0) == 1 then
+				self.Owner:EmitSound("vo/mvm/norm/heavy_mvm_sandwichtaunt"..math.random(10,17)..".wav", 80, 100)
+			else
+				self.Owner:PlayScene(table.Random(heavysandwichtaunt))
+			end
+		end)
+		
+		
+		timer.Simple(15, function()
+			if SERVER then
+			timer.Simple(20, function()
+				self.Owner:ResetClassSpeed()
+			end)	
+			self.Owner:StopParticles() 
+			GAMEMODE:StopMiniCritBoost(self.Owner)
+			self.Owner:StopSound("Weapon_General.CritPower") 
+			end
+		end)
+		
+	end
 	end
 end
 

@@ -44,12 +44,13 @@ float CritDamageMultiplier : Critical damage multiplier (default=3)
 can be called either using tf_util.CalculateDamage(table) or tf_util.CalculateDamage(weapon, hitpos)
 ]]
 
-local tf_damage_disablespread = CreateConVar("tf_damage_disablespread", 0, {FCVAR_NOTIFY})
+local tf_damage_disablespread = CreateConVar("tf_damage_disablespread", 1, {FCVAR_NOTIFY})
 
 function CalculateDamage(data, hitpos, srcpos)
 	if tf_damage_disablespread:GetBool() then
 		return data.BaseDamage
 	end
+	
 	local dist, falloff, damage
 	local src, hit, crit
 	
@@ -63,6 +64,8 @@ function CalculateDamage(data, hitpos, srcpos)
 		crit = data.Critical
 	end
 	
+	--if crit then return data.BaseDamage * (data.CritDamageMultiplier or 3) end
+	
 	if hit then
 		dist = src:Distance(hit)
 		falloff = math.Clamp((dist / 512)-1, -1, 1)
@@ -73,8 +76,6 @@ function CalculateDamage(data, hitpos, srcpos)
 	else
 		falloff = 0
 	end
-
-	--if crit then return data.BaseDamage * (data.CritDamageMultiplier or 3) end
 	
 	if data.DamageRandomize then
 		damage = math.random(data.BaseDamage * (1-data.DamageRandomize), data.BaseDamage * (1+data.DamageRandomize))
@@ -82,20 +83,8 @@ function CalculateDamage(data, hitpos, srcpos)
 		damage = data.BaseDamage
 	end
 	
-	return 1 * damage * (1 - falloff)
+	return (data.DamageModifier or 1) * damage * (1 - falloff)
 end
-function IsHL1SwepsMounted()
-	for k, v in pairs(engine.GetAddons()) do 
-		--print("addon "..v.wsid.." aka "..v.title.." has been detected!")
-		if v.wsid == "1360233031" and v.mounted == true then
-			return true
-		end
-	end
-	return false
-end
-function CalculateDamageRanged(data, hitpos, srcpos)
-	return data.BaseDamage
-end 
 
 -- Performs a traceline first, and if the hit entity doesn't match the condition, perform a tracehull
 -- Additional condition checking parameters can be given, such as the entity which fired the trace
@@ -151,7 +140,7 @@ function TraceLineWithCallback(tracedata)
 	return res
 end
 
-RegisteredModels = {} 
+RegisteredModels = {}
 
 function ReadActivitiesFromModel(ent)
 	if not util.IsValidModel(ent:GetModel() or "") then return end
@@ -164,9 +153,9 @@ function ReadActivitiesFromModel(ent)
 			if act~="" and not _G[act] then
 				_G[act] = ent:GetSequenceActivity(i)
 				
-				if act == "ACT_MELEE_VM_HITCENTER" then
+				--[[if act == "ACT_MELEE_VM_HITCENTER" then
 					MsgFN("Setting %s to %d (model='%s' entity=%s owner=%s)", act, _G[act], ent:GetModel(), tostring(ent), tostring(ent:GetOwner()))
-				end
+				end]]
 			end
 			i = i+1
 		end
