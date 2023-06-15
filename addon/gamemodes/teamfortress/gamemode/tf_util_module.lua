@@ -86,6 +86,19 @@ function CalculateDamage(data, hitpos, srcpos)
 	return (data.DamageModifier or 1) * damage * (1 - falloff)
 end
 
+function IsHL1SwepsMounted()
+	for k, v in pairs(engine.GetAddons()) do 
+		--print("addon "..v.wsid.." aka "..v.title.." has been detected!")
+		if v.wsid == "1360233031" and v.mounted == true then
+			return true
+		end
+	end
+	return false
+end
+function CalculateDamageRanged(data, hitpos, srcpos)
+	return data.BaseDamage
+end 
+
 -- Performs a traceline first, and if the hit entity doesn't match the condition, perform a tracehull
 -- Additional condition checking parameters can be given, such as the entity which fired the trace
 
