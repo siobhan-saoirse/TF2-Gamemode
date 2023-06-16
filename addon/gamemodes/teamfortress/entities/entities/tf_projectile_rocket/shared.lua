@@ -341,7 +341,7 @@ function ENT:DoExplosion(ent)
 	if ForceDamageClasses[ent:GetClass()] then
 		local dmginfo = DamageInfo()
 		dmginfo:SetDamage(100)
-		dmginfo:SetDamageType(DMG_AIRBOAT)
+		dmginfo:SetDamageType(DMG_BLAST)
 		dmginfo:SetAttacker(owner)
 		dmginfo:SetInflictor(self)
 		dmginfo:SetDamagePosition(self:GetPos())
