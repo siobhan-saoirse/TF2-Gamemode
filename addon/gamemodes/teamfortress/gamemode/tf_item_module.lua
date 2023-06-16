@@ -253,10 +253,10 @@ function ITEM:InitVisuals(owner, visuals)
 		end
 	end
 	
-	self:SetMaterial(self.MaterialOverride)
+	--self:SetMaterial(self.MaterialOverride)
 	if self:IsWeapon() then
 		if IsValid(owner) and IsValid(owner:GetViewModel()) then
-			owner:GetViewModel():SetMaterial(self.MaterialOvveride)
+			--owner:GetViewModel():SetMaterial(self.MaterialOvveride)
 		end
 	end
 	
@@ -368,7 +368,7 @@ function ITEM:SetupItem(item)
 			if item.attach_to_hands==1 then
 				local t = self.Owner:GetPlayerClassTable()
 				if t and t.ModelName then
-					self.ViewModelOverride = Format("models/weapons/c_models/c_%s_arms.mdl", t.ModelName)
+					self.ViewModelOverride = Format("models/weapons/c_models/c_%s_arms_empty.mdl", t.ModelName)
 					self.ViewModel = self.ViewModelOverride
 					self:SetModel(self.ViewModelOverride)
 					self.Owner:GetViewModel():SetModel(self.ViewModelOverride)
@@ -402,7 +402,7 @@ function ITEM:SetupItem(item)
 			if item.attach_to_hands==1 then
 				local t = self.Owner:GetPlayerClassTable()
 				if t and t.ModelName then
-					self.ViewModelOverride = Format("models/weapons/c_models/c_%s_arms.mdl", t.ModelName)
+					self.ViewModelOverride = Format("models/weapons/c_models/c_%s_arms_empty.mdl", t.ModelName)
 					self:SetModel(self.ViewModelOverride)
 					self:SetupCModelActivities(item)
 				end

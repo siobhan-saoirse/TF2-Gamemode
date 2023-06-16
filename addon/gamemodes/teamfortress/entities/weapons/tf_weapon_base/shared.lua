@@ -35,9 +35,6 @@ function SWEP:DrawWorldModel(  )
 			self.WModel:SetProxyVar("CritTeam",t2)
 			self.WModel:SetProxyVar("CritStatus",s2)
             -- Specify a good position
-			if (self.WModel:GetMaterial() != mat or string.find(self.WModel:GetMaterial(),"invuln")) then
-				self.WModel:SetSkin(self.WeaponSkin or _Owner:GetSkin())
-			end
 			self.WModel:SetBodyGroups(self:GetBodyGroups())
 			
 			local model = self:GetItemData().model_world or self:GetItemData().model_player or self.WorldModel
@@ -61,12 +58,14 @@ function SWEP:DrawWorldModel(  )
 				self.WModel:SetupBones()
 			end
 			if (self.WModel:GetMaterial() != "models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())) and _Owner:HasGodMode() and !_Owner:GetNWBool("NoWeapon",false)) then
-				self.WModel:SetMaterial("models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())))
+				--self.WModel:SetMaterial("models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())))
 			elseif (self.WModel:GetMaterial() != "color" and _Owner:GetNWBool("NoWeapon",false) == true) then
-				self.WModel:SetMaterial("color")
+				--self.WModel:SetMaterial("color")
 			else
 				local mat = self.CustomMaterialOverride2 or self.MaterialOverride or self.WeaponMaterial or ""
-				self.WModel:SetMaterial(mat)
+				if (self.WModel:GetMaterial() != mat) then
+					--self.WModel:SetMaterial(mat)	
+				end
 			end
 			self.WModel:SetPos(self:GetPos())
 			self.WModel:SetAngles(self:GetAngles())
@@ -689,8 +688,8 @@ function SWEP:Deploy()
 	--self:InitializeAttachedModels()
 	if SERVER then
 		if IsValid(self.WModel) then 
-			self.WModel:SetSkin(self.WeaponSkin or self.Owner:GetSkin())
-			self.WModel:SetMaterial(self.MaterialOverride or self.WeaponMaterial or 0)
+			--self.WModel:SetSkin(self.WeaponSkin or self.Owner:GetSkin())
+			--self.WModel:SetMaterial(self.MaterialOverride or self.WeaponMaterial or 0)
 		end
 	end
 	if self.Owner:IsPlayer() and not self.Owner:IsHL2() and self.Owner:Team() == TEAM_BLU and string.find(game.GetMap(), "mvm_") then
