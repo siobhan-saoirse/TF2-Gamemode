@@ -1373,7 +1373,7 @@ function SWEP:Think()
 				self.WModel:SetSkin(skin)	
 			end
 			if (self.WModel:GetMaterial() != self.WeaponMaterial) then
-				self.WModel:SetMaterial(self.WeaponMaterial)
+				--self.WModel:SetMaterial(self.WeaponMaterial)
 			end
 		end
 		if IsValid(self.ExtraCModel) then
