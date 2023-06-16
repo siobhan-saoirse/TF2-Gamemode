@@ -552,7 +552,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	
 	if (ent:GetClass() == "npc_helicopter") then
 		dmginfo:SetDamageType(DMG_AIRBOAT)
-		dmginfo:ScaleDamage(2)
+		dmginfo:ScaleDamage(1.5)
 	end
 	if (attacker:IsPlayer() and attacker:IsMiniBoss() and attacker.playerclass == "Heavy") then
 		dmginfo:SetDamage(dmginfo:GetDamage() * 1.5)
