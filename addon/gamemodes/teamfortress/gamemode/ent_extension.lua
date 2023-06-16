@@ -495,6 +495,7 @@ function Callback(attacker,traceres,damageinfo)
 
 local ForceDamageClasses = {
 	npc_combinegunship = true,
+	npc_helicopter = true,
 }
 
 local function TFBulletCallback(attacker, trace, dmginfo)
@@ -513,7 +514,9 @@ local function TFBulletCallback(attacker, trace, dmginfo)
 				trace.Entity:TakeDamageInfo(dmginfo)
 				--gamemode.Call("EntityTakeDamage", trace.Entity, self, attacker, 1, dmginfo)
 			end
-			
+			if (trace.Entity:GetClass() == "npc_helicopter") then
+				trace.Entity:TakeDamageInfo(dmginfo)
+			end
 			if (trace.Entity:IsPlayer() or trace.Entity:IsNPC()) and dmg.Critical then
 				if attacker:EntityTeam()==TEAM_BLU or attacker:EntityTeam()==TF_TEAM_PVE_INVADERS then
 					ParticleEffect("bullet_impact1_blue_crit", trace.HitPos, Angle(0,0,0))

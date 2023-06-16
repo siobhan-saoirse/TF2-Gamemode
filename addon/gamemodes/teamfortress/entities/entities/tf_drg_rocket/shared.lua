@@ -203,6 +203,7 @@ end
 
 local ForceDamageClasses = {
 	npc_combinegunship = true,
+	npc_helicopter = true,
 }
 
 function ENT:DoExplosion(ent)
@@ -334,7 +335,6 @@ function ENT:DoExplosion(ent)
 		util.BlastDamage(self, owner, self:GetPos(), range, 100)
 	end
 	
-	if ForceDamageClasses[ent:GetClass()] then
 		local dmginfo = DamageInfo()
 		dmginfo:SetDamage(80)
 		dmginfo:SetDamageType(DMG_DISSOLVE)
@@ -343,7 +343,6 @@ function ENT:DoExplosion(ent)
 		dmginfo:SetDamagePosition(self:GetPos())
 		dmginfo:SetDamageForce(vector_up)
 		ent:TakeDamageInfo(dmginfo)
-	end
 	
 	self:Remove()
 end

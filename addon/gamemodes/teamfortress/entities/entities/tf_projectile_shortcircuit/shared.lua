@@ -189,6 +189,7 @@ end
 
 local ForceDamageClasses = {
 	npc_combinegunship = true,
+	npc_helicopter = true,
 }
 
 function ENT:DoExplosion(ent)

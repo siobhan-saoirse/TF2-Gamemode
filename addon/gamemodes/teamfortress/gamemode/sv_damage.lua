@@ -15,7 +15,8 @@ obj_sentrygun = true,
 obj_dispenser = true,
 }
 local ForceDamageClasses = {
-npc_combinegunship = true
+npc_combinegunship = true,
+npc_helicopter = true,
 }
 
 --[[
@@ -472,10 +473,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		return true
 	end
 	
-	if (ent:GetClass() == "npc_helicopter") then
-		dmginfo:SetDamageType(DMG_AIRBOAT)
-		dmginfo:SetDamage(dmginfo:GetDamage() * 26)
-	end
 	--print("EntityTakeDamage",ent,dmginfo)
 	
 	-- Some HL2 projectiles seem to keep the original attacker, even though their owner got changed (by Pyro's airblast, for instance)
@@ -553,6 +550,13 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		end
 	end
 	
+	if (ent:GetClass() == "npc_helicopter") then
+		dmginfo:SetDamageType(DMG_AIRBOAT)
+		dmginfo:ScaleDamage(2)
+	end
+	if (attacker:IsPlayer() and attacker:IsMiniBoss() and attacker.playerclass == "Heavy") then
+		dmginfo:SetDamage(dmginfo:GetDamage() * 1.5)
+	end
 	gamemode.Call("PostScaleDamage", ent, 0, dmginfo)
 	
 	-- Increased explosion force

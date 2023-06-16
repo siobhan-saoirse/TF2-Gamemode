@@ -198,8 +198,8 @@ end
 
 local ForceDamageClasses = {
 	npc_combinegunship = true,
+	npc_helicopter = true,
 }
-
 function ENT:DoExplosion(ent)
 
 	if ent == self:GetOwner() and self:GetOwner():GetClass() == "eyeball_boss" then return end
