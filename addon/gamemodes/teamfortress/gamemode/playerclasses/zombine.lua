@@ -1,11 +1,11 @@
-CLASS.Name = "Zombie"
+CLASS.Name = "Zombiefast"
 CLASS.Speed = 240
 CLASS.Health = 150
 
 if CLIENT then
 	CLASS.CharacterImage = {
-		surface.GetTextureID("console/characters/zombie_heavy"),
-		surface.GetTextureID("console/characters/zombie_heavy")
+		surface.GetTextureID("hud/class_zombiefastred"),
+		surface.GetTextureID("hud/class_zombiefastblue")
 	}
 	CLASS.ScoreboardImage = {
 		surface.GetTextureID("console/characters/zombie_heavy"),
@@ -15,7 +15,7 @@ end
 
 CLASS.Loadout = {"tf_weapon_minigun", "tf_weapon_shotgun_hwg", "tf_weapon_fists"}
 CLASS.DefaultLoadout = {"TF_WEAPON_FISTS"}
-CLASS.ModelName = "zombie_classic"
+CLASS.ModelName = "heavy"
 
 ----------------------------------------
 
@@ -59,7 +59,7 @@ if SERVER then
 
 function CLASS:Initialize()
 	self.minigunfiretime = 0
-	self:SetModel("models/zombie/zombie_soldier.mdl")
+	self:SetModel("models/player/zombine/zombie_soldier.mdl")
 	self:EmitSound("Zombine.Alert")
 end
 

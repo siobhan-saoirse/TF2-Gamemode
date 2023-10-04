@@ -364,7 +364,7 @@ function meta:SetPlayerClass(class)
 		end
 	end
 	
-	self:ResetHealth()
+	self:ResetHealth() 
 	
 	if c.Buildings then
 		self.Buildings = tf_objects.GetBuildables(c.Buildings)
@@ -373,7 +373,7 @@ function meta:SetPlayerClass(class)
 	 
 	for k,v in pairs(self.AmmoMax or {}) do
 		self:SetAmmoCount(v, k)
-	end 
+	end  
 	 
 	-- Capitalize player class because the talker system wants to :/
 	-- This is used for playing scenes
@@ -388,7 +388,7 @@ function meta:SetPlayerClass(class)
 	elseif (self:GetPlayerClass() == "bowman" or self:GetPlayerClass() == "bowman_rapid_fire") then		
 		self.playerclass = "Sniper"
 	elseif (self:GetPlayerClass() == "giantpyro" || self:GetPlayerClass() == "chiefpyro" || self:GetPlayerClass() == "pyro_flare" || self:GetPlayerClass() == "giantflarepyro") then
-		self.playerclass = "Pyro" 
+		self.playerclass = "Pyro"  
 	elseif (self:GetPlayerClass() == "giantengineer") then
 		self.playerclass = "Engineer" 
 	elseif (self:GetPlayerClass() == "giantmedic" || self:GetPlayerClass() == "kritzmedic") then

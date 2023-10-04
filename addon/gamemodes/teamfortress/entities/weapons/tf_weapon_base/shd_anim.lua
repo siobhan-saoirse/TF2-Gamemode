@@ -328,32 +328,6 @@ function SWEP:SetWeaponHoldType(t)
 		self.ActivityTranslate[ACT_MP_RELOAD_STAND]		 				= getfenv()["ACT_RELOAD"]
 		self.ActivityTranslate[ACT_MP_JUMP] 						= getfenv()["ACT_RUN"] 
 	end
-	if v:GetPlayerClass() == "zombine" and v:GetActiveWeapon():GetClass() == "tf_weapon_fists" and self:GetHoldType() == "MELEE" then
-		self.ActivityTranslate[ACT_MP_STAND_IDLE] 						= getfenv()["ACT_IDLE"]
-		self.ActivityTranslate[ACT_MP_RUN] 								= getfenv()["ACT_RUN"]
-		self.ActivityTranslate[ACT_MP_WALK] 								= getfenv()["ACT_WALK"]
-		self.ActivityTranslate[ACT_MP_WALK] 								= getfenv()["ACT_WALK"]
-		self.ActivityTranslate[ACT_MP_CROUCH_IDLE] 						= getfenv()["ACT_IDLE"]
-		self.ActivityTranslate[ACT_MP_CROUCHWALK] 						= getfenv()["ACT_WALK"]
-		self.ActivityTranslate[ACT_MP_ATTACK_STAND_PRIMARYFIRE]			= getfenv()["ACT_RANGE_ATTACK_SMG1"]
-		self.ActivityTranslate[ACT_MP_ATTACK_CROUCH_PRIMARYFIRE]			= getfenv()["ACT_RANGE_ATTACK_SMG1_LOW"]
-		self.ActivityTranslate[ ACT_MP_JUMP ]						= getfenv()["ACT_JUMP"]
-		self.ActivityTranslate[ACT_MP_RELOAD_STAND]		 				= getfenv()["ACT_RELOAD"]
-		self.ActivityTranslate[ACT_MP_JUMP] 						= getfenv()["ACT_JUMP"]
-	end
-	if v:GetPlayerClass() == "zombine" and v:GetActiveWeapon():GetClass() == "tf_weapon_fists" and self:GetHoldType() == "GRENADE" then
-		self.ActivityTranslate[ACT_MP_STAND_IDLE] 						= getfenv()["ACT_IDLE"]
-		self.ActivityTranslate[ACT_MP_RUN] 								= getfenv()["ACT_RUN"]
-		self.ActivityTranslate[ACT_MP_WALK] 								= getfenv()["ACT_WALK"]
-		self.ActivityTranslate[ACT_MP_WALK] 								= getfenv()["ACT_WALK"]
-		self.ActivityTranslate[ACT_MP_CROUCH_IDLE] 						= getfenv()["ACT_IDLE"]
-		self.ActivityTranslate[ACT_MP_CROUCHWALK] 						= getfenv()["ACT_ZOMBINE_GRENADE_WALK"]
-		self.ActivityTranslate[ACT_MP_ATTACK_STAND_PRIMARYFIRE]			= getfenv()["ACT_RANGE_ATTACK_SMG1"]
-		self.ActivityTranslate[ACT_MP_ATTACK_CROUCH_PRIMARYFIRE]			= getfenv()["ACT_RANGE_ATTACK_SMG1_LOW"]
-		self.ActivityTranslate[ ACT_MP_JUMP ]						= getfenv()["ACT_JUMP"]
-		self.ActivityTranslate[ACT_MP_RELOAD_STAND]		 				= getfenv()["ACT_RELOAD"]
-		self.ActivityTranslate[ACT_MP_JUMP] 						= getfenv()["ACT_JUMP"]
-	end
 	if v:GetPlayerClass() == "combinesoldier" and v:GetActiveWeapon():GetClass() == "tf_weapon_trenchknife" then
 		self.ActivityTranslate[ACT_MP_STAND_IDLE] 						= getfenv()["ACT_IDLE_ANGRY_SMG1"]
 		self.ActivityTranslate[ACT_MP_RUN] 								= getfenv()["ACT_RUN_AIM_RIFLE"]

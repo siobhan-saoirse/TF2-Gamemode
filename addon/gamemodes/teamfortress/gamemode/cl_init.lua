@@ -1984,6 +1984,14 @@ timer.Create("ForceBosses",0,0,function()
 					DImageButton.DoClick = function()
 						RunConsoleCommand( "changeclass", "mercenary" )
 					end
+					local DImageButton = pnl:Add( "DImageButton" )
+					DImageButton:SetPos( 256, 128 )
+					DImageButton:SetTooltip( "Enforcer" )
+					DImageButton:SetSize( 128, 128 )
+					DImageButton:SetImage( "hud/class_zombiefastred" )
+					DImageButton.DoClick = function()
+						RunConsoleCommand( "changeclass", "zombine" )
+					end
 				end
 			}
 		)

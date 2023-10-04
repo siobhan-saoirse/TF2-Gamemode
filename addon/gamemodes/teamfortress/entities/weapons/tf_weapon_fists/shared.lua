@@ -2558,6 +2558,7 @@ function SWEP:PrimaryAttack()
 			self.NameOverride = "hl_zombie"
 		end
 		if self.Owner:GetPlayerClass() == "zombine" then
+			self:SetWeaponHoldType("MELEE")
 			self.Owner:EmitSound("Zombine.Alert")
 			self.Owner:DoAnimationEvent(ACT_VM_UNLOAD, true) 
 			self.MeleeAttackDelay = 0.2
