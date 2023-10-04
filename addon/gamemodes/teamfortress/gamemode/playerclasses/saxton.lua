@@ -15,7 +15,7 @@ end
 
 CLASS.Loadout = {"tf_weapon_fists"}
 CLASS.DefaultLoadout = {"TF_WEAPON_FISTS"}
-CLASS.ModelName = "saxton"
+CLASS.ModelName = "heavy"
 CLASS.Gibs = {
 	[GIB_LEFTLEG]		= GIBS_HEAVY_START,
 	[GIB_RIGHTLEG]		= GIBS_HEAVY_START+1,

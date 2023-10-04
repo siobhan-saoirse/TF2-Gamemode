@@ -724,7 +724,7 @@ criterion "ConceptPlayerHealth" "Concept" "TLK_PLAYER_HEALTH_CO" required
 #include "talker/Spy.txt"
 #include "talker/Civilian_.txt"
 #include "talker/mercenary.txt"
-#include "talker/john.txt" 
+#include "talker/john.txt"  
 #include "talker/enforcer.txt"
 #include "talker/repressor.txt"
 #include "talker/telecon.txt"
