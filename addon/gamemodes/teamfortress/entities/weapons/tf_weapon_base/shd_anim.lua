@@ -256,18 +256,6 @@ function SWEP:SetWeaponHoldType(t)
 		self.ActivityTranslate[ACT_MP_AIRWALK] 						= v:GetSequenceActivity(v:LookupSequence("fallingloop"))
 		self.ActivityTranslate[ACT_MP_SWIM] 						= v:GetSequenceActivity(v:LookupSequence("fallingloop"))
 	end
-	if v:GetPlayerClass() == "combinesoldier" and v:GetActiveWeapon():GetClass() != "tf_weapon_trenchknife" then
-		self.ActivityTranslate[ACT_MP_STAND_IDLE] 						= getfenv()["ACT_IDLE_ANGRY"]
-		self.ActivityTranslate[ACT_MP_RUN] 								= getfenv()["ACT_RUN_AIM_RIFLE"]
-		self.ActivityTranslate[ACT_MP_WALK] 								= getfenv()["ACT_WALK_AIM_RIFLE"]
-		self.ActivityTranslate[ACT_MP_CROUCH_IDLE] 						= getfenv()["ACT_CROUCHIDLE"]
-		self.ActivityTranslate[ACT_MP_CROUCHWALK] 						= getfenv()["ACT_WALK_CROUCH_RIFLE"]
-		self.ActivityTranslate[ACT_MP_ATTACK_STAND_PRIMARYFIRE]			= getfenv()["ACT_RANGE_ATTACK_SMG1"]
-		self.ActivityTranslate[ACT_MP_ATTACK_CROUCH_PRIMARYFIRE]			= getfenv()["ACT_RANGE_ATTACK_SMG1_LOW"]
-		self.ActivityTranslate[ ACT_MP_JUMP ]						= getfenv()["ACT_JUMP"]
-		self.ActivityTranslate[ACT_MP_RELOAD_STAND]		 				= getfenv()["ACT_RELOAD"]
-		self.ActivityTranslate[ACT_MP_JUMP] 						= getfenv()["ACT_JUMP"]
-	end
 	if v:GetPlayerClass() == "zombie" and v:GetActiveWeapon():GetClass() == "tf_weapon_fists"  then
 		self.ActivityTranslate[ACT_MP_STAND_IDLE] 						= getfenv()["ACT_IDLE"]
 		self.ActivityTranslate[ACT_MP_RUN] 								= getfenv()["ACT_WALK"]
@@ -319,30 +307,6 @@ function SWEP:SetWeaponHoldType(t)
 		self.ActivityTranslate[ ACT_MP_JUMP ]						= getfenv()["ACT_RUN"]
 		self.ActivityTranslate[ACT_MP_RELOAD_STAND]		 				= getfenv()["ACT_RELOAD"]
 		self.ActivityTranslate[ACT_MP_JUMP] 						= getfenv()["ACT_RUN"] 
-	end
-	if v:GetPlayerClass() == "combinesoldier" and v:GetActiveWeapon():GetClass() == "tf_weapon_trenchknife" then
-		self.ActivityTranslate[ACT_MP_STAND_IDLE] 						= getfenv()["ACT_IDLE_ANGRY_SMG1"]
-		self.ActivityTranslate[ACT_MP_RUN] 								= getfenv()["ACT_RUN_AIM_RIFLE"]
-		self.ActivityTranslate[ACT_MP_WALK] 								= getfenv()["ACT_WALK_AIM_RIFLE"]
-		self.ActivityTranslate[ACT_MP_CROUCH_IDLE] 						= getfenv()["ACT_CROUCHIDLE"]
-		self.ActivityTranslate[ACT_MP_CROUCHWALK] 						= getfenv()["ACT_WALK_CROUCH_RIFLE"]
-		self.ActivityTranslate[ACT_MP_ATTACK_STAND_PRIMARYFIRE]			= getfenv()["ACT_RANGE_ATTACK_SMG1"]
-		self.ActivityTranslate[ACT_MP_ATTACK_CROUCH_PRIMARYFIRE]			= getfenv()["ACT_RANGE_ATTACK_SMG1_LOW"]
-		self.ActivityTranslate[ ACT_MP_JUMP ]						= getfenv()["ACT_JUMP"]
-		self.ActivityTranslate[ACT_MP_RELOAD_STAND]		 				= getfenv()["ACT_RELOAD"]
-		self.ActivityTranslate[ACT_MP_JUMP] 						= getfenv()["ACT_JUMP"]
-	end
-	if v:GetPlayerClass() == "combinesoldier" and v:GetActiveWeapon():GetClass() == "tf_weapon_tranqulizer" then
-		self.ActivityTranslate[ACT_MP_STAND_IDLE] 						= getfenv()["ACT_IDLE_ANGRY_SHOTGUN"]
-		self.ActivityTranslate[ACT_MP_RUN] 								= getfenv()["ACT_RUN_AIM_SHOTGUN"]
-		self.ActivityTranslate[ACT_MP_WALK] 								= getfenv()["ACT_WALK_AIM_SHOTGUN"]
-		self.ActivityTranslate[ACT_MP_CROUCH_IDLE] 						= getfenv()["ACT_CROUCHIDLE_SHOTGUN"]
-		self.ActivityTranslate[ACT_MP_CROUCHWALK] 						= getfenv()["ACT_WALK_CROUCH_SHOTGUN"]
-		self.ActivityTranslate[ACT_MP_ATTACK_STAND_PRIMARYFIRE]			= getfenv()["ACT_RANGE_ATTACK_SHOTGUN"]
-		self.ActivityTranslate[ACT_MP_ATTACK_CROUCH_PRIMARYFIRE]			= getfenv()["ACT_RANGE_ATTACK_SHOTGUN"]
-		self.ActivityTranslate[ ACT_MP_JUMP ]						= getfenv()["ACT_JUMP"]
-		self.ActivityTranslate[ACT_MP_RELOAD_STAND]		 				= getfenv()["ACT_RELOAD"] 
-		self.ActivityTranslate[ACT_MP_JUMP] 						= getfenv()["ACT_JUMP"]
 	end
 	if v:GetPlayerClass() == "rebel" and v:GetActiveWeapon():GetClass() != "tf_weapon_trenchknife" then
 		self.ActivityTranslate[ACT_MP_STAND_IDLE] 						= getfenv()["ACT_IDLE_ANGRY_SMG1"]

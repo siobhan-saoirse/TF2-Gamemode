@@ -1,11 +1,11 @@
-CLASS.Name = "Combine Soldier"
+CLASS.Name = "Combine"
 CLASS.Speed = 300
 CLASS.Health = 170
 
 if CLIENT then
 	CLASS.CharacterImage = {
-		surface.GetTextureID("decals/lambdaspray_2a"),
-		surface.GetTextureID("decals/lambdaspray_2a")
+		surface.GetTextureID("hud/class_combinered"),
+		surface.GetTextureID("hud/class_combineblue")
 	}
 	CLASS.ScoreboardImage = {
 		surface.GetTextureID("hud/leaderboard_class_spy"),
@@ -14,6 +14,7 @@ if CLIENT then
 end
 
 CLASS.Loadout = {"tf_weapon_capsulelauncher","tf_weapon_trenchknife","tf_weapon_tranqulizer"}
+CLASS.DefaultLoadout = {"Natascha","Pistol","Batsaber"}
 CLASS.ModelName = "scout"
 
 CLASS.AmmoMax = {
@@ -47,6 +48,6 @@ CLASS.Sounds = {
 
 if SERVER then
 	function CLASS:Initialize()
-		self:SetModel("models/combine_soldier.mdl")
+		self:SetModel("models/player/repressor/combine_suppresor.mdl")
 	end
 end
