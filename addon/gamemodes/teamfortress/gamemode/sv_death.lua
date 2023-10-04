@@ -1567,7 +1567,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 			end
 		end
 	end
-	if (ply:GetPlayerClass() == "headless_hatman" or ply:GetPlayerClass() == "saxton" or ply:GetPlayerClass() == "sentrybuster") then
+	if (ply:GetPlayerClass() == "headless_hatman" or ply:GetPlayerClass() == "merasmus" or ply:GetPlayerClass() == "sentrybuster") then
 		ply:SetPlayerClass("gmodplayer")
 	end
 	if (ply:GetPlayerClass() == "headless_hatman") then
