@@ -1914,6 +1914,7 @@ list.Set(
 	}
 ) 
 
+timer.Stop("ForceBosses")
 timer.Create("ForceBosses",0,0,function()
 
 	if (GetConVar("civ2_enable_be_the_bosses"):GetBool()) then
@@ -1961,11 +1962,19 @@ timer.Create("ForceBosses",0,0,function()
 					end
 					local DImageButton = pnl:Add( "DImageButton" )
 					DImageButton:SetPos( 512, 25 )
-					DImageButton:SetTooltip( "Saxton" )
+					DImageButton:SetTooltip( "Saxton Hale" )
 					DImageButton:SetSize( 128, 128 )
 					DImageButton:SetImage( "entities/npc_saxton.png" )
 					DImageButton.DoClick = function()
 						RunConsoleCommand( "changeclass", "saxton" )
+					end
+					local DImageButton = pnl:Add( "DImageButton" )
+					DImageButton:SetPos( 0, 128 )
+					DImageButton:SetTooltip( "Telecon" )
+					DImageButton:SetSize( 128, 128 )
+					DImageButton:SetImage( "hud/class_teleconred" )
+					DImageButton.DoClick = function()
+						RunConsoleCommand( "changeclass", "telecon" )
 					end
 				end
 			}
