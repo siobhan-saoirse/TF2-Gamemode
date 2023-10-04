@@ -2024,6 +2024,14 @@ timer.Create("ForceBosses",0,0,function()
 					DImageButton.DoClick = function()
 						RunConsoleCommand( "changeclass", "combinesoldier" )
 					end
+					local DImageButton = pnl:Add( "DImageButton" )
+					DImageButton:SetPos( 256, 256 )
+					DImageButton:SetTooltip( "Civilian" )
+					DImageButton:SetSize( 128, 128 )
+					DImageButton:SetImage( "hud/class_civilianred" )
+					DImageButton.DoClick = function()
+						RunConsoleCommand( "changeclass", "civilian_" )
+					end
 				end
 			}
 		)
