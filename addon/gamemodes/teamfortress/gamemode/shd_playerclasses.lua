@@ -333,7 +333,7 @@ function meta:SetPlayerClass(class)
 		self:SetViewOffset(Vector(0,0,64)) 
 		self:SetViewOffsetDucked(Vector(0, 0, 28))
 		--self:SetCollisionBounds(unpack(DefaultHull))
-	else
+	else 
 		-- Special hull, because TF2 players are larger than HL2 players
 		self:SetHull(unpack(TFHull))
 		self:SetHullDuck(unpack(TFHullDuck))
