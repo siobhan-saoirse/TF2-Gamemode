@@ -2559,11 +2559,11 @@ function SWEP:PrimaryAttack()
 		end
 		if self.Owner:GetPlayerClass() == "zombine" then
 			self:SetWeaponHoldType("MELEE")
-			self.Owner:EmitSound("Zombine.Alert")
+			self.Owner:EmitSound("Zombine.Charge")
 			self.Owner:DoAnimationEvent(ACT_VM_UNLOAD, true) 
-			self.MeleeAttackDelay = 0.2
-			self.Owner:SetBodygroup(1,1)
-			self.Primary.Delay = 0.7
+			self.MeleeAttackDelay = 0.1
+			self.Owner:SetBodygroup(1,0)
+			self.Primary.Delay = 0.8
 			self.NameOverride = "hl_zombie"
 		end	
 		--self.NextMeleeAttack = CurTime() + self.MeleeAttackDelay
