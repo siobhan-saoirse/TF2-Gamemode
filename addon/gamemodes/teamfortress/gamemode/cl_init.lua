@@ -1998,7 +1998,7 @@ timer.Create("ForceBosses",0,0,function()
 					DImageButton:SetSize( 64, 64 )
 					DImageButton:SetImage( "hud/class_rebelred" )
 					DImageButton.DoClick = function()
-						RunConsoleCommand( "changeclass", "john" )
+						RunConsoleCommand( "changeclass", "rebel" )
 					end
 					local DImageButton = pnl:Add( "DImageButton" )
 					DImageButton:SetPos( 512, 128 )
