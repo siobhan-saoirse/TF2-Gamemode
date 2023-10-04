@@ -1,0 +1,44 @@
+//Choreo version 1
+actor "civilian"
+{
+	channel "audio"
+	{
+		event speak "Civilian.PainSharp02"
+		{
+			time 0 0.301859
+			param "Civilian.PainSharp02"
+			fixedlength
+			
+			cctype "cc_master" 
+			cctoken ""
+		}
+		event speak "Civilian.PainSharp03"
+		{
+			time 0.557692 0.923406
+			param "Civilian.PainSharp03"
+			fixedlength
+			
+			cctype "cc_master" 
+			cctoken ""
+		}
+		event speak "Civilian.PainSharp04"
+		{
+			time 1.198718 1.547017
+			param "Civilian.PainSharp04"
+			fixedlength
+			
+			cctype "cc_master" 
+			cctoken ""
+		}
+	}
+}
+"scalesettings"
+{
+	"CChoreoView" "100"
+	"SceneRampTool" "100"
+	"ExpressionTool" "100"
+	"GestureTool" "100"
+	"RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,66 @@
+//Choreo version 1
+event loop "loop"
+{
+	time 3.97 -1
+	param "2.380000"
+	loopcount 255
+	
+}
+actor "civilian"
+{
+	channel "sequence"
+	{
+		event sequence "intro"
+		{
+			time -0.764706 -0.764706
+			param "selectionMenu_StartPose"
+			fixedlength
+			
+		}
+		event sequence "selectionMenu_Anim01"
+		{
+			time 0 2.333333
+			param "selectionMenu_Anim01"
+			fixedlength
+			
+		}
+		event sequence "idle"
+		{
+			time -0.754902 -0.254902
+			param "selectionMenu_Idle"
+			
+		}
+		event sequence "selectionMenu_Idle"
+		{
+			time 2.337925 3.994624
+			param "selectionMenu_Idle"
+			
+		}
+	}
+	channel "facial"
+	{
+		event expression "painBigUpper"
+		{
+			time 0.934211 1.934211
+			param "player\scout\emotion\emotion"
+			param2 "painBigUpper"
+			event_ramp
+			{
+				0.1118 0.141192
+				0.1882 0.400044
+				0.7941 0.403966
+			}
+			
+		}
+	}
+}
+"scalesettings"
+{
+	"CChoreoView" "100"
+	"SceneRampTool" "100"
+	"ExpressionTool" "100"
+	"GestureTool" "100"
+	"RampTool" "100"
+}
+fps 60
+snap off

@@ -1,0 +1,42 @@
+//Choreo version 1
+actor "civilian"
+{
+	channel "audio"
+	{
+		event speak "Civilian.ActivateCharge02"
+		{
+			time 0 1.793741
+			param "Civilian.ActivateCharge02"
+			fixedlength
+			
+			cctype "cc_master" 
+			cctoken ""
+		}
+	}
+	channel "emotion"
+	{
+		event expression "player\civilian\emotion\emotion/happyBig"
+		{
+			time 0 3.013334
+			param "player\civilian\emotion\emotion"
+			param2 "mad"
+			event_ramp
+			{
+				0.462 0.35298002
+				0.588 0.73733604
+				1.0944 0.423576
+			}
+			
+		}
+	}
+}
+"scalesettings"
+{
+	"CChoreoView" "100"
+	"SceneRampTool" "100"
+	"ExpressionTool" "100"
+	"GestureTool" "100"
+	"RampTool" "100"
+}
+fps 60
+snap off

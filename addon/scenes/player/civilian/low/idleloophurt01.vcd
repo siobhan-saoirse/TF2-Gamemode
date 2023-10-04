@@ -1,0 +1,31 @@
+//Choreo version 1
+actor "civilian"
+{
+	channel "emotion"
+	{
+		event expression "player\civilian\emotion\emotion/scared"
+		{
+			time 0 15
+			param "player\civilian\emotion\emotion"
+			param2 "painBigUpper"
+			event_ramp
+			{
+				0.4778 0.403966
+				0.9714 0.709882
+				6.0571 0.3922
+				10.9571 0.80401003
+			}
+			
+		}
+	}
+}
+"scalesettings"
+{
+	"CChoreoView" "100"
+	"SceneRampTool" "100"
+	"ExpressionTool" "100"
+	"GestureTool" "100"
+	"RampTool" "100"
+}
+fps 60
+snap off
