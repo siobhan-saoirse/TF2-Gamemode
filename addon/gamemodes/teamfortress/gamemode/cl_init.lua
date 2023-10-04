@@ -1964,7 +1964,7 @@ timer.Create("ForceBosses",0,0,function()
 					DImageButton:SetPos( 512, 25 )
 					DImageButton:SetTooltip( "Saxton Hale" )
 					DImageButton:SetSize( 128, 128 )
-					DImageButton:SetImage( "entities/npc_saxton.png" )
+					DImageButton:SetImage( "hud/class_saxtonred" )
 					DImageButton.DoClick = function()
 						RunConsoleCommand( "changeclass", "saxton" )
 					end
@@ -1991,6 +1991,22 @@ timer.Create("ForceBosses",0,0,function()
 					DImageButton:SetImage( "hud/class_zombiefastred" )
 					DImageButton.DoClick = function()
 						RunConsoleCommand( "changeclass", "zombine" )
+					end
+					local DImageButton = pnl:Add( "DImageButton" )
+					DImageButton:SetPos( 384, 128 )
+					DImageButton:SetTooltip( "John" )
+					DImageButton:SetSize( 128, 128 )
+					DImageButton:SetImage( "hud/class_rebelred" )
+					DImageButton.DoClick = function()
+						RunConsoleCommand( "changeclass", "john" )
+					end
+					local DImageButton = pnl:Add( "DImageButton" )
+					DImageButton:SetPos( 512, 128 )
+					DImageButton:SetTooltip( "Jerry" )
+					DImageButton:SetSize( 128, 128 )
+					DImageButton:SetImage( "hud/class_antlionred" )
+					DImageButton.DoClick = function()
+						RunConsoleCommand( "changeclass", "antlion" )
 					end
 				end
 			}

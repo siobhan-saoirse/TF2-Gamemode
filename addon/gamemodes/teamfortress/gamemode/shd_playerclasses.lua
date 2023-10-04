@@ -330,7 +330,7 @@ function meta:SetPlayerClass(class)
 		-- Default hull
 		self:ResetHull()
 		self:SetStepSize(18)
-		self:SetViewOffset(Vector(0,0,64))
+		self:SetViewOffset(Vector(0,0,64)) 
 		self:SetViewOffsetDucked(Vector(0, 0, 28))
 		--self:SetCollisionBounds(unpack(DefaultHull))
 	else

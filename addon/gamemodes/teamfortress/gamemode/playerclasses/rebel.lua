@@ -1,11 +1,11 @@
-CLASS.Name = "Civilian"
-CLASS.Speed = 3 * 96
+CLASS.Name = "John"
+CLASS.Speed = 300
 CLASS.Health = 80
 
 if CLIENT then
 	CLASS.CharacterImage = {
-		surface.GetTextureID("decals/lambdaspray_2a"),
-		surface.GetTextureID("decals/lambdaspray_2a")
+		surface.GetTextureID("hud/class_rebelred"),
+		surface.GetTextureID("hud/class_rebelblue")
 	}
 	CLASS.ScoreboardImage = {
 		surface.GetTextureID("hud/leaderboard_class_spy"),
@@ -47,10 +47,6 @@ CLASS.Sounds = {
 
 if SERVER then
 	function CLASS:Initialize()
-		if (math.random(1,6) != 1) then
-			self:SetModel("models/humans/group03/male_0"..math.random(1,9)..".mdl")
-		else
-			self:SetModel("models/humans/group03/female_0"..table.Random({"1","2","3","4","6"})..".mdl")
-		end
+		self:SetModel("models/humans/group01/male_07.mdl")
 	end
 end

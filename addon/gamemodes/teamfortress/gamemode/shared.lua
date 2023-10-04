@@ -92,6 +92,39 @@ if CLIENT then
 end  
 
 sound.Add( {
+	name = "Telecon.Death",
+	volume = 0.820,
+	level = 95, 
+	channel = CHAN_VOICE, 
+	pitch = { 100 },
+	sound = { "vo/telecon/painsevere1.wav","vo/telecon/painsevere2.wav","vo/telecon/painsevere3.wav", } 
+} )
+sound.Add( {
+	name = "Telecon.CritDeath",
+	volume = 0.820,
+	level = 95, 
+	channel = CHAN_VOICE, 
+	pitch = { 100 },
+	sound = { "vo/telecon/critdeath1.wav","vo/telecon/critdeath2.wav", } 
+} )
+sound.Add( {
+	name = "Telecon.MeleeDeath",
+	volume = 0.820,
+	level = 95, 
+	channel = CHAN_VOICE, 
+	pitch = { 100 },
+	sound = { "vo/telecon/critdeath1.wav","vo/telecon/critdeath2.wav", } 
+} )
+sound.Add( {
+	name = "Telecon.ExplosionDeath",
+	volume = 0.820,
+	level = 95, 
+	channel = CHAN_VOICE, 
+	pitch = { 100 },
+	sound = { "vo/telecon/painsharp1.wav","vo/telecon/painsharp2.wav","vo/telecon/painsharp3.wav","vo/telecon/painsharp4.wav","vo/telecon/painsharp5.wav","vo/telecon/painsharp6.wav", } 
+} )
+
+sound.Add( {
 	name = "Player.AmbientUnderWater",
 	volume = 0.22,
 	level = 75, 

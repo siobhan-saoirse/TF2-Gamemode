@@ -1,11 +1,11 @@
 CLASS.Name = "Antlion"
-CLASS.Speed = 110
+CLASS.Speed = 520
 CLASS.Health = 80
 
 if CLIENT then
 	CLASS.CharacterImage = {
-		surface.GetTextureID("console/characters/zombie_heavy"),
-		surface.GetTextureID("console/characters/zombie_heavy")
+		surface.GetTextureID("hud/class_antlionred"),
+		surface.GetTextureID("hud/class_antlionblue")
 	}
 	CLASS.ScoreboardImage = {
 		surface.GetTextureID("console/characters/zombie_heavy"),
@@ -69,7 +69,7 @@ if SERVER then
 
 function CLASS:Initialize()
 	self.minigunfiretime = 0
-	self:SetModel("models/antlion.mdl")
+	self:SetModel("models/player/jerry/antlion.mdl")
 end
 
 function CLASS:PlayCustomGesture(anim, state)
