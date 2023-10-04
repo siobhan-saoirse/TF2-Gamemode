@@ -159,6 +159,11 @@ function SWEP:Think()
 			
 		end
 	end
+	self:InspectAnimCheck()
+	if (self:GetItemData().model_player == "models/weapons/c_models/c_bigaxe/c_bigaxe.mdl") then
+		self.HitWorld = "Halloween.HeadlessBossAxeHitWorld"
+		self.HitFlesh = "Halloween.HeadlessBossAxeHitFlesh"
+	end
 	self.BaseClass.Think(self)
 	if SERVER and self.dt.IsEyelander then
 		if not self.NextWhisper then

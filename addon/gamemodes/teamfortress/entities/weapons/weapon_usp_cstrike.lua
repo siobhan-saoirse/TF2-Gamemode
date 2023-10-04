@@ -14,7 +14,7 @@ SWEP.Spawnable = true
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
 SWEP.ViewModel = Model( "models/weapons/v_pist_usp.mdl" )
 SWEP.WorldModel = "models/weapons/w_pist_usp.mdl"
-SWEP.ViewModelFOV = 75
+SWEP.ViewModelFOV = 75 
 SWEP.UseHands = true
 SWEP.HoldType = "pistol"
 SWEP.Primary.Delay = 0.1
@@ -22,7 +22,7 @@ SWEP.Primary.ClipSize = 12  -- How much bullets are in the mag
 SWEP.Primary.DefaultClip = 128 -- How much bullets preloaded when spawned
 SWEP.Primary.Damage = 25
 SWEP.Primary.TakeAmmo = 1
-SWEP.Primary.Spread = 0.75
+SWEP.Primary.Spread = 0.25
 SWEP.Primary.NumberofShots = 1
 SWEP.Primary.Ammo = "pistol" 
 SWEP.Secondary.Ammo = "none"
@@ -150,7 +150,7 @@ function SWEP:PrimaryAttack()
 	 
 	self.Owner:FireBullets( bullet ) 
 	if (!self.IsSilenced) then
-		self:EmitSound(self.ShootSound, 85,math.random(95,105))	
+		self:EmitSound(self.ShootSound, 85,100)	
 		self.Owner:ViewPunch( Angle( rnda,0,0 ) ) 
 		self:TakePrimaryAmmo(self.Primary.TakeAmmo) 
 		self:SendWeaponAnim(vm:GetSequenceActivity(vm:LookupSequence("shoot"..math.random(1,3).."_unsil")))
@@ -165,7 +165,7 @@ function SWEP:PrimaryAttack()
 			end)
 		end)
 	else
-		self:EmitSound(self.ShootSound2, 67,math.random(95,105))	
+		self:EmitSound(self.ShootSound2, 67,100)	
 		self.Owner:ViewPunch( Angle( rnda,0,0 ) ) 
 		self:TakePrimaryAmmo(self.Primary.TakeAmmo) 
 		self:SendWeaponAnim(vm:GetSequenceActivity(vm:LookupSequence("shoot"..math.random(1,3))))

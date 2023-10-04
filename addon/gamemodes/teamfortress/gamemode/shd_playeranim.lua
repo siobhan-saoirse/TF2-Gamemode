@@ -245,8 +245,8 @@ function GM:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 		local maxspeed = pl:GetRunSpeed()
 		
 		if SERVER then
-			pl:SetPoseParameter("move_x", vel.x / maxspeed)
-			pl:SetPoseParameter("move_y", -vel.y / maxspeed)
+			//pl:SetPoseParameter("move_x", vel.x / maxspeed)
+			//pl:SetPoseParameter("move_y", -vel.y / maxspeed)
 		end
 
 		if not pl.PlayerBodyYaw or not pl.TargetBodyYaw then
@@ -261,19 +261,6 @@ function GM:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 		end
 		
 		local d = pl.TargetBodyYaw - pl.PlayerBodyYaw
-		if (GetConVar("civ2_smooth_worldmodel_turning"):GetBool()) then
-
-			if d > 180 then
-				pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(FrameTime() * 2, pl.PlayerBodyYaw+360, pl.TargetBodyYaw))
-			elseif d < -180 then
-				pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(FrameTime() * 2, pl.PlayerBodyYaw-360, pl.TargetBodyYaw))
-			else
-				pl.PlayerBodyYaw = Lerp(FrameTime() * 2, pl.PlayerBodyYaw, pl.TargetBodyYaw)
-			end
-			if CLIENT then
-				pl:SetRenderAngles(Angle(0, pl.PlayerBodyYaw, 0))
-			end
-		end
 		return self.BaseClass:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 	end   
 	local c = pl:GetPlayerClassTable()
@@ -295,11 +282,10 @@ function GM:UpdateAnimation(pl, velocity, maxseqgroundspeed)
  	
 	maxspeed = pl:GetRealClassSpeed()
 	if c and c.Speed then 
-	if (pl:OnGround() and pl:Crouching()) then
-		maxspeed = c.Speed
-	end
-	
-		maxspeed = maxspeed * 0.3 
+		if (pl:OnGround() and pl:Crouching()) then
+			maxspeed = c.Speed
+			maxspeed = maxspeed * 0.3 
+		end
 	elseif pl:WaterLevel() > 1 then
 		maxspeed = maxspeed * 0.8
 	end
@@ -307,15 +293,15 @@ function GM:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 	if c and c.ModifyMaxAnimSpeed then
 		maxspeed = c.ModifyMaxAnimSpeed(pl, maxspeed)
 	end
-	maxspeed = maxspeed * 3 
+	maxspeed = maxspeed
 		
 	local vel = 1 * velocity
 	vel:Rotate(Angle(0,-pl:EyeAngles().y,0))
 	vel:Rotate(Angle(-vel:Angle().p,0,0))
-	if SERVER then
-		pl:SetPoseParameter("move_x", vel.x / maxspeed)
-		pl:SetPoseParameter("move_y", -vel.y / maxspeed)
-	end
+	--if SERVER then
+		--pl:SetPoseParameter("move_x", vel.x / maxspeed)
+		--pl:SetPoseParameter("move_y", -vel.y / maxspeed)
+	--end
 
 	local maxspeed2 =  pl:GetClassSpeed()
 		
@@ -325,7 +311,13 @@ function GM:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 	if (string.StartWith(pl:GetModel(), "models/infected/")) then
 		pl:SetPoseParameter("body_pitch", pitch2)
 	else
-		pl:SetPoseParameter("body_pitch", pitch)
+		if (pl:GetNWBool("IsDerpAim",false) == true) then
+			if (math.random(1,2) == 1) then
+				pl:SetPoseParameter("body_pitch", table.Random({-90,90,90,90,90,-90}))
+			end
+		else
+			pl:SetPoseParameter("body_pitch", pitch)
+		end
 	end 
 	
 	if not pl.PlayerBodyYaw or not pl.TargetBodyYaw then
@@ -343,11 +335,11 @@ function GM:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 	if (pl:IsL4D() or GetConVar("civ2_smooth_worldmodel_turning"):GetBool()) then
 
 		if d > 180 then
-			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(FrameTime() * 2, pl.PlayerBodyYaw+360, pl.TargetBodyYaw))
+			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(FrameTime() * 0.6, pl.PlayerBodyYaw+360, pl.TargetBodyYaw))
 		elseif d < -180 then
-			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(FrameTime() * 2, pl.PlayerBodyYaw-360, pl.TargetBodyYaw))
+			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(FrameTime() * 0.6, pl.PlayerBodyYaw-360, pl.TargetBodyYaw))
 		else
-			pl.PlayerBodyYaw = Lerp(FrameTime() * 2, pl.PlayerBodyYaw, pl.TargetBodyYaw)
+			pl.PlayerBodyYaw = Lerp(FrameTime() * 0.6, pl.PlayerBodyYaw, pl.TargetBodyYaw)
 		end
 
 	else
@@ -362,7 +354,11 @@ function GM:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 	if (string.StartWith(pl:GetModel(), "models/infected/") || pl:GetPlayerClass() == "rebel" || pl:GetPlayerClass() == "combinesoldier") then
 		pl:SetPoseParameter("body_yaw", -diff)
 	else
-		pl:SetPoseParameter("body_yaw", diff)
+		if (pl:GetNWBool("IsDerpAim",false) == true) then
+			pl:SetPoseParameter("body_yaw", math.random(-45,45))
+		else
+			pl:SetPoseParameter("body_yaw", diff)
+		end
 	end
 	 
 	
@@ -429,7 +425,11 @@ function GM:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 		
 	if CLIENT then
 		GAMEMODE:GrabEarAnimation( pl )
-		pl:SetRenderAngles(Angle(0, pl.PlayerBodyYaw, 0))
+		if (pl:GetNWBool("IsDerpAim",false) == true) then
+			pl:SetRenderAngles(Angle(0, math.random(-179,179), 0))
+		else
+			pl:SetRenderAngles(Angle(0, pl.PlayerBodyYaw, 0))
+		end
 		--pl:SetRenderAngles(Angle(0, pl:EyeAngles().y, 0))
 	end
 end
@@ -598,7 +598,7 @@ function GM:TranslateActivity(pl, act)
 	end
 	
 	if pl:InVehicle() then
-		return ACT_KART_IDLE or act
+		return pl:GetSequenceActivity(pl:LookupSequence("kart_idle")) or pl:TranslateWeaponActivity(act)
 	end
 	
 	return pl:TranslateWeaponActivity(act)
@@ -682,21 +682,21 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 			local act
 			--MsgN("Restarting prefire gesture")
 			if pl.anim_InSwim then
-				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_SWIM_PREFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_SWIM_PREFIRE, true)
 			elseif pl:Crouching() then
-				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_CROUCH_PREFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_CROUCH_PREFIRE, true)
 			else
-				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_STAND_PREFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_STAND_PREFIRE, true)
 			end
 			pl.anim_Deployed = true
 		elseif data == ACT_MP_ATTACK_STAND_POSTFIRE then
 			-- Postfire gesture
 			if pl.anim_InSwim then
-				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_SWIM_POSTFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_SWIM_POSTFIRE, true)
 			elseif pl:Crouching() then
-				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_CROUCH_POSTFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_CROUCH_POSTFIRE, true)
 			else
-				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_STAND_POSTFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_STAND_POSTFIRE, true)
 			end
 			pl.anim_Deployed = false
 		elseif data == ACT_MP_ATTACK_STAND_SECONDARYFIRE then
@@ -735,7 +735,11 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 			pl:AddVCDSequenceToGestureSlot(GESTURE_SLOT_FLINCH, pl:LookupSequence(TauntGestures[data]), 0, true)
 		else
 			-- just let us do custom ones man
-			pl:AddVCDSequenceToGestureSlot( GESTURE_SLOT_FLINCH, data, 0, true )
+			if (isstring(data)) then
+				pl:AddVCDSequenceToGestureSlot(GESTURE_SLOT_FLINCH, pl:LookupSequence(data), 0, true)
+			else
+				pl:AnimRestartGesture(GESTURE_SLOT_FLINCH, data, true)
+			end
 		end
 		
 		return ACT_INVALID
@@ -759,7 +763,13 @@ function plyr:DoTauntEvent(anim,autokill)
 		if (autokill == nil) then
 			autokill = true
 		end 
-		self:AddVCDSequenceToGestureSlot( GESTURE_SLOT_FLINCH, self:LookupSequence(anim), 0, autokill )
+		if SERVER then
+			net.Start("TauntAnim")
+				net.WriteEntity(self)
+				net.WriteInt(self:LookupSequence(anim),32)
+				net.WriteBool(autokill)
+			net.Broadcast()
+		end
 	end
 end
 

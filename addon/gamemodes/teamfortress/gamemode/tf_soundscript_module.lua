@@ -23,54 +23,6 @@ end
 
 end
 
-if not meta.EmitSoundOLD then
-	meta.EmitSoundOLD = meta.EmitSound
-end
-function meta:EmitSound(snd, lvl, pitch)
-	self:EmitSoundOLD(snd, lvl, pitch)
-end
-
-if not util.PrecacheSoundOLD then
-	util.PrecacheSoundOLD = util.PrecacheSound
-end
-function util.PrecacheSound(snd)
-	local s = tf_soundscript.Sounds[string.lower(snd)]
-	if s then
-		for _,v in ipairs(s.wave) do
-			util.PrecacheSound(v)
-		end
-	else
-		util.PrecacheSoundOLD(snd)
-	end
-end
-
-if not CreateSoundOLD then
-	CreateSoundOLD = CreateSound
-end
-function CreateSound(ent, snd)
-	local s = tf_soundscript.Sounds[string.lower(snd)]
-	
-	if s then
-		snd = table.Random(s.wave)
-		local pitch
-		if s.rndpitch then
-			pitch = math.random(unpack(s.rndpitch))
-		else
-			pitch = s.pitch
-		end
-		
-		local lvl = s.soundlevel
-		
-		local sound_ent = CreateSoundOLD(ent, snd)
-		sound_ent:ChangePitch(pitch)
-		sound_ent:ChangeVolume(volume)
-		sound_ent:SetSoundLevel(lvl)
-		return sound_ent
-	else
-		return CreateSoundOLD(ent, snd)
-	end
-end
-
 local string = string
 local util = util
 local file = file

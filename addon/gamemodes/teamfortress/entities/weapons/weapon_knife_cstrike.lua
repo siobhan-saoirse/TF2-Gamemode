@@ -73,7 +73,7 @@ function SWEP:DealDamage()
 	-- We need the second part for single player because SWEP:Think is ran shared in SP
 	if ( (IsValid(tr.Entity) and !tr.Entity:IsTFPlayer()) or tr.HitWorld ) then
 		if SERVER then
-			self.Owner:EmitSound( "weapons/knife/knife_hitwall1.wav", 75, math.random(95,105) )
+			self.Owner:EmitSound( "weapons/knife/knife_hitwall1.wav", 75, 100 )
 		end
 	end
 
@@ -86,9 +86,9 @@ function SWEP:DealDamage()
 					"weapons/knife/knife_hit2.wav",
 					"weapons/knife/knife_hit3.wav",
 					"weapons/knife/knife_hit4.wav"
-			}), 75, math.random(95,105) )
+			}), 75, 100 )
 		else
-		self.Owner:EmitSound( "weapons/knife/knife_stab.wav", 75, math.random(95,105) )
+		self.Owner:EmitSound( "weapons/knife/knife_stab.wav", 75, 100 )
 		end
 
 		local dmginfo = DamageInfo()
@@ -250,11 +250,33 @@ function SWEP:MeleeAttack( right )
 	end)
 	if (!right) then
 		self:SetNextMeleeAttack( CurTime() + 0.1 )
-		self:SetNextPrimaryFire( CurTime() + 0.4 )
-		self:SetNextSecondaryFire( CurTime() + 0.4 )
+		local tr = util.TraceLine( {
+			start = self.Owner:GetShootPos(),
+			endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * self.HitDistance,
+			filter = self.Owner,
+			mask = MASK_SHOT_HULL
+		} )
+	
+		if ( !IsValid( tr.Entity ) ) then
+			tr = util.TraceHull( {
+				start = self.Owner:GetShootPos(),
+				endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * self.HitDistance,
+				filter = self.Owner,
+				mins = Vector( -10, -10, -8 ),
+				maxs = Vector( 10, 10, 8 ),
+				mask = MASK_SHOT_HULL
+			} )
+		end
+		if (tr.HitWorld or IsValid(tr.Entity)) then
+			self:SetNextPrimaryFire( CurTime() + 0.5 )
+			self:SetNextSecondaryFire( CurTime() + 0.5 )
+		else
+			self:SetNextPrimaryFire( CurTime() + 0.4 )
+			self:SetNextSecondaryFire( CurTime() + 0.4 )
+		end
 		self.IsTryingToBackstab = false
 	else
-		self:SetNextMeleeAttack( CurTime() )
+		self:SetNextMeleeAttack( CurTime() + 0.1 )
 		self:SetNextPrimaryFire( CurTime() + 1.0 )
 		self:SetNextSecondaryFire( CurTime() + 1.0 )
 		self.IsTryingToBackstab = true

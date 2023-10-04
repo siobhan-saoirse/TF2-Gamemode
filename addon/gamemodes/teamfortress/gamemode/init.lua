@@ -23,10 +23,11 @@ include("sv_ent_substitute.lua")
 
 CreateConVar("grapple_distance", -1, false)  
 response_rules.Load("talker/tf_response_rules.txt")
-response_rules.Load("talker/demoman_custom.txt") 
+response_rules.Load("talker/demoman_custom.txt")  
 response_rules.Load("talker/heavy_custom.txt") 
 
 util.AddNetworkString("TFRagdollCreate")
+util.AddNetworkString("TauntAnim")
 
 CreateConVar('tf_opentheorangebox', 0, FCVAR_ARCHIVE + FCVAR_SERVER_CAN_EXECUTE, 'Enables 2007 mode')
 -- Quickfix for Valve's typo in tf_reponse_rules.txt
@@ -37,10 +38,12 @@ response_rules.AddCriterion([[criterion "WeaponIsScattergunDouble" "item_name" "
 --end) 
 
 hook.Add("Think", "NoAttackPuppet", function()
-	for k,v in ipairs(player.GetAll()) do 
-		if (v:WaterLevel() < 2 and !v.IsDrowning) then
-			timer.Stop("Drown"..v:EntIndex())
-			timer.Stop("DrownContinue"..v:EntIndex())
+	if (math.random(1,3+(table.Count(player.GetAll())*0.4)) == 1) then 
+		for k,v in ipairs(player.GetAll()) do 
+			if (v:WaterLevel() < 2 and !v.IsDrowning) then
+				timer.Stop("Drown"..v:EntIndex())
+				timer.Stop("DrownContinue"..v:EntIndex())
+			end
 		end
 	end
 end) 
@@ -514,33 +517,35 @@ local function CopyPoseParams(pEntityFrom, pEntityTo)
 	end
 end
 hook.Add("Think", "CanYouSetMovea_XParameterToThePlayers?", function()
-	for k,pl in ipairs(player.GetAll()) do
-		if (pl.IsL4DZombie) then
-			pl:SetSaveValue("m_iClass",CLASS_ZOMBIE)
-		elseif (pl:Team() == TEAM_BLU and !pl.IsL4DZombie) then
-			pl:SetSaveValue("m_iClass",CLASS_COMBINE)
-		elseif (pl:Team() == TEAM_RED and !pl.IsL4DZombie) then
-			pl:SetSaveValue("m_iClass",CLASS_PLAYER)
-		else
-			pl:SetSaveValue("m_iClass",CLASS_HUMAN_MILITARY)
-		end
-		local vm = pl:GetViewModel()
-		if (pl:IsL4D()) then
-			CopyPoseParams(pl,vm)
-		end
-		
-		if SERVER then
-			if (pl:IsHL2()) then
-				vm:SetPoseParameter("ver_aims", math.Remap(pl:GetPoseParameter("aim_pitch"),90,-45,1,-1))
-				vm:SetPoseParameter("hor_aims", math.Remap(pl:GetPoseParameter("aim_yaw"),45,-45,-1,1))
+	if (math.random(1,3+(table.Count(player.GetAll())*0.4)) == 1) then 
+		for k,pl in ipairs(player.GetAll()) do
+			if (pl.IsL4DZombie) then
+				pl:SetSaveValue("m_iClass",CLASS_ZOMBIE)
+			elseif (pl:Team() == TEAM_BLU and !pl.IsL4DZombie) then
+				pl:SetSaveValue("m_iClass",CLASS_COMBINE)
+			elseif (pl:Team() == TEAM_RED and !pl.IsL4DZombie) then
+				pl:SetSaveValue("m_iClass",CLASS_PLAYER)
 			else
-				vm:SetPoseParameter("ver_aims", math.Remap(pl:GetPoseParameter("body_pitch"),90,-45,1,-1))
-				vm:SetPoseParameter("hor_aims", math.Remap(pl:GetPoseParameter("body_yaw"),45,-45,-1,1))
+				pl:SetSaveValue("m_iClass",CLASS_HUMAN_MILITARY)
 			end
-		end
-		if (pl:WaterLevel() > 1) then
-			if (pl:IsOnFire()) then
-				pl:Extinguish()
+			local vm = pl:GetViewModel()
+			if (pl:IsL4D()) then
+				CopyPoseParams(pl,vm)
+			end
+			
+			if SERVER then
+				if (pl:IsHL2()) then
+					vm:SetPoseParameter("ver_aims", math.Remap(pl:GetPoseParameter("aim_pitch"),90,-45,1,-1))
+					vm:SetPoseParameter("hor_aims", math.Remap(pl:GetPoseParameter("aim_yaw"),45,-45,-1,1))
+				else
+					vm:SetPoseParameter("ver_aims", math.Remap(pl:GetPoseParameter("body_pitch"),90,-45,1,-1))
+					vm:SetPoseParameter("hor_aims", math.Remap(pl:GetPoseParameter("body_yaw"),45,-45,-1,1))
+				end
+			end
+			if (pl:WaterLevel() > 1) then
+				if (pl:IsOnFire()) then
+					pl:Extinguish()
+				end
 			end
 		end
 	end
@@ -548,7 +553,7 @@ end)
 
 concommand.Add( "tf_sentrybuster_explode", function( ply, cmd )
 
-	if ply:GetInfoNum("tf_sentrybuster", 0) == 1 then
+	if (ply:GetPlayerClass() == "sentrybuster") then
 	ply:SetNoDraw(true)
 	ply:EmitSound("MVM.SentryBusterSpin")
 	ply:SetNWBool("Taunting", true)
@@ -602,8 +607,6 @@ concommand.Add( "tf_sentrybuster_explode", function( ply, cmd )
 			animent:Remove() 
 		end
 	
-		ply:EmitSound("MvM.SentryBusterExplode")
-		ply:EmitSound("MvM.SentryBusterExplode")
 		ply:EmitSound("MvM.SentryBusterExplode")
 		ply:SetNoDraw(false)
 
@@ -1714,21 +1717,91 @@ end)
 hook.Add( "PlayerSpawn", "PlayerGiantRoBotSpawn", PlayerGiantBotSpawn)
 
 
+concommand.Add( "random_team", function( ply, cmd, args )
+
+	local nDiffBetweenTeams = 0;
+	local m_iLightestTeam = 0;
+	local m_iHeaviestTeam = 0;
+	local iMostPlayers = 0;
+	local iLeastPlayers = game.MaxPlayers() + 1;
+	local i = 1; 
+	for k,v in ipairs(team.GetAllTeams()) do
+			local iNumPlayers = team.NumPlayers(v);
+
+			if ( iNumPlayers < iLeastPlayers ) then
+				iLeastPlayers = iNumPlayers;
+				m_iLightestTeam = k; 
+			end
+
+			if ( iNumPlayers > iMostPlayers ) then
+				iMostPlayers = iNumPlayers;
+				m_iHeaviestTeam = k; 
+			end
+	end 
+
+	nDiffBetweenTeams = ( iMostPlayers - iLeastPlayers );
+	if (team.NumPlayers(1) > team.NumPlayers(2)) then
+		ply:SetTeam(2)	
+	elseif (team.NumPlayers(1) < team.NumPlayers(2)) then
+		ply:SetTeam(1)	
+	else
+		ply:SetTeam(table.Random({TEAM_RED,TEAM_BLU}))	
+	end
+	if ply:Alive() and ply:Team() != TEAM_SPECTATOR then ply:Kill() end 
+
+end)
 concommand.Add( "changeteam", function( pl, cmd, args )
 	--if ( tonumber( args[ 1 ] ) >= 5 and args[ 1 ] ~= 1002 ) then return end
 	if ( tonumber( args[ 1 ] ) == 0 or tonumber( args[ 1 ] ) < 0 or tonumber( args[ 1 ] ) > TEAM_FRIENDLY) then pl:ChatPrint("Invalid Team!") return end
-	if ( pl:Team() == tonumber( args[ 1 ] ) ) then return false end
+	if ( !GetConVar("tf_competitive"):GetBool() and pl:Team() == tonumber( args[ 1 ] ) ) then pl:PrintMessage(HUD_PRINTTALK,"You are already in this team!") return false end
 	if ( GetConVar("tf_competitive"):GetBool() and tonumber( args[ 1 ] ) == 4 ) then pl:ChatPrint("Competitive mode is on!") return end
 	if ( string.find(game.GetMap(), "mvm_") and tonumber( args[ 1 ] ) == 6 ) then pl:ChatPrint("Friendly Team is disabled!") return end
 	if ( string.find(game.GetMap(), "mvm_") and !pl:IsAdmin() and tonumber( args[ 1 ] ) == 5 ) then pl:ChatPrint("Neutral Team is disabled!") return end
+	if ( GetConVar("tf_competitive"):GetBool() and tonumber( args[ 1 ] ) == 6 ) then pl:ChatPrint("Friendly Team is disabled!") return end
+	if ( GetConVar("tf_competitive"):GetBool() and tonumber( args[ 1 ] ) == 5 ) then pl:ChatPrint("Neutral Team is disabled!") return end
+	if ( GetConVar("tf_competitive"):GetBool() and tonumber( args[ 1 ] ) == 4 ) then pl:ChatPrint("Green Team is disabled!") return end
+	if ( GetConVar("tf_competitive"):GetBool() and tonumber( args[ 1 ] ) == 3 ) then pl:ChatPrint("Yellow Team is disabled!") return end
 
-	if ( GetConVar("tf_disable_nonred_mvm"):GetBool() and string.find(game.GetMap(), "syn_") and tonumber( args[ 1 ] ) == 2 ) and !pl:IsAdmin() then pl:ChatPrint("Blue Team is disabled!") return end
-	if ( GetConVar("tf_disable_nonred_mvm"):GetBool() and string.find(game.GetMap(), "bb_coop_") and tonumber( args[ 1 ] ) == 2 ) and !pl:IsAdmin() then pl:ChatPrint("Blue Team is disabled!") return end
-	if ( GetConVar("tf_disable_nonred_mvm"):GetBool() and string.find(game.GetMap(), "cl_coop_") and tonumber( args[ 1 ] ) == 2 ) and !pl:IsAdmin() then pl:ChatPrint("Blue Team is disabled!") return end
-	if ( GetConVar("tf_disable_nonred_mvm"):GetBool() and string.find(game.GetMap(), "js_coop_") and tonumber( args[ 1 ] ) == 2 ) and !pl:IsAdmin() then pl:ChatPrint("Blue Team is disabled!") return end
-	if ( GetConVar("tf_disable_nonred_mvm"):GetBool() and string.find(game.GetMap(), "coop_") and tonumber( args[ 1 ] ) == 2 ) and !pl:IsAdmin() then pl:ChatPrint("Blue Team is disabled!") return end
-	if ( GetConVar("tf_disable_nonred_mvm"):GetBool() and string.find(game.GetMap(), "mvm_") and tonumber( args[ 1 ] ) == 2 ) and !pl:IsAdmin() then pl:ChatPrint("Blue Team is disabled!") return end
-	pl:SetTeam( tonumber( args[ 1 ] ) )  
+	if ( GetConVar("tf_competitive"):GetBool() ) then
+		local theteam = tonumber( args[ 1 ] )
+		local nDiffBetweenTeams = 0;
+		local m_iLightestTeam = 0;
+		local m_iHeaviestTeam = 0;
+		local iMostPlayers = 0;
+		local iLeastPlayers = game.MaxPlayers() + 1;
+		local i = 1; 
+		for k,v in ipairs(team.GetAllTeams()) do
+				local iNumPlayers = team.NumPlayers(v);
+
+				if ( iNumPlayers < iLeastPlayers ) then
+					iLeastPlayers = iNumPlayers;
+					m_iLightestTeam = k; 
+				end
+
+				if ( iNumPlayers > iMostPlayers ) then
+					iMostPlayers = iNumPlayers;
+					m_iHeaviestTeam = k; 
+				end
+		end 
+
+		nDiffBetweenTeams = ( iMostPlayers - iLeastPlayers );
+		if (team.NumPlayers(1) > team.NumPlayers(2) and theteam == 1) then
+			pl:PrintMessage(HUD_PRINTTALK,"The team is full. Press the dot key to change teams again.")
+			return false
+		elseif (team.NumPlayers(1) < team.NumPlayers(2) and theteam == 2) then
+			pl:PrintMessage(HUD_PRINTTALK,"The team is full. Press the dot key to change teams again.")
+			return false
+		else
+			if (pl:Team() == theteam) then
+				pl:PrintMessage(HUD_PRINTTALK,"You are already in this team!")
+				return false
+			else
+				pl:SetTeam( tonumber( args[ 1 ] ) )  
+			end
+		end
+	else
+		pl:SetTeam( tonumber( args[ 1 ] ) )  
+	end
 	pl:ConCommand("tf_changeclass")
 	timer.Simple(0.3, function() if !IsValid(pl) then return end PrintMessage(HUD_PRINTTALK, 'Player '.. pl:Nick() ..	' joined team '.. team.GetName(pl:Team()) ) end) 
 	if pl:Alive() and pl:Team() != TEAM_SPECTATOR then pl:Kill() end 
@@ -1757,12 +1830,53 @@ hook.Add("InitPostEntity", "TF_InitSpawnables", function()
 		end
 	end
 end) 
- 
+local function GetFirstObserverPoint()
+	local tbl = {}
+	for k,v in ipairs(ents.FindByClass("info_observer_point")) do
+		if (IsValid(v)) then
+			table.insert(tbl, v)
+		end
+	end
+	return table.Random(tbl)
+end
 function GM:PlayerInitialSpawn(ply)
 	if (!ply:IsBot()) then
 		ply:SetTeam(TEAM_SPECTATOR)	
+		ply:Spectate(OBS_MODE_IN_EYE)
+		if (GetFirstObserverPoint() != nil) then
+			ply:SpectateEntity(GetFirstObserverPoint())
+		end
 	else
-		ply:SetTeam(table.Random({TEAM_RED,TEAM_BLU}))	
+	
+		local nDiffBetweenTeams = 0;
+		local m_iLightestTeam = 0;
+		local m_iHeaviestTeam = 0;
+		local iMostPlayers = 0;
+		local iLeastPlayers = game.MaxPlayers() + 1;
+		local i = 1; 
+		for k,v in ipairs(team.GetAllTeams()) do
+				local iNumPlayers = team.NumPlayers(v);
+
+				if ( iNumPlayers < iLeastPlayers ) then
+					iLeastPlayers = iNumPlayers;
+					m_iLightestTeam = k; 
+				end
+
+				if ( iNumPlayers > iMostPlayers ) then
+					iMostPlayers = iNumPlayers;
+					m_iHeaviestTeam = k; 
+				end
+		end 
+
+		nDiffBetweenTeams = ( iMostPlayers - iLeastPlayers );
+		if (team.NumPlayers(1) > team.NumPlayers(2)) then
+			ply:SetTeam(2)	
+		elseif (team.NumPlayers(1) < team.NumPlayers(2)) then
+			ply:SetTeam(1)	
+		else
+			ply:SetTeam(table.Random({TEAM_RED,TEAM_BLU}))	
+		end
+		
 	end
 	-- Wait until InitPostEntity has been called
 	if not self.PostEntityDone then
@@ -1791,7 +1905,7 @@ function GM:OnPlayerChangedTeam(ply, oldteam, newteam)
 	self:UpdateEntityRelationship(ply)
 end
 
-local function CanSpawn(ply) if (ply:Team() == TEAM_SPECTATOR && !ply:IsAdmin()) or GetConVar("tf_competitive"):GetBool() then return false end return true end
+local function CanSpawn(ply) if (ply:Team() == TEAM_SPECTATOR && !ply:IsAdmin()) or GetConVar("tf_competitive"):GetBool() && !ply:IsAdmin() then return false end return true end
 
 function GM:CanPlayerSuicide(ply)
 	if ply:Team() == TEAM_SPECTATOR then return false end
@@ -1801,6 +1915,9 @@ end
 function GM:PlayerSpawnSWEP(ply)
 	return CanSpawn(ply)
 end
+hook.Add("CanArmDupe","ArmDupe?",function(ply)
+	return CanSpawn(ply)
+end)
 
 function GM:PlayerSpawnVehicle(ply)
 	return CanSpawn(ply)
@@ -1815,6 +1932,18 @@ function GM:PlayerSpawnSENT(ply)
 end
 
 function GM:PlayerSpawnObject(ply)
+	return CanSpawn(ply)
+end
+
+function GM:PlayerSpawnProp(ply)
+	return CanSpawn(ply)
+end
+
+function GM:PlayerSpawnRagdoll(ply)
+	return CanSpawn(ply)
+end
+
+function GM:PlayerSpawnEffect(ply)
 	return CanSpawn(ply)
 end
 
@@ -1874,12 +2003,16 @@ end
 
 
 hook.Add( "PlayerButtonDown", "PlayerButtonDownTF", function( pl, key )
-	if key == KEY_G then
-		if (pl:GetInfoNum("tf_sentrybuster",0) == 1) then
+	if key == KEY_G then 
+		if (pl:GetPlayerClass() == "sentrybuster") then
 			pl:ConCommand("tf_sentrybuster_explode")         
 		else
 			if (pl:GetActiveWeapon():GetClass() == "weapon_physcannon") then
-				pl:ConCommand("tf_taunt_laugh")
+				if (pl:GetPlayerClass() == "scout") then
+					pl:ConCommand("tf_taunt_come_and_get_me")
+				else
+					pl:ConCommand("tf_taunt_laugh")
+				end
 			elseif (pl:GetActiveWeapon():GetClass() == "weapon_physgun") then
 				pl:ConCommand("tf_taunt_directors_vision")
 			else
@@ -1916,18 +2049,6 @@ hook.Add( "PlayerButtonDown", "PlayerButtonDownTF", function( pl, key )
 	if key == KEY_X then  
 		pl:ConCommand("voice_menu_2")   
 	end
-	if key == KEY_E then  
-		if GetConVar("tf_crossover_mode"):GetBool() then
-			local tr = pl:GetEyeTrace()
-			pl:SetNWBool("Reviving", true)
-			timer.Simple(5, function()
-				pl:SetNWBool("Reviving", false)
-			end)
-			if tr.Entity and tr.Entity:IsPlayer() then
-				tr.Entity:ConCommand("wos_ls_force_revive")
-			end
-		end
-	end
 	if key == KEY_L then
 		pl:ConCommand("gmod_undo")   
 	end
@@ -1957,10 +2078,10 @@ hook.Add( "PlayerButtonUp", "PlayerButtonUpTF", function( pl, key )
 		pl:ConCommand("-attack")
 		pl:ConCommand("lastinv") 
 		pl:StopSound("Grappling")
-	end
-end)	
-
-
+	end  
+end)	 
+ 
+  
 concommand.Add("changeclass", function(pl, cmd, args)
 	if SERVER then
 		if pl:Team()==TEAM_SPECTATOR then return end
@@ -2065,8 +2186,14 @@ function GM:PlayerSpawn(ply)
 			GAMEMODE:UpdateEntityRelationship(v)
 		end
 	end
+	-- engage a rare chance of getting the hacker bot's fake aim (derp)
+	if (ply:IsBot() and math.random(1,1000) == 1) then
+		ply:SetNWBool("IsDerpAim",true)
+	else
+		ply:SetNWBool("IsDerpAim",false)
+	end
 	for k,v in ipairs(player.GetAll()) do
-		if (k<1) then
+		if (player.GetCount() == 1) then
 
 			if (!GAMEMODE.round_active and ply:Team() != TEAM_SPECTATOR) then
 				RunConsoleCommand("gmod_admin_cleanup")
@@ -2090,13 +2217,13 @@ function GM:PlayerSpawn(ply)
 					
 					for k,v in ipairs(player.GetAll()) do
 						v:Spawn()
-						v:Freeze(true)
+						v:SetNWBool("Taunting",true)
 						timer.Create("SlowGuydown"..v:EntIndex(), 0.1, 48, function()
 							v:SetWalkSpeed(1)
 							v:SetRunSpeed(1)
 						end)
 						timer.Simple(5, function()
-							v:Freeze(false)
+							v:SetNWBool("Taunting",false)
 							v:ResetClassSpeed()
 						end)
 					end
@@ -2108,13 +2235,13 @@ function GM:PlayerSpawn(ply)
 							RunConsoleCommand("gmod_admin_cleanup") 
 							for k,v in ipairs(player.GetAll()) do
 								v:Spawn()
-								v:Freeze(true)
+								v:SetNWBool("Taunting",true)
 								timer.Create("SlowGuydown"..v:EntIndex(), 0.1, 48, function()
 									v:SetWalkSpeed(1)
 									v:SetRunSpeed(1)
 								end) 
 								timer.Simple(5, function()
-									v:Freeze(false)
+									v:SetNWBool("Taunting",false)
 									v:ResetClassSpeed()
 									v:Speak("TLK_ROUND_START")
 								end)
@@ -2312,7 +2439,8 @@ function GM:PlayerSpawn(ply)
 		ply:ConCommand("giveitem Grappling Hook")
 	end
 	ply:Speak("TLK_PLAYER_EXPRESSION", true)  
- 
+	ply.Warned = false
+	
 	local playercolorconv = ply:GetInfo("cl_playercolor") 
 	local weaponcolorconv = ply:GetInfo("cl_weaponcolor") 
 	local playercolor = Vector(string.sub(playercolorconv, 1, 8), string.sub(playercolorconv, 10, 17), string.sub(playercolorconv, 19, 26))
@@ -2365,7 +2493,21 @@ function GM:PlayerSpawn(ply)
 	net.Start("TF_PlayerSpawn")
 	net.WriteEntity(ply)
 	net.Broadcast()
+	ply:SetMaterial("")
+	timer.Simple(0.5, function()
+		if (ply:IsBot()) then
+			if (ply:GetWeapons()[2]:GetClass() == "tf_weapon_lunchbox_drink" or ply:GetWeapons()[1]:GetClass() == "tf_weapon_lunchbox_drink") then
 
+					ply:SelectWeapon("tf_weapon_lunchbox_drink")
+					timer.Simple(0.8, function()
+						ply:GetActiveWeapon():PrimaryAttack()
+						timer.Simple(0.95, function()
+							ply:SelectWeapon("tf_weapon_bat")	
+						end)
+					end)
+			end
+		end
+	end)
 end
 
 function GM:PlayerSetHandsModel( ply, ent )
@@ -2655,8 +2797,8 @@ elseif file.Exists("maps/"..game.GetMap()..".lua", "LUA") then
 	include("maps/"..game.GetMap()..".lua")
 end
 
-RunConsoleCommand("sk_player_head", "1")
-RunConsoleCommand("sv_friction", "8")
+RunConsoleCommand("sk_player_head", "3")
+RunConsoleCommand("sv_friction", "4")
 RunConsoleCommand("sv_stopspeed", "100")
 --Disables use key on objects (Can Be Re-enabled)
 -- WHAT WERE YOU THINKING

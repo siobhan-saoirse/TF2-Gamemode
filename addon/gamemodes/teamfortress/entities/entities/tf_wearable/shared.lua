@@ -34,6 +34,51 @@ function ENT:Think()
 			self:CreateShadow()
 		end
 	else
+		local item = self:GetItemData()
+		if (item.visuals) then
+			if item.visuals.player_bodygroups then
+				local bodygroups = item.visuals.player_bodygroups
+				if (bodygroups.hat) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("hat"),1)
+				elseif (bodygroups.headphones) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("headphones"),1)
+				elseif (bodygroups.medal) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("medal"),1)
+				elseif (bodygroups.grenades) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("grenades"),1)
+				elseif (bodygroups.bullets) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("bullets"),1)
+				elseif (bodygroups.arrows) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("arrows"),1)
+				elseif (bodygroups.rightarm) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("rightarm"),1)
+				elseif (bodygroups.shoes_socks) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("shoes_socks"),1)
+				end
+			end
+		end
+		if (item and item.visuals) then
+			if item.visuals.player_bodygroups then
+				local bodygroups = item.visuals.player_bodygroups
+				if (bodygroups.hat) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("hat"),bodygroups.hat)
+				elseif (bodygroups.headphones) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("headphones"),bodygroups.headphones)
+				elseif (bodygroups.medal) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("medal"),bodygroups.medal)
+				elseif (bodygroups.grenades) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("grenades"),bodygroups.grenades)
+				elseif (bodygroups.bullets) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("bullets"),bodygroups.bullets)
+				elseif (bodygroups.arrows) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("arrows"),bodygroups.arrows)
+				elseif (bodygroups.rightarm) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("rightarm"),bodygroups.rightarm)
+				elseif (bodygroups.shoes_socks) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("shoes_socks"),bodygroups.shoe_socks)
+				end
+			end
+		end
 		if self.ShadowCreated ~= false then
 			self.ShadowCreated = false
 			self:DestroyShadow()
@@ -154,42 +199,14 @@ function ENT:Initialize()
 			self.Model = string.Replace(modelperclass,"demoman","demo")
 		end
 	end
-	if (item.visuals) then
-		if item.visuals.player_bodygroups then
-			local bodygroups = item.visuals.player_bodygroups
-			if (bodygroups.hat) then
-				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("hat"),1)
-			elseif (bodygroups.headphones) then
-				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("headphones"),1)
-			elseif (bodygroups.medal) then
-				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("medal"),1)
-			elseif (bodygroups.grenades) then
-				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("grenades"),1)
-			elseif (bodygroups.bullets) then
-				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("bullets"),1)
-			elseif (bodygroups.arrows) then
-				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("arrows"),1)
-			elseif (bodygroups.rightarm) then
-				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("rightarm"),1)
-			elseif (bodygroups.shoes_socks) then
-				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("shoes_socks"),1)
-			end
-		end
-	end
 	if SERVER then
 		self:SetMoveType(MOVETYPE_NONE)
 		self:SetSolid(SOLID_NONE)
-		if (!self:GetOwner():IsHL2()) then
-			self:SetParent(self:GetOwner())
-		end
+		self:SetParent(self:GetOwner())
 		
 		if self.Model then
 			self:SetModel(self.Model)
-			if (self:GetOwner():IsHL2()) then
-				self:FollowBone(self:GetOwner(),self:GetOwner():LookupBone("ValveBiped.Bip01_Head1"))
-			else
-				self:AddEffects(EF_BONEMERGE)
-			end
+			self:AddEffects(EF_BONEMERGE)
 			
 			if item.set_sequence_to_class then
 				self:AddEffects(EF_NOINTERP)

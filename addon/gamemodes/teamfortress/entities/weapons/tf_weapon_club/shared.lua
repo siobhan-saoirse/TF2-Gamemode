@@ -9,7 +9,7 @@ end
 
 SWEP.Base				= "tf_weapon_melee_base"
 
-SWEP.ViewModel			= "models/weapons/c_models/c_sniper_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_sniper_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_machete/c_machete.mdl"
 SWEP.Crosshair = "tf_crosshair3"
 

@@ -31,7 +31,8 @@ SWEP.Secondary.Automatic = true
 SWEP.DeployAfterPickup = false
 SWEP.HitDistance = 48
 SWEP.ReloadTime = 0.4
-SWEP.ShootSound = Sound("Weapon_Shotgun.NPC_Single")
+SWEP.ShootSound = Sound("Weapon_Shotgun.Single")
+SWEP.ViewModelFOV = 54
 SWEP.ViewModelFlip = false
 function SWEP:Deploy()
 	self:SetWeaponHoldType( self.HoldType ) 
@@ -234,7 +235,7 @@ function SWEP:PrimaryAttack()
 	self:ShootEffects()
 	 
 	self.Owner:FireBullets( bullet ) 
-		self:EmitSound(self.ShootSound, 85,math.random(95,105))	
+		self:EmitSound(self.ShootSound, 85,100)	
 		self.Owner:ViewPunch( Angle( rnda,0,0 ) ) 
 		self:TakePrimaryAmmo(self.Primary.TakeAmmo) 
 		self:SendWeaponAnim(vm:GetSequenceActivity(vm:LookupSequence("fire01")))
@@ -291,7 +292,7 @@ function SWEP:SecondaryAttack()
 	self:ShootEffects()
 	 
 	self:FireBullets( bullet ) 
-		self:EmitSound("Weapon_Shotgun.Double", 85,math.random(95,105))	
+		self:EmitSound("Weapon_Shotgun.NPC_Double", 85,100)	
 		self.Owner:ViewPunch( Angle( rnda - 2,0,0 ) ) 
 		self:TakePrimaryAmmo(self.Primary.TakeAmmo + 1) 
 		self.Owner:DoAnimationEvent( ACT_HL2MP_GESTURE_RANGE_ATTACK_CROSSBOW,true,true )

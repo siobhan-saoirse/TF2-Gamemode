@@ -105,7 +105,27 @@ function GM:PostScaleDamage(ent, hitgroup, dmginfo)
 		GAMEMODE:HealPlayer(nil, att, dmginfo:GetDamage() * 0.75, true, false)
 	end
 end
+local function SimpleSpline( value )
+	local valueSquared = value * value;
 
+	// Nice little ease-in, ease-out spline-like curve
+	return (3 * valueSquared - 2 * valueSquared * value);
+end
+// remaps a value in [startInterval, startInterval+rangeInterval] from linear to
+// spline using SimpleSpline
+local function SimpleSplineRemapValClamped( val, A, B, C, D )
+	if ( A == B ) then
+		if (val >= B) then
+			return D
+		else
+			return C
+		end
+	end
+
+	local cVal = (val - A) / (B - A);
+	cVal = math.Clamp( cVal, 0.0, 1.0 );
+	return C + (D - C) * SimpleSpline( cVal );
+end
 --------------------------------------------------------------
 -- TF2 damage system (takes care of damage spread
 -- for TF2 bullets, special damage effects (jarate) and crits)
@@ -168,6 +188,7 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 	gamemode.Call("PreScaleDamage", ent, hitgroup, dmginfo)
 
 	local is_normal_damage = true
+
 	--[[
 	if (ent.TFBot and ent:EntIndex() != att:EntIndex() and att:IsTFPlayer() and !att:IsFriendly(ent)) then
 		ent.TargetEnt = att
@@ -283,34 +304,7 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 	
 	if is_normal_damage then
 		-- Not a crit, calculate the damage properly here
-		if inf.Explosive then
-			-- Explosive damage
-			
-			local damage = inf.CalculatedDamage
-			-- Self damage
-			if att==ent then
-				if ent:IsPlayer() and inf.BaseDamage then
-					if inf.OwnerDamage then
-						damage = inf.BaseDamage * inf.OwnerDamage
-					else
-						dmginfo:SetDamage(inf.BaseDamage * 0.8)
-					end
-					dmginfo:SetDamageForce(dmginfo:GetDamageForce() * 1.2)
-				elseif ent.IsTFBuilding then
-					damage = 0
-					dmginfo:SetDamageForce(vector_origin)
-				end
-			else
-				dmginfo:SetDamageForce(dmginfo:GetDamageForce())
-			end
-			
-			if not damage then
-				damage = inf.BaseDamage or 0
-			end
-			
-			dmginfo:SetDamage(damage)
-			
-		elseif dmginfo:IsBulletDamage() and (inf:IsWeapon() or inf.IsTFBuilding) then
+		if dmginfo:IsBulletDamage() and (inf:IsWeapon() or inf.IsTFBuilding) then
 			if (inf.IsTFWeapon or inf.IsTFBuilding) and inf.CalculateDamage then
 				-- Bullet damage inflicted from a TF2 weapon
 				local damage = inf:CalculateDamage(dmginfo:GetDamagePosition(), ent)
@@ -321,8 +315,8 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 					-- that's quite convenient since bullets fired from TF2 weapons initially inflict only 1 damage
 					damage = damage * dmginfo:GetDamage()
 				end
-				
-				dmginfo:SetDamage(damage)
+						
+				dmginfo:SetDamage(damage )
 				dontscaledamage = true
 			else
 				-- Bullet damage inflicted from another weapon
@@ -353,12 +347,68 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 	if (inf.IsTFWeapon and (string.find(inf:GetClass(),"sword") or string.find(inf:GetClass(),"katana"))) then
 		ent:AddDeathFlag(DF_DECAP)
 	end
+
+	if (ent:GetMaterial() == "color" and ent:GetClass() == "spy") then
+		if (ent:Team() == TEAM_BLU) then
+			ent:SetMaterial("models/shadertest/shader3")
+		else
+			ent:SetMaterial("models/props_combine/tprings_globe")
+		end
+		ent:RemoveEffects(EF_NOSHADOW)
+		timer.Simple(0.4, function()
+			ent:SetMaterial("color")
+			ent:AddEffects(EF_NOSHADOW)
+		end)
+	end
+	local att = dmginfo:GetAttacker()
+
+	local flRandomDamage = dmginfo:GetDamage() * 0.5;
+	local flRandomDamageSpread = 0.10;
+	local flMin = 0.5 - flRandomDamageSpread;
+	local flMax = 0.5 + flRandomDamageSpread; 
+	
+	local vAttackerPos = att:WorldSpaceCenter();
+	local flOptimalDistance = 512.0;
+
+	if ( dmginfo:GetInflictor():GetClass() == "tf_weapon_sniperrifle" ) then
+		flOptimalDistance = flOptimalDistance * 2.5;
+	end
+
+	local flDistance = math.max( 1.0, ( ent:WorldSpaceCenter() - vAttackerPos):Length() )
+	if (dmginfo:IsExplosionDamage()) then
+		flDistance = math.max( 1.0, ( ent:WorldSpaceCenter() - dmginfo:GetDamagePosition()):Length() )
+	end
+	local flCenter = math.Clamp(flDistance / flOptimalDistance, 2.0, 1.0)
+	if ( flCenter <= 0.5 ) then
+		if ( !dmginfo:IsDamageType(DMG_DIRECT) ) then
+			if ( flCenter > 0.5 ) then
+				// Reduce the damage bonus at close range
+				flCenter = math.Remap( flCenter, 0.5, 1.0 );
+			end
+		end
+		flMin = math.max( 0.0, flCenter - flRandomDamageSpread );
+		flMax = math.min( 1.0, flCenter + flRandomDamageSpread );
+	end
+	local flRandomRangeVal = math.Rand(flMin,flMax);
+	if (!GetConVar("tf_damage_disablespread"):GetBool()) then
+		flRandomRangeVal = flMin + flRandomDamageSpread;
+	end
+	if ( dmginfo:GetInflictor():GetClass() == "tf_weapon_scattergun" && flRandomRangeVal > 0.5 ) then
+		flRandomDamage = flRandomDamage * 1.5;
+	elseif ( string.find(dmginfo:GetInflictor():GetClass(),"pipe") && flRandomRangeVal > 0.5 ) then
+		flRandomDamage = flRandomDamage * 0.2;
+	elseif ( string.find(dmginfo:GetInflictor():GetClass(),"rocket") && flRandomRangeVal > 0.5 ) then
+		flRandomDamage = flRandomDamage * 0.5;
+	end
+	local flDmgVariance = SimpleSplineRemapValClamped( flRandomRangeVal, 0, 1, -flRandomDamage, flRandomDamage ); 
+	if (!dmginfo:GetInflictor().IsMeleeWeapon && dmginfo:GetInflictor():GetClass() != "tf_weapon_sniperrifle" && att != ent) then
+		dmginfo:SetDamage(dmginfo:GetDamage() + flDmgVariance)
+	end
 	return dontscaledamage
 end
 
 function GM:ScalePlayerDamage(pl, hitgroup, dmginfo)
 	local dontscaledamage = self:CommonScaleDamage(pl, hitgroup, dmginfo)
-	
 	--if not dontscaledamage then
 		 -- players seem to receive doubled damage from other players, so we'll just fix this
 		--dmginfo:ScaleDamage(0.5)
@@ -449,6 +499,16 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		end
 	end
 
+	timer.Simple(0.1, function()
+	
+		if (ent:IsPlayer() and 2*ent:Health()<ent:GetMaxHealth()) then
+			if (!ent.Warned) then
+				ent:SendLua("surface.PlaySound(\"common/warning.wav\")")
+				ent.Warned = true
+			end
+		end
+
+	end)
 	-- Friendly fire
 	if (attacker:IsPlayer() and (attacker:GetPlayerClass() == "giantblastsoldier" || attacker:GetPlayerClass() == "steelgauntletpusher")) then
 	
@@ -527,16 +587,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		ent:EmitSound("Player.HitInternal")
 	end
 	if ent:IsPlayer() then
-		--print("EntityTakeDamage", ent, dmginfo)
-		if not ent.DamagePositions then
-			--print("-> Manually calling ScalePlayerDamage")
-			self:ScalePlayerDamage(ent, 0, dmginfo)
-		else
-			if ent.ScaleDamageSubstract then
-				--print("Substracting "..ent.ScaleDamageSubstract.." from total damage")
-				dmginfo:SubtractDamage(ent.ScaleDamageSubstract)
-			end
-		end
 		ent.DamagePositions = nil
 	end
 	
@@ -552,7 +602,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	
 	if (ent:GetClass() == "npc_helicopter") then
 		dmginfo:SetDamageType(DMG_AIRBOAT)
-		dmginfo:ScaleDamage(1.5)
+		dmginfo:ScaleDamage(0.875)
 	end
 	if (attacker:IsPlayer() and attacker:IsMiniBoss() and attacker.playerclass == "Heavy") then
 		dmginfo:SetDamage(dmginfo:GetDamage() * 1.5)
@@ -574,7 +624,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			-- Modify the damage 
 			dmginfo:ScaleDamage(3)
 
-			if ent:IsPlayer() and (!ent.NextSpeak or ent.NextSpeak<CurTime()) then
+			if ent:IsPlayer() and (!ent.NextPainSound or ent.NextPainSound<CurTime()) then
 				SendUserMessage("CriticalHitReceived", ent)
 			end
 			DispatchCritEffect(ent, inflictor, attacker, false)
@@ -584,7 +634,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	elseif gamemode.Call("ShouldMiniCrit", ent, inflictor, attacker, hitgroup, dmginfo) then
 		local mul
 
-		if ent:IsPlayer() and (!ent.NextSpeak or ent.NextSpeak<CurTime()) then
+		if ent:IsPlayer() and (!ent.NextPainSound or ent.NextPainSound<CurTime()) then
 			SendUserMessage("CriticalHitReceived", ent)
 		end
 		
@@ -626,7 +676,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 					local dist = (ent:GetPos() - inflictor:GetPos()):Length()
 					local fraction = math.Clamp(dist / 50, 0.3, 2)
 					
-					force = force * fraction
+					force = force * fraction * 2.0
 				end
 				
 				local vel = ent:GetVelocity() + force
@@ -721,10 +771,10 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	
 	-- Pain and death sounds
 	local hp = ent:Health() - dmginfo:GetDamage()
-	ent:Speak("TLK_PLAYER_EXPRESSION", true)
-	if ((inflictor:GetClass()=="tf_entityflame" or inflictor:GetClass()=="entityflame") and (!ent.NextSpeak or CurTime()>ent.NextSpeak)) then
+	ent:Speak("TLK_PLAYER_EXPRESSION", false)
+	if ((inflictor:GetClass()=="tf_entityflame" or inflictor:GetClass()=="entityflame") and (!ent.NextP or CurTime()>ent.NextSpeak)) then
 		if (!ent:IsMiniBoss()) then
-			ent:FireSound("TLK_ONFIRE")
+			ent:Speak("TLK_ONFIRE", false)
 		end
 	end
 	
@@ -733,7 +783,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		ent.NextFlinch = CurTime() + 0.5
 	end
 	if hp<=0 then
-		--ent.LastDamageInfo = CopyDamageInfo(dmginfo)
+		ent.LastDamageInfo = CopyDamageInfo(dmginfo)
 	elseif not dmginfo:IsFallDamage() and not dmginfo:IsDamageType(DMG_DIRECT) and ent:WaterLevel() < 1 then
 		if attacker:IsPlayer() then
 			if ent:HasGodMode() == false and !ent:IsMiniBoss() then
@@ -742,7 +792,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 					ent:PainSound("TLK_PLAYER_PAIN")
 					
 					if SERVER and ent.playerclass then
-						timer.Simple(0.0002, function()
+						timer.Simple(0.0, function()
 						
 							attacker:SendLua("Entity("..ent:EntIndex().."):EmitSound(\""..ent.playerclass..".Death\")")
 
@@ -755,7 +805,10 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 					if ent:GetPlayerClass() == "scout" then
 						ent:EmitSound("Scout.BeingShotInvincible"..math.random(10,36))
 					end
-					ent:EmitSound("tf/weapons/fx/rics/ric"..math.random(1,4)..".wav", 80, math.random(92, 106))
+					local effectdata = EffectData()
+					effectdata:SetOrigin( dmginfo:GetDamagePosition() )
+					util.Effect( "MetalSpark", effectdata )
+					sound.Play( "FX_RicochetSound.Ricochet", dmginfo:GetDamagePosition(), 75, 100, 1 )
 				end
 			end
 		else
@@ -766,7 +819,10 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 					if ent:GetPlayerClass() == "scout" then
 						ent:EmitSound("Scout.BeingShotInvincible"..math.random(10,36))
 					end
-					ent:EmitSound("tf/weapons/fx/rics/ric"..math.random(1,4)..".wav", 80, math.random(92, 106), 1, CHAN_BODY)
+					local effectdata = EffectData()
+					effectdata:SetOrigin( dmginfo:GetDamagePosition() )
+					util.Effect( "MetalSpark", effectdata )
+					sound.Play( "FX_RicochetSound.Ricochet", dmginfo:GetDamagePosition(), 75, 100, 1 )
 				end
 			end
 		end
@@ -777,9 +833,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		umsg.End()
 	elseif dmginfo:IsFallDamage() and !string.find(ent:GetModel(),"/bot_") and !ent:IsMiniBoss() then 
 		ent:RandomSentence("Death")
-	end
-	if (attacker:EntIndex() == ent:EntIndex() and dmginfo:IsExplosionDamage()) then
-		dmginfo:ScaleDamage(0.35)
 	end
 	if (dmginfo:IsFallDamage() and string.find(ent:GetModel(),"/bot_")) then
 		dmginfo:ScaleDamage(0)

@@ -107,5 +107,5 @@ function PANEL:Paint()
 	draw.Text(param)
 end
 
-if HudObjectiveFlagPanel then HudObjectiveFlagPanel:Remove() end
-HudObjectiveFlagPanel = vgui.CreateFromTable(vgui.RegisterTable(PANEL, "DPanel"))
+if HudObjectiveBombPanel then HudObjectiveBombPanel:Remove() end
+HudObjectiveBombPanel = vgui.CreateFromTable(vgui.RegisterTable(PANEL, "DPanel"))

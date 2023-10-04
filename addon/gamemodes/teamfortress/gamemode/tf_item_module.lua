@@ -278,8 +278,8 @@ function ITEM:InitVisuals(owner, visuals)
 	-- Bodygroups
 	
 	if not self:GetItemData().hide_bodygroups_deployed_only then
-		if visuals.hide_player_bodygroup_names then
-			for _,group in ipairs(visuals.hide_player_bodygroup_names) do
+		if visuals.player_bodygroups then
+			for _,group in ipairs(visuals.player_bodygroups) do
 				--MsgFN("Setting bodygroup '%s' for player %s", group, tostring(owner))
 				local b = PlayerNamedBodygroups[owner:GetPlayerClass()]
 				if b and b[group] then
@@ -332,8 +332,8 @@ function GlobalApplyBodygroups(ent, owner, itemdata)
 	if not itemdata.hide_bodygroups_deployed_only then
 		local visuals = itemdata.visuals or {}
 		
-		if visuals.hide_player_bodygroup_names then
-			for _,group in ipairs(visuals.hide_player_bodygroup_names) do
+		if visuals.player_bodygroups then
+			for _,group in ipairs(visuals.player_bodygroups) do
 				local b = PlayerNamedBodygroups[owner:GetPlayerClass()]
 				if b and b[group] then
 					ent:SetBodygroup(b[group], 1)
@@ -368,7 +368,7 @@ function ITEM:SetupItem(item)
 			if item.attach_to_hands==1 then
 				local t = self.Owner:GetPlayerClassTable()
 				if t and t.ModelName then
-					self.ViewModelOverride = Format("models/weapons/c_models/c_%s_arms_empty.mdl", t.ModelName)
+					self.ViewModelOverride = Format("models/weapons/c_models/c_%s_arms.mdl", t.ModelName)
 					self.ViewModel = self.ViewModelOverride
 					self:SetModel(self.ViewModelOverride)
 					self.Owner:GetViewModel():SetModel(self.ViewModelOverride)
@@ -402,7 +402,7 @@ function ITEM:SetupItem(item)
 			if item.attach_to_hands==1 then
 				local t = self.Owner:GetPlayerClassTable()
 				if t and t.ModelName then
-					self.ViewModelOverride = Format("models/weapons/c_models/c_%s_arms_empty.mdl", t.ModelName)
+					self.ViewModelOverride = Format("models/weapons/c_models/c_%s_arms.mdl", t.ModelName)
 					self:SetModel(self.ViewModelOverride)
 					self:SetupCModelActivities(item)
 				end
@@ -713,13 +713,16 @@ usermessage.Hook("TF_SetExtraAttributes", function(msg)
 end)
 
 hook.Add("Think", "TFCheckUpdateItems", function()
-	for _,v in pairs(ents.GetAll()) do
-		if v.IsRootLocator and not IsValid(v:GetParent()) then
-			v:Remove()
-		elseif v.CheckUpdateItem then
-			local ok, err = pcall(v.CheckUpdateItem, v)
-			if not ok then
-				ErrorNoHalt(Format("%s:CheckUpdateItem failed: %s", tostring(v), err))
+	
+	if (math.random(1,3+(table.Count(player.GetAll())*0.4)) == 1) then 
+		for _,v in pairs(ents.GetAll()) do
+			if v.IsRootLocator and not IsValid(v:GetParent()) then
+				v:Remove()
+			elseif v.CheckUpdateItem then
+				local ok, err = pcall(v.CheckUpdateItem, v)
+				if not ok then
+					ErrorNoHalt(Format("%s:CheckUpdateItem failed: %s", tostring(v), err))
+				end
 			end
 		end
 	end

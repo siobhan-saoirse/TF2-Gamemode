@@ -31,7 +31,7 @@ SWEP.Primary.Automatic = true
 SWEP.Secondary.Automatic = true
 SWEP.DeployAfterPickup = false
 SWEP.HitDistance = 48
-SWEP.ShootSound = Sound("^weapons/p90/p90-1.wav")
+SWEP.ShootSound = Sound("Weapon_P90.Single")
 SWEP.ViewModelFlip = true
 function SWEP:Deploy()
 	self:SetWeaponHoldType( self.HoldType ) 

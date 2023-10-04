@@ -53,7 +53,7 @@ end
 
 SWEP.Base				= "tf_weapon_gun_base"
 
-SWEP.ViewModel			= "models/weapons/c_models/c_demo_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_demo_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_grenadelauncher/c_grenadelauncher.mdl"
 SWEP.Crosshair = "tf_crosshair3"
 

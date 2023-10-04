@@ -42,7 +42,9 @@ function SWEP:PrimaryAttack()
 	local tbl = table.Random({"scout","soldier","pyro","demo","heavy","engineer","medic","sniper","hwm/spy"})
 	timer.Simple(2, function()
 		if SERVER then
-			ply:SetModel("models/player/"..tbl..".mdl")
+			if SERVER then
+				ply:SetModel("models/player/"..tbl..".mdl")
+			end
 			
 				if (ply:GetModel() == "models/player/scout.mdl") then
 					ply.playerclass = "Scout"
@@ -59,7 +61,7 @@ function SWEP:PrimaryAttack()
 				elseif (ply:GetModel() == "models/player/medic.mdl") then
 					ply.playerclass = "Medic"
 				elseif (ply:GetModel() == "models/player/sniper.mdl") then
-					ply.playerclass = "Medic"
+					ply.playerclass = "Sniper"
 				else
 					ply.playerclass = string.upper(string.sub(class,1,1))..string.sub(class,2)	
 				end
@@ -70,7 +72,9 @@ function SWEP:PrimaryAttack()
 			end
 			timer.Create("RemoveDisguise"..ply:EntIndex(), 0.01, 0, function()
 				if not ply:Alive() then 
-					ply:SetModel("models/player/spy.mdl") 
+					if SERVER then
+						ply:SetModel("models/player/spy.mdl") 
+					end
 					if ply:Team() == TEAM_BLU then 
 						ply:SetSkin(1) 
 					elseif ply:Team() == TF_TEAM_PVE_INVADERS then 
@@ -93,7 +97,7 @@ function SWEP:PrimaryAttack()
 					elseif (ply:GetModel() == "models/player/medic.mdl") then
 						ply.playerclass = "Medic"
 					elseif (ply:GetModel() == "models/player/sniper.mdl") then
-						ply.playerclass = "Medic"
+						ply.playerclass = "Sniper"
 					else
 						local class = ply:GetPlayerClass()
 						ply.playerclass = string.upper(string.sub(class,1,1))..string.sub(class,2)	

@@ -1,14 +1,9 @@
 AddCSLuaFile()
 
-PrecacheParticleSystem( "halloween_boss_summon" );
-PrecacheParticleSystem( "halloween_boss_axe_hit_world" );
-PrecacheParticleSystem( "halloween_boss_injured" );
-PrecacheParticleSystem( "halloween_boss_death" );
-PrecacheParticleSystem( "halloween_boss_foot_impact" );
-PrecacheParticleSystem( "halloween_boss_eye_glow" );
+game.AddParticles("particles/particles_vsh.pcf")
 ENT.Base 			= "base_nextbot"
 ENT.Spawnable		= false
-ENT.Model = "models/player/saxton.mdl"
+ENT.Model = "models/player/saxton_hale.mdl"
 ENT.AttackDelay = 50
 ENT.AttackDamage = 30
 ENT.AttackRange = 200
@@ -32,27 +27,54 @@ function ENT:Initialize()
 		axe:AddEffects(bit.bor(EF_BONEMERGE,EF_BONEMERGE_FASTCULL))
 		self:SetNWEntity("Axe",axe)
 	end
-	local seq = "spawn"
+	local seq = "taunt01"
 	timer.Simple(0.1, function()
+		if SERVER then
+			self:AddGestureSequence(self:LookupSequence(seq)) 
+		end
+		timer.Simple(self:SequenceDuration(self:LookupSequence(seq)) - 0.6, function()
 			self.Ready = true
 			if SERVER then
 				self:StartActivity(self:GetSequenceActivity(self:LookupSequence("stand_melee")))
 				timer.Create("Laugh"..self:EntIndex(), 3, 0, function()
 					if (self.Ready) then
-						timer.Adjust("Laugh"..self:EntIndex(),math.random(3,5),nil,nil)
-						if (math.random(0,100) < 25) then
-							self:AddGesture(ACT_MP_GESTURE_VC_FISTPUMP_MELEE,true)
-						elseif (math.random(0,100) < 50) then
-							self:AddGesture(ACT_MP_GESTURE_VC_FINGERPOINT_MELEE,true)
-						end
+						timer.Adjust("Laugh"..self:EntIndex(),math.random(3,15),nil,nil)
+							if (self:GetEnemy() != nil and !self:Visible(self:GetEnemy())) then
+								self:EmitSound(table.Random({
+									"mvm/saxton_hale_by_matthew_simmons/come_back_01.mp3",
+									"mvm/saxton_hale_by_matthew_simmons/come_back_02.mp3",
+									"mvm/saxton_hale_by_matthew_simmons/laugh_01.mp3",
+									"mvm/saxton_hale_by_matthew_simmons/last_mann_hiding_01.mp3",
+									"mvm/saxton_hale_by_matthew_simmons/last_mann_hiding_02.mp3",
+									"mvm/saxton_hale_by_matthew_simmons/last_mann_hiding_03.mp3",
+									"mvm/saxton_hale_by_matthew_simmons/last_mann_hiding_04.mp3",
+									"mvm/saxton_hale_by_matthew_simmons/last_mann_hiding_05.mp3",
+									"mvm/saxton_hale_by_matthew_simmons/last_mann_hiding_06.mp3",
+									"mvm/saxton_hale_by_matthew_simmons/last_mann_hiding_07.mp3",
+								}),95,100,CHAN_VOICE)
+								if (math.random(0,100) < 25) then
+									self:AddGesture(ACT_MP_GESTURE_VC_FISTPUMP_MELEE,true)
+								elseif (math.random(0,100) < 50) then
+									self:AddGesture(ACT_MP_GESTURE_VC_FINGERPOINT_MELEE,true)
+								elseif (math.random(0,100) < 75) then 
+									self:AddGestureSequence(self:LookupSequence("gesture_melee_help"))  
+								end
+							else
+								if (math.random(0,100) < 25) then
+									self:AddGesture(ACT_MP_GESTURE_VC_FISTPUMP_MELEE,true)
+								elseif (math.random(0,100) < 50) then
+									self:AddGesture(ACT_MP_GESTURE_VC_FINGERPOINT_MELEE,true)
+								end
+							end 
 					end
 				end)
 			end
+		end)
 	end)
 	self.Ready = false
 	self.LoseTargetDist	= 3600	-- How far the enemy has to be before we lose them
 	self.SearchRadius 	= 2500	-- How far to search for enemies
-	self:SetHealth(5000)
+	self:SetHealth(30000)
 	self:SetSolid(SOLID_BBOX)
 	self:SetCollisionGroup(COLLISION_GROUP_NPC)
 end
@@ -74,7 +96,7 @@ end
 function ENT:FireAnimationEvent( pos, ang, event, name )
 	if (event == 6004 or event == 7001) then
 		timer.Simple(0.02, function()
-			self:EmitSound("Selection.MedicFootStomp")
+			self:EmitSound("Selection.MedicHeelClick")
 		end)
 	end
 end
@@ -138,6 +160,30 @@ function ENT:HaveEnemy()
 	end
 end
 
+function ENT:BodyUpdate()
+
+	local act = self:GetActivity()
+
+	--
+	-- This helper function does a lot of useful stuff for us.
+	-- It sets the bot's move_x move_y pose parameters, sets their animation speed relative to the ground speed, and calls FrameAdvance.
+	--
+	if ( act == ACT_MP_RUN_MELEE || act == self:GetSequenceActivity(self:LookupSequence("run_item1")) ) then
+
+		self:BodyMoveXY()
+
+		-- BodyMoveXY() already calls FrameAdvance, calling it twice will affect animation playback, specifically on layers
+		return
+
+	end
+
+	--
+	-- If we're not walking or running we probably just want to update the anim system
+	--
+	self:FrameAdvance()
+
+end
+
 ----------------------------------------------------
 -- ENT:FindEnemy()
 -- Returns true and sets our enemy if we find one
@@ -158,6 +204,10 @@ function ENT:FindEnemy()
 				end
 			end
 			-- We found one so lets set it as our enemy and return true
+			local plrs = player.GetAll()
+			if (v:IsPlayer()) then
+				v = table.Random(plrs)
+			end
 			self:SetEnemy(v)
 			if (v:IsNPC()) then
 				v:SetEnemy(self.bullseye)
@@ -194,7 +244,7 @@ function ENT:RunBehaviour()
 				-- Now that we have an enemy, the code in this block will run
 				self.loco:FaceTowards(self:GetEnemy():GetPos())	-- Face our enemy
 				self:StartActivity( self:GetSequenceActivity(self:LookupSequence("run_melee")) )			-- Set the animation
-				self.loco:SetDesiredSpeed( 400 )		-- Set the speed that we will be moving at. Don't worry, the animation will speed up/slow down to match
+				self.loco:SetDesiredSpeed( 300 )		-- Set the speed that we will be moving at. Don't worry, the animation will speed up/slow down to match
 				self:ChaseEnemy( ) 						-- The new function like MoveToPos.
 				self:StartActivity( self:GetSequenceActivity(self:LookupSequence("stand_melee")) )			-- Set the animation
 				-- Now once the above function is finished doing what it needs to do, the code will loop back to the start
@@ -207,7 +257,7 @@ function ENT:RunBehaviour()
 					-- Since we can't find an enemy, lets wander
 					-- Its the same code used in Garry's test bot
 					self:StartActivity( self:GetSequenceActivity(self:LookupSequence("run_melee")) )			-- Set the animation
-					self.loco:SetDesiredSpeed( 320 )		-- Walk speed
+					self.loco:SetDesiredSpeed( 300 )		-- Walk speed
 					self.loco:SetAcceleration(300)
 					self:MoveToPos( self:GetPos() + Vector( math.Rand( -1, 1 ), math.Rand( -1, 1 ), 0 ) * 800 ) -- Walk to a random place within about 400 units (yielding)
 					self:StartActivity( self:GetSequenceActivity(self:LookupSequence("stand_melee")) )			-- Set the animation
@@ -237,11 +287,7 @@ end
 --  is one.
 ----------------------------------------------------
 function ENT:Think()
-	if SERVER then
-
-		self:BodyMoveXY()
-
-	end
+	
 	if (IsValid(self:GetEnemy()) and self.Ready) then
 		if (math.random(1,1800) == 1) then
 			self.CrybabyMode = true
@@ -254,22 +300,54 @@ function ENT:Think()
 		if (self:GetEnemy():GetPos():Distance(self:GetPos()) < self.AttackRange and self:GetEnemy():Health() > 0) then
 			
 			if (IsValid(self:GetEnemy()) and (!self.MeleeAttackDelay or CurTime() > self.MeleeAttackDelay)) then
-				self:AddGestureSequence(self:LookupSequence("melee_swing"),true)
-				timer.Simple(0.58, function()
+				self:AddGestureSequence(self:SelectWeightedSequence(ACT_MP_ATTACK_STAND_MELEE),true)
+				self:EmitSound("Weapon_Fist.Miss")
+				timer.Simple(0.2, function()
 					if (!self.Ready) then return end
 					if (self:GetEnemy():GetPos():Distance(self:GetPos()) < 200) then
 						if (self:GetEnemy():GetClass() != "npc_saxton") then
 							local dmginfo = DamageInfo()
 							dmginfo:SetAttacker(self)
 							dmginfo:SetInflictor(self)
-							dmginfo:SetDamageType(bit.bor(DMG_CLUB,DMG_SLASH))
-							dmginfo:SetDamage(300)
+							dmginfo:SetDamageType(bit.bor(DMG_CLUB,DMG_SLASH,DMG_BLAST))
+							dmginfo:SetDamage(40)
 							self:GetEnemy():TakeDamageInfo(dmginfo) 
+							self:EmitSound("Weapon_Fist.HitFlesh")
+							if (self:GetEnemy():Health() < 0) then
+								self:EmitSound("mvm/saxton_hale_by_matthew_simmons/kill_generic_"..table.Random({
+									"01",
+									"02",
+									"03",
+									"04",
+									"05",
+									"06",
+									"07",
+									"08",
+									"09",
+									"10",
+									"11",
+									"12",
+									"13",
+									"14",
+									"15",
+									"16",
+									"17",
+									"18",
+									"19",
+									"20",
+									"21",
+									"22",
+									"23",
+									"24",
+									"25",
+									"26",
+								})..".mp3",95,100,CHAN_VOICE)
+							end
 						end
 					end
 
 				end)
-				self.MeleeAttackDelay = CurTime() + 0.8
+				self.MeleeAttackDelay = CurTime() + 0.4
 			end
 		end
 		if (self:GetEnemy():GetPos():Distance(self:GetPos()) < 100 and self:GetEnemy():Health() > 0) then
@@ -290,7 +368,7 @@ function ENT:Think()
 					self:StartActivity( self:GetSequenceActivity(self:LookupSequence("run_melee")) )	
 				end
 			end
-			self.loco:SetDesiredSpeed( 400 )
+			self.loco:SetDesiredSpeed( 300 )
 			self.loco:SetAcceleration(300)
 		end
 	elseif (IsValid(self:GetEnemy()) and (self:GetEnemy():Health() < 1) and self.Ready) then
@@ -348,20 +426,17 @@ function ENT:ChaseEnemy( options )
 
 end
 function ENT:OnInjured( dmginfo )
+	if not self.NextFlinch or CurTime() > self.NextFlinch then
+		self:AddGesture(ACT_MP_GESTURE_FLINCH_CHEST)
+		self.NextFlinch = CurTime() + 0.5
+	end
 end
 function ENT:OnKilled( dmginfo )
 
 	hook.Call( "OnNPCKilled", GAMEMODE, self, dmginfo:GetAttacker(), dmginfo:GetInflictor() )
 	self.Ready = false
-	self:PrecacheGibs()
-				timer.Simple(0.1,function()
-			
-					if (!IsValid(self)) then return end
-					local pos = self:GetPos()
-					self:GibBreakServer(dmginfo:GetDamageForce() * 2)
-					self:Remove()
-		
-				end)
+	self:BecomeRagdoll(dmginfo)
+	self:Remove()
 end
 
 list.Set( "NPC", "npc_saxton", {

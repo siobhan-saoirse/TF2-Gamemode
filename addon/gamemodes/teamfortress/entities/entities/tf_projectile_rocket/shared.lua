@@ -248,7 +248,7 @@ function ENT:DoExplosion(ent)
 		--[[if self.FastRocket then
 			self:EmitSound(self.ExplosionSoundFast)
 		else]]
-			self:EmitSound(self.ExplosionSound)
+			sound.Play(self.ExplosionSound, self:GetPos())
 		--end
 		
 		local flags = 0
@@ -294,7 +294,7 @@ function ENT:DoExplosion(ent)
 	local owner = self:GetOwner()
 	if not owner or not owner:IsValid(self.WModel2) then owner = self end
 	
-	--local damage = self:CalculateDamage(owner:GetPos()+Vector(0,0,1))
+	local damage = self:CalculateDamage(owner:GetPos()+Vector(0,0,1))
 	local range = self.ExplosionRadiusInit
 	if self.ExplosionRadiusMultiplier and self.ExplosionRadiusMultiplier>1 then
 		range = range * self.ExplosionRadiusMultiplier
@@ -310,7 +310,7 @@ function ENT:DoExplosion(ent)
 		util.BlastDamage(self, owner, self:GetPos(), range*6, 100)
 	else
 		--util.BlastDamage(self, owner, self:GetPos(), range, damage)
-		util.BlastDamage(self, owner, self:GetPos(), range*1, 100)
+		util.BlastDamage(self, owner, self:GetPos(), range*1, damage)
 	end
 	
 	for k,v in ipairs(ents.FindInSphere(self:GetPos(),range)) do

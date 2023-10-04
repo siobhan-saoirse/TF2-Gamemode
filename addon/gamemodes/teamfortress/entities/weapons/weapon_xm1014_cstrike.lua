@@ -230,7 +230,7 @@ function SWEP:PrimaryAttack()
 	self:ShootEffects()
 	 
 	self.Owner:FireBullets( bullet ) 
-		self:EmitSound(self.ShootSound, 85,math.random(95,105))	
+		self:EmitSound(self.ShootSound, 85,100)	
 		self.Owner:ViewPunch( Angle( rnda,0,0 ) ) 
 		self:TakePrimaryAmmo(self.Primary.TakeAmmo) 
 		self.Owner:DoAnimationEvent( ACT_HL2MP_GESTURE_RANGE_ATTACK_CROSSBOW,true,true )

@@ -10,94 +10,52 @@ end
 
 
 --If you ask me a question about why I'm using console commands trust me, this shit is golden
-
+ 
 resource.AddFile("models/weapons/c_models/c_scout_arms_empty.dx90.vtx")
 resource.AddFile("models/weapons/c_models/c_scout_arms_empty.dx80.vtx")
-resource.AddFile("models/weapons/c_models/c_scout_arms_empty.mdl")
+resource.AddFile("models/weapons/c_models/c_scout_arms.mdl")
 resource.AddFile("models/weapons/c_models/c_scout_arms_empty.sw.vtx")
 resource.AddFile("models/weapons/c_models/c_scout_arms_empty.vvd")
 resource.AddFile("models/weapons/c_models/c_soldier_arms_empty.dx90.vtx")
 resource.AddFile("models/weapons/c_models/c_soldier_arms_empty.dx80.vtx")
-resource.AddFile("models/weapons/c_models/c_soldier_arms_empty.mdl") 
+resource.AddFile("models/weapons/c_models/c_soldier_arms.mdl") 
 resource.AddFile("models/weapons/c_models/c_soldier_arms_empty.sw.vtx") 
 resource.AddFile("models/weapons/c_models/c_soldier_arms_empty.vvd")
 resource.AddFile("models/weapons/c_models/c_pyro_arms_empty.dx90.vtx")
 resource.AddFile("models/weapons/c_models/c_pyro_arms_empty.dx80.vtx")
-resource.AddFile("models/weapons/c_models/c_pyro_arms_empty.mdl")
+resource.AddFile("models/weapons/c_models/c_pyro_arms.mdl")
 resource.AddFile("models/weapons/c_models/c_pyro_arms_empty.sw.vtx")
 resource.AddFile("models/weapons/c_models/c_pyro_arms_empty.vvd")
 resource.AddFile("models/weapons/c_models/c_demo_arms_empty.dx90.vtx")
 resource.AddFile("models/weapons/c_models/c_demo_arms_empty.dx80.vtx")
-resource.AddFile("models/weapons/c_models/c_demo_arms_empty.mdl")
+resource.AddFile("models/weapons/c_models/c_demo_arms.mdl")
 resource.AddFile("models/weapons/c_models/c_demo_arms_empty.sw.vtx")
 resource.AddFile("models/weapons/c_models/c_demo_arms_empty.vvd")
 resource.AddFile("models/weapons/c_models/c_heavy_arms_empty.dx90.vtx")
 resource.AddFile("models/weapons/c_models/c_heavy_arms_empty.dx80.vtx")
-resource.AddFile("models/weapons/c_models/c_heavy_arms_empty.mdl")
+resource.AddFile("models/weapons/c_models/c_heavy_arms.mdl")
 resource.AddFile("models/weapons/c_models/c_heavy_arms_empty.sw.vtx")
 resource.AddFile("models/weapons/c_models/c_heavy_arms_empty.vvd")
 resource.AddFile("models/weapons/c_models/c_engineer_arms_empty.dx90.vtx")
 resource.AddFile("models/weapons/c_models/c_engineer_arms_empty.dx80.vtx")
-resource.AddFile("models/weapons/c_models/c_engineer_arms_empty.mdl")
+resource.AddFile("models/weapons/c_models/c_engineer_arms.mdl")
 resource.AddFile("models/weapons/c_models/c_engineer_arms_empty.sw.vtx")
 resource.AddFile("models/weapons/c_models/c_engineer_arms_empty.vvd")
 resource.AddFile("models/weapons/c_models/c_medic_arms_empty.dx90.vtx")
 resource.AddFile("models/weapons/c_models/c_medic_arms_empty.dx80.vtx")
-resource.AddFile("models/weapons/c_models/c_medic_arms_empty.mdl")
+resource.AddFile("models/weapons/c_models/c_medic_arms.mdl")
 resource.AddFile("models/weapons/c_models/c_medic_arms_empty.sw.vtx")
 resource.AddFile("models/weapons/c_models/c_medic_arms_empty.vvd")
 resource.AddFile("models/weapons/c_models/c_sniper_arms_empty.dx90.vtx")
 resource.AddFile("models/weapons/c_models/c_sniper_arms_empty.dx80.vtx")
-resource.AddFile("models/weapons/c_models/c_sniper_arms_empty.mdl")
+resource.AddFile("models/weapons/c_models/c_sniper_arms.mdl")
 resource.AddFile("models/weapons/c_models/c_sniper_arms_empty.sw.vtx")
 resource.AddFile("models/weapons/c_models/c_sniper_arms_empty.vvd")
 resource.AddFile("models/weapons/c_models/c_spy_arms_empty.dx90.vtx")
 resource.AddFile("models/weapons/c_models/c_spy_arms_empty.dx80.vtx")
-resource.AddFile("models/weapons/c_models/c_spy_arms_empty.mdl")
+resource.AddFile("models/weapons/c_models/c_spy_arms.mdl")
 resource.AddFile("models/weapons/c_models/c_spy_arms_empty.sw.vtx")
 resource.AddFile("models/weapons/c_models/c_spy_arms_empty.vvd")
-resource.AddFile("models/weapons/c_models/c_civilian_arms.dx90.vtx")
-resource.AddFile("models/weapons/c_models/c_civilian_arms.dx80.vtx")
-resource.AddFile("models/weapons/c_models/c_civilian_arms.mdl")
-resource.AddFile("models/weapons/c_models/c_civilian_arms.sw.vtx")
-resource.AddFile("models/weapons/c_models/c_civilian_arms.vvd")
-resource.AddFile("models/player/civilian.dx90.vtx")
-resource.AddFile("models/player/civilian.dx80.vtx")
-resource.AddFile("models/player/civilian.mdl")
-resource.AddFile("models/player/civilian.phy")
-resource.AddFile("models/player/civilian.sw.vtx")
-resource.AddFile("models/player/civilian.vvd")
-resource.AddFile("models/player/civilian_animations.mdl")
-resource.AddFile("materials/models/player/civilian_vip/civilian_red.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_red.vtf")
-resource.AddFile("materials/models/player/civilian_vip/civilian_blue.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_blue.vtf")
-resource.AddFile("materials/models/player/civilian_vip/civilian_ylw.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_ylw.vtf")
-resource.AddFile("materials/models/player/civilian_vip/civilian_grn.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_grn.vtf")
-resource.AddFile("materials/models/player/civilian_vip/civilian_gibs_red.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_gibs_red.vtf")
-resource.AddFile("materials/models/player/civilian_vip/civilian_gibs_blue.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_gibs_blue.vtf")
-resource.AddFile("materials/models/player/civilian_vip/civilian_gibs_ylw.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_gibs_ylw.vtf")
-resource.AddFile("materials/models/player/civilian_vip/civilian_gibs_grn.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_gibs_grn.vtf")
-resource.AddFile("materials/models/player/civilian_vip/civilian_hands.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_hands.vtf")
-resource.AddFile("materials/models/player/civilian_vip/civilian_gm.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_gm.vtf")
-resource.AddFile("materials/models/player/civilian_vip/civilian_gm_invun.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_hands_red_invun.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_hands_blue_invun.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_hands_ylw_invun.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_hands_grn_invun.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_red_invun.vmt") 
-resource.AddFile("materials/models/player/civilian_vip/civilian_blue_invun.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_ylw_invun.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_grn_invun.vmt")
-resource.AddFile("materials/models/player/civilian_vip/civilian_normal.vtf")
 
 if CLIENT then
 	language.Add("tool.turn_into_gatebot.name", "Gate-Botizer")
@@ -107,6 +65,30 @@ if CLIENT then
 	language.Add("tool.reprogrammer.desc", "Change the TFBot or NPC Team to the opposite team or your team.")
 	language.Add("tool.reprogrammer.left", "Left-click: Change TFBot or NPC team to the opposite team.")
 	language.Add("tool.reprogrammer.right", "Right-click: Change TFBot or NPC team to your team.")
+		
+	include("cl_hud.lua")
+	include("tf_lang_module.lua")
+
+	include("cl_proxies.lua")
+	include("cl_pickteam.lua")
+
+	include("cl_conflict.lua")
+
+	include("cl_entclientinit.lua")
+	include("cl_deathnotice.lua") 
+	include("cl_scheme.lua")
+
+	include("cl_player_other.lua")
+
+	include("cl_camera.lua")
+
+	include("tf_draw_module.lua")
+
+	include("cl_materialfix.lua")
+
+	include("cl_pac.lua")
+
+	include("cl_loadout.lua")
 end  
 
 sound.Add( {
@@ -135,7 +117,7 @@ sound.Add( {
 	pitch = { 100 }, 
 	sound = { "items/ammo_pickup.wav" } 
 } )
-
+ 
 sound.Add( {
 	name = "General.BurningObject",
 	level = 75,
@@ -499,6 +481,7 @@ if (file.Exists("sound/tf/weapons/explode1.wav", "WORKSHOP")) then
 		volume = 1.0,
 		level = 95,
 		pitch = { 100 },
+		channel = CHAN_ITEM,
 		sound = { "tf/weapons/explode1.wav",  "tf/weapons/explode2.wav",  "tf/weapons/explode3.wav"} 
 	} )
 
@@ -509,6 +492,7 @@ sound.Add( {
 	volume = 1.0,
 	level = 95,
 	pitch = { 100 },
+	channel = CHAN_ITEM,
 	sound = { "weapons/explode1.wav",  "weapons/explode2.wav"} 
 } )
 
@@ -518,6 +502,7 @@ sound.Add( {
 	volume = 1.0,
 	level = 150,
 	pitch = { 95, 105 },
+	channel = CHAN_ITEM,
 	sound = { "^weapons/explode3.wav", "^weapons/explode4.wav", "^weapons/explode5.wav" } 
 } ) 
 sound.Add( {
@@ -1812,6 +1797,7 @@ CreateConVar('tf_talkicon_showtextchat', 1, FCVAR_ARCHIVE + FCVAR_REPLICATED + F
 CreateConVar('tf_talkicon_ignoreteamchat', 1, FCVAR_ARCHIVE + FCVAR_REPLICATED + FCVAR_SERVER_CAN_EXECUTE, 'Disable over-head icon on using team chat.')
 CreateConVar("tf_unlimited_buildings", 0, {FCVAR_NOTIFY, FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_ARCHIVE, FCVAR_CHEAT})
 CreateConVar("tf_use_client_ragdolls", 1, {FCVAR_NOTIFY, FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED})
+CreateConVar( "civ2_enable_be_the_bosses", "0", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "!!!EXPERIMENTAL!!! - Port Be the Bosses 2 from TF2 to Garry's Mod" )
 hook.Add( "EntityEmitSound", "TimeWarpSounds", function( t )
 end )
 
@@ -1841,17 +1827,46 @@ elseif (CLIENT) then
 	local text_mat = Material('effects/speech_typing')
 
 	hook.Add('PostPlayerDraw', 'TalkIcon', function(ply)
-		if ply == LocalPlayer() and GetViewEntity() == LocalPlayer() then return end
+		if ply == LocalPlayer() and GetViewEntity() == LocalPlayer() and !LocalPlayer():ShouldDrawLocalPlayer() then return end
 		if not ply:Alive() then return end
-		if not ply:IsSpeaking() and not (showtextchat:GetBool() and ply:GetNW2Bool('ti_istyping')) then return end
+		if not ply:IsSpeaking() then return end
 
 		local pos = ply:GetPos() + Vector(0, 0, ply:GetModelRadius() + 10)
+		if (ply:LookupBone("bip_head")) then
+			pos = ply:GetBonePosition(ply:LookupBone("bip_head")) + Vector(0, 0, 16)
+		elseif (ply:LookupBone("ValveBiped.Bip01_Head1")) then
+			pos = ply:GetBonePosition(ply:LookupBone("ValveBiped.Bip01_Head1")) + Vector(0, 0, 16)
+		end
 
 		if ply:Team() == TEAM_BLU then
 			render.SetMaterial(ply:IsSpeaking() and voice_mat2 or voice_mat2)
 		else
 			render.SetMaterial(ply:IsSpeaking() and voice_mat or voice_mat)		
 		end
+
+		local color_var = 255
+
+		if computecolor:GetBool() then
+			local computed_color = render.ComputeLighting(ply:GetPos(), Vector(0, 0, 1))
+			local max = math.max(computed_color.x, computed_color.y, computed_color.z)
+			color_var = math.Clamp(max * 255 * 1.11, 0, 255)
+		end
+
+		render.DrawSprite(pos, 16, 16, Color(color_var, color_var, color_var, 255))
+	end)
+	hook.Add('PostPlayerDraw', 'TalkIcon2', function(ply)
+		if ply == LocalPlayer() and GetViewEntity() == LocalPlayer() and !LocalPlayer():ShouldDrawLocalPlayer() then return end
+		if not ply:Alive() then return end
+		if not ply:IsTyping() then return end
+
+		local pos = ply:GetPos() + Vector(0, 0, ply:GetModelRadius() + 10)
+		if (ply:LookupBone("bip_head")) then
+			pos = ply:GetBonePosition(ply:LookupBone("bip_head")) + Vector(0, 0, 16)
+		elseif (ply:LookupBone("ValveBiped.Bip01_Head1")) then
+			pos = ply:GetBonePosition(ply:LookupBone("ValveBiped.Bip01_Head1")) + Vector(0, 0, 16)
+		end
+
+		render.SetMaterial(Material("effects/speech_typing"))
 
 		local color_var = 255
 
@@ -1955,6 +1970,7 @@ if SERVER then
 
 util.AddNetworkString("ActivateTauntCam")
 util.AddNetworkString("DeActivateTauntCam")
+util.AddNetworkString("DeActivateTauntCamImmediate")
 
 concommand.Add("__svspeak", function(pl,_,args)
 	if pl:Speak(args[1]) then

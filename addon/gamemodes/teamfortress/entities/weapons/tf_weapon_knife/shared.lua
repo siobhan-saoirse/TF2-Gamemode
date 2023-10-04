@@ -18,7 +18,7 @@ end
 
 SWEP.Base				= "tf_weapon_melee_base"
 
-SWEP.ViewModel			= "models/weapons/c_models/c_spy_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_spy_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_knife/c_knife.mdl"
 SWEP.Crosshair = "tf_crosshair3"
 
@@ -124,20 +124,20 @@ function SWEP:Think()
 		local shouldbackstab = self:ShouldBackstab()
 			
 		if shouldbackstab and not self.BackstabState then
-			self:SendWeaponAnim(self.BACKSTAB_VM_UP)
-			self.NextBackstabIdle = CurTime() + self:SequenceDuration(self:SelectWeightedSequence(self.BACKSTAB_VM_UP))
+			self:SendWeaponAnimEx(self.BACKSTAB_VM_UP)
+			self.NextBackstabIdle = CurTime() + self:SequenceDuration()
 			self.NextIdle = nil
 		elseif not shouldbackstab and self.BackstabState then
 			if self.Primary.Delay and CurTime() >= self.Primary.Delay then
-				self:SendWeaponAnim(self.BACKSTAB_VM_DOWN)
+				self:SendWeaponAnimEx(self.BACKSTAB_VM_DOWN)
 				self.NextBackstabIdle = nil
-				self.NextIdle =  CurTime() + self:SequenceDuration(self:SelectWeightedSequence(self.VM_IDLE))
+				self.NextIdle =  CurTime() + self:SequenceDuration()
 			end
 		end
 		self.BackstabState = shouldbackstab
 			
 		if self.NextBackstabIdle and CurTime()>=self.NextBackstabIdle then
-			self:SendWeaponAnim(self.BACKSTAB_VM_IDLE)
+			self:SendWeaponAnimEx(self.BACKSTAB_VM_IDLE)
 			self.NextBackstabIdle = nil
 			self.NextIdle = nil
 		end

@@ -15,7 +15,7 @@ SWEP.ShootCritSound = Sound("Weapon_Scatter_Gun.SingleCrit")
 SWEP.ReloadSound = Sound("Weapon_Scatter_Gun.WorldReload") 
 SWEP.ReloadSoundFinish = nil
 SWEP.IsMeleeWeapon = false
- 
+local defaultdeployspeed = CreateConVar( "tf_default_deploy_speed", "1.4", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY, FCVAR_ARCHIVE}, "LEGS!" )
 -- Sounds
 
 if CLIENT then
@@ -26,9 +26,8 @@ function SWEP:DrawWorldModel(  )
 		if (!IsValid(self.WModel)) then
 			self.WModel = ents.CreateClientProp()
 			self.WModel:Spawn()
-			self.WModel:AddEffects(EF_BONEMERGE)
+			self.WModel:SetNoDraw(true)
 		end
-		self.WModel:SetNoDraw(true)
 		if (IsValid(_Owner)) then
 			local t2 = _Owner:GetProxyVar("CritTeam") 
 			local s2 = _Owner:GetProxyVar("CritStatus")
@@ -57,23 +56,25 @@ function SWEP:DrawWorldModel(  )
 
 				self.WModel:SetupBones()
 			end
-			if (self.WModel:GetMaterial() != "models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())) and _Owner:HasGodMode() and !_Owner:GetNWBool("NoWeapon",false)) then
-				--self.WModel:SetMaterial("models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())))
-			elseif (self.WModel:GetMaterial() != "color" and _Owner:GetNWBool("NoWeapon",false) == true) then
-				--self.WModel:SetMaterial("color")
+			if (self.WModel:GetMaterial() != "models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())) and _Owner:HasGodMode() and (_Owner:GetSkin() == 2 or _Owner:GetSkin() == 3) and !_Owner:GetNWBool("NoWeapon",false)) then
+				self.WModel:SetMaterial("models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())))
+			elseif (_Owner:GetNWBool("NoWeapon",false) == true or _Owner:GetMaterial() == "color") then 
+				self.WModel:SetMaterial("color")
 			else
 				local mat = self.CustomMaterialOverride2 or self.MaterialOverride or self.WeaponMaterial or ""
 				if (self.WModel:GetMaterial() != mat) then
-					--self.WModel:SetMaterial(mat)	
+					self.WModel:SetMaterial(mat)	
 				end
 			end
+			self.WModel:SetSkin(self.WeaponSkin or self:GetOwner():GetSkin())
 			self.WModel:SetPos(self:GetPos())
 			self.WModel:SetAngles(self:GetAngles())
 			self.WModel:SetParent(self.Owner)
+			self.WModel:AddEffects(bit.bor(EF_BONEMERGE,EF_BONEMERGE_FASTCULL))	
 		else	
 			self.WModel:SetPos(self:GetPos())
 			self.WModel:SetAngles(self:GetAngles())
-		end
+		end 
 		self.WModel:DrawModel()
 		
 end
@@ -131,7 +132,7 @@ SWEP.Primary.NoFiringScene	= false
 
 SWEP.Secondary.Automatic	= true
 SWEP.Secondary.Ammo			= "none"
-SWEP.Secondary.Delay        = 0.1
+SWEP.Secondary.Delay        = 0
 SWEP.Secondary.QuickDelay   = -1
 SWEP.Secondary.NoFiringScene	= false
 
@@ -285,7 +286,7 @@ function SWEP:PostCalculateDamage(dmg, ent)
 end
 
 function SWEP:CalculateDamage(hitpos, ent)
-	return tf_util.CalculateDamage(self, self:GetPos(), ownerpos)
+	return tf_util.CalculateDamage(self, self:GetPos(), self.Owner:GetPos())
 end
 
 function SWEP:Equip()
@@ -448,12 +449,12 @@ end
 
 function SWEP:Deploy() 
 	local vm = self.Owner:GetViewModel()
-	self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_POSTFIRE)
+	if (self.Owner.anim_Deployed) then
+		self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_POSTFIRE)
+	end
 	self:TFViewModelFOV()
 	self:TFFlipViewmodel()
-	if (self:Ammo1() < 1 and self:Clip1() < 1 and self.Primary.ClipSize ~= -1 and !self.IsMeleeWeapon) then
-		return false
-	end
+	self:InspectAnimCheck()
 	if (self.MarkForDeath) then
 		self.Owner:AddPlayerState(PLAYERSTATE_MARKED, true)
 	end
@@ -470,6 +471,7 @@ function SWEP:Deploy()
 	if (self.Owner:IsHL2()) then
 		self:SetWeaponHoldType(self.HoldTypeHL2 or self.HoldType)
 	end
+	
 	if (self:GetClass() == "tf_weapon_shotgun") then
 		if (self.Owner:GetPlayerClass() == "soldier"
 		|| self.Owner:GetPlayerClass() == "heavy"
@@ -506,7 +508,6 @@ function SWEP:Deploy()
 		end
 	end
 	--MsgFN("Deploy %s", tostring(self))
-
 	local wmodel = self:GetItemData().model_player or self.WorldModel
 	if (self.Owner:GetNWBool("NoWeapon")) then
 		--self.WorldModel = "models/empty.mdl"
@@ -517,6 +518,10 @@ function SWEP:Deploy()
 	if (self:GetItemData()) then
 		if (self:GetItemData().model_player) then
 
+			if (self:GetItemData().model_player == "models/weapons/c_models/c_bigaxe/c_bigaxe.mdl") then
+				self.HitWorld = "Halloween.HeadlessBossAxeHitWorld"
+				self.HitFlesh = "Halloween.HeadlessBossAxeHitFlesh"
+			end
 			if (self:GetItemData().model_player == "models/workshop/weapons/c_models/c_demo_sultan_sword/c_demo_sultan_sword.mdl") then
 				self:SetHoldType("MELEE_ALLCLASS")
 				self.HoldType = "MELEE_ALLCLASS"
@@ -538,10 +543,15 @@ function SWEP:Deploy()
 				self.VM_PULLBACK		= _G["ACT_"..hold.."_VM_PULLBACK"]
 				self.VM_PREFIRE			= _G["ACT_"..hold.."_ATTACK_STAND_PREFIRE"]
 				self.VM_POSTFIRE		= _G["ACT_"..hold.."_ATTACK_STAND_POSTFIRE"]
-				
+						
+				self.VM_RELOAD_START	= getfenv()["ACT_"..hold.."_RELOAD_START"]
+				self.VM_RELOAD	= getfenv()["ACT_"..hold.."_VM_RELOAD"]
+				self.VM_RELOAD_FINISH		= getfenv()["ACT_"..hold.."_RELOAD_FINISH"]
 				self.VM_INSPECT_START	= _G["ACT_"..hold.."_VM_INSPECT_START"]
 				self.VM_INSPECT_IDLE	= _G["ACT_"..hold.."_VM_INSPECT_IDLE"]
 				self.VM_INSPECT_END		= _G["ACT_"..hold.."_VM_INSPECT_END"]
+				self.BACKSTAB_VM_UP		= getfenv()["ACT_"..hold.."_BACKSTAB_VM_UP"]
+				self.BACKSTAB_VM_DOWN		= getfenv()["ACT_"..hold.."_BACKSTAB_VM_DOWN"]
 			end
 			
 		end
@@ -678,7 +688,6 @@ function SWEP:Deploy()
 	
 	local hold = self.HoldType 
 	--MsgN(Format("SetupCModelActivities %s", tostring(self)))
-
 	if (self.Owner:GetNWBool("NoWeapon")) then
 		--self.WorldModel = "models/empty.mdl"
 	else
@@ -697,22 +706,19 @@ function SWEP:Deploy()
 			self.Owner:SetBloodColor(BLOOD_COLOR_MECH)
 		end
 	end
-	timer.Simple(0.05, function()
 		if IsValid(self) then
 			if IsValid(self.Owner) then
 				if IsValid(self.Owner:GetViewModel()) then  
-					
 					if self.Owner.TempAttributes and self.Owner.TempAttributes.DeployTimeMultiplier then
-						self.Owner:GetViewModel():SetPlaybackRate(1.3 / self.Owner.TempAttributes.DeployTimeMultiplier)
+						self:SetDeploySpeed(defaultdeployspeed:GetFloat() / self.Owner.TempAttributes.DeployTimeMultiplier)
 					elseif self.DeployTimeMultiplier then
-						self.Owner:GetViewModel():SetPlaybackRate(1.3 / self.DeployTimeMultiplier)
+						self:SetDeploySpeed(defaultdeployspeed:GetFloat() / self.DeployTimeMultiplier)
 					else
-						self.Owner:GetViewModel():SetPlaybackRate(1.3)
+						self:SetDeploySpeed(defaultdeployspeed:GetFloat())
 					end
 				end
 			end
 		end
-	end)
 	if IsValid(self.CModel) then
 
 		local t2 = self.Owner:GetProxyVar("CritTeam") 
@@ -797,11 +803,13 @@ function SWEP:Deploy()
 	end
 
 	self:InspectAnimCheck()
-	local drawAnim = self.VM_DRAW or ACT_VM_DRAW
-	local draw_duration = self:SequenceDuration(self:SelectWeightedSequence(self.VM_DRAW))
-	local deploy_duration = self.DeployDuration
+	local hold = self.HoldType
+	local drawAnim = self.VM_DRAW
+	local draw_duration = self:SequenceDuration(self:SelectWeightedSequence(self.VM_DRAW)) / self:GetDeploySpeed()
+	local deploy_duration = self.DeployDuration / self:GetDeploySpeed() 
 	if SERVER then
-		self:SendWeaponAnimEx(drawAnim)
+		self:SendWeaponAnim(drawAnim)
+		self.Owner:GetViewModel():SetPlaybackRate(self:GetDeploySpeed())
 	end
 	if self.Owner.TempAttributes and self.Owner.TempAttributes.DeployTimeMultiplier then
 		draw_duration = draw_duration * self.Owner.TempAttributes.DeployTimeMultiplier
@@ -817,8 +825,8 @@ function SWEP:Deploy()
 		self.NextIdle = CurTime() + 0.5
 		self.NextDeployed = CurTime() + 0.5
 	else
-		self.NextIdle = CurTime() + draw_duration - 0.35
-		self.NextDeployed = CurTime() + deploy_duration - 0.35
+		self.NextIdle = CurTime() + draw_duration + 0.02
+		self.NextDeployed = CurTime() + deploy_duration + 0.02
 	end
 	if (IsValid(self.CModel)) then
 		self.CModel:SetSkin(self.WeaponSkin or self:GetOwner():GetSkin())
@@ -838,19 +846,6 @@ function SWEP:InspectAnimCheck()
 				self:SetWeaponHoldType("MELEE_ALLCLASS")
 			end
 			
-		end
-	end
-	if (self:Ammo1() < 1 and self:Clip1() < 1 and self.Primary.ClipSize ~= -1) then
-		if (CurTime() > self:GetNextPrimaryFire()) then
-			if (self.HoldType == "PRIMARY") then
-				if (IsValid(self.Owner:GetWeapons()[2])) then
-					self.Owner:SelectWeapon(self.Owner:GetWeapons()[2]:GetClass())
-				end
-			elseif ((self.HoldType == "SECONDARY" or (self:GetClass() == "tf_weapon_jar" or self:GetClass() == "tf_weapon_jar_milk")) and self.Owner:GetPlayerClass() != "medic") then
-				if (IsValid(self.Owner:GetWeapons()[3])) then
-					self.Owner:SelectWeapon(self.Owner:GetWeapons()[3]:GetClass())
-				end
-			end
 		end
 	end
 	if CLIENT then
@@ -882,6 +877,14 @@ function SWEP:InspectAnimCheck()
 					self.VM_RELOAD = getfenv()[replace.act_vm_reload]
 				end
 
+				if replace.act_reload_start then
+					self.VM_RELOAD_START = getfenv()[replace.act_reload_start]
+				end
+				 
+				if replace.act_reload_finish then
+					self.VM_RELOAD_FINISH = getfenv()[replace.act_reload_finish]
+				end
+
 				if replace.act_primary_vm_inspect_end then
 					self.VM_INSPECT_END = getfenv()[replace.act_primary_vm_inspect_end]
 				end
@@ -894,6 +897,37 @@ function SWEP:InspectAnimCheck()
 				if replace.act_primary_vm_inspect_idle then
 					self.VM_INSPECT_IDLE = getfenv()[replace.act_primary_vm_inspect_idle]
 				end
+			else
+				
+				local hold = self.HoldType
+				self.VM_DRAW			= getfenv()["ACT_"..hold.."_VM_DRAW"]
+				self.VM_IDLE			= getfenv()["ACT_"..hold.."_VM_IDLE"] 
+				self.VM_PRIMARYATTACK	= getfenv()["ACT_"..hold.."_VM_PRIMARYATTACK"]
+				self.VM_SECONDARYATTACK	= getfenv()["ACT_"..hold.."_VM_SECONDARYATTACK"]
+				 
+				-- Special activities
+				self.VM_CHARGE			= getfenv()["ACT_"..hold.."_VM_CHARGE"]
+				self.VM_DRYFIRE			= getfenv()["ACT_"..hold.."_VM_DRYFIRE"]
+				self.VM_IDLE_2			= getfenv()["ACT_"..hold.."_VM_IDLE_2"]
+				self.VM_CHARGE_IDLE_3	= getfenv()["ACT_"..hold.."_VM_CHARGE_IDLE_3"]
+				self.VM_IDLE_3			= getfenv()["ACT_"..hold.."_VM_IDLE_3"]
+				self.VM_PULLBACK		= getfenv()["ACT_"..hold.."_VM_PULLBACK"]
+				self.VM_PREFIRE			= getfenv()["ACT_"..hold.."_ATTACK_STAND_PREFIRE"]
+				self.VM_POSTFIRE		= getfenv()["ACT_"..hold.."_ATTACK_STAND_POSTFIRE"]
+				
+				self.VM_INSPECT_START	= getfenv()["ACT_"..hold.."_VM_INSPECT_START"]
+				self.VM_INSPECT_IDLE	= getfenv()["ACT_"..hold.."_VM_INSPECT_IDLE"]
+				self.VM_INSPECT_END		= getfenv()["ACT_"..hold.."_VM_INSPECT_END"]
+				self.VM_RELOAD_START	= getfenv()["ACT_"..hold.."_RELOAD_START"]
+				self.VM_RELOAD	= getfenv()["ACT_"..hold.."_VM_RELOAD"] 
+				self.VM_RELOAD_FINISH		= getfenv()["ACT_"..hold.."_RELOAD_FINISH"]
+				 
+				self.VM_HITLEFT		= getfenv()["ACT_"..hold.."_VM_HITLEFT"]
+				self.VM_HITRIGHT		= getfenv()["ACT_"..hold.."_VM_HITRIGHT"]
+				self.VM_HITCENTER		= getfenv()["ACT_"..hold.."_VM_HITCENTER"]
+				self.VM_SWINGHARD		= getfenv()["ACT_"..hold.."_VM_SWINGHARD"]
+				self.BACKSTAB_VM_UP		= getfenv()["ACT_"..hold.."_BACKSTAB_VM_UP"]
+				self.BACKSTAB_VM_DOWN		= getfenv()["ACT_"..hold.."_BACKSTAB_VM_DOWN"]
 			end
 
 				if visuals.sound_single_shot then
@@ -927,7 +961,7 @@ function SWEP:InspectAnimCheck()
 				if visuals.sound_special3 then
 					self.SpecialSound3 = Sound(visuals.sound_special3)
 				end
-		end
+			end
 
 end
 
@@ -944,6 +978,20 @@ function SWEP:Inspect()
 		self.CModel:SetProxyVar("CritStatus",s2)
 
 	end
+	if (self:Ammo1() < 1 and self:Clip1() < 1 and self.Primary.ClipSize > 0 and self.AmmoType != nil || self:Ammo1() < 1 and self.AmmoType != nil) then
+		if (CurTime() > self:GetNextPrimaryFire()) then
+			if (self.HoldType == "PRIMARY") then
+				if (IsValid(self.Owner:GetWeapons()[2])) then
+					self.Owner:SelectWeapon(self.Owner:GetWeapons()[2]:GetClass())
+				end
+			elseif ((self.HoldType == "SECONDARY" or (self:GetClass() == "tf_weapon_jar" or self:GetClass() == "tf_weapon_jar_milk")) and self.Owner:GetPlayerClass() != "medic") then
+				if (IsValid(self.Owner:GetWeapons()[3])) then
+					self.Owner:SelectWeapon(self.Owner:GetWeapons()[3]:GetClass())
+				end
+			end
+		end
+	end
+	self:InspectAnimCheck()
 end	
 
 --[[function SWEP:Inspect()
@@ -1028,6 +1076,7 @@ function SWEP:Holster()
 	self.NextIdle = nil
 	self.NextReloadStart = nil
 	self.NextReload = nil
+	self.NextReload2 = nil
 	self.Reloading = nil
 	self.RequestedReload = nil
 	self.NextDeployed = nil
@@ -1060,7 +1109,7 @@ function SWEP:OnRemove()
 end
 
 function SWEP:CanPrimaryAttack() 
-	if (self.Primary.ClipSize == -1 and self:Ammo1() > 0) or self:Clip1() > 0 then
+	if (((self.Primary.ClipSize == -1 and self:Ammo1() > 0) or self:Clip1() > 0) and self.Owner:GetNWBool("Bonked",false) == false) then
 		return true
 	end
 	
@@ -1076,61 +1125,10 @@ function SWEP:CanSecondaryAttack()
 end
 
 function SWEP:PrimaryAttack(noscene)
-	if self.Owner:GetMaterial() == "models/shadertest/predator" then return false end
-	if not self.IsDeployed then return false end
-	if self.Owner:GetNWBool("Bonked") == true then
-		return false
-	end
-	
-	if (IsValid(self.Owner)) then
-		if (self.Owner:IsBot()) then
-			if (self.Reloading or self.StartedReloading) then
-				if (self.Owner:GetPlayerClass() == "giantrapidfiresoldier" or self.Owner:GetPlayerClass() == "giantburstsoldier" or self.Owner:GetPlayerClass() == "colonelbarrage") then 
-					return false
-				end
-			end
-		end
-	end
-
-	if not self:CanPrimaryAttack() then
-		return
-	end
-	//if self.Reloading then return false end
-	
-	self.NextDeployed = nil
-	
-	local Delay = self.Delay or -1
-	local QuickDelay = self.QuickDelay or -1
-	
-	if (not(self.Primary.QuickDelay>=0 and self.Owner:KeyPressed(IN_ATTACK)) and Delay>=0 and CurTime()<Delay)
-	or (self.Primary.QuickDelay>=0 and self.Owner:KeyPressed(IN_ATTACK) and QuickDelay>=0 and CurTime()<QuickDelay) then
-		return
-	end
-	if (self.Primary.FastDelay) then
-		self.Delay =  CurTime() + self.Primary.FastDelay
-		self.QuickDelay =  CurTime() + self.Primary.QuickDelay
-	else
-		self.Delay =  CurTime() + self.Primary.Delay
-		self.QuickDelay =  CurTime() + self.Primary.QuickDelay
-	end
-	
-	
-	if SERVER then
-		umsg.Start("TF2ShellEject")
-			umsg.Entity(self)
-		umsg.End()
-	end
-	if self.NextReload or self.NextReloadStart then
-		self.NextReload = nil
-		self.NextReloadStart = nil
-	end
-	self:RustyBulletHole()
-	if SERVER and not self.Primary.NoFiringScene and not noscene then
-		self.Owner:Speak("TLK_FIREWEAPON", true)
-	end
-	--print(self.Base)
-	self.NextIdle = nil
-	
+	self.Reloading = false
+	self.NextReload = nil
+	self.NextReload2 = nil
+	self.NextReloadStart = nil
 	return true
 end
 
@@ -1167,6 +1165,7 @@ function SWEP:SecondaryAttack(noscene)
 		
 		if self.NextReload or self.NextReloadStart then
 			self.NextReload = nil
+			self.NextReload2 = nil
 			self.NextReloadStart = nil
 		end
 		
@@ -1198,9 +1197,6 @@ function SWEP:CheckAutoReload()
 				--MsgFN("Deployed with empty clip, reloading")
 					self:Reload()
 				end
-	
-
-				self:Reload()
 			end
 		end
 	end
@@ -1211,6 +1207,7 @@ function SWEP:Reload()
 	if CLIENT and _G.NOCLIENTRELOAD then return end
 	
 	if self.NextReloadStart or self.NextReload or self.Reloading then return end
+	if CurTime() < self.Primary.Delay then return end
 	
 	if self.RequestedReload then
 		if self.Delay and CurTime() < self.Delay then
@@ -1245,7 +1242,7 @@ function SWEP:Reload()
 					else
 						self.Owner:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_STAND, true)
 					end]]
-					self.NextReloadStart = CurTime() + (self:SequenceDuration() or self.ReloadStartTime ) 
+					self.NextReloadStart = CurTime() + (self.ReloadTime - 0.2 or self.ReloadStartTime ) 
 					if (self:Clip1() == 0) then
 						self.Reloading = true
 					end
@@ -1265,13 +1262,34 @@ function SWEP:Reload()
 					if (self:Clip1() == 0) then
 						self.Reloading = true
 					end
-					self.NextReloadStart = CurTime() + (self:SequenceDuration() or self.ReloadStartTime)
+					if self.FastReloadTime and self.OldReloadTime then  
+						if (!self.ReloadTimeMultiplier) then
+							self.NextReloadStart = CurTime() + self:SequenceDuration() / self.FastReloadTime
+						else
+							self.NextReloadStart = CurTime() + self:SequenceDuration() / self.FastReloadTime / self.ReloadTimeMultiplier
+						end
+					else
+						self.NextReloadStart = CurTime() + self:SequenceDuration()
+					end
 				end
 			else
 				if SERVER then
 					self:SendWeaponAnimEx(self.VM_RELOAD)
 				end
 				self.Owner:SetAnimation(PLAYER_RELOAD)
+				if (!self.Owner:KeyDown(IN_ATTACK)) then
+					if self.FastReloadTime and self.OldReloadTime then  
+						if (!self.ReloadTimeMultiplier) then
+							self:SetNextPrimaryFire(CurTime() + self:SequenceDuration() / self.FastReloadTime)
+						else
+							
+							self:SetNextPrimaryFire(CurTime() + self:SequenceDuration() / self.FastReloadTime / self.ReloadTimeMultiplier)
+						end
+					else
+						
+						self:SetNextPrimaryFire(CurTime() + self:SequenceDuration())
+					end
+				end
 				
 				if self.FastReloadTime and self.OldReloadTime then  
 					if (!self.ReloadTimeMultiplier) then
@@ -1280,6 +1298,7 @@ function SWEP:Reload()
 						self.ReloadTime = self.OldReloadTime * self.FastReloadTime
 						self.NextIdle = CurTime() + self.ReloadTime
 						self.NextReload = self.NextIdle
+						self.NextReload2 = self.ReloadTime
 					
 					else
 					
@@ -1287,6 +1306,7 @@ function SWEP:Reload()
 						self.ReloadTime = self.OldReloadTime * (self.FastReloadTime * self.ReloadTimeMultiplier)
 						self.NextIdle = CurTime() + self.ReloadTime
 						self.NextReload = self.NextIdle
+						self.NextReload2 = CurTime() + self.ReloadTime
 						
 					end
 				elseif !self.FastReloadTime and self.ReloadTimeMultiplier then  
@@ -1296,9 +1316,11 @@ function SWEP:Reload()
 					end
 					self.NextIdle = self.OriginalReloadTime * self.ReloadTimeMultiplier
 					self.NextReload = self.NextIdle
+					self.NextReload2 = CurTime() + self.ReloadTime
 				else
 					self.NextIdle = CurTime() + (self.ReloadTime or self:SequenceDuration())
 					self.NextReload = self.NextIdle
+					self.NextReload2 = CurTime() + self.ReloadTime
 				end
 				
 				self.AmmoAdded = math.min(self.Primary.ClipSize - ammo, available)
@@ -1325,6 +1347,7 @@ end
 
 function SWEP:Think() 
 	self:Inspect()
+	self:InspectAnimCheck()
 	if (((self.NextReload and self.NextReload>=CurTime()) or ((self.NextReloadStart and self.NextReloadStart>=CurTime()) or self.Reloading)) and self.ReloadSingle) then
 	
 		if self.FastReloadTime and SERVER then  
@@ -1373,7 +1396,7 @@ function SWEP:Think()
 				self.WModel:SetSkin(skin)	
 			end
 			if (self.WModel:GetMaterial() != self.WeaponMaterial) then
-				--self.WModel:SetMaterial(self.WeaponMaterial)
+				self.WModel:SetMaterial(self.WeaponMaterial)
 			end
 		end
 		if IsValid(self.ExtraCModel) then
@@ -1654,7 +1677,7 @@ function SWEP:Think()
 	if (self.Owner:GetPlayerClass() == "superheavyweightchamp") then
 		self.Primary.Delay = 1.0 * 0.6
 	end
-	if self.NextReload and CurTime()>=self.NextReload then
+	if self.NextReload2 and CurTime()>=self.NextReload2 then
 		self:SetClip1(self:Clip1() + self.AmmoAdded)
 		if (self:GetClass() != "tf_weapon_particle_launcher") then
 			if not self.ReloadSingle and self.ReloadDiscardClip then
@@ -1663,6 +1686,10 @@ function SWEP:Think()
 				self.Owner:RemoveAmmo(self.AmmoAdded, self.Primary.Ammo, false)
 			end
 		end
+		self.NextReload2 = nil
+	end
+	if self.NextReload and CurTime()>=self.NextReload then
+		//self:SetClip1(self:Clip1() + self.AmmoAdded)
 		
 		self.Delay = -1
 		self.QuickDelay = -1
@@ -1694,7 +1721,7 @@ function SWEP:Think()
 						self.Owner:DoAnimationEvent(ACT_MP_RELOAD_STAND_END, true)
 					end
 				end
-				self.NextIdle = CurTime() + self:SequenceDuration() 
+				self.NextIdle = CurTime() + (self.ReloadTime or self.ReloadStartTime ) 
 			else
 				
 				local idleAnim = self.VM_IDLE or ACT_VM_IDLE
@@ -1709,6 +1736,7 @@ function SWEP:Think()
 			if SERVER then
 			self:SendWeaponAnimEx(self.VM_RELOAD)
 			end
+			self.NextReload2 = CurTime() + self.ReloadTime
 			if CLIENT then
 				if self:GetItemData().model_player == "models/weapons/c_models/c_scattergun.mdl" then
 					--PrintTable(self.CModel:GetAttachments())
@@ -1787,6 +1815,7 @@ function SWEP:Think()
 	end
 	
 	if self.NextReloadStart and CurTime()>=self.NextReloadStart then
+		//self:SetClip1(self:Clip1() + self.AmmoAdded)
 		if self.FastReloadTime then  
 			self.ReloadTime = self.FastReloadTime
 		end
@@ -1815,8 +1844,9 @@ function SWEP:Think()
 			end
 		end
 		self.NextReload = CurTime() + (self.ReloadTime)
+		self.NextReload2 = CurTime() + (self.ReloadTime-(self.Primary.Delay*0.6))
 		
-		self.AmmoAdded = 1
+		self.AmmoAdded = 1 
 		
 
 		if (!(self:Clip1()>=self.Primary.ClipSize or self.Owner:GetAmmoCount(self.Primary.Ammo)==0)) then
@@ -1909,18 +1939,18 @@ function SWEP:Think()
 			self.NextReplayDeployAnim = nil
 		end
 	end
-		if SERVER and self.NextIdle and CurTime()>=self.NextIdle then
+		if SERVER and self.NextIdle and CurTime()>=self.NextIdle and !self.Owner:KeyDown(IN_ATTACK) and !self.Owner:KeyDown(IN_ATTACK2) then
 			local idleAnim = self.VM_IDLE or ACT_VM_IDLE
 			self:SendWeaponAnimEx(idleAnim)
 			if SERVER then
 				self.NextIdle = CurTime() + self:SequenceDuration(self:SelectWeightedSequence(idleAnim))
 			end
 		end
-		if self then
-			if self.IsDeployed and self.Owner:GetInfoNum("tf_autoreload", 1) == 1 then
+		if self and SERVER then
+			if self.IsDeployed and self.Owner:GetInfoNum("tf_autoreload", 1) == 1 or self.Owner:IsBot() then
 				if self.Owner:Alive() then
-					if (CurTime() > self:GetNextPrimaryFire() or CurTime() > self:GetNextSecondaryFire()) then
-						self:Reload()
+					if (CurTime() > self:GetNextPrimaryFire() and CurTime() > self:GetNextSecondaryFire()) then
+						self:CheckAutoReload()
 					end
 				end
 			end
@@ -1928,12 +1958,8 @@ function SWEP:Think()
 	if not self.IsDeployed and self.NextDeployed and CurTime()>=self.NextDeployed and self:GetClass() != "tf_weapon_grapplinghook" then
 		self.IsDeployed = true
 		self.CanInspect = true
-		self:CheckAutoReload()
 	end
 
-	if (IsValid(self.Owner) and self.Owner:IsBot()) then
-		self:CheckAutoReload()
-	end
 	if not self.IsDeployed and self:GetClass() == "tf_weapon_grapplinghook" then
 
 		self.IsDeployed = true

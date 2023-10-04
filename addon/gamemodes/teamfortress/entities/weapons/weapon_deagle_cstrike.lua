@@ -22,11 +22,11 @@ SWEP.Primary.ClipSize = 7  -- How much bullets are in the mag
 SWEP.Primary.DefaultClip = 7 -- How much bullets preloaded when spawned
 SWEP.Primary.Damage = 50
 SWEP.Primary.TakeAmmo = 1
-SWEP.Primary.Spread = 0.75
+SWEP.Primary.Spread = 0.25
 SWEP.Primary.NumberofShots = 1
 SWEP.Primary.Ammo = "357" 
 SWEP.Secondary.Ammo = "none"
-SWEP.Primary.Recoil = 0.8
+SWEP.Primary.Recoil = 2
 SWEP.Primary.Automatic = false
 SWEP.Secondary.Automatic = true
 SWEP.DeployAfterPickup = false
@@ -127,7 +127,7 @@ function SWEP:PrimaryAttack()
 	self:ShootEffects()
 	 
 	self.Owner:FireBullets( bullet ) 
-		self:EmitSound(self.ShootSound, 85,math.random(95,105))	
+		self:EmitSound(self.ShootSound, 85,100)	
 		self.Owner:ViewPunch( Angle( rnda,0,0 ) ) 
 		self:TakePrimaryAmmo(self.Primary.TakeAmmo) 
 		self:SendWeaponAnim(vm:GetSequenceActivity(vm:LookupSequence("firesingle")))

@@ -19,7 +19,7 @@ end
 
 SWEP.Base				= "tf_weapon_knife"
 
-SWEP.ViewModel			= "models/weapons/c_models/c_spy_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_spy_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_xms_cold_shoulder/c_xms_cold_shoulder.mdl"
 SWEP.Crosshair = "tf_crosshair3"
 

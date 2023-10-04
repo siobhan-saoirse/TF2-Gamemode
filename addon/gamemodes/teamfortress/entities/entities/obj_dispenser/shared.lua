@@ -1,6 +1,10 @@
 
 ENT.Base = "obj_base"
 ENT.Type = "ai"  
+ENT.PrintName = "Dispenser"
+ENT.Author			= "Seamusmario"
+ENT.Category = "Team Fortress 2"
+ENT.Spawnable = true
 
 ENT.AutomaticFrameAdvance = true
 ENT.Sapped = false

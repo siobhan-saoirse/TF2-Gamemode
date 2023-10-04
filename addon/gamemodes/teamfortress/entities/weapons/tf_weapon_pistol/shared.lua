@@ -9,7 +9,7 @@ end
 SWEP.Base				= "tf_weapon_gun_base"
 
 SWEP.Slot				= 1
-SWEP.ViewModel			= "models/weapons/c_models/c_engineer_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_engineer_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_pistol/c_pistol.mdl"
 SWEP.Crosshair = "tf_crosshair1"
 
@@ -42,7 +42,7 @@ SWEP.BulletSpread = 0.04
 SWEP.Primary.ClipSize		= 12
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
 SWEP.Primary.Ammo			= TF_SECONDARY
-SWEP.Primary.Delay          = 0.14
+SWEP.Primary.Delay          = 0.15
 SWEP.ReloadTime = 1.2
 
 SWEP.HoldType = "SECONDARY"

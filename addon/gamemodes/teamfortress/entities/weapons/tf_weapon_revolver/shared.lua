@@ -13,7 +13,7 @@ end
 
 SWEP.Base				= "tf_weapon_gun_base"
 
-SWEP.ViewModel			= "models/weapons/c_models/c_spy_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_spy_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_revolver/c_revolver.mdl"
 SWEP.Crosshair = "tf_crosshair2"
 SWEP.Slot				= 0
@@ -33,7 +33,7 @@ PrecacheParticleSystem("muzzle_revolver")
 
 SWEP.BaseDamage = 40
 SWEP.BulletsPerShot = 1
-SWEP.BulletSpread = 0.025
+SWEP.BulletSpread = 0.0125
 SWEP.Primary.ClipSize		= 6
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
 SWEP.Primary.Ammo			= TF_PRIMARY

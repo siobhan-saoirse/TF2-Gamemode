@@ -7,6 +7,7 @@ include("shared.lua")
 ENT.Levels = {}
 ENT.Gibs = {}
 ENT.DisableDuringUpgrade = false
+ENT.AutomaticFrameAdvance = true
 ENT.NoUpgradedModel = false
 ENT.IdleSequence = "ref"
 
@@ -21,6 +22,26 @@ ENT.UpgradeAnimRate = 1
 ENT.UpgradeProgress = 0
 ENT.InitialHealth = 1
 ENT.IsEnabled = 0
+
+
+function ENT:SpawnFunction(pl, tr)
+	if not tr.Hit then return end
+	
+	local pos = tr.HitPos
+	
+	local ent = ents.Create(self.ClassName)
+	ent:SetPos(pos)
+	ent:Spawn()
+	ent:Activate()
+	
+	ent:SetPos(pos - Vector(0,0,ent:OBBMins().z))
+	
+	ent:SetTeam(pl:Team())
+	ent:SetBuilder(pl)
+	
+	return ent
+end
+
 function ENT:OnStartBuilding() end
 function ENT:OnDoneBuilding() end
 function ENT:OnStartUpgrade() end
@@ -113,8 +134,8 @@ function ENT:Build()
 	self:SetNPCState(NPC_STATE_SCRIPT)
 	
 	self.Model:SetNoDraw(false)
-	self.Model:ResetSequence(self:SelectWeightedSequence(ACT_OBJ_ASSEMBLING))
 	self.Model:SetCycle(0)
+	self.Model:ResetSequence(self:SelectWeightedSequence(ACT_OBJ_ASSEMBLING))
 	self.Model:SetPlaybackRate(self.BuildRate)
 	
 	self:SetLevel(1)
@@ -147,15 +168,16 @@ function ENT:Upgrade()
 		self:PreUpgradeAnim()
 		self:SetNoDraw(true)
 		self.Model:SetNoDraw(false)
-		self.Model:ResetSequence(self:SelectWeightedSequence(ACT_OBJ_UPGRADING))
 		self.Model:SetCycle(0) 
+		self.Model:ResetSequence(self:SelectWeightedSequence(ACT_OBJ_UPGRADING))
+		self.Model:SetPlaybackRate(1) 
 			
 			if (string.find(game.GetMap(),"mvm_")) then
-				self.Model:SetPlaybackRate(1)
+				self.Model:SetPlaybackRate(0.00001)
 				self.Duration = 0.1
 				self.TimeLeft = 0.1
 			else
-				self.Model:SetPlaybackRate(0.00001)
+				self.Model:SetPlaybackRate(1)
 				self.Duration = self.Model:SequenceDuration()
 				self.TimeLeft = self.Model:SequenceDuration()
 				timer.Simple(self.Model:SequenceDuration(), function()
@@ -181,7 +203,7 @@ function ENT:Enable()
 	
 	self:SetNPCState(NPC_STATE_IDLE)
 	self.Model:SetNoDraw(false)
-	self:SetNoDraw(false)
+	self:SetNoDraw(true)
 	self:ResetSequence(self:SelectWeightedSequence(ACT_OBJ_RUNNING))
 	self:SetCycle(0)
 	self:SetPlaybackRate(1)
@@ -211,13 +233,14 @@ function ENT:Enable()
 				self:PreUpgradeAnim()
 				self:SetNoDraw(true)
 				self.Model:SetNoDraw(false)
-				self.Model:ResetSequence(self:SelectWeightedSequence(ACT_OBJ_UPGRADING))
 				self.Model:SetCycle(0) 
+				self.Model:ResetSequence(self:SelectWeightedSequence(ACT_OBJ_UPGRADING))
 				self.Model:SetPlaybackRate(1)
 			if (string.find(game.GetMap(),"mvm_")) then
 				self.Duration = 0.1
 				self.TimeLeft = 0.1
 			else
+				self.Model:SetPlaybackRate(1)
 				self.Duration = self.Model:SequenceDuration()
 				self.TimeLeft = self.Model:SequenceDuration()
 				timer.Simple(self.Model:SequenceDuration(), function()
@@ -241,8 +264,8 @@ function ENT:Enable()
 				self:PreUpgradeAnim()
 				self:SetNoDraw(true)
 				self.Model:SetNoDraw(false)
-				self.Model:ResetSequence(self:SelectWeightedSequence(ACT_OBJ_UPGRADING))
 				self.Model:SetCycle(0) 
+				self.Model:ResetSequence(self:SelectWeightedSequence(ACT_OBJ_UPGRADING))
 				self.Model:SetPlaybackRate(1)
 			if (string.find(game.GetMap(),"mvm_")) then
 				self.Duration = 0.1
@@ -369,7 +392,7 @@ function ENT:Think()
 		end
 	end
 	
-	self:NextThink(FrameTime())
+	self:NextThink(CurTime())
 	return true
 end
 
@@ -438,6 +461,63 @@ function ENT:AddMetal(owner, max)
 	if self:GetLevel()<self.NumLevels then
 		local current = self:GetMetal()
 		metal_spent = math.Clamp(self.UpgradeCost - current, 0, math.min(max, self.UpgradeRate))
+		current = current + metal_spent
+		
+		if current>=self.UpgradeCost then
+			self:SetMetal(0)
+			self:Upgrade()
+			-- Upgrading already resupplies ammo so we don't need to do anything else
+			upgraded = true
+		elseif not repaired or not self:NeedsResupply() then
+			-- Add to the upgrade status only if no metal was spent repairing the building or if the building doesn't need to be resupplied first
+			self:SetMetal(current)
+		end
+		
+		max = max - metal_spent
+	end
+	
+	-- Resupply (todo)
+	if self:NeedsResupply() and not upgraded then
+		metal_spent = self:Resupply(max)
+		
+		if metal_spent then
+			max = max - metal_spent
+			resupplied = true
+		end
+	end
+	
+	return max0 - max
+end
+
+function ENT:AddMetal2(owner, max)
+	if not self.BuildBoost then
+		self.BuildBoost = {}
+	end
+	
+	self.BuildBoost[owner] = {val=2, endtime=CurTime() + 9999}
+	
+	-- Building or upgrading
+	if self:GetState()~=3 then return 0 end
+	
+	local max0 = max
+	local metal_spent
+	
+	local repaired, resupplied, upgraded
+	
+	-- Repair
+	metal_spent = math.Clamp(math.ceil((self:GetMaxHealth() - self:Health()) * 0.2), 0, math.min(max, self.RepairRate))
+	
+	if metal_spent > 0 then
+		self:SetHealth(math.Clamp(self:Health() + 5 * metal_spent, 0, self:GetMaxHealth()))
+		
+		max = max - metal_spent
+		repaired = true
+	end
+	
+	-- Upgrade
+	if self:GetLevel()<self.NumLevels then
+		local current = self:GetMetal()
+		metal_spent = math.Clamp(self.UpgradeCost - current, 0, max)
 		current = current + metal_spent
 		
 		if current>=self.UpgradeCost then

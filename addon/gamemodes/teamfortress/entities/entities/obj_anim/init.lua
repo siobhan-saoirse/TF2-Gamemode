@@ -19,8 +19,3 @@ function ENT:Initialize()
 	self:SetParent(owner)
 	self:SetNotSolid(true)
 end
-
-function ENT:Think()
-	self:NextThink(CurTime()+0.00001)
-	return true
-end

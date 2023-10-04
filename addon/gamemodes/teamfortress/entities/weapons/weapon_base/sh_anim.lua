@@ -28,33 +28,35 @@ local ActIndex = {
 -----------------------------------------------------------]]
 function SWEP:SetWeaponHoldType( t )
 
-	if (self.Owner:IsHL2()) then
-		t = string.lower( t )
-		local index = ActIndex[ t ]
+	if (IsValid(self.Owner) and IsValid(self.Owner:IsHL2())) then
+		if (self.Owner:IsHL2()) then
+			t = string.lower( t )
+			local index = ActIndex[ t ]
 
-		if ( index == nil ) then
-			Msg( "SWEP:SetWeaponHoldType - ActIndex[ \"" .. t .. "\" ] isn't set! (defaulting to normal)\n" )
-			t = "normal"
-			index = ActIndex[ t ]
-		end
+			if ( index == nil ) then
+				Msg( "SWEP:SetWeaponHoldType - ActIndex[ \"" .. t .. "\" ] isn't set! (defaulting to normal)\n" )
+				t = "normal"
+				index = ActIndex[ t ]
+			end
 
-		self.ActivityTranslate = {}
-		self.ActivityTranslate[ ACT_MP_STAND_IDLE ]					= index
-		self.ActivityTranslate[ ACT_MP_WALK ]						= index + 1
-		self.ActivityTranslate[ ACT_MP_RUN ]						= index + 2
-		self.ActivityTranslate[ ACT_MP_CROUCH_IDLE ]				= index + 3
-		self.ActivityTranslate[ ACT_MP_CROUCHWALK ]					= index + 4
-		self.ActivityTranslate[ ACT_MP_ATTACK_STAND_PRIMARYFIRE ]	= index + 5
-		self.ActivityTranslate[ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE ]	= index + 5
-		self.ActivityTranslate[ ACT_MP_RELOAD_STAND ]				= index + 6
-		self.ActivityTranslate[ ACT_MP_RELOAD_CROUCH ]				= index + 6
-		self.ActivityTranslate[ ACT_MP_JUMP ]						= index + 7
-		self.ActivityTranslate[ ACT_RANGE_ATTACK1 ]					= index + 8
-		self.ActivityTranslate[ ACT_MP_SWIM ]						= index + 9
+			self.ActivityTranslate = {}
+			self.ActivityTranslate[ ACT_MP_STAND_IDLE ]					= index
+			self.ActivityTranslate[ ACT_MP_WALK ]						= index + 1
+			self.ActivityTranslate[ ACT_MP_RUN ]						= index + 2
+			self.ActivityTranslate[ ACT_MP_CROUCH_IDLE ]				= index + 3
+			self.ActivityTranslate[ ACT_MP_CROUCHWALK ]					= index + 4
+			self.ActivityTranslate[ ACT_MP_ATTACK_STAND_PRIMARYFIRE ]	= index + 5
+			self.ActivityTranslate[ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE ]	= index + 5
+			self.ActivityTranslate[ ACT_MP_RELOAD_STAND ]				= index + 6
+			self.ActivityTranslate[ ACT_MP_RELOAD_CROUCH ]				= index + 6
+			self.ActivityTranslate[ ACT_MP_JUMP ]						= index + 7
+			self.ActivityTranslate[ ACT_RANGE_ATTACK1 ]					= index + 8
+			self.ActivityTranslate[ ACT_MP_SWIM ]						= index + 9
 
-		-- "normal" jump animation doesn't exist
-		if ( t == "normal" ) then
-			self.ActivityTranslate[ ACT_MP_JUMP ] = ACT_HL2MP_JUMP_SLAM
+			-- "normal" jump animation doesn't exist
+			if ( t == "normal" ) then
+				self.ActivityTranslate[ ACT_MP_JUMP ] = ACT_HL2MP_JUMP_SLAM
+			end
 		end
 	end
 

@@ -7,8 +7,8 @@ ENT.Type = "nextbot"
 
 function ENT:Initialize()
 	self:SetModel("models/gman.mdl")
-	self:SetSolid(SOLID_NONE)
-	self:SetNoDraw(GetConVar("developer"):GetFloat() == 0)
+	self:SetNoDraw(true)
+	self:SetSolid( SOLID_NONE )
 	self.PosGen = nil
 	self.NextJump = -1
 	self.NextDuck = 0
@@ -24,30 +24,18 @@ function ENT:Initialize()
 	self.nextStuckJump = 0
 end
 
-function ENT:ChasePos( options )  
-
-	local options = options or {}
-	self.P = Path( "Follow" )
-	local path = self.P
-	path:SetMinLookAheadDistance( 300 )
-	path:SetGoalTolerance( options.tolerance or 20 )
-
-
-	if ( !path:IsValid() ) then return "failed" end
-
-	while ( path:IsValid() ) do
-
-		
-		for k,v in ipairs(player.GetBots()) do
-			if (v.ControllerBot:EntIndex() == self:EntIndex()) then
-				v.loco:Approach(self.PosGen,1)
-				v.loco:SetDesiredSpeed( 100 )  
-				path:Compute( v, self.PosGen )
-				path:Update( v )
-			end
+function ENT:ChasePos( options )
+	self.P = Path("Follow")
+	self.P:SetMinLookAheadDistance(300)
+	self.P:SetGoalTolerance(20)
+	self.P:Compute(self, self.PosGen)
+	
+	if !self.P:IsValid() then return end
+	while self.P:IsValid() do
+		if self.P:GetAge() > 0.3 and math.random(1,2+(table.Count(player.GetAll())*0.4)) == 1 then
+			self.P:Compute(self, self.PosGen)
+			self.P:Update(self, self.PosGen)
 		end
-
-		-- If we're stuck then call the HandleStuck function and abandon
 		if ( self.loco:IsStuck() ) then
 
 			self:HandleStuck()
@@ -55,19 +43,17 @@ function ENT:ChasePos( options )
 			return "stuck"
 
 		end
-
-		path:Draw()
-		debugoverlay.Line(path:GetStart(), path:GetEnd(), 0.2, Color(0,255,0), false)
-		--
-		-- If they set maxage on options then make sure the path is younger than it
-		--
-		if ( options.maxage ) then
-			if ( path:GetAge() > options.maxage ) then return "timeout" end
+		if GetConVar("developer"):GetFloat() > 0 then
+			self.P:Draw() 
 		end
-
-		coroutine.wait(2)
+		
+		if self.loco:IsStuck() then
+			self:HandleStuck()
+			return
+		end
+		
+		coroutine.wait(1)
 		coroutine.yield()
-
 	end
 end
 
@@ -76,29 +62,16 @@ function ENT:OnInjured()
 end
 
 function ENT:OnKilled()
-	return false 
+	return false
 end
 
-function ENT:IsNPC()
-	return false 
-end
-
-function ENT:IsNextBot()
-	return false 
-end
-
-function ENT:HandleStuck()
-	for k,v in ipairs(player.GetBots()) do
-		if (v.ControllerBot:EntIndex() == self:EntIndex() and self.P:GetCurrentGoal().pos != nil) then
-			v:SetPos(self.P:GetCurrentGoal().pos)
-		end
-	end
-end
 function ENT:RunBehaviour()
 	while (true) do
 		if self.PosGen then
 			self:ChasePos({})
 		end
+		coroutine.wait(0.1)
+		
 		coroutine.yield()
 	end
 end

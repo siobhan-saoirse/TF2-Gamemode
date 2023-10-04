@@ -17,7 +17,7 @@ SWEP.WorldModel = "models/weapons/w_rif_sg552.mdl"
 SWEP.ViewModelFOV = 75
 SWEP.UseHands = true
 SWEP.HoldType = "ar2"
-SWEP.Primary.Delay = 0.08
+SWEP.Primary.Delay = 0.06078
 SWEP.Primary.ClipSize = 30  -- How much bullets are in the mag
 SWEP.Primary.DefaultClip = 128 -- How much bullets preloaded when spawned
 SWEP.Primary.Damage = 28
@@ -127,7 +127,7 @@ function SWEP:PrimaryAttack()
 	self:ShootEffects()
 	 
 	self.Owner:FireBullets( bullet ) 
-		self:EmitSound(self.ShootSound, 85,math.random(95,105))	
+		self:EmitSound(self.ShootSound, 85,100)	
 		self.Owner:ViewPunch( Angle( rnda,0,0 ) ) 
 		self:TakePrimaryAmmo(self.Primary.TakeAmmo) 
 		self:SendWeaponAnim(vm:GetSequenceActivity(vm:LookupSequence("shoot"..math.random(1,3))))

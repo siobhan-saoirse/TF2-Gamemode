@@ -162,7 +162,11 @@ function ENT:FindEnemy()
 				end
 			end
 			-- We found one so lets set it as our enemy and return true
-			self:SetEnemy(v)
+			if (v:IsPlayer()) then
+				self:SetEnemy(table.Random(player.GetAll()))
+			else
+				self:SetEnemy(v)
+			end
 			if (v:IsNPC()) then
 				v:SetEnemy(self.bullseye)
 			elseif (v:IsNextBot()) then
@@ -233,6 +237,30 @@ function ENT:RunBehaviour()
 
 end	
 
+function ENT:BodyUpdate()
+
+	local act = self:GetActivity()
+
+	--
+	-- This helper function does a lot of useful stuff for us.
+	-- It sets the bot's move_x move_y pose parameters, sets their animation speed relative to the ground speed, and calls FrameAdvance.
+	--
+	
+	if ( act == self:GetSequenceActivity(self:LookupSequence("run_item1")) || act == self:GetSequenceActivity(self:LookupSequence("run_secondary")) ) then
+
+		self:BodyMoveXY()
+
+		-- BodyMoveXY() already calls FrameAdvance, calling it twice will affect animation playback, specifically on layers
+		return
+
+	end
+
+	--
+	-- If we're not walking or running we probably just want to update the anim system
+	--
+	self:FrameAdvance()
+
+end
 ----------------------------------------------------
 -- ENT:ChaseEnemy()
 -- Works similarly to Garry's MoveToPos function
@@ -251,11 +279,7 @@ function ENT:Think()
 	if (SERVER and !self:HaveEnemy()) then
 		self.EyeAngle = self:GetAngles()
 	end
-	if SERVER then
-
-		self:BodyMoveXY()
-
-	end
+	
 	if (IsValid(self:GetEnemy()) and self.Ready) then
 		if (math.random(1,1800) == 1) then
 			self.CrybabyMode = true

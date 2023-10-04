@@ -81,7 +81,7 @@ PrecacheParticleSystem("eject_minigunbrass")
 
 SWEP.Base				= "tf_weapon_minigun"
 
-SWEP.ViewModel			= "models/weapons/c_models/c_heavy_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_heavy_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_minigun/c_minigun.mdl"
 SWEP.Crosshair = "tf_crosshair4"
 

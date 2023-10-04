@@ -78,7 +78,7 @@ for k, v in pairs(items_game["items"]) do
 	if (string.find(v.name,"MvM GateBot ")) then
 		v.item_name = v.name
         v.item_slot = "head"
-        v.item_class = "tf_wearable"
+        v.item_class = "tf_wearable_item"
 		v.item_quality = "collectors"
 	end
 	if (string.find(v.name,"Gloves of Running Urgently MvM")) then
@@ -87,7 +87,7 @@ for k, v in pairs(items_game["items"]) do
 	end
     if (!v.item_slot) then
         v.item_slot = "misc"
-        v.item_class = "tf_wearable"
+        v.item_class = "tf_wearable_item"
 		v.item_quality = "unique"
     end
 	if (!v.item_quality) then
@@ -97,7 +97,7 @@ for k, v in pairs(items_game["items"]) do
         v.item_name = v.name
 		v.item_quality = "unique"
     end
-    if (v.item_slot == "hat") then
+    if (v.item_slot == "hat" or v.equip_region == "hat" or v.prefab == "hat") then
         v.item_class = "tf_wearable_item"
 		v.item_quality = "unique"
 		v.visuals = {}
@@ -161,7 +161,7 @@ for k, v in pairs(items_game["items"]) do
         v.item_class = "tf_weapon_rocketlauncher_dh"
     end
     if k == 513 then
-        v.item_class = "tf_weapon_rocketlauncher_qrl"
+        v.item_class = "tf_weapon_rocketlauncher"
 		elseif k == 20 then
 			v.item_slot = "primary"
 		elseif k == 19 then
@@ -187,11 +187,11 @@ for k, v in pairs(items_game["items"]) do
 			v.item_slot = "melee"
         end
         if v.name == "Bootlegger" then
-			v.item_class = "tf_wearable"
+			v.item_class = "tf_wearable_item"
 			v.item_slot = "secondary"
         end
         if v.name == "Ali Baba's Wee Booties" then
-			v.item_class = "tf_wearable"
+			v.item_class = "tf_wearable_item"
 			v.item_slot = "secondary"
         end
         if v.name == "Concheror" then

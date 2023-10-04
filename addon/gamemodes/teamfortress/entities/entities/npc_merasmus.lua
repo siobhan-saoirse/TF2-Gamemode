@@ -24,8 +24,8 @@ function ENT:Initialize()
 	end
 	self:SetModel( self.Model )
 	self:AddFlags(FL_OBJECT)
-	local seq = "spawn"
-	timer.Simple(0.1, function()
+	local seq = "teleport_in"
+	timer.Simple(0.25, function()
 		if SERVER then
 			for k,v in ipairs(ents.GetAll()) do
 				if v:IsNPC() then
@@ -33,7 +33,8 @@ function ENT:Initialize()
 				end
 			end
 		end
-		timer.Simple(self:SequenceDuration(self:SelectWeightedSequence(ACT_SHIELD_UP)) - 0.1, function()
+		self:ResetSequence(self:LookupSequence(seq))
+		timer.Simple(self:SequenceDuration(self:LookupSequence("teleport_in")) - 0.1, function()
 			self.Ready = true
 			if SERVER then
 				self:StartActivity(self:GetSequenceActivity(self:LookupSequence("stand_melee")))
@@ -43,7 +44,7 @@ function ENT:Initialize()
 	self.Ready = false
 	self.LoseTargetDist	= 9000	-- How far the enemy has to be before we lose them
 	self.SearchRadius 	= 6000	-- How far to search for enemies
-	self:SetHealth(10000)
+	self:SetHealth(20000)
 	self:EmitSound("Halloween.MerasmusAppears")
 	self:EmitSound("Halloween.Merasmus_Float")
 	self:SetModelScale(1)
@@ -59,7 +60,7 @@ function ENT:Initialize()
 		self:SetBloodColor(DONT_BLEED)
 		PrintMessage(HUD_PRINTCENTER,"MERASMUS has appeared!\n")
 		ParticleEffectAttach("merasmus_spawn", PATTACH_ABSORIGIN_FOLLOW, self, -1)
-		self:StartActivity(ACT_SHIELD_UP)
+		ParticleEffectAttach("merasmus_ambient_body", PATTACH_ABSORIGIN_FOLLOW, self, -1)
 	end
 end
 function ENT:GetAxe()
@@ -98,7 +99,7 @@ function ENT:HaveEnemy()
 			-- FindEnemy() will return true if an enemy is found, making this function return true
 			return self:FindEnemy()
 		-- If the enemy is dead( we have to check if its a player before we use Alive() )
-		elseif ( self:GetEnemy():IsTFPlayer() and (GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_SPECTATOR or GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_FRIENDLY or self:GetEnemy():Health() < 1 or self:GetEnemy():IsFlagSet(FL_NOTARGET)) ) then
+		elseif ( self:GetEnemy():IsTFPlayer() and (GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_SPECTATOR or GAMEMODE:EntityTeam(self:GetEnemy()) == TEAM_FRIENDLY or self:GetEnemy():Health() < 0 or self:GetEnemy():IsFlagSet(FL_NOTARGET)) ) then
 			return self:FindEnemy()		-- Return false if the search finds nothing
 		end	
 		-- The enemy is neither too far nor too dead so we can return true
@@ -120,7 +121,7 @@ function ENT:FindEnemy()
 	local _ents = ents.FindInSphere( self:GetPos(), self.SearchRadius )
 	-- Here we loop through every entity the above search finds and see if it's the one we want
 	for k,v in ipairs( _ents ) do
-		if ( ( v:IsTFPlayer() and !v:IsNextBot()) and GAMEMODE:EntityTeam(v) != TEAM_SPECTATOR and GAMEMODE:EntityTeam(v) != TEAM_FRIENDLY and v:Health() > 1 and !v:IsFlagSet(FL_NOTARGET) ) then
+		if ( ( v:IsTFPlayer() and !v:IsNextBot() ) and GAMEMODE:EntityTeam(v) != TEAM_SPECTATOR and GAMEMODE:EntityTeam(v) != TEAM_FRIENDLY and v:Health() > 1 and !v:IsFlagSet(FL_NOTARGET) ) then
 			if SERVER then
 				for k,v in ipairs(ents.GetAll()) do
 					if v:IsNPC() then
@@ -129,6 +130,10 @@ function ENT:FindEnemy()
 				end
 			end
 			-- We found one so lets set it as our enemy and return true
+			local plrs = player.GetAll()
+			if (v:IsPlayer()) then
+				v = table.Random(plrs)
+			end
 			self:SetEnemy(v)
 			if (v:IsNPC()) then
 				v:SetEnemy(self.bullseye)
@@ -207,6 +212,32 @@ end )
 function ENT:EyeAngles()
 	return self.EyeAngle
 end
+
+
+function ENT:BodyUpdate()
+
+	local act = self:GetActivity()
+
+	--
+	-- This helper function does a lot of useful stuff for us.
+	-- It sets the bot's move_x move_y pose parameters, sets their animation speed relative to the ground speed, and calls FrameAdvance.
+	--
+	if ( act == ACT_MP_RUN_MELEE || act == self:GetSequenceActivity(self:LookupSequence("run_item1")) ) then
+
+		self:BodyMoveXY()
+
+		-- BodyMoveXY() already calls FrameAdvance, calling it twice will affect animation playback, specifically on layers
+		return
+
+	end
+
+	--
+	-- If we're not walking or running we probably just want to update the anim system
+	--
+	self:FrameAdvance()
+
+end
+
 ----------------------------------------------------
 -- ENT:ChaseEnemy()
 -- Works similarly to Garry's MoveToPos function
@@ -215,11 +246,7 @@ end
 --  is one.
 ----------------------------------------------------
 function ENT:Think()
-	if SERVER then
-
-		self:BodyMoveXY()
-
-	end
+	
 	if (IsValid(self:GetEnemy()) and self.Ready) then
 		if (math.random(1,1800) == 1) then
 			self.CrybabyMode = true
@@ -230,11 +257,149 @@ function ENT:Think()
 	if (SERVER and !self:HaveEnemy()) then
 		self.EyeAngle = self:GetAngles()
 	end
-	if (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 1) then
+	if (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 0) then
 		self:SetEnemy(nil)
+	end
+	if SERVER then
+			
+		for k,v in ipairs(ents.FindInSphere(self:GetPos(),self.MeleeAttackRange)) do
+
+			if (IsValid(v) and (v:IsPlayer() or v:IsNextBot() or v:IsNPC()) and IsValid(self:GetEnemy()) and v:EntIndex() != self:GetEnemy():EntIndex() and v:EntIndex() != self:EntIndex() and self.Ready and SERVER) then
+				self.loco:FaceTowards(v:GetPos())
+				if (v:GetPos():Distance(self:GetPos()) < self.MeleeAttackRange and v:Health() > 0) then
+					self.loco:FaceTowards(v:GetPos())
+					if (IsValid(v) and (!self.MeleeAttackDelay or CurTime() > self.MeleeAttackDelay) and (!self.RangedAttackDelay2 or CurTime() > self.RangedAttackDelay2)) then
+						if (math.random(1,3) == 1) then
+							self:EmitSound(table.Random({"Halloween.MerasmusStaffAttack","Halloween.MerasmusStaffAttackRare"}))
+						end
+						self:AddGestureSequence(self:LookupSequence("melee_swing"),true)
+						timer.Simple(0.19, function()
+							if (!self.Ready) then return end
+							if (!self:HaveEnemy()) then return end
+							if (v:GetPos():Distance(self:GetPos()) < 200) then
+								v:AddDeathFlag(DF_DECAP)
+							end 
+						end)
+						timer.Simple(0.2, function()
+							if (!self.Ready) then return end
+							if (!self:HaveEnemy()) then return end
+							if (v:GetPos():Distance(self:GetPos()) < 200) then
+									local dmginfo = DamageInfo()
+									dmginfo:SetAttacker(self)
+									dmginfo:SetInflictor(self)
+									dmginfo:SetDamageType(bit.bor(DMG_CLUB,DMG_SLASH))
+									dmginfo:SetDamage(500)
+									v:TakeDamageInfo(dmginfo) 
+								if (v:IsBuilding()) then
+									self:EmitSound("Halloween.HeadlessBossAxeHitWorld")
+								else
+									self:EmitSound("Halloween.HeadlessBossAxeHitFlesh")
+								end
+							end
+		
+						end)
+						self.MeleeAttackDelay = CurTime() + 1.0
+					end
+				end
+			elseif (!self.UsingBomb and v:GetPos():Distance(self:GetPos()) > self.MeleeAttackRange and v:GetPos():Distance(self:GetPos()) < self.RangedAttackRange and v:Health() > 0) then
+						if (IsValid(v) and (!self.RangedAttackDelay or CurTime() > self.RangedAttackDelay)) then
+							self.loco:FaceTowards(v:GetPos())
+							self.UsingBomb = true
+								self:EmitSound(table.Random({"Halloween.MerasmusGrenadeThrow","Halloween.MerasmusGrenadeThrowRare"}))
+							ParticleEffectAttach( "merasmus_shoot", PATTACH_POINT_FOLLOW, self, self:LookupAttachment("effect_hand_R") );
+							self:AddGestureSequence(self:LookupSequence("item1_fire"),true)
+							local staffBodyGroup = self:FindBodygroupByName("staff")
+							self:SetBodygroup( staffBodyGroup, 2 );
+							local bomb
+							timer.Simple(0.3, function()
+							
+								bomb = ents.Create("prop_physics")
+								local aimvec = self:EyePos() + Vector(0,0,120)
+								local aimvec2 = self:GetAttachment( self:LookupAttachment("effect_hand_R") ).Ang:Forward()
+								bomb:SetPos(aimvec + (self:GetAngles():Forward() * 32))
+								bomb:SetModel("models/props_lakeside_event/bomb_temp.mdl")
+								-- Set the angles to the player'e eye angles. Then spawn it.
+								bomb:SetAngles( self:EyeAngles() )
+								bomb:Spawn()
+				
+								-- Now get the physics object. Whenever we get a physics object
+								-- we need to test to make sure its valid before using it.
+								-- If it isn't then we'll remove the entity.
+								local phys = bomb:GetPhysicsObject()
+								if ( not phys:IsValid() ) then bomb:Remove() return end
+							
+								-- Now we apply the force - so the chair actually throws instead 
+								-- of just falling to the ground. You can play with this value here
+								-- to adjust how fast we throw it.
+								-- Now that this is the last use of the aimvector vector we created,
+								-- we can directly modify it instead of creating another copy
+								aimvec2:Mul( math.random(1500,2000) )
+								phys:ApplyForceCenter( aimvec2 )
+			
+							end)
+							timer.Simple(0.8, function()
+								if (!self:HaveEnemy()) then return end
+								if (math.random(1,3) == 1) then
+									self:EmitSound(table.Random({"Halloween.MerasmusCastFireSpell","Halloween.MerasmusCastFireSpell"}))
+								end 
+								self:SetBodygroup( staffBodyGroup, 0 );
+								self:StartActivity(ACT_RANGE_ATTACK2)
+								self.loco:SetDesiredSpeed( 0 )
+								self.loco:SetAcceleration(0)
+								self.Ready = false
+								timer.Simple(self:SequenceDuration(self:SelectWeightedSequence(ACT_RANGE_ATTACK2)), function()
+									if (self:Health() < 0) then return end
+									self.Ready = true
+									self.UsingBomb = false
+								end)
+								self.RangedAttackDelay2 = CurTime() + self:SequenceDuration(self:SelectWeightedSequence(ACT_RANGE_ATTACK2))
+								timer.Simple(1.2, function()
+									if (self:Health() < 0) then return end
+									if (!self:HaveEnemy()) then bomb:Remove() return end
+									self:EmitSound("Halloween.Merasmus_Spell")
+									ParticleEffect( "merasmus_dazed_explosion", bomb:GetPos() + Vector(0,0,30), bomb:GetAngles() )
+									bomb:EmitSound("TF_BaseExplosionEffect.Sound")
+									for k,v in ipairs(ents.FindInSphere(bomb:GetPos(), 160)) do
+										if (v:IsTFPlayer() and v:EntIndex() != self:EntIndex()) then
+											local dmginfo = DamageInfo()
+											dmginfo:SetAttacker(self)
+											dmginfo:SetInflictor(self)
+											dmginfo:SetDamageType(DMG_BLAST)
+											dmginfo:SetDamage(95)
+											v:TakeDamageInfo(dmginfo) 
+											v:SetLocalVelocity(v:GetVelocity() + Vector(0,0,800))
+											if (v:Health() > 0) then
+												GAMEMODE:IgniteEntity(v, self, self, 8)
+											end
+										end
+									end
+									for k,v in ipairs(ents.FindInSphere(bomb:GetPos(), self.RangedAttackRange)) do
+										if (v:IsTFPlayer() and v:EntIndex() != self:EntIndex()) then
+											local dmginfo = DamageInfo()
+											dmginfo:SetAttacker(self)
+											dmginfo:SetInflictor(self)
+											dmginfo:SetDamageType(bit.bor(DMG_GENERIC,DMG_BURN,DMG_DISSOLVE))
+											dmginfo:SetDamage(35)
+											v:TakeDamageInfo(dmginfo) 
+											v:SetLocalVelocity(v:GetVelocity() + Vector(0,0,800))
+											if (v:Health() > 0) then
+												GAMEMODE:IgniteEntity(v, self, self, 8)
+											end
+										end
+									end
+									bomb:Remove()
+								end)
+			
+							end)
+							self.RangedAttackDelay = CurTime() + 6
+						end
+			end
+			
+		end 
 	end
 	if (IsValid(self:GetEnemy()) and self.Ready and SERVER) then
 		if (self:GetEnemy():GetPos():Distance(self:GetPos()) < self.MeleeAttackRange and self:GetEnemy():Health() > 0) then
+			self.loco:FaceTowards(self:GetEnemy():GetPos())
 			if (IsValid(self:GetEnemy()) and (!self.MeleeAttackDelay or CurTime() > self.MeleeAttackDelay) and (!self.RangedAttackDelay2 or CurTime() > self.RangedAttackDelay2)) then
 				if (math.random(1,3) == 1) then
 					self:EmitSound(table.Random({"Halloween.MerasmusStaffAttack","Halloween.MerasmusStaffAttackRare"}))
@@ -251,14 +416,12 @@ function ENT:Think()
 					if (!self.Ready) then return end
 					if (!self:HaveEnemy()) then return end
 					if (self:GetEnemy():GetPos():Distance(self:GetPos()) < 200) then
-						if (self:GetEnemy():GetClass() != "npc_headless_hatman") then
 							local dmginfo = DamageInfo()
 							dmginfo:SetAttacker(self)
 							dmginfo:SetInflictor(self)
 							dmginfo:SetDamageType(bit.bor(DMG_CLUB,DMG_SLASH))
 							dmginfo:SetDamage(500)
 							self:GetEnemy():TakeDamageInfo(dmginfo) 
-						end
 						if (self:GetEnemy():IsBuilding()) then
 							self:EmitSound("Halloween.HeadlessBossAxeHitWorld")
 						else
@@ -267,56 +430,82 @@ function ENT:Think()
 					end
 
 				end)
-				self.MeleeAttackDelay = CurTime() + 0.8
+				self.MeleeAttackDelay = CurTime() + 1.0
 			end
 		elseif (!self.UsingBomb and self:GetEnemy():GetPos():Distance(self:GetPos()) > self.MeleeAttackRange and self:GetEnemy():GetPos():Distance(self:GetPos()) < self.RangedAttackRange and self:GetEnemy():Health() > 0) then
 			if (IsValid(self:GetEnemy()) and (!self.RangedAttackDelay or CurTime() > self.RangedAttackDelay)) then
+				self.loco:FaceTowards(self:GetEnemy():GetPos())
 				self.UsingBomb = true
-				self:AddGestureSequence(self:LookupSequence("melee_swing"),true)	
-				local bomb = ents.Create("prop_physics")
-				local aimvec = self:EyePos() + Vector(0,0,120)
-				bomb:SetPos(aimvec + (self.EyeAngle:Forward() * 32))
-				bomb:SetModel("models/props_lakeside_event/bomb_temp.mdl")
-				-- Set the angles to the player'e eye angles. Then spawn it.
-				bomb:SetAngles( self:EyeAngles() )
-				bomb:Spawn()
+					self:EmitSound(table.Random({"Halloween.MerasmusGrenadeThrow","Halloween.MerasmusGrenadeThrowRare"}))
+				ParticleEffectAttach( "merasmus_shoot", PATTACH_POINT_FOLLOW, self, self:LookupAttachment("effect_hand_R") );
+				self:AddGestureSequence(self:LookupSequence("item1_fire"),true)
+				local staffBodyGroup = self:FindBodygroupByName("staff")
+				self:SetBodygroup( staffBodyGroup, 2 );
+				local bomb
+				timer.Simple(0.3, function()
+				
+					bomb = ents.Create("prop_physics")
+					local aimvec = self:EyePos() + Vector(0,0,120)
+					local aimvec2 = self:GetAttachment( self:LookupAttachment("effect_hand_R") ).Ang:Forward()
+					bomb:SetPos(aimvec + (self:GetAngles():Forward() * 32))
+					bomb:SetModel("models/props_lakeside_event/bomb_temp.mdl")
+					-- Set the angles to the player'e eye angles. Then spawn it.
+					bomb:SetAngles( self:EyeAngles() )
+					bomb:Spawn()
+	
+					-- Now get the physics object. Whenever we get a physics object
+					-- we need to test to make sure its valid before using it.
+					-- If it isn't then we'll remove the entity.
+					local phys = bomb:GetPhysicsObject()
+					if ( not phys:IsValid() ) then bomb:Remove() return end
+				
+					-- Now we apply the force - so the chair actually throws instead 
+					-- of just falling to the ground. You can play with this value here
+					-- to adjust how fast we throw it.
+					-- Now that this is the last use of the aimvector vector we created,
+					-- we can directly modify it instead of creating another copy
+					aimvec2:Mul( math.random(1500,2000) )
+					phys:ApplyForceCenter( aimvec2 )
 
-				-- Now get the physics object. Whenever we get a physics object
-				-- we need to test to make sure its valid before using it.
-				-- If it isn't then we'll remove the entity.
-				local phys = bomb:GetPhysicsObject()
-				if ( not phys:IsValid() ) then bomb:Remove() return end
-			
-				-- Now we apply the force - so the chair actually throws instead 
-				-- of just falling to the ground. You can play with this value here
-				-- to adjust how fast we throw it.
-				-- Now that this is the last use of the aimvector vector we created,
-				-- we can directly modify it instead of creating another copy
-				aimvec:Mul( 800 )
-				aimvec:Add( VectorRand( -10, 10 ) ) -- Add a random vector with elements [-10, 10)
-				phys:ApplyForceCenter( aimvec )
+				end)
 				timer.Simple(0.8, function()
 					if (!self:HaveEnemy()) then return end
-					self:EmitSound("Halloween.MerasmusCastFireSpell")
+					if (math.random(1,3) == 1) then
+						self:EmitSound(table.Random({"Halloween.MerasmusCastFireSpell","Halloween.MerasmusCastFireSpell"}))
+					end 
+					self:SetBodygroup( staffBodyGroup, 0 );
 					self:StartActivity(ACT_RANGE_ATTACK2)
 					self.loco:SetDesiredSpeed( 0 )
 					self.loco:SetAcceleration(0)
 					self.Ready = false
 					timer.Simple(self:SequenceDuration(self:SelectWeightedSequence(ACT_RANGE_ATTACK2)), function()
-						if (self:Health() < 1) then return end
+						if (self:Health() < 0) then return end
 						self.Ready = true
 						self.UsingBomb = false
 					end)
 					self.RangedAttackDelay2 = CurTime() + self:SequenceDuration(self:SelectWeightedSequence(ACT_RANGE_ATTACK2))
 					timer.Simple(1.2, function()
-						if (self:Health() < 1) then return end
+						if (self:Health() < 0) then return end
 						if (!self:HaveEnemy()) then bomb:Remove() return end
 						self:EmitSound("Halloween.Merasmus_Spell")
-						local effectdata = EffectData()
-						effectdata:SetOrigin( bomb:GetPos() )
-						util.Effect( "Explosion", effectdata )
+						ParticleEffect( "merasmus_dazed_explosion", bomb:GetPos() + Vector(0,0,30), bomb:GetAngles() )
+						bomb:EmitSound("TF_BaseExplosionEffect.Sound")
+						for k,v in ipairs(ents.FindInSphere(bomb:GetPos(), 160)) do
+							if (v:IsTFPlayer() and v:EntIndex() != self:EntIndex()) then
+								local dmginfo = DamageInfo()
+								dmginfo:SetAttacker(self)
+								dmginfo:SetInflictor(self)
+								dmginfo:SetDamageType(DMG_BLAST)
+								dmginfo:SetDamage(95)
+								v:TakeDamageInfo(dmginfo) 
+								v:SetLocalVelocity(v:GetVelocity() + Vector(0,0,800))
+								if (v:Health() > 0) then
+									GAMEMODE:IgniteEntity(v, self, self, 8)
+								end
+							end
+						end
 						for k,v in ipairs(ents.FindInSphere(bomb:GetPos(), self.RangedAttackRange)) do
-							if (v:IsTFPlayer() and !v:IsNextBot()) then
+							if (v:IsTFPlayer() and v:EntIndex() != self:EntIndex()) then
 								local dmginfo = DamageInfo()
 								dmginfo:SetAttacker(self)
 								dmginfo:SetInflictor(self)
@@ -336,7 +525,7 @@ function ENT:Think()
 				self.RangedAttackDelay = CurTime() + 6
 			end
 		end
-		if (self:GetEnemy():GetPos():Distance(self:GetPos()) < 100 and self:GetEnemy():Health() > 0) then
+		if (self:GetEnemy():GetPos():Distance(self:GetPos()) < 000 and self:GetEnemy():Health() > 0) then
 			if (self:GetSequence() != self:LookupSequence("stand_melee")) then
 				self:StartActivity( self:GetSequenceActivity(self:LookupSequence("stand_melee")) )
 			end
@@ -357,7 +546,7 @@ function ENT:Think()
 			self.loco:SetDesiredSpeed( 500 )
 			self.loco:SetAcceleration(300)
 		end
-	elseif (IsValid(self:GetEnemy()) and (self:GetEnemy():Health() < 1) and self.Ready) then
+	elseif (IsValid(self:GetEnemy()) and (self:GetEnemy():Health() < 0) and self.Ready) then
 		self:SetEnemy(nil)
 	end
 	self:NextThink(CurTime())
@@ -426,6 +615,11 @@ function ENT:ChaseEnemy( options )
 end
 function ENT:OnInjured( dmginfo )
 	ParticleEffect( "merasmus_blood", dmginfo:GetDamagePosition(), self:GetAngles() )
+	
+	if not self.NextFlinch or CurTime() > self.NextFlinch then
+		self:AddGesture(ACT_MP_GESTURE_FLINCH_CHEST)
+		self.NextFlinch = CurTime() + 0.5
+	end
 end
 function ENT:OnKilled( dmginfo )
 
@@ -438,16 +632,16 @@ function ENT:OnKilled( dmginfo )
 			self:SetEnemy(nil)
 			self.loco:SetDesiredSpeed( 0 )
 			self.loco:SetAcceleration(0)
-			self:StartActivity( ACT_DIESIMPLE )
 			self:EmitSound("Halloween.Merasmus_Death")
 			self:EmitSound("Halloween.MerasmusBanish")
 			timer.Simple(0.1, function()
 			
 				if (!IsValid(self)) then return end
 
+				self:StartActivity( ACT_DIESIMPLE )
 				timer.Simple(self:SequenceDuration(self:LookupSequence("death")) - 0.1,function()
 			
-					ParticleEffectAttach("merasmus_tp", PATTACH_ABSORIGIN_FOLLOW, self, -1)
+					ParticleEffect( "merasmus_tp", self:GetPos(), self:GetAngles() )
 					PrintMessage(HUD_PRINTCENTER,"MERASMUS has been defeated!\n")
 					self:EmitSound("Halloween.Merasmus_TP_Out")
 					for k,v in ipairs(player.GetAll()) do

@@ -26,16 +26,16 @@ function TeamSelection()
 	TeamNeutral:SetSize( 130, 20 )
 	TeamNeutral:SetText( "Neutral Team" )
 	local TeamFriendly = vgui.Create( "DButton", teamframe )
-	function TeamFriendly.DoClick() RunConsoleCommand( "changeteam", 6 ) teamframe:Close() end
+	function TeamFriendly.DoClick() RunConsoleCommand( "random_team" ) teamframe:Close() end
 	TeamFriendly:SetPos( 10, 125 )
 	TeamFriendly:SetSize( 130, 20 )
-	TeamFriendly:SetText( "Friendly Team" )
+	TeamFriendly:SetText( "Random Team" )
 	teamframe:SetSize(150,150) --set its size
 	teamframe:Center() --position it at the center of the screen CheckUpdateItem
 	teamframe:SetDraggable(false) --can you move it around
 	teamframe:SetSizable(false) --can you resize it?
-	teamframe:ShowCloseButton(true) --can you close it
-	teamframe:MakePopup() --make it appear
+	teamframe:ShowCloseButton(false) --can you close it
+	teamframe:MakePopup() --make it appear 
 	teamframe:SetKeyboardInputEnabled( false )
 	
 end

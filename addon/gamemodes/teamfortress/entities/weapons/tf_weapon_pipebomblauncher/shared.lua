@@ -132,7 +132,7 @@ SWEP.Slot				= 1
 SWEP.HasTeamColouredVModel = false
 SWEP.HasTeamColouredWModel = false
 
-SWEP.ViewModel			= "models/weapons/c_models/c_demo_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_demo_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_stickybomb_launcher/c_stickybomb_launcher.mdl"
 SWEP.Crosshair = "tf_crosshair3"
 

@@ -9,16 +9,19 @@ direction = teleporter direction pose param
 ]]
 
 
-ENT.Base = "base_entity" 
+ENT.Base = "base_nextbot" 
 ENT.Type = "anim"  
-
-ENT.AutomaticFrameAdvance = true
 
 function ENT:SetupDataTables()
 	self:NetworkVar("Entity", 0, "Builder")
 	self:NetworkVar("Float", 0, "Scale")
 	self:NetworkVar("Int", 0, "BuildGroup")
 	self:NetworkVar("Int", 1, "BuildMode")
+end
+
+function ENT:Think()
+	self:NextThink(CurTime())
+	return true
 end
 
 function ENT:SetBuildingScale(s)

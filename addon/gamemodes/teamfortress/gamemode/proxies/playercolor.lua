@@ -11,10 +11,9 @@ matproxy.Add({
         -- In sandbox this function is created as a network function, 
         -- in player_sandbox.lua in SetupDataTables
 		if ( ent.GetPlayerColor ) then	
-			local clr = ent:GetPlayerColor()
+			local clr = ent.GetPlayerColor
 			mat:SetVector( self.ResultTo, clr )
-		end
-		if (ent:GetOwner():GetNWEntity("RagdollEntity") == ent) then
+        elseif (ent:GetOwner():GetNWEntity("RagdollEntity") == ent or ent.RagdollEntity == ent) then
 	
 			mat:SetVector( self.ResultTo, ent:GetOwner():GetPlayerColor() )
 			

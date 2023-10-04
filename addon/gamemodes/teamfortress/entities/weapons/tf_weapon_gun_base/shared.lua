@@ -47,36 +47,50 @@ function SWEP:ShootPos()
 end
 
 function SWEP:PrimaryAttack()
+	if (!self:CanPrimaryAttack()) then 
+		if (!self.Reloading and SERVER) then
+			self:SetNextPrimaryFire(CurTime())
+			self:SetNextSecondaryFire(CurTime())
+		end
+		return 
+	end
 	if not self.IsDeployed then return false end 
-	if self:GetItemData().model_player == "models/workshop/weapons/c_models/c_russian_riot/c_russian_riot.mdl" then
-		self.ShootSound = Sound(")weapons/family_business_shoot.wav")
-		self.ShootCritSound = Sound(")weapons/family_business_shoot.wav")
-		self.Primary.ClipSize = 8
-		self.Primary.DefaultClip = 8
-		self.Primary.Delay = 0.5
-	end
-	if self:GetItemData().model_player == "models/workshop/weapons/c_models/c_reserve_shooter/c_reserve_shooter.mdl" then
-		self.Primary.ClipSize = 3
-		self.Primary.DefaultClip = 3
-	end
 	self:StopTimers()
 	if self.Owner:GetMaterial() == "models/shadertest/predator" then return end
 	
 	auto_reload = self.Owner:GetInfoNum("tf_righthand", 1)
 	
-	if (self:CanPrimaryAttack() and CurTime() > self:GetNextPrimaryFire() and self:Clip1() >= 0) then
-		if SERVER then
-			self:SendWeaponAnim(self.VM_PRIMARYATTACK)
-		end
+	self.Reloading = false
+	self.NextReload = nil
+	self.NextReload2 = nil
+	self.NextReloadStart = nil
+	
+	if (!self.Reloading and self:Clip1() >= 0) then
 		
 		if (self.Primary.FastDelay) then
 			self:SetNextPrimaryFire(CurTime() + self.Primary.FastDelay)
+			self:SetNextSecondaryFire(CurTime() + self.Primary.FastDelay)
 		else
 			self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+			self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
 		end
-		self:ShootEffects()
+
+		self:SendWeaponAnim(self.VM_PRIMARYATTACK)
+		if SERVER then
+			self:ShootEffects()
+		end
+		self:RustyBulletHole()		
 	end
-	if not self:CallBaseFunction("PrimaryAttack") then return false end
+	if SERVER then
+		umsg.Start("TF2ShellEject")
+			umsg.Entity(self)
+		umsg.End()
+	end
+	if (self.FastDelay) then
+		self.NextIdle = CurTime() + self:SequenceDuration(self:SelectWeightedSequence(self.VM_PRIMARYATTACK)) / self.Primary.FastDelay
+	else
+		self.NextIdle = CurTime() + self:SequenceDuration(self:SelectWeightedSequence(self.VM_PRIMARYATTACK))
+	end
 	--if ( IsFirstTimePredicted() ) then
 		self:ShootProjectile(self.BulletsPerShot, self.BulletSpread)
 		self.Owner:DoAttackEvent()
@@ -97,20 +111,6 @@ function SWEP:PrimaryAttack()
 			end
 		end)
 	--end
-	
-
-	if self then
-		if self.Owner:GetInfoNum("tf_autoreload", 1) == 1 then
-			if auto_reload then
-				timer.Create("AutoReload", (self:SequenceDuration() + self.AutoReloadTime), 1, function() if IsValid(self) and IsValid(self.Owner) and isfunction(self:Reload()) then self:Reload() end end)
-			end
-		end
-	end
-	
-	
-	if self:Clip1() <= 0 then
-		self:Reload()
-	end
 	
 	if self.Owner:GetPlayerClass() == "spy" then
 		if self.Owner:GetModel() == "models/player/scout.mdl" or  self.Owner:GetModel() == "models/player/soldier.mdl" or  self.Owner:GetModel() == "models/player/pyro.mdl" or  self.Owner:GetModel() == "models/player/demo.mdl" or  self.Owner:GetModel() == "models/player/heavy.mdl" or  self.Owner:GetModel() == "models/player/engineer.mdl" or  self.Owner:GetModel() == "models/player/medic.mdl" or  self.Owner:GetModel() == "models/player/sniper.mdl" or  self.Owner:GetModel() == "models/player/hwm/spy.mdl"	 or self.Owner:GetModel() == "models/player/kleiner.mdl" then
@@ -171,7 +171,10 @@ function SWEP:PrimaryAttack()
 	self.NextReloadStart = nil
 	self.NextReload = nil
 	self.Reloading = false
-	
+	if SERVER then
+		self.Owner:Speak("TLK_FIREWEAPON", false)
+	end
+
 	return true
 end
 
@@ -223,18 +226,23 @@ function SWEP:ShootEffects()
 		--self.WorldModel = "models/empty.mdl"
 	else
 		--self.WorldModel = wmodel;
-	end;
-	local vm = self.Owner:GetViewModel()
-	if SERVER then
-	
-			if (self:Critical()) then
-				self.Owner:EmitSound(self.ShootCritSound)
-			else
-				self.Owner:EmitSound(self.ShootSound)
-			end
-			
-			self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_PRIMARYFIRE)
 	end
+	local vm = self.Owner:GetViewModel()
+		if (!self:CanPrimaryAttack()) then return end
+		timer.Simple(0.02, function()
+		
+			if (self:Critical()) then
+				self:EmitSound(self.ShootCritSound)
+			else
+				self:EmitSound(self.ShootSound)
+			end
+
+		end)
+			
+	self.Reloading = false
+	self.NextReload = nil
+	self.NextReload2 = nil
+	self.NextReloadStart = nil
 	if CLIENT then
 		if IsValid(self.CModel) then
 			self.CModel:SetModel(wmodel) 

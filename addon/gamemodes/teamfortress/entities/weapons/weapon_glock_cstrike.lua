@@ -22,7 +22,7 @@ SWEP.Primary.ClipSize = 20  -- How much bullets are in the mag
 SWEP.Primary.DefaultClip = 128 -- How much bullets preloaded when spawned
 SWEP.Primary.Damage = 18
 SWEP.Primary.TakeAmmo = 1
-SWEP.Primary.Spread = 0.75
+SWEP.Primary.Spread = 0.25
 SWEP.Primary.NumberofShots = 1
 SWEP.Primary.Ammo = "pistol" 
 SWEP.Secondary.Ammo = "none"
@@ -111,7 +111,7 @@ function SWEP:PrimaryAttack()
 	if ( !self:CanPrimaryAttack() ) then return end
 	 
 	local vm = self:GetOwner():GetViewModel()
-	local bullet = {} 
+	local bullet = {}  
 	bullet.Num = self.Primary.NumberofShots 
 	bullet.Src = self.Owner:GetShootPos() 
 	bullet.Dir = self.Owner:GetAimVector() 
@@ -124,10 +124,10 @@ function SWEP:PrimaryAttack()
 	local rnda = self.Primary.Recoil * -1 
 	local rndb = self.Primary.Recoil * math.random(-1, 1) 
 	  
-	self:ShootEffects()
+	self:ShootEffects() 
 	 
 	self.Owner:FireBullets( bullet ) 
-		self:EmitSound(self.ShootSound, 85,math.random(95,105))	
+		self:EmitSound(self.ShootSound, 85,100)	
 		self.Owner:ViewPunch( Angle( rnda,0,0 ) ) 
 		self:TakePrimaryAmmo(self.Primary.TakeAmmo) 
 		self:SendWeaponAnim(vm:GetSequenceActivity(vm:LookupSequence("glock_firesingle")))

@@ -49,7 +49,7 @@ local ActIndex = {
 
 function SWEP:SetupCModelActivities(item, noreplace)
 	tf_util.ReadActivitiesFromModel(self)
-	
+	 
 	if item then
 		local hold = "PRIMARY"
 		if item.anim_slot then
@@ -59,65 +59,70 @@ function SWEP:SetupCModelActivities(item, noreplace)
 		end
 		--MsgN(Format("SetupCModelActivities %s", tostring(self)))
 		
-		self.VM_DRAW			= _G["ACT_"..hold.."_VM_DRAW"]
-		self.VM_IDLE			= _G["ACT_"..hold.."_VM_IDLE"]
-		self.VM_PRIMARYATTACK	= _G["ACT_"..hold.."_VM_PRIMARYATTACK"]
-		self.VM_SECONDARYATTACK	= _G["ACT_"..hold.."_VM_SECONDARYATTACK"]
-		self.VM_RELOAD			= _G["ACT_"..hold.."_VM_RELOAD"]
-		self.VM_RELOAD_START	= _G["ACT_"..hold.."_RELOAD_START"]
-		self.VM_RELOAD_FINISH	= _G["ACT_"..hold.."_RELOAD_FINISH"]
-		
+		self.VM_DRAW			= getfenv()["ACT_"..hold.."_VM_DRAW"]
+		self.VM_IDLE			= getfenv()["ACT_"..hold.."_VM_IDLE"]
+		self.VM_PRIMARYATTACK	= getfenv()["ACT_"..hold.."_VM_PRIMARYATTACK"]
+		self.VM_SECONDARYATTACK	= getfenv()["ACT_"..hold.."_VM_SECONDARYATTACK"]
+		self.VM_RELOAD			= getfenv()["ACT_"..hold.."_VM_RELOAD"]
+		self.VM_RELOAD_START	= getfenv()["ACT_"..hold.."_RELOAD_START"]
+		self.VM_RELOAD_FINISH	= getfenv()["ACT_"..hold.."_RELOAD_FINISH"]
+		 
 		-- Special activities
-		self.VM_CHARGE			= _G["ACT_"..hold.."_VM_CHARGE"]
-		self.VM_DRYFIRE			= _G["ACT_"..hold.."_VM_DRYFIRE"]
-		self.VM_IDLE_2			= _G["ACT_"..hold.."_VM_IDLE_2"]
-		self.VM_CHARGE_IDLE_3	= _G["ACT_"..hold.."_VM_CHARGE_IDLE_3"]
-		self.VM_IDLE_3			= _G["ACT_"..hold.."_VM_IDLE_3"]
-		self.VM_PULLBACK		= _G["ACT_"..hold.."_VM_PULLBACK"]
-		self.VM_PREFIRE			= _G["ACT_"..hold.."_ATTACK_STAND_PREFIRE"]
-		self.VM_POSTFIRE		= _G["ACT_"..hold.."_ATTACK_STAND_POSTFIRE"]
+		self.VM_CHARGE			= getfenv()["ACT_"..hold.."_VM_CHARGE"]
+		self.VM_DRYFIRE			= getfenv()["ACT_"..hold.."_VM_DRYFIRE"]
+		self.VM_IDLE_2			= getfenv()["ACT_"..hold.."_VM_IDLE_2"]
+		self.VM_CHARGE_IDLE_3	= getfenv()["ACT_"..hold.."_VM_CHARGE_IDLE_3"]
+		self.VM_IDLE_3			= getfenv()["ACT_"..hold.."_VM_IDLE_3"]
+		self.VM_PULLBACK		= getfenv()["ACT_"..hold.."_VM_PULLBACK"]
+		self.VM_PREFIRE			= getfenv()["ACT_"..hold.."_ATTACK_STAND_PREFIRE"]
+		self.VM_POSTFIRE		= getfenv()["ACT_"..hold.."_ATTACK_STAND_POSTFIRE"]
 		
-		self.VM_INSPECT_START	= _G["ACT_"..hold.."_VM_INSPECT_START"]
-		self.VM_INSPECT_IDLE	= _G["ACT_"..hold.."_VM_INSPECT_IDLE"]
-		self.VM_INSPECT_END		= _G["ACT_"..hold.."_VM_INSPECT_END"]
+		self.VM_INSPECT_START	= getfenv()["ACT_"..hold.."_VM_INSPECT_START"]
+		self.VM_INSPECT_IDLE	= getfenv()["ACT_"..hold.."_VM_INSPECT_IDLE"]
+		self.VM_INSPECT_END		= getfenv()["ACT_"..hold.."_VM_INSPECT_END"]
+		self.VM_RELOAD_START	= getfenv()["ACT_"..hold.."_RELOAD_START"]
+		self.VM_RELOAD	= getfenv()["ACT_"..hold.."_VM_RELOAD"]
+		self.VM_RELOAD_FINISH		= getfenv()["ACT_"..hold.."_RELOAD_FINISH"]
 		
 		self.VM_HITLEFT			= ACT_VM_HITLEFT
 		self.VM_HITRIGHT		= ACT_VM_HITRIGHT
 		
 		-- those melee activities are just so weird, sometimes it's ACT_VM_HITCENTER, sometimes it's ACT_MELEE_VM_HITCENTER
 		if self:SelectWeightedSequence(ACT_VM_HITCENTER) < 0 then
-			self.VM_HITCENTER		= _G["ACT_"..hold.."_VM_HITCENTER"] or ACT_VM_HITCENTER
-			self.VM_SWINGHARD		= _G["ACT_"..hold.."_VM_SWINGHARD"] or ACT_VM_SWINGHARD
+			self.VM_HITCENTER		= getfenv()["ACT_"..hold.."_VM_HITCENTER"] or ACT_VM_HITCENTER
+			self.VM_SWINGHARD		= getfenv()["ACT_"..hold.."_VM_SWINGHARD"] or ACT_VM_SWINGHARD
 		else
 			self.VM_HITCENTER		= ACT_VM_HITCENTER
 			self.VM_SWINGHARD		= ACT_VM_SWINGHARD
 		end
 	else
-		self.VM_DRAW			= ACT_VM_DRAW
-		self.VM_IDLE			= ACT_VM_IDLE
-		self.VM_PRIMARYATTACK	= ACT_VM_PRIMARYATTACK
-		self.VM_SECONDARYATTACK	= ACT_VM_SECONDARYATTACK
-		self.VM_RELOAD			= ACT_VM_RELOAD
-		self.VM_RELOAD_START	= ACT_RELOAD_START
-		self.VM_RELOAD_FINISH	= ACT_RELOAD_FINISH
+		local hold = self.HoldType
+		self.VM_DRAW			= getfenv()["ACT_"..hold.."_VM_DRAW"]
+		self.VM_IDLE			= getfenv()["ACT_"..hold.."_VM_IDLE"] 
+		self.VM_PRIMARYATTACK	= getfenv()["ACT_"..hold.."_VM_PRIMARYATTACK"]
+		self.VM_SECONDARYATTACK	= getfenv()["ACT_"..hold.."_VM_SECONDARYATTACK"]
+		 
+		-- Special activities
+		self.VM_CHARGE			= getfenv()["ACT_"..hold.."_VM_CHARGE"]
+		self.VM_DRYFIRE			= getfenv()["ACT_"..hold.."_VM_DRYFIRE"]
+		self.VM_IDLE_2			= getfenv()["ACT_"..hold.."_VM_IDLE_2"]
+		self.VM_CHARGE_IDLE_3	= getfenv()["ACT_"..hold.."_VM_CHARGE_IDLE_3"]
+		self.VM_IDLE_3			= getfenv()["ACT_"..hold.."_VM_IDLE_3"]
+		self.VM_PULLBACK		= getfenv()["ACT_"..hold.."_VM_PULLBACK"]
+		self.VM_PREFIRE			= getfenv()["ACT_"..hold.."_ATTACK_STAND_PREFIRE"]
+		self.VM_POSTFIRE		= getfenv()["ACT_"..hold.."_ATTACK_STAND_POSTFIRE"]
 		
-		self.VM_CHARGE			= ACT_INVALID
-		self.VM_DRYFIRE			= ACT_INVALID
-		self.VM_IDLE_2			= ACT_INVALID
-		self.VM_CHARGE_IDLE_3	= ACT_INVALID
-		self.VM_IDLE_3			= ACT_INVALID
-		self.VM_PULLBACK		= ACT_VM_PULLBACK
-		self.VM_PREFIRE			= ACT_MP_ATTACK_STAND_PREFIRE
-		self.VM_POSTFIRE		= ACT_MP_ATTACK_STAND_POSTFIRE
+		self.VM_INSPECT_START	= getfenv()["ACT_"..hold.."_VM_INSPECT_START"]
+		self.VM_INSPECT_IDLE	= getfenv()["ACT_"..hold.."_VM_INSPECT_IDLE"]
+		self.VM_INSPECT_END		= getfenv()["ACT_"..hold.."_VM_INSPECT_END"]
+		self.VM_RELOAD_START	= getfenv()["ACT_"..hold.."_RELOAD_START"]
+		self.VM_RELOAD	= getfenv()["ACT_"..hold.."_VM_RELOAD"]
+		self.VM_RELOAD_FINISH		= getfenv()["ACT_"..hold.."_RELOAD_FINISH"]
 		
-		self.VM_INSPECT_START	= ACT_PRIMARY_VM_INSPECT_START
-		self.VM_INSPECT_IDLE	= ACT_PRIMARY_VM_INSPECT_IDLE
-		self.VM_INSPECT_END		= ACT_PRIMARY_VM_INSPECT_END
-		
-		self.VM_HITLEFT			= ACT_VM_HITLEFT
-		self.VM_HITRIGHT		= ACT_VM_HITRIGHT
-		self.VM_HITCENTER		= ACT_VM_HITCENTER
-		self.VM_SWINGHARD		= ACT_VM_SWINGHARD
+		self.VM_HITLEFT		= getfenv()["ACT_"..hold.."_VM_HITCENTER"]
+		self.VM_HITRIGHT		= getfenv()["ACT_"..hold.."_VM_SWINGHARD"]
+		self.VM_HITCENTER		= getfenv()["ACT_"..hold.."_VM_HITCENTER"]
+		self.VM_SWINGHARD		= getfenv()["ACT_"..hold.."_VM_SWINGHARD"]
 	end
 	
 	if self.UsesSpecialAnimations then
@@ -134,7 +139,7 @@ function SWEP:SetupCModelActivities(item, noreplace)
 		if visuals and visuals.animations then
 			for act,rep in pairs(visuals.animations) do
 				if ActivityNameTranslate[act] then
-					self[ActivityNameTranslate[act]] = _G[rep]
+					self[ActivityNameTranslate[act]] = getfenv()[rep]
 				end
 			end
 		end

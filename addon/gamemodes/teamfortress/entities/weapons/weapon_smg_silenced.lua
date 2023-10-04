@@ -172,7 +172,7 @@ function SWEP:SecondaryAttack( right )
 	local vm = self.Owner:GetViewModel()
 	vm:SendViewModelMatchingSequence( vm:LookupSequence( anim ) )
 
-	self:EmitSound( ")player/survivor/swing/swish_weaponswing_swipe"..math.random(5,6)..".wav", 75, math.random(95,105) )
+	self:EmitSound( ")player/survivor/swing/swish_weaponswing_swipe"..math.random(5,6)..".wav", 75, 100 )
 
 	timer.Stop("Idle"..self.Owner:EntIndex())
 	timer.Create("Idle"..self.Owner:EntIndex(), vm:SequenceDuration(vm:LookupSequence("melee")) , 1, function()
@@ -214,7 +214,7 @@ function SWEP:DealDamage()
 	-- We need the second part for single player because SWEP:Think is ran shared in SP
 	if ( (IsValid(tr.Entity) and !tr.Entity:IsTFPlayer()) or tr.HitWorld ) then
 		if SERVER then
-			self.Owner:EmitSound( "player/survivor/hit/rifle_swing_hit_world.wav", 75, math.random(95,105) )
+			self.Owner:EmitSound( "player/survivor/hit/rifle_swing_hit_world.wav", 75, 100 )
 		end
 	end
 
@@ -231,7 +231,7 @@ function SWEP:DealDamage()
 					"player/survivor/hit/rifle_swing_hit_clown4.wav",
 					"player/survivor/hit/rifle_swing_hit_clown5.wav",
 					"player/survivor/hit/rifle_swing_hit_clown6.wav",
-				}), 75, math.random(95,105) )
+				}), 75, 100 )
 			else
 				self.Owner:EmitSound( table.Random({
 					"player/survivor/hit/rifle_swing_hit_infected7.wav",
@@ -240,13 +240,13 @@ function SWEP:DealDamage()
 					"player/survivor/hit/rifle_swing_hit_infected10.wav",
 					"player/survivor/hit/rifle_swing_hit_infected11.wav",
 					"player/survivor/hit/rifle_swing_hit_infected12.wav"
-				}), 75, math.random(95,105) )
+				}), 75, 100 )
 			end
 		else
 			self.Owner:EmitSound( table.Random({
 				"player/survivor/hit/rifle_swing_hit_survivor1.wav",
 				"player/survivor/hit/rifle_swing_hit_survivor2.wav"
-			}), 75, math.random(95,105) )
+			}), 75, 100 )
 		end
 		local dmginfo = DamageInfo()
 

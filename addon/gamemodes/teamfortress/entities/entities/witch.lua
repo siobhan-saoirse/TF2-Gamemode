@@ -185,7 +185,7 @@ end
 -- Simple functions used in keeping our enemy saved
 ----------------------------------------------------
 function ENT:SetEnemy(ent)
-	if (!self.SoonToBeRetreating && !self.Retreating) then
+	if (!self.SoonToBeRetreating && !self.Retreating and IsValid(ent)) then
 		if ent:IsL4D() then return end
 		if (self:Visible(ent)) then
 			self.Enemy = ent
@@ -349,10 +349,10 @@ function ENT:HandleAnimEvent( event, eventTime, cycle, type, options )
 					end
 				end
 			else 
-				self:EmitSound("Zombie.AttackMiss")
+				self:EmitSound("L4D_Zombie.AttackMiss")
 			end
 		else
-			self:EmitSound("Zombie.AttackMiss")
+			self:EmitSound("L4D_Zombie.AttackMiss")
 		end
 	end
 end

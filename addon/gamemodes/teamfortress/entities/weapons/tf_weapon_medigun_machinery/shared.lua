@@ -181,13 +181,13 @@ PrecacheParticleSystem("medicgun_invulnstatus_fullcharge_blue")
 
 SWEP.Base				= "tf_weapon_gun_base"
 
-SWEP.ViewModel			= "models/weapons/c_models/c_medic_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_medic_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_medigun_defense/c_medigun_defense.mdl"
 SWEP.Crosshair = "tf_crosshair5"
 
 SWEP.MuzzleEffect = "pyro_blast"
 
-SWEP.ShootSound = Sound("Weapon_Vaccinator.Heal")
+SWEP.ShootSound = Sound("WeaponMedigun_Vaccinator.Healing")
 SWEP.ShootSound2 = Sound("WeaponMedigun.NoTarget")
 SWEP.ChargedSound = Sound("WeaponMedigun.Charged")
 
@@ -342,7 +342,7 @@ function SWEP:PrimaryAttack()
 			self.Firing = true
 			self:SetHealTarget(tr.Entity)
 			
-			self:SendWeaponAnim(ACT_MP_ATTACK_STAND_PREFIRE)
+			self:SendWeaponAnim(ACT_SECONDARY_ATTACK_STAND_PREFIRE)
 			self.Owner:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_STAND_PREFIRE, true )	
 			tr.Entity:SetHealth(math.Clamp(tr.Entity:Health() + 5, 0, tr.Entity:GetMaxHealth()))
 			timer.Simple(0.01, function()
@@ -369,7 +369,7 @@ function SWEP:PrimaryAttack()
 			self.Firing = true
 			self:SetHealTarget(tr.Entity)
 			
-			self:SendWeaponAnim(ACT_MP_ATTACK_STAND_PREFIRE)
+			self:SendWeaponAnim(ACT_SECONDARY_ATTACK_STAND_PREFIRE)
 			self.Owner:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_STAND_PREFIRE, true )
 			timer.Simple(0.01, function()
 			timer.Create("LoopPlayerAttack1", 0.2, 0, function()
@@ -384,7 +384,7 @@ function SWEP:PrimaryAttack()
 			self.Firing = true
 			self:SetHealTarget(tr.Entity)
 			
-			self:SendWeaponAnim(ACT_MP_ATTACK_STAND_PREFIRE)
+			self:SendWeaponAnim(ACT_SECONDARY_ATTACK_STAND_PREFIRE)
 			self.Owner:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_STAND_PREFIRE, true )
 			timer.Simple(0.01, function()
 			timer.Create("LoopPlayerAttack1", 0.2, 0, function()
@@ -567,7 +567,7 @@ function SWEP:StopFiring()
 	self.CanInspect = true
 	timer.Stop("LoopPlayerAttack1")
 	self.ShootSoundLoop:Stop()
-	self:SendWeaponAnim(ACT_MP_ATTACK_STAND_POSTFIRE)
+	self:SendWeaponAnim(ACT_SECONDARY_ATTACK_STAND_POSTFIRE)
 	self.Owner:SetAnimation(ACT_MP_ATTACK_STAND_POSTFIRE)
 	self.NextIdle = CurTime() + self:SequenceDuration() - 0.2
 end

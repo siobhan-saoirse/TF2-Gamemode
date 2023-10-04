@@ -670,14 +670,14 @@ local ATTRIBUTES = {
 ["or_crit_vs_playercond"] = {
 	boolean = true,
 	crit_override = function(v,ent,hitgroup,dmginfo)
-		if ISPLAYER(ent) and ONFIRE(ent) then return true end
+		if ISPLAYER(ent) and ONFIRE(ent) and dmginfo:GetInflictor():GetClass() != "tf_entityflame" then return true end
 	end,
 },
 
 ["or_minicrit_vs_playercond_burning"] = {
 	boolean = true,
 	minicrit_override = function(v,ent,hitgroup,dmginfo)
-		if ISPLAYER(ent) and ONFIRE(ent) then return true end
+		if ISPLAYER(ent) and ONFIRE(ent) and dmginfo:GetInflictor():GetClass() != "tf_entityflame" then return true end
 	end,
 },
 
@@ -1180,7 +1180,7 @@ local ATTRIBUTES = {
 
 ["set_turn_to_gold"] = {
 	boolean = true,
-	on_kill = function(v,ent,inf,att)
+	pre_damage = function(v,ent,inf,att)
 	engineer_gold_lines =
 	{
 		"scenes/Player/Engineer/low/3605.vcd",

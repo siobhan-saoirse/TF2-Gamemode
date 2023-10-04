@@ -44,7 +44,7 @@ float CritDamageMultiplier : Critical damage multiplier (default=3)
 can be called either using tf_util.CalculateDamage(table) or tf_util.CalculateDamage(weapon, hitpos)
 ]]
 
-local tf_damage_disablespread = CreateConVar("tf_damage_disablespread", 1, {FCVAR_NOTIFY})
+local tf_damage_disablespread = CreateConVar("tf_damage_disablespread", 1, {FCVAR_NOTIFY,FL_REPLICATED})
 
 function CalculateDamage(data, hitpos, srcpos)
 	if tf_damage_disablespread:GetBool() then
@@ -64,26 +64,9 @@ function CalculateDamage(data, hitpos, srcpos)
 		crit = data.Critical
 	end
 	
-	--if crit then return data.BaseDamage * (data.CritDamageMultiplier or 3) end
+	damage = data.BaseDamage
 	
-	if hit then
-		dist = src:Distance(hit)
-		falloff = math.Clamp((dist / 512)-1, -1, 1)
-		
-		if falloff>0 then falloff = falloff * (data.MaxDamageFalloff or 0)
-		else falloff = falloff * (data.MaxDamageRampUp or 0)
-		end
-	else
-		falloff = 0
-	end
-	
-	if data.DamageRandomize then
-		damage = math.random(data.BaseDamage * (1-data.DamageRandomize), data.BaseDamage * (1+data.DamageRandomize))
-	else
-		damage = data.BaseDamage
-	end
-	
-	return (data.DamageModifier or 1) * damage * (1 - falloff)
+	return damage
 end
 
 function IsHL1SwepsMounted()

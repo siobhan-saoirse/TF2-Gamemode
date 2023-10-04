@@ -59,7 +59,7 @@ function SWEP:PrimaryAttack()
 	 
 	self.Owner:FireBullets( bullet ) 
 	if SERVER then
-		self.Owner:EmitSound(self.ShootSound, 75, math.random(95,105))	
+		self.Owner:EmitSound(self.ShootSound, 75, 100)	
 	end
 	self.Owner:ViewPunch( Angle( rnda,0,0 ) ) 
 	self:TakePrimaryAmmo(self.Primary.TakeAmmo) 

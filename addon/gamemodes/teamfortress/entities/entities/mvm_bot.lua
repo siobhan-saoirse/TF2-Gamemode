@@ -296,16 +296,19 @@ function ENT:Initialize()
 			end
 		end)
 		self.Bot = npc
-		timer.Simple(0.1, function()
+		timer.Simple(0.5, function()
 			if (self.Items and !table.IsEmpty(self.Items)) then
 				npc:StripWeapons() 
 				for k,v in ipairs(self.Items) do
+					npc:SetPlayerClass(npc:GetPlayerClass())
 					npc:EquipInLoadout(v)
 					timer.Simple(0.1, function()
 						local wep = npc:GetWeapons()[1] or npc:GetWeapons()[2] or npc:GetWeapons()[3]
 						npc:SelectWeapon(wep) 
 					end)
 				end
+			else
+				npc:SetPlayerClass(npc:GetPlayerClass())
 			end
 		end)
 	end	

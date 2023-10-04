@@ -201,70 +201,75 @@ if CLIENT then
 				collisiongroup = COLLISION_GROUP_PLAYER_MOVEMENT
 			} )
 			--debugoverlay.Line( pl:GetPos() + Vector(0,0,72), pl:GetPos() - Vector(0,0,4) * 4, 1, Color(255,255,255) )
-			if (tr.MatType == MAT_CONCRETE) then
+			if (pl:GetModel() == "models/bots/headless_hatman.mdl") then
+				pl:EmitSound("Halloween.HeadlessBossFootfalls") 
+				ParticleEffectAttach("halloween_boss_foot_impact", PATTACH_ABSORIGIN,pl,0)
+			else
+				if (tr.MatType == MAT_CONCRETE) then
 
-				pl:EmitSound("Concrete.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("Concrete.Step"..table.Random({"Right","Left"}))
 
-			elseif (tr.MatType == MAT_DEFAULT) then
+				elseif (tr.MatType == MAT_DEFAULT) then
 
-				pl:EmitSound("Concrete.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("Concrete.Step"..table.Random({"Right","Left"}))
 
-			elseif (tr.MatType == MAT_GRASS) then
+				elseif (tr.MatType == MAT_GRASS) then
 
-				pl:EmitSound("Grass.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("Grass.Step"..table.Random({"Right","Left"}))
 
-			elseif (tr.MatType == MAT_DIRT) then
+				elseif (tr.MatType == MAT_DIRT) then
 
-				pl:EmitSound("Dirt.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("Dirt.Step"..table.Random({"Right","Left"}))
 
-			elseif (tr.MatType == MAT_METAL) then
+				elseif (tr.MatType == MAT_METAL) then
 
-				pl:EmitSound("Metal.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("SolidMetal.Step"..table.Random({"Right","Left"}))
 
-			elseif (tr.MatType == MAT_SNOW) then
+				elseif (tr.MatType == MAT_SNOW) then
 
-				pl:EmitSound("Snow.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("Snow.Step"..table.Random({"Right","Left"}))
 
-			elseif (tr.MatType == MAT_PLASTIC) then
+				elseif (tr.MatType == MAT_PLASTIC) then
 
-				pl:EmitSound("Plastic.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("Plastic.Step"..table.Random({"Right","Left"}))
 
-			elseif (tr.MatType == MAT_FLESH || tr.MatType == MAT_BLOODYFLESH) then
+				elseif (tr.MatType == MAT_FLESH || tr.MatType == MAT_BLOODYFLESH) then
 
-				pl:EmitSound("Flesh.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("Flesh.Step"..table.Random({"Right","Left"}))
 
-			elseif (tr.MatType == MAT_SAND) then
+				elseif (tr.MatType == MAT_SAND) then
 
-				pl:EmitSound("Sand.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("Sand.Step"..table.Random({"Right","Left"}))
 
-			elseif (tr.MatType == MAT_SLOSH) then
+				elseif (tr.MatType == MAT_SLOSH) then
 
-				pl:EmitSound("Mud.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("Mud.Step"..table.Random({"Right","Left"}))
 
-			elseif (tr.MatType == MAT_TILE) then
+				elseif (tr.MatType == MAT_TILE) then
 
-				pl:EmitSound("Tile.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("Tile.Step"..table.Random({"Right","Left"}))
 
-			elseif (tr.MatType == MAT_VENT) then
+				elseif (tr.MatType == MAT_VENT) then
 
-				pl:EmitSound("MetalVent.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("MetalVent.Step"..table.Random({"Right","Left"}))
 
-			elseif (tr.MatType == MAT_COMPUTER) then
+				elseif (tr.MatType == MAT_COMPUTER) then
 
-				pl:EmitSound("MetalVent.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("MetalVent.Step"..table.Random({"Right","Left"}))
 
-			elseif (tr.MatType == MAT_FOLIAGE) then
+				elseif (tr.MatType == MAT_FOLIAGE) then
 
-				pl:EmitSound("Wood.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("Wood.Step"..table.Random({"Right","Left"}))
 
-			elseif (tr.MatType == MAT_WOOD) then
+				elseif (tr.MatType == MAT_WOOD) then
 
-				pl:EmitSound("Wood.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("Wood.Step"..table.Random({"Right","Left"}))
 
-			elseif (tr.MatType == MAT_GRATE) then
+				elseif (tr.MatType == MAT_GRATE) then
 
-				pl:EmitSound("MetalGrate.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("MetalGrate.Step"..table.Random({"Right","Left"}))
 
+				end
 			end
 			 
 		end
@@ -818,8 +823,58 @@ hook.Add("EntityEmitSound", "MouthFix", function(snd)
 		snd.Pitch = math.Clamp( snd.Pitch * engine.GetDemoPlaybackTimeScale(), 0, 255 )
 		return true
 	end
-	if CLIENT and !IsValid(snd.Entity) then return end
+
 	if (IsValid(snd.Entity)) then
+		for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),22000)) do
+			if ((--[[v:IsTFPlayer() || ]]v:IsPlayer() && v.TFBot) and !IsValid(v.TargetEnt) and v:EntIndex( ) != snd.Entity:EntIndex()) then
+				local oldangles = v:EyeAngles()
+				 
+				-- for improved npcs only
+				--[[if (SERVER and v:IsNPC() and !v:IsFriendly(snd.Entity) and snd.Entity:Team() != TEAM_NEUTRAL) then
+					if (v:GetCurrentSchedule() != SCHED_FORCED_GO_RUN) then
+						v:AlertSound()
+						v:SetSaveValue( "m_vecLastPosition", snd.Entity:GetPos() )
+						v:SetSchedule( SCHED_FORCED_GO_RUN ) 
+					end
+				else]]
+				if (v:IsPlayer()) then
+					v.LookAtEntity = snd.Entity
+					timer.Stop("Look"..v:EntIndex())
+					local discoverychance = 90
+					if (v.Difficulty == 2) then
+						discoverychance = 60
+					elseif (v.Difficulty == 1) then
+						discoverychance = 30
+					elseif (v.Difficulty == 0) then
+						discoverychance = 10
+					end
+					if (discoverychance > math.random(1,100)) then
+								
+							timer.Create("Look"..v:EntIndex(), 0.01, 100, function()
+								
+								if (!IsValid(v.TargetEnt) and v.LookAtEntity:GetPos():Distance(v:GetPos()) < 500) then
+									local angle = LerpAngle(0.2, v:EyeAngles(), ( v.LookAtEntity:GetPos() - v:GetPos() ):Angle())
+									v:SetEyeAngles(angle)
+									local tr = v:GetEyeTrace()
+									if (v.LookAtEntity:IsTFPlayer() and !v.LookAtEntity:IsFriendly(v)) then
+										v.TargetEnt = v.LookAtEntity
+									end
+								end
+
+							end)
+
+					end
+
+					timer.Stop("GoBack"..v:EntIndex())
+				end
+			end
+		end
+		local sound = string.Replace(snd.SoundName, ".mp3", ".wav")
+		if (file.Exists("sound/"..sound, "WORKSHOP")) then
+			if (!string.find(snd.SoundName,"announcer_") && !string.find(snd.SoundName,"mvm_")) then
+				snd.SoundName = string.Replace(snd.SoundName, ".mp3", ".wav") 
+			end
+		end
 		if (GetConVar("civ2_randomizer"):GetBool()) then	
 			if (!snd.Entity.IsRandomized) then
 				for i=0,snd.Entity:GetBoneCount() do
@@ -933,69 +988,24 @@ hook.Add("EntityEmitSound", "MouthFix", function(snd)
 		if CLIENT then
 			if !IsValid(snd.Entity) then return end
 			local pl = snd.Entity
-			if (!pl:IsL4D() and !pl:IsBot()) then
-				if (pl:GetPlayerClass() != "gmodplayer") then
-					pl:SetModel(pl:GetNWString("PlayerClassModel"))
-				end
-			elseif (pl:IsL4D()) then
-				pl:SetModel(pl:GetNWString("L4DModel"))
-			end
-
-			if (string.find(snd.Entity:GetModel(),"hwm")) then
-
-				if (snd.Entity.playerclass == "medicshotgun") then	
-					snd.Entity:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "heavy") then 
-					snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "scout") then
-					snd.Entity:SetupPhonemeMappings( "player/hwm/scout/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "pyro") then
-					snd.Entity:SetupPhonemeMappings( "player/hwm/scout/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "soldier") then
-					snd.Entity:SetupPhonemeMappings( "player/hwm/soldier/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "demoman") then
-					snd.Entity:SetupPhonemeMappings( "player/hwm/demo/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "engineer") then
-					snd.Entity:SetupPhonemeMappings( "player/hwm/engineer/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "medic") then
-					snd.Entity:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "sniper") then
-					snd.Entity:SetupPhonemeMappings( "player/hwm/sniper/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "spy") then
-					snd.Entity:SetupPhonemeMappings( "player/hwm/spy/phonemes/phonemes" )
-				else
-					snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
-				end
-
-			else
-				if (snd.Entity.playerclass == "medicshotgun") then	
-					snd.Entity:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "heavy") then
-					snd.Entity:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "scout") then
-					snd.Entity:SetupPhonemeMappings( "player/scout/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "soldier") then
-					snd.Entity:SetupPhonemeMappings( "player/soldier/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "demoman") then
-					snd.Entity:SetupPhonemeMappings( "player/demo/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "engineer") then
-					snd.Entity:SetupPhonemeMappings( "player/engineer/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "medic") then
-					snd.Entity:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "sniper") then
-					snd.Entity:SetupPhonemeMappings( "player/sniper/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "spy") then
-					snd.Entity:SetupPhonemeMappings( "player/spy/phonemes/phonemes" )
-				else
-					snd.Entity:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
+			if (snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
+				if (!pl:IsL4D() and !pl:IsBot()) then
+					if (pl:GetPlayerClass() != "gmodplayer") then
+						--pl:SetModel(pl:GetNWString("PlayerClassModel"))
+					end
+				elseif (pl:IsL4D()) then
+					--pl:SetModel(pl:GetNWString("L4DModel"))
 				end
 			end
-		end
+
+		end	
 	elseif (snd.Entity:IsPlayer() and snd.Entity:IsHL2()) then
 		if CLIENT and !snd.Entity:IsBot() then
 			if !IsValid(snd.Entity) then return end
-			snd.Entity:SetupPhonemeMappings("phonemes")
-			snd.Entity:SetModel(snd.Entity:GetNWString("PlayerClassModel"))
+			if (snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
+				--snd.Entity:SetupPhonemeMappings("phonemes")
+				----snd.Entity:SetModel(snd.Entity:GetNWString("PlayerClassModel"))
+			end
 		end
 		
 		--[[
@@ -1018,7 +1028,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 						if (IsValid(snd.Entity:GetEnemy())) then
 							v:SetEnemy(snd.Entity:GetEnemy())
-							v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+							
 						end
 					end
 				end
@@ -1027,30 +1037,26 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		end
 		if (snd.Entity:IsTFPlayer() and GAMEMODE:EntityTeam(snd.Entity) != TEAM_GREEN) then
 
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					v.TargetEnt = snd.Entity
-
-					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end]]
-					end
+			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),1800)) do
+				if ((v:IsPlayer() && v.TFBot) and !IsValid(v.TargetEnt) and v:GetPos():Distance(snd.Entity:GetPos()) < 400) then
+					--v.TargetEnt = snd.Entity
 				end
 			end
 
 		end
 		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-				if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
+
+				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
+					--v.TargetEnt = snd.Entity
+				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 					v:SetEnemy(snd.Entity)
-					v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+					
 	
 					if SERVER then
-						local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						v:AddGestureSequence(anim,true)
+						--[[
+local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+						--v:AddGestureSequence(anim,true)]]
 					end
 	
 					timer.Stop("IdleExpression"..v:EntIndex())
@@ -1059,18 +1065,20 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						
 						if SERVER then
 							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							v:AddGestureSequence(anim,true)
+							--v:AddGestureSequence(anim,true)
 						end
 	
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
+				elseif (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
+					--v.TargetEnt = snd.Entity
 				end
 			end
 		end
@@ -1080,58 +1088,58 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 			if (string.find(snd.Entity:GetModel(),"hwm")) then
  
 				if (snd.Entity.playerclass == "medicshotgun") then	
-					snd.Entity:SetupPhonemeMappings( "player/hwm/medic/emotions/emotions" )
-					snd.Entity:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
 				elseif (snd.Entity.playerclass == "heavy") then 
-					snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/emotions/emotions" )
-					snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
 				elseif (snd.Entity.playerclass == "scout") then
-					snd.Entity:SetupPhonemeMappings( "player/hwm/scout/emotions/emotions" )
-					snd.Entity:SetupPhonemeMappings( "player/hwm/scout/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/scout/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/scout/phonemes/phonemes" )
 				elseif (snd.Entity.playerclass == "soldier") then
-					snd.Entity:SetupPhonemeMappings( "player/hwm/soldier/emotions/emotions" )
-					snd.Entity:SetupPhonemeMappings( "player/hwm/soldier/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/soldier/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/soldier/phonemes/phonemes" )
 				elseif (snd.Entity.playerclass == "demoman") then
-					snd.Entity:SetupPhonemeMappings( "player/hwm/demo/emotions/emotions" )
-					snd.Entity:SetupPhonemeMappings( "player/hwm/demo/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/demo/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/demo/phonemes/phonemes" )
 				elseif (snd.Entity.playerclass == "engineer") then
-					snd.Entity:SetupPhonemeMappings( "player/hwm/engineer/emotions/emotions" )
-					snd.Entity:SetupPhonemeMappings( "player/hwm/engineer/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/engineer/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/engineer/phonemes/phonemes" )
 				elseif (snd.Entity.playerclass == "medic") then
-					snd.Entity:SetupPhonemeMappings( "player/hwm/medic/emotions/emotions" )
-					snd.Entity:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
 				elseif (snd.Entity.playerclass == "sniper") then
-					snd.Entity:SetupPhonemeMappings( "player/hwm/sniper/emotions/emotions" )
-					snd.Entity:SetupPhonemeMappings( "player/hwm/sniper/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/sniper/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/sniper/phonemes/phonemes" )
 				elseif (snd.Entity.playerclass == "spy") then
-					snd.Entity:SetupPhonemeMappings( "player/hwm/spy/emotions/emotions" )
-					snd.Entity:SetupPhonemeMappings( "player/hwm/spy/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/spy/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/spy/phonemes/phonemes" )
 				else
-					snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/emotions/emotions" )
-					snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
 				end
 
-			else
+			elseif (string.find(snd.Entity:GetModel(),"player") && snd.Entity:LookupBone("bip_head")) then
 				if (snd.Entity.playerclass == "medicshotgun") then	
-					snd.Entity:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
 				elseif (snd.Entity.playerclass == "heavy") then
-					snd.Entity:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
 				elseif (snd.Entity.playerclass == "scout") then
-					snd.Entity:SetupPhonemeMappings( "player/scout/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/scout/phonemes/phonemes" )
 				elseif (snd.Entity.playerclass == "soldier") then
-					snd.Entity:SetupPhonemeMappings( "player/soldier/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/soldier/phonemes/phonemes" )
 				elseif (snd.Entity.playerclass == "demoman") then
-					snd.Entity:SetupPhonemeMappings( "player/demo/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/demo/phonemes/phonemes" )
 				elseif (snd.Entity.playerclass == "engineer") then
-					snd.Entity:SetupPhonemeMappings( "player/engineer/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/engineer/phonemes/phonemes" )
 				elseif (snd.Entity.playerclass == "medic") then
-					snd.Entity:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
 				elseif (snd.Entity.playerclass == "sniper") then
-					snd.Entity:SetupPhonemeMappings( "player/sniper/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/sniper/phonemes/phonemes" )
 				elseif (snd.Entity.playerclass == "spy") then
-					snd.Entity:SetupPhonemeMappings( "player/spy/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/spy/phonemes/phonemes" )
 				else
-					snd.Entity:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
+					--snd.Entity:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
 				end
 			end
 		end
@@ -1139,18 +1147,20 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 end)
 
 hook.Add("Think","Bacterias",function()
-	for k,v in ipairs(player.GetAll()) do
+	if (math.random(1,3+(table.Count(player.GetAll())*0.4)) == 1) then 
+		for k,v in ipairs(player.GetAll()) do
 
-		if (v:WaterLevel() > 2 and !v.IsUnderWater) then
-			PrecacheParticleSystem("water_playerdive")
-			ParticleEffectAttach("water_playerdive", PATTACH_ABSORIGIN_FOLLOW, v, 0) 
-			v.IsUnderWater = true
-		elseif (v:WaterLevel() < 2 and v.IsUnderWater) then
-			PrecacheParticleSystem("water_playeremerge")
-			ParticleEffectAttach("water_playeremerge", PATTACH_ABSORIGIN_FOLLOW, v, 0) 
-			v.IsUnderWater = false
+			if (v:WaterLevel() > 2 and !v.IsUnderWater) then
+				PrecacheParticleSystem("water_playerdive")
+				ParticleEffectAttach("water_playerdive", PATTACH_ABSORIGIN_FOLLOW, v, 0) 
+				v.IsUnderWater = true
+			elseif (v:WaterLevel() < 2 and v.IsUnderWater) then
+				PrecacheParticleSystem("water_playeremerge")
+				ParticleEffectAttach("water_playeremerge", PATTACH_ABSORIGIN_FOLLOW, v, 0) 
+				v.IsUnderWater = false
+			end
+			local pl = v
 		end
-		local pl = v
 	end
 	if (math.random(1,150) == 1 and SERVER) then
 		for k,v in ipairs(player.GetAll()) do
@@ -2814,6 +2824,13 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 
 	
 
+	if (IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.SoundName,"female") and string.find(snd.Entity:GetModel(),"common_male")) then
+		snd.SoundName = string.Replace(snd.SoundName, "female", "male")
+		return true
+	elseif (IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.SoundName,"male") and string.find(snd.Entity:GetModel(),"common_female")) then
+		snd.SoundName = string.Replace(snd.SoundName, "male", "female")
+		return true
+	end
 	if string.StartWith(snd.SoundName,"physics/body/") and string.find(snd.SoundName, "impact") and GetConVar("tf_enable_l4d2_ragdoll_sounds"):GetBool() then
 		snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "l4d2/physics/body/body_medium_impact_soft"..table.Random({"1","2","5","6","7"})..".wav")
 		snd.Volume = 0.6
@@ -2947,7 +2964,7 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 						if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 							if (IsValid(snd.Entity:GetEnemy())) then
 								v:SetEnemy(snd.Entity:GetEnemy())
-								v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+								
 							end
 						end
 					end
@@ -2958,14 +2975,14 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 	
 				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
 					if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-						v.TargetEnt = snd.Entity
+						--v.TargetEnt = snd.Entity
 	
 						if SERVER then
-							--[[for _,npc in ipairs(ents.GetAll()) do
-								if npc:IsNPC() then
+							for _,npc in ipairs(ents.GetAll()) do
+								if npc:IsNPC() and !npc:IsFriendly(v) then
 									npc:AddEntityRelationship(v,D_HT,99)
 								end
-							end]]
+							end
 						end
 					end
 				end
@@ -2975,11 +2992,11 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
 					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 						v:SetEnemy(snd.Entity)
-						v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+						
 		
 						if SERVER then
 							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							v:AddGestureSequence(anim,true)
+							--v:AddGestureSequence(anim,true)
 						end
 		
 						timer.Stop("IdleExpression"..v:EntIndex())
@@ -2988,17 +3005,17 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 							
 							if SERVER then
 								local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-								v:AddGestureSequence(anim,true)
+								--v:AddGestureSequence(anim,true)
 							end
 		
 							timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 						end)
 						if SERVER then
-							--[[for _,npc in ipairs(ents.GetAll()) do
-								if npc:IsNPC() then
+							for _,npc in ipairs(ents.GetAll()) do
+								if npc:IsNPC() and !v:IsFriendly(npc) then
 									npc:AddEntityRelationship(v,D_HT,99)
 								end
-							end]]
+							end
 						end
 					end
 				end
@@ -3063,6 +3080,18 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 		else
 			snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "tf/player/footsteps/wade"..math.random(1,4)..".wav")
 		end
+		local pl = snd.Entity
+		
+		if (CLIENT and snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
+			if (!pl:IsL4D() and !pl:IsBot()) then
+				if (pl:GetPlayerClass() != "gmodplayer") then
+					--pl:SetModel(pl:GetNWString("PlayerClassModel"))
+				end
+			elseif (pl:IsL4D()) then
+				--pl:SetModel(pl:GetNWString("L4DModel"))
+			end
+		end
+
 		--[[
 if (IsMounted("left4dead") or IsMounted("left4dead2")) then 
 			local pos = snd.Entity:GetPos()
@@ -3076,7 +3105,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 				end
 			end
 		end]]
-		snd.Pitch = math.random(95,105)
+		snd.Pitch = 100
 		if (snd.Entity:IsPlayer()) then
 			if (snd.Entity:GetMoveType() == MOVETYPE_LADDER) then
 				snd.Volume = 1 * (groundspeed * 0.000006) * 0.2
@@ -3109,7 +3138,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 						if (IsValid(snd.Entity:GetEnemy())) then
 							v:SetEnemy(snd.Entity:GetEnemy())
-							v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+							
 						end
 					end
 				end
@@ -3120,14 +3149,15 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
 				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					v.TargetEnt = snd.Entity
+					--v.TargetEnt = snd.Entity
 
+					
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -3135,13 +3165,17 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		end
 		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-				if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
+
+				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
+					--v.TargetEnt = snd.Entity
+				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 					v:SetEnemy(snd.Entity)
-					v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+					
 	
 					if SERVER then
-						local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						v:AddGestureSequence(anim,true)
+						--[[
+local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+						--v:AddGestureSequence(anim,true)]]
 					end
 	
 					timer.Stop("IdleExpression"..v:EntIndex())
@@ -3150,21 +3184,93 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						
 						if SERVER then
 							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							v:AddGestureSequence(anim,true)
+							--v:AddGestureSequence(anim,true)
 						end
 	
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
 		end
+		
+		if (string.find(snd.Entity:GetModel(),"hwm")) then
+ 
+			if (snd.Entity.playerclass == "medicshotgun") then	
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/emotions/emotions" )
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
+			elseif (snd.Entity.playerclass == "heavy") then 
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/emotions/emotions" )
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
+			elseif (snd.Entity.playerclass == "scout") then
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/scout/emotions/emotions" )
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/scout/phonemes/phonemes" )
+			elseif (snd.Entity.playerclass == "soldier") then
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/soldier/emotions/emotions" )
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/soldier/phonemes/phonemes" )
+			elseif (snd.Entity.playerclass == "demoman") then
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/demo/emotions/emotions" )
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/demo/phonemes/phonemes" )
+			elseif (snd.Entity.playerclass == "engineer") then
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/engineer/emotions/emotions" )
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/engineer/phonemes/phonemes" )
+			elseif (snd.Entity.playerclass == "medic") then
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/emotions/emotions" )
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
+			elseif (snd.Entity.playerclass == "sniper") then
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/sniper/emotions/emotions" )
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/sniper/phonemes/phonemes" )
+			elseif (snd.Entity.playerclass == "spy") then
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/spy/emotions/emotions" )
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/spy/phonemes/phonemes" )
+			else
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/emotions/emotions" )
+				--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
+			end
+
+		elseif (string.find(snd.Entity:GetModel(),"player") && snd.Entity:LookupBone("bip_head")) then
+			if (snd.Entity.playerclass == "medicshotgun") then	
+				--snd.Entity:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
+			elseif (snd.Entity.playerclass == "heavy") then
+				--snd.Entity:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
+			elseif (snd.Entity.playerclass == "scout") then
+				--snd.Entity:SetupPhonemeMappings( "player/scout/phonemes/phonemes" )
+			elseif (snd.Entity.playerclass == "soldier") then
+				--snd.Entity:SetupPhonemeMappings( "player/soldier/phonemes/phonemes" )
+			elseif (snd.Entity.playerclass == "demoman") then
+				--snd.Entity:SetupPhonemeMappings( "player/demo/phonemes/phonemes" )
+			elseif (snd.Entity.playerclass == "engineer") then
+				--snd.Entity:SetupPhonemeMappings( "player/engineer/phonemes/phonemes" )
+			elseif (snd.Entity.playerclass == "medic") then
+				--snd.Entity:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
+			elseif (snd.Entity.playerclass == "sniper") then
+				--snd.Entity:SetupPhonemeMappings( "player/sniper/phonemes/phonemes" )
+			elseif (snd.Entity.playerclass == "spy") then
+				--snd.Entity:SetupPhonemeMappings( "player/spy/phonemes/phonemes" )
+			else
+				--snd.Entity:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
+			end
+		end
+		return true
+	elseif IsValid(snd.Entity) and snd.Entity:IsPlayer() and snd.Entity:IsHL2() and string.find(snd.SoundName, "step") then
+		if CLIENT then
+			if (snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
+				--snd.Entity:SetupPhonemeMappings("phonemes")
+				--snd.Entity:SetModel(snd.Entity:GetNWString("PlayerClassModel"))
+			end
+			return true
+		end
+	elseif (IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.SoundName,"female") and string.find(snd.Entity:GetModel(),"common_male")) then
+		snd.SoundName = string.Replace(snd.SoundName, "female", "male")
+		return true
+	elseif (IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.SoundName,"male") and string.find(snd.Entity:GetModel(),"common_female")) then
+		snd.SoundName = string.Replace(snd.SoundName, "male", "female")
 		return true
 	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.StartWith(snd.Entity:GetModel(), "models/infected/common_") and string.find(snd.SoundName, "step") then
 		snd.SoundName = string.Replace(snd.SoundName, "wade5", "wade1")
@@ -3256,7 +3362,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 						if (IsValid(snd.Entity:GetEnemy())) then
 							v:SetEnemy(snd.Entity:GetEnemy())
-							v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+							
 						end
 					end
 				end
@@ -3267,14 +3373,14 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
 				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					v.TargetEnt = snd.Entity
+					--v.TargetEnt = snd.Entity
 
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -3282,13 +3388,17 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		end
 		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-				if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
+
+				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
+					--v.TargetEnt = snd.Entity
+				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 					v:SetEnemy(snd.Entity)
-					v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+					
 	
 					if SERVER then
-						local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						v:AddGestureSequence(anim,true)
+						--[[
+local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+						--v:AddGestureSequence(anim,true)]]
 					end
 	
 					timer.Stop("IdleExpression"..v:EntIndex())
@@ -3297,116 +3407,116 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						
 						if SERVER then
 							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							v:AddGestureSequence(anim,true)
+							--v:AddGestureSequence(anim,true)
 						end
 	
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
+					
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
 		end
-		snd.Pitch = math.random(95,105)
+		snd.Pitch = 100
 		return true
-	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.StartWith(snd.Entity:GetModel(), "models/bots/small_headless_hatman") and string.find(snd.SoundName, "step") then
-		snd.Channel = CHAN_BODY
-		local speed = snd.Entity:GetVelocity():Length()
-		local groundspeed = snd.Entity:GetVelocity():Length2DSqr()
-		snd.Volume = 0.5
-		snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/footsteps/giant"..math.random(1,2)..".wav")
-		snd.Pitch = math.random(95,100)
-		if (snd.Entity:IsPlayer()) then
-			if (snd.Entity:GetMoveType() == MOVETYPE_LADDER) then
-				snd.Volume = 1 * (groundspeed * 0.000006)
-			elseif (snd.Entity:IsPlayer() and snd.Entity:Crouching()) then
-				snd.Volume = 1 * (groundspeed * 0.000006)
+	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.StartWith(snd.Entity:GetModel(), "models/bots/headless_hatman") and string.find(snd.SoundName, "vo/") and !string.find(snd.SoundName, "knight") then
+		if (string.find(snd.SoundName,"demoman_") and string.find(snd.SoundName,"Pain") and !string.find(snd.SoundName,"Death")) then
+			snd.SoundName = string.Replace(snd.SoundName,snd.SoundName,"vo/halloween_boss/knight_pain0"..math.random(1,3)..".mp3")
+		elseif (string.find(snd.SoundName,"demoman_") and string.find(snd.SoundName,"Death")) then
+			snd.SoundName = string.Replace(snd.SoundName,snd.SoundName,"vo/halloween_boss/knight_death0"..math.random(1,2)..".mp3")
+		elseif (string.find(snd.SoundName,"demoman_") and !string.find(snd.SoundName,"Pain") and !string.find(snd.SoundName,"Death")) then
+			if (string.find(snd.SoundName,"Incoming")) then
+				snd.SoundName = string.Replace(snd.SoundName,snd.SoundName,"vo/halloween_boss/knight_alert0"..math.random(1,2)..".mp3")
+				local randomplr = table.Random(player.GetAll())
+				if (randomplr:EntIndex() != snd.Entity:EntIndex()) then
+					snd.Entity:SetPos(randomplr:GetPos() + Vector(0,0,72))
+				end
+			elseif (string.find(snd.SoundName,"Medic")) then
+				snd.SoundName = string.Replace(snd.SoundName,snd.SoundName,"vo/halloween_boss/knight_alert.mp3")
+				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),300)) do
+					if v:IsTFPlayer() and v:EntIndex() != snd.Entity:EntIndex() and v:Team() != snd.Entity:Team() then
+						if (v:IsPlayer()) then
+							v:StripWeapons()
+							v:ConCommand("tf_tp_simulation_toggle")
+							v:EmitSound("Halloween.PlayerScream")
+							v:SendLua("surface.PlaySound(\"misc/halloween/hwn_bomb_flash.wav\")")
+							local attach = v:LookupAttachment("head") or 1
+							ParticleEffectAttach("yikes_fx", PATTACH_POINT_FOLLOW, v, attach)
+							timer.Simple(5,function()
+								v:StopParticles()
+								local health = v:Health()
+								v:SetPlayerClass(v:GetPlayerClass())
+								v:ConCommand("tf_tp_simulation_toggle")
+								timer.Simple(0.1, function()
+									v:SetHealth(health)
+								end)
+							end)
+						elseif (v:IsNPC()) then
+							if (IsValid(v:GetActiveWeapon())) then
+								local weaponname = v:GetActiveWeapon():GetClass()
+								timer.Simple(0.1, function()
+								
+									v:StripWeapons()
+									
+								end)
+								v:EmitSound("Halloween.PlayerScream")
+								
+								for k,v in ipairs(ents.GetAll()) do
+									if v:IsNPC() then
+										v:AddEntityRelationship(self,D_FR,99) 
+									end
+								end
+								v.ScaredOfHHH = true
+								local attach = v:LookupAttachment("head") or 1
+								ParticleEffectAttach("yikes_fx", PATTACH_POINT_FOLLOW, v, attach)
+								
+								timer.Simple(5,function()
+
+									v:StopParticles()
+									for k,v in ipairs(ents.GetAll()) do
+										if v:IsNPC() then
+											v:AddEntityRelationship(self,D_HT,99)
+										end
+									end
+									v.ScaredOfHHH = false
+
+								end)
+							else
+
+								v:EmitSound("Halloween.PlayerScream")
+							
+								for k,v in ipairs(ents.GetAll()) do
+									if v:IsNPC() then
+										v:AddEntityRelationship(self,D_FR,99) 
+									end
+								end
+								v.ScaredOfHHH = true
+								local attach = v:LookupAttachment("head") or 1
+								ParticleEffectAttach("yikes_fx", PATTACH_POINT_FOLLOW, v, attach)
+								
+								timer.Simple(5,function()
+
+									v:StopParticles()
+									for k,v in ipairs(ents.GetAll()) do
+										if v:IsNPC() then
+											v:AddEntityRelationship(self,D_HT,99)
+										end
+									end
+									v.ScaredOfHHH = false
+
+								end)
+							end
+						end
+					end
+				end
 			else
-				if (snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
-					if (LocalPlayer():ShouldDrawLocalPlayer()) then
-						if (snd.Entity:GetNWBool("Taunting",false) == true) then
-							snd.Volume = 0
-						else
-							snd.Volume = 1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.008))
-						end
-					else
-						snd.Volume = 1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.008))
-					end
-				else
-					if (snd.Entity:GetNWBool("Taunting",false) == true) then
-						snd.Volume = 0
-					else
-						snd.Volume = 1 * (groundspeed * 0.000009 * (snd.Entity:GetRunSpeed() * 0.008))
-					end
-				end
-			end
-		end
-		if (snd.Entity:GetClass() == "infected") then
-			if (string.find(snd.Entity:GetModel(),"clown")) then
-
-				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-						if (IsValid(snd.Entity:GetEnemy())) then
-							v:SetEnemy(snd.Entity:GetEnemy())
-							v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
-						end
-					end
-				end
-
-			end
-		end
-		if (snd.Entity:IsTFPlayer() and GAMEMODE:EntityTeam(snd.Entity) != TEAM_GREEN) then
-
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					v.TargetEnt = snd.Entity
-
-					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end]]
-					end
-				end
-			end
-
-		end
-		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-				if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-					v:SetEnemy(snd.Entity)
-					v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
-	
-					if SERVER then
-						local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						v:AddGestureSequence(anim,true)
-					end
-	
-					timer.Stop("IdleExpression"..v:EntIndex())
-					timer.Stop("AngryExpression"..v:EntIndex())
-					timer.Create("AngryExpression"..v:EntIndex(), 3, 0, function()
-						
-						if SERVER then
-							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							v:AddGestureSequence(anim,true)
-						end
-	
-						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
-					end)
-					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end]]
-					end
-				end
+				snd.SoundName = string.Replace(snd.SoundName,snd.SoundName,"vo/halloween_boss/knight_laugh0"..math.random(1,4)..".mp3")
 			end
 		end
 		return true
@@ -3441,7 +3551,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 						if (IsValid(snd.Entity:GetEnemy())) then
 							v:SetEnemy(snd.Entity:GetEnemy())
-							v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+							
 						end
 					end
 				end
@@ -3452,14 +3562,14 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
 				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					v.TargetEnt = snd.Entity
+					--v.TargetEnt = snd.Entity
 
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -3467,13 +3577,17 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		end
 		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-				if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
+
+				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
+					--v.TargetEnt = snd.Entity
+				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 					v:SetEnemy(snd.Entity)
-					v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+					
 	
 					if SERVER then
-						local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						v:AddGestureSequence(anim,true)
+						--[[
+local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+						--v:AddGestureSequence(anim,true)]]
 					end
 	
 					timer.Stop("IdleExpression"..v:EntIndex())
@@ -3482,17 +3596,17 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						
 						if SERVER then
 							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							v:AddGestureSequence(anim,true)
+							--v:AddGestureSequence(anim,true)
 						end
 	
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -3558,7 +3672,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 						if (IsValid(snd.Entity:GetEnemy())) then
 							v:SetEnemy(snd.Entity:GetEnemy())
-							v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+							
 						end
 					end
 				end
@@ -3569,14 +3683,14 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
 				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					v.TargetEnt = snd.Entity
+					--v.TargetEnt = snd.Entity
 
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -3584,13 +3698,17 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		end
 		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-				if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
+
+				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
+					--v.TargetEnt = snd.Entity
+				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 					v:SetEnemy(snd.Entity)
-					v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+					
 	
 					if SERVER then
-						local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						v:AddGestureSequence(anim,true)
+						--[[
+local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+						--v:AddGestureSequence(anim,true)]]
 					end
 	
 					timer.Stop("IdleExpression"..v:EntIndex())
@@ -3599,17 +3717,17 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						
 						if SERVER then
 							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							v:AddGestureSequence(anim,true)
+							--v:AddGestureSequence(anim,true)
 						end
 	
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -3624,7 +3742,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		end
 		
 		snd.Channel = CHAN_STATIC
-		snd.Pitch = math.random(95,105)
+		snd.Pitch = 100
 		snd.SoundLevel = 80
 		snd.Volume = 1
 		if (snd.Entity:GetClass() == "infected") then
@@ -3634,7 +3752,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 						if (IsValid(snd.Entity:GetEnemy())) then
 							v:SetEnemy(snd.Entity:GetEnemy())
-							v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+							
 						end
 					end
 				end
@@ -3645,14 +3763,14 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
 				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					v.TargetEnt = snd.Entity
+					--v.TargetEnt = snd.Entity
 
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -3660,13 +3778,17 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		end
 		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-				if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
+
+				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
+					--v.TargetEnt = snd.Entity
+				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 					v:SetEnemy(snd.Entity)
-					v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+					
 	
 					if SERVER then
-						local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						v:AddGestureSequence(anim,true)
+						--[[
+local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+						--v:AddGestureSequence(anim,true)]]
 					end
 	
 					timer.Stop("IdleExpression"..v:EntIndex())
@@ -3675,17 +3797,17 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						
 						if SERVER then
 							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							v:AddGestureSequence(anim,true)
+							--v:AddGestureSequence(anim,true)
 						end
 	
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -3700,7 +3822,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		snd.SoundName = string.Replace(snd.SoundName, "2", math.random(1,4))
 		snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/boomer/run/")
 		
-		snd.Pitch = math.random(95,105)
+		snd.Pitch = 100
 		
 		--[[
 if (IsMounted("left4dead") or IsMounted("left4dead2")) then 
@@ -3722,7 +3844,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 						if (IsValid(snd.Entity:GetEnemy())) then
 							v:SetEnemy(snd.Entity:GetEnemy())
-							v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+							
 						end
 					end
 				end
@@ -3733,14 +3855,14 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
 				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					v.TargetEnt = snd.Entity
+					--v.TargetEnt = snd.Entity
 
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -3748,13 +3870,17 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		end
 		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-				if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
+
+				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
+					--v.TargetEnt = snd.Entity
+				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 					v:SetEnemy(snd.Entity)
-					v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+					
 	
 					if SERVER then
-						local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						v:AddGestureSequence(anim,true)
+						--[[
+local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+						--v:AddGestureSequence(anim,true)]]
 					end
 	
 					timer.Stop("IdleExpression"..v:EntIndex())
@@ -3763,17 +3889,17 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						
 						if SERVER then
 							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							v:AddGestureSequence(anim,true)
+							--v:AddGestureSequence(anim,true)
 						end
 	
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -3801,7 +3927,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 				end
 			end
 		end]]
-		snd.Pitch = math.random(95,105)
+		snd.Pitch = 100
 		
 		if (snd.Entity:GetClass() == "infected") then
 			if (string.find(snd.Entity:GetModel(),"clown")) then
@@ -3810,7 +3936,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 						if (IsValid(snd.Entity:GetEnemy())) then
 							v:SetEnemy(snd.Entity:GetEnemy())
-							v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+							
 						end
 					end
 				end
@@ -3821,14 +3947,14 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
 				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					v.TargetEnt = snd.Entity
+					--v.TargetEnt = snd.Entity
 
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -3836,13 +3962,17 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		end
 		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-				if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
+
+				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
+					--v.TargetEnt = snd.Entity
+				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 					v:SetEnemy(snd.Entity)
-					v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+					
 	
 					if SERVER then
-						local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						v:AddGestureSequence(anim,true)
+						--[[
+local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+						--v:AddGestureSequence(anim,true)]]
 					end
 	
 					timer.Stop("IdleExpression"..v:EntIndex())
@@ -3851,17 +3981,18 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						
 						if SERVER then
 							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							v:AddGestureSequence(anim,true)
+							--v:AddGestureSequence(anim,true)
 						end
 	
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
+					
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -3882,7 +4013,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 			snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/infected/run/")
 		end
 		
-		snd.Pitch = math.random(95,105)
+		snd.Pitch = 100
 		snd.Volume = 0
 		
 		--[[
@@ -3905,7 +4036,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 						if (IsValid(snd.Entity:GetEnemy())) then
 							v:SetEnemy(snd.Entity:GetEnemy())
-							v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+							
 						end
 					end
 				end
@@ -3916,14 +4047,15 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
 				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					v.TargetEnt = snd.Entity
+					--v.TargetEnt = snd.Entity
 
+					
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -3931,13 +4063,17 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		end
 		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-				if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
+
+				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
+					--v.TargetEnt = snd.Entity
+				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 					v:SetEnemy(snd.Entity)
-					v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+					
 	
 					if SERVER then
-						local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						v:AddGestureSequence(anim,true)
+						--[[
+local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+						--v:AddGestureSequence(anim,true)]]
 					end
 	
 					timer.Stop("IdleExpression"..v:EntIndex())
@@ -3946,17 +4082,18 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						
 						if SERVER then
 							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							v:AddGestureSequence(anim,true)
+							--v:AddGestureSequence(anim,true)
 						end
 	
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
+					
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -3987,7 +4124,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 				end
 			end
 		end]]
-		snd.Pitch = math.random(95,105)
+		snd.Pitch = 100
 		
 		return true
 	elseif IsValid(snd.Entity) and snd.Entity:IsPlayer() and snd.Entity:GetPlayerClass() == "spitter" and string.find(snd.SoundName, "step") then
@@ -4002,7 +4139,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		else
 			snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/infected/run/")
 		end
-		snd.Pitch = math.random(95,105)
+		snd.Pitch = 100
 		
 		--[[
 if (IsMounted("left4dead") or IsMounted("left4dead2")) then 
@@ -4024,7 +4161,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 						if (IsValid(snd.Entity:GetEnemy())) then
 							v:SetEnemy(snd.Entity:GetEnemy())
-							v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+							--v:EmitSound(table.Random({"L4D_Zombie.Alert","L4D_Zombie..alert"}))
 						end
 					end
 				end
@@ -4035,14 +4172,15 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
 				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					v.TargetEnt = snd.Entity
+					--v.TargetEnt = snd.Entity
 
+					
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -4050,13 +4188,17 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		end
 		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-				if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
+
+				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
+					--v.TargetEnt = snd.Entity
+				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 					v:SetEnemy(snd.Entity)
-					v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+					
 	
 					if SERVER then
-						local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						v:AddGestureSequence(anim,true)
+						--[[
+local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+						--v:AddGestureSequence(anim,true)]]
 					end
 	
 					timer.Stop("IdleExpression"..v:EntIndex())
@@ -4065,17 +4207,18 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						
 						if SERVER then
 							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							v:AddGestureSequence(anim,true)
+							--v:AddGestureSequence(anim,true)
 						end
 	
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
+					
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -4088,7 +4231,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		snd.SoundName = string.Replace(snd.SoundName, "wade8", "wade4")
 		snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/footsteps/charger/run/charger_run_"..table.Random({"left","right"}).."_0"..math.random(1,4)..".wav")
 		
-		snd.Pitch = math.random(95,105)
+		snd.Pitch = 100
 
 		
 		return true
@@ -4200,7 +4343,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 						if (IsValid(snd.Entity:GetEnemy())) then
 							v:SetEnemy(snd.Entity:GetEnemy())
-							v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+							
 						end
 					end
 				end
@@ -4211,14 +4354,15 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
 				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					v.TargetEnt = snd.Entity
+					--v.TargetEnt = snd.Entity
 
+					
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -4226,13 +4370,17 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		end
 		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-				if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
+
+				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
+					--v.TargetEnt = snd.Entity
+				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
 					v:SetEnemy(snd.Entity)
-					v:EmitSound(table.Random({"Zombie.Alert","Zombie.BecomeAlert"}))
+					
 	
 					if SERVER then
-						local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						v:AddGestureSequence(anim,true)
+						--[[
+local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+						--v:AddGestureSequence(anim,true)]]
 					end
 	
 					timer.Stop("IdleExpression"..v:EntIndex())
@@ -4241,17 +4389,18 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 						
 						if SERVER then
 							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							v:AddGestureSequence(anim,true)
+							--v:AddGestureSequence(anim,true)
 						end
 	
 						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
 					end)
+					
 					if SERVER then
-						--[[for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() then
+						for _,npc in ipairs(ents.GetAll()) do
+							if npc:IsNPC() and !npc:IsFriendly(v) then
 								npc:AddEntityRelationship(v,D_HT,99)
 							end
-						end]]
+						end
 					end
 				end
 			end
@@ -4303,13 +4452,8 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 			snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/medic", "vo/mvm/norm/taunts/medic_mvm")
 			snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/sniper", "vo/mvm/norm/taunts/sniper_mvm")
 			snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/spy", "vo/mvm/norm/taunts/spy_mvm")
-			
-			if (file.Exists(string.Replace(snd.SoundName, ".mp3", ".wav"), "WORKSHOP")) then
-				snd.SoundName = string.Replace(snd.SoundName, ".mp3", ".wav")
-			else
-				snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
-			end
 		end
+		snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
 		return true
 	elseif IsValid(snd.Entity) and string.find(snd.SoundName, "vo/") and GetConVar("tf_pyrovision"):GetBool() then
 		if (snd.Entity:GetInfoNum("tf_special_dsp_type",-1) > -1) then
@@ -4332,12 +4476,6 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 		snd.SoundName = string.Replace(snd.SoundName, "heavy_laughshort04", "heavy_laughshort01")
 		snd.SoundName = string.Replace(snd.SoundName, "heavy_laughshort05", "heavy_laughshort02")
 		snd.SoundName = string.Replace(snd.SoundName, "heavy_laughlong03", "heavy_laughlong02")
-		
-		if (file.Exists(string.Replace(snd.SoundName, ".mp3", ".wav"), "WORKSHOP")) then
-			snd.SoundName = string.Replace(snd.SoundName, ".mp3", ".wav")
-		else 
-			snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
-		end
 		snd.Pitch = 100 * 1.3
 		return true
 	elseif IsValid(snd.Entity) and snd.Entity:IsPlayer() and !snd.Entity:IsHL2() and snd.Entity:GetModel() and ((snd.Entity:GetInfoNum("tf_giant_robot",0) == 1 or (string.find(snd.Entity:GetModel(),"bot") and string.find(snd.Entity:GetModel(),"boss")))) and string.StartWith(snd.SoundName, "vo/") then
@@ -4399,17 +4537,12 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 			snd.SoundName = string.Replace(snd.SoundName, "heavy_laughshort05", "heavy_laughshort02")
 			snd.SoundName = string.Replace(snd.SoundName, "heavy_laughlong03", "heavy_laughlong02")
 		end
-		if (!string.find(snd.SoundName,"announcer_") && !string.find(snd.SoundName,"mvm_") && !string.find(snd.SoundName,"burp")) then
+		if (!string.find(snd.SoundName,"announcer_") && !string.find(snd.SoundName,"mvm_")) then
 			
-			if snd.Entity:GetInfoNum("tf_player_use_female_models", 0) == 1 && snd.Entity:GetPlayerClass() == "soldier" then
+			if snd.Entity:GetInfoNum("tf_player_use_female_models", 0) == 1 then
 				snd.Pitch = 130
 			end 
-			if (file.Exists(string.Replace(snd.SoundName, ".mp3", ".wav"), "WORKSHOP")) then
-				snd.SoundName = string.Replace(snd.SoundName, ".mp3", ".wav")
-			else
-				snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
-			end
-		end
+		end 
 		return true	
 	elseif IsValid(snd.Entity) and string.StartWith(snd.SoundName, "vo/") and snd.Entity:IsPlayer() and snd.Entity.playerclass == "spy" then
 		if (string.find(snd.Entity:GetModel(), "scout")) then
@@ -4437,15 +4570,6 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 			snd.SoundName = string.Replace(snd.SoundName, "painsevere", "laughhappy")
 			snd.SoundName = string.Replace(snd.SoundName, "paincrticialdeath", "laughlong")
 			snd.SoundName = string.Replace(snd.SoundName, "autoonfire", "laughhappy")
-		end
-		if (!string.find(snd.SoundName,"announcer_") && !string.find(snd.SoundName,"mvm_")) then
-			
-			if (file.Exists(string.Replace(snd.SoundName, ".mp3", ".wav"), "WORKSHOP")) then
-				snd.SoundName = string.Replace(snd.SoundName, ".mp3", ".wav")
-			else
-				snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
-			end
-
 		end
 		return true
 	elseif IsValid(snd.Entity) and string.StartWith(snd.SoundName, "vo/") and snd.Entity:IsPlayer() and snd.Entity:Team() == TEAM_BLU and string.find(game.GetMap(), "mvm") then

@@ -14,7 +14,7 @@ SWEP.Spawnable = true
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
 SWEP.ViewModel = Model( "models/weapons/v_pist_fiveseven.mdl" )
 SWEP.WorldModel = "models/weapons/w_pist_fiveseven.mdl"
-SWEP.ViewModelFOV = 75
+SWEP.ViewModelFOV = 75 
 SWEP.UseHands = true
 SWEP.HoldType = "pistol"
 SWEP.Primary.Delay = 0.1
@@ -22,7 +22,7 @@ SWEP.Primary.ClipSize = 20  -- How much bullets are in the mag
 SWEP.Primary.DefaultClip = 128 -- How much bullets preloaded when spawned
 SWEP.Primary.Damage = 18
 SWEP.Primary.TakeAmmo = 1
-SWEP.Primary.Spread = 0.75
+SWEP.Primary.Spread = 0.25
 SWEP.Primary.NumberofShots = 1
 SWEP.Primary.Ammo = "pistol" 
 SWEP.Secondary.Ammo = "none"
@@ -127,7 +127,7 @@ function SWEP:PrimaryAttack()
 	self:ShootEffects()
 	 
 	self.Owner:FireBullets( bullet ) 
-		self:EmitSound(self.ShootSound, 85,math.random(95,105))	
+		self:EmitSound(self.ShootSound, 85,100)	
 		self.Owner:ViewPunch( Angle( rnda,0,0 ) ) 
 		self:TakePrimaryAmmo(self.Primary.TakeAmmo) 
 		self:SendWeaponAnim(vm:GetSequenceActivity(vm:LookupSequence("firesingle")))

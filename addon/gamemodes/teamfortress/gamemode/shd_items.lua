@@ -161,6 +161,7 @@ function ParseGameItems(data, silent)
 				--vis.show_player_bodygroup_names = {}
 				vis.animations = {}
 				vis.hide_player_bodygroup_names = {}
+				vis.player_bodygroups = {}
 				vis.attached_particlesystems = {}
 				
 				for a,w in pairs(vis) do
@@ -191,6 +192,12 @@ function ParseGameItems(data, silent)
 						--vis.attached_models[tonumber(num)] = w
 					end
 					
+					num = string.match(a, "(%d)%-player_bodygroups")
+					if num then
+						vis[a] = nil
+						table.insert(vis.player_bodygroups, w)
+					end
+
 					num = string.match(a, "(%d)%-hide_player_bodygroup_name")
 					if num then
 						vis[a] = nil

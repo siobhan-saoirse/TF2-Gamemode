@@ -10,31 +10,73 @@ ENT.Model = "models/bots/skeleton_sniper/skeleton_sniper.mdl"
 ENT.AttackDelay = 50
 ENT.AttackDamage = 30
 ENT.AttackRange = 120
+local s_skeletonHatModels =
+{
+	"models/player/items/all_class/skull_scout.mdl",
+	"models/workshop/player/items/scout/hw2013_boston_bandy_mask/hw2013_boston_bandy_mask.mdl",
+	"models/workshop/player/items/demo/hw2013_blackguards_bicorn/hw2013_blackguards_bicorn.mdl",
+	"models/player/items/heavy/heavy_big_chief.mdl",
+}
 function ENT:Initialize()
 
 	self:SetModel( self.Model )
 	local rand = math.random(1,7)
 	local seq = "spawn0"..rand
-	timer.Simple(0.1, function()
+	timer.Simple(0.2, function()
+		if SERVER then
+			self:ResetSequence(seq)
+			if (self:GetModelScale() == 1) then
+			
+				timer.Create("Laugh"..self:EntIndex(), math.random(4,5), 0, function()
+					self:EmitSound("Halloween.skeleton_laugh_medium")
+				end)
+			elseif (self:GetModel() == "models/bots/skeleton_sniper_boss/skeleton_sniper_boss.mdl") then
+				timer.Create("Laugh"..self:EntIndex(), math.random(6,7), 0, function()
+					self:EmitSound("Halloween.skeleton_laugh_giant")
+				end)
+			elseif (self:GetModelScale() == 0.5) then
+				timer.Create("Laugh"..self:EntIndex(), math.random(2,3), 0, function()
+					self:EmitSound("Halloween.skeleton_laugh_small")
+				end)
+			end
+
+		end
+		timer.Simple(0.1, function()
+		
+			if SERVER and math.random(1,50) == 1 then
+				local axe = ents.Create("gmod_button")
+				axe:SetModel(table.Random(s_skeletonHatModels))
+				axe:SetModelScale(self:GetModelScale())
+				axe:SetPos(self:GetBonePosition(self:LookupBone("bip_pelvis")))
+				axe:SetAngles(self:GetAngles())
+				axe:SetParent(self)
+				axe:AddEffects(EF_BONEMERGE)
+				self:SetNWEntity("Hat",axe)
+			end
+			
+		end)
 		if (self:GetModel() == "models/bots/skeleton_sniper/skeleton_sniper.mdl") then
 			self:SetSkin(2)
-			timer.Simple(self:SequenceDuration(self:LookupSequence(seq)), function()
+			timer.Simple(self:SequenceDuration(self:LookupSequence(seq)) - 0.2, function()
 				self.Ready = true
 			end)
 		elseif (self:GetModel() == "models/bots/skeleton_sniper/skeleton_sniper_boss.mdl") then
 			self:SetSkin(2)
 			self:SetModelScale(1.75)
-			timer.Simple(self:SequenceDuration(self:LookupSequence(seq)), function()
+			timer.Simple(self:SequenceDuration(self:LookupSequence(seq)) - 0.2, function()
 				self.Ready = true
 			end)
 		end
 	end)
+	
+	self:SetSkin(2)
 	self.Ready = false
 	self.LoseTargetDist	= 4000	-- How far the enemy has to be before we lose them
 	self.SearchRadius 	= 3000	-- How far to search for enemies
-	self:SetHealth(50)
+	self:SetHealth(30)
 	self:SetCollisionGroup( COLLISION_GROUP_INTERACTIVE_DEBRIS )
 	if SERVER then
+		
 		self:SetBloodColor(DONT_BLEED)
 		self:AddFlags(FL_OBJECT)
 		if SERVER then
@@ -44,7 +86,6 @@ function ENT:Initialize()
 				end
 			end
 		end
-		self:PlaySequenceAndWait("spawn0"..rand)
 	end
 end
 
@@ -115,7 +156,11 @@ function ENT:FindEnemy()
 		if ( ( v:IsTFPlayer() and !v:IsNextBot()) and GAMEMODE:EntityTeam(v) != TEAM_SPECTATOR and GAMEMODE:EntityTeam(v) != TEAM_FRIENDLY and v:Health() > 0 and !v:IsFlagSet(FL_NOTARGET) ) then
 			-- We found one so lets set it as our enemy and return true
 			if v:IsNPC() and (v:Classify() == CLASS_ZOMBIE || v:Classify() == CLASS_HEADCRAB) then return end
-			self:SetEnemy(v)
+			if (v:IsPlayer()) then
+				self:SetEnemy(table.Random(player.GetAll()))
+			else
+				self:SetEnemy(v)
+			end
 			if (v:IsNPC()) then
 				v:SetEnemy(self)
 			end
@@ -175,6 +220,30 @@ hook.Add( "ShouldCollide", "SkeletonCollision", function( ent1, ent2 )
 
 end )
 
+function ENT:BodyUpdate()
+
+	local act = self:GetActivity()
+
+	--
+	-- This helper function does a lot of useful stuff for us.
+	-- It sets the bot's move_x move_y pose parameters, sets their animation speed relative to the ground speed, and calls FrameAdvance.
+	--
+	if ( act == ACT_MP_RUN_MELEE || act == self:GetSequenceActivity(self:LookupSequence("run_item1")) ) then
+
+		self:BodyMoveXY()
+
+		-- BodyMoveXY() already calls FrameAdvance, calling it twice will affect animation playback, specifically on layers
+		return
+
+	end
+
+	--
+	-- If we're not walking or running we probably just want to update the anim system
+	--
+	self:FrameAdvance()
+
+end
+
 ----------------------------------------------------
 -- ENT:ChaseEnemy()
 -- Works similarly to Garry's MoveToPos function
@@ -183,24 +252,11 @@ end )
 --  is one.
 ----------------------------------------------------
 function ENT:Think()
-	if SERVER then
-		self:BodyMoveXY()
-	end
+	
 	if (IsValid(self:GetEnemy()) and self:GetEnemy():Health() < 1) then
 		self:SetEnemy(nil)
 	end
-	if (self:GetModel() == "models/bots/skeleton_sniper/skeleton_sniper.mdl" or self:GetModel() == "models/bots/skeleton_sniper_boss/skeleton_sniper_boss.mdl") then
-		if (math.random(1,500) == 1) then
-			if (self:GetModelScale() == 1) then
-				self:EmitSound("Halloween.skeleton_laugh_medium")
-			elseif (self:GetModel() == "models/bots/skeleton_sniper_boss/skeleton_sniper_boss.mdl") then
-				self:EmitSound("Halloween.skeleton_laugh_giant")
-			elseif (self:GetModelScale() == 0.5) then
-				self:EmitSound("Halloween.skeleton_laugh_small")
-			end
-		end
-	end
-	if CLIENT then
+	if CLIENT then 
 
 		if (self:GetModelScale() == 0.5) then
 			self:ManipulateBoneScale(self:LookupBone("bip_head"),Vector(3,3,3))
@@ -209,6 +265,7 @@ function ENT:Think()
 		end
 
 	end
+	
 	if (IsValid(self:GetEnemy()) and self:IsOnGround()) then
 		if (self:GetEnemy():GetPos():Distance(self:GetPos()) < self.AttackRange and self:GetEnemy():Health() > 0) then
 			if (IsValid(self:GetEnemy()) and (!self.MeleeAttackDelay or CurTime() > self.MeleeAttackDelay)) then
@@ -286,7 +343,19 @@ function ENT:ChaseEnemy( options )
 end
 function ENT:OnInjured( dmginfo )
 	if (string.find(self:GetModel(),"skeleton")) then
-		ParticleEffect( "spell_skeleton_goop_green", dmginfo:GetDamagePosition(), self:GetAngles() )
+		if (self:GetSkin() == 3) then
+			ParticleEffect( "spell_skeleton_goop_green", dmginfo:GetDamagePosition(), self:GetAngles() )
+		elseif (self:GetSkin() == 2) then
+			ParticleEffect( "spell_skeleton_goop_green", dmginfo:GetDamagePosition(), self:GetAngles() )
+		elseif (self:GetSkin() == 0) then
+			ParticleEffect( "spell_pumpkin_mirv_goop_red", dmginfo:GetDamagePosition(), self:GetAngles() )
+		elseif (self:GetSkin() == 1) then
+			ParticleEffect( "spell_pumpkin_mirv_goop_blue", dmginfo:GetDamagePosition(), self:GetAngles() )
+		end
+	end
+	if not self.NextFlinch or CurTime() > self.NextFlinch then
+		self:AddGesture(ACT_MP_GESTURE_FLINCH_CHEST)
+		self.NextFlinch = CurTime() + 0.5
 	end
 end
 function ENT:OnKilled( dmginfo )
@@ -294,29 +363,47 @@ function ENT:OnKilled( dmginfo )
 	hook.Call( "OnNPCKilled", GAMEMODE, self, dmginfo:GetAttacker(), dmginfo:GetInflictor() )
 
 	local pos = self:GetPos()
-	self:PrecacheGibs()
-	self:GibBreakClient(dmginfo:GetDamageForce() * 0.5)
-	self:EmitSound("Halloween.skeleton_break")
-	self:Remove()
+	if (self:GetModel() == "models/bots/skeleton_sniper/skeleton_sniper_boss.mdl") then
+		ParticleEffect( "halloween_boss_death", self:GetPos(), self:GetAngles() )
+		self:EmitSound("misc/halloween/spell_meteor_impact.wav")
+		self:EmitSound("misc/halloween/spell_spawn_boss.wav")
+	end 
 	if (self:GetModel() == "models/bots/skeleton_sniper/skeleton_sniper.mdl") then
 		if (self:GetModelScale() == 1) then
-			for i=1,3 do
-				timer.Simple(1.5, function()
-				
+			local theskin = self:GetSkin()
+			for i=1,3 do 
+				timer.Simple(math.Rand(2,2.5), function()
 					local mini_skeleton = ents.Create("npc_tf_zombie")
+					local pos2 = pos + Vector(math.random(-32,32),math.random(-32,32),0) * math.random(1,6)
 					mini_skeleton:SetModelScale(0.5)
-					mini_skeleton:SetPos(pos)
+					mini_skeleton:SetPos(pos2)
+					if (theskin == 3) then
+						ParticleEffect( "spell_skeleton_goop_green", pos2, mini_skeleton:GetAngles() )
+					elseif (theskin == 2) then
+						ParticleEffect( "spell_skeleton_goop_green", pos2, mini_skeleton:GetAngles() )
+					elseif (theskin == 0) then
+						ParticleEffect( "spell_pumpkin_mirv_goop_red", pos2, mini_skeleton:GetAngles() )
+					elseif (theskin == 1) then
+						ParticleEffect( "spell_pumpkin_mirv_goop_blue", pos2, mini_skeleton:GetAngles() )
+					end
 					mini_skeleton:EmitSound("Cleaver.ImpactFlesh")
 					mini_skeleton:Spawn()
 					mini_skeleton:Activate()
 					mini_skeleton.AttackDamage = 20
 					mini_skeleton.AttackRange = 40
-					mini_skeleton:PlaySequenceAndWait("spawn0"..math.random(1,7))
-
+					timer.Simple(0.25, function()
+						if (theskin != 2) then
+							mini_skeleton:SetSkin(theskin)
+						end
+					end)
 				end)
 			end
 		end
 	end
+	self:PrecacheGibs()
+	self:GibBreakClient(dmginfo:GetDamageForce() * 0.05)
+	self:EmitSound("Halloween.skeleton_break")
+	self:Remove()
 end
 list.Set( "NPC", "npc_tf_zombie", {
 	Name = "SKELETON",

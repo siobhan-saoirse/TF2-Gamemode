@@ -21,7 +21,7 @@ function ENT:Initialize()
 	filter:SetPos(self:GetPos())
 	filter:SetKeyValue("filterteam", teamnum)
 	filter:SetKeyValue("Negated", negated)
-	filter:Spawn()
+	filter:Spawn() 
 	
 	self:Remove()
 end

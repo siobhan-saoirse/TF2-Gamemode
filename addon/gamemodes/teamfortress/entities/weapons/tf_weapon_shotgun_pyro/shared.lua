@@ -9,7 +9,7 @@ end
 
 SWEP.Base				= "tf_weapon_gun_base"
 SWEP.HasCModel 			= true
-SWEP.ViewModel			= "models/weapons/c_models/c_pyro_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_pyro_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_shotgun/c_shotgun.mdl"
 SWEP.Crosshair = "tf_crosshair1"
 

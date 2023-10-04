@@ -73,7 +73,7 @@ ENT.DragCoefficient = 2
 ENT.Buoyancy = 60
 ENT.ThinkTime = 0
 
-ENT.BaseLifeTime = 0.1
+ENT.BaseLifeTime = 0.28
 
 ENT.BackCritAngle = 120
 

@@ -175,7 +175,11 @@ function ENT:FindEnemy()
 				end
 			end
 			-- We found one so lets set it as our enemy and return true
-			self:SetEnemy(v)
+			if (v:IsPlayer()) then
+				self:SetEnemy(table.Random(player.GetAll()))
+			else
+				self:SetEnemy(v)
+			end
 			if (v:IsNPC()) then
 				v:SetEnemy(self.bullseye)
 			elseif (v:IsNextBot()) then

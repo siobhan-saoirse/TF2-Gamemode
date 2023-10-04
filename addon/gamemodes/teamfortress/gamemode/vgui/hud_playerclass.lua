@@ -100,7 +100,7 @@ function PANEL:Paint()
 			end
 	if convar:GetBool() then
 		local ply = LocalPlayer()
-		if (!ply:Alive()) then
+		if (ply:Health() < 0 or ply:IsHL2()) then
 			if self.ClassModel then
 				self.ClassModel:Remove()
 			end
@@ -113,22 +113,20 @@ function PANEL:Paint()
 				self.ClassModel.oldDrawModel = self.ClassModel.DrawModel
 			end
 			self.ClassModel:SetPos(9*Scale, (480-100)*Scale)
-			self.ClassModel:SetSize(125*Scale, 100*Scale)
-			self.ClassModel:SetFOV(70)
+			self.ClassModel:SetSize(130*Scale, 100*Scale)
+			self.ClassModel:SetFOV(54)
 			if (ply:Team() == TEAM_BLU) then
 				self.ClassModel:SetSkin(1)
 			else
 				self.ClassModel:SetSkin(ply:GetSkin())
 			end
-			self.ClassModel:SetLookAng(Angle(170, -30, 180))
-			self.ClassModel:SetCamPos(Vector(75, -30, 60))
+			self.ClassModel:SetLookAng(Angle(180, -30, 180))
+			self.ClassModel:SetCamPos(Vector(75, -30, 55))
 			if (self.ClassModel:GetModel() != LocalPlayer():GetModel()) then
 				self.ClassModel:SetModel(LocalPlayer():GetModel())
 			end
-			if (self.ClassModel.Entity:GetSequence() != ply:GetSequence()) then
-				self.ClassModel.Entity:SetCycle(0)
-				self.ClassModel.Entity:SetSequence(LocalPlayer():GetSequence())
-			end
+			local holdtype = LocalPlayer():GetActiveWeapon().HoldType or LocalPlayer():GetActiveWeapon():GetHoldType()
+			self.ClassModel.Entity:SetSequence("stand_"..holdtype)
 			for i = 0, ply:GetNumPoseParameters() - 1 do
 				local flMin, flMax = ply:GetPoseParameterRange(i)
 				local sPose = ply:GetPoseParameterName(i)
@@ -140,7 +138,7 @@ function PANEL:Paint()
 			
 			if (!IsValid(ent.Weapon) and IsValid(ply:GetActiveWeapon())) then
 				local wmodel
-				wmodel = ply:GetActiveWeapon():GetWeaponWorldModel() or "models/empty.mdl"
+				wmodel = ply:GetActiveWeapon().IsTFWeapon && (ply:GetActiveWeapon():GetItemData().model_world or ply:GetActiveWeapon():GetItemData().model_player) or ply:GetActiveWeapon():GetWeaponWorldModel() or "models/empty.mdl"
 				ent.Weapon = ClientsideModel(wmodel)
 				ent.Weapon:SetParent(ent)
 				ent.Weapon:AddEffects(EF_BONEMERGE)
@@ -148,7 +146,7 @@ function PANEL:Paint()
 			elseif (IsValid(ent.Weapon) and IsValid(ply:GetActiveWeapon())) then
 				local wmodel
 				
-				wmodel = ply:GetActiveWeapon():GetWeaponWorldModel() or "models/empty.mdl"
+				wmodel = ply:GetActiveWeapon().IsTFWeapon && (ply:GetActiveWeapon():GetItemData().model_world or ply:GetActiveWeapon():GetItemData().model_player) or ply:GetActiveWeapon():GetWeaponWorldModel() or "models/empty.mdl"
 				ent.Weapon:SetModel(wmodel)
 				ent.Weapon:SetParent(ent)
 				ent.Weapon:AddEffects(EF_BONEMERGE)

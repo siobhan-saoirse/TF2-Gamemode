@@ -252,46 +252,69 @@ function GM:PostTFPlayerDeath(ent, attacker, inflictor)
 	end]]
 	
 	-- X fell to a clumsy, painful death
-	if ent.LastDamageInfo and ent.LastDamageInfo:IsFallDamage() then
-		umsg.Start("Notice_EntityFell")
-			umsg.String(GAMEMODE:EntityDeathnoticeName(ent))
-			umsg.Short(GAMEMODE:EntityTeam(ent))
-			umsg.Short(GAMEMODE:EntityID(ent))
-		umsg.End()
-	elseif attacker == ent then
-		-- Suicide
-		if IsValid(cooperator) and GAMEMODE:EntityTeam(cooperator)~=TEAM_HIDDEN then
-			-- Y finished off X
-			umsg.Start("Notice_EntityFinishedOffEntity")
+	if (attacker:IsTFPlayer()) then
+		if ent.LastDamageInfo and ent.LastDamageInfo:IsFallDamage() then
+			umsg.Start("Notice_EntityFell")
 				umsg.String(GAMEMODE:EntityDeathnoticeName(ent))
 				umsg.Short(GAMEMODE:EntityTeam(ent))
 				umsg.Short(GAMEMODE:EntityID(ent))
+			umsg.End()
+		elseif attacker == ent then
+			-- Suicide
+			if IsValid(cooperator) and GAMEMODE:EntityTeam(cooperator)~=TEAM_HIDDEN then
+				-- Y finished off X
+				umsg.Start("Notice_EntityFinishedOffEntity")
+					umsg.String(GAMEMODE:EntityDeathnoticeName(ent))
+					umsg.Short(GAMEMODE:EntityTeam(ent))
+					umsg.Short(GAMEMODE:EntityID(ent))
+					
+					umsg.String(GAMEMODE:EntityDeathnoticeName(cooperator))
+					umsg.Short(GAMEMODE:EntityTeam(cooperator))
+					umsg.Short(GAMEMODE:EntityID(cooperator))
+				umsg.End()
+			elseif attacker==inflictor then
+				-- X bid farewell, cruel world!
+				umsg.Start("Notice_EntitySuicided")
+					umsg.String(GAMEMODE:EntityDeathnoticeName(ent))
+					umsg.Short(GAMEMODE:EntityTeam(ent))
+					umsg.Short(GAMEMODE:EntityID(ent))
+				umsg.End()
+			elseif (!ent.LastDamageInfo or (ent.LastDamageInfo and !ent.LastDamageInfo:IsFallDamage())) then
+				local InflictorClass = gamemode.Call("GetInflictorClass", ent, attacker, inflictor)
 				
-				umsg.String(GAMEMODE:EntityDeathnoticeName(cooperator))
-				umsg.Short(GAMEMODE:EntityTeam(cooperator))
-				umsg.Short(GAMEMODE:EntityID(cooperator))
-			umsg.End()
-		elseif attacker==inflictor then
-			-- X bid farewell, cruel world!
-			umsg.Start("Notice_EntitySuicided")
-				umsg.String(GAMEMODE:EntityDeathnoticeName(ent))
-				umsg.Short(GAMEMODE:EntityTeam(ent))
-				umsg.Short(GAMEMODE:EntityID(ent))
-			umsg.End()
-		else
+				-- <killicon> X
+				umsg.Start("Notice_EntityKilledEntity")
+					umsg.String(GAMEMODE:EntityDeathnoticeName(ent))
+					umsg.Short(GAMEMODE:EntityTeam(ent))
+					umsg.Short(GAMEMODE:EntityID(ent))
+					
+					umsg.String(InflictorClass)
+					
+					umsg.String(GAMEMODE:EntityDeathnoticeName(ent))
+					umsg.Short(GAMEMODE:EntityTeam(ent))
+					umsg.Short(GAMEMODE:EntityID(ent))
+					
+					umsg.String(GAMEMODE:EntityDeathnoticeName(cooperator))
+					umsg.Short(GAMEMODE:EntityTeam(cooperator))
+					umsg.Short(GAMEMODE:EntityID(cooperator))
+					
+					umsg.Bool(ent.LastDamageWasCrit)
+				umsg.End()
+			end
+		elseif (!ent.LastDamageInfo or (ent.LastDamageInfo and !ent.LastDamageInfo:IsFallDamage())) then
 			local InflictorClass = gamemode.Call("GetInflictorClass", ent, attacker, inflictor)
 			
-			-- <killicon> X
-			umsg.Start("Notice_EntityKilledEntity")
+			-- Y <killicon> X
+			umsg.Start("Notice_EntityKilledEntity") 
 				umsg.String(GAMEMODE:EntityDeathnoticeName(ent))
-				umsg.Short(GAMEMODE:EntityTeam(ent))
+				umsg.Short(GAMEMODE:EntityTeam(ent)) 
 				umsg.Short(GAMEMODE:EntityID(ent))
 				
 				umsg.String(InflictorClass)
 				
-				umsg.String(GAMEMODE:EntityDeathnoticeName(ent))
-				umsg.Short(GAMEMODE:EntityTeam(ent))
-				umsg.Short(GAMEMODE:EntityID(ent))
+				umsg.String(GAMEMODE:EntityDeathnoticeName(killer))
+				umsg.Short(GAMEMODE:EntityTeam(killer))
+				umsg.Short(GAMEMODE:EntityID(killer))
 				
 				umsg.String(GAMEMODE:EntityDeathnoticeName(cooperator))
 				umsg.Short(GAMEMODE:EntityTeam(cooperator))
@@ -300,27 +323,6 @@ function GM:PostTFPlayerDeath(ent, attacker, inflictor)
 				umsg.Bool(ent.LastDamageWasCrit)
 			umsg.End()
 		end
-	else
-		local InflictorClass = gamemode.Call("GetInflictorClass", ent, attacker, inflictor)
-		
-		-- Y <killicon> X
-		umsg.Start("Notice_EntityKilledEntity")
-			umsg.String(GAMEMODE:EntityDeathnoticeName(ent))
-			umsg.Short(GAMEMODE:EntityTeam(ent))
-			umsg.Short(GAMEMODE:EntityID(ent))
-			
-			umsg.String(InflictorClass)
-			
-			umsg.String(GAMEMODE:EntityDeathnoticeName(killer))
-			umsg.Short(GAMEMODE:EntityTeam(killer))
-			umsg.Short(GAMEMODE:EntityID(killer))
-			
-			umsg.String(GAMEMODE:EntityDeathnoticeName(cooperator))
-			umsg.Short(GAMEMODE:EntityTeam(cooperator))
-			umsg.Short(GAMEMODE:EntityID(cooperator))
-			
-			umsg.Bool(ent.LastDamageWasCrit)
-		umsg.End()
 	end
 	
 	if ent.PendingNemesises then
@@ -442,12 +444,14 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	local inflictor = dmginfo:GetInflictor()
 	ply:SetNWBool("Taunting",false)
 	
+	ply.LastDamageInfo = CopyDamageInfo(dmginfo)
+
 	if (string.find(ply:GetModel(),"/bot_")) then
 		ParticleEffect("bot_death",ply:GetPos(),ply:GetAngles(),nil)
-	end
-	net.Start("DeActivateTauntCam")
+	end 
+	net.Start("DeActivateTauntCamImmediate")
 	net.Send(ply)
-
+	ply.TargetEnt = nil
 	if (!ply:IsHL2() and !ply:IsL4D() and attacker:IsNPC() and attacker:Classify() == CLASS_HEADCRAB) then
 		
 		local item = ents.Create("npc_tf_zombie_old")
@@ -846,12 +850,22 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		end
 	else
 		
-		if (((!ply:IsHL2() and !ply:IsL4D() and not (dmginfo:IsDamageType(DMG_ALWAYSGIB) or dmginfo:IsDamageType(DMG_BLAST) or dmginfo:IsExplosionDamage() or inflictor.Explosive)) or (ply:IsHL2() || ply:IsL4D())) or string.find(ply:GetModel(),"/bot_") and ply:GetModelScale() == 1.0 and !string.find(ply:GetModel(),"_boss.mdl")) then
+		if (((!ply:IsHL2() and !ply:IsL4D() and not (dmginfo:IsDamageType(DMG_BLAST) or dmginfo:IsExplosionDamage() or inflictor.Explosive)) or (ply:IsHL2() || ply:IsL4D())) or string.find(ply:GetModel(),"/bot_") and ply:GetModelScale() == 1.0 and !string.find(ply:GetModel(),"_boss.mdl")) then
 			if (GetConVar("tf_use_client_ragdolls"):GetBool()) then
-				net.Start("TFRagdollCreate")
-					net.WriteEntity(ply)
-					net.WriteVector(ply:GetVelocity() + dmginfo:GetDamageForce())
-				net.Broadcast()
+					if (!dmginfo:IsDamageType(DMG_DISSOLVE) and !ply:HasDeathFlag(DF_FROZEN) and !ply:HasDeathFlag(DF_GOLDEN)) then
+						net.Start("TFRagdollCreate")
+							net.WriteEntity(ply)
+							net.WriteVector(ply:GetVelocity() + dmginfo:GetDamageForce())
+						net.Broadcast()
+						
+					else
+						if (!ply:HasDeathFlag(DF_FROZEN) and !ply:HasDeathFlag(DF_GOLDEN)) then
+							ply:CreateRagdoll()
+						end
+					end
+					if (ply:HasDeathFlag(DF_DECAP)) then
+						ply:EmitSound("TFPlayer.Decapitated")
+					end
 				/*
 				timer.Simple(0.1, function()
 					local ragdoll = ply:GetRagdollEntity()
@@ -869,6 +883,84 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		end
 
 	end
+	timer.Simple(0.02, function()
+	
+		if ply:HasDeathFlag(DF_GOLDEN) then
+	
+			timer.Simple(0.1, function()
+				if ply:GetRagdollEntity():IsValid() then
+					ply:GetRagdollEntity():Remove()
+				end
+			end)
+			local engineer_golden_lines = {
+				"scenes/Player/Engineer/low/3605.vcd",
+				"scenes/Player/Engineer/low/3690.vcd",
+				"scenes/Player/Engineer/low/3691.vcd",
+			}
+		
+			if attacker:GetPlayerClass() == "engineer" then
+				attacker:PlayScene(engineer_golden_lines[math.random( #engineer_golden_lines )])
+			end
+			
+			local animent = ents.Create( 'prop_ragdoll' )
+			local ragdoll = animent
+			animent:AddFlags(FL_GODMODE) -- The entity used for the death animation	
+			animent:SetModel(ply:GetModel())
+			animent:SetSkin(ply:GetSkin())
+			animent:Fire("FadeAndRemove","",15)
+			animent:SetAngles(ply:GetAngles())
+			animent:SetPos(ply:GetPos() - Vector(0,0,40))
+			animent:Spawn()
+			animent:Activate()
+			animent:SetMaterial("models/player/shared/gold_player")
+			TransferBones(ply,ragdoll)
+			local bones = ragdoll:GetPhysicsObjectCount()
+			if ( bones < 2 ) then return end 
+			for bone = 1, bones - 1 do
+			
+				local constraint = constraint.Weld( ragdoll, ragdoll, 0, bone, 0 )
+			
+			end
+			timer.Simple(15, function()
+				ragdoll:SetSaveValue( "m_bFadingOut", true )
+			end)
+		elseif ply:HasDeathFlag(DF_FROZEN) then
+			timer.Simple(0.1, function()
+				if ply:GetRagdollEntity():IsValid() then
+					ply:GetRagdollEntity():Remove()
+				end
+			end)
+			local animent = ents.Create( 'prop_ragdoll' )
+			animent:AddFlags(FL_GODMODE) -- The entity used for the death animation	
+			animent:SetModel(ply:GetModel())
+			animent:SetSkin(ply:GetSkin())
+			animent:SetPos(ply:GetPos() - Vector(0,0,40))
+			animent:SetAngles(ply:GetAngles())
+			animent:Spawn()
+			animent:Activate()
+			ply.RagdollEntity = animent
+			ply:EmitSound("weapons/icicle_freeze_victim_01.wav", 95, 100)
+			animent:SetMaterial("models/player/shared/ice_player")
+			animent:Fire("FadeAndRemove","",15)
+			local ragdoll = animent
+			TransferBones(ply,ragdoll)
+			timer.Simple(15, function()
+				ragdoll:SetSaveValue( "m_bFadingOut", true )
+			end)
+			local bones = ragdoll:GetPhysicsObjectCount()
+			if ( bones < 2 ) then return end 
+			for bone = 1, bones - 1 do
+			
+				local constraint = constraint.Weld( ragdoll, ragdoll, 0, bone, 0 )
+			
+			end
+			timer.Simple(15, function()
+				ragdoll:SetSaveValue( "m_bFadingOut", true )
+			end)
+			
+		end
+
+	end)
 	gamemode.Call("DoTFPlayerDeath", ply, attacker, dmginfo)
 	ply:StopSound( "GrappledFlesh" )
 	ply:StopSound("Grappling")
@@ -1383,99 +1475,6 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		end )
 		
 	end]]
-	if ply:HasDeathFlag(DF_GOLDEN) then
-	
-		local engineer_golden_lines = {
-			"scenes/Player/Engineer/low/3605.vcd",
-			"scenes/Player/Engineer/low/3690.vcd",
-			"scenes/Player/Engineer/low/3691.vcd",
-		}
-	
-		if dmginfo:GetAttacker():GetPlayerClass() == "engineer" then
-			dmginfo:GetAttacker():PlayScene(engineer_golden_lines[math.random( #engineer_golden_lines )])
-		end
-		local animent = ents.Create( 'base_gmodentity' )
-		animent:AddFlags(FL_GODMODE) -- The entity used for the death animation	
-		animent:SetModel(ply:GetModel())
-		animent:SetSkin(ply:GetSkin())
-		animent:SetPos(ply:GetPos() - Vector(0,0,65))
-		animent:SetAngles(ply:GetAngles())
-		animent:Spawn()
-		animent:Activate()
-		ply.RagdollEntity = animent
-	
-		animent:SetSolid( SOLID_OBB ) -- This stuff isn't really needed, but just for physics
-		animent:PhysicsInit( SOLID_OBB )
-		animent:SetCollisionGroup( COLLISION_GROUP_DEBRIS )
-		if ply:IsHL2() then
-			animent:SetSequence("death_01")
-		else
-			animent:SetSequence( "primary_death_backstab" )
-		end
-		animent:SetPlaybackRate( 1 )
-		animent:SetMaterial("models/player/shared/gold_player")
-		timer.Simple(0.15, function()
-			animent:SetPlaybackRate( 0 )
-		end)
-		animent.AutomaticFrameAdvance = true
-		if ply:GetRagdollEntity():IsValid() then
-			ply:GetRagdollEntity():Remove()
-		end
-		function animent:Think() -- This makes the animation work
-			if ply:GetRagdollEntity():IsValid() then
-				ply:GetRagdollEntity():Remove()
-			end
-			self:NextThink( CurTime() )
-			return true
-		end
-	
-		timer.Simple( 20, function() -- After the sequence is done, spawn the ragdoll
-			animent:Remove()
-		end )
-		
-	end
-	if ply:HasDeathFlag(DF_FROZEN) then
-		local animent = ents.Create( 'base_gmodentity' )
-		animent:AddFlags(FL_GODMODE) -- The entity used for the death animation	
-		animent:SetModel(ply:GetModel())
-		animent:SetSkin(ply:GetSkin())
-		animent:SetPos(ply:GetPos())
-		animent:SetAngles(ply:GetAngles())
-		animent:Spawn()
-		animent:Activate()
-		ply.RagdollEntity = animent
-	
-		animent:SetSolid( SOLID_OBB ) -- This stuff isn't really needed, but just for physics
-		animent:PhysicsInit( SOLID_OBB )
-		animent:SetCollisionGroup( COLLISION_GROUP_DEBRIS )
-		ply:EmitSound("weapons/icicle_freeze_victim_01.wav", 95, 100)
-		if ply:IsHL2() then
-			animent:SetSequence( "death_02" )
-		else
-			animent:SetSequence( "primary_death_backstab" )
-		end
-		animent:SetPlaybackRate( 1 )
-		animent:SetMaterial("models/player/shared/ice_player")
-		timer.Simple(0.2, function()
-			animent:SetPlaybackRate( 0 )
-		end)
-		animent.AutomaticFrameAdvance = true
-		if ply:GetRagdollEntity():IsValid() then
-			ply:GetRagdollEntity():Remove()
-		end
-		function animent:Think() -- This makes the animation work
-			if ply:GetRagdollEntity():IsValid() then
-				ply:GetRagdollEntity():Remove()
-			end
-			self:NextThink( CurTime() )
-			return true
-		end
-	
-		timer.Simple( 20, function() -- After the sequence is done, spawn the ragdoll
-			animent:Remove()
-		end )
-		
-	end
 	if (ply:IsOnFire()) then
 		ply:GetRagdollEntity():Ignite(10)
 	end
@@ -1526,7 +1525,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 			umsg.Short(GAMEMODE:EntityTeam(ply))
 			umsg.Short(GAMEMODE:EntityID(ply))
 		umsg.End()
-	elseif dmginfo:IsDamageType(DMG_ALWAYSGIB) or dmginfo:IsDamageType(DMG_BLAST) or dmginfo:IsExplosionDamage() or inflictor.Explosive then -- Explosion damage
+	elseif dmginfo:IsDamageType(DMG_BLAST) or dmginfo:IsExplosionDamage() or inflictor.Explosive then -- Explosion damage
 	
 		if ply:GetMaterial() == "models/shadertest/predator" then return end
 		ply:RandomSentence("ExplosionDeath")
@@ -1568,7 +1567,12 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 			end
 		end
 	end
-
+	if (ply:GetPlayerClass() == "headless_hatman" or ply:GetPlayerClass() == "saxton" or ply:GetPlayerClass() == "sentrybuster") then
+		ply:SetPlayerClass("gmodplayer")
+	end
+	if (ply:GetPlayerClass() == "headless_hatman") then
+		ply:RandomSentence("CritDeath")
+	end
 	if ply:GetPlayerClass() == "zombie" then
 		ply:EmitSound("Zombie.Die")
 	end
@@ -1681,8 +1685,13 @@ function GM:PlayerDeath(ent, inflictor, attacker)
 		end
 	end)
 	
-	
-	gamemode.Call("PostTFPlayerDeath", ent, attacker, inflictor)
+	if (attacker:IsTFPlayer()) then
+		gamemode.Call("PostTFPlayerDeath", ent, attacker, inflictor)
+	else
+		if (!ent.LastDamageInfo:IsFallDamage()) then
+			gamemode.Call("PostTFPlayerDeath", ent, ent, inflictor)
+		end
+	end
 end
 
 -- No flatline sound

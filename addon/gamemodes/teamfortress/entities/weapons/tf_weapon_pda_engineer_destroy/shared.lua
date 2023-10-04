@@ -6,7 +6,7 @@ end
 
 SWEP.Base				= "tf_weapon_base"
 
-SWEP.ViewModel			= "models/weapons/c_models/c_engineer_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_engineer_arms.mdl"
 SWEP.WorldModel			= "models/weapons/w_models/w_pda_engineer.mdl"
 
 SWEP.Spawnable = true

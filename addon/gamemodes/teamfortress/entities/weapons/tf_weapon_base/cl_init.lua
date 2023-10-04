@@ -12,7 +12,7 @@ SWEP.DrawWeaponInfoBox	= false
 SWEP.BounceWeaponIcon   = false
 SWEP.WepSelectIcon = surface.GetTextureID( "weapons/swep" )
 SWEP.SwayScale			= 0 -- 0.5
-SWEP.BobScale			= 0.25
+SWEP.BobScale			= 1
  
 --[[
 hook.Add("HUDPaint", "testlol", function()
@@ -244,14 +244,14 @@ function SWEP:ViewModelDrawn()
 	self.DrawingViewModel = true
 	if IsValid(self.CModel) then
 		self.CModel:SetSkin(self.WeaponSkin or 0)
-		self.CModel:SetMaterial(self.WeaponMaterial or 0)
+		//self.CModel:SetMaterial(self.WeaponMaterial or 0)
 	end
 	if IsValid(self.AttachedVModel) then
 		self.AttachedVModel:SetSkin(self.WeaponSkin or 0)
 		//self.AttachedVModel:SetMaterial(self.WeaponMaterial or 0)
 	end
 	self.Owner:GetViewModel():SetSkin(self.WeaponSkin or 0)
-	self.Owner:GetViewModel():SetMaterial(self.WeaponMaterial or 0)
+	//self.Owner:GetViewModel():SetMaterial(self.WeaponMaterial or 0)
 	
 	if self.ViewModelFlip then
 		render.CullMode(MATERIAL_CULLMODE_CW)

@@ -28,7 +28,8 @@ SWEP.Primary.Automatic = true
 SWEP.Secondary.Automatic = true
 SWEP.DeployAfterPickup = false
 SWEP.HitDistance = 48
-SWEP.ShootSound = Sound("Weapon_AR2.NPC_Single")
+SWEP.ShootSound = Sound("Weapon_AR2.Single")
+SWEP.ViewModelFOV = 54
 SWEP.ViewModelFlip = false
 function SWEP:Deploy()
 	self:SetWeaponHoldType( self.HoldType ) 
@@ -120,7 +121,7 @@ function SWEP:PrimaryAttack()
 	bullet.Damage = self.Primary.Damage 
 	bullet.AmmoType = self.Primary.Ammo 
 	 
-	local rnda = self.Primary.Recoil * -1 
+	local rnda = self.Primary.Recoil * math.random(-1, 1)  
 	local rndb = self.Primary.Recoil * math.random(-1, 1) 
 	local rndc = self.Primary.Recoil * math.random(-1, 1) 
 	  
@@ -128,7 +129,7 @@ function SWEP:PrimaryAttack()
 	self.Primary.Spread = self.Primary.Spread + 0.07
 	self.Primary.Recoil = self.Primary.Recoil + 0.08
 	self.Owner:FireBullets( bullet ) 
-		self:EmitSound(self.ShootSound, 65,math.random(95,105))	
+		self:EmitSound(self.ShootSound, 65,100)	
 		self.Owner:ViewPunch( Angle( rnda,0,0 ) ) 
 		self:TakePrimaryAmmo(self.Primary.TakeAmmo) 
 		self:SendWeaponAnim(vm:GetSequenceActivity(vm:LookupSequence("ir_fire")))

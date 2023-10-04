@@ -2021,10 +2021,19 @@
 //============================================================================================================
 // LAMBDA FORTRESS EXTENDED RESPONSE RULES
 
+	response ScoutTauntNailGun 
+	{
+		scene "scenes/player/scout/low/taunt07_vocal01.vcd"
+		scene "scenes/player/scout/low/taunt07_vocal02.vcd"
+		scene "scenes/player/scout/low/taunt07_vocal03.vcd"
+		scene "scenes/player/scout/low/taunt07_vocal04.vcd"
+		scene "scenes/player/scout/low/taunt07_vocal05.vcd"
+	}
+
 	rule ScoutTauntGravityGun
 	{
 		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsScout
-		response ScoutTauntLaugh
+		response ScoutTauntNailgun
 	}
 
 	rule SoldierTauntGravityGun

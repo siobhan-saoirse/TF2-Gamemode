@@ -24,7 +24,7 @@ ENT.HitPlayerRangeSound = Sound("DemoCharge.HitFleshRange")
 ENT.HitWorldSound = Sound("DemoCharge.HitWorld")
 
 ENT.CritStartSound = Sound("")
-ENT.CritStopSound = Sound("player/spy_uncloak.wav")
+ENT.CritStopSound = Sound("Player.Spy_UnCloakReduced")
 
 ENT.DefaultChargeDuration = 15
 ENT.ChargeCooldownDuration = 8
@@ -36,7 +36,7 @@ function ENT:SetupDataTables()
 	self:DTVar("Bool", 1, "Ready")
 	self:DTVar("Float", 0, "NextEndCharge")
 	self:DTVar("Float", 1, "AdditiveChargeDuration")
-	self:DTVar("Float", 2, "ChargeCooldownMultiplier")
+	self:DTVar("Float", 1, "ChargeCooldownMultiplier")
 end
 
 if CLIENT then
@@ -146,7 +146,7 @@ function ENT:StartCloaking()
 		self.ChargeDuration = self.DefaultChargeDuration + self.dt.AdditiveChargeDuration
 	end
 	
-	local vm = self:GetOwner():GetViewModel(2)
+	local vm = self:GetOwner():GetViewModel(1)
 			
 	if ( IsValid( vm ) ) then
 		--associate its weapon to us
@@ -155,62 +155,32 @@ function ENT:StartCloaking()
 	self.dt.Ready = false
 	self.dt.Cloaking = true
 	self.dt.NextEndCharge = CurTime() + self.ChargeDuration
-	self:GetOwner():EmitSound("player/spy_cloak.wav")	
-	self:SendViewModelAnim( ACT_VM_DRAW, 2 )
+	self:GetOwner():EmitSound("Player.Spy_Cloak")
+	self:GetOwner():PrintMessage(HUD_PRINTCENTER, "You are now cloaked."	)	
+	self:SendViewModelAnim( ACT_VM_DRAW, 1 )
 	for _,v in pairs(ents.GetAll()) do
 		if v:IsNPC() and not v:IsFriendly(self:GetOwner()) then
 			v:AddEntityRelationship(self:GetOwner(), D_LI, 99)
 		end
 	end
 	self:GetOwner():SetNWBool("Bonked", true)
-	ProxyentCloakEffect = ents.Create("proxyent_tf2cloakeffect")
-	ProxyentCloakEffect:SetTargetEnt(self:GetOwner())  
-	ProxyentCloakEffect2 = ents.Create("proxyent_tf2cloakeffect")
-	ProxyentCloakEffect2:SetTargetEnt(self:GetOwner():GetHands())  
-	ProxyentCloakEffect3 = ents.Create("proxyent_tf2cloakeffect")
-	ProxyentCloakEffect3:SetTargetEnt(self:GetOwner():GetActiveWeapon().CModel)  
-	if self:GetOwner():Team() == TEAM_RED then
-		ProxyentCloakEffect:SetCloakTintVector(Vector(255/255,127/255,102/255))
-		ProxyentCloakEffect2:SetCloakTintVector(Vector(255/255,127/255,102/255))
-		ProxyentCloakEffect3:SetCloakTintVector(Vector(255/255,127/255,102/255))
-	elseif self:GetOwner():Team() == TEAM_BLU then
-		ProxyentCloakEffect:SetCloakTintVector(Vector(102/255,127/255,102/255))
-		ProxyentCloakEffect2:SetCloakTintVector(Vector(102/255,127/255,102/255))
-		ProxyentCloakEffect3:SetCloakTintVector(Vector(102/255,127/255,102/255))
-	elseif self:GetOwner():Team() == TF_TEAM_PVE_INVADERS then
-		ProxyentCloakEffect:SetCloakTintVector(Vector(102/255,127/255,102/255))
-		ProxyentCloakEffect2:SetCloakTintVector(Vector(102/255,127/255,102/255))
-		ProxyentCloakEffect3:SetCloakTintVector(Vector(102/255,127/255,102/255))
-	elseif self:GetOwner():Team() == TEAM_NEUTRAL then
-		ProxyentCloakEffect:SetCloakTintVector(Vector(53/255,151/255,0/255))
-		ProxyentCloakEffect2:SetCloakTintVector(Vector(53/255,151/255,0/255))
-		ProxyentCloakEffect3:SetCloakTintVector(Vector(53/255,151/255,0/255))
+	local ent = self.Owner
+	if (ent:Team() == TEAM_BLU) then
+		ent:SetMaterial("models/shadertest/shader3")
+	else
+		ent:SetMaterial("models/props_combine/tprings_globe")
 	end
-	ProxyentCloakEffect:SetName("CloakEffectPlayer"..self:GetOwner():EntIndex())
-	self:GetOwner():PrintMessage(HUD_PRINTCENTER, "You are now cloaked.")
-	timer.Create("Cloak"..self:GetOwner():EntIndex(), 0.05, 20, function()
-		ProxyentCloakEffect:SetCloakFactor(ProxyentCloakEffect:GetCloakFactor() + 0.05/1)
-		ProxyentCloakEffect3:SetCloakFactor(ProxyentCloakEffect3:GetCloakFactor() + 0.05/1)
-
-	end)
-	timer.Create("Cloak3"..self:GetOwner():EntIndex(), 0.05, 15, function()
-		ProxyentCloakEffect2:SetCloakFactor(ProxyentCloakEffect2:GetCloakFactor() + 0.05/1)
-
-	end)
-	timer.Create("Cloak2"..self:GetOwner():EntIndex(), 1, 1, function()
-		self:GetOwner():SetNoDraw(true)
+	timer.Create("Cloak2"..self:GetOwner():EntIndex(), 0.8, 1, function()
+		self:GetOwner():SetMaterial("color")
+		ent:AddEffects(EF_NOSHADOW)
 		
 		self:GetOwner():SetNWBool("NoWeapon", true)
 	end)
-	ProxyentCloakEffect:Spawn()
-	ProxyentCloakEffect:Activate()
-	ProxyentCloakEffect2:Spawn()
-	ProxyentCloakEffect2:Activate()
 	for _,v in pairs(ents.FindByClass("tf_hat")) do
 		if v:GetOwner()==self:GetOwner() then
 			v:SetKeyValue("effects", "0")
 			v:SetParent(self:GetOwner())
-			vself.WModel2:SetNoDraw(true)
+			v:SetNoDraw(true)
 			v:DrawShadow(true)
 			v.Dead = true
 		end
@@ -219,7 +189,7 @@ function ENT:StartCloaking()
 		if v:GetOwner()==self:GetOwner() then
 			v:SetKeyValue("effects", "0")
 			v:SetParent(self:GetOwner())
-			vself.WModel2:SetNoDraw(true)
+			v:SetNoDraw(true)
 			v:DrawShadow(true)
 			v.Dead = true
 		end
@@ -235,15 +205,22 @@ function ENT:StopCloaking()
 	self.SpeedBonus = nil
 	self:GetOwner():ResetClassSpeed()
 
-	self:SendViewModelAnim( ACT_VM_HOLSTER, 2 )
-	ProxyentCloakEffect:SetCloakAnimTimeIn(3)		
-	ProxyentCloakEffect:SetCloakAnimTimeOut(2)
+	self:SendViewModelAnim( ACT_VM_HOLSTER, 1 )
 	
 	self:GetOwner():SetNWBool("NoWeapon", false)
 	
 	self:GetOwner():PrintMessage(HUD_PRINTCENTER, "You are now decloaked."	)
 	self:EmitSound("player/spy_uncloak.wav")
-	self:GetOwner():SetNoDraw(false)
+	local ent = self.Owner
+	if (ent:Team() == TEAM_BLU) then
+		ent:SetMaterial("models/shadertest/shader3")
+	else
+		ent:SetMaterial("models/props_combine/tprings_globe")
+	end
+	timer.Create("Cloak2"..self:GetOwner():EntIndex(), 0.8, 1, function()
+		self:GetOwner():SetMaterial("")
+		ent:RemoveEffects(EF_NOSHADOW)
+	end)
 	for _,v in pairs(ents.GetAll()) do
 		if v:IsNPC() and not v:IsFriendly(self:GetOwner()) then
 			v:AddEntityRelationship(self:GetOwner(), D_HT, 99)
@@ -251,12 +228,6 @@ function ENT:StopCloaking()
 	end
 
 	self:GetOwner():SetNWBool("Bonked", false)
-	timer.Create("DeCloak"..self:GetOwner():EntIndex(), 0.05, 20, function()
-		ProxyentCloakEffect:SetCloakFactor(ProxyentCloakEffect:GetCloakFactor() - 0.05/1)
-	end)
-	timer.Create("DeCloak3"..self:GetOwner():EntIndex(), 0.05, 15, function()
-		ProxyentCloakEffect2:SetCloakFactor(ProxyentCloakEffect2:GetCloakFactor() - 0.05/1)
-	end)
 	for _,v in pairs(ents.FindByClass("tf_hat")) do
 		if v:GetOwner()==self:GetOwner() then
 			v:SetKeyValue("effects", "0")

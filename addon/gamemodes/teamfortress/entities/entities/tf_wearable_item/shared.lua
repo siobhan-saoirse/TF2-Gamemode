@@ -43,6 +43,29 @@ function ENT:Think()
 		else
 			self:SetNoDraw(false)
 		end
+		local item = self:GetItemData()
+		if (item and item.visuals) then
+			if item.visuals.player_bodygroups then
+				local bodygroups = item.visuals.player_bodygroups
+				if (bodygroups.hat) then
+					self:GetOwner():SetBodygroup(self:GetOwner():FindBodygroupByName("hat"),1)
+				elseif (bodygroups.headphones) then
+					self:GetOwner():SetBodygroup(self:GetOwner():FindBodygroupByName("headphones"),1)
+				elseif (bodygroups.medal) then
+					self:GetOwner():SetBodygroup(self:GetOwner():FindBodygroupByName("medal"),1)
+				elseif (bodygroups.grenades) then
+					self:GetOwner():SetBodygroup(self:GetOwner():FindBodygroupByName("grenades"),1)
+				elseif (bodygroups.bullets) then
+					self:GetOwner():SetBodygroup(self:GetOwner():FindBodygroupByName("bullets"),1)
+				elseif (bodygroups.arrows) then
+					self:GetOwner():SetBodygroup(self:GetOwner():FindBodygroupByName("arrows"),1)
+				elseif (bodygroups.rightarm) then
+					self:GetOwner():SetBodygroup(self:GetOwner():FindBodygroupByName("rightarm"),1)
+				elseif (bodygroups.shoes_socks) then
+					self:GetOwner():SetBodygroup(self:GetOwner():FindBodygroupByName("shoes_socks"),1)
+				end
+			end
+		end
 		if self:GetItemData()["item_slot"] == "head" then
 			if self:GetOwner():GetInfoNum("tf_hatcolor_rainbow", 0) == 1 then 
 				self:SetCosmeticTint(Vector(math.random(5, 255)/255, math.random(5, 255)/255, math.random(5, 255)/255))
@@ -199,7 +222,7 @@ function ENT:Initialize()
 		
 		if self.Model then
 			self:SetModel(self.Model)
-			self:SetKeyValue("effects", "1")
+			self:SetKeyValue("effects", "1") 
 			
 			if item.set_sequence_to_class then
 				self:AddEffects(EF_NOINTERP)

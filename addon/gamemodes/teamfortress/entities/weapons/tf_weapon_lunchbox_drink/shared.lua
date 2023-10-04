@@ -63,14 +63,15 @@ end
 
 function SWEP:PrimaryAttack()
 	self:SetNextPrimaryFire(CurTime() + 40)
-	self.Owner:DoAnimationEvent(ACT_DOD_SPRINT_AIM_SPADE, true)
+	self.Owner:DoTauntEvent("taunt04", true)
 	self.Owner:SetNWBool("Taunting", true)
 	if SERVER then
 	self.Owner:ConCommand("tf_tp_simulation_toggle")
 	end
 	if (self:GetItemData().name != "Crit-a-Cola") then
 
-		timer.Simple(0.92, function() 
+		timer.Simple(1.2, function() 
+			self.Owner:DoTauntEvent("a_flinch01", true)
 			if SERVER then
 				if (self.Owner:GetWeapons()[1] == self) then
 					self.Owner:SelectWeapon(self.Owner:GetWeapons()[2])	
@@ -99,14 +100,14 @@ function SWEP:PrimaryAttack()
 				if self:GetOwner():Team() == TEAM_BLU then
 					self:GetOwner().trail = util.SpriteTrail( self:GetOwner(), att, Color( 255, 255, 255 ), false, 12, 12, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blu" )
 					self:GetOwner().trail2 = util.SpriteTrail( self:GetOwner(), att2, Color( 255, 255, 255 ), false, 16, 16, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blu" )
-					self:GetOwner().trail3 = util.SpriteTrail( self:GetOwner(), att3, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blu" )
-					self:GetOwner().trail4 = util.SpriteTrail( self:GetOwner(), att4, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blu" )
+					self:GetOwner().trail3 = util.SpriteTrail( self:GetOwner(), att3, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_white" )
+					self:GetOwner().trail4 = util.SpriteTrail( self:GetOwner(), att4, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_white" )
 					self:GetOwner().trail5 = util.SpriteTrail( self:GetOwner(), att5, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blu" )
 				else
 					self:GetOwner().trail = util.SpriteTrail( self:GetOwner(), att, Color( 255, 255, 255 ), false, 12, 12, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
 					self:GetOwner().trail2 = util.SpriteTrail( self:GetOwner(), att2, Color( 255, 255, 255 ), false, 16, 16, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
-					self:GetOwner().trail3 = util.SpriteTrail( self:GetOwner(), att3, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
-					self:GetOwner().trail4 = util.SpriteTrail( self:GetOwner(), att4, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
+					self:GetOwner().trail3 = util.SpriteTrail( self:GetOwner(), att3, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_white" )
+					self:GetOwner().trail4 = util.SpriteTrail( self:GetOwner(), att4, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_white" )
 					self:GetOwner().trail5 = util.SpriteTrail( self:GetOwner(), att5, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
 				end
 			end

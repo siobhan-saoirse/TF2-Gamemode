@@ -194,6 +194,11 @@ function ENT:Think()
 		self:DoExplosion()
 		self.NextExplode = nil
 	end
+	for k,v in ipairs(ents.FindInSphere(self:GetPos(),90)) do
+		if (v:IsValid() and (v:IsTFPlayer() or v:IsNextBot()) and v:EntIndex() != self:GetOwner():EntIndex() and !v:IsFriendly(self:GetOwner()) and v:Health() > 0) then
+			self:DoExplosion()
+		end
+	end
 	for k,v in ipairs(ents.FindInSphere(self:GetPos(), 50)) do
 		if ( v:IsValid(self.WModel2) and v:IsTFPlayer() and v:Health() >= 0 and v != self:GetOwner() ) then
 			self:DoExplosion()
@@ -237,12 +242,7 @@ function ENT:DoExplosion()
 	
 	--self.ResultDamage = self.BaseDamage
 	
-	--util.BlastDamage(self, owner, self:GetPos(), range, self.BaseDamage)
-	local d = DamageInfo()
-	d:SetDamage( 500 )
-	d:SetAttacker( owner )
-	d:SetDamageType( bit.bor(DMG_AIRBOAT,DMG_BLAST) ) 
-	util.BlastDamageInfo(d, self:GetRealPos(), range)
+	util.BlastDamage(self, owner, self:GetPos(), range, 9999999)
 	
 	self:SetNoDraw(true)
 	self:SetNotSolid(true)

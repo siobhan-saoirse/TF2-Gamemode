@@ -916,6 +916,77 @@ concommand.Add("tf_taunt_thriller", function(ply)
 		net.Send(ply)
 	end)
 end)
+concommand.Add("tf_taunt_gimme20", function(ply)
+	if ply:GetNWBool("Taunting") == true then return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
+	if not ply:IsOnGround() then return end
+	if ply:WaterLevel() ~= 0 then return end
+	if ply:GetPlayerClass() != "soldier" then ply:ChatPrint("You're not Soldier!") return end
+
+	if ply:GetInfoNum("tf_giantrobot", 0) == 1 then ply:ChatPrint("You can't taunt as a mighty robot!") return end
+	local time = ply:SequenceDuration(ply:LookupSequence("taunt_gimmie20"))
+	timer.Simple(0.5, function()
+		ply:EmitSound("Soldier.Jeers08")
+	end)
+	ply:DoTauntEvent("taunt_gimmie20")
+	ply:SelectWeapon(ply:GetWeapons()[1]:GetClass())
+	ply:SetNWBool("Taunting", true)
+	net.Start("ActivateTauntCam")
+	net.Send(ply)
+	timer.Simple(time, function()
+		if not IsValid(ply) or (not ply:Alive() and not ply:GetNWBool("Taunting")) then return end
+		ply:SetNWBool("Taunting", false)
+		net.Start("DeActivateTauntCam")
+		net.Send(ply)
+	end)
+end)
+concommand.Add("tf_taunt_slit_throat", function(ply)
+	if ply:GetNWBool("Taunting") == true then return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
+	if not ply:IsOnGround() then return end
+	if ply:WaterLevel() ~= 0 then return end
+	if ply:GetPlayerClass() != "soldier" then ply:ChatPrint("You're not Soldier!") return end
+
+	if ply:GetInfoNum("tf_giantrobot", 0) == 1 then ply:ChatPrint("You can't taunt as a mighty robot!") return end
+	local time = ply:SequenceDuration(ply:LookupSequence("taunt_slit_throat"))
+	timer.Simple(1.4, function()
+		ply:EmitSound("Selection.HeavyClothesRustle")
+	end)
+	ply:DoTauntEvent("taunt_slit_throat")
+	ply:SelectWeapon(ply:GetWeapons()[1]:GetClass())
+	ply:SetNWBool("Taunting", true)
+	net.Start("ActivateTauntCam")
+	net.Send(ply)
+	timer.Simple(time, function()
+		if not IsValid(ply) or (not ply:Alive() and not ply:GetNWBool("Taunting")) then return end
+		ply:SetNWBool("Taunting", false)
+		net.Start("DeActivateTauntCam")
+		net.Send(ply)
+	end)
+end)
+concommand.Add("tf_taunt_come_and_get_me", function(ply)
+	if ply:GetNWBool("Taunting") == true then return end
+	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
+	if not ply:IsOnGround() then return end
+	if ply:WaterLevel() ~= 0 then return end
+	if ply:GetPlayerClass() != "scout" then ply:ChatPrint("You're not Scout!") return end
+
+	if ply:GetInfoNum("tf_giantrobot", 0) == 1 then ply:ChatPrint("You can't taunt as a mighty robot!") return end
+	local time = ply:SequenceDuration(ply:LookupSequence("taunt_come_and_get_me"))
+	ply:PlayScene("scenes/player/scout/low/taunt07_vocal0"..math.random(1,5)..".vcd", 0)
+	ply:DoTauntEvent("taunt_come_and_get_me")
+	ply:SetNWBool("Taunting", true)
+	ply:SetNWBool("NoWeapon", true)
+	net.Start("ActivateTauntCam")
+	net.Send(ply)
+	timer.Simple(time, function()
+		if not IsValid(ply) or (not ply:Alive() and not ply:GetNWBool("Taunting")) then return end
+		ply:SetNWBool("Taunting", false)
+		ply:SetNWBool("NoWeapon", false)
+		net.Start("DeActivateTauntCam")
+		net.Send(ply)
+	end)
+end)
 concommand.Add("tf_taunt_directors_vision", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
 	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
@@ -927,15 +998,15 @@ concommand.Add("tf_taunt_directors_vision", function(ply)
 	if (ply:GetPlayerClass() == "pyro") then
 		if (math.random(1,3) == 2) then
 			time = ply:PlayScene("scenes/player/pyro/low/taunt_replay2.vcd", 0)
-			ply:DoAnimationEvent(ply:LookupSequence("pyro_taunt_replay2"))
+			ply:DoTauntEvent("pyro_taunt_replay2")
 		else
-			ply:DoAnimationEvent(ply:LookupSequence("pyro_taunt_replay"))
+			ply:DoTauntEvent("pyro_taunt_replay")
 		end
 	else
 		if (ply:LookupSequence(ply:GetPlayerClass().."_taunt_replay") == -1) then
-			ply:DoAnimationEvent(ply:LookupSequence("taunt_replay"))
+			ply:DoTauntEvent("taunt_replay")
 		else
-			ply:DoAnimationEvent(ply:LookupSequence(ply:GetPlayerClass().."_taunt_replay"))
+			ply:DoTauntEvent(ply:GetPlayerClass().."_taunt_replay")
 		end
 	end
 	ply:SetNWBool("Taunting", true)
@@ -1341,15 +1412,12 @@ concommand.Add("tf_stun_me", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
+	ply:EmitSound("TFPlayer.StunImpactRange")
 	timer.Create("StunRobot25"..ply:EntIndex(), 0.001, 1, function()
 		ply:DoAnimationEvent(ACT_MP_STUN_BEGIN,2)
-		timer.Create("StunRobotloop3"..ply:EntIndex(), 0.6, 0, function()
-			if not ply:Alive() then timer.Stop("StunRobotloop"..ply:EntIndex()) return end 
 			timer.Create("StunRobotloop4"..ply:EntIndex(), 0.8, 6, function()
-				if not ply:Alive() then timer.Stop("StunRobotloop4"..ply:EntIndex()) return end
 				ply:DoAnimationEvent(ACT_MP_STUN_MIDDLE,2)
 			end)
-		end)
 	end) 
 	ply:DoAnimationEvent(ACT_DOD_SECONDARYATTACK_BOLT, true)
 	ply:SetNWBool("Taunting", true)  
@@ -1742,6 +1810,11 @@ concommand.Add("tf_taunt_squaredance_intro", function(ply)
 		end
 	end)
 end)
+concommand.Add("tf_derp_aim", function(ply)
+	if (ply:IsAdmin()) then
+		ply:SetNWBool("IsDerpAim",true)
+	end
+end)
 concommand.Add("tf_taunt_rockpaperscissors_intro", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
 	if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
@@ -1763,14 +1836,11 @@ concommand.Add("tf_taunt_rockpaperscissors_intro", function(ply)
 		ply:EmitSound(""..ply:GetPlayerClass().."_taunt_rps_intro_wait_rand")
 	end)
 	timer.Create("rpsstart"..ply:EntIndex(), 0.1, 0, function()
-		if ply:KeyDown(IN_USE) then
-			ply:ConCommand("tf_taunt_squaredance_intro_stop")
-		end
 		for k,v in ipairs(ents.FindInSphere(ply:GetPos(), 80)) do
-			if v:IsPlayer() and v:Nick() != ply:Nick() and v:GetNWBool("IWantToTauntToo") == true then
+			if v:IsPlayer() and v:Nick() != ply:Nick() then
 				if math.random(1,4) == 1 then
 					local sceusermessageime = ply:PlayScene("scenes/player/"..ply:GetPlayerClass().."/low/taunt_rps_paper_lose.vcd", 0)
-					ply:DoAnimationEvent(ACT_DOD_RELOAD_DEPLOYED_FG42, true)
+					ply:DoTauntEvent("taunt_rps_paper_lose")
 					ply:SetNWBool("Taunting", true)
 					ply:SetNWBool("NoWeapon", true)
 					net.Start("ActivateTauntCam")
@@ -1778,7 +1848,7 @@ concommand.Add("tf_taunt_rockpaperscissors_intro", function(ply)
 					ply:SetNWBool("IWantToTaunt", false)
 					v:SetNWBool("IWantToTauntToo", false)
 					local sceusermessageime2 = v:PlayScene("scenes/player/"..v:GetPlayerClass().."/low/taunt_rps_scissors_win.vcd", 0)
-					v:DoAnimationEvent(ACT_DOD_PRONEWALK_IDLE_BAR, true)
+					v:DoTauntEvent("taunt_rps_scissors_win")
 					v:SetNWBool("Taunting", true)
 					v:SetNWBool("NoWeapon", true)
 					net.Start("ActivateTauntCam")
@@ -1803,7 +1873,7 @@ concommand.Add("tf_taunt_rockpaperscissors_intro", function(ply)
 				end
 				if math.random(1,4) == 2 then
 					local sceusermessageime = ply:PlayScene("scenes/player/"..ply:GetPlayerClass().."/low/taunt_rps_scissors_win.vcd", 0)
-					ply:DoAnimationEvent(ACT_DOD_RELOAD_DEPLOYED_FG42, true)
+					ply:DoTauntEvent("taunt_rps_scissors_win")
 					ply:SetNWBool("Taunting", true)
 					ply:SetNWBool("NoWeapon", true)
 					net.Start("ActivateTauntCam")
@@ -1811,7 +1881,7 @@ concommand.Add("tf_taunt_rockpaperscissors_intro", function(ply)
 					ply:SetNWBool("IWantToTaunt", false)
 					v:SetNWBool("IWantToTauntToo", false)
 					local sceusermessageime2 = v:PlayScene("scenes/player/"..v:GetPlayerClass().."/low/taunt_rps_paper_lose.vcd", 0)
-					v:DoAnimationEvent(ACT_DOD_PRONEWALK_IDLE_BAR, true)
+					v:DoTauntEvent("taunt_rps_paper_lose")
 					v:SetNWBool("Taunting", true)
 					v:SetNWBool("NoWeapon", true)
 					net.Start("ActivateTauntCam")
@@ -1839,7 +1909,7 @@ concommand.Add("tf_taunt_rockpaperscissors_intro", function(ply)
 				end
 				if math.random(1,4) == 3 then
 					local sceusermessageime = ply:PlayScene("scenes/player/"..ply:GetPlayerClass().."/low/taunt_rps_rock_lose.vcd", 0)
-					ply:DoAnimationEvent(ACT_DOD_RELOAD_DEPLOYED_FG42, true)
+					ply:DoTauntEvent("taunt_rps_rock_lose")
 					ply:SetNWBool("Taunting", true)
 					ply:SetNWBool("NoWeapon", true)
 					net.Start("ActivateTauntCam")
@@ -1847,7 +1917,7 @@ concommand.Add("tf_taunt_rockpaperscissors_intro", function(ply)
 					ply:SetNWBool("IWantToTaunt", false)
 					v:SetNWBool("IWantToTauntToo", false)
 					local sceusermessageime2 = v:PlayScene("scenes/player/"..v:GetPlayerClass().."/low/taunt_rps_paper_win.vcd", 0)
-					v:DoAnimationEvent(ACT_DOD_PRONEWALK_IDLE_BAR, true)
+					v:DoTauntEvent("taunt_rps_paper_win")
 					v:SetNWBool("Taunting", true)
 					v:SetNWBool("NoWeapon", true)
 					net.Start("ActivateTauntCam")
@@ -1876,7 +1946,7 @@ concommand.Add("tf_taunt_rockpaperscissors_intro", function(ply)
 			end
 			if v.Base == "npc_tf2base" or v.Base == "npc_soldier_red" or v.Base == "npc_hwg_red" or v.Base == "npc_pyro_red" or v.Base == "npc_scout_red" then
 				if math.random(1,4) == 1 then
-					local sceusermessageime = ply:PlayScene("scenes/player/"..ply:GetPlayerClass().."/low/taunt_rps_paper_lose.vcd", 0)
+					local sceusermessageime = ply:PlayScene("scenes/player/"..ply:GetPlayerClass().."/low/taunt_rps_paper_lose.vcd", 0) 
 					ply:DoAnimationEvent(ACT_DOD_RELOAD_DEPLOYED_FG42, true)
 					ply:SetNWBool("Taunting", true)
 					ply:SetNWBool("NoWeapon", true)
@@ -2038,7 +2108,7 @@ concommand.Add("tf_taunt_scary", function(ply)
 
 	if ply:GetInfoNum("tf_giantrobot", 0) == 1 then ply:ChatPrint("You can't taunt as a mighty robot!") return end
 	local time = ply:PlayScene("scenes/player/heavy/low/taunt07_halloween.vcd", 0)
-	ply:DoAnimationEvent(ACT_DOD_CROUCH_AIM_RIFLE, true)
+	ply:DoTauntEvent("taunt07_halloween")
 	ply:SetNWBool("Taunting", true)
 	ply:SetNWBool("NoWeapon", true)
 	net.Start("ActivateTauntCam")

@@ -17,8 +17,8 @@ resource.AddFile("materials/HUD/d_images_custom.vtf")
 resource.AddFile("materials/HUD/dneg_images_custom.vmt")
 resource.AddFile("materials/HUD/dneg_images_custom.vtf")
 
-resource.AddFile("materials/sprites/tf_crosshairs.vmt")
-resource.AddFile("materials/sprites/tf_crosshairs.vtf")
+resource.AddFile("gamemodes/teamfortress/content/materials/sprites/tf_crosshairs.vmt")
+resource.AddFile("gamemodes/teamfortress/content/materials/sprites/tf_crosshairs.vtf")
 
 resource.AddFile("materials/Effects/imcookin_2.vmt")
 

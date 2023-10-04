@@ -57,6 +57,7 @@ function SWEP:Deploy()
 end
 
 function SWEP:ShootProjectile()
+	self.ShootCritSound = Sound("Weapon_Airstrike.CritFire")
 	if SERVER then
 		local rocket = ents.Create("tf_projectile_rocket")
 		rocket:SetPos(self:ProjectileShootPos())

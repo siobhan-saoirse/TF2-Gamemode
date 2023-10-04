@@ -107,6 +107,13 @@ local SpectatorsInQueue = {
 	xalign=TEXT_ALIGN_LEFT,
 	yalign=TEXT_ALIGN_CENTER,
 }
+local SpectatorsInQueue2 = {
+	text="",
+	font="ScoreboardVerySmall",
+	pos={115*Scale, 347*Scale},
+	xalign=TEXT_ALIGN_LEFT,
+	yalign=TEXT_ALIGN_CENTER,
+}
 local PlayerName = {
 	text="",
 	font="ScoreboardMedium",
@@ -288,6 +295,26 @@ function PANEL:Paint()
 			SpectatorsInQueue.text = "Neutral: "..t
 		end
 		draw.Text(SpectatorsInQueue)
+	end
+	if num3 > 0 then
+		local t = {}
+		for k,v in ipairs(tab3) do
+			t[k] = v:GetName()
+		end
+		t = string.Implode(", ", t) 
+		
+		--[[if num == 1 then
+			SpectatorsInQueue.text = tf_lang.GetFormatted("#TF_Arena_ScoreBoard_Spectator", num, t)
+		else
+			SpectatorsInQueue.text = tf_lang.GetFormatted("#TF_Arena_ScoreBoard_Spectators", num, t)
+		end]]
+
+		if num3 == 1 then
+			SpectatorsInQueue2.text = "1 friendly: "..t
+		else
+			SpectatorsInQueue2.text = "Friendly: "..t
+		end
+		draw.Text(SpectatorsInQueue2)
 	end
 	
 	PlayerName.color = team.GetColor(playerteam)

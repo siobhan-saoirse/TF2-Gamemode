@@ -272,25 +272,6 @@ concommand.Add("open_charinfo_direct", function(_, _, args)
 		classmodel:GetEntity():SetSequence("competitive_loserstate_idle")    
         classmodel:GetEntity().Weapon:SetNoDraw(true)        
 	end
-    local hat2 = vgui.Create("DImageButton", frame)
-    hat2:SetSize(128, 128)
-    hat2:SetText("Open Taunt Menu")
-    hat2:SetTextColor(Color(255, 255, 0))
-    hat2:SetPos(305, 120)
-    hat2:SetImage( "backpack/player/items/all_class/taunt_russian_large" )
-    hat2.DoClick = function(self) 
-        
-        frame.OnClose = function(self)
-
-        end
-        frame:Close()
-        surface.PlaySound("ui/buttonclick.wav") 
-        RunConsoleCommand("open_taunt_menu") 
-    end
-	hat2.OnCursorEntered = function()
-		classmodel:GetEntity():SetSequence("competitive_loserstate_idle")    
-        classmodel:GetEntity().Weapon:SetNoDraw(true)        
-	end
     weapon3.PaintOver = function()
         if nextLoadoutUpdate < CurTime() then
             nextLoadoutUpdate = CurTime() + 5

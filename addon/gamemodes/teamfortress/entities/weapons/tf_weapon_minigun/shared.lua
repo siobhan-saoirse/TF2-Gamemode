@@ -81,7 +81,7 @@ PrecacheParticleSystem("eject_minigunbrass")
 
 SWEP.Base				= "tf_weapon_gun_base"
 
-SWEP.ViewModel			= "models/weapons/c_models/c_heavy_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_heavy_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_minigun/c_minigun.mdl"
 SWEP.Crosshair = "tf_crosshair4"
 
@@ -100,10 +100,10 @@ PrecacheParticleSystem("bullet_tracer01_blue_crit")
 SWEP.barrelRotation 		= 0
 SWEP.barrelSpeed 			= 1
 SWEP.barrelValue1 			= 0
-SWEP.BaseDamage = 5
-SWEP.DamageRandomize = 2
-SWEP.MaxDamageRampUp = 1.5
-SWEP.MaxDamageFalloff = 0.5
+SWEP.BaseDamage = 8
+SWEP.DamageRandomize = 0
+SWEP.MaxDamageRampUp = 0
+SWEP.MaxDamageFalloff = 0
 
 SWEP.BulletsPerShot = 1
 SWEP.BulletSpread = 0.1
@@ -280,13 +280,12 @@ function SWEP:PrimaryAttack(vampire)
 	if SERVER then
 		if not self.StartTime then
 			self.StartTime = CurTime()
-			self.Owner:Speak("TLK_FIREMINIGUN", true)
 		end
 		
 		self.Owner.minigunfiretime = CurTime() - self.StartTime
 		
 		if not self.NextPlayerTalk or CurTime()>self.NextPlayerTalk then
-			self.Owner:Speak("TLK_MINIGUN_FIREWEAPON")
+			self.Owner:Speak("TLK_MINIGUN_FIREWEAPON",false)
 			self.NextPlayerTalk = CurTime() + 1
 		end
 	end
@@ -336,6 +335,9 @@ function SWEP:PrimaryAttack(vampire)
 	end
 	self:GetOwner():GetViewModel():SetPlaybackRate(1 / self.Primary.Delay * 0.1)
 	self:ShootProjectile(self.BulletsPerShot, self.BulletSpread)
+	if SERVER then
+		self.Owner:Speak("TLK_FIREWEAPON", false)
+	end
 	if CLIENT then
 			----PrintTable(self.CModel:GetAttachments())
 			local effectdata = EffectData()
@@ -365,7 +367,6 @@ function SWEP:Reload()
 end
 
 function SWEP:Think()
-
 	if (self:Ammo1() < 1 and self:Clip1() < 1 and self.Primary.ClipSize ~= -1) then
 		if (CurTime() > self:GetNextPrimaryFire()) then
 			if (self.HoldType == "PRIMARY") then

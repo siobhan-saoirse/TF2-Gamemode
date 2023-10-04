@@ -12,7 +12,7 @@ heavysandvichtaunt = { "vo/heavy_sandwichtaunt01.wav", "vo/heavy_sandwichtaunt02
 SWEP.Base				= "tf_weapon_gun_base"
 
 SWEP.Slot				= 1
-SWEP.ViewModel			= "models/weapons/c_models/c_engineer_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_engineer_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_wrangler.mdl"
 SWEP.Crosshair = "tf_crosshair3"
 
@@ -114,10 +114,6 @@ function SWEP:Holster()
 		end
 	end
 
-	
-	if SERVER then
-		self.Owner:PrintMessage(HUD_PRINTCENTER, "Wrangler Disabled!")
-	end
 
 	return self.BaseClass.Holster(self)
 
@@ -134,9 +130,6 @@ function SWEP:Deploy()
 				v.Shoot_Sound = Sound("Building_Sentrygun.ShaftFire3")
 			end
 			v.Wrangled = true 
-			if SERVER then
-				self.Owner:PrintMessage(HUD_PRINTCENTER, "Wrangler Enabled!")
-			end
 			if SERVER then
 				animent3 = ents.Create( 'base_gmodentity' ) -- The entity used for the death animation	
 				animent3:SetAngles(v:GetAngles())

@@ -31,7 +31,7 @@ sound.Add( {
 SWEP.Base				= "tf_weapon_melee_base"
 
 SWEP.Slot				= 2
-SWEP.ViewModel			= "models/weapons/c_models/c_demo_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_demo_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_bottle/c_bottle.mdl"
 SWEP.Crosshair = "tf_crosshair3"
 
@@ -42,9 +42,9 @@ SWEP.Category = "Team Fortress 2"
 SWEP.Swing = Sound("Weapon_Bottle.Miss")
 SWEP.SwingCrit = Sound("Weapon_Bottle.MissCrit")
 
-SWEP.HitFlesh = Sound("Weapon_Bottle.HitFlesh")
+SWEP.HitFlesh = Sound("Weapon_Bottle.IntactHitFlesh")
 SWEP.HitRobot = Sound("MVM_Weapon_Bottle.HitFlesh")
-SWEP.HitWorld = Sound("Weapon_Bottle.HitWorld")
+SWEP.HitWorld = Sound("Weapon_Bottle.IntactHitWorld")
 
 SWEP.BrokenHitFlesh = Sound("Weapon_Bottle.BrokenHitFlesh")
 SWEP.BrokenHitWorld = Sound("Weapon_Bottle.BrokenHitWorld")
@@ -73,7 +73,7 @@ end
 
 function SWEP:ViewModelDrawn()
 	if IsValid(self.CModel) then
-		if self.dt.Broken ~= self.VBrokenState then
+		if self.dt.Broken then
 			self.CModel:SetBodygroup(0,(self.dt.Broken and 1) or 0)
 			
 			self.VBrokenState = self.dt.Broken
@@ -84,8 +84,10 @@ function SWEP:ViewModelDrawn()
 end
 
 function SWEP:DrawWorldModel(from_postplayerdraw)
-	if SERVER then
-
+	if IsValid(self.WModel) then
+		if self.dt.Broken then
+			self.WModel:SetBodygroup(0,(self.dt.Broken and 1) or 0)
+		end
 	end
 	
 	self:CallBaseFunction("DrawWorldModel", from_postplayerdraw)
@@ -115,13 +117,9 @@ function SWEP:Deploy()
 	if SERVER and self.dt.Broken then
 		self.Owner:GetViewModel():SetBodygroup(1,1)
 	end
-		if IsValid(self.WModel2) then
-			if self.dt.Broken ~= self.BrokenState then
-				if self.dt.Broken then
-					MsgN("Breaking bottle worldmodel")
-				end
-				
-				--self.WModel2:SetBodygroup(0,(self.dt.Broken and 1) or 0)
+		if IsValid(self.WModel) then
+			if self.dt.Broken then
+				self.WModel:SetBodygroup(0,(self.dt.Broken and 1) or 0)
 				self.BrokenState = self.dt.Broken
 			end
 		end

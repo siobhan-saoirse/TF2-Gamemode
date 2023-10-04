@@ -2,7 +2,7 @@ CreateConVar( "tf_competitive", "0", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_NOTIFY, FC
 
 hook.Add("SpawnMenuOpen", "TF2Competitive", function()
 	if GetConVar("tf_competitive"):GetBool() then
-		return false
+		--return false
 	end
 end)
 

@@ -32,7 +32,7 @@ end
 
 SWEP.Base				= "tf_weapon_gun_base"
 
-SWEP.ViewModel			= "models/weapons/c_models/c_soldier_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_soldier_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_rocketlauncher/c_rocketlauncher.mdl"
 SWEP.Crosshair = "tf_crosshair3"
 
@@ -48,7 +48,7 @@ SWEP.ShootCritSound = Sound("MVM.GiantSoldierRocketShootCrit")
 SWEP.ChargeSound = Sound("Weapon_StickyBombLauncher.ChargeUp")
 SWEP.ReloadSound = Sound("")
 
-SWEP.Primary.ClipSize		= 20
+SWEP.Primary.ClipSize		= 4
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
 SWEP.Primary.Delay          = 0.4
 
@@ -74,8 +74,9 @@ SWEP.MaxAddPitch = -6
 SWEP.MinGravity = 1
 SWEP.MaxGravity = 1
 SWEP.BulletSpread = 7 
-SWEP.ReloadTime = 0.8 * -0.8
-SWEP.ReloadStartTime = 0.8 * -0.8
+SWEP.ReloadTime = 0.8
+SWEP.OldReloadTime = 0.8
+SWEP.FastReloadTime = -1.6
 SWEP.VM_DRAW = ACT_PRIMARY_VM_DRAW
 SWEP.VM_IDLE = ACT_PRIMARY_VM_IDLE
 SWEP.VM_PRIMARYATTACK = ACT_PRIMARY_VM_PRIMARYATTACK

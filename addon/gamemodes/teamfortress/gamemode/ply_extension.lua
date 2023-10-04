@@ -155,7 +155,6 @@ if not meta.CreateRagdollOLD then
 end
 
 function meta:CreateRagdoll()
-	physenv.SetGravity(Vector(0,0,-386))
 	self:CreateRagdollOLD()
 end
 function meta:TFTaunt(args)

@@ -87,35 +87,35 @@ function ENT:Build()
 	end
 	if self.Player:GetWeapon("tf_weapon_builder").MovedBuildingLevel == 2 and obj.class_name == "obj_sentrygun" and self.Player:GetWeapon("tf_weapon_builder").Moving != false then 
 
-		timer.Create("SEtModel", 0.1, 15, function()
+		timer.Create("SetModel"..ent:EntIndex(), 0.01, 500, function()
 			if ent:GetLevel() <= 2 then
 				ent:AddMetal2(ent, 200)
 			end
 		end)
 	elseif self.Player:GetWeapon("tf_weapon_builder").MovedBuildingLevel == 2 and obj.class_name == "obj_sentrygun" and self.Player:GetWeapon("tf_weapon_builder").Moving != false then 
 
-		timer.Create("SEtModel", 0.1, 15, function()
+		timer.Create("SetModel"..ent:EntIndex(), 0.01, 500, function()
 			if ent:GetLevel() <= 2 then
 				ent:AddMetal2(ent, 200)
 			end
 		end)
 	elseif self.Player:GetWeapon("tf_weapon_builder").MovedBuildingLevel == 2 and obj.class_name == "obj_dispenser" and self.Player:GetWeapon("tf_weapon_builder").Moving != false then 
 
-		timer.Create("SEtModel", 0.1, 20, function()
+		timer.Create("SetModel"..ent:EntIndex(), 0.01, 500, function()
 			if ent:GetLevel() <= 2 then
 				ent:AddMetal2(ent, 200)
 			end
 		end)
 	elseif self.Player:GetWeapon("tf_weapon_builder").MovedBuildingLevel == 3 and obj.class_name == "obj_dispenser" and self.Player:GetWeapon("tf_weapon_builder").Moving != false then 
 
-		timer.Create("SEtModel", 0.1, 20, function()
+		timer.Create("SEtModel", 0.1, 80, function()
 			if ent:GetLevel() <= 3 then
 				ent:AddMetal2(ent, 200)
 			end
 		end)
 	elseif self.Player:GetWeapon("tf_weapon_builder").MovedBuildingLevel == 3 and obj.class_name == "obj_sentrygun" and self.Player:GetWeapon("tf_weapon_builder").Moving != false then 
 
-		timer.Create("SEtModel", 0.1, 20, function()
+		timer.Create("SEtModel", 0.1, 80, function()
 			if ent:GetLevel() <= 3 then
 				ent:AddMetal2(ent, 200)
 			end

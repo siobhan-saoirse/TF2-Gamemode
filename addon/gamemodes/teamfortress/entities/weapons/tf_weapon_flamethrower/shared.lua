@@ -100,7 +100,7 @@ PrecacheParticleSystem("pyro_blast_warp2")
 
 SWEP.Base				= "tf_weapon_gun_base"
 
-SWEP.ViewModel			= "models/weapons/c_models/c_pyro_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_pyro_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_flamethrower/c_flamethrower.mdl"
 SWEP.Crosshair = "tf_crosshair3"
 
@@ -284,7 +284,7 @@ function SWEP:SecondaryAttack()
 	
 	self:StopFiring()
 	
-	--self.Owner:DoAnimationEvent(self.Owner:SelectWeightedSequence(self.Owner:LookupSequence("SECONDARYAttackStand_PRIMARY")),true) 
+	self.Owner:DoTauntEvent("AttackStand_PRIMARY_ALT",true) 
 	self:EmitSound(self.AirblastSound)
 	
 	if SERVER then

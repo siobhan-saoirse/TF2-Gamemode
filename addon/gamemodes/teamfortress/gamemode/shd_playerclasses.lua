@@ -379,11 +379,11 @@ function meta:SetPlayerClass(class)
 	-- This is used for playing scenes
 	if (self:GetPlayerClass() == "superscout" || self:GetPlayerClass() == "giantscoutmelee" || self:GetPlayerClass() == "chiefscout" || self:GetPlayerClass() == "melee_scout" || self:GetPlayerClass() == "melee_scout_expert" || self:GetPlayerClass() == "melee_scout_sandman" || self:GetPlayerClass() == "giantscout" || self:GetPlayerClass() == "scoutfan" || self:GetPlayerClass() == "scout_shortstop" || self:GetPlayerClass() == "superscoutfan" || self:GetPlayerClass() == "bonk_scout") then
 		self.playerclass = "Scout"
-	elseif (self:GetPlayerClass() == "demoknight" || self:GetPlayerClass() == "samuraidemo" || self:GetPlayerClass() == "sentrybuster" || self:GetPlayerClass() == "giantdemoman" || self:GetPlayerClass() == "wtfdemoman" || self:GetPlayerClass() == "giantdemoknight" || self:GetPlayerClass() == "chieftavish") then
+	elseif (self:GetPlayerClass() == "demoknight" || self:GetPlayerClass() == "samuraidemo" || self:GetPlayerClass() == "sentrybuster" || self:GetPlayerClass() == "giantdemoman" || self:GetPlayerClass() == "wtfdemoman" || self:GetPlayerClass() == "giantdemoknight" || self:GetPlayerClass() == "chieftavish" || self:GetPlayerClass() == "headless_hatman") then
 		self.playerclass = "Demoman"
 	elseif (self:GetPlayerClass() == "soldierblackbox" || self:GetPlayerClass() == "soldierbuffed" || self:GetPlayerClass() == "giantsoldier" || self:GetPlayerClass() == "giantburstfiresoldier" || self:GetPlayerClass() == "giantburstfiresoldier2" || self:GetPlayerClass() == "giantblastsoldier" || self:GetPlayerClass() == "colonelbarrage" || self:GetPlayerClass() == "giantsoldiercharged" || self:GetPlayerClass() == "giantsoldierrapidfire") then
 		self.playerclass = "Soldier"
-	elseif (self:GetPlayerClass() == "giantheavy" || self:GetPlayerClass() == "giantheavyheater" || self:GetPlayerClass() == "giantheavyshotgun" || self:GetPlayerClass() == "heavyshotgun" || self:GetPlayerClass() == "heavyweightchamp" || self:GetPlayerClass() == "steelgauntlet" || self:GetPlayerClass() == "steelgauntletpusher" || self:GetPlayerClass() == "captain_punch" || self:GetPlayerClass() == "superheavyweightchamp") then
+	elseif (self:GetPlayerClass() == "giantheavy" || self:GetPlayerClass() == "saxton" || self:GetPlayerClass() == "giantheavyheater" || self:GetPlayerClass() == "giantheavyshotgun" || self:GetPlayerClass() == "heavyshotgun" || self:GetPlayerClass() == "heavyweightchamp" || self:GetPlayerClass() == "steelgauntlet" || self:GetPlayerClass() == "steelgauntletpusher" || self:GetPlayerClass() == "captain_punch" || self:GetPlayerClass() == "superheavyweightchamp" || self:GetPlayerClass() == "saxton") then
 		self.playerclass = "Heavy"
 	elseif (self:GetPlayerClass() == "bowman" or self:GetPlayerClass() == "bowman_rapid_fire") then		
 		self.playerclass = "Sniper"
@@ -420,7 +420,27 @@ function meta:SetPlayerClass(class)
 	else
 		self.Team = "Infected"
 	end
+	timer.Simple(1.0, function()
 	
+		if (self:GetModel() == "models/player/scoutplayer/scout.mdl") then
+			self.playerclass = "Scout"
+		elseif (self:GetModel() == "models/player/demomanplayer/demonstrationman.mdl") then
+			self.playerclass = "Demoman"
+		elseif (self:GetModel() == "models/player/soldierplayer/soldier.mdl") then
+			self.playerclass = "Soldier"
+		elseif (self:GetModel() == "models/player/heavyplayer/heavy.mdl") then
+			self.playerclass = "Heavy"
+		elseif (self:GetModel() == "models/player/sniperplayer/sniper.mdl") then		
+			self.playerclass = "Sniper"
+		elseif (self:GetModel() == "models/player/pyroplayer/pyro.mdl") then
+			self.playerclass = "Pyro"
+		elseif (self:GetModel() == "models/player/engieplayer/engie.mdl") then
+			self.playerclass = "Engineer" 
+		elseif (self:GetModel() == "models/player/medicplayer/medic.mdl") then
+			self.playerclass = "Medic"
+		end
+
+	end)
 	-- Setting the model, obviously
 	-- Stupid way to enable robots, but we just comment out class model already being defined!
 	--if not c.Model then
@@ -496,7 +516,7 @@ function meta:SetPlayerClass(class)
 	end
 	if (self.TFBot and self.IsL4DZombie) then
 		for k,v in ipairs(ents.GetAll()) do
-			if (IsValid(v.Bot) and v.Bot:EntIndex() == self:EntIndex()) then
+			if (IsValid(v.Bot) and v.Bot:EntIndex() == self:EntIndex() and string.find(v:GetClass(),"mvm")) then
 				v:CustomOnInitialize(self)
 			end
 		end
@@ -525,29 +545,30 @@ function meta:SetPlayerClass(class)
 		end
 	end
 	if (self:IsMiniBoss()) then
-		local npc = self
-		if (npc.playerclass == "Scout") then
-			npc:EmitSound("MVM.GiantScoutLoop")
-		elseif (npc.playerclass == "Soldier") then
-			npc:EmitSound("MVM.GiantSoldierLoop")
-		elseif (npc.playerclass == "Pyro") then
-			npc:EmitSound("MVM.GiantPyroLoop")
-		elseif (npc.playerclass == "Demoman") then
-		
-			if (!string.find(npc:GetPlayerClass(),"sentry")) then
+		if SERVER then
+			if (self.playerclass == "Scout") then
+				self:EmitSound("MVM.GiantScoutLoop")
+			elseif (self.playerclass == "Soldier") then
+				self:EmitSound("MVM.GiantSoldierLoop")
+			elseif (self.playerclass == "Pyro") then
+				self:EmitSound("MVM.GiantPyroLoop")
+			elseif (self.playerclass == "Demoman") then
 			
-				npc:EmitSound("MVM.GiantDemomanLoop")
+				if (!string.find(self:GetPlayerClass(),"sentry")) then
 				
-			else
+					self:EmitSound("MVM.GiantDemomanLoop")
+					
+				else
+					
+					self:EmitSound("MVM.SentryBusterLoop")
+					self:EmitSound("MVM.SentryBusterIntro")
+					
+				end
 				
-				npc:EmitSound("MVM.SentryBusterLoop")
-				npc:EmitSound("MVM.SentryBusterIntro")
-				
-			end
-			
-		elseif (npc.playerclass == "Heavy") then
-			npc:EmitSound("MVM.GiantHeavyLoop")
-		end	
+			elseif (self.playerclass == "Heavy") then
+				self:EmitSound("MVM.GiantHeavyLoop")
+			end	
+		end
 
 	end
 	UpgradePlayerIfBot(self)

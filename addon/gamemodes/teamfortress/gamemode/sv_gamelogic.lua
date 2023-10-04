@@ -552,87 +552,90 @@ end
 function GM:Tick()
 end
 function GM:Think()
-	if not self.NextUpdateDamage or CurTime()>self.NextUpdateDamage then
-		for _,v in pairs(player.GetAll()) do
-			-- Update damage dealt in the last 20 seconds for every player
-			self:UpdateTotalDamage(v)
-			self:UpdateKills(v)
+	if (math.random(1,2+(table.Count(player.GetAll())*2))) then
+		if not self.NextUpdateDamage or CurTime()>self.NextUpdateDamage then
+			for _,v in pairs(player.GetAll()) do
+				-- Update damage dealt in the last 20 seconds for every player
+				self:UpdateTotalDamage(v)
+				self:UpdateKills(v)
+				
+				-- Roll critical hits for rapidfire weapons
+				local w = v:GetActiveWeapon()
+				if w and w:IsValid() and w.CriticalChance and w.IsRapidFire then
+					self:RollCritical(v)
+				end
+			end
 			
-			-- Roll critical hits for rapidfire weapons
-			local w = v:GetActiveWeapon()
-			if w and w:IsValid() and w.CriticalChance and w.IsRapidFire then
-				self:RollCritical(v)
+			self.NextUpdateDamage = CurTime() + 1
+		end
+		for k, v in ipairs(ents.GetAll()) do
+			if (v:GetClass() == "gmod_tool" && GetConVar("tf_competitive"):GetBool()) then
+				v:Remove()
 			end
 		end
-		
-		self.NextUpdateDamage = CurTime() + 1
-	end
-	for k, self in ipairs(player.GetAll()) do
-		if (self:IsNextBot()) then
+		for k, self in ipairs(player.GetAll()) do
+			if (self:IsNextBot()) then
+				for p, ply in ipairs(player.GetAll()) do
+					if(ply:EyePos():Distance(self:EyePos()) <= 300) then
+						self:SetEyeTarget(ply:EyePos())
+					end
+				end
+			end
+		end
+		for _,pl in ipairs(player.GetAll()) do
 			for p, ply in ipairs(player.GetAll()) do
-				if(ply:EyePos():Distance(self:EyePos()) <= 300) then
-					self:SetEyeTarget(ply:EyePos())
+				if(ply:EntIndex() != pl:EntIndex() and ply:EyePos():Distance(pl:EyePos()) <= 300) then
+					pl:SetEyeTarget(ply:EyePos())
 				end
 			end
-		end
-	end
-	for _,pl in ipairs(player.GetAll()) do
-		for p, ply in ipairs(player.GetAll()) do
-			if(ply:EntIndex() != pl:EntIndex() and ply:EyePos():Distance(pl:EyePos()) <= 300) then
-				pl:SetEyeTarget(ply:EyePos())
+			if (IsValid(pl.ShovedAnimation)) then
+				pl:SetAngles(pl.ShovedAnimation:GetAngles())
+				pl.ShovedAnimation.IsVJBaseSNPC = false
 			end
-		end
-		if (IsValid(pl.ShovedAnimation)) then
-			pl:SetAngles(pl.ShovedAnimation:GetAngles())
-			pl.ShovedAnimation.IsVJBaseSNPC = false
-		end
-		if (pl:Health() > pl:GetMaxHealth()) then
+			if (pl:Health() > pl:GetMaxHealth()) then
 
-			if not pl.NextHealthDecay then
-				pl.NextHealthDecay = CurTime() + 0.2
-			elseif CurTime() >= pl.NextHealthDecay then
-				pl:SetHealth(pl:Health() - 1)
-				pl.NextHealthDecay = CurTime() + 0.2
-			end
-
-		end
-		for k,v in ipairs(ents.FindInSphere(pl:GetShootPos() * 1.05,80 * pl:GetModelScale() * 1.01)) do
-		
-			if (pl:IsPlayer() and !pl:IsHL2() and IsValid(pl:GetActiveWeapon()) and pl.IsTFWeapon) then
-				
-				if (pl:GetActiveWeapon():GetItemData().item_name and pl:GetActiveWeapon():GetItemData().item_name == "#TF_Minigun_Deflector" and (string.find(v:GetClass(), "tf_projectile_") or v:GetClass() == "prop_combine_ball" or v:GetClass() == "rpg_missile" or v:GetCollisionGroup() == COLLISION_GROUP_PROJECTILE) and pl:KeyDown(IN_ATTACK)) then
-				
-					v:EmitSound("Halloween.HeadlessBossAxeHitWorld")
-					
-					local effectdata = EffectData()
-						effectdata:SetOrigin(v:GetPos())
-						effectdata:SetNormal(Vector(0,0,1))
-						effectdata:SetMagnitude(2)
-						effectdata:SetScale(1)
-						effectdata:SetRadius(5)
-					util.Effect("Sparks", effectdata)
-					
-					v:Remove()
-
+				if not pl.NextHealthDecay then
+					pl.NextHealthDecay = CurTime() + 0.2
+				elseif CurTime() >= pl.NextHealthDecay then
+					pl:SetHealth(pl:Health() - 1)
+					pl.NextHealthDecay = CurTime() + 0.2
 				end
-				
+
 			end
+			for k,v in ipairs(ents.FindInSphere(pl:GetShootPos() * 1.05,80 * pl:GetModelScale() * 1.01)) do
 			
-		end
-	end
-	for _,bot in pairs(player.GetBots()) do
-		if (string.find(bot:GetModel(),"bot_")) then
-			GAMEMODE:GiveAmmoPercent(bot, 100)
-		elseif (bot.IsL4DZombie) then
-			if (math.random(1,150)) == 1 then
-				GAMEMODE:GiveAmmoPercent(bot, 40)
+				if (pl:IsPlayer() and !pl:IsHL2() and IsValid(pl:GetActiveWeapon()) and pl.IsTFWeapon) then
+					
+					if (pl:GetActiveWeapon():GetItemData().item_name and pl:GetActiveWeapon():GetItemData().item_name == "#TF_Minigun_Deflector" and (string.find(v:GetClass(), "tf_projectile_") or v:GetClass() == "prop_combine_ball" or v:GetClass() == "rpg_missile" or v:GetCollisionGroup() == COLLISION_GROUP_PROJECTILE) and pl:KeyDown(IN_ATTACK)) then
+					
+						v:EmitSound("Halloween.HeadlessBossAxeHitWorld")
+						
+						local effectdata = EffectData()
+							effectdata:SetOrigin(v:GetPos())
+							effectdata:SetNormal(Vector(0,0,1))
+							effectdata:SetMagnitude(2)
+							effectdata:SetScale(1)
+							effectdata:SetRadius(5)
+						util.Effect("Sparks", effectdata)
+						
+						v:Remove()
+
+					end
+					
+				end
+				
 			end
 		end
-		if (bot.TargetEnt) then
-			for k,v in pairs(player.GetAll()) do
-				if (v:EntIndex() == bot.TargetEnt) then
-					if (v:Health() < 1) then
-						bot.TargetEnt = table.Random({team.GetPlayers(v:Team())})
+		for _,bot in pairs(player.GetBots()) do
+			if (string.find(bot:GetModel(),"/bot_")) then
+				GAMEMODE:GiveAmmoPercent(bot, 100)
+			end
+			if (bot.TargetEnt and math.random(1,16 + table.Count(player.GetAll())) == 1) then 
+				for k,v in pairs(ents.GetAll()) do
+					if (v:IsTFPlayer() and v:EntIndex() == bot.TargetEnt) then
+						if (v:Health() < 1) then
+							bot.TargetEnt = table.Random({team.GetPlayers(v:Team())})
+						end
 					end
 				end
 			end
@@ -664,183 +667,185 @@ hook.Add("Move", "TFPlayerSlowdown", function(pl, move)
 end)
 ]]
 hook.Add("Think", "TFPlayerThink", function()
-	for v,_ in pairs(entset.GetTFPlayers()) do
-		--------------------------------------------------------
-		-- Overheal
-		if v:IsValid() then
-		local health, maxhealth = v:Health(), v:GetMaxHealth()
-		if maxhealth>0 then -- Some particuliar NPCs have a max health of 0, do not take overhealing into consideration
-			if not v.OverhealDecreasePeriod or v.CurrentMaxHealth~=maxhealth then
-				-- A full overheal  (+50% max health) takes exactly 20 seconds to fade out
-				v.OverhealDecreasePeriod = 20/(maxhealth * 0.5)
-				v.CurrentMaxHealth = maxhealth
-			end
-			
-			if (not v.NextOverhealThink or CurTime()>v.NextOverhealThink) and health>maxhealth then
-				health = health-1
-				v:SetHealth(health)
-				v.NextOverhealThink = CurTime() + v.OverhealDecreasePeriod
-			end
-			
-			if health<=maxhealth then
-				v:RemovePlayerState(PLAYERSTATE_OVERHEALED, true)
-			else
-				v:AddPlayerState(PLAYERSTATE_OVERHEALED, true)
-			end
-		end
-		end
-		
-		-- Update the Networked health for all NPCs
-		if v:IsNPC() then
-			if not v.LastHealth and v:GetNPCData().health then
-				v:ResetMaxHealth()
-				v:ResetHealth()
-			end
-			
-			v.LastHealth = v:HealthOLD()
-			v:SetNWInt("Health", v.LastHealth)
-		end
-		
-		--------------------------------------------------------
-		-- Fire
-		
-		-- now handled by tf_entityflame
-		
-		--[[
-		if v.NextExtinguish then
-			if v:WaterLevel()>2 or CurTime()>v.NextExtinguish or (v:IsPlayer() and not v:Alive()) then
-				GAMEMODE:ExtinguishEntity(v)
-			elseif not v.NextBurn or CurTime()>v.NextBurn then
-				local attacker = v.LastIgniter or v
-				local dmginfo = DamageInfo()
-					dmginfo:SetAttacker(attacker)
-					dmginfo:SetInflictor(attacker)
-					dmginfo:SetDamage(3)
-					dmginfo:SetDamageType(DMG_BURN|DMG_DIRECT)
-					dmginfo:SetDamagePosition(v:GetPos())
-				v:TakeDamageInfo(dmginfo)
-				v.NextBurn = CurTime() + 0.5
-			end
-		end]]
-		
-		--------------------------------------------------------
-		-- Removing Jarate effects
-		
-		if v.NextEndJarate and (v:WaterLevel()>2 or CurTime()>v.NextEndJarate) then
-			v.NextEndJarate = nil
-			v:RemovePlayerState(PLAYERSTATE_JARATED, true)
-		end
-		
-		--------------------------------------------------------
-		-- Removing Mad Milk effects
-		
-		if v.NextEndMilk and CurTime()>v.NextEndMilk then
-			v.NextEndMilk = nil
-			v:RemovePlayerState(PLAYERSTATE_MILK, true)
-		end
-		
-		--------------------------------------------------------
-		-- Recharging weapons (Jarate, Sandman, etc...)
-		
-		if v:IsPlayer() and v.NextGiveAmmo and CurTime()>v.NextGiveAmmo then
-			if v.NextGiveAmmoType then
-				v:GiveAmmo(1, v.NextGiveAmmoType)
-			end
-			v.NextGiveAmmo = nil
-		end
-		
-		--------------------------------------------------------
-		-- Critical boost expired, remove the crit effect
-		
-		if v:IsPlayer() and v.NextCritBoostExpire and CurTime()>v.NextCritBoostExpire then
-			--GAMEMODE:StopCritBoost(v)
-		end
-		
-		--------------------------------------------------------
-		-- Thrown by explosion
-		
-		if v:IsThrownByExplosion() and v:OnGround() then
-			v:SetThrownByExplosion(false)
-		end
-		
-		--------------------------------------------------------
-		-- Updating stats
-		
-		if not v.NextUpdateHealStats or CurTime() > v.NextUpdateHealStats then
-			if v.AddedHealing then
-				if v.AddedHealing ~= 0 then
-					v:AddHealing(v.AddedHealing)
-				end
-			end
-			if v and v.AddedHealing and isnumber(v.AddedHealing) then
-				v.AddedHealing = 0
-			end
-			if v and v.HealingScoreProgress and isnumber(v.HealingScoreProgress) then
-				local score = 0
-				while v.HealingScoreProgress > 600 do
-					v.HealingScoreProgress = v.HealingScoreProgress - 600
-					score = score + 1
-				end
-				if score > 0 then v:AddFrags(score) end
-			end
-			if v.NextUpdateHealStats then
-				v.NextUpdateHealStats = CurTime() + 2
-			end
-		end
-		
-		--------------------------------------------------------
-		-- Player-only attributes
-		
-		local TA
-		if IsValid(v) and v:IsPlayer() and v:Alive() and v.TempAttributes and TA then
-			TA = v.TempAttributes
-		end
-		if TA then
+	if (math.random(1,3+(table.Count(player.GetAll())*0.4)) == 1) then 
+		for v,_ in pairs(entset.GetTFPlayers()) do
 			--------------------------------------------------------
-			-- Health regeneration/drain
-			
-			if not TA.NextHealthRegen then
-				TA.NextHealthRegen = CurTime() + 1
-			elseif CurTime() >= TA.NextHealthRegen then
-				--local h = TA.HealthRegen or 0
-				local data = {health = 0}
+			-- Overheal
+			if v:IsValid() then
+			local health, maxhealth = v:Health(), v:GetMaxHealth()
+			if maxhealth>0 then -- Some particuliar NPCs have a max health of 0, do not take overhealing into consideration
+				if not v.OverhealDecreasePeriod or v.CurrentMaxHealth~=maxhealth then
+					-- A full overheal  (+50% max health) takes exactly 20 seconds to fade out
+					v.OverhealDecreasePeriod = 20/(maxhealth * 0.5)
+					v.CurrentMaxHealth = maxhealth
+				end
 				
-				if v:GetPlayerClassTable().HasMedicRegeneration then
-					data.health = Lerp((CurTime() - (v.LastDamaged or 0)) / 10, 3, 6)
+				if (not v.NextOverhealThink or CurTime()>v.NextOverhealThink) and health>maxhealth then
+					health = health-1
+					v:SetHealth(health)
+					v.NextOverhealThink = CurTime() + v.OverhealDecreasePeriod
+				end
+				
+				if health<=maxhealth then
+					v:RemovePlayerState(PLAYERSTATE_OVERHEALED, true)
+				else
+					v:AddPlayerState(PLAYERSTATE_OVERHEALED, true)
+				end
+			end
+			end
+			
+			-- Update the Networked health for all NPCs
+			if v:IsNPC() then
+				if not v.LastHealth and v:GetNPCData().health then
+					v:ResetMaxHealth()
+					v:ResetHealth()
+				end
+				
+				v.LastHealth = v:HealthOLD()
+				v:SetNWInt("Health", v.LastHealth)
+			end
+			
+			--------------------------------------------------------
+			-- Fire
+			
+			-- now handled by tf_entityflame
+			
+			--[[
+			if v.NextExtinguish then
+				if v:WaterLevel()>2 or CurTime()>v.NextExtinguish or (v:IsPlayer() and not v:Alive()) then
+					GAMEMODE:ExtinguishEntity(v)
+				elseif not v.NextBurn or CurTime()>v.NextBurn then
+					local attacker = v.LastIgniter or v
+					local dmginfo = DamageInfo()
+						dmginfo:SetAttacker(attacker)
+						dmginfo:SetInflictor(attacker)
+						dmginfo:SetDamage(3)
+						dmginfo:SetDamageType(DMG_BURN|DMG_DIRECT)
+						dmginfo:SetDamagePosition(v:GetPos())
+					v:TakeDamageInfo(dmginfo)
+					v.NextBurn = CurTime() + 0.5
+				end
+			end]]
+			
+			--------------------------------------------------------
+			-- Removing Jarate effects
+			
+			if v.NextEndJarate and (v:WaterLevel()>2 or CurTime()>v.NextEndJarate) then
+				v.NextEndJarate = nil
+				v:RemovePlayerState(PLAYERSTATE_JARATED, true)
+			end
+			
+			--------------------------------------------------------
+			-- Removing Mad Milk effects
+			
+			if v.NextEndMilk and CurTime()>v.NextEndMilk then
+				v.NextEndMilk = nil
+				v:RemovePlayerState(PLAYERSTATE_MILK, true)
+			end
+			
+			--------------------------------------------------------
+			-- Recharging weapons (Jarate, Sandman, etc...)
+			
+			if v:IsPlayer() and v.NextGiveAmmo and CurTime()>v.NextGiveAmmo then
+				if v.NextGiveAmmoType then
+					v:GiveAmmo(1, v.NextGiveAmmoType)
+				end
+				v.NextGiveAmmo = nil
+			end
+			
+			--------------------------------------------------------
+			-- Critical boost expired, remove the crit effect
+			
+			if v:IsPlayer() and v.NextCritBoostExpire and CurTime()>v.NextCritBoostExpire then
+				--GAMEMODE:StopCritBoost(v)
+			end
+			
+			--------------------------------------------------------
+			-- Thrown by explosion
+			
+			if v:IsThrownByExplosion() and v:OnGround() then
+				v:SetThrownByExplosion(false)
+			end
+			
+			--------------------------------------------------------
+			-- Updating stats
+			
+			if not v.NextUpdateHealStats or CurTime() > v.NextUpdateHealStats then
+				if v.AddedHealing then
+					if v.AddedHealing ~= 0 then
+						v:AddHealing(v.AddedHealing)
+					end
+				end
+				if v and v.AddedHealing and isnumber(v.AddedHealing) then
+					v.AddedHealing = 0
+				end
+				if v and v.HealingScoreProgress and isnumber(v.HealingScoreProgress) then
+					local score = 0
+					while v.HealingScoreProgress > 600 do
+						v.HealingScoreProgress = v.HealingScoreProgress - 600
+						score = score + 1
+					end
+					if score > 0 then v:AddFrags(score) end
+				end
+				if v.NextUpdateHealStats then
+					v.NextUpdateHealStats = CurTime() + 2
+				end
+			end
+			
+			--------------------------------------------------------
+			-- Player-only attributes
+			
+			local TA
+			if IsValid(v) and v:IsPlayer() and v:Alive() and v.TempAttributes and TA then
+				TA = v.TempAttributes
+			end
+			if TA then
+				--------------------------------------------------------
+				-- Health regeneration/drain
+				
+				if not TA.NextHealthRegen then
+					TA.NextHealthRegen = CurTime() + 1
+				elseif CurTime() >= TA.NextHealthRegen then
+					--local h = TA.HealthRegen or 0
+					local data = {health = 0}
+					
+					if v:GetPlayerClassTable().HasMedicRegeneration then
+						data.health = Lerp((CurTime() - (v.LastDamaged or 0)) / 10, 3, 6)
+						
+						if v:IsPlayer() and IsValid(v:GetActiveWeapon()) then
+							ApplyAttributesFromEntity(v:GetActiveWeapon(), "medic_health_regen", v, data)
+						end
+						ApplyGlobalAttributesFromPlayer(v, "medic_health_regen", v, data)
+					end
 					
 					if v:IsPlayer() and IsValid(v:GetActiveWeapon()) then
-						ApplyAttributesFromEntity(v:GetActiveWeapon(), "medic_health_regen", v, data)
+						ApplyAttributesFromEntity(v:GetActiveWeapon(), "health_regen", v, data)
 					end
-					ApplyGlobalAttributesFromPlayer(v, "medic_health_regen", v, data)
+					ApplyGlobalAttributesFromPlayer(v, "health_regen", v, data)
+					
+					v:GiveHealth(math.floor(data.health))
+					TA.NextHealthRegen = CurTime() + 1
 				end
 				
-				if v:IsPlayer() and IsValid(v:GetActiveWeapon()) then
-					ApplyAttributesFromEntity(v:GetActiveWeapon(), "health_regen", v, data)
-				end
-				ApplyGlobalAttributesFromPlayer(v, "health_regen", v, data)
 				
-				v:GiveHealth(math.floor(data.health))
-				TA.NextHealthRegen = CurTime() + 1
-			end
-			
-			
-			--------------------------------------------------------
-			-- Ammo regeneration/drain
-			
-			if not TA.NextAmmoRegen then
-				TA.NextAmmoRegen = CurTime() + 5
-			elseif CurTime() >= TA.NextAmmoRegen then
-				local data = {}
+				--------------------------------------------------------
+				-- Ammo regeneration/drain
 				
-				if v:IsPlayer() and IsValid(v:GetActiveWeapon()) then
-					ApplyAttributesFromEntity(v:GetActiveWeapon(), "ammo_regen", v, data)
+				if not TA.NextAmmoRegen then
+					TA.NextAmmoRegen = CurTime() + 5
+				elseif CurTime() >= TA.NextAmmoRegen then
+					local data = {}
+					
+					if v:IsPlayer() and IsValid(v:GetActiveWeapon()) then
+						ApplyAttributesFromEntity(v:GetActiveWeapon(), "ammo_regen", v, data)
+					end
+					ApplyGlobalAttributesFromPlayer(v, "ammo_regen", v, data)
+					
+					for ammo,count in pairs(data) do
+						v:GiveTFAmmo(count,ammo)
+					end
+					TA.NextAmmoRegen = CurTime() + 5
 				end
-				ApplyGlobalAttributesFromPlayer(v, "ammo_regen", v, data)
-				
-				for ammo,count in pairs(data) do
-					v:GiveTFAmmo(count,ammo)
-				end
-				TA.NextAmmoRegen = CurTime() + 5
 			end
 		end
 	end

@@ -150,7 +150,7 @@ function SWEP:PrimaryAttack()
 	 
 	self.Owner:FireBullets( bullet ) 
 	if (!self.IsSilenced) then
-		self:EmitSound(self.ShootSound, 85,math.random(95,105))	
+		self:EmitSound(self.ShootSound, 85,100)	
 		self.Owner:ViewPunch( Angle( rnda,0,0 ) ) 
 		self:TakePrimaryAmmo(self.Primary.TakeAmmo) 
 		self:SendWeaponAnim(vm:GetSequenceActivity(vm:LookupSequence("shoot"..math.random(1,3).."_unsil")))
@@ -165,7 +165,7 @@ function SWEP:PrimaryAttack()
 			end)
 		end)
 	else
-		self:EmitSound(self.ShootSound2, 60,math.random(95,105))	
+		self:EmitSound(self.ShootSound2, 60,100)	
 		self.Owner:ViewPunch( Angle( rnda,0,0 ) ) 
 		self:TakePrimaryAmmo(self.Primary.TakeAmmo) 
 		self:SendWeaponAnim(vm:GetSequenceActivity(vm:LookupSequence("shoot"..math.random(1,3))))

@@ -40,6 +40,24 @@ ENT.Sapped = false
 
 ENT.Range = 100
 
+function ENT:SpawnFunction(pl, tr)
+	if not tr.Hit then return end
+	
+	local pos = tr.HitPos
+	
+	local ent = ents.Create(self.ClassName)
+	ent:SetPos(pos)
+	ent:Spawn()
+	ent:Activate()
+	
+	ent:SetPos(pos - Vector(0,0,ent:OBBMins().z))
+	
+	ent:SetTeam(pl:Team())
+	ent:SetBuilder(pl) 
+	
+	return ent
+end
+
 function ENT:StartSupply(pl)
 	self.NumClients = self.NumClients + 1
 	if not self.NextHealSound or CurTime()>self.NextHealSound then

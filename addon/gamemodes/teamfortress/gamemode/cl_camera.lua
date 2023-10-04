@@ -71,8 +71,8 @@ hook.Add("CreateMove", "TauntMove", function(cmd)
 		if lockangle == nil then
 			lockangle = taunt_angles * 1
 		end
-
-		if (LocalPlayer():GetPlayerClass() != "tank_l4d" and !LocalPlayer():IsPlayingTaunt()) then
+		
+		if (LocalPlayer():GetPlayerClass() != "tank_l4d" and !LocalPlayer():IsPlayingTaunt() and LocalPlayer().IsThirdperson) then
 			cmd:SetViewAngles(lockangle)
 		end
 		cmd:ClearButtons()
@@ -393,6 +393,11 @@ net.Receive("DeActivateTauntCam", function()
 	if (LocalPlayer().IsThirdperson) then
 		LocalPlayer().NextEndThirdperson = CurTime() + ThirdpersonEndDelay
 	end
+end)
+net.Receive("DeActivateTauntCamImmediate", function()
+	if LocalPlayer().FirstReality == true then return end
+	LocalPlayer().NextEndThirdperson = nil
+	LocalPlayer().IsThirdperson = false
 end)
 
 function StartSimulatedCamera()

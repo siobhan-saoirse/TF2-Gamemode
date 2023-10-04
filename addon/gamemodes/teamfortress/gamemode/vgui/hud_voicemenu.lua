@@ -15,7 +15,6 @@ local VoiceMenuList = {
 	{"TLK_PLAYER_RIGHT",	"#Voice_Menu_Right"},
 	{"TLK_PLAYER_YES",		"#Voice_Menu_Yes"},
 	{"TLK_PLAYER_NO",		"#Voice_Menu_No"},
-	{"TLK_MVM_ENCOURAGE_UPGRADE",		"Upgrade"},
 },
 
 {
@@ -27,7 +26,6 @@ local VoiceMenuList = {
 	{"TLK_PLAYER_SENTRYHERE",		"#Voice_Menu_SentryHere"},
 	{"TLK_PLAYER_ACTIVATECHARGE",	"#Voice_Menu_ActivateCharge"},
 	{"TLK_PLAYER_CHARGEREADY",		"#Voice_Menu_ChargeReady"},
-	{"TLK_MVM_SNIPER_CALLOUT",		"Sniper!"},
 },
 
 {
@@ -39,7 +37,6 @@ local VoiceMenuList = {
 	{"TLK_PLAYER_NEGATIVE",		"#Voice_Menu_Negative"},
 	{"TLK_PLAYER_NICESHOT",		"#Voice_Menu_NiceShot"},
 	{"TLK_PLAYER_GOODJOB",		"#Voice_Menu_GoodJob"},
-	{"TLK_MVM_LOOT_ULTRARARE",		"Positive"},
 }
 }
 
@@ -79,7 +76,6 @@ concommand.Add("voicemenu", function(pl, cmd, args)
 		end
 	end
 	RunConsoleCommand("__svspeak", v[1])
-	RunConsoleCommand("voicemenu_gesture", a, b)
 			
 
 	HudVoiceMenu:Hide()
@@ -205,8 +201,16 @@ end)
 
 hook.Add("PlayerSlotSelected", "VoiceMenuSelect", function(slot)
 	if HudVoiceMenu.CurrentMenu then	
-		RunConsoleCommand("voicemenu", HudVoiceMenu.CurrentMenu - 1, slot - 1)
 		return true
+	end
+end)
+hook.Add("PlayerBindPress", "VoiceMenuSelect", function(pl, bind)
+	if HudVoiceMenu.CurrentMenu then	
+		local num = tonumber(string.match(bind, "^slot(%d)") or "")
+		if num then
+			RunConsoleCommand("voicemenu", HudVoiceMenu.CurrentMenu - 1, num - 1)
+			return true
+		end
 	end
 end)
 hook.Add("PlayerButtonDown", "VoiceMenuSelect2", function( pl, key )

@@ -21,14 +21,14 @@ SWEP.HitFlesh = Sound("")
 SWEP.HitRobot = Sound("MVM_Weapon_Default.HitFlesh")
 SWEP.HitWorld = Sound("")
 
-SWEP.MeleeAttackDelay = 0.15
+SWEP.MeleeAttackDelay = 0.2
 --SWEP.MeleeAttackDelayCritical = 0.25
 SWEP.MeleeRange = 48
 
 SWEP.MaxDamageRampUp = 0
 SWEP.MaxDamageFalloff = 0
 
-SWEP.CriticalChance = 8
+SWEP.CriticalChance = 5
 SWEP.HasThirdpersonCritAnimation = false
 SWEP.NoHitSound = false
 
@@ -79,6 +79,7 @@ function SWEP:CanPrimaryAttack()
 end
 
 function SWEP:CanSecondaryAttack()
+	if (self.Owner:GetNWBool("Bonked",false) == true) then return false end
 	return true
 end
 
@@ -252,6 +253,8 @@ function SWEP:InspectAnimCheck()
 			self.BACKSTAB_VM_UP = ACT_ITEM2_BACKSTAB_VM_UP
 			
 		end
+		self.BACKSTAB_VM_UP		= getfenv()["ACT_"..self.HoldType.."_BACKSTAB_VM_UP"]
+		self.BACKSTAB_VM_DOWN		= getfenv()["ACT_"..self.HoldType.."_BACKSTAB_VM_DOWN"]
 	self:CallBaseFunction("InspectAnimCheck")
 end
 
@@ -359,13 +362,14 @@ function SWEP:MeleeHitSound(tr)
 	
 	if tr.Entity and IsValid(tr.Entity) then
 		if tr.Entity:IsTFPlayer() then
-			if tr.Entity:IsBuilding() then
+			if tr.Entity:IsBuilding() and (!tr.Entity:IsFriendly(self.Owner) && self.Owner.playerclass == "Engineer" || self.Owner.playerclass != "Engineer") then
 				--self.Owner:EmitSound(self.HitWorld)
 				--sound.Play(self.HitWorld, tr.HitPos)
 				if SERVER then
 				sound.Play(self.HitWorld, self:GetPos())
 				end
 			else
+				if tr.Entity:IsBuilding() and (tr.Entity:IsFriendly(self.Owner) && self.Owner.playerclass == "Engineer") then return end
 				--self.Owner:EmitSound(self.HitFlesh)
 				--sound.Play(self.HitFlesh, tr.HitPos)
 				if tr.Entity:IsPlayer() and not tr.Entity:IsHL2() and tr.Entity:GetInfoNum("tf_robot",0) == 1 then
@@ -397,6 +401,10 @@ function SWEP:MeleeHitSound(tr)
 				
 					self.Owner:EmitSound(self.HitFlesh)
 					
+				elseif tr.Entity:IsNextBot() then
+				
+					self.Owner:EmitSound(self.HitFlesh)
+					
 				elseif tr.Entity.Base == "npc_tf2base" or tr.Entity.Base == "npc_demo_red" or tr.Entity.Base == "npc_hwg_red" or tr.Entity.Base == "npc_soldier_red" or tr.Entity.Base == "npc_sniper_red" or tr.Entity.Base == "npc_spy_red" or tr.Entity.Base == "npc_scout_red" or tr.Entity.Base == "npc_pyro_red" or tr.Entity.Base == "npc_medic_red" or tr.Entity.Base == "npc_engineer_red" or tr.Entity:GetClass() == "headless_hatman" then
 				
 					self.Owner:EmitSound(self.HitFlesh)
@@ -412,6 +420,7 @@ function SWEP:MeleeHitSound(tr)
 					
 			end
 		else
+			if tr.Entity:IsBuilding() and (tr.Entity:IsFriendly(self.Owner) && self.Owner.playerclass == "Engineer") then return end
 			if not self.NoHitSound then
 				if FleshMaterials[tr.Entity:GetMaterialType()] then
 					--self.Owner:EmitSound(self.HitFlesh)
@@ -431,6 +440,7 @@ function SWEP:MeleeHitSound(tr)
 			end
 		end
 	else
+		if tr.Entity:IsBuilding() and (!tr.Entity:IsFriendly(self.Owner) && self.Owner.playerclass == "Engineer") then return end
 		if not self.NoHitSound then
 			--self.Owner:EmitSound(self.HitWorld)
 			--sound.Play(self.HitWorld, tr.HitPos)
@@ -662,6 +672,7 @@ function SWEP:MeleeAttack(dummy)
 				end
 			
 			if SERVER then
+				if v:IsBuilding() and (v:IsFriendly(self.Owner) && v.playerclass == "Engineer") then return end
 				v:EmitSound(self.HitFlesh)
 				if (self.Owner:GetPlayerClass() == "charger") then
 					v:EmitSound(self.HitFlesh)
@@ -847,6 +858,7 @@ usermessage.Hook("DoMeleeSwing", function(msg)
 end)]]
 
 function SWEP:PrimaryAttack()
+	if (!self:CanPrimaryAttack()) then return end
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	local vm = self.Owner:GetViewModel()
 	if self:CriticalEffect() then
@@ -906,7 +918,7 @@ function SWEP:PrimaryAttack()
 		self.Owner:Speak("TLK_FIREWEAPON", true)
 	end
 	
-	self.NextIdle = CurTime() + self:SequenceDuration(vm:SelectWeightedSequence(self.VM_HITCENTER))  
+	self.NextIdle = CurTime() + self:SequenceDuration()  
 	
 	--self.NextMeleeAttack = CurTime() + self.MeleeAttackDelay
 	if not self.NextMeleeAttack then

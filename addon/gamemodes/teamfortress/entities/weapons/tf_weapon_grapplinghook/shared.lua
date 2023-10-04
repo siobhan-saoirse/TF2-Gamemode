@@ -10,7 +10,7 @@ SWEP.Crosshair = "tf_crosshair3"
  
 SWEP.Category			= "Team Fortress 2"
 SWEP.PrintName			= "Grappling Hook"
-SWEP.ViewModel = "models/weapons/c_models/c_scout_arms_empty.mdl"
+SWEP.ViewModel = "models/weapons/c_models/c_scout_arms.mdl"
 SWEP.WorldModel = "models/weapons/c_models/c_grappling_hook/c_grappling_hook.mdl"
 
 SWEP.Spawnable			= true

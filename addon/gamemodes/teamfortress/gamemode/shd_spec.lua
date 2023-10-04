@@ -14,7 +14,9 @@ end
 function getAllPlayersButNotThisGuy(ply)
 	local npcs = {}
 	for k,v in ipairs(ents.GetAll()) do
-		if (v:IsTFPlayer() and v:EntIndex() != ply:EntIndex()) then
+		if (v:GetClass() == "info_observer_point") then
+			table.insert(npcs, v)
+		elseif (v:IsTFPlayer() and v:EntIndex() != ply:EntIndex()) then
 			if (v:Health() > 1) then
 				table.insert(npcs, v)
 			end
@@ -25,7 +27,9 @@ end
 function lookForNextPlayer(ply,bot)
 	local npcs = {}
 	for k,v in ipairs(ents.GetAll()) do
-		if (v:IsTFPlayer() and v:EntIndex() != ply:EntIndex() and v:EntIndex() != bot:EntIndex()) then
+		if (v:GetClass() == "info_observer_point") then
+			table.insert(npcs, v)
+		elseif (v:IsTFPlayer() and v:EntIndex() != ply:EntIndex() and v:EntIndex() != bot:EntIndex()) then
 			if (v:Health() > 1) then
 				table.insert(npcs, v)
 			end

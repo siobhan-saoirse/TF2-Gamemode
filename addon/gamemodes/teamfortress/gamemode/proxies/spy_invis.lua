@@ -1,1 +1,61 @@
-local TempVector = {1.0, 1.0, 1.0}function PROXY:Init(mat, kv)	local var_factor = mat:FindVar("$cloakfactor")	local var_tint = mat:FindVar("$cloakcolortint")	local var_refract = mat:FindVar("$refractamount")		self.Factor = var_factor	self.Tint = var_tint	self.Refract = var_refract		return trueendfunction PROXY:OnBind(ent)	if not self.Result then return end		self.Factor:SetFloatValue(ent:GetProxyVar("CloakLevel") or 0)	self.Refract:SetFloatValue(ent:GetProxyVar("CloakRefract") or 0.5)		local tint = ent:GetProxyVar("CloakTint")		if tint then		TempVector[1] = tint[1]		TempVector[2] = tint[2]		TempVector[3] = tint[3]	else		TempVector[1] = 1.0		TempVector[2] = 1.0		TempVector[3] = 1.0	end		self.Tint:SetVecValue(TempVector, 3)endfunction PROXY:GetMaterial()	if not self.Factor then return end		return self.Factor:GetOwningMaterial()end
+
+local DefaultGlowColor = Vector(0.0, 0.0, 0.0)
+
+--[[local ]]
+GlowColorTable = {
+	{	-- red
+		Vector(14.0, 1.0, 1.0),	-- crit
+		Vector(14.0, 1.0, 1.0),	-- crit
+	},
+	{	-- blue
+		Vector(1.0, 4.0, 14.0),	-- crit
+		Vector(1.0, 4.0, 14.0),	-- crit
+	},
+	{	-- red
+		Vector(14.0, 1.0, 1.0),	-- crit
+		Vector(14.0, 1.0, 1.0),	-- crit
+	},
+	{	-- blue
+		Vector(1.0, 4.0, 14.0),	-- crit
+		Vector(1.0, 4.0, 14.0),	-- crit
+	},
+} 
+
+matproxy.Add({
+	name = "spy_invis",
+	init = function(self, mat, values)
+		self.ResultTo = values.resultvar  
+	end,
+
+	bind = function(self, mat, ent)
+		if (IsValid(ent) and IsValid(ent.Owner)) then
+
+			local t2 = ent.Owner:GetProxyVar("CloakTint") 
+			local s2 = ent.Owner:GetProxyVar("CloakLevel")
+			if s2 and t2 then
+				mat:SetVector(self.ResultTo,GlowColorTable[t2][s2])
+			else
+				mat:SetVector(self.ResultTo,DefaultGlowColor)
+			end
+
+		elseif (IsValid(ent)) then
+
+			local t2 = ent.Owner:GetProxyVar("CloakTint") 
+			local s2 = ent.Owner:GetProxyVar("CloakLevel")
+			if s2 and t2 then
+				mat:SetVector(self.ResultTo,GlowColorTable[t2][s2])
+			else
+				mat:SetVector(self.ResultTo,DefaultGlowColor)
+			end
+
+		end
+	end
+
+})
+
+--[[
+function PROXY:GetMaterial()
+	if not self.Result then return end
+	
+	return self.Result:GetOwningMaterial()
+end]]

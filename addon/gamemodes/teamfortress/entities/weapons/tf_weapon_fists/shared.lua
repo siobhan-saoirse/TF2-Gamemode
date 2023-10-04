@@ -13,7 +13,7 @@ end
 SWEP.ReadyToPounce		= true
 SWEP.Base				= "tf_weapon_melee_base"
 SWEP.Slot				= 2
-SWEP.ViewModel			= "models/weapons/c_models/c_heavy_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_heavy_arms.mdl"
 SWEP.WorldModel			= "models/empty.mdl"
 SWEP.Crosshair = "tf_crosshair3"
 
@@ -64,7 +64,7 @@ end
 function SWEP:OnCritBoostAdded()
 	--self.Owner:EmitSound(self.CritHit)
 end
-
+ 
 function SWEP:Deploy() 
 	if self:GetItemData().model_player == "models/weapons/c_models/c_breadmonster_gloves/c_breadmonster_gloves.mdl" then
 	self.Owner:EmitSound("Weapon_bm_gloves.draw")
@@ -965,7 +965,6 @@ function SWEP:SecondaryAttack()
 		end
 		if self.Owner:GetPlayerClass() == "tank_l4d" or self.Owner:GetPlayerClass() == "boomer"or self.Owner:GetPlayerClass() == "spitter"or self.Owner:GetPlayerClass() == "boomette"  or self.Owner:GetPlayerClass() == "smoker" or self.Owner:GetPlayerClass() ==  "hunter" or self.Owner:GetPlayerClass() ==  "jockey" or self.Owner:GetPlayerClass() ==  "witch" then
 			timer.Adjust("VoiceL4d"..self.Owner:EntIndex(), 1.5)
-			self.Owner:DoAnimationEvent(ACT_MELEE_ATTACK1)
 			self.MeleeRange = 100
 		elseif self.Owner:GetPlayerClass() == "charger" then
 			self.Owner:DoAnimationEvent(ACT_GESTURE_TURN_LEFT90)
@@ -1249,7 +1248,7 @@ function SWEP:SecondaryAttack()
 			end
 		end)
 	elseif self.Owner:GetPlayerClass() == "spitter" and self.Owner:IsBot() then
-		self.Owner:DoAnimationEvent(self.Owner:GetSequenceActivity(self.Owner:LookupSequence("spitter_spitting")))
+		self.Owner:DoAnimationEvent("spitter_spitting")
 		self.Owner:SetWalkSpeed(1)
 		self.Owner:SetRunSpeed(1)
 		self:SendWeaponAnim(self.Owner:GetViewModel():GetSequenceActivity(self.Owner:GetViewModel():LookupSequence("spit")))
@@ -1294,7 +1293,7 @@ function SWEP:SecondaryAttack()
 			timer.Create("Pounce"..self.Owner:EntIndex(), 0, 2, function()
 				self.Owner:SetVelocity( self.Owner:GetAimVector() * 300 * 3.1 )
 			end)
-			self.Owner:DoAnimationEvent(self.Owner:GetSequenceActivity(self.Owner:LookupSequence("Pounce_01")))
+			self.Owner:DoAnimationEvent("Pounce_01")
 			timer.Simple(self.Owner:SequenceDuration(self.Owner:LookupSequence("Pounce_01")) , function()
 				/*
 				if (self.Owner:GetAngles():Up():Length() > 0.7) then
@@ -1305,10 +1304,10 @@ function SWEP:SecondaryAttack()
 					end)
 				else*/
 					
-					self.Owner:DoAnimationEvent(self.Owner:GetSequenceActivity(self.Owner:LookupSequence("pounce_idle_low")))
+					self.Owner:DoAnimationEvent("pounce_idle_low")
 					timer.Create("LoopHunterAnim"..self.Owner:EntIndex(), self.Owner:SequenceDuration(self.Owner:LookupSequence("pounce_idle_low")) , 0, function()
 						//print(self.Owner:GetAimVector():LengthSqr())
-						self.Owner:DoAnimationEvent(self.Owner:GetSequenceActivity(self.Owner:LookupSequence("Pounce_idle_low")))
+						self.Owner:DoAnimationEvent("Pounce_idle_low")
 					end)
 				//end
 			end)
@@ -1828,7 +1827,7 @@ function SWEP:PrimaryAttack()
 	if self.Owner:GetPlayerClass() == "headcrab" then return end
 	if self.Owner:GetPlayerClass() == "charger" and !self.Owner:IsBot() then return end
 	if self.Owner:GetPlayerClass() == "spitter" and !self.Owner:IsBot() then
-		self.Owner:DoAnimationEvent(self.Owner:GetSequenceActivity(self.Owner:LookupSequence("spitter_spitting")))
+		self.Owner:DoAnimationEvent("spitter_spitting")
 		self.Owner:SetWalkSpeed(1)
 		self.Owner:SetRunSpeed(1)
 		self:SendWeaponAnim(self.Owner:GetViewModel():GetSequenceActivity(self.Owner:GetViewModel():LookupSequence("spit")))
@@ -2146,7 +2145,7 @@ function SWEP:PrimaryAttack()
 			timer.Create("Pounce"..self.Owner:EntIndex(), 0, 2, function()
 				self.Owner:SetVelocity( self.Owner:GetAimVector() * 300 * 1.5 )
 			end)
-			self.Owner:DoAnimationEvent(self.Owner:GetSequenceActivity(self.Owner:LookupSequence("Pounce_01")))
+			self.Owner:DoAnimationEvent("Pounce_01")
 			timer.Simple(self.Owner:SequenceDuration(self.Owner:LookupSequence("Pounce_01")) , function()
 				/*
 				if (self.Owner:GetAngles():Up():Length() > 0.7) then
@@ -2157,10 +2156,10 @@ function SWEP:PrimaryAttack()
 					end)
 				else*/
 					
-					self.Owner:DoAnimationEvent(self.Owner:GetSequenceActivity(self.Owner:LookupSequence("pounce_idle_low")))
+					self.Owner:DoAnimationEvent("pounce_idle_low")
 					timer.Create("LoopHunterAnim"..self.Owner:EntIndex(), self.Owner:SequenceDuration(self.Owner:LookupSequence("pounce_idle_low")) , 0, function()
 						//print(self.Owner:GetAimVector():LengthSqr())
-						self.Owner:DoAnimationEvent(self.Owner:GetSequenceActivity(self.Owner:LookupSequence("Pounce_idle_low")))
+						self.Owner:DoAnimationEvent("Pounce_idle_low")
 					end)
 				//end
 			end)

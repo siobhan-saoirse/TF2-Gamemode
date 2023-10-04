@@ -205,7 +205,7 @@ function ENT:Think()
 		self:Remove()
 	end
 	for k,v in ipairs(ents.FindInSphere(self:GetPos(),90)) do
-		if (v:IsValid() and v:IsTFPlayer() and v:EntIndex() != self:GetOwner():EntIndex() and !v:IsFriendly(self:GetOwner()) and v:Health() > 0) then
+		if (v:IsValid() and (v:IsTFPlayer() or v:IsNextBot()) and v:EntIndex() != self:GetOwner():EntIndex() and !v:IsFriendly(self:GetOwner()) and v:Health() > 0) then
 			if self.BouncesLeft>0 then
 				self:DoExplosion()
 			end
@@ -220,7 +220,7 @@ end
 function ENT:DoExplosion()
 	self.PhysicsCollide = nil
 	
-	self:EmitSound(self.ExplosionSound, 100, 100)
+	sound.Play(self.ExplosionSound, self:GetPos())
 	
 	local flags = 0
 	

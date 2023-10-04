@@ -1,6 +1,8 @@
 
 if !IsMounted("tf") then
-	ErrorNoHalt("TF2 is not mounted! Expect errors!")
+	timer.Create("ExpectErrors!", 0, 0, function()
+		ErrorNoHalt("TF2 is not mounted! Expect errors!")
+	end)
 	if CLIENT then
 		local conflict_help_frame = vgui.Create( "DFrame" )
 		conflict_help_frame:SetSize(200, 200)
@@ -15,16 +17,24 @@ if !IsMounted("tf") then
 		conflicttext:InsertColorChange(255, 255, 255, 255)
 		conflicttext:CenterHorizontal(0.5)
 		conflicttext:SetVerticalScrollbarEnabled(false)
-		conflicttext:AppendText("Unfortuntely, you cannot play this gamemode because you do not have Team Fortress 2 Mounted. Please get it from the steam store.")
-		local conflictbut = vgui.Create("DButton", conflict_help_frame)
-		conflictbut:SetSize(100, 30)
-		conflictbut:SetPos(0, 145)
-		conflictbut:CenterHorizontal(0.5)
-		conflictbut:SetText("Ok") 
+		conflicttext:AppendText("Unfortuntely, it is highly unrecommeneded to play this gamemode right now because you do not have Team Fortress 2 Mounted. Please get it from the steam store.")
+			local conflictbut = vgui.Create("DButton", conflict_help_frame)
+			conflictbut:SetSize(100, 30)
+			conflictbut:SetPos(0, 125)
+			conflictbut:CenterHorizontal(0.5)
+			conflictbut:SetText("Get the Game (it's free)") 
+			local conflictbut2 = vgui.Create("DButton", conflict_help_frame)
+			conflictbut2:SetSize(100, 30)
+			conflictbut2:SetPos(0, 165)
+			conflictbut2:CenterHorizontal(0.5)
+			conflictbut2:SetText("Continue") 
 
-		function conflictbut.DoClick()
-			RunConsoleCommand("disconnect")
-			gui.OpenURL("https://store.steampowered.com/app/440")
-		end
+			function conflictbut.DoClick()
+				RunConsoleCommand("disconnect")
+				gui.OpenURL("https://store.steampowered.com/app/440")
+			end
+			function conflictbut2.DoClick()
+				conflict_help_frame:Close()
+			end
 	end
 end 

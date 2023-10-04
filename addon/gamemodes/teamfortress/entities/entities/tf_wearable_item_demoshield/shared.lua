@@ -16,7 +16,7 @@ ENT.DamagePerHead = 10
 --ENT.MaxHeads = 5
 
 ENT.BaseDamage = 50
-ENT.DamageRandomize = 0.1
+ENT.DamageRandomize = 0.1 
 ENT.MaxDamageRampUp = 0
 ENT.MaxDamageFalloff = 0
 
@@ -343,33 +343,34 @@ function ENT:StartCharging()
 
 	if SERVER then
 		ParticleEffectAttach( 'warp_version', PATTACH_ABSORIGIN_FOLLOW, self.Owner, 0)
-		local att = 1
-		local att2 = 1
-		local att3 = 1
-		local att4 = 1
-		local att5 = 1
-		if (self:GetOwner():LookupAttachment("back_upper")) then
+		
+				local att = 1
+				local att2 = 1
+				local att3 = 1
+				local att4 = 1
+				local att5 = 1
+				if (self:GetOwner():LookupAttachment("back_upper")) then
 
-			att = self:GetOwner():LookupAttachment("back_upper")
-			att2 = self:GetOwner():LookupAttachment("back_lower")
-			att3 = self:GetOwner():LookupAttachment("foot_R")
-			att4 = self:GetOwner():LookupAttachment("foot_L")
-			att5 = self:GetOwner():LookupAttachment("hand_L")
+					att = self:GetOwner():LookupAttachment("back_upper")
+					att2 = self:GetOwner():LookupAttachment("back_lower")
+					att3 = self:GetOwner():LookupAttachment("foot_R")
+					att4 = self:GetOwner():LookupAttachment("foot_L")
+					att5 = self:GetOwner():LookupAttachment("hand_L")
 
-		end
-		if self:GetOwner():Team() == TEAM_BLU then
-			self:GetOwner().trail = util.SpriteTrail( self:GetOwner(), att, Color( 255, 255, 255 ), false, 12, 12, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blu" )
-			self:GetOwner().trail2 = util.SpriteTrail( self:GetOwner(), att2, Color( 255, 255, 255 ), false, 16, 16, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blu" )
-			self:GetOwner().trail3 = util.SpriteTrail( self:GetOwner(), att3, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blu" )
-			self:GetOwner().trail4 = util.SpriteTrail( self:GetOwner(), att4, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blu" )
-			self:GetOwner().trail5 = util.SpriteTrail( self:GetOwner(), att5, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blu" )
-		else
-			self:GetOwner().trail = util.SpriteTrail( self:GetOwner(), att, Color( 255, 255, 255 ), false, 12, 12, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
-			self:GetOwner().trail2 = util.SpriteTrail( self:GetOwner(), att2, Color( 255, 255, 255 ), false, 16, 16, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
-			self:GetOwner().trail3 = util.SpriteTrail( self:GetOwner(), att3, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
-			self:GetOwner().trail4 = util.SpriteTrail( self:GetOwner(), att4, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
-			self:GetOwner().trail5 = util.SpriteTrail( self:GetOwner(), att5, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
-		end
+				end
+				if self:GetOwner():Team() == TEAM_BLU then
+					self:GetOwner().trail = util.SpriteTrail( self:GetOwner(), att, Color( 255, 255, 255 ), false, 12, 12, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blu" )
+					self:GetOwner().trail2 = util.SpriteTrail( self:GetOwner(), att2, Color( 255, 255, 255 ), false, 16, 16, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blu" )
+					self:GetOwner().trail3 = util.SpriteTrail( self:GetOwner(), att3, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_white" )
+					self:GetOwner().trail4 = util.SpriteTrail( self:GetOwner(), att4, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_white" )
+					self:GetOwner().trail5 = util.SpriteTrail( self:GetOwner(), att5, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_blu" )
+				else
+					self:GetOwner().trail = util.SpriteTrail( self:GetOwner(), att, Color( 255, 255, 255 ), false, 12, 12, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
+					self:GetOwner().trail2 = util.SpriteTrail( self:GetOwner(), att2, Color( 255, 255, 255 ), false, 16, 16, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
+					self:GetOwner().trail3 = util.SpriteTrail( self:GetOwner(), att3, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_white" )
+					self:GetOwner().trail4 = util.SpriteTrail( self:GetOwner(), att4, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_white" )
+					self:GetOwner().trail5 = util.SpriteTrail( self:GetOwner(), att5, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
+				end
 	end
 	if not self.ChargeSoundEnt then
 		self.ChargeSoundEnt = CreateSound(self:GetOwner(), "DemoCharge.Charging")

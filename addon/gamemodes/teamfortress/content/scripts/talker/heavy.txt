@@ -715,22 +715,31 @@ Response HeavySwingFistsStart
 }
 Rule HeavySwingFistsStart
 {
-	criteria ConceptFireWeapon IsWeaponMelee 50PercentChance IsHeavy IsNotDaring HeavyNotKillSpeechMelee IsNotDominating IsNotHeavyFistsSwung WeaponIsNotSaxxy
+	criteria ConceptFireWeapon WeaponIsFists 50PercentChance IsHeavy IsNotHeavyFistsSwung
 	ApplyContext "HeavyFistsSwung:1:10"
 	Response HeavySwingFistsStart
 }
 
 Response HeavySwingFists
 {
+	scene "scenes/player/heavy/low/1980.vcd"
 	scene "scenes/player/heavy/low/2272.vcd"
 	scene "scenes/player/heavy/low/2273.vcd"
 	scene "scenes/player/heavy/low/2274.vcd"
 	scene "scenes/player/heavy/low/1978.vcd"
-	scene "scenes/player/heavy/low/1979.vcd"
+	scene "scenes/player/heavy/low/1979.vcd" 
+	scene "scenes/Player/Heavy/low/2275.vcd"
+	scene "scenes/Player/Heavy/low/2276.vcd"
 }
 Rule HeavySwingFists
 {
-	criteria ConceptFireWeapon IsWeaponMelee 50PercentChance IsHeavyFistsSwung IsNotDaring HeavyNotKillSpeechMelee IsNotDominating IsHeavy IsNotHeavyFistsSwinging
+	criteria ConceptFireWeapon WeaponIsFists 50PercentChance IsHeavy
+	ApplyContext "HeavyFistsSwinging:2:3"
+	Response HeavySwingFists
+}
+Rule HeavySwingFists2
+{
+	criteria ConceptFireWeapon WeaponIsCrowbar 50PercentChance IsHeavy IsNotHeavyFistsSwinging
 	ApplyContext "HeavyFistsSwinging:2:3"
 	Response HeavySwingFists
 }
@@ -1154,6 +1163,7 @@ Response PlayerHeadLeftHeavy
 	scene "scenes/Player/Heavy/low/237.vcd" 
 	scene "scenes/Player/Heavy/low/238.vcd" 
 	scene "scenes/Player/Heavy/low/239.vcd" 
+	scene "scenes/Player/Heavy/low/2276.vcd" 
 }
 Rule PlayerHeadLeftHeavy
 {
@@ -1166,6 +1176,7 @@ Response PlayerHeadRightHeavy
 	scene "scenes/Player/Heavy/low/240.vcd" 
 	scene "scenes/Player/Heavy/low/241.vcd" 
 	scene "scenes/Player/Heavy/low/242.vcd" 
+	scene "scenes/Player/Heavy/low/2275.vcd" 
 }
 Rule PlayerHeadRightHeavy
 {

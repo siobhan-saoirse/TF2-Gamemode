@@ -140,7 +140,7 @@ function DispatchCritEffect(ent, inf, att, is_mini_crit)
 		-- Notify the attacker that they scored a crit hit :D
 		if att:IsPlayer() then
 			if is_mini_crit then
-				SendUserMessage("CriticalHitMini", att, critpos)
+				SendUserMessage("CriticalHitMiniOther", att, critpos)
 			else
 				SendUserMessage("CriticalHit", att, critpos)
 			end
@@ -158,6 +158,7 @@ function DispatchCritEffect(ent, inf, att, is_mini_crit)
 				rp:AddPlayer(v)
 			end
 			SendUserMessage("CriticalHitMiniOther", rp, critpos)
+
 		end
 	end
 	

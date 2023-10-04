@@ -11,9 +11,10 @@ ENT.Spawnable		= false
 ENT.Model = "models/bots/headless_hatman.mdl"
 ENT.AttackDelay = 50
 ENT.AttackDamage = 30
-ENT.AttackRange = 200
-ENT.MeleeAttackDelay2 = CurTime() + 1.1	
+ENT.AttackRange = 300
+ENT.MeleeAttackDelay2 = CurTime() + 1.15	
 ENT.CrybabyMode = false
+ENT.Hammer = false
 function ENT:Initialize()
 
 	if CLIENT then
@@ -27,7 +28,11 @@ function ENT:Initialize()
 	ParticleEffectAttach("halloween_boss_eye_glow", PATTACH_POINT_FOLLOW, self, self:LookupAttachment("righteye"))
 	if SERVER then
 		local axe = ents.Create("gmod_button")
-		axe:SetModel("models/weapons/c_models/c_bigaxe/c_bigaxe.mdl")
+		if (self.Hammer) then
+			axe:SetModel("models/weapons/c_models/c_big_mallet/c_big_mallet.mdl")
+		else
+			axe:SetModel("models/weapons/c_models/c_bigaxe/c_bigaxe.mdl")
+		end
 		axe:SetPos(self:GetPos())
 		axe:SetAngles(self:GetAngles())
 		axe:SetParent(self)
@@ -45,7 +50,7 @@ function ENT:Initialize()
 						self:EmitSound("Halloween.HeadlessBossLaugh")
 						timer.Adjust("Laugh"..self:EntIndex(),math.random(3,5),nil,nil)
 						if (math.random(0,100) < 25) then
-							self:AddGesture(ACT_MP_GESTURE_VC_FISTPUMP_MELEE,true)
+							self:AddGestureSequence(self:LookupSequence("gesture_air_grab_shake"),true)
 						elseif (math.random(0,100) < 50) then
 							self:AddGesture(ACT_MP_GESTURE_VC_FINGERPOINT_MELEE,true)
 						end
@@ -61,17 +66,52 @@ function ENT:Initialize()
 	self:EmitSound("Halloween.HeadlessBossSpawnRumble")
 	self:SetSolid(SOLID_BBOX)
 	self:SetCollisionGroup(COLLISION_GROUP_NPC)
+
+	for k,v in ipairs(ents.FindInSphere(self:GetPos(),600)) do
+		if (v:EntIndex() != self:EntIndex()) then
+			local toVictim = v:WorldSpaceCenter() - self:WorldSpaceCenter();
+			toVictim:Normalize();
+			local vecDir = toVictim;
+			vecDir:Normalize();
+			vecDir.z = vecDir.z + 0.7;
+			vecDir = vecDir * 500.0;
+			v:SetVelocity(vecDir)
+		end
+	end
 	for k,v in ipairs(player.GetAll()) do
 		if SERVER then
 			v:SendLua("LocalPlayer():EmitSound(\"ui/halloween_boss_summoned_fx.wav\")")
 		end
 	end
 	if SERVER then
+		util.ScreenShake( self:GetPos(), 50, 5, self:SequenceDuration(self:SelectWeightedSequence(ACT_TRANSITION)) - 0.1, 1000 )
 		self:SetBloodColor(DONT_BLEED)
 		PrintMessage(HUD_PRINTCENTER,"The Horseless Headless Horsemann has appeared!\n")
-		ParticleEffectAttach("halloween_boss_summon", PATTACH_ABSORIGIN_FOLLOW, self, -1)
+		ParticleEffectAttach("halloween_boss_summon", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 		self:StartActivity(ACT_TRANSITION)
 	end
+		
+	ParticleEffectAttach("ghost_pumpkin", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+	hook.Add("PlayerDeath","RemoveITOnPlayerDeath",function(ply,inflictor,attacker)
+		if (ply.IsITFromHHH) then
+			ply.IsITFromHHH = false
+		end 
+	end)
+	hook.Add("EntityTakeDamage","RemoveITFromMeleeHit",function(target,dmginfo)
+		local att = dmginfo:GetAttacker()
+		if (target:IsTFPlayer() and !target:IsNextBot() and (dmginfo:IsDamageType(DMG_CLUB) or dmginfo:IsDamageType(DMG_SLASH)) and att.IsITFromHHH) then
+			for k,v in ipairs(ents.FindByClass("npc_headless_hatman")) do
+				if (IsValid(v)) then
+					v:SetEnemy(target)
+				end
+			end
+			for k,v in ipairs(ents.FindByClass("npc_headless_hatman_hammer")) do
+				if (IsValid(v)) then
+					v:SetEnemy(target)
+				end
+			end
+		end
+	end)
 end
 function ENT:GetAxe()
 	return self:GetNWEntity("Axe")
@@ -81,10 +121,10 @@ function ENT:OnRemove()
 		self.bullseye:Remove()
 	end
 	for k,v in ipairs(player.GetAll()) do
-		if (v.IsITFromHHH) then
+		if (v.IsITFromHHH and !self.Hammer) then
 			v:PrintMessage(HUD_PRINTCENTER,"You are no longer IT.")
 			v:SendLua("LocalPlayer():EmitSound(\"Player.TaggedOtherIT\")")
-			v:RemovePlayerState(PLAYERSTATE_MARKED)
+			
 			v.IsITFromHHH = false
 		end
 	end
@@ -106,31 +146,19 @@ function ENT:SetEnemy(ent)
 	if (self.CrybabyMode) then
 		self.CrybabyMode = false
 	end
+	if (self.Enemy != nil) then
+		if (self.Enemy:IsPlayer() and self.Enemy.IsITFromHHH) then
+			self.Enemy:PrintMessage(HUD_PRINTCENTER,"You are no longer IT.")
+			self.Enemy:SendLua("LocalPlayer():EmitSound(\"Player.TaggedOtherIT\")")
+			self.Enemy.IsITFromHHH = false
+		end
+	end
 	self.Enemy = ent
 end
 function ENT:GetEnemy()
 	return self.Enemy
 end
 
-hook.Add("PlayerDeath","RemoveITOnPlayerDeath",function(ply,inflictor,attacker)
-	if (ply.IsITFromHHH) then
-		ply.IsITFromHHH = false
-	end
-end)
-hook.Add("EntityTakeDamage","RemoveITFromMeleeHit",function(target,dmginfo)
-	local att = dmginfo:GetAttacker()
-	if (target:IsTFPlayer() and !target:IsNextBot() and (dmginfo:IsDamageType(DMG_CLUB) or dmginfo:IsDamageType(DMG_SLASH)) and att.IsITFromHHH) then
-		att:PrintMessage(HUD_PRINTCENTER,"You are no longer IT.")
-		att:SendLua("LocalPlayer():EmitSound(\"Player.TaggedOtherIT\")")
-		att:RemovePlayerState(PLAYERSTATE_MARKED)
-		att.IsITFromHHH = false
-		for k,v in ipairs(ents.FindByClass("npc_headless_hatman")) do
-			if (IsValid(v)) then
-				v:SetEnemy(target)
-			end
-		end
-	end
-end)
 
 ----------------------------------------------------
 -- ENT:HaveEnemy()
@@ -146,7 +174,6 @@ function ENT:HaveEnemy()
 			if (self:GetEnemy():IsPlayer()) then
 				self:GetEnemy():PrintMessage(HUD_PRINTCENTER,"You are no longer IT.")
 				self:GetEnemy():SendLua("LocalPlayer():EmitSound(\"Player.TaggedOtherIT\")")
-				self:GetEnemy():RemovePlayerState(PLAYERSTATE_MARKED)
 				self:GetEnemy().IsITFromHHH = false
 			end
 			return self:FindEnemy()
@@ -171,9 +198,10 @@ function ENT:FindEnemy()
 	-- Search around us for entities
 	-- This can be done any way you want eg. ents.FindInCone() to replicate eyesight
 	local _ents = ents.FindInSphere( self:GetPos(), self.SearchRadius )
+	local plrs = player.GetAll()
 	-- Here we loop through every entity the above search finds and see if it's the one we want
-	for k,v in ipairs( _ents ) do
-		if ( ( v:IsTFPlayer() and !v:IsNextBot()) and GAMEMODE:EntityTeam(v) != TEAM_SPECTATOR and GAMEMODE:EntityTeam(v) != TEAM_FRIENDLY and v:Health() > 1 and !v:IsFlagSet(FL_NOTARGET) ) then
+	for k,b in ipairs( _ents ) do
+		if ( ( b:IsTFPlayer() and b:EntIndex() != self:EntIndex() and b:GetClass() != self:GetClass() and !string.find(b:GetClass(),self:GetClass()) ) and GAMEMODE:EntityTeam(b) != TEAM_SPECTATOR and GAMEMODE:EntityTeam(b) != TEAM_FRIENDLY and b:Health() > 1 and !b:IsFlagSet(FL_NOTARGET) ) then
 			if SERVER then
 				for k,v in ipairs(ents.GetAll()) do
 					if v:IsNPC() then
@@ -182,22 +210,25 @@ function ENT:FindEnemy()
 				end
 			end
 			-- We found one so lets set it as our enemy and return true
+			local v = b
+			if (v:IsPlayer()) then
+				v = table.Random(plrs)
+			end
 			self:SetEnemy(v)
 			if (v:IsNPC()) then
 				v:SetEnemy(self.bullseye)
 			elseif (v:IsNextBot()) then
 				v:SetEnemy(self)
 			end
-			if (math.random(1,5) == 1) then
+			if (math.random(1,3) == 1) then
 				self:EmitSound("Halloween.HeadlessBossAlert")
 			end
-			if (v:IsPlayer() and !v.IsITFromHHH) then
+			if (v:IsPlayer() and !v.IsITFromHHH and !self.Hammer) then
 				v:PrintMessage(HUD_PRINTCENTER,"YOU ARE IT!  MELEE HIT AN ENEMY TO TAG THEM IT!")
 				v:SendLua("LocalPlayer():EmitSound(\"Player.YouAreIt\")")
 				v.IsITFromHHH = true
 				v:EmitSound("Halloween.PlayerScream")
 			end
-			v:AddPlayerState(PLAYERSTATE_MARKED)
 			return true
 		end
 	end	
@@ -259,6 +290,30 @@ function ENT:RunBehaviour()
 
 end	
 
+function ENT:BodyUpdate()
+
+	local act = self:GetActivity()
+
+	--
+	-- This helper function does a lot of useful stuff for us.
+	-- It sets the bot's move_x move_y pose parameters, sets their animation speed relative to the ground speed, and calls FrameAdvance.
+	--
+	if ( act == ACT_MP_RUN_MELEE || act == self:GetSequenceActivity(self:LookupSequence("run_item1")) ) then
+
+		self:BodyMoveXY()
+
+		-- BodyMoveXY() already calls FrameAdvance, calling it twice will affect animation playback, specifically on layers
+		return
+
+	end
+
+	--
+	-- If we're not walking or running we probably just want to update the anim system
+	--
+	self:FrameAdvance()
+
+end
+
 ----------------------------------------------------
 -- ENT:ChaseEnemy()
 -- Works similarly to Garry's MoveToPos function
@@ -267,11 +322,7 @@ end
 --  is one.
 ----------------------------------------------------
 function ENT:Think()
-	if SERVER then
-
-		self:BodyMoveXY()
-
-	end
+	
 	if (IsValid(self:GetEnemy()) and self.Ready) then
 		if (math.random(1,1800) == 1) then
 			self.CrybabyMode = true
@@ -281,31 +332,36 @@ function ENT:Think()
 		self:SetEnemy(nil)
 	end
 	if (IsValid(self:GetEnemy()) and self.Ready) then
-		if (self:GetEnemy():GetPos():Distance(self:GetPos()) < self.AttackRange and self:GetEnemy():Health() > 0) then
-			
-			if (IsValid(self:GetEnemy()) and (!self.TerrifyAttackDelay or CurTime() > self.TerrifyAttackDelay)) then
+		for k,v in ipairs(ents.FindInSphere(self:GetPos(), self.AttackRange)) do
+
+			if (IsValid(v) and (v:IsPlayer() or v:IsNPC()) and v:Health() > 0 and v:EntIndex() != self:EntIndex() and (!self.TerrifyAttackDelay or CurTime() > self.TerrifyAttackDelay)) then
 				if (!self.TerrifyAttackDelay) then
 					self.TerrifyAttackDelay = CurTime() + 20
 					return
 				end
-				if (self:HaveEnemy() and self:GetEnemy():GetPos():Distance(self:GetPos()) < 300) then
+				if (self:HaveEnemy() and v:GetPos():Distance(self:GetPos()) < 600) then
 					self.Ready = false
+					self.loco:SetDesiredSpeed(0)
+					self.loco:SetAcceleration(0)
 					self:EmitSound("Halloween.HeadlessBossBoo")
 					self:AddGestureSequence(self:LookupSequence("boo"))
 					timer.Simple(1.25, function()
 						self.Ready = true
+						self.loco:SetDesiredSpeed(400)
+						self.loco:SetAcceleration(400)
 					end)
 					timer.Simple(0.25, function()
 					
-						for k,v in ipairs(ents.FindInSphere(self:GetPos(),300)) do
+						for k,v in ipairs(ents.FindInSphere(self:GetPos(),600)) do
 							if v:IsTFPlayer() then
 								if (v:IsPlayer()) then
 									v:StripWeapons()
 									v:ConCommand("tf_tp_simulation_toggle")
 									v:EmitSound("Halloween.PlayerScream")
+									v:SendLua("surface.PlaySound(\"misc/halloween/hwn_bomb_flash.wav\")")
 									local attach = v:LookupAttachment("head") or 1
 									ParticleEffectAttach("yikes_fx", PATTACH_POINT_FOLLOW, v, attach)
-									timer.Simple(3,function()
+									timer.Simple(5,function()
 										v:StopParticles()
 										local health = v:Health()
 										v:SetPlayerClass(v:GetPlayerClass())
@@ -333,7 +389,7 @@ function ENT:Think()
 										local attach = v:LookupAttachment("head") or 1
 										ParticleEffectAttach("yikes_fx", PATTACH_POINT_FOLLOW, v, attach)
 										
-										timer.Simple(3,function()
+										timer.Simple(5,function()
 	
 											v:StopParticles()
 											for k,v in ipairs(ents.GetAll()) do
@@ -357,7 +413,7 @@ function ENT:Think()
 										local attach = v:LookupAttachment("head") or 1
 										ParticleEffectAttach("yikes_fx", PATTACH_POINT_FOLLOW, v, attach)
 										
-										timer.Simple(3,function()
+										timer.Simple(5,function()
 	
 											v:StopParticles()
 											for k,v in ipairs(ents.GetAll()) do
@@ -378,43 +434,115 @@ function ENT:Think()
 				self.MeleeAttackDelay = CurTime() + 1
 				self.TerrifyAttackDelay = CurTime() + 20
 			end
-			if (IsValid(self:GetEnemy()) and (!self.MeleeAttackDelay or CurTime() > self.MeleeAttackDelay)) then
+			if (IsValid(v) and (v:IsPlayer() or v:IsNextBot() or v:IsNPC()) and v:Health() > 0 and v:EntIndex() != self:EntIndex()) then
+				self.loco:FaceTowards(v:GetPos())
+			end
+			if (IsValid(v) and (v:IsPlayer() or v:IsNextBot() or v:IsNPC()) and v:Health() > 0 and v:EntIndex() != self:EntIndex() and (!self.MeleeAttackDelay or CurTime() > self.MeleeAttackDelay)) then
 				self:EmitSound("Halloween.HeadlessBossAttack")
 				self:AddGestureSequence(self:LookupSequence("attackstand_item1"),true)
-				timer.Simple(0.57, function()
-					if (!self.Ready) then return end
-					if (self:GetEnemy():GetPos():Distance(self:GetPos()) < 200) then
-						self:GetEnemy():AddDeathFlag(DF_DECAP)
-					end
-				end)
-				timer.Simple(0.58, function()
-					if (!self.Ready) then return end
-					if (self:GetEnemy():GetPos():Distance(self:GetPos()) < 200) then
-						if (self:GetEnemy():GetClass() != "npc_headless_hatman") then
-							local dmginfo = DamageInfo()
-							dmginfo:SetAttacker(self)
-							dmginfo:SetInflictor(self)
-							dmginfo:SetDamageType(bit.bor(DMG_CLUB,DMG_SLASH))
-							dmginfo:SetDamage(500)
-							self:GetEnemy():TakeDamageInfo(dmginfo) 
-						end
-						if (self:GetEnemy():IsBuilding()) then
-							ParticleEffect( "halloween_boss_axe_hit_world", self:GetEnemy():GetPos(), self:GetEnemy():GetAngles() )
-							util.ScreenShake( self:GetPos(), 15, 5, 1, 1000 )
-							self:EmitSound("Halloween.HeadlessBossAxeHitWorld")
-						else
-							self:EmitSound("Halloween.HeadlessBossAxeHitFlesh")
-						end
-					else
-						local blade = self:GetAxe():GetAttachment(self:GetAxe():LookupAttachment("axe_blade"))
-						ParticleEffect( "halloween_boss_axe_hit_world", blade.Pos, blade.Ang )
-					end
-					util.ScreenShake( self:GetPos(), 15, 5, 1, 1000 )
-					self:EmitSound("Halloween.HeadlessBossAxeHitWorld")
+				if (self.Hammer) then
 
-				end)
-				self.MeleeAttackDelay = CurTime() + 1
-			end
+					timer.Simple(0.58, function()
+						if (!self.Ready) then return end
+						ParticleEffect( "hammer_impact_button", self:GetPos(), self:GetAngles() )
+						util.ScreenShake( self:GetPos(), 15, 5, 1, 1000 )
+						if (v:IsPlayer()) then
+							v:ViewPunch( Angle( -50, 0, 0 ) )
+						end
+						self:EmitSound("Halloween.HeadlessBossAxeHitWorld")
+						self:EmitSound("Halloween.HammerImpact")
+						
+						local toVictim = v:WorldSpaceCenter() - self:WorldSpaceCenter();
+						toVictim:Normalize();
+						local vecDir = toVictim;
+						vecDir:Normalize();
+						vecDir.z = vecDir.z + 0.7;
+						vecDir = vecDir * 1300.0;
+						v:SetVelocity(vecDir)
+						for k,_ in ipairs(ents.FindInSphere(self:GetPos(),350)) do
+							if (_:EntIndex() != self:EntIndex() && _:EntIndex() != v:EntIndex()) then
+								local toVictim = _:WorldSpaceCenter() - self:WorldSpaceCenter();
+								toVictim:Normalize();
+								local vecDir = toVictim;
+								vecDir:Normalize();
+								vecDir.z = vecDir.z + 0.7;
+								vecDir = vecDir * 1300.0;
+								_:SetVelocity(vecDir)
+								if (_:IsPlayer()) then
+									_:ViewPunch( Angle( -30, 0, 0 ) )
+								end
+							end
+						end
+						self:SetEnemy(nil)
+					end)
+
+				else
+					if (v:GetPos():Distance(self:GetPos()) < self.AttackRange) then
+						self.loco:FaceTowards(v:GetPos())
+					end
+					if (self:GetEnemy():GetPos():Distance(self:GetPos()) < self.AttackRange) then
+						self.loco:FaceTowards(self:GetEnemy():GetPos())
+					end
+					timer.Simple(0.57, function()
+						if (!self.Ready) then return end
+						if (v:GetPos():Distance(self:GetPos()) < 200) then
+							v:AddDeathFlag(DF_DECAP)
+						end
+						if (self:GetEnemy():GetPos():Distance(self:GetPos()) < 200) then
+							self:GetEnemy():AddDeathFlag(DF_DECAP)
+						end
+					end)
+					timer.Simple(0.58, function()
+						if (!self.Ready) then return end
+						if (v:GetPos():Distance(self:GetPos()) < self.AttackRange) then
+							if (!string.find(v:GetClass(),self:GetClass())) then
+								local dmginfo = DamageInfo()
+								dmginfo:SetAttacker(self)
+								dmginfo:SetInflictor(self)
+								dmginfo:SetDamageType(DMG_CLUB)
+								dmginfo:SetDamage(500)
+								v:TakeDamageInfo(dmginfo) 
+							end
+							if (v:IsBuilding()) then
+								ParticleEffect( "halloween_boss_axe_hit_world", v:GetPos(), v:GetAngles() )
+								util.ScreenShake( self:GetPos(), 15, 5, 1, 1000 )
+								self:EmitSound("Halloween.HeadlessBossAxeHitWorld")
+							else
+								self:EmitSound("Halloween.HeadlessBossAxeHitFlesh")
+							end
+						else
+							local blade = self:GetAxe():GetAttachment(self:GetAxe():LookupAttachment("axe_blade"))
+							ParticleEffect( "halloween_boss_axe_hit_world", blade.Pos, blade.Ang )
+						end
+						if (self:GetEnemy():GetPos():Distance(self:GetPos()) < self.AttackRange) then
+							
+							if (!string.find(v:GetClass(),self:GetEnemy():GetClass())) then
+								local dmginfo = DamageInfo()
+								dmginfo:SetAttacker(self)
+								dmginfo:SetInflictor(self)
+								dmginfo:SetDamageType(DMG_CLUB)
+								dmginfo:SetDamage(500)
+								self:GetEnemy():TakeDamageInfo(dmginfo) 
+							end
+							if (self:GetEnemy():IsBuilding()) then
+								ParticleEffect( "halloween_boss_axe_hit_world", v:GetPos(), v:GetAngles() )
+								util.ScreenShake( self:GetPos(), 15, 5, 1, 1000 )
+								self:EmitSound("Halloween.HeadlessBossAxeHitWorld")
+							else
+								self:EmitSound("Halloween.HeadlessBossAxeHitFlesh")
+							end
+						else
+							local blade = self:GetAxe():GetAttachment(self:GetAxe():LookupAttachment("axe_blade"))
+							ParticleEffect( "halloween_boss_axe_hit_world", blade.Pos, blade.Ang )
+						end
+						util.ScreenShake( self:GetPos(), 15, 5, 1, 1000 )
+						self:EmitSound("Halloween.HeadlessBossAxeHitWorld")
+
+					end)
+				end
+				self.MeleeAttackDelay = CurTime() + 1.0
+			end 
+
 		end
 		if (self:GetEnemy():GetPos():Distance(self:GetPos()) < 100 and self:GetEnemy():Health() > 0) then
 			if (self:GetSequence() != self:LookupSequence("stand_item1")) then
@@ -450,9 +578,10 @@ function ENT:HandleStuck()
 	-- Clear the stuck status
 	--
 	self.loco:ClearStuck()
-	if (math.random(1,4) == 1) then
+	if (math.random(1,3) == 1) then
 		if (self:HaveEnemy()) then
-			self:SetPos(self:GetEnemy():GetPos() + Vector(0,0,10))
+			self:SetPos(self:GetEnemy():GetPos() + Vector(math.random(-32,32),math.random(-32,32),0))
+			self:EmitSound("Halloween.HeadlessBossAlert")
 		end	
 	else
 		self.Enemy = nil
@@ -495,6 +624,10 @@ function ENT:OnInjured( dmginfo )
 	if (math.random(1,20) == 1) then
 		self:EmitSound("Halloween.HeadlessBossPain")
 	end
+	if not self.NextFlinch or CurTime() > self.NextFlinch then
+		self:AddGesture(ACT_MP_GESTURE_FLINCH_CHEST)
+		self.NextFlinch = CurTime() + 0.5
+	end
 	ParticleEffect( "halloween_boss_injured", dmginfo:GetDamagePosition(), self:GetAngles() )
 end
 function ENT:OnKilled( dmginfo )
@@ -518,16 +651,17 @@ function ENT:OnKilled( dmginfo )
 			self:SetEnemy(nil)
 			self.loco:SetDesiredSpeed( 0 )
 			self.loco:SetAcceleration(0)
-			self:StartActivity( ACT_DIESIMPLE )
 			timer.Simple(0.1, function()
 						
 				if (!IsValid(self)) then return end
 
+				self:ResetSequence( self:LookupSequence("shake") )
 				timer.Simple(2.5,function()
 			
 					PrintMessage(HUD_PRINTCENTER,"The Horseless Headless Horsemann has been defeated!\n")
 					ParticleEffect( "halloween_boss_death", self:GetPos(), self:GetAngles() )
 					self:EmitSound("misc/halloween/spell_meteor_impact.wav",95,100,1,CHAN_ITEM)
+					self:EmitSound("misc/halloween/spell_spawn_boss.wav",95,100,1,CHAN_STATIC)
 					self:EmitSound("vo/halloween_boss/knight_death0"..math.random(1,2)..".mp3",95,100,1,CHAN_VOICE)
 					for k,v in ipairs(player.GetAll()) do
 						if SERVER then

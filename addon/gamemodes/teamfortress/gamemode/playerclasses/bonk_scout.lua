@@ -70,6 +70,13 @@ if SERVER then
 
 	function CLASS:Initalize()
 		self:SelectWeapon("tf_weapon_bat")
+		self:SelectWeapon("tf_weapon_lunchbox_drink")
+		timer.Simple(0.8, function()
+			self:GetActiveWeapon():PrimaryAttack()
+			timer.Simple(0.95, function()
+				self:SelectWeapon("tf_weapon_bat")	
+			end)
+		end)
 	end
 
 end

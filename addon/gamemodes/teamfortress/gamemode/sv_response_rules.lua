@@ -282,8 +282,8 @@ local function playscene_delayed(ent, scene)
 	ent:PlayScene(scene, 0)
 end
 
-function PlayResponse(ent, response, nospeech)
-	if ent.NextSpeak and CurTime()<ent.NextSpeak and not nospeech then
+function PlayResponse(ent, response, nospeech, concept)
+	if ent.NextSpeak and CurTime()<ent.NextSpeak and not nospeech and concept != "TLK_PLAYER_TAUNT" then
 		return false
 	end
 
@@ -331,12 +331,18 @@ function PlayResponse(ent, response, nospeech)
 			if tf_voice_cooldown:GetBool() then
 				if (time) then
 					print("vcd time: "..1.5)
-					ent.NextSpeak = CurTime() + 1.5
+					if (concept != "TLK_PLAYER_TAUNT") then
+						ent.NextSpeak = CurTime() + 1.5
+					end
 				else
 					print("vcd time: 1.5")
-					ent.NextSpeak = CurTime() + 1.5
+					if (concept != "TLK_PLAYER_TAUNT") then
+						ent.NextSpeak = CurTime() + 1.5
+					end
 				end
-				if delay then ent.NextSpeak = ent.NextSpeak + delay end
+				if (concept != "TLK_PLAYER_TAUNT") then
+					if delay then ent.NextSpeak = ent.NextSpeak + delay end
+				end
 			end
 		end
 		return true
@@ -840,7 +846,7 @@ function META:Speak(concept, nospeech, dbg)
 	local response = SelectResponse(self, dbg)
 	
 	if response then
-		return PlayResponse(self, response, nospeech, dbg)
+		return PlayResponse(self, response, nospeech, concept)
 	end
 	
 	return false

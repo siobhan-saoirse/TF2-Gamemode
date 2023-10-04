@@ -102,18 +102,21 @@ function SWEP:OnMeleeHit(tr)
 				end
 			elseif tr.Entity:IsTFPlayer() and !tr.Entity:IsBuilding() then
 
+				if tr.Entity:IsBuilding() and (tr.Entity:IsFriendly(self.Owner) && self.Owner.playerclass == "Engineer") then return end
 				self:EmitSound(self.HitFlesh)
 
 			end
 		end
 	elseif tr.HitWorld then
+		if tr.Entity:IsBuilding() and (tr.Entity:IsFriendly(self.Owner) && self.Owner.playerclass == "Engineer") then return end
 		self:EmitSound(self.HitWorld)
 	end
 end
 
 function SWEP:SecondaryAttack()
 	self:SetNextSecondaryFire(CurTime() + 0.5)
-	for k,v in pairs(ents.FindInSphere(self.Owner:GetPos(), 75)) do
+	local v = self.Owner:GetEyeTrace().Entity
+	
 		if v:IsBuilding() and v:GetBuilder() == self.Owner then
 			if v:GetClass() == "obj_sentrygun" then
 				if SERVER then
@@ -128,6 +131,7 @@ function SWEP:SecondaryAttack()
 					end
 					v:Fire("Kill", "", 0.1)
 					self.Owner:Move(2, 0)
+					builder:SetWeaponHoldType("BUILDING_DEPLOYED")
 				end
 			elseif v:GetClass() == "obj_dispenser" then
 				if SERVER then
@@ -141,6 +145,7 @@ function SWEP:SecondaryAttack()
 					end
 					v:Fire("Kill", "", 0.1)
 					self.Owner:Move(0, 0)
+					builder:SetWeaponHoldType("BUILDING_DEPLOYED")
 				end
 			elseif v:GetClass() == "obj_teleporter" and v:IsExit() != true then
 				if SERVER then
@@ -154,6 +159,7 @@ function SWEP:SecondaryAttack()
 					end
 					v:Fire("Kill", "", 0.1)
 					self.Owner:Move(1, 0)
+					builder:SetWeaponHoldType("BUILDING_DEPLOYED")
 				end
 			elseif v:GetClass() == "obj_teleporter" and v:IsExit() != false then
 				if SERVER then
@@ -167,9 +173,9 @@ function SWEP:SecondaryAttack()
 					end
 					v:Fire("Kill", "", 0.1)
 					self.Owner:Move(1, 1)
+					builder:SetWeaponHoldType("BUILDING_DEPLOYED")
 				end
 			end
 		end
-	end
 end 	
 

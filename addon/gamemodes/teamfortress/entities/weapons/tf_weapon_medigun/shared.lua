@@ -180,13 +180,13 @@ PrecacheParticleSystem("medicgun_invulnstatus_fullcharge_blue")
 SWEP.Base				= "tf_weapon_gun_base"
 
 SWEP.Slot				= 1
-SWEP.ViewModel			= "models/weapons/c_models/c_medic_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_medic_arms.mdl" 
 SWEP.WorldModel			= "models/weapons/c_models/c_medigun/c_medigun.mdl"
 SWEP.Crosshair = "tf_crosshair5"
 
 SWEP.MuzzleEffect = "pyro_blast"
 
-SWEP.ShootSound = Sound("WeaponMedigun.Healing")
+SWEP.ShootSound = Sound("WeaponMedigun.HealingWorld")
 SWEP.ShootSound2 = Sound("WeaponMedigun.NoTarget")
 SWEP.ChargedSound = Sound("WeaponMedigun.Charged")
 
@@ -414,6 +414,7 @@ end
 
 function SWEP:StopFiring()
 	if IsValid(self.Target) and self.Target:IsPlayer() and self.Target:Alive() then
+		self.Target:EmitSound("WeaponMedigun.HealingDetachTarget")
 		self.Target:Speak("TLK_HEALTARGET_STOPPEDHEALING")
 	end
 	
@@ -425,8 +426,8 @@ function SWEP:StopFiring()
 	self.ShootSoundLoop:Stop()
 	self:SendWeaponAnim(ACT_SECONDARY_ATTACK_STAND_POSTFIRE)
 	self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_POSTFIRE)
-	
-	self.Owner:EmitSound("weapons/medigun_heal_detach.wav", 95, 100)
+	 
+	self.Owner:EmitSound("WeaponMedigun.HealingDetachHealer")
 	self.NextIdle = CurTime() + self:SequenceDuration() - 0.2
 end
 

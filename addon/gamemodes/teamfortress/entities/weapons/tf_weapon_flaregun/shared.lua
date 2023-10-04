@@ -15,7 +15,7 @@ end
 SWEP.Base				= "tf_weapon_gun_base"
 
 SWEP.Slot				= 1
-SWEP.ViewModel			= "models/weapons/c_models/c_pyro_arms_empty.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_pyro_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_flaregun_pyro/c_flaregun_pyro.mdl"
 SWEP.Crosshair = "tf_crosshair1"
 

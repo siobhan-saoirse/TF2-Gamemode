@@ -146,7 +146,7 @@ function SWEP:SecondaryAttack( right )
 	if SERVER then
 		vm:SendViewModelMatchingSequence( vm:LookupSequence( anim ) )
 	end
-	self:EmitSound( ")player/survivor/swing/swish_weaponswing_swipe"..math.random(5,6)..".wav", 75, math.random(95,105) )
+	self:EmitSound( ")player/survivor/swing/swish_weaponswing_swipe"..math.random(5,6)..".wav", 75, 100 )
 
 	timer.Stop("Idle"..self.Owner:EntIndex())
 	timer.Stop("Idle2"..self.Owner:EntIndex())
