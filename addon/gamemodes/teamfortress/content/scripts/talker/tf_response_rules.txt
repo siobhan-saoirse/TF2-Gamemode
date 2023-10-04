@@ -701,6 +701,16 @@ criterion "IsCompWinner"	"IsCompWinner" "1" required
 criterion "ConceptPlayerGameOverComp" "Concept" "TLK_GAME_OVER_COMP" required
 criterion "ConceptPlayerMatchOverComp" "Concept" "TLK_MATCH_OVER_COMP" required
 
+criterion "ConceptPlayerCombine" "Concept" "TLK_PLAYER_COMBINE_CO" required 
+criterion "ConceptPlayerRebel" "Concept" "TLK_PLAYER_REBEL_CO" required 
+criterion "ConceptPlayerStrider" "Concept" "TLK_PLAYER_STRIDER_CO" required 
+criterion "ConceptPlayerZombie" "Concept" "TLK_PLAYER_ZOMBIE_CO" required 
+criterion "ConceptPlayerHeadcrab" "Concept" "TLK_PLAYER_HEADCRAB_CO" required 
+criterion "ConceptPlayerAntlion" "Concept" "TLK_PLAYER_ANTLION_CO" required 
+criterion "ConceptPlayerTrap" "Concept" "TLK_PLAYER_TRAP_CO" required 
+criterion "ConceptPlayerAmmo" "Concept" "TLK_PLAYER_AMMO_CO" required 
+criterion "ConceptPlayerHealth" "Concept" "TLK_PLAYER_HEALTH_CO" required 
+
 // Test rules
 #include "talker/tf.txt"
 #include "talker/Heavy.txt"
@@ -714,7 +724,7 @@ criterion "ConceptPlayerMatchOverComp" "Concept" "TLK_MATCH_OVER_COMP" required
 #include "talker/Spy.txt"
 #include "talker/Civilian_.txt"
 #include "talker/mercenary.txt"
-#include "talker/john.txt"
+#include "talker/john.txt" 
 #include "talker/enforcer.txt"
 #include "talker/repressor.txt"
 #include "talker/telecon.txt"

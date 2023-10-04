@@ -1662,6 +1662,8 @@ sound.AddSoundOverrides("scripts/game_sounds_vo_pauling.txt")
 sound.AddSoundOverrides("scripts/game_sounds_vo_rd_robots.txt")
 sound.AddSoundOverrides("scripts/game_sounds_vo_taunts.txt")
 sound.AddSoundOverrides("scripts/game_sounds_vo_tough_break.txt")
+sound.AddSoundOverrides("scripts/game_sounds_vo_lfce.txt") 
+sound.AddSoundOverrides("scripts/game_sounds_vo_tf2c.txt") 
 sound.AddSoundOverrides("scripts/game_sounds.txt")
 
 

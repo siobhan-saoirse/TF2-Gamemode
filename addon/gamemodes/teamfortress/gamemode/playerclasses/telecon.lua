@@ -1,6 +1,6 @@
 CLASS.Name = "Telecon"
-CLASS.Speed = 400
-CLASS.Health = 125
+CLASS.Speed = 320
+CLASS.Health = 110
 
 PrecacheParticleSystem("doublejump_puff")
 
@@ -17,7 +17,7 @@ end
 
 CLASS.Loadout = {"tf_weapon_scattergun", "tf_weapon_pistol_scout", "tf_weapon_bat"}
 CLASS.DefaultLoadout = {"TF_WEAPON_SCATTERGUN", "TF_WEAPON_BAT"}
-CLASS.ModelName = "telecon"
+CLASS.ModelName = "scout"
 
 CLASS.Gibs = {
 	[GIB_LEFTLEG]		= GIBS_SCOUT_START,
@@ -65,3 +65,11 @@ CLASS.AmmoMax = {
 	[TF_GRENADES1]	= 1,		-- grenades1
 	[TF_GRENADES2]	= 1,		-- grenades2
 }
+
+if SERVER then
+
+function CLASS:Initialize()
+	self:SetModel("models/player/telecon.mdl")
+end
+
+end

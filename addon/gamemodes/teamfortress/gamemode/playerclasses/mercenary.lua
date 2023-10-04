@@ -1,6 +1,6 @@
 CLASS.Name = "Mercenary"
-CLASS.Speed = 99
-CLASS.Health = 170
+CLASS.Speed = 300
+CLASS.Health = 150
 
 if CLIENT then
 	CLASS.CharacterImage = {
@@ -13,7 +13,8 @@ if CLIENT then
 	}
 end 
 
-CLASS.Loadout = {}
+CLASS.Loadout = {"tf_weapon_fists"}
+CLASS.DefaultLoadout = {"Frying Pan","Pistol","Original"}
 CLASS.ModelName = "soldier"
 
 CLASS.Gibs = { 
@@ -66,14 +67,7 @@ CLASS.AmmoMax = {
 if SERVER then
 
 function CLASS:Initialize()
-	//self:SetModel("models/player/mercenary.mdl")
-	self:Give("tf_weapon_allclass") 
-	self:Give("tf_weapon_pistol") 
-	if self:IsBot() then
-		self:SelectWeapon("tf_weapon_pistol_merc")
-	else
-		self:SelectWeapon("tf_weapon_allclass")
-	end
+	self:SetModel("models/player/mercenary.mdl")
 end
 
 end

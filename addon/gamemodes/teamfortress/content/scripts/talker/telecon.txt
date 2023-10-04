@@ -212,7 +212,7 @@ Rule PlayerTeleporterThanksTelecon
 //--------------------------------------------------------------------------------------------------------------
 Response KilledPlayerManyTelecon
 {
-	//scene "scenes/Player/Telecon/low/Taunts04.vcd" 
+	scene "scenes/Player/Telecon/low/Taunts04.vcd" 
 }
 Rule KilledPlayerManyTelecon
 {
@@ -224,15 +224,15 @@ Rule KilledPlayerManyTelecon
 
 Response KilledPlayerMeleeTelecon
 {
-	//scene "scenes/Player/Telecon/low/SpecialCompleted02.vcd" 
-	//scene "scenes/Player/Telecon/low/SpecialCompleted03.vcd" 
-	//scene "scenes/Player/Telecon/low/SpecialCompleted04.vcd" 
-	//scene "scenes/Player/Telecon/low/SpecialCompleted06.vcd" 
-	//scene "scenes/Player/Telecon/low/SpecialCompleted07.vcd" 
-	//scene "scenes/Player/Telecon/low/SpecialCompleted09.vcd" 
-	//scene "scenes/Player/Telecon/low/SpecialCompleted11.vcd" 
-	//scene "scenes/Player/Telecon/low/Taunts08.vcd" 
-	//scene "scenes/Player/Telecon/low/Taunts11.vcd" 
+	scene "scenes/Player/Telecon/low/SpecialCompleted02.vcd" 
+	scene "scenes/Player/Telecon/low/SpecialCompleted03.vcd" 
+	scene "scenes/Player/Telecon/low/SpecialCompleted04.vcd" 
+	scene "scenes/Player/Telecon/low/SpecialCompleted06.vcd" 
+	scene "scenes/Player/Telecon/low/SpecialCompleted07.vcd" 
+	scene "scenes/Player/Telecon/low/SpecialCompleted09.vcd" 
+	scene "scenes/Player/Telecon/low/SpecialCompleted11.vcd" 
+	scene "scenes/Player/Telecon/low/Taunts08.vcd" 
+	scene "scenes/Player/Telecon/low/Taunts11.vcd" 
 }
 Rule KilledPlayerMeleeTelecon
 {
@@ -244,26 +244,26 @@ Rule KilledPlayerMeleeTelecon
 
 Response KilledPlayerMeleeTeleconFatTelecon
 {
-	//scene "scenes/Player/Telecon/low/SpecialCompleted01.vcd" 
+	scene "scenes/Player/Telecon/low/SpecialCompleted01.vcd" 
 }
 Rule KilledPlayerMeleeTeleconFatTelecon
 {
 	criteria ConceptKilledPlayer KilledPlayerDelay 75PercentChance  IsWeaponMelee TeleconNotKillSpeechMeleeFat IsTelecon IsVictimHeavy
-	ApplyContext "TeleconKillSpeechMeleeFat:1:10"
+	ApplyContext "TeleconKillSpeechMeleeFat:1:10" 
 	applycontexttoworld
 	Response KilledPlayerMeleeTeleconFatTelecon
 }
 
 Response PlayerKilledCapperTelecon
 {
-	//scene "scenes/Player/Telecon/low/AutoCappedIntelligence01.vcd" 
-	//scene "scenes/Player/Telecon/low/Cheers01.vcd" 
-	//scene "scenes/Player/Telecon/low/Cheers06.vcd" 
-	//scene "scenes/Player/Telecon/low/NiceShot03.vcd" 
-	//scene "scenes/Player/Telecon/low/SpecialCompleted-AssistedKill02.vcd" 
-	//scene "scenes/Player/Telecon/low/Taunts02.vcd" 
-	//scene "scenes/Player/Telecon/low/Taunts09.vcd" 
-	//scene "scenes/Player/Telecon/low/Taunts18.vcd" 
+	scene "scenes/Player/Telecon/low/AutoCappedIntelligence01.vcd" 
+	scene "scenes/Player/Telecon/low/Cheers01.vcd" 
+	scene "scenes/Player/Telecon/low/Cheers06.vcd" 
+	scene "scenes/Player/Telecon/low/NiceShot03.vcd" 
+	scene "scenes/Player/Telecon/low/SpecialCompleted-AssistedKill02.vcd" 
+	scene "scenes/Player/Telecon/low/Taunts02.vcd" 
+	scene "scenes/Player/Telecon/low/Taunts09.vcd" 
+	scene "scenes/Player/Telecon/low/Taunts18.vcd" 
 }
 Rule PlayerKilledCapperTelecon
 {
@@ -275,14 +275,14 @@ Rule PlayerKilledCapperTelecon
 Response PlayerKilledDominatingTelecon
 {
 	scene "scenes/Player/Telecon/low/GoodJob02.vcd" predelay "2.5"
-	//scene "scenes/Player/Telecon/low/LaughEvil02.vcd" predelay "2.5"
-	//scene "scenes/Player/Telecon/low/LaughHappy01.vcd" predelay "2.5"
-	//scene "scenes/Player/Telecon/low/LaughHappy02.vcd" predelay "2.5"
-	//scene "scenes/Player/Telecon/low/LaughHappy03.vcd" predelay "2.5"
-	//scene "scenes/Player/Telecon/low/LaughHappy04.vcd" predelay "2.5"
-	//scene "scenes/Player/Telecon/low/LaughLong01.vcd" predelay "2.5"
-	//scene "scenes/Player/Telecon/low/LaughLong02.vcd" predelay "2.5"
-	//scene "scenes/Player/Telecon/low/Taunts16.vcd" predelay "2.5"
+	scene "scenes/Player/Telecon/low/LaughEvil02.vcd" predelay "2.5"
+	scene "scenes/Player/Telecon/low/LaughHappy01.vcd" predelay "2.5"
+	scene "scenes/Player/Telecon/low/LaughHappy02.vcd" predelay "2.5"
+	scene "scenes/Player/Telecon/low/LaughHappy03.vcd" predelay "2.5"
+	scene "scenes/Player/Telecon/low/LaughHappy04.vcd" predelay "2.5"
+	scene "scenes/Player/Telecon/low/LaughLong01.vcd" predelay "2.5"
+	scene "scenes/Player/Telecon/low/LaughLong02.vcd" predelay "2.5"
+	scene "scenes/Player/Telecon/low/Taunts16.vcd" predelay "2.5"
 }
 Rule PlayerKilledDominatingTelecon
 {
@@ -295,7 +295,7 @@ Response PlayerKilledForRevengeTelecon
 {
 	scene "scenes/Player/Telecon/low/Cheers02.vcd" predelay "2.5"
 	scene "scenes/Player/Telecon/low/NiceShot02.vcd" predelay "2.5"
-	//scene "scenes/Player/Telecon/low/SpecialCompleted12.vcd" predelay "2.5"
+	scene "scenes/Player/Telecon/low/SpecialCompleted12.vcd" predelay "2.5"
 }
 Rule PlayerKilledForRevengeTelecon
 {
@@ -306,7 +306,7 @@ Rule PlayerKilledForRevengeTelecon
 
 Response PlayerKilledObjectTelecon
 {
-	//scene "scenes/Player/Telecon/low/SpecialCompleted10.vcd" 
+	scene "scenes/Player/Telecon/low/SpecialCompleted10.vcd" 
 }
 Rule PlayerKilledObjectTelecon
 {
@@ -471,9 +471,9 @@ Rule PlayerHelpDefendTelecon
 
 Response PlayerMedicTelecon
 {
-	speak "Telecon.Medic01"
-	speak "Telecon.Medic02"
-	speak "Telecon.Medic03"
+	scene "scenes/Player/Telecon/low/Medic01.vcd" 
+	scene "scenes/Player/Telecon/low/Medic02.vcd" 
+	scene "scenes/Player/Telecon/low/Medic03.vcd"
 	
 }
 Rule PlayerMedicTelecon
@@ -636,7 +636,7 @@ Response PlayerCheersTelecon
 Rule PlayerCheersTelecon
 {
 	criteria ConceptPlayerCheers IsTelecon
-	Response PlayerCheersTelecon
+	Response PlayerCheersTelecon 
 }
 
 Response PlayerGoodJobTelecon
@@ -727,111 +727,3 @@ Rule PlayerTauntsTelecon
 	criteria ConceptPlayerTaunts IsTelecon
 	Response PlayerTauntsTelecon
 }
-
-Response PlayerCombineTelecon
-{
-	speak "Telecon.WarnCombine1"
-	speak "Telecon.WarnCombine2"
-	speak "Telecon.WarnCombine3"
-}
-Rule PlayerCombineTelecon
-{
-	criteria ConceptPlayerCombine IsTelecon
-	Response PlayerCombineTelecon
-}
-
-Response PlayerStriderTelecon
-{
-	speak "Telecon.WarnStrider1"
-	speak "Telecon.WarnStrider2"
-	speak "Telecon.WarnStrider3"
-}
-Rule PlayerStriderTelecon
-{
-	criteria ConceptPlayerStrider IsTelecon
-	Response PlayerStriderTelecon
-}
-
-Response PlayerZombieTelecon
-{
-	speak "Telecon.WarnZombie1"
-	speak "Telecon.WarnZombie2"
-}
-Rule PlayerZombieTelecon
-{
-	criteria ConceptPlayerZombie IsTelecon
-	Response PlayerZombieTelecon
-}
-
-Response PlayerHeadcrabTelecon
-{
-	speak "Telecon.WarnHeadcrabs1"
-	speak "Telecon.WarnHeadcrabs2"
-}
-Rule PlayerHeadcrabTelecon
-{
-	criteria ConceptPlayerHeadcrab IsTelecon
-	Response PlayerHeadcrabTelecon
-}
-
-Response PlayerTrapTelecon
-{
-	speak "Telecon.WarnTrap1"
-	speak "Telecon.WarnTrap2"
-}
-Rule PlayerTrapTelecon
-{
-	criteria ConceptPlayerTrap IsTelecon
-	Response PlayerTrapTelecon
-}
-
-Response PlayerAmmoTelecon
-{
-	speak "Telecon.WarnAmmo1"
-	speak "Telecon.WarnAmmo2"
-	speak "Telecon.WarnAmmo3"
-	speak "Telecon.WarnAmmo4"
-}
-Rule PlayerAmmoTelecon
-{
-	criteria ConceptPlayerAmmo IsTelecon
-	Response PlayerAmmoTelecon
-}
-
-Response PlayerHealthTelecon
-{
-	speak "Telecon.WarnHealth1"
-	speak "Telecon.WarnHealth2"
-	speak "Telecon.WarnHealth3"
-}
-Rule PlayerHealthTelecon
-{
-	criteria ConceptPlayerHealth IsTelecon
-	Response PlayerHealthTelecon
-}
-
-Response PlayerRebelTelecon
-{
-	speak "Telecon.WarnRebels1"
-	speak "Telecon.WarnRebels2"
-	speak "Telecon.WarnRebels3"
-}
-Rule PlayerRebelTelecon
-{
-	criteria ConceptPlayerRebel IsTelecon
-	Response PlayerRebelTelecon
-}
-
-Response PlayerAntlionTelecon
-{
-	speak "Telecon.WarnAntlion1"
-	speak "Telecon.WarnAntlion1"
-	speak "Telecon.WarnAntlion3"
-	speak "Telecon.WarnAntlion4"
-}
-Rule PlayerAntlionTelecon
-{
-	criteria ConceptPlayerAntlion IsTelecon
-	Response PlayerAntlionTelecon
-}
-

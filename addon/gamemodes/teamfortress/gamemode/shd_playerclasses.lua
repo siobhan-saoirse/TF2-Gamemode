@@ -360,7 +360,7 @@ function meta:SetPlayerClass(class)
 		end
 	else
 		for k,v in ipairs(c.Loadout or {}) do
-			self:Give(v)
+			self:Give(v) 
 		end
 	end
 	
@@ -370,10 +370,10 @@ function meta:SetPlayerClass(class)
 		self.Buildings = tf_objects.GetBuildables(c.Buildings)
 		self:GiveItem("TF_WEAPON_BUILDER") 
 	end
-	
+	 
 	for k,v in pairs(self.AmmoMax or {}) do
 		self:SetAmmoCount(v, k)
-	end
+	end 
 	
 	-- Capitalize player class because the talker system wants to :/
 	-- This is used for playing scenes

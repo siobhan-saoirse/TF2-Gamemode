@@ -107,6 +107,10 @@ function AddResponse(str)
 				end
 			end
 			table.insert(tbl, t)
+		elseif head=="speak" then
+			local sc = string.match(param, '([%a%d_/%.]+)')
+			util.PrecacheSound(sc)  
+			table.insert(tbl, t)
 		end
 	end 
 	 
