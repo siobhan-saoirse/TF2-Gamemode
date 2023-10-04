@@ -1,4 +1,4 @@
-CLASS.Name = "Scout"
+CLASS.Name = "Telecon"
 CLASS.Speed = 400
 CLASS.Health = 125
 
@@ -6,18 +6,18 @@ PrecacheParticleSystem("doublejump_puff")
 
 if CLIENT then
 	CLASS.CharacterImage = {
-		surface.GetTextureID("hud/class_scoutred"),
-		surface.GetTextureID("hud/class_scoutblue")
+		surface.GetTextureID("hud/class_teleconred"),
+		surface.GetTextureID("hud/class_teleconblue")
 	}
 	CLASS.ScoreboardImage = {
-		surface.GetTextureID("hud/leaderboard_class_scout"),
-		surface.GetTextureID("hud/leaderboard_class_scout_d")
+		surface.GetTextureID("hud/leaderboard_class_teleporter"),
+		surface.GetTextureID("hud/leaderboard_class_teleporter")
 	}
 end
 
 CLASS.Loadout = {"tf_weapon_scattergun", "tf_weapon_pistol_scout", "tf_weapon_bat"}
-CLASS.DefaultLoadout = {"TF_WEAPON_SCATTERGUN", "TF_WEAPON_PISTOL_SCOUT", "TF_WEAPON_BAT"}
-CLASS.ModelName = "scout"
+CLASS.DefaultLoadout = {"TF_WEAPON_SCATTERGUN", "TF_WEAPON_BAT"}
+CLASS.ModelName = "telecon"
 
 CLASS.Gibs = {
 	[GIB_LEFTLEG]		= GIBS_SCOUT_START,

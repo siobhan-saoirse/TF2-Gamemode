@@ -16,7 +16,7 @@ end
 CLASS.Loadout = {}
 CLASS.ModelName = "soldier"
 
-CLASS.Gibs = {
+CLASS.Gibs = { 
 	[GIB_LEFTLEG]		= GIBS_SOLDIER_START,
 	[GIB_RIGHTLEG]		= GIBS_SOLDIER_START+1,
 	[GIB_RIGHTARM]		= GIBS_SOLDIER_START+2,

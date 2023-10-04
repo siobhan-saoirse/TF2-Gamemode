@@ -368,7 +368,7 @@ function meta:SetPlayerClass(class)
 	
 	if c.Buildings then
 		self.Buildings = tf_objects.GetBuildables(c.Buildings)
-		self:GiveItem("TF_WEAPON_BUILDER")
+		self:GiveItem("TF_WEAPON_BUILDER") 
 	end
 	
 	for k,v in pairs(self.AmmoMax or {}) do
@@ -383,7 +383,7 @@ function meta:SetPlayerClass(class)
 		self.playerclass = "Demoman"
 	elseif (self:GetPlayerClass() == "soldierblackbox" || self:GetPlayerClass() == "soldierbuffed" || self:GetPlayerClass() == "giantsoldier" || self:GetPlayerClass() == "giantburstfiresoldier" || self:GetPlayerClass() == "giantburstfiresoldier2" || self:GetPlayerClass() == "giantblastsoldier" || self:GetPlayerClass() == "colonelbarrage" || self:GetPlayerClass() == "giantsoldiercharged" || self:GetPlayerClass() == "giantsoldierrapidfire") then
 		self.playerclass = "Soldier"
-	elseif (self:GetPlayerClass() == "giantheavy" || self:GetPlayerClass() == "saxton" || self:GetPlayerClass() == "giantheavyheater" || self:GetPlayerClass() == "giantheavyshotgun" || self:GetPlayerClass() == "heavyshotgun" || self:GetPlayerClass() == "heavyweightchamp" || self:GetPlayerClass() == "steelgauntlet" || self:GetPlayerClass() == "steelgauntletpusher" || self:GetPlayerClass() == "captain_punch" || self:GetPlayerClass() == "superheavyweightchamp" || self:GetPlayerClass() == "saxton") then
+	elseif (self:GetPlayerClass() == "giantheavy" || self:GetPlayerClass() == "giantheavyheater" || self:GetPlayerClass() == "giantheavyshotgun" || self:GetPlayerClass() == "heavyshotgun" || self:GetPlayerClass() == "heavyweightchamp" || self:GetPlayerClass() == "steelgauntlet" || self:GetPlayerClass() == "steelgauntletpusher" || self:GetPlayerClass() == "captain_punch" || self:GetPlayerClass() == "superheavyweightchamp" || self:GetPlayerClass() == "saxton") then
 		self.playerclass = "Heavy"
 	elseif (self:GetPlayerClass() == "bowman" or self:GetPlayerClass() == "bowman_rapid_fire") then		
 		self.playerclass = "Sniper"

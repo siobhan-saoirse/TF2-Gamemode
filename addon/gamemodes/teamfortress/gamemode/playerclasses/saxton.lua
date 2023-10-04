@@ -1,4 +1,4 @@
-CLASS.Name = "Heavy"
+CLASS.Name = "Saxton"
 CLASS.Speed = 520
 CLASS.Health = 1000
 
@@ -15,7 +15,7 @@ end
 
 CLASS.Loadout = {"tf_weapon_fists"}
 CLASS.DefaultLoadout = {"TF_WEAPON_FISTS"}
-CLASS.ModelName = "saxton_hale"
+CLASS.ModelName = "saxton"
 CLASS.Gibs = {
 	[GIB_LEFTLEG]		= GIBS_HEAVY_START,
 	[GIB_RIGHTLEG]		= GIBS_HEAVY_START+1,
