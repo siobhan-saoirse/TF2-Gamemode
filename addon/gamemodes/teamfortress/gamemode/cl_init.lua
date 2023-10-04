@@ -16,7 +16,7 @@ include("cl_proxies.lua")
 include("cl_pickteam.lua")
 
 include("cl_conflict.lua")
-
+ 
 include("shared.lua")
 include("cl_entclientinit.lua")
 include("cl_deathnotice.lua") 
@@ -1913,62 +1913,66 @@ list.Set(
 		end
 	}
 ) 
- 
-if (GetConVar("civ2_enable_be_the_bosses"):GetBool()) then
-	list.Set(
-		"DesktopWindows",
-		"BeTheBosses",
-		{
-			title = "Be the Bosses",
-			icon = "backpack/player/items/all_class/pumkin_hat",
-			width = 1024,
-			height = 768,
-			onewindow = true,
-			init = function(icn, pnl)
-				local DImageButton = pnl:Add( "DImageButton" )
-				DImageButton:SetPos( 0, 25 )
-				DImageButton:SetTooltip( "Horseless Headless Horsemann" )
-				DImageButton:SetSize( 128, 128 )
-				DImageButton:SetImage( "backpack/player/items/all_class/pumkin_hat" )
-				DImageButton.DoClick = function()
-					RunConsoleCommand( "changeclass","headless_hatman" )
+
+timer.Create("ForceBosses",0,0,function()
+
+	if (GetConVar("civ2_enable_be_the_bosses"):GetBool()) then
+		list.Set(
+			"DesktopWindows",
+			"BeTheBosses",
+			{
+				title = "Be the Bosses",
+				icon = "backpack/player/items/all_class/pumkin_hat",
+				width = 1024,
+				height = 768,
+				onewindow = true,
+				init = function(icn, pnl)
+					local DImageButton = pnl:Add( "DImageButton" )
+					DImageButton:SetPos( 0, 25 )
+					DImageButton:SetTooltip( "Horseless Headless Horsemann" )
+					DImageButton:SetSize( 128, 128 )
+					DImageButton:SetImage( "backpack/player/items/all_class/pumkin_hat" )
+					DImageButton.DoClick = function()
+						RunConsoleCommand( "changeclass","headless_hatman" )
+					end
+					local DImageButton = pnl:Add( "DImageButton" )
+					DImageButton:SetPos( 128, 25 )
+					DImageButton:SetTooltip( "Sentry Buster" )
+					DImageButton:SetSize( 128, 128 )
+					DImageButton:SetImage( "hud/leaderboard_class_sentry_buster" )
+					DImageButton.DoClick = function()
+						RunConsoleCommand( "changeclass","sentrybuster" )
+					end
+					local DImageButton = pnl:Add( "DImageButton" )
+					DImageButton:SetPos( 256, 25 )
+					DImageButton:SetTooltip( "Giant Robot (Toggle ON)" )
+					DImageButton:SetSize( 128, 128 )
+					DImageButton:SetImage( "backpack/player/items/mvm_loot/soldier/robot_helmet" )
+					DImageButton.DoClick = function()
+						RunConsoleCommand( "tf_giant_robot","1" )
+					end
+					local DImageButton = pnl:Add( "DImageButton" )
+					DImageButton:SetPos( 384, 25 )
+					DImageButton:SetTooltip( "Giant Robot (Toggle OFF)" )
+					DImageButton:SetSize( 128, 128 )
+					DImageButton:SetImage( "vgui/achievements/tf_mvm_spy_sap_robots" )
+					DImageButton.DoClick = function()
+						RunConsoleCommand( "tf_giant_robot","0" )
+					end
+					local DImageButton = pnl:Add( "DImageButton" )
+					DImageButton:SetPos( 512, 25 )
+					DImageButton:SetTooltip( "Saxton" )
+					DImageButton:SetSize( 128, 128 )
+					DImageButton:SetImage( "entities/npc_saxton.png" )
+					DImageButton.DoClick = function()
+						RunConsoleCommand( "changeclass", "saxton" )
+					end
 				end
-				local DImageButton = pnl:Add( "DImageButton" )
-				DImageButton:SetPos( 128, 25 )
-				DImageButton:SetTooltip( "Sentry Buster" )
-				DImageButton:SetSize( 128, 128 )
-				DImageButton:SetImage( "hud/leaderboard_class_sentry_buster" )
-				DImageButton.DoClick = function()
-					RunConsoleCommand( "changeclass","sentrybuster" )
-				end
-				local DImageButton = pnl:Add( "DImageButton" )
-				DImageButton:SetPos( 256, 25 )
-				DImageButton:SetTooltip( "Giant Robot (Toggle ON)" )
-				DImageButton:SetSize( 128, 128 )
-				DImageButton:SetImage( "backpack/player/items/mvm_loot/soldier/robot_helmet" )
-				DImageButton.DoClick = function()
-					RunConsoleCommand( "tf_giant_robot","1" )
-				end
-				local DImageButton = pnl:Add( "DImageButton" )
-				DImageButton:SetPos( 384, 25 )
-				DImageButton:SetTooltip( "Giant Robot (Toggle OFF)" )
-				DImageButton:SetSize( 128, 128 )
-				DImageButton:SetImage( "vgui/achievements/tf_mvm_spy_sap_robots" )
-				DImageButton.DoClick = function()
-					RunConsoleCommand( "tf_giant_robot","0" )
-				end
-				local DImageButton = pnl:Add( "DImageButton" )
-				DImageButton:SetPos( 512, 25 )
-				DImageButton:SetTooltip( "Saxton" )
-				DImageButton:SetSize( 128, 128 )
-				DImageButton:SetImage( "entities/npc_saxton.png" )
-				DImageButton.DoClick = function()
-					RunConsoleCommand( "changeclass", "saxton" )
-				end
-			end
-		}
-	)
-end
+			}
+		)
+	end
+	
+end)
 include("cl_hud.lua")
 
 file.Append(LOGFILE, Format("Done loading, time = %f\n", SysTime() - load_time))	
