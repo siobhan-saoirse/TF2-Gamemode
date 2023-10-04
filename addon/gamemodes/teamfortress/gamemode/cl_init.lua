@@ -1976,6 +1976,14 @@ timer.Create("ForceBosses",0,0,function()
 					DImageButton.DoClick = function()
 						RunConsoleCommand( "changeclass", "telecon" )
 					end
+					local DImageButton = pnl:Add( "DImageButton" )
+					DImageButton:SetPos( 128, 128 )
+					DImageButton:SetTooltip( "Mercenary" )
+					DImageButton:SetSize( 128, 128 )
+					DImageButton:SetImage( "hud/class_mercenaryred" )
+					DImageButton.DoClick = function()
+						RunConsoleCommand( "changeclass", "mercenary" )
+					end
 				end
 			}
 		)
