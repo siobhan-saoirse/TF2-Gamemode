@@ -393,6 +393,10 @@ function meta:SetPlayerClass(class)
 		self.playerclass = "Engineer" 
 	elseif (self:GetPlayerClass() == "giantmedic" || self:GetPlayerClass() == "kritzmedic") then
 		self.playerclass = "Medic"
+	elseif (self:GetPlayerClass() == "telecon") then
+		self.playerclass = "Telecon"
+	elseif (self:GetPlayerClass() == "rebel") then
+		self.playerclass = "John"
 	else
 		self.playerclass = string.upper(string.sub(class,1,1))..string.sub(class,2)	
 	end

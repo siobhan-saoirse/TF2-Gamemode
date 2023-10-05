@@ -269,7 +269,7 @@ hook.Add("PlayerHurt", "RoboIsHurt", function( ply, pos, foot, sound, volume, rf
 	if ply:GetInfoNum("dylan_rageheavy", 0) == 1 then
 		ply:EmitSound("vo/heavy_paincrticialdeath0"..math.random(1,3)..".wav", 150, 100)
 		if ply:GetInfoNum("tf_giant_robot", 0) == 1 then
-				ply:SetModelScale(6)
+				ply:SetModelScale(6) 
 				ply:EmitSound("music/stingers/hl1_stinger_song28.wav", 0, 80)
 				ply:EmitSound("music/stingers/hl1_stinger_song28.wav", 0, 75)
 		 end

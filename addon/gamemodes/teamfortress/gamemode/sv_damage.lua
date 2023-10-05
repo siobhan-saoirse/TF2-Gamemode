@@ -32,6 +32,14 @@ local mp_falldamage = GetConVar("mp_falldamage")
 
 -- No ear ringing sound when damaged by explosion
 function GM:OnDamagedByExplosion(pl, dmginfo)
+	if (pl:IsHL2()) then
+		pl:SetDSP( 140, false )
+		timer.Simple(0.1, function()
+		
+			pl:SetDSP( 137, false )
+		
+		end)
+	end
 end
 
 function GM:GetFallDamage(pl, sp)

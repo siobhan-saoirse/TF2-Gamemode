@@ -450,14 +450,23 @@
 							// FLT	ftype	cutoff	qwidth	quality gain
 							{  FLT	LP		1000	0		MED		0.25}
 }
+// HE grenade shock effect
+// ear ringing combined with low pass filter.
+// This is the middle of the effect, so it has to be able to last a bit longer.
+{	35	PARALLEL4	0.2 0.7	3  -1.0  80 0.5	
+							// DFR size #dly	feedbk
+							{  DFR	1.0	3		0.15	}
 
-{	35	LINEAR	0.2 0.7	1.6  -1.0  80 0.5					// *** SHOCK MUFFLE 1 ***
+							// FLT	ftype	cutoff	qwidth	quality gain
+							{  FLT	LP		1000	0		HI		0.5}
+
 							// DFR size #dly	feedbk
 							{  DFR	1.0	2		0.15	}
 
 							// LFO	wavtype		rate	foneshot gain
-							{  LFO	SIN			3000.0	0.0		 0.25}
+							{  LFO	SIN			3000.0	0.0		 0.03 }
 }
+
 
 {	36	LINEAR	0.2 0.7	1.6  -1.0  80 0.5					// *** SHOCK MUFFLE 2 ***
 							// DFR size #dly	feedbk
@@ -974,6 +983,109 @@
 							
 							// RVA size	 min   	#dly	feedbk	gain	cutoff	fpar fmod rate w  d  h    fw    fd  fh ftap
 							{  RVA 0.0	0.0  	100		0.0		2.0		4000	1	   0  0.0  48 192 64  0.97 -0.4 0.4   0} 
+}
+
+{	136	LINEAR	0.2 0.2	0.7  -1.0  80 0.5					// *** FLASHBANG MUFFLE SHORT ***
+							// DFR size #dly	feedbk
+							{  DFR	1.0	2		0.15	}
+
+							// LFO	wavtype		rate	foneshot gain
+							{  LFO	SIN			3000.0	0.0		 0.05}
+}
+
+// HE grenade shock effect
+// ear ringing combined with low pass filter.
+// This is the initial and final filter used for the effect, shouldn't last long
+// since it's a rather subtle effect.
+{	137	PARALLEL4	0.2 0.7	1  -1.0  80 0.5	
+							// DFR size #dly	feedbk
+							{  DFR	1.0	3		0.15	}
+
+							// FLT	ftype	cutoff	qwidth	quality gain
+							{  FLT	LP		4000	0		HI		0.5}
+
+							// DFR size #dly	feedbk
+							{  DFR	1.0	2		0.15	}
+
+							// LFO	wavtype		rate	foneshot gain
+							{  LFO	SIN			3000.0	0.0		 0.01 }
+}
+
+// HE grenade shock effect
+// ear ringing combined with low pass filter.
+{	138	PARALLEL4	0.2 0.7	1.5  -1.0  80 0.5	
+							// DFR size #dly	feedbk
+							{  DFR	1.0	3		0.15	}
+
+							// FLT	ftype	cutoff	qwidth	quality gain
+							{  FLT	LP		2000	0		HI		0.5}
+
+							// DFR size #dly	feedbk
+							{  DFR	1.0	2		0.15	}
+
+							// LFO	wavtype		rate	foneshot gain
+							{  LFO	SIN			3000.0	0.0		 0.02 }
+}
+
+// HE grenade shock effect
+// ear ringing combined with low pass filter.
+// This is the middle of the effect, so it has to be able to last a bit longer.
+{	139	PARALLEL4	0.2 0.7	3  -1.0  80 0.5	
+							// DFR size #dly	feedbk
+							{  DFR	1.0	3		0.15	}
+
+							// FLT	ftype	cutoff	qwidth	quality gain
+							{  FLT	LP		1000	0		HI		0.5}
+
+							// DFR size #dly	feedbk
+							{  DFR	1.0	2		0.15	}
+
+							// LFO	wavtype		rate	foneshot gain
+							{  LFO	SIN			3000.0	0.0		 0.03 }
+}
+
+// Near-death muffled sound
+{	140	LINEAR	0.2 0.7	35  10  80 0.5						//  *** Based on EXPLOSION RING 3 *** 
+							// DFR size #dly	feedbk
+							{  DFR	1.0	3		0.15	}
+
+							// FLT	ftype	cutoff	qwidth	quality gain
+							{  FLT	LP		1000	0		MED		0.25}
+}
+
+// Near-death muffled sound
+{	141	LINEAR	0.2 0.7	5  -1.0  80 0.5						//  *** Based on EXPLOSION RING 3 *** 
+							// DFR size #dly	feedbk
+							{  DFR	1.0	3		0.15	}
+
+							// FLT	ftype	cutoff	qwidth	quality gain
+							{  FLT	LP		1000	0		MED		0.25}
+}
+
+// Ghosted Infected effect
+{	142	LINEAR	0.2 0.7	0.0  -1.0  80 0.5						//  *** Based on EXPLOSION RING 3 *** 
+							// DFR size #dly	feedbk
+							{  DFR	1.0	3		0.15	}
+
+							// DLY dtype	delay	feedbk	gain	ftype	cutoff	qwidth	quality tap1 tap2 tap3
+							// {  DLY PLAIN	500.0	0.3	    0.70		 HP		1000	    0	LO		0		0	0} 
+
+							// EFO thresh	attackms decayms
+							{  EFO -600		20.0	 200.0 }
+
+
+							// MDY	dtype	delay	feedback	gain	ftype	cutoff	qwidth	qual	modrate	moddepth modglide	mix
+							{  MDY	PLAIN	500.0	0.4			0.90		0		0		0		LO		0.50		1.0		  15		1.0 }
+
+							// FLT	ftype	cutoff	qwidth	quality gain
+							{  FLT	HP		1000	 0		 MED	1.0}
+}
+
+// Ghosted Infected effect
+{	143	LINEAR	0.2 0.7	0.0  -1.0  80 0.5
+
+							// FLT	ftype	cutoff	qwidth	quality gain
+							{  FLT	HP		500	 0		 MED	1.0}
 }
 
 /////////////////////////////////////////////////////

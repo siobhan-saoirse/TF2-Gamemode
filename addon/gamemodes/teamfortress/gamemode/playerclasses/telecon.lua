@@ -1,4 +1,4 @@
-CLASS.Name = "Robo"
+CLASS.Name = "Telecon"
 CLASS.Speed = 320
 CLASS.Health = 110
 
