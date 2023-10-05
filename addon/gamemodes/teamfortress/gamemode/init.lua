@@ -274,6 +274,11 @@ hook.Add("PlayerHurt", "RoboIsHurt", function( ply, pos, foot, sound, volume, rf
 				ply:EmitSound("music/stingers/hl1_stinger_song28.wav", 0, 75)
 		 end
 	end
+	if (ply:IsHl2()) then
+		ply:GetViewModel():SetMaterial("")
+	else
+		ply:GetViewModel():SetMaterial("color")
+	end
 	if not ply:IsHL2() and ply:GetInfoNum("tf_robot", 0) == 1 then
 		ply:EmitSound( "MVM_Giant.BulletImpact" )
 	end 
@@ -2544,6 +2549,16 @@ function GM:PlayerSetHandsModel( ply, ent )
 						end
 
 					end
+				elseif (ply:GetPlayerClass() == "mercenary") then
+					if ((IsValid(ply:GetActiveWeapon()) and string.find(ply:GetActiveWeapon():GetClass(),"tf_weapon")) or !IsValid(ply:GetActiveWeapon())) then
+
+						ent:SetModel( "models/weapons/c_models/c_merc_arms.mdl" )
+
+					else
+						
+						ent:SetModel("models/weapons/v_hands.mdl")
+
+					end
 				elseif (ply:GetPlayerClass() == "civilian_") then
 					ent:SetModel( "models/weapons/c_models/c_civilian_arms.mdl" )
 				elseif (ply:GetPlayerClass() == "civilian") then
@@ -2571,24 +2586,16 @@ function GM:PlayerSetHandsModel( ply, ent )
 					else 
 						
 						if ((IsValid(ply:GetActiveWeapon()) and string.find(ply:GetActiveWeapon():GetClass(),"tf_weapon")) or !IsValid(ply:GetActiveWeapon())) then
-
-							ent:SetModel( "models/weapons/c_models/c_"..ply:GetPlayerClass().."_arms.mdl" )
+	
+							if (file.Exists("models/weapons/c_models/c_"..ply:GetPlayerClass().."_arms.mdl", "GAME")) then
+								ent:SetModel( "models/weapons/c_models/c_"..ply:GetPlayerClass().."_arms.mdl" )
+							else
+								ent:SetModel( "models/weapons/c_models/c_sniper_arms.mdl" )
+							end
 
 						else
 
-							if (ply:GetPlayerClass() == "engineer") then
-								if (file.Exists("models/player/engieplayer/"..ply:GetPlayerClass().."_hands.mdl", "WORKSHOP")) then
-									ent:SetModel( "models/player/engieplayer/"..ply:GetPlayerClass().."_hands.mdl" )
-								else
-									ent:SetModel("models/weapons/v_hands.mdl")
-								end
-							else
-								if (file.Exists("models/player/"..ply:GetPlayerClass().."player/"..ply:GetPlayerClass().."_hands.mdl", "WORKSHOP")) then
-									ent:SetModel( "models/player/"..ply:GetPlayerClass().."player/"..ply:GetPlayerClass().."_hands.mdl" )
-								else
-									ent:SetModel("models/weapons/v_hands.mdl")
-								end
-							end
+							ent:SetModel("models/weapons/v_hands.mdl")
 
 						end
 					end

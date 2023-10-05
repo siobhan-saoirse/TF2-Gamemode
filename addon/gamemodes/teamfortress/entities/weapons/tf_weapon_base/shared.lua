@@ -1348,6 +1348,11 @@ end
 function SWEP:Think() 
 	self:Inspect()
 	self:InspectAnimCheck()
+			if (self.Owner:IsHL2()) then
+				self.Owner:GetViewModel():SetMaterial("")
+			else
+				self.Owner:GetViewModel():SetMaterial("color")
+			end
 	if (((self.NextReload and self.NextReload>=CurTime()) or ((self.NextReloadStart and self.NextReloadStart>=CurTime()) or self.Reloading)) and self.ReloadSingle) then
 	
 		if self.FastReloadTime and SERVER then  

@@ -136,10 +136,14 @@ function SWEP:Think()
 	if self.Owner:GetPlayerClass() == "scout" then
 		self.BaseDamage = 35
 		self.Primary.Delay = 0.5
-	else
-		if (!self.Owner:IsHL2()) then
+	elseif self.Owner:GetPlayerClass() == "spy" then
+		self.BaseDamage = 40
+		self.MeleeAttackDelay = 0
+	else 
+		if (!self.Owner:IsHL2() and self.Owner:GetPlayerClass() != "mercenary") then
 			self:SetWeaponHoldType("MELEE_ALLCLASS")
 		else
+			self.HoldType = "MELEE"
 			self:SetWeaponHoldType("MELEE")
 		end
 		if self.Owner:GetPlayerClass() == "spy" then

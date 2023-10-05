@@ -1987,10 +1987,12 @@
 
 	"rndwave"			
 	{
-		"wave"		"vo/mercenary_paincrticialdeath01.wav"
-		"wave"		"vo/mercenary_paincrticialdeath02.wav"
-		"wave"		"vo/mercenary_paincrticialdeath03.wav"
-		"wave"		"vo/mercenary_paincrticialdeath04.wav"
+		"wave"		"vo/mercenary_painsevere01.wav"
+		"wave"		"vo/mercenary_painsevere02.wav"
+		"wave"		"vo/mercenary_painsevere03.wav"
+		"wave"		"vo/mercenary_painsevere04.wav"
+		"wave"		"vo/mercenary_painsevere05.wav"
+		"wave"		"vo/mercenary_painsevere06.wav"
 	}
 }
 
