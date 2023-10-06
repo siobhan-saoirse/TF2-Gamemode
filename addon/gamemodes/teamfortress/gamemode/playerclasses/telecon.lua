@@ -1,5 +1,5 @@
 CLASS.Name = "Telecon"
-CLASS.Speed = 320
+CLASS.Speed = 400
 CLASS.Health = 110
 
 PrecacheParticleSystem("doublejump_puff")
