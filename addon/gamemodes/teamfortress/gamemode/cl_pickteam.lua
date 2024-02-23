@@ -15,7 +15,7 @@ function TeamSelection()
 	TeamBlu:SetPos( 10, 105 )
 	TeamBlu:SetSize( 130, 20 )
 	TeamBlu:SetText( "BLU Team" )
-	
+	--[[
 	local TeamSpectate = vgui.Create( "DButton", teamframe )
 	function TeamSpectate.DoClick() RunConsoleCommand( "tf_spectate" ) teamframe:Close() end
 	TeamSpectate:SetPos( 10, 45 )
@@ -26,7 +26,7 @@ function TeamSelection()
 		LocalPlayer():StopSound("TV.Tune")
 		LocalPlayer():EmitSound("TV.Tune")
 		
-	end
+	end]]
 	local TeamNeutral = vgui.Create( "DButton", teamframe )
 	function TeamNeutral.DoClick() RunConsoleCommand( "changeteam", 5 ) teamframe:Close() end
 	TeamNeutral:SetPos( 10, 85 )
