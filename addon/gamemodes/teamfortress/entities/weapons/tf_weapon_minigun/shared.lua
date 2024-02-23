@@ -240,6 +240,7 @@ function SWEP:StopFiring()
 end
 
 function SWEP:CanPrimaryAttack()
+	if (self.Owner:GetNWBool("Bonked")) then return false end
 	if self.Owner:GetAmmoCount(self.Primary.Ammo) <= 0 then
 	
 		if SERVER then
@@ -255,6 +256,7 @@ function SWEP:CanPrimaryAttack()
 end
 
 function SWEP:PrimaryAttack(vampire)
+	if (!self:CanPrimaryAttack()) then return end
 	if not self.IsDeployed then return false end
 	if self.Owner:IsBot() and GetConVar("tf_bot_melee_only"):GetBool() then
 		self.Owner:SelectWeapon(self.Owner:GetWeapons()[3])
@@ -545,6 +547,14 @@ function SWEP:Think()
 				return
 			end
 		end
+		if self:GetItemData().attach_to_hands == 1 and IsValid(self.WModel) then
+			bone = self.WModel:LookupBone("barrel")
+			if bone then
+				self.WModel:ManipulateBoneAngles( bone, Angle(0,self.barrelRotation,0) )
+			else
+				return
+			end
+		end
 	end
 	
 	self.barrelValue1 = CurTime() 
@@ -569,12 +579,13 @@ function SWEP:Holster()
 		self.ShootSoundLoop:Stop()
 		self.ShootCritSoundLoop:Stop()
 	end
-	
-	self.Owner:StopSound(self.ShootSound2)
-	self.Owner:StopSound(self.ShootCritSound)
-	self.Owner:StopSound(self.SpecialSound1)
-	self.Owner:StopSound(self.SpecialSound2)
-	self.Owner:StopSound(self.SpecialSound3)
+	if IsValid(self.Owner) then
+		self.Owner:StopSound(self.ShootSound2)
+		self.Owner:StopSound(self.ShootCritSound)
+		self.Owner:StopSound(self.SpecialSound1)
+		self.Owner:StopSound(self.SpecialSound2)
+		self.Owner:StopSound(self.SpecialSound3)
+	end
 	self.Spinning = nil
 	self.Ready = nil
 	self.NextEndSpinUp = nil
@@ -605,11 +616,13 @@ end
 function SWEP:OnRemove()
 	self.Owner = self.CurrentOwner
 	self.Removed = true
-	self.Owner:StopSound(self.ShootSound2)
-	self.Owner:StopSound(self.ShootCritSound)
-	self.Owner:StopSound(self.SpecialSound1)
-	self.Owner:StopSound(self.SpecialSound2)
-	self.Owner:StopSound(self.SpecialSound3)
+	if IsValid(self.Owner) then
+		self.Owner:StopSound(self.ShootSound2)
+		self.Owner:StopSound(self.ShootCritSound)
+		self.Owner:StopSound(self.SpecialSound1)
+		self.Owner:StopSound(self.SpecialSound2)
+		self.Owner:StopSound(self.SpecialSound3)
+	end
 	self:Holster()
 end
 

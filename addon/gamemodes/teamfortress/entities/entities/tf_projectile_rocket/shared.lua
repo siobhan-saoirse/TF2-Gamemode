@@ -195,8 +195,8 @@ function ENT:Think()
 		self:Remove()
 	end
 	
-	for k,v in ipairs(ents.FindInSphere(self:GetPos(),95)) do
-		if (v:IsValid() and v:IsTFPlayer() and v:EntIndex() != self:GetOwner():EntIndex() and !v:IsFriendly(self:GetOwner()) and v:Health() > 0) then
+	for k,v in ipairs(ents.FindInSphere(self:GetPos(),200)) do
+		if (v:IsValid() and v:IsTFPlayer() and v:EntIndex() != self:GetOwner():EntIndex() and !v:IsFriendly(self:GetOwner()) and v:Health() > 0 and self:GetPos():Distance(v:GetPos()) < v:GetModelRadius() + 24) then
 			self:DoExplosion(v)
 		end
 	end

@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials/models/player/shared/invun_custom.vmt"
-	
-	insert
-	{
-		"$baseTexture" "models/player/mercenary/hwm/mercenary_head"
-	}
-}

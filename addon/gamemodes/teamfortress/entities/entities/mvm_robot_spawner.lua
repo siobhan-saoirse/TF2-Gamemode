@@ -5,7 +5,7 @@ ENT.Spawnable = false
 ENT.AdminOnly = true
 ENT.AutomaticFrameAdvance = true
 ENT.PrintName		= "Robot Spawner"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 
 local stock_bots = {
 	"mvm_bot",
@@ -83,7 +83,7 @@ list.Set( "NPC", "mvm_robot_spawner", {
 } )
 function ENT:Initialize()
 	if CLIENT then return end	
-	self:SetModel("models/buildables/teleporter_light.mdl")
+	self:SetModel("models/buildables/teleporter.mdl")
 	self:ResetSequence(self:LookupSequence("running"))
 	self:SetSolid(SOLID_BBOX)
 	self:SetModelScale(1.0)

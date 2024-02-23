@@ -34,7 +34,6 @@ function SWEP:DrawWorldModel(  )
 			self.WModel:SetProxyVar("CritTeam",t2)
 			self.WModel:SetProxyVar("CritStatus",s2)
             -- Specify a good position
-			self.WModel:SetBodyGroups(self:GetBodyGroups())
 			
 			local model = self:GetItemData().model_world or self:GetItemData().model_player or self.WorldModel
 			if (self.WModel:GetModel() != model) then
@@ -449,6 +448,13 @@ end
 
 function SWEP:Deploy() 
 	local vm = self.Owner:GetViewModel()
+	if (IsValid(vm)) then
+		if (self.Owner:IsHL2()) then
+			self.Owner:GetViewModel():SetMaterial("")
+		else
+			self.Owner:GetViewModel():SetMaterial("color")
+		end
+	end
 	if (self.Owner.anim_Deployed) then
 		self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_POSTFIRE)
 	end
@@ -805,28 +811,31 @@ function SWEP:Deploy()
 	self:InspectAnimCheck()
 	local hold = self.HoldType
 	local drawAnim = self.VM_DRAW
-	local draw_duration = self:SequenceDuration(self:SelectWeightedSequence(self.VM_DRAW)) / self:GetDeploySpeed()
-	local deploy_duration = self.DeployDuration / self:GetDeploySpeed() 
-	if SERVER then
-		self:SendWeaponAnim(drawAnim)
-		self.Owner:GetViewModel():SetPlaybackRate(self:GetDeploySpeed())
-	end
-	if self.Owner.TempAttributes and self.Owner.TempAttributes.DeployTimeMultiplier then
-		draw_duration = draw_duration * self.Owner.TempAttributes.DeployTimeMultiplier
-		deploy_duration = deploy_duration * self.Owner.TempAttributes.DeployTimeMultiplier
-	elseif self.DeployTimeMultiplier then
-		draw_duration = draw_duration * self.DeployTimeMultiplier
-		deploy_duration = deploy_duration * self.DeployTimeMultiplier
-	end
-	if (self:GetClass() == "tf_weapon_syringegun_medic") then
-		self.NextIdle = CurTime() + 0.5
-		self.NextDeployed = CurTime() + 0.5
-	elseif (self:GetClass() == "tf_weapon_crossbow") then
-		self.NextIdle = CurTime() + 0.5
-		self.NextDeployed = CurTime() + 0.5
-	else
-		self.NextIdle = CurTime() + draw_duration + 0.02
-		self.NextDeployed = CurTime() + deploy_duration + 0.02
+	if (self.VM_DRAW != nil) then
+		local draw_duration = self:SequenceDuration(self:SelectWeightedSequence(self.VM_DRAW)) / self:GetDeploySpeed()
+		local deploy_duration = self.DeployDuration / self:GetDeploySpeed() 
+		if SERVER then
+			self:SendWeaponAnim(drawAnim)
+			self.Owner:GetViewModel():SetPlaybackRate(self:GetDeploySpeed())
+		end
+			
+		if self.Owner.TempAttributes and self.Owner.TempAttributes.DeployTimeMultiplier then
+			draw_duration = draw_duration * self.Owner.TempAttributes.DeployTimeMultiplier
+			deploy_duration = deploy_duration * self.Owner.TempAttributes.DeployTimeMultiplier
+		elseif self.DeployTimeMultiplier then
+			draw_duration = draw_duration * self.DeployTimeMultiplier
+			deploy_duration = deploy_duration * self.DeployTimeMultiplier
+		end
+		if (self:GetClass() == "tf_weapon_syringegun_medic") then
+			self.NextIdle = CurTime() + 0.5
+			self.NextDeployed = CurTime() + 0.5
+		elseif (self:GetClass() == "tf_weapon_crossbow") then
+			self.NextIdle = CurTime() + 0.5
+			self.NextDeployed = CurTime() + 0.5
+		else
+			self.NextIdle = CurTime() + draw_duration + 0.02
+			self.NextDeployed = CurTime() + deploy_duration + 0.02
+		end
 	end
 	if (IsValid(self.CModel)) then
 		self.CModel:SetSkin(self.WeaponSkin or self:GetOwner():GetSkin())
@@ -1022,6 +1031,9 @@ end
 end]]
   
 function SWEP:Holster()
+	if (IsValid(self.Owner) and IsValid(self.Owner:GetViewModel())) then
+		self.Owner:GetViewModel():SetMaterial("")
+	end
 	self:StopTimers()
 	if IsValid(self.Owner) then
 		if (self.MarkForDeath) then
@@ -1109,6 +1121,7 @@ function SWEP:OnRemove()
 end
 
 function SWEP:CanPrimaryAttack() 
+	if (self.Owner:GetNWBool("Bonked")) then return false end
 	if (((self.Primary.ClipSize == -1 and self:Ammo1() > 0) or self:Clip1() > 0) and self.Owner:GetNWBool("Bonked",false) == false) then
 		return true
 	end
@@ -1348,11 +1361,6 @@ end
 function SWEP:Think() 
 	self:Inspect()
 	self:InspectAnimCheck()
-			if (self.Owner:IsHL2()) then
-				self.Owner:GetViewModel():SetMaterial("")
-			else
-				self.Owner:GetViewModel():SetMaterial("color")
-			end
 	if (((self.NextReload and self.NextReload>=CurTime()) or ((self.NextReloadStart and self.NextReloadStart>=CurTime()) or self.Reloading)) and self.ReloadSingle) then
 	
 		if self.FastReloadTime and SERVER then  

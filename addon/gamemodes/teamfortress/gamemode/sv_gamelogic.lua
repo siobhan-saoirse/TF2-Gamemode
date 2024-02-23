@@ -552,6 +552,13 @@ end
 function GM:Tick()
 end
 function GM:Think()
+	for _,v in pairs(player.GetAll()) do
+		if (v:GetNWBool("Taunting",false) == true) then
+			if (v:IsOnGround()) then
+				v:SetVelocity(Vector(0,0,0))
+			end
+		end
+	end
 	if (math.random(1,2+(table.Count(player.GetAll())*2))) then
 		if not self.NextUpdateDamage or CurTime()>self.NextUpdateDamage then
 			for _,v in pairs(player.GetAll()) do

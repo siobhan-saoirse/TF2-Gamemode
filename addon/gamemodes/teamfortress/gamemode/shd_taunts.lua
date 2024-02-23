@@ -487,13 +487,18 @@ concommand.Add("tf_taunt_conga_start", function(ply)
 	if ply:WaterLevel() ~= 0 then return end
 
 	if ply:GetInfoNum("tf_giantrobot", 0) == 1 then ply:ChatPrint("You can't taunt as a mighty robot!") return end
-	ply:DoAnimationEvent(ACT_DOD_CROUCHWALK_IDLE_PISTOL, false)
-	ply:EmitSound("CongaSong")	
+		if (!ply:IsHL2()) then
+			ply:DoAnimationEvent(ACT_DOD_CROUCHWALK_IDLE_PISTOL, false)
+		else
+			ply:DoAnimationEvent(ACT_GMOD_TAUNT_DANCE, false)
+		end
+	ply:EmitSound("music.conga_loop")	
+	if (!ply:IsHL2()) then
+		ParticleEffectAttach("speech_taunt_all", PATTACH_POINT_FOLLOW,ply,ply:LookupAttachment("head"))
+	end
 	local time 
 	if ply:IsHL2() then
 		time = ply:PlayScene("scenes/player/sniper/low/conga.vcd", 0)		
-		ply:SetColor( Color( 255, 255, 255, 0 ) ) 
-		ply:SetRenderMode( RENDERMODE_TRANSALPHA ) 
 	else
 		time = ply:PlayScene("scenes/player/"..ply:GetPlayerClass().."/low/conga.vcd", 0)		
 	end 
@@ -505,26 +510,26 @@ concommand.Add("tf_taunt_conga_start", function(ply)
 	end)
 	ply:SetNWBool("NoWeapon", true)
 	ply:SetNWBool("Bonked", true)
+	ply:SetNWBool("Congaing", true)
 	ply:ConCommand("tf_tp_simulation_toggle ")
 	net.Send(ply)
 	
+	timer.Create("LoopAnimCongaHL2"..ply:EntIndex(), ply:SequenceDuration(ply:SelectWeightedSequence(ACT_GMOD_TAUNT_DANCE)), 0, function()
+	
+		if (ply:IsHL2()) then
+			ply:DoAnimationEvent(ACT_GMOD_TAUNT_DANCE, false)
+		end
+		
+	end)
 	timer.Create("LoopAnimConga"..ply:EntIndex(), time, 0, function()
-		ply:StopSound("CongaSong")	
-		ply:EmitSound("CongaSong")
-		ply:DoAnimationEvent(ACT_DOD_CROUCHWALK_IDLE_PISTOL, false)
+		if (!ply:IsHL2()) then
+			ply:DoAnimationEvent(ACT_DOD_CROUCHWALK_IDLE_PISTOL, false)
+		end
 		ply:PlayScene("scenes/player/"..ply:GetPlayerClass().."/low/conga.vcd", 0)	
 		if ply:IsHL2() then
 			ply:PlayScene("scenes/player/sniper/low/conga.vcd", 0)		
-			ply:SetColor( Color( 255, 255, 255, 0 ) ) 
-			ply:SetRenderMode( RENDERMODE_TRANSALPHA )
 		else
 			ply:PlayScene("scenes/player/"..ply:GetPlayerClass().."/low/conga.vcd", 0)		
-		end
-	end)
-	timer.Create("LoopSetAngles"..ply:EntIndex(), 0.001, 0, function()
-		if ply:IsHL2() then
-			animent2:SetAngles(ply:EyeAngles())
-			animent2:SetPos(ply:GetPos())
 		end
 	end)
 end)
@@ -532,19 +537,18 @@ concommand.Add("tf_taunt_conga_stop", function(ply)
 	if not IsValid(ply) or (not ply:Alive() and not ply:GetNWBool("NoWeapon")) then return end
 	ply:SetNWBool("NoWeapon", false)
 	ply:SetNWBool("Bonked", false)
-	ply:StopSound("CongaSong")
+	ply:SetNWBool("Congaing", false)
+	ply:StopSound("music.conga_loop")	
+	ply:DoTauntEvent("a_flinch01", true)
+	ply:StopParticles()
 	timer.Stop("LoopAnimConga"..ply:EntIndex()) 
+	timer.Stop("LoopAnimCongaHL2"..ply:EntIndex()) 
 	timer.Stop("LoopSlowTauntSpeed"..ply:EntIndex()) 
 	timer.Stop("LoopTauntSpeakingConga"..ply:EntIndex())
 	ply:ConCommand("tf_firstperson")
 	ply:ResetClassSpeed()
 	net.Send(ply)
-	ply:SetColor( Color( 255, 255, 255, 255 ) ) 
-	ply:SetRenderMode( RENDERMODE_TRANSALPHA ) 
-	if IsValid(animent2) and IsValid(animent3) then
-		animent2:Fire("Kill", "", 0.01)
-		animent3:Fire("Kill", "", 0.01)
-	end
+	ply:SetColor( Color( 255, 255, 255, 0 ) ) 
 end)
 concommand.Add("tf_taunt_russian_start", function(ply)
 	if ply:GetNWBool("Taunting2") == true then return end
@@ -554,22 +558,24 @@ concommand.Add("tf_taunt_russian_start", function(ply)
 
 	if ply:GetInfoNum("tf_giantrobot", 0) == 1 then ply:ChatPrint("You can't taunt as a mighty robot!") return end
 	ply:DoAnimationEvent(ACT_DI_ALYX_ZOMBIE_TORSO_MELEE, false)
-	ply:EmitSound("RussianSong")
+	ply:EmitSound("music.russian")
+	ParticleEffectAttach("speech_taunt_all", PATTACH_POINT_FOLLOW,ply,ply:LookupAttachment("head")) 
 	local time = ply:PlayScene("scenes/player/"..ply:GetPlayerClass().."/low/taunt_russian.vcd", 0)
 	timer.Create("LoopSlowTauntSpeed2"..ply:EntIndex(), 0.01, 0, function()
-		ply:SetClassSpeed(3 * 25)
+		ply:SetClassSpeed(50)
 	end)
 	timer.Create("LoopTauntSpeakingConga2"..ply:EntIndex(), 0.001, 0, function()
 		if ply:GetNWBool("NoWeapon") == false then timer.Stop("LoopAnimRussian"..ply:EntIndex()) timer.Stop("LoopSlowTauntSpeed2"..ply:EntIndex()) timer.Stop("LoopTauntSpeakingConga2"..ply:EntIndex()) timer.Stop("LoopMusic"..ply:EntIndex()) return end
 	end)
 	ply:SetNWBool("NoWeapon", true)
 	ply:SetNWBool("Bonked", true)
+	ply:SetNWBool("Taunting2", true)
+	ply:SetNWBool("Russian", true)
 	ply:ConCommand("tf_tp_simulation_toggle")
 	net.Send(ply)
 	timer.Create("LoopMusic"..ply:EntIndex(), 66.24, 0, function()
-		ply:EmitSound("RussianSong")
 	end)
-	timer.Create("LoopAnimRussian"..ply:EntIndex(), time, 0, function()
+	timer.Create("LoopAnimRussian"..ply:EntIndex(), ply:SequenceDuration(ply:LookupSequence("taunt_russian")) - 0.1, 0, function()
 		ply:DoAnimationEvent(ACT_DI_ALYX_ZOMBIE_TORSO_MELEE, false)
 		ply:PlayScene("scenes/player/"..ply:GetPlayerClass().."/low/taunt_russian.vcd", 0)
 	end)
@@ -578,7 +584,11 @@ concommand.Add("tf_taunt_russian_stop", function(ply)
 	if not IsValid(ply) or (not ply:Alive() and not ply:GetNWBool("NoWeapon")) then return end
 	ply:SetNWBool("NoWeapon", false)
 	ply:SetNWBool("Bonked", false)
-	ply:StopSound("RussianSong")
+	ply:SetNWBool("Taunting2", false)
+	ply:SetNWBool("Russian", false)
+	ply:StopSound("music.russian")
+	ply:DoTauntEvent("a_flinch01", true)
+	ply:StopParticles()
 	ply:ResetClassSpeed()
 	ply:ConCommand("tf_firstperson")
 	timer.Stop("LoopAnimRussian"..ply:EntIndex())
@@ -598,6 +608,7 @@ concommand.Add("tf_taunt_banjo_start", function(ply)
 
 	if ply:GetInfoNum("tf_giantrobot", 0) == 1 then ply:ChatPrint("You can't taunt as a mighty robot!") return end
 	ply:DoAnimationEvent(ACT_SIGNAL3, false)
+	ply:SetNWBool("Taunting2", true)
 	ply:EmitSound("BanjoSong")
 	local time = ply:SequenceDuration("taunt_bumpkins_banjo_fastloop")
 	timer.Create("LoopAnimBanjo2"..ply:EntIndex(), 0.001, 0, function()
@@ -639,6 +650,7 @@ concommand.Add("tf_taunt_chair", function(ply)
 	end)
 	ply:SetNWBool("Taunting", true)
 	ply:SetNWBool("NoWeapon", true)
+	ply:SetNWBool("Taunting2", true)
 	net.Start("ActivateTauntCam")
 	net.Send(ply)
 	local animent2 = ents.Create( 'base_gmodentity' ) -- The entity used for the death animation	
@@ -677,6 +689,7 @@ concommand.Add("tf_taunt_weight", function(ply)
 		if ply:GetNWBool("Taunting") == false then timer.Stop("LoopAnimBook"..ply:EntIndex()) timer.Stop("LoopAnimBanjo2"..ply:EntIndex()) timer.Stop("LoopTauntSpeakingConga2"..ply:EntIndex()) timer.Stop("LoopMusic"..ply:EntIndex()) return end
 	end)
 	ply:SetNWBool("Taunting", true)
+	ply:SetNWBool("Taunting2", true)
 	ply:SetNWBool("NoWeapon", true)
 	net.Start("ActivateTauntCam")
 	net.Send(ply)
@@ -710,6 +723,7 @@ concommand.Add("tf_taunt_chair2", function(ply)
 		if ply:GetNWBool("Taunting") == false then timer.Stop("LoopAnimBook"..ply:EntIndex()) timer.Stop("LoopAnimBanjo2"..ply:EntIndex()) timer.Stop("LoopTauntSpeakingConga2"..ply:EntIndex()) timer.Stop("LoopMusic"..ply:EntIndex()) return end
 	end)
 	ply:SetNWBool("Taunting", true)
+	ply:SetNWBool("Taunting2", true)
 	ply:SetNWBool("NoWeapon", true)
 	net.Start("ActivateTauntCam")
 	net.Send(ply)
@@ -842,7 +856,6 @@ concommand.Add("tf_taunt_banjo_stop", function(ply)
 	if not IsValid(ply) or (not ply:Alive() and not ply:GetNWBool("NoWeapon")) then return end
 	if ply:GetPlayerClass() != "engineer" then return end
 	ply:StopSound("BanjoSong")
-	ply:EmitSound("BanjoSongStop")
 	ply:ResetClassSpeed()
 	ply:DoAnimationEvent(ACT_SIGNAL_ADVANCE, false)
 	local time = ply:SequenceDuration(ply:LookupSequence("taunt_bumpkins_banjo_outro"))
@@ -860,6 +873,7 @@ concommand.Add("tf_taunt_chair_stop", function(ply)
 	if not IsValid(ply) or (not ply:Alive() and not ply:GetNWBool("NoWeapon")) then return end
 	ply:ResetClassSpeed()
 	ply:DoAnimationEvent(ACT_RUN_CROUCH_AIM)
+	ply:SetNWBool("Taunting2", false)
 	timer.Simple(3.2, function()
 		for k,v in ipairs(ents.FindByName("BanjoModel"..ply:EntIndex())) do
 			v:Remove()
@@ -873,6 +887,7 @@ end)
 concommand.Add("tf_taunt_weight_stop", function(ply)
 	if not IsValid(ply) or (not ply:Alive() and not ply:GetNWBool("NoWeapon")) then return end
 	ply:ResetClassSpeed()
+	ply:SetNWBool("Taunting2", false)
 		for k,v in ipairs(ents.FindByName("BanjoModel"..ply:EntIndex())) do
 			v:Remove()
 			ply:SetNWBool("NoWeapon", false)
@@ -887,6 +902,7 @@ end)
 concommand.Add("tf_taunt_chair2_stop", function(ply)
 	if not IsValid(ply) or (not ply:Alive() and not ply:GetNWBool("NoWeapon")) then return end
 	ply:ResetClassSpeed()
+	ply:SetNWBool("Taunting2", false)
 		for k,v in ipairs(ents.FindByName("BanjoModel"..ply:EntIndex())) do
 			v:Remove()
 			ply:SetNWBool("NoWeapon", false)

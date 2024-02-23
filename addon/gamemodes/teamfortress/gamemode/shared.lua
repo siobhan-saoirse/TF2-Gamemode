@@ -1274,15 +1274,6 @@ net.Receive("botVoiceStart", function()
 end)
 hook.Add("Think", "PlayerStuff", function()	
 	for k,pl in ipairs(player.GetAll()) do
-	
-		if (!pl:Alive()) then
-			if (IsValid(pl:GetNWEntity("RagdollEntity"))) then
-				pl:SetMoveType(MOVETYPE_NONE)
-				pl:SetPos(pl:GetNWEntity("RagdollEntity"):GetPos())
-			else
-				pl:SetMoveType(MOVETYPE_NONE)
-			end
-		end
 		
 		if not pl.anim_Jumping and !pl:IsOnGround() then
 			pl.anim_Jumping = true
@@ -1396,7 +1387,14 @@ hook.Add("PostPlayerDraw", "LeadBot_VoiceIcon", function(ply)
         surface.DrawTexturedRect(-8, -8, 16, 16)
     cam.End3D2D()
 end)
- 
+
+if CLIENT then
+
+	list.Set( "ContentCategoryIcons", "Team Fortress 2", "games/16/tf.png" )
+	list.Set( "ContentCategoryIcons", "TFBots", "games/16/tf.png" )
+
+end
+
 sound.Add( {
 	name = "MVM.GiantWTFDemomanLoop",
 	channel = CHAN_STATIC,
@@ -1593,8 +1591,6 @@ function util.PrecacheModel(mdl)
 end
 
 include("particle_manifest.lua")
-include("shd_sounds1.lua")
-include("shd_sounds2.lua")
 include("vmatrix_extension.lua")
 
 include("tf_lang_module.lua")
@@ -1635,16 +1631,16 @@ include("shd_ragdolls2.lua")
 include("shd_items_game.lua")    
 include("shd_conflict.lua") 
 if (IsMounted("thestanleyparable")) then 
-	sound.AddSoundOverrides("scripts/npc_sounds_stanley.txt")
-	sound.AddSoundOverrides("scripts/soundscapes_stanley.txt")
+	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/npc_sounds_stanley.lua")
+	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/soundscapes_stanley.lua")
 end
 if (IsMounted("left4dead2")) then 
-	sound.AddSoundOverrides("scripts/l4d2_game_sounds_doors.txt")
-	sound.AddSoundOverrides("scripts/l4d2_game_sounds_weapons.txt")
-	sound.AddSoundOverrides("scripts/l4d2_game_sounds_music.txt")
-	sound.AddSoundOverrides("scripts/l4d2_game_sounds_player.txt")
-	sound.AddSoundOverrides("scripts/l4d2_game_sounds_infected_common.txt")
-	sound.AddSoundOverrides("scripts/l4d2_game_sounds_infected_special.txt")
+	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/l4d2_game_sounds_doors.lua")
+	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/l4d2_game_sounds_weapons.lua")
+	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/l4d2_game_sounds_music.lua")
+	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/l4d2_game_sounds_player.lua")
+	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/l4d2_game_sounds_infected_common.lua")
+	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/l4d2_game_sounds_infected_special.lua")
 	player_manager.AddValidModel("infected_smoker","models/infected/smoker.mdl")
 	player_manager.AddValidHands("infected_smoker","models/v_models/weapons/v_claw_smoker.mdl")
 	player_manager.AddValidModel("infected_smoker_l4d1","models/infected/smoker_l4d1.mdl")
@@ -1677,27 +1673,27 @@ if (IsMounted("left4dead2")) then
 	player_manager.AddValidHands("infected_charger","models/weapons/arms/v_charger_arms.mdl")
 end
 if (IsMounted("left4dead")) then 
-	sound.AddSoundOverrides("scripts/l4d1_game_sounds_infected_special.txt") 
+	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/l4d1_game_sounds_infected_special.lua") 
 end
-sound.AddSoundOverrides("scripts/game_sounds_mvm.txt") 
-sound.AddSoundOverrides("scripts/game_sounds_weapons_tf.txt")
-sound.AddSoundOverrides("scripts/game_sounds_weapons_tf2.txt")
-sound.AddSoundOverrides("scripts/game_sounds_weapons_l4d1.txt") 
-sound.AddSoundOverrides("scripts/game_sounds_player.txt")
-sound.AddSoundOverrides("scripts/game_sounds_music.txt")
-sound.AddSoundOverrides("scripts/game_sounds_vo.txt")
-sound.AddSoundOverrides("scripts/game_sounds_vo_handmade.txt")
-sound.AddSoundOverrides("scripts/game_sounds_vo_mvm.txt")
-sound.AddSoundOverrides("scripts/game_sounds_vo_merasmus.txt")
-sound.AddSoundOverrides("scripts/game_sounds_vo_mvm_handmade.txt")
-sound.AddSoundOverrides("scripts/game_sounds_vo_mvm_mighty.txt")
-sound.AddSoundOverrides("scripts/game_sounds_vo_pauling.txt")
-sound.AddSoundOverrides("scripts/game_sounds_vo_rd_robots.txt")
-sound.AddSoundOverrides("scripts/game_sounds_vo_taunts.txt")
-sound.AddSoundOverrides("scripts/game_sounds_vo_tough_break.txt")
-sound.AddSoundOverrides("scripts/game_sounds_vo_lfce.txt") 
-sound.AddSoundOverrides("scripts/game_sounds_vo_tf2c.txt") 
-sound.AddSoundOverrides("scripts/game_sounds.txt")
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_mvm.lua") 
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_weapons_tf.lua")
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_weapons_tf2.lua")
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_weapons_l4d1.lua") 
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_player.lua")
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_music.lua")
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_vo.lua") 
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_vo_handmade.lua")
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_vo_mvm.lua")
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_vo_merasmus.lua")
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_vo_mvm_handmade.lua")
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_vo_mvm_mighty.lua")
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_vo_pauling.lua")
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_vo_rd_robots.lua")
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_vo_taunts.lua")
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_vo_tough_break.lua")
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_vo_lfce.lua") 
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_vo_tf2c.lua") 
+sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds.lua")
 
 
 hook.Add("PlayerStepSoundTime", "FootTime", function(ply, iType, iWalking)
@@ -1752,26 +1748,26 @@ hook.Add("PlayerStepSoundTime", "FootTime", function(ply, iType, iWalking)
 	end
 	if (iType == STEPSOUNDTIME_NORMAL || iType == STEPSOUNDTIME_WATER_FOOT) then
 		if (ply:GetMoveType() == MOVETYPE_LADDER) then
-			local speed = math.Remap(ply:GetMaxSpeed(), 200, 450, 400, 200) + 100
+			local speed = math.Remap(ply:GetVelocity():Length2D(), 200, 450, 400, 200) + 100
 			return speed
 		else
 			if (ply:Crouching()) then
-				local speed = math.Remap(ply:GetMaxSpeed(), 200, 450, 400, 200) + 100 + ply:GetVelocity():Length2D() / (ply:GetMaxSpeed() * 0.8)
+				local speed = math.Remap(ply:GetVelocity():Length2D(), 200, 450, 400, 200) + 100
 				return speed
 			else
 				if (ply:GetWalkSpeed() > 450) then
 				
-					local speed = 200 + ply:GetVelocity():Length2D() / (ply:GetMaxSpeed() * 0.8)
+					local speed = 200 + ply:GetVelocity():Length2D()
 					return speed
 					
 				else
 					if (ply:GetWalkSpeed() < 229 and !ply:KeyDown(IN_SPEED)) then
 					
-						local speed = 400 + ply:GetVelocity():Length2D() / (ply:GetMaxSpeed() * 0.8)
+						local speed = 400 + ply:GetVelocity():Length2D()
 						return speed 
 						
 					else
-						local speed = math.Remap(ply:GetMaxSpeed(), 200, 450, 400, 200) + ply:GetVelocity():Length2D() / (ply:GetMaxSpeed() * 0.8)
+						local speed = math.Remap(ply:GetVelocity():Length2D(), 200, 450, 400, 200)
 						return speed
 					end
 				end
@@ -1860,6 +1856,7 @@ elseif (CLIENT) then
 	local voice_mat = Material('effects/speech_voice_red')
 	local voice_mat2 = Material('effects/speech_voice_blue')
 	local text_mat = Material('effects/speech_typing')
+	local partner_mat = Material('effects/speech_taunt')
 
 	hook.Add('PostPlayerDraw', 'TalkIcon', function(ply)
 		if ply == LocalPlayer() and GetViewEntity() == LocalPlayer() and !LocalPlayer():ShouldDrawLocalPlayer() then return end
@@ -1902,6 +1899,56 @@ elseif (CLIENT) then
 		end
 
 		render.SetMaterial(Material("effects/speech_typing"))
+
+		local color_var = 255
+
+		if computecolor:GetBool() then
+			local computed_color = render.ComputeLighting(ply:GetPos(), Vector(0, 0, 1))
+			local max = math.max(computed_color.x, computed_color.y, computed_color.z)
+			color_var = math.Clamp(max * 255 * 1.11, 0, 255)
+		end
+
+		render.DrawSprite(pos, 16, 16, Color(color_var, color_var, color_var, 255))
+	end)
+	hook.Add('PostPlayerDraw', 'TalkIcon3', function(ply)
+		if (!ply:IsHL2()) then return end
+		if ply == LocalPlayer() and GetViewEntity() == LocalPlayer() and !LocalPlayer():ShouldDrawLocalPlayer() then return end
+		if not ply:Alive() then return end
+		if not ply:GetNWBool("Congaing") then return end
+
+		local pos = ply:GetPos() + Vector(0, 0, ply:GetModelRadius() + 10)
+		if (ply:LookupBone("bip_head")) then
+			pos = ply:GetBonePosition(ply:LookupBone("bip_head")) + Vector(0, 0, 16)
+		elseif (ply:LookupBone("ValveBiped.Bip01_Head1")) then
+			pos = ply:GetBonePosition(ply:LookupBone("ValveBiped.Bip01_Head1")) + Vector(0, 0, 16)
+		end
+
+		render.SetMaterial(partner_mat)
+
+		local color_var = 255
+
+		if computecolor:GetBool() then
+			local computed_color = render.ComputeLighting(ply:GetPos(), Vector(0, 0, 1))
+			local max = math.max(computed_color.x, computed_color.y, computed_color.z)
+			color_var = math.Clamp(max * 255 * 1.11, 0, 255)
+		end
+
+		render.DrawSprite(pos, 16, 16, Color(color_var, color_var, color_var, 255))
+	end)
+	hook.Add('PostPlayerDraw', 'TalkIcon4', function(ply)
+		if (!ply:IsHL2()) then return end
+		if ply == LocalPlayer() and GetViewEntity() == LocalPlayer() and !LocalPlayer():ShouldDrawLocalPlayer() then return end
+		if not ply:Alive() then return end
+		if not ply:GetNWBool("Russian") then return end
+
+		local pos = ply:GetPos() + Vector(0, 0, ply:GetModelRadius() + 10)
+		if (ply:LookupBone("bip_head")) then
+			pos = ply:GetBonePosition(ply:LookupBone("bip_head")) + Vector(0, 0, 16)
+		elseif (ply:LookupBone("ValveBiped.Bip01_Head1")) then
+			pos = ply:GetBonePosition(ply:LookupBone("ValveBiped.Bip01_Head1")) + Vector(0, 0, 16)
+		end
+
+		render.SetMaterial(partner_mat)
 
 		local color_var = 255
 
@@ -2012,7 +2059,9 @@ concommand.Add("__svspeak", function(pl,_,args)
 		if VoiceMenuGesture[args[1]] then
 			pl:DoAnimationEvent(VoiceMenuGesture[args[1]], true)
 		end
-		
+		if (args[1] == "TLK_PLAYER_MEDIC") then
+			ParticleEffectAttach("speech_mediccall", PATTACH_POINT_FOLLOW,pl,pl:LookupAttachment("head"))
+		end
 		umsg.Start("TFPlayerVoice")
 			umsg.Entity(pl)
 			umsg.String(args[1])
@@ -2203,7 +2252,7 @@ function GM:EntityTeam(ent)
 			if (ent.PreviousTeam) then
 				t = ent.PreviousTeam
 			else
-				if (ent:GetClass() == "npc_turret_floor" and ent:HasSpawnFlags(512)) then
+				if ((ent:GetClass() == "npc_turret_floor" || ent:GetClass() == "npc_portal_turret_floor") and ent:HasSpawnFlags(512)) then
 					t = TEAM_RED
 				else
 					t = ent:GetNPCData().team

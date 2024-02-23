@@ -332,12 +332,12 @@ function meta:SetPlayerClass(class)
 		self:SetStepSize(18)
 		self:SetViewOffset(Vector(0,0,64)) 
 		self:SetViewOffsetDucked(Vector(0, 0, 28))
-		--self:SetCollisionBounds(unpack(DefaultHull))
+		self:SetCollisionBounds(unpack(DefaultHull))
 	else 
 		-- Special hull, because TF2 players are larger than HL2 players
 		self:SetHull(unpack(TFHull))
 		self:SetHullDuck(unpack(TFHullDuck))
-		--self:SetCollisionBounds(unpack(TFHull))
+		self:SetCollisionBounds(unpack(TFHull))
 		self:SetStepSize(18)
 	end
 	self:SetDuckSpeed(0.2)
@@ -598,10 +598,10 @@ function meta:SetPlayerClass(class)
 end
 
 
-function meta:SetClassSpeed(sp)
+function meta:SetClassSpeed(sp)  
 	if !self:IsHL2() then
 		self:SetWalkSpeed(sp) 
-		self:SetRunSpeed(sp * 1.2) 
+		self:SetRunSpeed(sp) 
 		self:SetJumpPower(289)
 		self:SetCrouchedWalkSpeed(0.33)
 		self:SetMaxSpeed(520) 

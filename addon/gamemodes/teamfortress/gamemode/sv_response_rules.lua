@@ -5,9 +5,9 @@ local function PrecacheGameSounds(path)
 	local data
 	
 	if SERVER and game.IsDedicated() then
-		data = file.Read(GM.Folder.."/content/scripts/"..path, "GAME")
+		data = file.Read(GM.Folder.."/gamemode/contents/"..path, "GAME")
 	else
-		data = file.Read(GM.Folder.."/content/scripts/"..path, "GAME")
+		data = file.Read(GM.Folder.."/gamemode/contents/"..path, "GAME")
 	end
 	
 	data = '"woot"\n{\n'..data..'\n}\n'
@@ -17,7 +17,7 @@ local function PrecacheGameSounds(path)
 	end
 end
 
-sound.AddSoundOverrides( "content/scripts/game_sounds_vo.txt" )
+sound.AddSoundOverrides( "gamemode/contents/game_sounds_vo.lua" )
 
 module("response_rules", package.seeall)
 
@@ -150,7 +150,7 @@ function AddRule(str)
 	if context and value and duration then
 		tbl.context = {context, tonumber(value) or 0, tonumber(duration) or 0, worldcontext ~= nil}
 	end
-	
+	 
 	Rules[name] = tbl
 	return tbl
 end
@@ -181,9 +181,9 @@ function Load(path)
 	local data
 	
 	if SERVER and game.IsDedicated() then
-		data = file.Read(GM.Folder.."/content/scripts/"..path, "GAME")
+		data = file.Read(GM.Folder.."/gamemode/contents/"..path, "GAME")
 	else 
-		data = file.Read(GM.Folder.."/content/scripts/"..path, "GAME")
+		data = file.Read(GM.Folder.."/gamemode/contents/"..path, "GAME")
 	end
 	
 	if not data or data=="" then
@@ -240,7 +240,7 @@ function SelectResponse(ent, dbg)
 				if not MissingCriterionErrorShown then
 					MissingCriterionErrorShown = true
 					ErrorNoHalt("WARNING: Criterion '"..cname.."' is required for rule '"..rname.."' but was not found")
-					ErrorNoHalt("WARNING: Outdated tf_response_rules.txt, some scenes might not function properly")
+					ErrorNoHalt("WARNING: Outdated tf_response_rules.lua, some scenes might not function properly")
 				end
 			elseif IsMatchingCriterion(ent, criterion or {}) then
 				score = score + criterion.weight
@@ -335,18 +335,12 @@ function PlayResponse(ent, response, nospeech, concept)
 			if tf_voice_cooldown:GetBool() then
 				if (time) then
 					print("vcd time: "..1.5)
-					if (concept != "TLK_PLAYER_TAUNT") then
-						ent.NextSpeak = CurTime() + 1.5
-					end
+					ent.NextSpeak = CurTime() + 1.5
 				else
 					print("vcd time: 1.5")
-					if (concept != "TLK_PLAYER_TAUNT") then
-						ent.NextSpeak = CurTime() + 1.5
-					end
+					ent.NextSpeak = CurTime() + 1.5
 				end
-				if (concept != "TLK_PLAYER_TAUNT") then
-					if delay then ent.NextSpeak = ent.NextSpeak + delay end
-				end
+				if delay then ent.NextSpeak = ent.NextSpeak + delay end
 			end
 		end
 		return true
@@ -388,13 +382,7 @@ function PainfulResponse(ent, response, nospeech, attacker)
 				ent:SetNWBool("SpeechTime", time) 
 			end)
 		else
-			if (string.find(ent:GetModel(),"hwm")) then
-				if (ent:GetInfoNum("tf_usehwmvcds ",0) == 1) then
-					r[1] = string.Replace(r[1],"low","high")
-				end
-			end
 			time = ent:PlayScene(r[1], 0)
-
 		end
 		
 		ent.LastScene = r[1]
@@ -755,7 +743,7 @@ function META:Speak(concept, nospeech, dbg)
 	local class = ""
 	if tr.Entity and tr.Entity:IsPlayer() then
 		if tr.Entity:GetPlayerClass() == "gmodplayer" then
-			class = "sniper"
+			class = string.lower(tr.Entity.playerclass) or "sniper"
 		elseif tr.Entity:GetPlayerClass() == "medicshotgun" then
 			class = "medic"
 		else
@@ -837,7 +825,7 @@ function META:Speak(concept, nospeech, dbg)
 		end
 	end
 	self.crosshair_on = class
-	
+	 
 	-- Temporary
 	self.GameRound = 5
 	if self:IsLoser() then
@@ -845,7 +833,7 @@ function META:Speak(concept, nospeech, dbg)
 	else
 		self.OnWinningTeam = 1
 	end
-	----------------------------------------------------------------
+	---------------------------------------------------------------- 
 	
 	local response = SelectResponse(self, dbg)
 	
@@ -955,7 +943,7 @@ function META:PainSound(concept, nospeech, dbg, attacker)
 	local class = ""
 	if tr.Entity and tr.Entity:IsPlayer() then
 		if tr.Entity:GetPlayerClass() == "gmodplayer" then
-			class = "sniper"
+			class = string.lower(tr.Entity.playerclass) or "sniper"
 		elseif tr.Entity:GetPlayerClass() == "medicshotgun" then
 			class = "medic"
 		else

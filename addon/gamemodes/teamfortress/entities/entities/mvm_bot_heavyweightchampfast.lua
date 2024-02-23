@@ -8,7 +8,7 @@ ENT.AdminOnly = false
 ENT.IsBoss = false
 ENT.Items = {"Gloves of Running Urgently MvM"} 
 ENT.PrintName		= "Heavyweight Champ (Fast)"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 ENT.PreferredIcon = "hud/leaderboard_class_heavy_gru"
 
 list.Set( "NPC", "mvm_bot_heavyweightchampfast", {

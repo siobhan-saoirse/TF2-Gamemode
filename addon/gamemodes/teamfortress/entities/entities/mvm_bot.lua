@@ -10,7 +10,7 @@ ENT.Difficulty = 0
 ENT.PrintName		= "Scout"
 ENT.Items = {}
 ENT.Bot = nil
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 ENT.PreferredName = nil
 ENT.PreferredIcon = nil
 list.Set( "NPC", "mvm_bot", {

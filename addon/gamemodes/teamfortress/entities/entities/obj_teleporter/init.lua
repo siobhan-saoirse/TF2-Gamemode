@@ -18,10 +18,6 @@ ENT.Sound_Ready = Sound("Building_Teleporter.Ready")
 ENT.Sound_Send = Sound("Building_Teleporter.Send")
 ENT.Sound_Receive = Sound("Building_Teleporter.Receive")
 
-ENT.Sound_Spin1 = Sound("Building_Teleporter.SpinLevel1")
-ENT.Sound_Spin2 = Sound("Building_Teleporter.SpinLevel2")
-ENT.Sound_Spin3 = Sound("Building_Teleporter.SpinLevel3")
-
 ENT.Sound_Explode = Sound("Building_Teleporter.Explode")
 
 --ENT.Sound_DoneBuilding = Sound("Building_Sentrygun.Built")
@@ -30,7 +26,7 @@ ENT.TeleportDelay = 1
 
 ENT.RechargeTime = 10
 ENT.RechargeTime2 = 7
-ENT.RechargeTime3 = 5
+ENT.RechargeTime3 = 3.3
 ENT.MinRechargingSpinSpeed = 0.2
 ENT.SpinSpeed = 0
 
@@ -83,13 +79,12 @@ function ENT:PostEnable(laststate)
 end
 
 function ENT:OnLink(ent)
-	if self.Spin_Sound then
-		self.Spin_Sound:Stop()
-	end
-	self.Spin_Sound = CreateSound(self, self.Sound_Spin1)
-	self.Spin_Sound:Play()
 	self:SetAcceleration(0.005)
 	self:SetChargePercentage(1)
+
+	if (ent != nil) then
+		ent:SetLevel(self:GetLevel())
+	end
 
 	self.Model:ResetSequence("running")	
 
@@ -109,12 +104,17 @@ function ENT:OnStartUpgrade()
 			self.Spin_Sound:Stop()
 		end
 		
-		self.NextRecharge = CurTime() + 2
-		self.NextRestartMotor = CurTime() + 2
-		self:SetAcceleration(-0.006)
-		self:GetLinkedTeleporter():SetAcceleration(-0.006)	
-		self:GetLinkedTeleporter().NextRecharge = CurTime() + 3.5
-		self:GetLinkedTeleporter().NextRestartMotor = CurTime() + 2
+		self.NextRecharge = CurTime() + 2.5
+		timer.Simple(2.5, function()
+			self:EmitSound(self.Sound_Ready)
+			self:GetLinkedTeleporter():EmitSound(self.Sound_Ready)
+		end)
+		timer.Simple(1.5, function()
+			self:SetAcceleration(0.01)
+			self:GetLinkedTeleporter():SetAcceleration(0.01)	
+		end)
+		self:SetAcceleration(-0.01)
+		self:GetLinkedTeleporter():SetAcceleration(-0.01)	
 		
 		self.DoneInitialWarmup = true
 		if self:GetLevel()==2 then
@@ -143,7 +143,6 @@ function ENT:AddMetal(owner, max)
 	if IsValid(w) and w.ConstructRateMultiplier then
 		mult = w.ConstructRateMultiplier
 	end
-	
 	self.BuildBoost[owner] = {val=mult, endtime=CurTime() + 0.8}
 	
 	-- Building or upgrading
@@ -173,10 +172,13 @@ function ENT:AddMetal(owner, max)
 		if current>=self.UpgradeCost then
 			self:SetMetal(0)
 			self:Upgrade()
-			-- Upgrading already resupplies ammo so we don't need to do anything else
 			upgraded = true
 		elseif not repaired or not self:NeedsResupply() then
 			-- Add to the upgrade status only if no metal was spent repairing the building or if the building doesn't need to be resupplied first
+			
+			if (exit != nil and exit:EntIndex()~=self:EntIndex()) then
+				exit:SetMetal(current)
+			end
 			self:SetMetal(current)
 		end
 		
@@ -192,7 +194,6 @@ function ENT:AddMetal(owner, max)
 			resupplied = true
 		end
 	end
-	
 	return max0 - max
 end
 
@@ -202,57 +203,58 @@ function ENT:Teleport(pl)
 	if not IsValid(exit) then return end
 	
 	self:EmitSound(self.Sound_Send)
-	
-	self:SetChargePercentage(0)
-	if self:GetLevel() == 2 then
-		self.SpinSpeed = 2
-		self:SetAcceleration(-0.004)
-		self.NextRecharge = CurTime() + self.RechargeTime2
-		self.NextRestartMotor = CurTime() + 0.5 * self.RechargeTime2
-	elseif self:GetLevel() == 3 then
-		self.SpinSpeed = 3
-		self:SetAcceleration(-0.005)
-		self.NextRecharge = CurTime() + self.RechargeTime3
-		self.NextRestartMotor = CurTime() + 0.5 * self.RechargeTime3
-	else
-		self.SpinSpeed = 1.0
-		self:SetAcceleration(-0.0025)
-		self.NextRecharge = CurTime() + self.RechargeTime
-		self.NextRestartMotor = CurTime() + 0.5 * self.RechargeTime
-	end
-	if exit:GetLevel() == 2 then
-		exit.SpinSpeed = 2
-		exit:SetAcceleration(-0.004)
-		exit.NextRecharge = CurTime() + exit.RechargeTime2
-		exit.NextRestartMotor = CurTime() + 0.5 * exit.RechargeTime2
-	elseif exit:GetLevel() == 3 then
-		exit.SpinSpeed = 3
-		exit:SetAcceleration(-0.005)
-		exit.NextRecharge = CurTime() + exit.RechargeTime3
-		exit.NextRestartMotor = CurTime() + 0.5 * exit.RechargeTime3
-	else
-		exit.SpinSpeed = 1.0
-		exit:SetAcceleration(-0.0025)
-		exit.NextRecharge = CurTime() + exit.RechargeTime
-		exit.NextRestartMotor = CurTime() + 0.5 * exit.RechargeTime
-	end
 	if pl:IsTFPlayer() then
 		if pl:IsPlayer() then
-		pl:SetFOV(50, 0.5)
+		pl:SetFOV(50, 0.7)
 		umsg.Start("TFTeleportEffect", pl)
 		umsg.End()
 		pl:ScreenFade( SCREENFADE.OUT, Color( 255, 255, 255, 150 ), 0.5, 0.65 )
 		end
 		ParticleEffect("teleportedin_red", self:GetPos(), self:GetAngles(), pl)
-		timer.Simple(0.3, function()	
-			
-			if pl:IsPlayer() then
-			pl:SetFOV(0, 0.7)
-			end
-		end)
 	end
-	timer.Simple(0.4, function()
+	timer.Simple(0.6, function()
+	
+		self:SetChargePercentage(0)
+		if self:GetLevel() == 2 then
+			self.SpinSpeed = 2
+			self:SetAcceleration(-0.004)
+			self.NextRecharge = CurTime() + self.RechargeTime2
+			self.NextRestartMotor = CurTime() + 0.5 * self.RechargeTime2
+		elseif self:GetLevel() == 3 then
+			self.SpinSpeed = 3
+			self:SetAcceleration(-0.009)
+			self.NextRecharge = CurTime() + self.RechargeTime3
+			self.NextRestartMotor = CurTime() + 0.5 * self.RechargeTime3
+		else
+			self.SpinSpeed = 1.0
+			self:SetAcceleration(-0.0025)
+			self.NextRecharge = CurTime() + self.RechargeTime
+			self.NextRestartMotor = CurTime() + 0.5 * self.RechargeTime
+		end
+		if exit:GetLevel() == 2 then
+			exit.SpinSpeed = 2
+			exit:SetAcceleration(-0.004)
+			exit.NextRecharge = CurTime() + exit.RechargeTime2
+			exit.NextRestartMotor = CurTime() + 0.5 * exit.RechargeTime2
+		elseif exit:GetLevel() == 3 then
+			exit.SpinSpeed = 3
+			exit:SetAcceleration(-0.009)
+			exit.NextRecharge = CurTime() + exit.RechargeTime3
+			exit.NextRestartMotor = CurTime() + 0.5 * exit.RechargeTime3
+		else
+			exit.SpinSpeed = 1.0
+			exit:SetAcceleration(-0.0025)
+			exit.NextRecharge = CurTime() + exit.RechargeTime
+			exit.NextRestartMotor = CurTime() + 0.5 * exit.RechargeTime
+		end
 		pl:SetPos(exit:GetExitPosition())
+			
+		if pl:IsPlayer() then
+			pl:SetFOV(120, 0)
+			timer.Simple(0.05, function()
+				pl:SetFOV(0, 0.8)
+			end)
+		end
 		ParticleEffect("teleportedin_red", exit:GetPos(), exit:GetAngles(), pl)
 		exit:EmitSound(self.Sound_Receive)
 		
@@ -294,7 +296,12 @@ function ENT:OnThinkActive()
 	if !IsValid(self:GetLinkedTeleporter()) then
 		self:OnUnlink(self:GetLinkedTeleporter())
 	end
-	
+	if (IsValid(self:GetLinkedTeleporter())) then
+		if (self:GetLinkedTeleporter():GetLevel() <= self:GetLevel() - 1 and self:GetLinkedTeleporter():GetState() == 3) then
+			local exit = self:GetLinkedTeleporter()
+			exit:AddMetal2(self:GetOwner(),200)
+		end
+	end
 	if (self.Spawnpoint) then
 	 
 		if (!IsValid(self:GetLinkedTeleporter())) then 
@@ -314,7 +321,6 @@ function ENT:OnThinkActive()
 		self:SetChargePercentage(r)
 		if r == 1 then
 			self.NextRecharge = nil
-			self.SpinSpeed = 1
 		end
 	end
 	
@@ -325,7 +331,7 @@ function ENT:OnThinkActive()
 		elseif self:GetLevel() == 2 then
 			self:SetAcceleration(0.004)
 		elseif self:GetLevel() == 3 then
-			self:SetAcceleration(0.005)
+			self:SetAcceleration(0.009)
 		end
 		self.NextRestartMotor = nil
 	end
@@ -334,9 +340,7 @@ function ENT:OnThinkActive()
 	self.SpinSpeed = math.Clamp(self.SpinSpeed + self.Acceleration, 0, 1)
 	self:SetPlaybackRate(self.SpinSpeed)
 	self.Model:SetPlaybackRate(self.SpinSpeed)
-	if self.Spin_Sound then
-		self.Spin_Sound:ChangePitch(math.Clamp(100*self.SpinSpeed, 1, 100), 0)
-	end
+	self:SetNWFloat("SpinSpeed",self.SpinSpeed)
 	
 	if self.SpinSpeed == 1 then
 		self:SetBodygroup(1,1)
@@ -394,11 +398,5 @@ function ENT:OnThinkActive()
 				self.Clients[k] = nil
 			end
 		end
-	end
-end
-
-function ENT:OnRemove()
-	if self.Spin_Sound then
-		self.Spin_Sound:Stop()
 	end
 end

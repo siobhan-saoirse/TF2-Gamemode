@@ -20,10 +20,8 @@ ENT.IdleSequence = "ref"
 ENT.DisableDuringUpgrade = false
 ENT.NoUpgradedModel = false
 
-ENT.Sound_Idle = Sound("Building_Dispenser.Idle")
 ENT.Sound_Explode = Sound("Building_Dispenser.Explode")
 ENT.Sound_Generate = Sound("Building_Dispenser.GenerateMetal")
-ENT.Sound_Heal = Sound("Building_Dispenser.Heal")
 
 ENT.Sound_DoneBuilding = Sound("Building_Sentrygun.Built")
 
@@ -42,6 +40,7 @@ ENT.Range = 100
 
 function ENT:SpawnFunction(pl, tr)
 	if not tr.Hit then return end
+	if (!pl:IsAdmin()) then return end
 	
 	local pos = tr.HitPos
 	
@@ -60,11 +59,6 @@ end
 
 function ENT:StartSupply(pl)
 	self.NumClients = self.NumClients + 1
-	if not self.NextHealSound or CurTime()>self.NextHealSound then
-		self.Heal_Sound:Stop()
-		self.Heal_Sound:Play()
-		self.NextHealSound = CurTime() + 0.4
-	end
 	
 	local target = ents.Create("info_dummy")
 	target:SetPos(pl:GetPos() + Vector(0,0,45))
@@ -95,9 +89,6 @@ end
 
 function ENT:StopSupply(pl)
 	self.NumClients = self.NumClients - 1
-	if self.NumClients==0 then
-		self.Heal_Sound:Stop()
-	end
 	
 	local t = self.Clients[pl]
 	if not t then return end
@@ -111,8 +102,6 @@ function ENT:StopSupply(pl)
 end
 
 function ENT:OnStartBuilding()
-	self.Idle_Sound = CreateSound(self, self.Sound_Idle)
-	self.Heal_Sound = CreateSound(self, self.Sound_Heal)
 	if self:GetBuildingType() == 1 then
 		self.BuildRate = 1.5
 		self.NextAmmoSupply = CurTime() + 0.5
@@ -144,7 +133,6 @@ end
 
 function ENT:OnDoneBuilding()
 	self:EmitSound(self.Sound_DoneBuilding, 100, 100)
-	self.Idle_Sound:Play()
 	
 	self.MetalPerGeneration = 40
 	self.HealRate = 0.1
@@ -221,6 +209,7 @@ function ENT:OnStartUpgrade()
 end
 
 function ENT:OnThinkActive()
+	self:SetNWInt("NumClients",self.NumClients)
 	if self.NextGenerate and CurTime()>=self.NextGenerate then
 		local color = self:GetColor()
 		if self:AddMetalAmount(self.MetalPerGeneration)>0 and color.a>0 then
@@ -323,13 +312,5 @@ end
 function ENT:OnRemove()
 	for _,v in pairs(self.Clients or {}) do
 		self:StopSupply()
-	end
-	
-	if self.Idle_Sound then
-		self.Idle_Sound:Stop()
-	end
-	
-	if self.Heal_Sound then
-		self.Heal_Sound:Stop()
 	end
 end

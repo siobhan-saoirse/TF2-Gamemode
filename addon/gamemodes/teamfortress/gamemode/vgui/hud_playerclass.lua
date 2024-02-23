@@ -12,7 +12,7 @@ local character_bg = {
 }
 local character_default = surface.GetTextureID("hud/class_scoutred")
 local character3d_default = "models/player/spy.mdl"
-local convar = CreateClientConVar("cl_hud_playerclass_use_playermodel", "1", true, false)
+local convar = CreateClientConVar("cl_hud_playerclass_use_playermodel", "0", true, false)
 
 function PANEL:Init()
 	self:SetPaintBackgroundEnabled(false)

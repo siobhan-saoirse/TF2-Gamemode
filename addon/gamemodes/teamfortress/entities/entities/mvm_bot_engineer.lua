@@ -7,7 +7,7 @@ ENT.Spawnable = false
 ENT.AdminOnly = false		
 ENT.IsBoss = false
 ENT.PrintName		= "Engineer"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 ENT.PreferredIcon 	= "hud/leaderboard_class_teleporter"
 
 list.Set( "NPC", "mvm_bot_engineer", {

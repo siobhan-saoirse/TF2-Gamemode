@@ -1,5 +1,5 @@
 local BlastForceMultiplier = 16
-local BlastForceToVelocityMultiplier = (0.015 / BlastForceMultiplier)
+local BlastForceToVelocityMultiplier = (0.025 / BlastForceMultiplier)
 
 local BulletForceMultiplier = 3
 
@@ -17,6 +17,7 @@ obj_dispenser = true,
 local ForceDamageClasses = {
 npc_combinegunship = true,
 npc_helicopter = true,
+npc_strider = true,
 }
 
 --[[
@@ -350,7 +351,7 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 		ent:SetVelocity(dmginfo:GetDamageForce() * (dmginfo:GetDamage()) * 0.5)
 	end
 	if (ent:IsPlayer()) then
-		dmginfo:SetDamageForce(dmginfo:GetDamageForce() / ent:GetModelScale())
+		dmginfo:SetDamageForce((dmginfo:GetDamageForce() / ent:GetModelScale()))
 	end
 	if (inf.IsTFWeapon and (string.find(inf:GetClass(),"sword") or string.find(inf:GetClass(),"katana"))) then
 		ent:AddDeathFlag(DF_DECAP)
@@ -445,12 +446,18 @@ function GM:ScaleNPCDamage(npc, hitgroup, dmginfo)
 		if (att:Team() == TEAM_NEUTRAL) then
 			npc.HatesNeutral = true
 			npc:AddEntityRelationship(att,D_HT,99)
+			for k,v in ipairs(ents.FindInSphere(npc:GetPos(),300)) do
+				if (v:IsNPC() and v:Disposition(npc) == D_LI) then
+					v.HatesNeutral = true
+					v:AddEntityRelationship(att,D_HT,99)
+				end
+			end
 		end
 	end
 	
 	if not dmginfo:IsDamageType(DMG_DIRECT) then
-		-- make NPCs a bit harder to kill
-		--dmginfo:ScaleDamage(0.7)
+		-- make NPCs a bit easier to kill
+		dmginfo:ScaleDamage(1.5)
 	end
 	
 	--Msg(tostring(npc).." - "..tostring(dmginfo).." > Calculated damage : "..dmginfo:GetDamage().."  Attacker : "..tostring(dmginfo:GetAttacker()).."\n")
@@ -478,11 +485,11 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	local amount = dmginfo:GetDamage()
 	
 	local att = dmginfo:GetAttacker()
-
 	if (!att:IsL4D() and !ent:IsL4D()) then
 		if att~=ent and att:IsTFPlayer() and att:IsFriendly(ent) and !GetConVar("mp_friendlyfire"):GetBool() then
 			dmginfo:SetDamageType(DMG_GENERIC)
 			dmginfo:SetDamage(0)
+			dmginfo:SetAttacker(att)
 			if (ent:IsPlayer()) then
 				ent:SetBloodColor(DONT_BLEED)
 			end
@@ -520,13 +527,13 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	-- Friendly fire
 	if (attacker:IsPlayer() and (attacker:GetPlayerClass() == "giantblastsoldier" || attacker:GetPlayerClass() == "steelgauntletpusher")) then
 	
-		local dir = -ent:GetAimVector() * 6
+		local dir = -ent:GetAimVector() * 45
 		local dir2 = dir:Angle()
 		dir2.p = math.Clamp(-dir2.p - 45,-90,90)
 		dir2 = dir2:Forward()
 		ent:RemoveFlags(FL_ONGROUND)
 		timer.Simple(0.1, function()
-			ent:SetVelocity(dir2 + Vector(0,0,80))
+			ent:SetVelocity((((-ent:GetAimVector() * 45) * 10) + Vector(0,0,245)) + dmginfo:GetDamageForce() * 45)
 		end)
 		--ent:SetThrownByExplosion(true)
 	end
@@ -609,17 +616,95 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	end
 	
 	if (ent:GetClass() == "npc_helicopter") then
-		dmginfo:SetDamageType(DMG_AIRBOAT)
-		dmginfo:ScaleDamage(0.875)
+		dmginfo:SetDamageType(bit.bor(DMG_AIRBOAT,DMG_MISSILEDEFENSE))
+		dmginfo:SetDamage(dmginfo:GetDamage() * 3.0)
 	end
 	if (attacker:IsPlayer() and attacker:IsMiniBoss() and attacker.playerclass == "Heavy") then
 		dmginfo:SetDamage(dmginfo:GetDamage() * 1.5)
 	end
 	gamemode.Call("PostScaleDamage", ent, 0, dmginfo)
 	
+	if ent:IsTFPlayer() then
+		-- Increased bullet force
+		if dmginfo:IsBulletDamage() then
+			dmginfo:SetDamageForce(dmginfo:GetDamageForce() * BulletForceMultiplier)
+		elseif dmginfo:IsExplosionDamage() then
+			dmginfo:SetDamageForce(dmginfo:GetDamageForce() * BlastForceMultiplier)
+		end 
+		
+		-- Overexaggerated explosion force
+		if (ent:IsNPC() or ent:IsPlayer()) and ent:ShouldReceiveDamageForce() and dmginfo:IsExplosionDamage() then
+			local force = dmginfo:GetDamageForce() * 0.025
+			
+			ent:SetGroundEntity(NULL)
+			ent:SetThrownByExplosion(true)
+			
+			if ent:IsPlayer() and attacker==ent then
+				-- Rocket jumping
+				if inflictor.GetRocketJumpForce then
+					force = inflictor:GetRocketJumpForce(ent, dmginfo)
+				else
+					local dist = (ent:GetPos() - inflictor:GetPos()):Length()
+					local fraction = math.Clamp(dist / 50, 0.3, 2)
+					
+					force = force * fraction
+				end
+				
+				local vel = ent:GetVelocity() + force
+				--MsgN(tostring(vel))
+				if vel.z > 100 and vel.z > vel:Length2D() then
+					--MsgN("Dispatching rocket jump effect")
+					umsg.Start("PlayerRocketJumpEffect")
+						umsg.Long(ent:UserID())
+					umsg.End()
+				end
+			end
+			
+			if ent.ExplosionForceCalcTime ~= CurTime() then
+				ent.ExplosionForceCalcTime = CurTime()
+				if not ent.ExplosionForceCalc then
+					ent.ExplosionForceCalc = Vector()
+				end
+				ent.ExplosionForceCalc:Zero()
+			end
+			
+			ent.ExplosionForceCalc:Add(force)
+			ent:SetVelocity(ent.ExplosionForceCalc)
+			
+			if ent:IsPlayer() then
+				ent:DoAnimationEvent(ACT_MP_AIRWALK, false)
+				--ent:DoAnimationEvent(ACT_MP_JUMP_FLOAT, false)
+			end
+		end
+		
+		-- Player damaged someone else, add crit percentage bonus
+		if attacker:IsPlayer() and ent~=attacker then
+			local realdmg = math.Clamp(dmginfo:GetDamage(), 0, ent:Health())
+			self:AddTotalDamage(attacker, realdmg)
+		end
+		
+		-- Reset the damage timer for the victim, for the medigun healing ramp
+		self:ResetLastDamaged(ent)
+		
+		-- Cooperations against that victim
+		if dmginfo:GetDamage() > 0 and attacker~=ent and not inflictor.NoDamageCooperation and not dmginfo:IsFallDamage() then
+			self:AddDamageCooperation(ent, attacker, dmginfo:GetDamage(), ASSIST_NORMAL, nil, {inflictor=inflictor})
+		end
+		
+		-- Force dispatch a blood effect when the entity has been damaged by either fall or direct damage
+		if dmginfo:IsFallDamage() or dmginfo:IsDamageType(DMG_DIRECT) then
+			ent:DispatchBloodEffect()
+		end
+		
+		-- Store some info regarding damage for death hooks
+		ent.LastDamageInfo = CopyDamageInfo(dmginfo)
+		ent.LastDamageData = {
+			attacker_sequence = attacker:GetSequence(),
+		}
+	end
 	-- Increased explosion force
 	if dmginfo:IsExplosionDamage() then
-		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (inflictor.BlastForceMultiplier or 1) * (BlastForceMultiplier * 0.7))
+		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (inflictor.BlastForceMultiplier or 1) * BlastForceMultiplier)
 	end
 	
 	if gamemode.Call("ShouldCrit", ent, inflictor, attacker, hitgroup, dmginfo) then
@@ -665,79 +750,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			end
 		end
 	end
-	if ent:IsTFPlayer() then
-		-- Increased bullet force
-		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * BulletForceMultiplier)
-		
-		-- Overexaggerated explosion force
-		if (ent:IsTFPlayer()) and ent:ShouldReceiveDamageForce() and dmginfo:IsExplosionDamage() then
-			local force = dmginfo:GetDamageForce() * (BlastForceToVelocityMultiplier * 0.5)
-			
-			ent:SetGroundEntity(NULL)
-			ent:SetThrownByExplosion(true)
-			
-			if ent:IsPlayer() and attacker==ent then
-				-- Rocket jumping
-				if inflictor.GetRocketJumpForce then
-					force = inflictor:GetRocketJumpForce(ent, dmginfo)
-				else
-					local dist = (ent:GetPos() - inflictor:GetPos()):Length()
-					local fraction = math.Clamp(dist / 50, 0.3, 2)
-					
-					force = force * fraction * 2.0
-				end
-				
-				local vel = ent:GetVelocity() + force
-				--MsgN(tostring(vel))
-				if vel.z > 100 and vel.z > vel:Length2D() then
-					--MsgN("Dispatching rocket jump effect")
-					umsg.Start("PlayerRocketJumpEffect")
-						umsg.Long(ent:UserID())
-					umsg.End()
-				end
-			end
-			
-			if ent.ExplosionForceCalcTime ~= CurTime() then
-				ent.ExplosionForceCalcTime = CurTime()
-				if not ent.ExplosionForceCalc then
-					ent.ExplosionForceCalc = Vector()
-				end
-				ent.ExplosionForceCalc:Zero()
-			end
-			
-			ent.ExplosionForceCalc:Add(force)
-			ent:SetVelocity(ent.ExplosionForceCalc)
-			
-			if ent:IsPlayer() then
-				ent:DoAnimationEvent(ACT_MP_AIRWALK, false)
-				--ent:DoAnimationEvent(ACT_MP_JUMP_FLOAT, false)
-			end
-		end
-		
-		-- Player damaged someone else, add crit percentage bonus
-		if attacker:IsPlayer() and ent~=attacker then
-			local realdmg = math.Clamp(dmginfo:GetDamage(), 0, ent:Health())
-			self:AddTotalDamage(attacker, realdmg)
-		end
-		-- Reset the damage timer for the victim, for the medigun healing ramp
-		self:ResetLastDamaged(ent)
-		
-		-- Cooperations against that victim
-		if dmginfo:GetDamage() > 0 and attacker~=ent and not inflictor.NoDamageCooperation and not dmginfo:IsFallDamage() then
-			self:AddDamageCooperation(ent, attacker, dmginfo:GetDamage(), ASSIST_NORMAL, nil, {inflictor=inflictor})
-		end
-		
-		-- Force dispatch a blood effect when the entity has been damaged by either fall or direct damage
-		if dmginfo:IsFallDamage() or dmginfo:IsDamageType(DMG_DIRECT) then
-			ent:DispatchBloodEffect()
-		end
-		
-		-- Store some info regarding damage for death hooks
-		ent.LastDamageInfo = CopyDamageInfo(dmginfo)
-		ent.LastDamageData = {
-			attacker_sequence = attacker:GetSequence(),
-		}
-	end
 	
 	-- Combine synths (striders, gunship) normally get hurt only from heavy explosive damage
 	-- This adds a health counter that decreases as they take bullet damage, and creates an explosion when it reaches zero (and then restarts again)
@@ -780,10 +792,8 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	-- Pain and death sounds
 	local hp = ent:Health() - dmginfo:GetDamage()
 	ent:Speak("TLK_PLAYER_EXPRESSION", false)
-	if ((inflictor:GetClass()=="tf_entityflame" or inflictor:GetClass()=="entityflame") and (!ent.NextP or CurTime()>ent.NextSpeak)) then
-		if (!ent:IsMiniBoss()) then
-			ent:Speak("TLK_ONFIRE", false)
-		end
+	if ((inflictor:GetClass()=="tf_entityflame" or inflictor:GetClass()=="entityflame") and (!ent.NextPainSound or CurTime()>ent.NextPainSound)) then
+		ent:PainSound("TLK_ONFIRE")
 	end
 	
 	if not ent.NextFlinch or CurTime() > ent.NextFlinch and !ent:IsL4D() then
@@ -792,19 +802,21 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	end
 	if hp<=0 then
 		ent.LastDamageInfo = CopyDamageInfo(dmginfo)
-	elseif not dmginfo:IsFallDamage() and not dmginfo:IsDamageType(DMG_DIRECT) and ent:WaterLevel() < 1 then
+	elseif not dmginfo:IsFallDamage() and not dmginfo:IsDamageType(DMG_DIRECT) and ent:WaterLevel() < 1 and !(inflictor:GetClass()=="tf_entityflame" and inflictor:GetClass()=="entityflame") then
 		if attacker:IsPlayer() then
 			if ent:HasGodMode() == false and !ent:IsMiniBoss() then
 				if (!ent.NextPainSound or ent.NextPainSound<CurTime()) then
-
-					ent:PainSound("TLK_PLAYER_PAIN")
 					
 					if SERVER and ent.playerclass then
-						timer.Simple(0.0, function()
 						
-							attacker:SendLua("Entity("..ent:EntIndex().."):EmitSound(\""..ent.playerclass..".Death\")")
+							attacker:SendLua("Entity("..ent:EntIndex().."):EmitSound(\""..ent.playerclass..".Death\")")	
+							for k,v in ipairs(player.GetAll()) do
+								if (v:EntIndex() != attacker:EntIndex()) then
+									v:SendLua("Entity("..ent:EntIndex().."):EmitSound(\""..ent.playerclass..".ExplosionDeath\")")
+								end
+							end
 
-						end)
+						ent.NextPainSound = CurTime() + 1.5
 					end
 
 				end

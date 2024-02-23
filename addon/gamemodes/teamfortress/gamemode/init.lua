@@ -18,13 +18,13 @@ file.Delete(LOGFILE)
 file.Append(LOGFILE, "Loading serverside script\n")
 local load_time = SysTime() 
 
-include("sv_npc_relationship.lua")  
+include("sv_npc_relationship.lua")   
 include("sv_ent_substitute.lua")  
 
 CreateConVar("grapple_distance", -1, false)  
-response_rules.Load("talker/tf_response_rules.txt")
-response_rules.Load("talker/demoman_custom.txt")  
-response_rules.Load("talker/heavy_custom.txt") 
+response_rules.Load("talker/tf_response_rules.lua")
+response_rules.Load("talker/demoman_custom.lua")  
+response_rules.Load("talker/heavy_custom.lua") 
 
 util.AddNetworkString("TFRagdollCreate")
 util.AddNetworkString("TauntAnim")
@@ -38,14 +38,12 @@ response_rules.AddCriterion([[criterion "WeaponIsScattergunDouble" "item_name" "
 --end) 
 
 hook.Add("Think", "NoAttackPuppet", function()
-	if (math.random(1,3+(table.Count(player.GetAll())*0.4)) == 1) then 
 		for k,v in ipairs(player.GetAll()) do 
 			if (v:WaterLevel() < 2 and !v.IsDrowning) then
 				timer.Stop("Drown"..v:EntIndex())
 				timer.Stop("DrownContinue"..v:EntIndex())
 			end
-		end
-	end
+		end 
 end) 
 
 
@@ -274,7 +272,7 @@ hook.Add("PlayerHurt", "RoboIsHurt", function( ply, pos, foot, sound, volume, rf
 				ply:EmitSound("music/stingers/hl1_stinger_song28.wav", 0, 75)
 		 end
 	end
-	if (ply:IsHl2()) then
+	if (ply:IsHL2()) then
 		ply:GetViewModel():SetMaterial("")
 	else
 		ply:GetViewModel():SetMaterial("color")
@@ -733,292 +731,6 @@ local function PlayerGiantBotSpawn( ply, mv )
 					else
 						ply:SetModel("models/lazy_zombies_v2/demo.mdl")
 					end
-				end)
-			end
-		end
-	end)
-	timer.Simple(0.18, function()
-		if (IsValid(ply)) then
-			timer.Create("VoiceL4d"..ply:EntIndex(), math.random(0.8,4), 0, function()
-				if !ply:Alive() then timer.Stop("VoiceL4d"..ply:EntIndex()) end
-				if !IsValid(ply) then timer.Stop("VoiceL4d"..ply:EntIndex()) end
-				
-				if ply:GetPlayerClass() == "tank_l4d" then
-					
-					if (string.find(ply:GetModel(),"l4d1")) then
-						if (ply:GetEyeTrace().HitPos) then
-							for k,v in ipairs(ents.FindInSphere(ply:GetEyeTrace().HitPos,800)) do
-								if (v:IsTFPlayer() and !v:IsFriendly(ply)) then
-									if (ply:Visible(v)) then
-										ply:EmitSound("L4D1_HulkZombie.Yell",90,100,1,CHAN_VOICE)
-									end
-								else
-									ply:EmitSound(table.Random({"L4D1_HulkZombie.Voice","L4D1_HulkZombie.Breathe","L4D1_HulkZombie.Growl"}),90,100,1,CHAN_VOICE)
-								end
-							end
-						end
-					else
-						if (ply:GetEyeTrace().HitPos) then
-							for k,v in ipairs(ents.FindInSphere(ply:GetEyeTrace().HitPos,800)) do
-								if (v:IsTFPlayer() and !v:IsFriendly(ply)) then
-									if (ply:Visible(v)) then
-										ply:EmitSound("HulkZombie.Yell",90,100,1,CHAN_VOICE)
-									end
-								else
-									ply:EmitSound(table.Random({"HulkZombie.Voice","HulkZombie.Breathe","HulkZombie.Growl"}),90,100,1,CHAN_VOICE)
-								end
-							end
-						end
-					end
-					timer.Adjust("VoiceL4d"..ply:EntIndex(), math.random(1,6))
-				elseif ply:GetPlayerClass() == "charger" then
-					if (ply:GetEyeTrace().Entity:IsTFPlayer() and !ply:GetEyeTrace().Entity:IsFriendly(ply)) then
-						ply:EmitSound(table.Random({"ChargerZombie.Alert","ChargerZombie.Growl","ChargerZombie.Recognize"}))
-					else
-						ply:EmitSound("ChargerZombie.Voice",90,100,1,CHAN_VOICE)
-					end
-					timer.Adjust("VoiceL4d"..ply:EntIndex(), math.random(1,5))
-				elseif ply:GetPlayerClass() == "jockey" then
-					ply:EmitSound("Jockey.Idle",90,100,1,CHAN_VOICE)
-					timer.Adjust("VoiceL4d"..ply:EntIndex(), math.random(2,6))
-				elseif ply:GetPlayerClass() == "hunter" then
-					if (ply:GetEyeTrace().Entity:IsTFPlayer() and !ply:GetEyeTrace().Entity:IsFriendly(ply)) then
-						ply:EmitSound("HunterZombie.Alert")
-					else
-						ply:EmitSound(table.Random({"HunterZombie.Voice","HunterZombie.Growl"}))
-					end
-					timer.Adjust("VoiceL4d"..ply:EntIndex(), math.random(1,5))
-				elseif ply:GetPlayerClass() == "smoker" then
-					if (string.find(ply:GetModel(),"l4d1")) then
-						if (ply:GetEyeTrace().Entity:IsTFPlayer() and !ply:GetEyeTrace().Entity:IsFriendly(ply)) then
-							ply:EmitSound(table.Random({"L4D1_SmokerZombie.Alert","L4D1_SmokerZombie.Recognize"}))
-						else
-							ply:EmitSound("L4D1_SmokerZombie.Breathe")
-						end
-					else
-						if (ply:GetEyeTrace().Entity:IsTFPlayer() and !ply:GetEyeTrace().Entity:IsFriendly(ply)) then
-							ply:EmitSound(table.Random({"SmokerZombie.Alert","SmokerZombie.Recognize"}))
-						else
-							ply:EmitSound("SmokerZombie.Breathe")
-						end
-					end
-					timer.Adjust("VoiceL4d"..ply:EntIndex(), math.random(1,5))
-				elseif ply:GetPlayerClass() == "boomer" then
-					if (string.find(ply:GetModel(),"l4d1")) then
-						if (ply:GetEyeTrace().Entity:IsTFPlayer() and !ply:GetEyeTrace().Entity:IsFriendly(ply)) then
-							ply:EmitSound(table.Random({"L4D1_BoomerZombie.Alert","L4D1_BoomerZombie.Rage"}))
-						else
-							ply:EmitSound(table.Random({"L4D1_BoomerZombie.Voice","L4D1_BoomerZombie.Groan"}),90,100,1,CHAN_VOICE)
-						end
-					else
-						if (ply:GetEyeTrace().Entity:IsTFPlayer() and !ply:GetEyeTrace().Entity:IsFriendly(ply)) then
-							ply:EmitSound(table.Random({"BoomerZombie.Alert","BoomerZombie.Rage"}))
-						else
-							ply:EmitSound(table.Random({"BoomerZombie.Voice","BoomerZombie.Groan"}),90,100,1,CHAN_VOICE)
-						end
-					end
-					timer.Adjust("VoiceL4d"..ply:EntIndex(), math.random(0.8,4))
-				elseif ply:GetPlayerClass() == "spitter" then
-					if (ply:GetEyeTrace().Entity:IsTFPlayer() and !ply:GetEyeTrace().Entity:IsFriendly(ply)) then
-						ply:EmitSound(table.Random({"SpitterZombie.Alert","SpitterZombie.Recognize"}))
-					else
-						ply:EmitSound(table.Random({"SpitterZombie.Voice"}),90,100,1,CHAN_VOICE)
-					end
-					timer.Adjust("VoiceL4d"..ply:EntIndex(), math.random(0.8,4))
-				elseif ply:GetPlayerClass() == "boomette" then
-					if (ply:GetEyeTrace().Entity:IsTFPlayer() and !ply:GetEyeTrace().Entity:IsFriendly(ply)) then
-						ply:EmitSound(table.Random({"BoomerZombie.Alert","BoomerZombie.Rage"}))
-					else
-						ply:EmitSound(table.Random({"BoomerZombie.Voice","BoomerZombie.Groan"}),90,100,1,CHAN_VOICE)
-					end
-					timer.Adjust("VoiceL4d"..ply:EntIndex(), math.random(0.8,4))
-				elseif ply:GetPlayerClass() == "l4d_zombie" then
-					ply:EmitSound("vj_l4d_com/attack_b/male/rage_"..math.random(50,82)..".wav",90,100,1,CHAN_VOICE)
-				end
-			end)
-			if ply:GetPlayerClass() == "tank_l4d" then
-				
-				if (ply:GetInfoNum("tank_use_dark_carnival_finale_music",0) == 1) then
-					for k,v in ipairs(player.GetAll()) do
-						v:StopSound("TankMusicLoop")
-						v:EmitSound("TankMidnightMusicLoop")
-					end
-				elseif (ply:GetInfoNum("tank_l4d1_skin",0) == 1) then
-					ply:SetModel("models/infected/hulk_l4d1.mdl")
-				elseif (ply:GetInfoNum("tank_dlc3_skin",0) == 1) then
-					ply:SetModel("models/infected/hulk_dlc3.mdl")
-				end
-				for k,v in ipairs(ents.FindInSphere(ply:GetPos(),600)) do
-					if (v:IsTFPlayer() and !ply:IsFriendly(v)) then
-						ply:EmitSound("HulkZombie.Yell",90,100,1,CHAN_VOICE)
-					else
-						ply:EmitSound(table.Random({"HulkZombie.Voice","HulkZombie.Breathe","HulkZombie.Growl"}),90,100,1,CHAN_VOICE)
-					end
-				end
-			elseif ply:GetPlayerClass() == "charger" then
-				if (ply:GetEyeTrace().Entity:IsTFPlayer() and !ply:GetEyeTrace().Entity:IsFriendly(ply)) then
-					ply:EmitSound(table.Random({"ChargerZombie.Alert","ChargerZombie.Growl","ChargerZombie.Recognize"}))
-				else
-					ply:EmitSound("ChargerZombie.Voice",90,100,1,CHAN_VOICE)
-				end
-			elseif ply:GetPlayerClass() == "jockey" then
-				ply:EmitSound("Jockey.Idle",90,100,1,CHAN_VOICE)
-			elseif ply:GetPlayerClass() == "hunter" then
-				if (ply:GetEyeTrace().Entity:IsTFPlayer() and !ply:GetEyeTrace().Entity:IsFriendly(ply)) then
-					ply:EmitSound("HunterZombie.Alert")
-				else
-					ply:EmitSound("player/hunter/voice/idle/hunter_stalk_0"..math.random(4,9)..".wav",90,100,1,CHAN_VOICE)
-				end
-			elseif ply:GetPlayerClass() == "smoker" then
-				if (ply:GetEyeTrace().Entity:IsTFPlayer() and !ply:GetEyeTrace().Entity:IsFriendly(ply)) then
-					ply:EmitSound("SmokerZombie.Recognize")
-				else
-					ply:EmitSound("SmokerZombie.Breathe")
-				end
-			elseif ply:GetPlayerClass() == "boomer" then
-				if (ply:GetEyeTrace().Entity:IsTFPlayer() and !ply:GetEyeTrace().Entity:IsFriendly(ply)) then
-					ply:EmitSound(table.Random({"BoomerZombie.Alert","BoomerZombie.Rage"}))
-				else
-					ply:EmitSound(table.Random({"BoomerZombie.Voice","BoomerZombie.Groan"}),90,100,1,CHAN_VOICE)
-				end
-			elseif ply:GetPlayerClass() == "boomette" then
-				if (ply:GetEyeTrace().Entity:IsTFPlayer() and !ply:GetEyeTrace().Entity:IsFriendly(ply)) then
-					ply:EmitSound(table.Random({"BoomerZombie.Alert","BoomerZombie.Rage"}))
-				else
-					ply:EmitSound(table.Random({"BoomerZombie.Voice","BoomerZombie.Groan"}),90,100,1,CHAN_VOICE)
-				end
-			elseif ply:GetPlayerClass() == "l4d_zombie" then
-				ply:EmitSound("vj_l4d_com/attack_b/male/rage_"..math.random(50,82)..".wav",90,100,1,CHAN_VOICE)
-			end
-			if ply:IsBot() then
-				timer.Simple(0.1, function()
-				if GetConVar("tf_bots_are_robots"):GetInt() == 1 or string.find(ply:GetModel(),"bots/"..ply:GetPlayerClassTable().ModelName) then
-					if ply:Team() == TEAM_BLU then
-					if ply:GetPlayerClass() == "scout" then
-						ply:SetModel("models/bots/scout/bot_scout.mdl")	
-					elseif ply:GetPlayerClass() == "soldier" then
-						ply:SetModel("models/bots/soldier/bot_soldier.mdl")	
-					elseif ply:GetPlayerClass() == "demoman" then
-						ply:SetModel("models/bots/demo/bot_demo.mdl")	
-					elseif ply:GetPlayerClass() == "heavy" then
-						ply:SetModel("models/bots/heavy/bot_heavy.mdl")	
-					elseif ply:GetPlayerClass() == "pyro" then
-						ply:SetModel("models/bots/pyro/bot_pyro.mdl")	
-					elseif ply:GetPlayerClass() == "medic" then
-						ply:SetModel("models/bots/medic/bot_medic.mdl")	
-					elseif ply:GetPlayerClass() == "engineer" then
-						ply:SetModel("models/bots/engineer/bot_engineer.mdl")	
-					elseif ply:GetPlayerClass() == "sniper" then
-						ply:SetModel("models/bots/sniper/bot_sniper.mdl")	
-					elseif ply:GetPlayerClass() == "spy" then
-						ply:SetModel("models/bots/spy/bot_spy.mdl")	
-					end
-					local ID = ply:LookupAttachment( "eye_1" )
-					if ( string.find(ply:GetModel(),"_boss") ) then
-						ID = ply:LookupAttachment( "eye_boss_1" )
-					end
-					local Attachment = ply:GetAttachment( ID )
-					if (Attachment == nil) then return end
-
-					if ply:GetPlayerClass() == "scout" then
-						ply:SetName("Scout")
-					elseif ply:GetPlayerClass() == "soldier" then
-						ply:SetName("Soldier")
-					elseif ply:GetPlayerClass() == "pyro" then
-						ply:SetName("Pyro")
-					elseif ply:GetPlayerClass() == "demoman" then
-						ply:SetName("Demoman")
-					elseif ply:GetPlayerClass() == "heavy" then
-						ply:SetName("Heavy")
-					elseif ply:GetPlayerClass() == "engineer" then
-						ply:SetName("Engineer")
-					elseif ply:GetPlayerClass() == "medic" then
-						ply:SetName("Medic")
-					elseif ply:GetPlayerClass() == "sniper" then
-						ply:SetName("Sniper")
-					elseif ply:GetPlayerClass() == "spy" then
-						ply:SetName("Spyware")
-					end
-
-					
-					eyeparticle1 = ents.Create( "info_particle_system" )
-					eyeparticle1:SetPos( Attachment.Pos )
-					eyeparticle1:SetAngles( Attachment.Ang )
-					eyeparticle1:SetName("eyeparticle1")
-					eyeparticle1:SetOwner(ply)
-					ply:DeleteOnRemove(eyeparticle1)
-
-					PrecacheParticleSystem("bot_eye_glow")
-					eyeparticle1:SetKeyValue( "effect_name", "bot_eye_glow" )
-					eyeparticle1:SetKeyValue( "start_active", "1")
-
-					local colorcontrol = ents.Create( "info_particle_system" )
-					if (ply.Difficulty == 3) then
-						colorcontrol:SetPos( Vector(255,180,36) )
-					else
-						if ply:Team() == TEAM_RED then
-							colorcontrol:SetPos( Vector(204,0,0) )
-						elseif ply:Team() == TEAM_BLU then
-							colorcontrol:SetPos( Vector(51,255,255) )
-						end
-					end
-					eyeparticle1:DeleteOnRemove(colorcontrol)
-					colorcontrol:SetKeyValue( "effect_name", "bot_eye_glow" )
-					--colorcontrol:SetKeyValue( "globalname", "colorcontrol_".. eyeparticle1:EntIndex())
-					colorcontrol:SetName("colorcontrol_".. eyeparticle1:EntIndex())
-					colorcontrol:Spawn()
-
-					eyeparticle1:SetParent(ply)
-					if ( string.find(ply:GetModel(),"_boss") ) then
-						eyeparticle1:Fire("setparentattachment", "eye_boss_1", 0.01)
-					else
-						eyeparticle1:Fire("setparentattachment", "eye_1", 0.01)
-					end
-					eyeparticle1:SetKeyValue( "cpoint1", "colorcontrol_".. eyeparticle1:EntIndex() ) --the color is controlled by the position of this entity - 
-																--if the colorcontroller's position is 255, 255, 255, 
-																--the color of the particle becomes white (255 255 255)
-					eyeparticle1:Spawn()
-					eyeparticle1:Activate()
-					--now for eye two
-					local ID = ply:LookupAttachment( "eye_2" )
-					if ( string.find(ply:GetModel(),"_boss") ) then
-						ID = ply:LookupAttachment( "eye_boss_2" )
-					end
-					local Attachment = ply:GetAttachment( ID )
-					if (Attachment != nil) then 
-						eyeparticle2 = ents.Create( "info_particle_system" )
-						eyeparticle2:SetPos( Attachment.Pos )
-						eyeparticle2:SetAngles( Attachment.Ang )
-						eyeparticle1:DeleteOnRemove(eyeparticle2)
-						eyeparticle2:SetKeyValue( "effect_name", "bot_eye_glow" )
-						eyeparticle2:SetKeyValue( "start_active", "1")
-						eyeparticle2:SetParent(ply)
-						eyeparticle2:SetName("eyeparticle2")
-						if ( string.find(ply:GetModel(),"_boss") ) then
-							eyeparticle2:Fire("setparentattachment", "eye_boss_2", 0.01)
-						else
-							eyeparticle2:Fire("setparentattachment", "eye_2", 0.01)
-						end
-						eyeparticle2:SetKeyValue( "cpoint1", "colorcontrol_".. eyeparticle1:EntIndex() )
-						eyeparticle2:Spawn()
-						eyeparticle2:Activate()							
-
-					end
-					timer.Create("KillParticlesOnDeath", 0.001, 0, function()
-						if ply:Alive() then
-							return true
-						else
-							for k,v in pairs(ents.FindByName("eyeparticle1")) do 
-								if v:GetOwner() == ply then
-									v:Remove()
-								end
-							end
-							timer.Stop("KillParticlesOnDeath")
-							return false
-						end
-					end)
-					end
-				end
 				end)
 			end
 		end
@@ -2012,19 +1724,41 @@ hook.Add( "PlayerButtonDown", "PlayerButtonDownTF", function( pl, key )
 		if (pl:GetPlayerClass() == "sentrybuster") then
 			pl:ConCommand("tf_sentrybuster_explode")         
 		else
-			if (pl:GetActiveWeapon():GetClass() == "weapon_physcannon") then
-				if (pl:GetPlayerClass() == "scout") then
-					pl:ConCommand("tf_taunt_come_and_get_me")
-				else
-					pl:ConCommand("tf_taunt_laugh")
+			for k,v in ipairs(ents.FindInSphere(pl:GetPos(), 300)) do
+				if (v:IsPlayer() and v:GetNWBool("Congaing") and !pl:GetNWBool("Congaing",false)) then
+					pl:ConCommand("tf_taunt_conga_start")
+					return
+				elseif (v:IsPlayer() and v:GetNWBool("Russian") and !pl:GetNWBool("Russian",false)) then
+					pl:ConCommand("tf_taunt_russian_start")
+					return
 				end
-			elseif (pl:GetActiveWeapon():GetClass() == "weapon_physgun") then
-				pl:ConCommand("tf_taunt_directors_vision")
-			else
-				pl:ConCommand("tf_taunt "..pl:GetActiveWeapon():GetSlot() + 1)         
 			end
-			print("taunt")
-			print(pl:GetWeapon(pl:GetActiveWeapon():GetClass()):GetSlot() + 1)
+			timer.Simple(0.05, function()
+			
+				if (pl:GetNWBool("Congaing",false)) then
+					pl:ConCommand("tf_taunt_conga_stop")
+					return
+				end
+				if (pl:GetNWBool("Russian",false)) then
+					pl:ConCommand("tf_taunt_russian_stop")
+					return
+				end
+
+				if (pl:GetActiveWeapon():GetClass() == "weapon_physcannon") then
+					if (pl:GetPlayerClass() == "scout") then
+						pl:ConCommand("tf_taunt_come_and_get_me")
+					else
+						pl:ConCommand("tf_taunt_laugh")
+					end
+				elseif (pl:GetActiveWeapon():GetClass() == "weapon_physgun") then
+					pl:ConCommand("tf_taunt_directors_vision")
+				else
+					pl:ConCommand("tf_taunt "..pl:GetActiveWeapon():GetSlot() + 1)         
+				end
+				print("taunt")
+				print(pl:GetWeapon(pl:GetActiveWeapon():GetClass()):GetSlot() + 1)
+
+			end)
 		end
 	end
 	if key == KEY_SPACE then
@@ -2043,7 +1777,6 @@ hook.Add( "PlayerButtonDown", "PlayerButtonDownTF", function( pl, key )
 	end
 	if key == KEY_Z then 
 		pl:ConCommand("voice_menu_1") 
-		pl:PrintMessage(HUD_PRINTCENTER, "NOTE: The undo key has been changed to \"L\" to prevent conflicting binds.")
 	end
 	if pl:GetPlayerClass() == "fastzombie" then
 		if key == KEY_SPACE and pl:OnGround() then 
@@ -2278,7 +2011,11 @@ function GM:PlayerSpawn(ply)
 		ply:SetEyeAngles(ply.CPAng)
 	end 
 	ply.anim_Deployed = false
-	ply:SetNoCollideWithTeammates(true)
+	if (ply:Team() != TEAM_NEUTRAL && ply:Team() != TEAM_FRIENDLY) then
+		ply:SetNoCollideWithTeammates(true)
+	else
+		ply:SetNoCollideWithTeammates(false)
+	end
 	if string.find(game.GetMap(), "mvm_") then
 		timer.Simple(0.4, function()
 			for k,v in ipairs(ents.FindByClass("obj_teleporter")) do
@@ -2402,9 +2139,53 @@ function GM:PlayerSpawn(ply)
 	end
 
 	timer.Simple(0.02, function() -- god i'm such a timer whore
+		-- are you sure about that
 		ply:SetPlayerClass(ply:GetPlayerClass())
+		
 	end)
-
+	timer.Simple(0.3, function()
+	
+		local v = ply
+		if (v:Alive()) then
+			if (v:IsHL2()) then		  
+				v:SetViewOffset(Vector(0,0,64 * v:GetModelScale()))
+				v:SetViewOffsetDucked(Vector(0, 0, 28 * v:GetModelScale()))
+			else
+				if (v.playerclass == "Scout") then
+					v:SetViewOffset(Vector(0, 0, 65 * v:GetModelScale()))
+					v:SetViewOffsetDucked(Vector(0, 0, 65 * (0.5 * v:GetModelScale())))
+				elseif (v.playerclass == "Soldier") then
+					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
+					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
+				elseif (v.playerclass == "Pyro") then
+					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
+					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
+				elseif (v.playerclass == "Demoman") then
+					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
+					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
+				elseif (v.playerclass == "Heavy") then
+					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
+					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
+				elseif (v.playerclass == "Engineer") then
+					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
+					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
+				elseif (v.playerclass == "Medic") then
+					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
+					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
+				elseif (v.playerclass == "Sniper") then
+					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
+					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
+				elseif (v.playerclass == "Spy") then
+					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
+					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
+				else
+					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
+					v:SetViewOffsetDucked(Vector(0, 0, 48 * v:GetModelScale()))
+				end
+			end
+		end
+		
+	end)
 	if ply:GetObserverMode() ~= OBS_MODE_NONE then
 		ply:UnSpectate()
 	end
@@ -2804,9 +2585,9 @@ elseif file.Exists("maps/"..game.GetMap()..".lua", "LUA") then
 	include("maps/"..game.GetMap()..".lua")
 end
 
-RunConsoleCommand("sk_player_head", "3")
-RunConsoleCommand("sv_friction", "4")
-RunConsoleCommand("sv_stopspeed", "100")
+RunConsoleCommand("sk_player_head", "1")
+RunConsoleCommand("sv_friction", "8")
+RunConsoleCommand("sv_stopspeed", "10")
 --Disables use key on objects (Can Be Re-enabled)
 -- WHAT WERE YOU THINKING
 RunConsoleCommand("sv_playerpickupallowed", "1")
@@ -2815,7 +2596,7 @@ RunConsoleCommand("sv_gravity", "800")
 --Sets to a impact force similar to TF2 so things to go flying balls of the walls!
 RunConsoleCommand("phys_impactforcescale", "0.05")
 --Ditto
---RunConsoleCommand("phys_pushscale", "0.10")
+RunConsoleCommand("phys_pushscale", "0.10")
 
 function GM:PlayerNoClip( pl )
 	if GetConVar("sbox_noclip"):GetInt() <= 0 then 

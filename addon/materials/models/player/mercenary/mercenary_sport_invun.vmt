@@ -1,9 +1,0 @@
-"Patch"
-{
-	include "materials/models/player/shared/invun_sport.vmt"
-	
-	insert
-	{
-		"$baseTexture" "models/player/mercenary/mercenary_sport"
-	}
-}

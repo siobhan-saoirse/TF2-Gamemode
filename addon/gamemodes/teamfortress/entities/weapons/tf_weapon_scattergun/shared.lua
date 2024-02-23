@@ -128,16 +128,16 @@ hook.Add("PostScaleDamage", "TFKnockbackDamage", function(ent, hitgroup, dmginfo
 	if inf.ScattergunHasKnockback and not ent:IsThrownByExplosion() then
 		local dist = inf:GetPos():Distance(ent:GetPos())
 		if dist < inf.MinKnockbackDistance then
-			if not inf.MaxKnockbackDamage then
-				inf.MaxKnockbackDamage = inf.BaseDamage * (1 + inf.MaxDamageRampUp + inf.DamageRandomize) * inf.BulletsPerShot
-			end
 			
-			local force = inf.KnockbackMaxForce * dmginfo:GetDamage() / inf.MaxKnockbackDamage
-			local ang = att:EyeAngles()
-			ang.p = ang.p + inf.KnockbackAddPitch
-			
-			ent:SetGroundEntity(NULL)
-			ent:SetVelocity(ang:Forward() * force)
+		local dir = -ent:GetAimVector() * 45
+		local dir2 = dir:Angle()
+		dir2.p = math.Clamp(-dir2.p - 45,-90,90)
+		dir2 = dir2:Forward()
+		ent:RemoveFlags(FL_ONGROUND)
+		timer.Simple(0.1, function()
+			ent:SetVelocity((((-ent:GetAimVector() * 45) * 10) + Vector(0,0,245)) + dmginfo:GetDamageForce() * 45)
+		end)
+
 			ent:SetThrownByExplosion(true)
 		end
 	end

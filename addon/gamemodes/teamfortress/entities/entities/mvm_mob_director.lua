@@ -1,11 +1,10 @@
-if (!IsMounted("left4dead2")) then return end
 if SERVER then AddCSLuaFile() end
 ENT.Base = "base_nextbot"
 ENT.Type = "nextbot"
 ENT.Spawnable = false
 ENT.AdminOnly = true
 ENT.PrintName		= "Raid"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "Civillian 2 Misc"
 
 list.Set( "NPC", "mvm_mob_director", {
 	Name = ENT.PrintName,
@@ -95,108 +94,8 @@ local function LeadBot_S_Add_Zombie(team,class,pos)
 	MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
 	return bot
 end
-local zombies = {
-	"mvm_bot_melee_scout",
-	"mvm_bot_melee_scout",
-	"mvm_bot_melee_scout",
-	"mvm_bot_melee_scout",
-	"mvm_bot_melee_scout_sandman",
-	"mvm_bot_bonk_scout",
-	"mvm_bot_bowman",
-	"mvm_bot_demoknight",
-	"mvm_bot_scout_minor_league",
-	"mvm_bot_heavyshotgun",
-	"mvm_bot_scoutfan",
-	"mvm_bot_scoutfan",
-	"mvm_bot_steelgauntlet",
-	"mvm_bot_steelgauntlet",
-	"mvm_bot_steelgauntlet",
-	"mvm_bot_steelgauntletpusher",
-	"mvm_bot_steelgauntlet",
-	"mvm_bot",
-	"mvm_bot_soldier",
-	"mvm_bot_pyro",
-	"mvm_bot_demoman",
-	"mvm_bot_heavy",
-	"mvm_bot_engineer",
-	"mvm_bot_medic",
-	"mvm_bot_sniper",
-	"mvm_bot_spy",
-	"mvm_bot_scout_gatebot",
-	"mvm_bot_soldier_gatebot",
-	"mvm_bot_pyro_gatebot",
-	"mvm_bot_demo_gatebot",
-	"mvm_bot_heavy_gatebot",
-	"mvm_bot_engineer_gatebot",
-	"mvm_bot_medic_gatebot",
-	"mvm_bot_sniper_gatebot",
-	"mvm_bot_spy_gatebot",
-	-- duplicate
-	"mvm_bot_melee_scout",
-	"mvm_bot_melee_scout",
-	"mvm_bot_melee_scout",
-	"mvm_bot_melee_scout",
-	"mvm_bot_melee_scout_sandman",
-	"mvm_bot_bonk_scout",
-	"mvm_bot_bowman",
-	"mvm_bot_demoknight",
-	"mvm_bot_scout_minor_league",
-	"mvm_bot_heavyshotgun",
-	"mvm_bot_scoutfan",
-	"mvm_bot_scoutfan",
-	"mvm_bot_steelgauntlet",
-	"mvm_bot_steelgauntlet",
-	"mvm_bot_steelgauntlet",
-	"mvm_bot_steelgauntletpusher",
-	"mvm_bot_steelgauntlet",
-	"mvm_bot",
-	"mvm_bot_soldier",
-	"mvm_bot_pyro",
-	"mvm_bot_demoman",
-	"mvm_bot_heavy",
-	"mvm_bot_engineer",
-	"mvm_bot_medic",
-	"mvm_bot_sniper",
-	"mvm_bot_spy",
-	"mvm_bot_scout_gatebot",
-	"mvm_bot_soldier_gatebot",
-	"mvm_bot_pyro_gatebot",
-	"mvm_bot_demo_gatebot",
-	"mvm_bot_heavy_gatebot",
-	"mvm_bot_engineer_gatebot",
-	"mvm_bot_medic_gatebot",
-	"mvm_bot_sniper_gatebot",
-	"mvm_bot_spy_gatebot",
-	"mvm_bot_giantscout",
-	"mvm_bot_giantsoldier",
-	"mvm_bot_giantpyro",
-	"mvm_bot_giantheavy",
-	"mvm_bot_giantdemoman",
-	"mvm_bot_giantdemoknight",
-	"mvm_bot_giantshotgunheavy",
-	"mvm_bot_giantheavyheater",
-	"mvm_bot_giantheavyheater_gatebot",
-	"mvm_bot_giantheavy_brassbeast",
-	"mvm_bot_giantheavy_natascha",
-	"mvm_bot_giantheavy_deflector",
-	"mvm_bot_deflectorheavy",
-	"mvm_bot_bowman_rapid_fire",
-	"mvm_bot_superscout",
-	"mvm_bot_superscoutfan",
-}
 
 local combine = {
-	"npc_combine_s",
-	"npc_combine_s",
-	"npc_combine_s",
-	"npc_combine_s",
-	"npc_combine_s",
-	"npc_combine_s",
-	"npc_combine_s",
-	"npc_combine_s",
-	"npc_combine_s",
-	"npc_combine_s",
-	"npc_combine_s",
 	"npc_metropolice",
 	"npc_metropolice",
 	"npc_metropolice",
@@ -218,26 +117,30 @@ local combine = {
 	"npc_metropolice",
 	"npc_metropolice",
 	"npc_metropolice",
-	"npc_hunter",
-	"npc_hunter",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
+	"npc_metropolice",
 	"npc_manhack",
 	"npc_manhack",
 	"npc_manhack",
-	"npc_manhack",
-	"npc_manhack",
-	"npc_manhack",
-	"npc_manhack",
-	"npc_manhack",
-	"npc_combine_s",
-	"npc_combine_s",
-	"npc_combine_s",
-	"npc_combine_s",
-	"npc_combine_s",
-	"npc_combine_s",
-	"npc_combine_s",
-	"npc_combine_s",
-	"npc_combine_s",
-	"npc_combine_s",
 	"npc_combine_s",
 	"npc_combine_s",
 	"npc_combine_s",
@@ -257,8 +160,19 @@ local combine = {
 	"npc_combine_s",
 	"npc_combine_s",
 	"npc_cscanner",
-	"npc_clawscanner",
-	"npc_stalker"
+	"npc_cscanner",
+	"npc_cscanner",
+	"npc_cscanner",
+	"npc_cscanner",
+	"npc_cscanner",
+	"npc_cscanner",
+	"npc_cscanner",
+	"npc_rollermine",
+	"npc_rollermine",
+	"npc_rollermine",
+	"npc_rollermine",
+	"npc_rollermine",
+	"npc_rollermine"
 }
 function ENT:OnRemove()
 	for k,v in ipairs(self.bots) do
@@ -289,49 +203,15 @@ function ENT:RunBehaviour()
 		end
 		self.loco:SetAcceleration( 1400 )
 		self.loco:SetDesiredSpeed( 1400 )		-- Walk speed
-		local pos = self:FindSpot("random", {radius = 4000})
+		local ply = table.Random(player.GetAll())
+		local pos = self:FindSpot("random", {type = "hiding", radius = math.random(400,20000), pos = ply:GetPos()})
 		if (pos) then
 			self:SetPos(pos)	
 		end
-			if (math.random(1,120) == 1) then 
-				if (table.Count(self.bots) < 2) then 
-					local bot = ents.Create(table.Random(zombies))
-					if (!IsValid(bot)) then 
-						coroutine.wait(0.1)
-						return
-					end
-					bot:SetPos(self:GetPos())
-					table.insert(self.bots,bot)
-					bot:SetOwner(self)
-					bot:Spawn()
-					if (bot:GetModel()) then
-						self:SetModel(bot:GetModel())
-						timer.Simple(0.1, function()
-							self:SetModelScale(bot:GetModelScale())
-						end)
-					end
-					bot.TargetEnt = table.Random(player.GetHumans())
-					print("Creating special bot #"..bot:EntIndex())
-					timer.Create("CheckForNoEnemies"..bot:EntIndex(), 15, 0, function()
-						if (!IsValid(bot)) then return end
-						if (bot.TargetEnt == nil) then -- not doing anything, kick
-							for k,v in ipairs(self.bots) do
-								if (v:EntIndex() == bot:EntIndex()) then
-									table.remove(self.bots,k)
-								end
-							end
-							bot:Remove()
-							print("Removed MVM bot #"..bot:EntIndex())
-						end
-					end)
-					coroutine.wait(2)
-				else
-					print("We have reached the limits! Not spawning MVM bots...")
-				end
-			elseif (math.random(1,6) == 1) then 
+			if (math.random(1,20) == 1) then 
 					local cmb = table.Random(combine)
 					if (cmb == "npc_manhack") then
-						for i=1,math.random(1,5) do
+						for i=1,math.random(1,3) do
 
 							local bot = ents.Create(cmb)
 							if (!IsValid(bot)) then 
@@ -342,6 +222,58 @@ function ENT:RunBehaviour()
 							bot:SetOwner(self)
 							if (bot:GetClass() == "npc_combine_s") then
 								bot:Fire("addoutput","numgrenades 6")
+							end
+							bot:Spawn()
+							bot:SetSquad("overwatch")
+							if (bot:GetClass() == "npc_helicopter" or bot:GetClass() == "npc_combinegunship" or bot:GetClass() == "npc_strider") then
+								bot:SetPos(self:GetPos() + Vector(0,0,300))
+							else
+								bot:SetPos(self:GetPos() + Vector(0,0,20))
+							end
+							local plr = table.Random(player.GetAll())
+							bot:SetTarget(plr)
+							bot:SetEnemy(plr)
+							bot:UpdateEnemyMemory( plr, plr:GetPos() )
+							if (bot:GetClass() == "npc_combine_s") then
+								bot:Give(table.Random({"weapon_ar2","weapon_smg1","weapon_shotgun"}))
+								if (math.random(1,3) == 1) then
+									bot:SetModel("models/combine_super_soldier.mdl")
+								end
+							elseif (bot:GetClass() == "npc_metropolice") then
+								bot:Give(table.Random({"weapon_smg1","weapon_pistol","weapon_shotgun","weapon_ar2","weapon_stunstick"}))
+							end
+							table.insert(self.bot,bot)
+							print("Creating NPC #"..bot:EntIndex())
+							timer.Create("CheckForNoEnemies"..bot:EntIndex(), 8, 0, function()
+								if (!IsValid(bot)) then return end
+								if (bot:GetEnemy() == nil) then -- not doing anything, kick
+									for k,v in ipairs(self.bot) do
+										if (v:EntIndex() == bot:EntIndex()) then
+											table.remove(self.bot,k)
+										end
+									end
+									bot:Remove()
+									print("Removed NPC #"..bot:EntIndex())
+								end
+							end)
+							if (bot:GetModel()) then
+								self:SetModel(bot:GetModel())
+							end
+							coroutine.wait(1.5)
+
+						end
+					else
+							local bot = ents.Create(cmb)
+							if (!IsValid(bot)) then 
+								coroutine.wait(0.1)
+								return
+							end
+							bot:SetAngles(self:GetAngles())
+							bot:SetOwner(self)
+							if (bot:GetClass() == "npc_combine_s") then
+								bot:Fire("addoutput","numgrenades "..math.random(0,6))
+							elseif (bot:GetClass() == "npc_metropolice") then
+								bot:Fire("addoutput","manhacks "..math.random(0,3))
 							end
 							bot:Spawn()
 							bot:SetSquad("overwatch")
@@ -380,56 +312,6 @@ function ENT:RunBehaviour()
 								self:SetModel(bot:GetModel())
 							end
 							coroutine.wait(1.5)
-
-						end
-					else
-						local bot = ents.Create(cmb)
-						if (!IsValid(bot)) then 
-							coroutine.wait(0.1)
-							return
-						end
-						bot:SetAngles(self:GetAngles())
-						bot:SetOwner(self)
-						if (bot:GetClass() == "npc_combine_s") then
-							bot:Fire("addoutput","numgrenades 6")
-						end
-						bot:Spawn()
-						bot:SetSquad("overwatch")
-						if (bot:GetClass() == "npc_helicopter" or bot:GetClass() == "npc_combinegunship" or bot:GetClass() == "npc_strider") then
-							bot:SetPos(self:GetPos() + Vector(0,0,300))
-						else
-							bot:SetPos(self:GetPos() + Vector(0,0,20))
-						end
-						local plr = table.Random(player.GetAll())
-						bot:SetTarget(plr)
-						bot:SetEnemy(plr)
-						bot:UpdateEnemyMemory( plr, plr:GetPos() )
-						if (bot:GetClass() == "npc_combine_s") then
-							bot:Give(table.Random({"weapon_ar2","weapon_smg1","weapon_shotgun"}))
-							if (math.random(1,3) == 1) then
-								bot:SetModel("models/combine_super_soldier.mdl")
-							end
-						elseif (bot:GetClass() == "npc_metropolice") then
-							bot:Give(table.Random({"weapon_smg1","weapon_pistol","weapon_357","weapon_stunstick"}))
-						end
-						table.insert(self.bot,bot)
-						print("Creating NPC #"..bot:EntIndex())
-						timer.Create("CheckForNoEnemies"..bot:EntIndex(), 8, 0, function()
-							if (!IsValid(bot)) then return end
-							if (bot:GetEnemy() == nil) then -- not doing anything, kick
-								for k,v in ipairs(self.bot) do
-									if (v:EntIndex() == bot:EntIndex()) then
-										table.remove(self.bot,k)
-									end
-								end
-								bot:Remove()
-								print("Removed NPC #"..bot:EntIndex())
-							end
-						end)
-						if (bot:GetModel()) then
-							self:SetModel(bot:GetModel())
-						end
-						coroutine.wait(0.8)
 					end
 			else
 				coroutine.yield()

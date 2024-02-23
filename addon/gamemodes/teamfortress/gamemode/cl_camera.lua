@@ -24,7 +24,7 @@ local tf_thirdperson	= CreateConVar("cam_thirdperson"		, 0)
 local taunt_angles				= Angle(0, 0, 0)
 local lockangle				= nil
 
-ThirdpersonEndDelay			= 1
+ThirdpersonEndDelay			= 0
 SensitivityMultiplier		= 0.0032
 LagMultiplier				= 2
 
@@ -67,14 +67,27 @@ hook.Add("CreateMove", "TauntMove", function(cmd)
 	local s = SensitivityMultiplier * sensitivity:GetFloat()
 	taunt_angles.pitch = taunt_angles.pitch	+ cmd:GetMouseY() * GetConVar("m_pitch"):GetFloat()
 	taunt_angles.yaw = taunt_angles.yaw		- cmd:GetMouseX() * GetConVar("m_yaw"):GetFloat()
-	if LocalPlayer():GetNWBool("Taunting") or LocalPlayer():IsPlayingTaunt() then
+	
+	if (LocalPlayer():GetNWBool("Congaing")) then
+		cmd:SetForwardMove(50)
+		cmd:SetSideMove(0)
+	end
+	
+	if (LocalPlayer():GetNWBool("Taunting") or LocalPlayer():IsPlayingTaunt()) and !LocalPlayer().CameraTest then
 		if lockangle == nil then
 			lockangle = taunt_angles * 1
 		end
 		
 		if (LocalPlayer():GetPlayerClass() != "tank_l4d" and !LocalPlayer():IsPlayingTaunt() and LocalPlayer().IsThirdperson) then
 			cmd:SetViewAngles(lockangle)
+		elseif (LocalPlayer():GetPlayerClass() != "tank_l4d" and !LocalPlayer():IsPlayingTaunt() and !LocalPlayer().IsThirdperson) then
+			cmd:SetViewAngles(LocalPlayer():EyeAngles())
 		end
+		cmd:ClearButtons()
+		cmd:ClearMovement()
+		return true
+	
+	elseif (LocalPlayer():GetNWBool("Taunting") or LocalPlayer():IsPlayingTaunt()) and LocalPlayer().CameraTest then
 		cmd:ClearButtons()
 		cmd:ClearMovement()
 		return true
@@ -153,8 +166,12 @@ function SetDesiredCenteredView(pl, origin, ang, tbl)
 	else
 		pl.CurrentView.distance = Lerp(lag, pl.CurrentView.distance, pl.TargetView.distance)
 	end
-	if pl.FirstReality then
-		return {angles = pl.CurrentView.angles, origin = origin, drawviewer = true}
+	if pl.FirstReality or pl.CameraTest then
+		if (pl.CameraTest) then
+			return {angles = pl.CurrentView.angles, origin = origin, drawviewer = false}
+		else
+			return {angles = pl.CurrentView.angles, origin = origin, drawviewer = true}
+		end
 	else
 		return {angles = pl.CurrentView.angles, origin = origin - pl.CurrentView.distance * pl.CurrentView.angles:Forward(), drawviewer = true}
 	end
@@ -164,18 +181,27 @@ hook.Add("CalcView", "TFCalcView", function(pl, pos, ang, fov)
 	if not IsValid(pl) then
 		return
 	end
+	
+	if pl.CameraTest and pl:Alive() then
+		if pl:IsHL2() then
+			pos = pl:GetBonePosition(pl:LookupBone("ValveBiped.Bip01_Head1"))+(ang:Up()*10)+(ang:Forward()*5)
+			--pl:ManipulateBoneScale(pl:LookupBone("ValveBiped.Bip01_Head1"), Vector(1,1,1))
+		elseif (pl:IsL4D()) then
+			--pl:ManipulateBoneScale(0, Vector(1,1,1))
+			pos = pl:GetBonePosition(0)+(ang:Up()*10)+(ang:Forward()*5) - pl:EyeAngles():Forward()
+		else
+			--pl:ManipulateBoneScale(pl:LookupBone("bip_head"), Vector(1,1,1))
+			if (pl:LookupBone( "prp_helmet" ) != nil) then				
+				--pl:ManipulateBoneScale(pl:LookupBone("prp_helmet"), Vector(1,1,1))
+			elseif (pl:LookupBone( "prp_hat" ) != nil) then
+				--pl:ManipulateBoneScale(pl:LookupBone("prp_hat"), Vector(1,1,1))
+			end
+			pos = pl:GetBonePosition(pl:LookupBone("bip_head"))+(ang:Up()*10)	+(ang:Forward()*5)
+		end
+	end
+	
 	if IsValid(GetViewEntity()) and GetViewEntity() ~= pl then
 		return
-	end
-	--------------------------------------------------------------------------------------------
-	-- THIRD PERSON
-	if not pl.IsThirdperson and not tf_thirdperson:GetBool() and not pl:IsPlayingTaunt() then
-		return
-	end
-	--------------------------------------------------------------------------------------------
-	-- FREEZECAM
-	if pl.FrozenScreen then
-		return {origin = pl.FreezeCamPos, angles = pl.FreezeCamAng}
 	end
 	
 	
@@ -199,7 +225,7 @@ hook.Add("CalcView", "TFCalcView", function(pl, pos, ang, fov)
 		
 		if pl.NextFreezeCam and CurTime()>pl.NextFreezeCam && IsValid(killer) then
 			pl.NextFreezeCam = nil
-			StartFreezeCam(viewpos, killer, pl.LastKillerPos)
+			StartFreezeCam(pos, killer, pl.LastKillerPos)
 		end
 		
 		local dist
@@ -248,6 +274,21 @@ hook.Add("CalcView", "TFCalcView", function(pl, pos, ang, fov)
 		pl.LastDead = false
 	end
 	
+	--------------------------------------------------------------------------------------------
+	-- THIRD PERSON
+	if not pl.IsThirdperson and not tf_thirdperson:GetBool() and not pl:IsPlayingTaunt() then
+		if (!pl.CameraTest) then
+			return
+		end
+	end
+	--------------------------------------------------------------------------------------------
+	-- FREEZECAM
+	if pl.FrozenScreen then
+		return {origin = pl.FreezeCamPos, angles = pl.FreezeCamAng}
+	end
+	
+	
+	
 	if pl.SimulatedCamera and pl.CameraAngles then
 		ang = pl.CameraAngles
 	end
@@ -268,35 +309,8 @@ hook.Add("CalcView", "TFCalcView", function(pl, pos, ang, fov)
 			end
 			pos = pl:GetBonePosition(pl:LookupBone("bip_head"))+(ang:Up()*10)	+(ang:Forward()*5)
 		end
-	end
-	
-	if pl.TauntingCam then
-		ang = taunt_angles
 	else
-		ang = taunt_angles + pl:GetViewPunchAngles()
-		ang = Angle(Angle(math.Clamp(ang.p, -80, 80), ang.y, ang.r))
-		local angle = (util.QuickTrace(pos, ang:Forward() * 5024, pl).HitPos - pl:GetShootPos()):Angle()
-		pl:SetEyeAngles(Angle(angle.p, angle.y, ang.r))
-	end
-
-	if pl.NextEndThirdperson then
-		if CurTime()>pl.NextEndThirdperson then
-			pl.NextEndThirdperson = nil
-			pl.IsThirdperson = false
-			pl.SimulatedCamera = false
-			pl.FirstReality = false
-			pl.TauntingCam = false
-			--[[if not IsValid(GetViewEntity()) or GetViewEntity()==LocalPlayer() then
-				gamemode.Call("OnViewModeChanged", false)
-			end]]
-			return
-		else 
-			if pl.CurrentView and not tf_thirdperson:GetBool() then -- stupid bug fix
-				if pl.TauntingCam then
-					pl:SetEyeAngles(taunt_angles)
-				end
-				pl.CurrentView.angles = ang
-				pl.CurrentView.distance = Lerp((pl.NextEndThirdperson - CurTime())/ThirdpersonEndDelay, 0, pl.TargetView.distance)
+	
 				if pl:IsHL2() then
 					pl:ManipulateBoneScale(pl:LookupBone("ValveBiped.Bip01_Head1"), Vector(1,1,1)) -- we can't let them see a shrunk head when transferring back!
 				elseif pl:IsL4D() then
@@ -310,6 +324,36 @@ hook.Add("CalcView", "TFCalcView", function(pl, pos, ang, fov)
 				elseif (pl:LookupBone( "prp_hat" ) != nil) then
 					pl:ManipulateBoneScale(pl:LookupBone("prp_hat"), Vector(1,1,1))
 				end
+				
+	end
+
+	if pl.TauntingCam and !pl.CameraTest then
+		ang = taunt_angles
+	else
+		ang = taunt_angles + pl:GetViewPunchAngles()
+		ang = Angle(Angle(math.Clamp(ang.p, -80, 80), ang.y, ang.r))
+		local angle = (util.QuickTrace(pos, ang:Forward() * 5024, pl).HitPos - pl:GetShootPos()):Angle()
+		pl:SetEyeAngles(Angle(angle.p, angle.y, ang.r))
+	end
+
+	if pl.NextEndThirdperson and !pl.CameraTest then
+		if CurTime()>pl.NextEndThirdperson then
+			pl.NextEndThirdperson = nil
+			pl.IsThirdperson = false
+			pl.SimulatedCamera = false
+			pl.FirstReality = false
+			pl.TauntingCam = false
+			--[[if not IsValid(GetViewEntity()) or GetViewEntity()==LocalPlayer() then
+				gamemode.Call("OnViewModeChanged", false)
+			end]]
+			return
+		else
+			if pl.CurrentView and not tf_thirdperson:GetBool() then -- stupid bug fix
+				if pl.TauntingCam then
+					pl:SetEyeAngles(taunt_angles)
+				end
+				pl.CurrentView.angles = ang
+				pl.CurrentView.distance = Lerp((pl.NextEndThirdperson - CurTime())/ThirdpersonEndDelay, 0, pl.TargetView.distance)
 				return {angles = pl.CurrentView.angles, origin = pos - pl.CurrentView.distance * pl.CurrentView.angles:Forward(), drawviewer = true}
 			end
 		end
@@ -355,7 +399,7 @@ end
 
 function GM:ShouldDrawLocalPlayer() 
 	if ( LocalPlayer():IsPlayingTaunt() ) then return true end
-	return LocalPlayer().IsThirdperson
+	return LocalPlayer().IsThirdperson and !LocalPlayer().CameraTest
 end
 
 function StartThirdperson()
@@ -383,7 +427,7 @@ net.Receive("ActivateTauntCam", function()
 	LocalPlayer().IsThirdperson = true
 	LocalPlayer().CurrentView = nil
 	LocalPlayer().TauntingCam = true
-	LocalPlayer().NextEndThirdperson = nil
+	LocalPlayer().NextEndThirdperson = nil 
 	lockangle = LocalPlayer():GetAngles()
 	taunt_angles = LocalPlayer():GetAngles()
 end)
@@ -583,5 +627,13 @@ concommand.Add("tf_tp_immersive_toggle", function(pl)
 		StartFirstReality()
 	else
 		EndFirstReality()
+	end
+end)
+
+concommand.Add("tf_camera_test_toggle", function(pl)
+	if not pl.CameraTest then
+		LocalPlayer().CameraTest = true
+	else
+		LocalPlayer().CameraTest = false
 	end
 end)

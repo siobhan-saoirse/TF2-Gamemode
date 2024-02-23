@@ -8,7 +8,7 @@ ENT.AdminOnly = false
 ENT.IsBoss = false
 ENT.Team = "RED"
 ENT.PrintName		= "Scout"
-ENT.Category		= "TF2: RED Bots"
+ENT.Category		= "TFBots"
 
 local function LeadBot_S_Add_Zombie(team,class,pos,ent)
 	if !navmesh.IsLoaded() then

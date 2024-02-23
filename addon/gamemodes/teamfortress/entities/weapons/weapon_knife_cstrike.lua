@@ -197,9 +197,7 @@ function SWEP:MeleeAttack( right )
 			self:ZoomOut()
 			return
 		end
-	if SERVER then
-		self.Owner:DoAnimationEvent( ACT_HL2MP_GESTURE_RANGE_ATTACK_KNIFE,true,true )
-	end
+	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	self:EmitSound("weapons/knife/knife_slash1.wav",75,100,CHAN_WEAPON)
 	local anim = "stab_miss"
 	if (!right) then

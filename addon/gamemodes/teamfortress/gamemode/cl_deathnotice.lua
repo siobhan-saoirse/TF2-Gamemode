@@ -591,7 +591,7 @@ function GM:DrawDeathNotice(x, y)
 	--local cleared = true
 	
 	x = ScrW() - 25
-	y = y * ScrH()
+	y = y * ScrH() + 60
 	
 	-- Draw
 	local size = #Deaths
@@ -604,7 +604,9 @@ function GM:DrawDeathNotice(x, y)
 		local maxtime = (Death.highlight and hud_deathnotice_time_local) or hud_deathnotice_time
 		
 		if Death.time + maxtime > CurTime() then
-			y = DrawDeath(x, y, Death)
+			if (i <= 3) then
+				y = DrawDeath(x, y, Death)
+			end
 			--cleared = false
 			i = i + 1
 		else

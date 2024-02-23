@@ -66,7 +66,7 @@ function SWEP:PrimaryAttack()
 	self.NextReloadStart = nil
 	
 	if (!self.Reloading and self:Clip1() >= 0) then
-		
+
 		if (self.Primary.FastDelay) then
 			self:SetNextPrimaryFire(CurTime() + self.Primary.FastDelay)
 			self:SetNextSecondaryFire(CurTime() + self.Primary.FastDelay)
@@ -75,11 +75,14 @@ function SWEP:PrimaryAttack()
 			self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
 		end
 
+		
 		self:SendWeaponAnim(self.VM_PRIMARYATTACK)
 		if SERVER then
-			self:ShootEffects()
-		end
-		self:RustyBulletHole()		
+			self.Owner:DoAttackEvent()
+			self:ShootProjectile(self.BulletsPerShot, self.BulletSpread)
+		end	
+		self:ShootEffects()
+		self:RustyBulletHole()	
 	end
 	if SERVER then
 		umsg.Start("TF2ShellEject")
@@ -92,8 +95,6 @@ function SWEP:PrimaryAttack()
 		self.NextIdle = CurTime() + self:SequenceDuration(self:SelectWeightedSequence(self.VM_PRIMARYATTACK))
 	end
 	--if ( IsFirstTimePredicted() ) then
-		self:ShootProjectile(self.BulletsPerShot, self.BulletSpread)
-		self.Owner:DoAttackEvent()
 		if self:GetVisuals() and self:GetVisuals()["sound_single_shot"] then
 			self.ShootSound = self:GetVisuals()["sound_single_shot"]
 			self.ShootCritSound = self:GetVisuals()["sound_burst"]
@@ -172,7 +173,7 @@ function SWEP:PrimaryAttack()
 	self.NextReload = nil
 	self.Reloading = false
 	if SERVER then
-		self.Owner:Speak("TLK_FIREWEAPON", false)
+		self.Owner:Speak("TLK_FIREWEAPON", true)
 	end
 
 	return true
@@ -229,16 +230,17 @@ function SWEP:ShootEffects()
 	end
 	local vm = self.Owner:GetViewModel()
 		if (!self:CanPrimaryAttack()) then return end
-		timer.Simple(0.02, function()
-		
-			if (self:Critical()) then
-				self:EmitSound(self.ShootCritSound)
-			else
-				self:EmitSound(self.ShootSound)
-			end
+		for k,v in ipairs(player.GetAll()) do
+			if SERVER then
 
-		end)
-			
+				if (self:Critical()) then
+					v:SendLua("Entity("..self.Owner:EntIndex().."):EmitSound(\""..self.ShootCritSound.."\")")
+				else
+					v:SendLua("Entity("..self.Owner:EntIndex().."):EmitSound(\""..self.ShootSound.."\")")
+				end
+
+			end
+		end
 	self.Reloading = false
 	self.NextReload = nil
 	self.NextReload2 = nil

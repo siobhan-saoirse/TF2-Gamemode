@@ -10,7 +10,7 @@ ENT.Difficulty = 3
 ENT.PrintName		= "Major League Scout"
 ENT.PreferredIcon = "hud/leaderboard_class_scout_stun"
 ENT.Items = {"Batter's Helmet","Essential Accessories","Sandman"}
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 
 list.Set( "NPC", "mvm_bot_scout_major_league", {
 	Name = ENT.PrintName,

@@ -6,6 +6,8 @@ local IgnoredClasses = {
 	[CLASS_BULLSEYE] = 1,
 }
 
+hook.Add( "OnEntityCreated", "ChangeTeamOnCreate", function( ent )
+end)
 local function CalcRelationship(ent1, ent2)
 	local t1, t2 = GAMEMODE:EntityTeam(ent1), GAMEMODE:EntityTeam(ent2)
 	if t1==t2 then
@@ -59,10 +61,6 @@ function GM:UpdateEntityRelationship(ent)
 		if (v:IsNPC() and v:EntityTeam()~=TEAM_HIDDEN and not IgnoredClasses[v:Classify()]) or v:IsPlayer() then
 			if (v.TargetEnt == ent) then return end
 			local rel = CalcRelationship(v, ent)
-			if (!v:IsFlagSet(FL_CLIENT)) then
-				v:AddFlags(FL_CLIENT)
-				v:AddFlags(FL_FAKECLIENT)
-			end
 			if rel then
 				if v:IsNPC() then
 					v:AddEntityRelationship(ent, rel)
@@ -93,11 +91,12 @@ hook.Add("OnEntityCreated", "TF_UpdateNPCRelationship", function(ent)
 			
 		end)
 	end
+	--[[
 	if (ent:IsNPC()) then
 		ent:AddFlags(FL_NPC)
 		ent:AddFlags(FL_CLIENT)
 		ent:AddFlags(FL_FAKECLIENT)
-	end
+	end]]
 	if ent:IsNPC() and ent:EntityTeam()~=TEAM_HIDDEN and not IgnoredClasses[ent:Classify()] and !ent:HasNPCFlag(NPC_NORELATIONSHIP) then
 		GAMEMODE:UpdateEntityRelationship(ent)
 		timer.Simple(0.1, function()

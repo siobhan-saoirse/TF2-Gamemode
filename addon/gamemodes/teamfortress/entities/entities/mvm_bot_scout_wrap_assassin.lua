@@ -6,7 +6,7 @@ ENT.PZClass = "melee_scout"
 ENT.Spawnable = false
 ENT.AdminOnly = false
 ENT.PrintName		= "Wrap Assassin"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 ENT.PreferredIcon = "hud/leaderboard_class_scout"
 ENT.Items = {"Wrap Assassin"}
 

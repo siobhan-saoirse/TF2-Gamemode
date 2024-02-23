@@ -71,6 +71,12 @@ function ENT:Touch(ent)
 		ent:GodEnable()
 		ent:SetSkin(3)
 	end
+	if (self.Team == 2 or self.Team == 3) then
+		if (ent:IsPlayer() and ent:Team() != self.Team) then
+			ent:KillSilent()
+			ent:Respawn()
+		end
+	end
 end
 
 function ENT:EndTouch(ent)

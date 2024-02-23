@@ -7,7 +7,7 @@ ENT.Spawnable = false
 ENT.AdminOnly = false 
 ENT.Difficulty = 3
 ENT.PrintName		= "Bonk Scout"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 ENT.PreferredIcon = "hud/leaderboard_class_scout_bonk"
 
 list.Set( "NPC", "mvm_bot_bonk_scout", {

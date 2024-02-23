@@ -8,7 +8,7 @@ ENT.AdminOnly = false
 ENT.IsBoss = false
 ENT.Difficulty = 3
 ENT.PrintName		= "Samurai Demo"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 ENT.Items = {"Half-Zatoichi","Splendid Screen","Samur-Eye"}
 ENT.PreferredIcon = "hud/leaderboard_class_demoknight_samurai"
 

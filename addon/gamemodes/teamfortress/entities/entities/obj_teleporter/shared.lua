@@ -28,6 +28,10 @@ PrecacheParticleSystem("teleporter_blue_exit_level3")
 
 ENT.ObjectHealth = 150
 
+ENT.Sound_Spin1 = Sound("Building_Teleporter.SpinLevel1")
+ENT.Sound_Spin2 = Sound("Building_Teleporter.SpinLevel2")
+ENT.Sound_Spin3 = Sound("Building_Teleporter.SpinLevel3")
+
 ENT.CollisionBox = {Vector(-24,-24,0), Vector(24,24,12)}
 ENT.BuildHull = {Vector(-28,-28,0), Vector(28,28,95)}
 ENT.Sapped = false

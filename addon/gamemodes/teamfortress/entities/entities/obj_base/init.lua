@@ -336,7 +336,6 @@ function ENT:Think()
 	
 	self.Model:SetModelScale(self:GetModelScale())
 	self:OnThink()
-	
 	if state==0 then
 		if CurTime()-self.StartTime>=self.TimeLeft then
 			self:Build()
@@ -380,9 +379,24 @@ function ENT:Think()
 		
 		if not self.DisableDuringUpgrade then
 			self:OnThinkActive()
+					
+			if (self:GetBuilder() != nil) then
+				if (self:GetBuilder():GetPlayerClass() != "engineer") then
+					self:Explode()
+				end
+			elseif (self:GetBuilder() == nil) then
+				self:Explode()
+			end
 		end 
 	elseif state==3 then
 		self:OnThinkActive()
+		if (self:GetBuilder() != nil) then
+			if (self:GetBuilder():GetPlayerClass() != "engineer") then
+				self:Explode()
+			end
+		elseif (self:GetBuilder() == nil) then
+			self:Explode()
+		end
 		if (string.find(game.GetMap(),"mvm_")) then
 				
 			if self:GetLevel()<=self.NumLevels then

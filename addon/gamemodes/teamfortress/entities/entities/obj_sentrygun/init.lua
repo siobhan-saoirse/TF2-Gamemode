@@ -74,18 +74,17 @@ ENT.OriginZOffset = 40
 
 function ENT:SpawnFunction(pl, tr)
 	if not tr.Hit then return end
-	
+	if (!pl:IsAdmin()) then return end
 	local pos = tr.HitPos
 	
 	local ent = ents.Create(self.ClassName)
 	ent:SetPos(pos)
+	ent:SetTeam(pl:Team())
+	ent:SetBuilder(pl)
 	ent:Spawn()
 	ent:Activate()
 	
 	ent:SetPos(pos - Vector(0,0,ent:OBBMins().z))
-	
-	ent:SetTeam(pl:Team())
-	ent:SetBuilder(pl)
 	
 	return ent
 end

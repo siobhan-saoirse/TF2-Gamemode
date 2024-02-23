@@ -8,7 +8,7 @@ ENT.AdminOnly = false
 ENT.IsBoss = false
 ENT.Difficulty = 2
 ENT.PrintName		= "Demoknight"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 ENT.Items = {"Chargin' Targe","Eyelander"}	
 ENT.PreferredIcon = "hud/leaderboard_class_demoknight"
 

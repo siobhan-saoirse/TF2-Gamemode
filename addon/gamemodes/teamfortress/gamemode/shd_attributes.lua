@@ -670,14 +670,14 @@ local ATTRIBUTES = {
 ["or_crit_vs_playercond"] = {
 	boolean = true,
 	crit_override = function(v,ent,hitgroup,dmginfo)
-		if ISPLAYER(ent) and ONFIRE(ent) and dmginfo:GetInflictor():GetClass() != "tf_entityflame" then return true end
+		if ISPLAYER(ent) and ONFIRE(ent) and dmginfo:GetInflictor():GetClass() != "entityflame" then return true end
 	end,
 },
 
 ["or_minicrit_vs_playercond_burning"] = {
 	boolean = true,
 	minicrit_override = function(v,ent,hitgroup,dmginfo)
-		if ISPLAYER(ent) and ONFIRE(ent) and dmginfo:GetInflictor():GetClass() != "tf_entityflame" then return true end
+		if ISPLAYER(ent) and ONFIRE(ent) and dmginfo:GetInflictor():GetClass() != "entityflame" then return true end
 	end,
 },
 
@@ -781,13 +781,13 @@ local ATTRIBUTES = {
 			end
 			timer.Stop("Stunned"..att:EntIndex())
 			timer.Stop("StunnedStop"..att:EntIndex())
-			att:AddPlayerState(PLAYERSTATE_SPEED,true)
+			--att:AddPlayerState(PLAYERSTATE_SPEED,true)
 			timer.Create("Stunned"..att:EntIndex(), 0.1, v * 10, function()
 				att:SetClassSpeed(att:GetPlayerClassTable().Speed * 1.5)
 			end)
 			timer.Create("StunnedStop"..att:EntIndex(), v, 1, function()
 				timer.Stop("Stunned"..att:EntIndex())
-				att:RemovePlayerState(PLAYERSTATE_SPEED,true)
+				--att:RemovePlayerState(PLAYERSTATE_SPEED,true)
 				att:SendLua("LocalPlayer():EmitSound('DisciplineDevice.PowerDown')")
 				att:EmitSound("Building_Speedpad.BoostStop")
 				att:ResetClassSpeed()
@@ -805,13 +805,13 @@ local ATTRIBUTES = {
 			end
 			timer.Stop("Stunned"..att:EntIndex())
 			timer.Stop("StunnedStop"..att:EntIndex())
-			att:AddPlayerState(PLAYERSTATE_SPEED,true)
+			--att:AddPlayerState(PLAYERSTATE_SPEED,true)
 			timer.Create("Stunned"..att:EntIndex(), 0.1, v * 40, function()
 				att:SetClassSpeed(att:GetPlayerClassTable().Speed * 1.5)
 			end)
 			timer.Create("StunnedStop"..att:EntIndex(), v + 4, 1, function()
 				timer.Stop("Stunned"..att:EntIndex())
-				att:RemovePlayerState(PLAYERSTATE_SPEED,true)
+				--att:RemovePlayerState(PLAYERSTATE_SPEED,true)
 				att:SendLua("LocalPlayer():EmitSound('DisciplineDevice.PowerDown')")
 				att:EmitSound("Building_Speedpad.BoostStop")
 				att:ResetClassSpeed()
@@ -823,13 +823,13 @@ local ATTRIBUTES = {
 			end
 			timer.Stop("Stunned"..ent:EntIndex())
 			timer.Stop("StunnedStop"..ent:EntIndex())
-			ent:AddPlayerState(PLAYERSTATE_SPEED,true)
+			--ent:AddPlayerState(PLAYERSTATE_SPEED,true)
 			timer.Create("Stunned"..ent:EntIndex(), 0.1, v * 40, function()
 				ent:SetClassSpeed(ent:GetPlayerClassTable().Speed * 1.5)
 			end)
 			timer.Create("StunnedStop"..ent:EntIndex(), v + 4, 1, function()
 				timer.Stop("Stunned"..ent:EntIndex())
-				ent:RemovePlayerState(PLAYERSTATE_SPEED,true)
+				--ent:RemovePlayerState(PLAYERSTATE_SPEED,true)
 				if (ent:IsPlayer()) then
 					ent:SendLua("LocalPlayer():EmitSound('DisciplineDevice.PowerDown')")
 				end
@@ -848,13 +848,13 @@ local ATTRIBUTES = {
 			end
 			timer.Stop("Stunned"..att:EntIndex())
 			timer.Stop("StunnedStop"..att:EntIndex())
-			att:AddPlayerState(PLAYERSTATE_SPEED,true)
+			--att:AddPlayerState(PLAYERSTATE_SPEED,true)
 			timer.Create("Stunned"..att:EntIndex(), 0.1, v * 10, function()
-				att:SetClassSpeed(att:GetPlayerClassTable().Speed * 1.5)
+				--att:SetClassSpeed(att:GetPlayerClassTable().Speed * 1.5)
 			end)
 			timer.Create("StunnedStop"..att:EntIndex(), v, 1, function()
 				timer.Stop("Stunned"..att:EntIndex())
-				att:RemovePlayerState(PLAYERSTATE_SPEED,true)
+				--att:RemovePlayerState(PLAYERSTATE_SPEED,true)
 				att:SendLua("LocalPlayer():EmitSound('DisciplineDevice.PowerDown')")
 				att:EmitSound("Building_Speedpad.BoostStop")
 				att:ResetClassSpeed()
@@ -875,7 +875,7 @@ local ATTRIBUTES = {
 ["add_onhit_addhealth"] = {
 	post_damage = function(v,ent,hitgroup,dmginfo)
 		if not ISSELFDMG(ent,dmginfo) and ISPLAYER(ent) and ent:Health()>0 and not ISBUILDING(ent) then
-			GAMEMODE:HealPlayer(dmginfo:GetAttacker(), dmginfo:GetAttacker(), v, true, false)
+			dmginfo:GetAttacker():SetHealth(dmginfo:GetAttacker():Health() + v)
 		end
 	end,
 	projectile_fired = function(v,proj,weapon,owner) end,
@@ -884,7 +884,7 @@ local ATTRIBUTES = {
 ["add_health_on_radius_damage"] = {
 	post_damage = function(v,ent,hitgroup,dmginfo)
 		if not ISSELFDMG(ent,dmginfo) and ISPLAYER(ent) and ent:Health()>0 and not ISBUILDING(ent) then
-			GAMEMODE:HealPlayer(dmginfo:GetAttacker(), dmginfo:GetAttacker(), v, true, false)
+			dmginfo:GetAttacker():SetHealth(dmginfo:GetAttacker():Health() + v)
 		end
 	end,
 	projectile_fired = function(v,proj,weapon,owner) end,
@@ -944,10 +944,6 @@ local ATTRIBUTES = {
 				effectdata:SetScale(128)
 				util.Effect("ThumperDust", effectdata, true, true)
 				
-				effectdata = EffectData()
-				effectdata:SetOrigin(ent:GetPos())
-				util.Effect("tf_stickybomb_destroyed", effectdata)
-				
 				ent:Remove()
 			end
 		end
@@ -957,7 +953,7 @@ local ATTRIBUTES = {
 ["bleeding_duration"] = {
 	pre_damage = function(v,ent,hitgroup,dmginfo)
 		if ent~=dmginfo:GetAttacker() and ent:CanBleed() then
-			GAMEMODE:EntityStartBleeding(ent, dmginfo:GetInflictor(), dmginfo:GetAttacker(), v)
+			--GAMEMODE:EntityStartBleeding(ent, dmginfo:GetInflictor(), dmginfo:GetAttacker(), v)
 		end
 	end,
 },
@@ -965,22 +961,17 @@ local ATTRIBUTES = {
 ["jarate_duration"] = {
 	post_damage = function(v,ent,hitgroup,dmginfo)
 		local inf = dmginfo:GetInflictor()
-		if inf:GetClass() == "tf_weapon_sniperrifle" and inf.ChargeTime then
+		if inf:GetClass() == "tf2_weapon_sniperrifle" and inf.ChargeTime then
 
 		end
 		
 		local att = dmginfo:GetAttacker()
 		
-		ent:AddPlayerState(PLAYERSTATE_JARATED, true)
-		timer.Simple(0, function() if IsValid(ent) then ent:AddPlayerState(PLAYERSTATE_JARATED, true) end end)
+		--ent:AddPlayerState(PLAYERSTATE_JARATED, true)
+		--timer.Simple(0, function() if IsValid(ent) then ent:AddPlayerState(PLAYERSTATE_JARATED, true) end end)
 		
 		ent.NextEndJarate = CurTime() + v
 		
-		local effectdata = EffectData()
-			effectdata:SetOrigin(dmginfo:GetDamagePosition())
-			effectdata:SetAngles(Angle(0,0,0))
-			effectdata:SetAttachment(5)
-		util.Effect("tf_explosion", effectdata, true, true)
 	end,
 	
 	equip = function(v,weapon,owner)
@@ -1050,8 +1041,8 @@ local ATTRIBUTES = {
 	post_damage = function(v,ent,hitgroup,dmginfo)
 		local att = dmginfo:GetAttacker()
 		if att:IsValidEnemy(ent) then
-			if (!ent:HasPlayerState(PLAYERSTATE_MARKED)) then
-				ent:AddPlayerState(PLAYERSTATE_MARKED, true)
+			--if (!ent:HasPlayerState(PLAYERSTATE_MARKED)) then
+				--ent:AddPlayerState(PLAYERSTATE_MARKED, true)
 				if (ent:IsPlayer()) then
 					if SERVER then
 						ent:SendLua('LocalPlayer():GetActiveWeapon():EmitSound("Weapon_Marked_for_Death.Indicator")')
@@ -1060,7 +1051,7 @@ local ATTRIBUTES = {
 				if CLIENT then
 					ent:EmitSound('Weapon_Marked_for_Death.Initial')
 				end
-			end
+			--end
 		end
 	end,
 },
@@ -1079,7 +1070,7 @@ local ATTRIBUTES = {
 ["mult_dmgtaken_from_fire"] = {
 	_global_post_damage_received = function(v,pl,hitgroup,dmginfo)
 		local inf = dmginfo:GetInflictor()
-		if dmginfo:IsDamageType(DMG_BURN) or (IsValid(inf) and inf:GetClass() == "tf_entityflame") then
+		if dmginfo:IsDamageType(DMG_BURN) or (IsValid(inf) and inf:GetClass() == "entityflame") then
 			dmginfo:ScaleDamage(v)
 		end
 	end,
@@ -1165,7 +1156,7 @@ local ATTRIBUTES = {
 ["add_onkill_critboost_time"] = {
 	on_kill = function(v,ent,inf,att)
 		if not ISBUILDING(ent) then
-			GAMEMODE:AddCritBoostTime(att, v)
+			--GAMEMODE:AddCritBoostTime(att, v)
 		end
 	end,
 },
@@ -1173,7 +1164,8 @@ local ATTRIBUTES = {
 ["heal_on_kill"] = {
 	on_kill = function(v,ent,inf,att)
 		if not ISBUILDING(ent) then
-			GAMEMODE:HealPlayer(att, att, v, true, true)
+			--GAMEMODE:HealPlayer(att, att, v, true, true)
+			att:SetHealth(att:Health() + v)
 		end
 	end,
 },

@@ -229,13 +229,6 @@ function GM:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 		end
 	end
 	GAMEMODE:MouthMoveAnimation( pl )
-	if (pl:IsHL2()) then		  
-		pl:SetViewOffset(Vector(0,0,64 * pl:GetModelScale()))
-		pl:SetViewOffsetDucked(Vector(0, 0, 28 * pl:GetModelScale()))
-	else
-		pl:SetViewOffset(Vector(0, 0, 68 * pl:GetModelScale()))
-		pl:SetViewOffsetDucked(Vector(0, 0, 48 * pl:GetModelScale()))
-	end
 	if pl:IsHL2() then
 		
 		local vel = 1 * velocity
@@ -265,20 +258,7 @@ function GM:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 	end   
 	local c = pl:GetPlayerClassTable()
 	local maxspeed = 100
-	if pl:IsSprinting() then
-		pl:SetPlaybackRate(1.15)
-	elseif pl:KeyDown(IN_SPEED) and pl:GetNWBool("Taunting") == true then
-		pl:SetPlaybackRate(1.15)
-	elseif pl:KeyDown(IN_WALK) and !pl:IsL4D() then
-		pl:SetPlaybackRate(0.8)
-	elseif pl:WaterLevel() == 2 and !pl:IsL4D() then
-		pl:SetPlaybackRate(0.8)
-	else
-		pl:SetPlaybackRate(1)
-		if SERVER then
-		pl:SetLaggedMovementValue( 1 )
-		end
-	end
+	pl:SetPlaybackRate(1)
  	
 	maxspeed = pl:GetRealClassSpeed()
 	if c and c.Speed then 

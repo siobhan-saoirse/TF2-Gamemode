@@ -204,8 +204,8 @@ function ENT:Think()
 	if SERVER and not IsValid(self:GetOwner()) then
 		self:Remove()
 	end
-	for k,v in ipairs(ents.FindInSphere(self:GetPos(),90)) do
-		if (v:IsValid() and (v:IsTFPlayer() or v:IsNextBot()) and v:EntIndex() != self:GetOwner():EntIndex() and !v:IsFriendly(self:GetOwner()) and v:Health() > 0) then
+	for k,v in ipairs(ents.FindInSphere(self:GetPos(),200)) do
+		if (v:IsValid() and v:IsTFPlayer() and v:EntIndex() != self:GetOwner():EntIndex() and !v:IsFriendly(self:GetOwner()) and v:Health() > 0 and self:GetPos():Distance(v:GetPos()) < v:GetModelRadius() + 24) then
 			if self.BouncesLeft>0 then
 				self:DoExplosion()
 			end

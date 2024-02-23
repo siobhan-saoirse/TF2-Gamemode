@@ -20,10 +20,10 @@ local tf_bot_melee_only = CreateConVar("tf_bot_melee_only", "0", {FCVAR_ARCHIVE,
 
 function lookForNearestPlayer(bot)
 	local npcs = {}
-	if (math.random(1,2+(table.Count(player.GetAll())*0.4)) == 1) then
-		for k,v in ipairs(player.GetBots()) do
-			if (v:Alive() and !v:IsFriendly(bot) and v:EntIndex() != bot:EntIndex()) then
-				table.insert(npcs, v)
+	if (math.random(1,1+(table.Count(player.GetAll())*0.4)) == 1) then
+		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 3300)) do
+			if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:EntityTeam(bot) != TEAM_NEUTRAL and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET) and v:Health() > 0 ) then
+				table.insert(npcs, v)		
 			end
 		end
 		return table.Random(npcs)
@@ -36,8 +36,8 @@ end
 function lookForClosestHumanPlayer(bot)
 	local npcs = {} 
 	if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
-		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 12000)) do
-			if (v:IsPlayer() and v:Health() > 0 and !v:IsBot() and v:EntIndex() != bot:EntIndex() and !IsValid(bot.TargetEnt) and !v:IsFriendly(bot) and v:Team() != TEAM_NEUTRAL and v:Team() != TEAM_FRIENDLY) then
+		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 12000)) do 
+			if (v:IsPlayer() and v:Health() > 0 and !v:IsBot() and v:EntIndex() != bot:EntIndex() and v:EntityTeam(bot) != TEAM_NEUTRAL and !IsValid(bot.TargetEnt) and !v:IsFriendly(bot) and v:Team() != TEAM_NEUTRAL and v:Team() != TEAM_FRIENDLY and v:Health() > 0 ) then
 				table.insert(npcs, v)
 			elseif ((v:IsNPC() or v:IsNextBot()) and !v:IsFriendly(bot)) then
 				if (v:Health() > 0) then
@@ -51,7 +51,7 @@ end
 
 function getNPCsAndPlayers()
 	local npcs = {}
-	if (math.random(1,8) == 1) then
+	if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
 		for k,v in ipairs(ents.GetAll()) do
 			if (v:IsNPC() or v:IsNextBot()) then
 				if (v:Health() > 0) then
@@ -476,9 +476,9 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 							RandomWeapon2(bot, "primary")
 							RandomWeapon2(bot, "secondary")
 							RandomWeapon2(bot, "melee")
-							RandomCosmetic(bot, "hat")
-							RandomCosmetic(bot, "misc")
-							RandomCosmetic(bot, "head")
+							--RandomCosmetic(bot, "hat")
+							--RandomCosmetic(bot, "misc")
+							--RandomCosmetic(bot, "head")
 						end
 
 					end)
@@ -494,7 +494,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 
 	local buttons = 0
 	if bot.TFBot then
-	
+		bot.CameraTest = true
 		cmd:ClearMovement()
 		cmd:ClearButtons()
 
@@ -506,20 +506,28 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			bot:SetModelScale(bot.OverrideModelScale)
 		end
 		if !IsValid(controller) then
-			bot.ControllerBot = ents.Create("leadbot_navigator")
+			bot.ControllerBot = ents.Create("ctf_bot_navigator")
 			bot.ControllerBot:Spawn()
 			bot.ControllerBot:SetOwner(bot)
 			controller = bot.ControllerBot
 		else
 			controller:SetPos(bot:GetPos())
 			controller:SetAngles(bot:GetAngles())
+				
+			if IsValid(controller.P) then
+				if bot.botPos != nil then
+					if (math.random(1,2+(table.Count(player.GetAll())*0.4)) == 1) then
+						controller.P:Compute(controller, bot.botPos)
+					end
+				end
+			end
 		end
 	
 		local moveawayrange = 80
 		if (string.find(bot:GetModel(),"/bot_")) then
 			moveawayrange = 150
 		end
-		if (IsValid(bot:GetActiveWeapon())) then
+		if (IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon():Ammo1() and bot:GetActiveWeapon():Clip1()) then
 					if (bot:GetActiveWeapon():Ammo1() < 1 and bot:GetActiveWeapon():Clip1() < 1 and bot:GetActiveWeapon().Primary.ClipSize ~= -1 && !bot:GetActiveWeapon().IsMeleeWeapon) then
 						if (CurTime() > bot:GetActiveWeapon():GetNextPrimaryFire()) then
 							if (bot:GetActiveWeapon().HoldType == "PRIMARY") then
@@ -536,7 +544,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				end
 					
 		if controller.NextCenter > CurTime() and bot:GetNWBool("Taunting",false) != true and bot.botPos then
-			if (IsValid(bot:GetActiveWeapon()) and !bot:GetActiveWeapon().IsMeleeWeapon) then
+			--[[if (IsValid(bot:GetActiveWeapon()) and !bot:GetActiveWeapon().IsMeleeWeapon) then
 				if controller.strafeAngle == 1 then
 					mv:SetSideSpeed(1500)
 				elseif controller.strafeAngle == 2 then
@@ -544,8 +552,9 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				else
 					mv:SetForwardSpeed(-1500)
 				end
-			end
+			end]]
 		end
+		if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
 			for k,v in ipairs(ents.FindInSphere(bot:GetPos(),moveawayrange)) do
 				if (IsValid(v) and GAMEMODE:EntityTeam(v) == bot:Team() and v:IsTFPlayer() and v:EntIndex() != bot:EntIndex() and bot:GetNWBool("Taunting",false) != true) then
 					local forward = bot:EyeAngles():Forward()
@@ -609,6 +618,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					mv:SetSideSpeed(mv:GetSideSpeed() + (side * 0.5))
 				end
 			end
+		end
 			 --[[
 		local BotCanTarget = tf_bot_notarget:GetBool()
  
@@ -671,17 +681,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					end
 				end
 			end
-			if math.random(1,500) == 1  and !string.find(bot:GetModel(),"/bot_") then
-				local args = {"TLK_PLAYER_MEDIC"}
-				if bot:Speak(args[1]) then
-					bot:DoAnimationEvent(ACT_MP_GESTURE_VC_HANDMOUTH, true)
-			
-					umsg.Start("TFPlayerVoice")
-						umsg.Entity(bot)
-						umsg.String(args[1])
-					umsg.End()
-				end
-			end
 		end 
 
 
@@ -702,26 +701,21 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			buttons = buttons + IN_JUMP
 		end
 		if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then
-			bot.TargetEnt = nil
+			
+			if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
+
+				bot.TargetEnt = nil
+
+			end
 		end
 		
 	
 		-- force a recompute
-			if controller.PosGen and controller.P then
-				if (IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 80) then
-					
-				else
-					if (math.random(1,2+(table.Count(player.GetAll())*0.4)) == 1) then 
-						controller.P:Compute(controller, controller.PosGen)
-						controller.P:Update(controller)
+				if (bot.botPos) then
+					if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
+						bot.ControllerBot.PosGen = bot.botPos
 					end
 				end
-			end	
-			if (math.random(1,2+(table.Count(player.GetAll())*0.4)) == 1) then 
-				if (bot.botPos) then
-					bot.ControllerBot.PosGen = bot.botPos
-				end
-			end
 
 			if IsValid(bot.TargetEnt) and !IsValid(bot.intelcarrier) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 6000 and bot.TargetEnt:Health() > 0 then
 				if (bot:GetPlayerClass() != "tank_l4d") then
@@ -732,7 +726,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			
 				local shouldvegoneforthehead = bot.TargetEnt:EyePos()
 				local bone = 1
-				shouldvegoneforthehead = bot.TargetEnt:GetBonePosition(bone)
+				shouldvegoneforthehead = bot.TargetEnt:GetBonePosition(bone) or bot.TargetEnt:WorldSpaceCenter()
 
 				local lerp = 1.2
 				if bot.Difficulty == 0 then
@@ -743,9 +737,9 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					lerp = 4
 				end
 				if (bot:IsL4D()) then
-					bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):Angle()))
+					bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
 				else
-					bot:SetEyeAngles(LerpAngle(0.2 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):Angle()))
+					bot:SetEyeAngles(LerpAngle(0.2 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
 				end
 			end
 			if IsValid(bot.intelcarrier) and !IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.intelcarrier:GetPos()) < 6000 and bot.intelcarrier:Health() > 0 then
@@ -771,9 +765,9 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					lerp = 4
 				end
 				if (bot:IsL4D()) then
-					bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):Angle()))
+					bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
 				else
-					bot:SetEyeAngles(LerpAngle(FrameTime() * math.random(8, 10) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):Angle()))
+					bot:SetEyeAngles(LerpAngle(FrameTime() * math.random(8, 10) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
 				end
 			end
 		if bot.ControllerBot.P then
@@ -869,7 +863,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 end)
 hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 	local buttons = 0
-	if bot.TFBot then
+	if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*0.4)) == 1 then
 		local controller = bot.ControllerBot
 		bot.movement = mv
 		if bot:IsPlayer() and !bot:IsBot() then
@@ -986,7 +980,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			-- find a random spot on the map, and in 10 seconds do it again!
 			if (!IsValid(bot.TargetEnt) and !bot:IsL4D()) then 
 				local trgt = lookForNearestPlayer(bot)
-				if (IsValid(trgt) and trgt:Alive() and trgt:EntIndex() != bot:EntIndex()) then
+				if (IsValid(trgt) and trgt:Health() > 0 and trgt:EntIndex() != bot:EntIndex()) then
 					bot.botPos = trgt:GetPos()
 				else
 					bot.botPos = nil
@@ -996,9 +990,16 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				else
 					mv:SetForwardSpeed(0)
 				end
-			elseif (bot:IsL4D()) then
+			elseif (!IsValid(bot.TargetEnt) and bot:IsL4D()) then
 				local trgt = lookForNearestPlayer(bot)
 				if (IsValid(trgt) and trgt:Alive() and trgt:EntIndex() != bot:EntIndex()) then
+					bot.botPos = trgt:GetPos()
+				else
+					bot.botPos = bot.ControllerBot:FindSpot("random", {radius = 12500})
+				end
+			elseif (IsValid(bot.TargetEnt)) then
+				local trgt = bot.TargetEnt
+				if (IsValid(trgt) and trgt:Health() > 0 and trgt:EntIndex() != bot:EntIndex()) then
 					bot.botPos = trgt:GetPos()
 				else
 					bot.botPos = bot.ControllerBot:FindSpot("random", {radius = 12500})
@@ -1053,7 +1054,11 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			end
 		end
 		if (!IsValid(bot.TargetEnt)) then
-			bot.TargetEnt = lookForNearestPlayer(bot)
+			
+			if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
+				bot.TargetEnt = lookForNearestPlayer(bot)
+			end
+			
 		end
 		------------------------------
 		 -----[[ENTITY DETECTION]]-----
@@ -1282,7 +1287,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			bot.TFBot = false
 		end
 	end
-		if bot.TFBot  then 
+		if bot.TFBot then 
 			local buttons = 0
 			local controller = bot.ControllerBot
 			cmd:ClearMovement()

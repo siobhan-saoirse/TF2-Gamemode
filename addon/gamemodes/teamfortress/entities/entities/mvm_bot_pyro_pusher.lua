@@ -8,7 +8,7 @@ ENT.AdminOnly = false
 ENT.IsBoss = false
 ENT.PrintName		= "Pyro Pusher"
 ENT.Items = {"Scorch Shot"}
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 ENT.PreferredIcon = "hud/leaderboard_class_pyro_flare"
 
 list.Set( "NPC", "mvm_bot_pyro_pusher", {

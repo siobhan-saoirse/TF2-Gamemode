@@ -442,5 +442,5 @@ end
 list.Set( "NPC", "npc_saxton", {
 	Name = "Saxton Hale",
 	Class = "npc_saxton",
-	Category = "TF2: VSH Bots"
+	Category = "TFBots"
 })

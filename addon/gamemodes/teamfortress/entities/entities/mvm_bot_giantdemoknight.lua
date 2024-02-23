@@ -9,7 +9,7 @@ ENT.IsBoss = true
 ENT.Difficulty = 3
 ENT.Items = {"Prince Tavish's Crown","Chargin' Targe","Eyelander","Ali Baba's Wee Booties"}	
 ENT.PrintName		= "Giant Demoknight"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 ENT.PreferredIcon = "hud/leaderboard_class_demoknight_giant"
 
 list.Set( "NPC", "mvm_bot_giantdemoknight", {

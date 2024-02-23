@@ -19,7 +19,7 @@ sound.Add( {
 } )
 SWEP.Base				= "tf_weapon_melee_base"
 
-SWEP.Slot				= 2
+SWEP.Slot				= 2  
 SWEP.ViewModel			= "models/weapons/c_models/c_pyro_arms.mdl"
 SWEP.WorldModel			= "models/weapons/w_models/w_fireaxe.mdl"
 SWEP.Crosshair = "tf_crosshair2"

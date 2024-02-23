@@ -241,10 +241,10 @@ function meta:IsFriendly(target)
 	if target:EntityTeam() == TEAM_FRIENDLY and t1~=t2 then
 		return true
 	end
-	if self:EntityTeam() == TEAM_SPECTATOR and t2~=t1 then
+	if self:IsPlayer() and self:EntityTeam() == TEAM_SPECTATOR and t2~=t1 then
 		return true
 	end
-	if target:EntityTeam() == TEAM_SPECTATOR and t1~=t2 then
+	if target:IsPlayer() and target:EntityTeam() == TEAM_SPECTATOR and t1~=t2 then
 		return true
 	end
 	return (self:HasNPCFlag(NPC_ALWAYSFRIENDLY) or

@@ -6,7 +6,7 @@ ENT.PZClass = "soldier"
 ENT.Spawnable = false
 ENT.AdminOnly = false
 ENT.PrintName		= "Soldier"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 
 list.Set( "NPC", "mvm_bot_soldier", {
 	Name = ENT.PrintName,

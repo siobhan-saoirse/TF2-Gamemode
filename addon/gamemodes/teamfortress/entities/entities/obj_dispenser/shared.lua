@@ -13,7 +13,8 @@ ENT.MaxMetal = 400
 ENT.IsEnabled = 0
 ENT.CollisionBox = {Vector(-24,-24,0), Vector(24,24,55)}
 ENT.BuildHull = {Vector(-24,-24,0), Vector(24,24,82)}
-
+ENT.Sound_Idle = Sound("Building_Dispenser.Idle")
+ENT.Sound_Heal = Sound("Building_Dispenser.Heal")
 ENT.ObjectName = "#TF_Object_Dispenser"
 
 function ENT:SetAutomaticFrameAdvance(bUsingAnim)
@@ -53,4 +54,34 @@ function ENT:SetAmmoPercentage(p)
 	local v = self.dt.BuildingInfoFloat
 	v.y = p
 	self.dt.BuildingInfoFloat = v
+end
+
+if CLIENT then
+function ENT:Think()
+		if !self.Idle_Sound and self:GetState()==3 || self.Idle_Sound and !self.Idle_Sound:IsPlaying() and self:GetState()==3 then
+			self.Idle_Sound = CreateSound(self, self.Sound_Idle)
+			self.Idle_Sound:Play()
+		end
+		if !self.Heal_Sound and self:GetNWInt("NumClients",0) >= 0 and self:GetState()==3 || self.Heal_Sound != nil and !self.Heal_Sound:IsPlaying() and self:GetNWInt("NumClients",0) >= 0 and self:GetState()==3 then
+			self.Heal_Sound = CreateSound(self, self.Sound_Heal)
+			self.Heal_Sound:Play()
+		end
+		if (self.Heal_Sound != nil and self.Heal_Sound:IsPlaying() and self:GetNWInt("NumClients",0) <= 0 and self:GetState()==3) then
+			self.Heal_Sound:Stop()
+		end
+end
+
+function ENT:OnRemove()
+
+	
+	if self.Idle_Sound then
+		self.Idle_Sound:Stop()
+	end
+	
+	if self.Heal_Sound then
+		self.Heal_Sound:Stop()
+	end
+
+end
+
 end

@@ -7,7 +7,7 @@ ENT.Spawnable = false
 ENT.AdminOnly = false
 ENT.IsBoss = false
 ENT.PrintName		= "GMOD Player"
-ENT.Category		= "TF2: RED Bots"
+ENT.Category		= "TFBots"
 
 list.Set( "NPC", "tf_red_bot_gmodplayer", {
 	Name = ENT.PrintName,

@@ -7,7 +7,7 @@ ENT.Spawnable = false
 ENT.AdminOnly = true 
 ENT.IsBoss = true
 ENT.PrintName		= "WTF Demoman"
-ENT.Category		= "TF2: VSH Bots"
+ENT.Category		= "TFBots"
 
 
 list.Set( "NPC", "mvm_bot_clusterfuck_demo", {

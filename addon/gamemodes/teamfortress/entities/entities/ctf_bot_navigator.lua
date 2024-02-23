@@ -32,19 +32,12 @@ function ENT:ChasePos( options )
 	
 	if !self.P:IsValid() then return end
 	while self.P:IsValid() do
-		if self.P:GetAge() > 0.3 and math.random(1,2+(table.Count(player.GetAll())*0.4)) == 1 then
+		
+		if self.P:GetAge() > 0.3 then
 			self.P:Compute(self, self.PosGen)
-			self.P:Update(self, self.PosGen)
-		end
-		if ( self.loco:IsStuck() ) then
-
-			self:HandleStuck()
-
-			return "stuck"
-
 		end
 		if GetConVar("developer"):GetFloat() > 0 then
-			self.P:Draw() 
+			self.P:Draw()
 		end
 		
 		if self.loco:IsStuck() then
@@ -52,7 +45,6 @@ function ENT:ChasePos( options )
 			return
 		end
 		
-		coroutine.wait(1)
 		coroutine.yield()
 	end
 end
@@ -70,7 +62,7 @@ function ENT:RunBehaviour()
 		if self.PosGen then
 			self:ChasePos({})
 		end
-		coroutine.wait(0.1)
+		coroutine.wait(1)
 		
 		coroutine.yield()
 	end

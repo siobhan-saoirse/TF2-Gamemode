@@ -45,7 +45,8 @@ function ENT:Think()
 			
 				GAMEMODE:GiveHealthPercent(pl, 100)
 				GAMEMODE:GiveAmmoPercent(pl, 100)
-				pl:SetPlayerClass(pl:GetPlayerClass())
+				--pl:SetPlayerClass(pl:GetPlayerClass())
+				pl:ConCommand("loadout_update")
 				self.Players[pl] = CurTime()
 				self.NextClose = CurTime() + 1.5
 				

@@ -928,6 +928,7 @@ end
 		
 
 function SWEP:SecondaryAttack()
+	if (!self:CanPrimaryAttack()) then return end
 	if SERVER then
 		self.Owner:Speak("TLK_FIREWEAPON")
 	end
@@ -1820,6 +1821,7 @@ SWEP.Special_HumiliationKill = "LAUGH KILL!"
 
 
 function SWEP:PrimaryAttack()
+	if (!self:CanPrimaryAttack()) then return end
 	if self.Owner:KeyDown(IN_ATTACK2) then return end
 	if SERVER then
 		self.Owner:Speak("TLK_FIREWEAPON")

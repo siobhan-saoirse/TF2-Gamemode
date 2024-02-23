@@ -178,7 +178,7 @@ self.VM_INSPECT_END = ACT_PRIMARY_VM_INSPECT_END
 	end
 	if ( self:GetOwner():KeyPressed( IN_SPEED ) and inspecting == false and GetConVar("tf_caninspect"):GetBool() and self.Owner:GetInfoNum("tf_sprintinspect", 1) == 1 ) then
 		timer.Create("StartInspection", self:SequenceDuration(), 1,function()
-			if self:GetOwner():KeyDown( IN_SPEED ) then 
+			if self:GetOwner():KeyDown(  ) then 
 				inspecting_idle = true
 			else
 				if CLIENT then

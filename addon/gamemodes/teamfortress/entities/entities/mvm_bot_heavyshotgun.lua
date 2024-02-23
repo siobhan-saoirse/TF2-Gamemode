@@ -9,7 +9,7 @@ ENT.IsBoss = false
 ENT.Difficulty = 2
 ENT.Items = {"Shotgun"}
 ENT.PrintName		= "Heavy Shotgun"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 ENT.PreferredIcon = "hud/leaderboard_class_heavy_shotgun"
 
 list.Set( "NPC", "mvm_bot_heavyshotgun", {

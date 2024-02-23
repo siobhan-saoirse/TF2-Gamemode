@@ -8,7 +8,7 @@ ENT.AdminOnly = true
 ENT.IsBoss = true
 ENT.Difficulty = 3
 ENT.PrintName		= "Giant Heavy"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 list.Set( "NPC", "mvm_bot_giantheavy", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot_giantheavy",

@@ -6,7 +6,7 @@ ENT.PZClass = "melee_scout"
 ENT.Spawnable = false
 ENT.AdminOnly = false
 ENT.PrintName		= "Scout (Sun-on-a-Stick)"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 ENT.Items = {"Sun-on-a-Stick","Bolt Boy"}
 ENT.PreferredIcon = "hud/leaderboard_class_scout"
 

@@ -163,7 +163,7 @@ monster_scientist = {
 	vplayer=VPLAYER_REBEL
 },
 monster_bigmomma = {
-	team=TEAM_NEUTRAL,
+	team=TEAM_GREEN,
 	health=1000,
 	accuracy=2,
 	flags=NPC_CANNOTHEAL,
@@ -259,6 +259,11 @@ npc_turret_floor = {
 	flags=NPC_BUILDING,
 	vplayer=VPLAYER_NONE
 },
+npc_portal_turret_floor = {
+	team=TEAM_SPECTATOR,
+	flags=NPC_BUILDING,
+	vplayer=VPLAYER_NONE
+},
 npc_turret_ground = {
 	team=TEAM_BLU,
 	flags=NPC_BUILDING,
@@ -326,37 +331,37 @@ npc_sniper = {
 	vplayer=VPLAYER_COMBINE
 },
 monster_human_grunt = {
-	team=TEAM_BLU,
+	team=TEAM_SPECTATOR,
 	health=140,
 	flags=NPC_HUMAN,
 	vplayer=VPLAYER_REBEL
 },
 monster_apache = {
-	team=TEAM_BLU,
+	team=TEAM_SPECTATOR,
 	health=800,
 	flags=NPC_FLYING,
 	vplayer=VPLAYER_REBEL
 },
 monster_miniturret = {
-	team=TEAM_BLU,
+	team=TEAM_SPECTATOR,
 	health=140,
 	flags=NPC_MECH,
 	vplayer=VPLAYER_COMBINE
 },
 monster_turret = {
-	team=TEAM_BLU,
+	team=TEAM_SPECTATOR,
 	health=180,
 	flags=NPC_HUMAN,
 	vplayer=VPLAYER_COMBINE
 },
 monster_sentry = {
-	team=TEAM_BLU,
+	team=TEAM_SPECTATOR,
 	health=80,
 	flags=NPC_MECH,
 	vplayer=VPLAYER_COMBINE
 },
 monster_human_assassin = {
-	team=TEAM_BLU,
+	team=TEAM_SPECTATOR,
 	health=130,
 	flags=NPC_HUMAN,
 	vplayer=VPLAYER_METROCOP
@@ -446,10 +451,76 @@ npc_headcrab_poison = {
 	vplayer=VPLAYER_HEADCRAB
 },
 monster_alien_controller = {
-	team=TEAM_NEUTRAL,
+	team=TEAM_GREEN,
 	health=120,
 	vplayer=VPLAYER_NONE,
 },
+monster_alien_grunt = {
+	team=TEAM_GREEN,
+	health=200,
+	vplayer=VPLAYER_NONE,
+},
+
+monster_alien_slave = {
+	team=TEAM_GREEN,
+	health=175,
+	vplayer=VPLAYER_NONE,
+},
+
+monster_gargantua = {
+	team=TEAM_GREEN,
+	health=3000,
+	vplayer=VPLAYER_NONE,
+},
+
+monster_bullchicken = {
+	team=TEAM_GREEN,
+	health=100,
+	vplayer=VPLAYER_NONE,
+},
+
+monster_babycrab = {
+	team=TEAM_GREEN,
+	health=100,
+	vplayer=VPLAYER_NONE,
+},
+
+monster_headcrab = {
+	team=TEAM_GREEN,
+	health=95,
+	vplayer=VPLAYER_NONE,
+},
+
+monster_tentacle = {
+	team=TEAM_GREEN,
+	health=30000,
+	vplayer=VPLAYER_NONE,
+},
+
+monster_snark = {
+	team=TEAM_GREEN,
+	health=95,
+	vplayer=VPLAYER_NONE,
+},
+
+monster_houndeye = {
+	team=TEAM_GREEN,
+	health=95,
+	vplayer=VPLAYER_NONE,
+},
+
+monster_zombie = {
+	team=TEAM_GREEN,
+	health=95,
+	vplayer=VPLAYER_ZOMBIE,
+},
+
+monster_nihilanth = {
+	team=TEAM_GREEN,
+	health=95,
+	vplayer=VPLAYER_ZOMBIE,
+},
+
 
 -- Zombies
 npc_fastzombie = {
@@ -629,7 +700,7 @@ monster_barnacle = {
 	flags=NPC_NORELATIONSHIP,
 },
 npc_gman = {
-	team=TEAM_NEUTRAL,
+	team=TEAM_RED,
 	health=8,
 	flags=bit.bor(NPC_HUMAN,NPC_NORELATIONSHIP),
 	vplayer=VPLAYER_NONE

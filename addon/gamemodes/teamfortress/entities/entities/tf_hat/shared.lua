@@ -20,7 +20,7 @@ end
 function ENT:SetupSkinAndBodygroups(ent)
 	local hatdata = self:GetHatData()
 	
-	if hatdata then
+	if hatdata then 
 		if hatdata.skin then
 			ent:SetSkin(hatdata.skin)
 		else
@@ -189,10 +189,11 @@ end)
 end
 
 local ActivityTranslateFixTF2 = {} 
+
 if CLIENT then
 	
 	hook.Add("PlayerFireAnimationEvent","OnStepEventPlayStepSound",function( pl, pos, ang, event, name )
-		if (event == 7001) then
+		if (event == 7001 and !pl:GetNWBool("Taunting",false) and !pl:GetNWBool("Congaing",false) and !pl:GetNWBool("Russian",false)) then
 			
 			local tr = util.TraceLine( {
 				start = pl:GetPos() + Vector(0,0,72),
@@ -211,7 +212,7 @@ if CLIENT then
 
 				elseif (tr.MatType == MAT_DEFAULT) then
 
-					pl:EmitSound("Concrete.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("Default.Step"..table.Random({"Right","Left"}))
 
 				elseif (tr.MatType == MAT_GRASS) then
 
@@ -259,7 +260,7 @@ if CLIENT then
 
 				elseif (tr.MatType == MAT_FOLIAGE) then
 
-					pl:EmitSound("Wood.Step"..table.Random({"Right","Left"}))
+					pl:EmitSound("Grass.Step"..table.Random({"Right","Left"}))
 
 				elseif (tr.MatType == MAT_WOOD) then
 
@@ -874,6 +875,10 @@ hook.Add("EntityEmitSound", "MouthFix", function(snd)
 			if (!string.find(snd.SoundName,"announcer_") && !string.find(snd.SoundName,"mvm_")) then
 				snd.SoundName = string.Replace(snd.SoundName, ".mp3", ".wav") 
 			end
+		else
+			if (string.find(snd.SoundName,"vo")) then   
+				snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3") 
+			end
 		end
 		if (GetConVar("civ2_randomizer"):GetBool()) then	
 			if (!snd.Entity.IsRandomized) then
@@ -1021,11 +1026,11 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 				end
 			end
 		end]]
-		if (snd.Entity:GetClass() == "infected") then
+		if (snd.Entity:GetClass() == "infected_this_is_not_needed_anymore_why") then
 			if (string.find(snd.Entity:GetModel(),"clown")) then
 
 				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
+					if (v:GetClass() == "infected_this_is_not_needed_anymore_why" and !IsValid(v:GetEnemy()) and v.Ready) then
 						if (IsValid(snd.Entity:GetEnemy())) then
 							v:SetEnemy(snd.Entity:GetEnemy())
 							
@@ -1049,7 +1054,7 @@ if (IsMounted("left4dead") or IsMounted("left4dead2")) then
 
 				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
 					--v.TargetEnt = snd.Entity
-				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
+				elseif (v:GetClass() == "infected_this_is_not_needed_anymore_why" and !IsValid(v:GetEnemy()) and v.Ready) then
 					v:SetEnemy(snd.Entity)
 					
 	
@@ -1202,7 +1207,7 @@ timer.Create("FixImprovedNPCsConflict",0.1,0, function()
 end)
 
 hook.Remove("TranslateActivity", "TF2PMStuff")
-hook.Add("TranslateActivity", "TF2PMStuff", function(pl, act) 
+hook.Add("TranslateActivity", "TF2PMStuff2", function(pl, act) 
 	local holdtype
     if (IsValid(pl:GetActiveWeapon())) then
        holdtype = pl:GetActiveWeapon().HoldType or pl:GetActiveWeapon():GetHoldType() 
@@ -2798,7 +2803,7 @@ hook.Add("TranslateActivity", "TF2PMStuff", function(pl, act)
 			
 			if (!pl:GetActiveWeapon().HoldTypeHL2) then
 				return ActivityTranslateFixTF2[act] or act
-			end
+			end 
 		end
 	end
 end)
@@ -2852,12 +2857,186 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 			end
 		end
 	end]]
-	if CLIENT and !IsValid(snd.Entity) then return end
-	if IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.Entity:GetModel(),"bot_") and !snd.Entity:IsMiniBoss() and string.find(snd.SoundName, "step") then
-		if (string.find(snd.Entity:GetModel(),"demo") and string.find(snd.Entity:GetModel(),"buster")) then
+	if (IsValid(snd.Entity) and snd.Entity:IsPlayer()) then
+		if IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.Entity:GetModel(),"bot_") and !snd.Entity:IsMiniBoss() and string.find(snd.SoundName, "step") then
+			if (string.find(snd.Entity:GetModel(),"demo") and string.find(snd.Entity:GetModel(),"buster")) then
+				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/sentrybuster/mvm_sentrybuster_step_0"..math.random(1,4)..".wav")
+				snd.SoundLevel = 95
+				snd.Channel = CHAN_STATIC
+				snd.Pitch = 100
+				local speed = snd.Entity:GetVelocity():Length()
+				local groundspeed = snd.Entity:GetVelocity():Length2DSqr()
+				if (snd.Entity:IsPlayer()) then
+					if (snd.Entity:GetMoveType() == MOVETYPE_LADDER) then
+						snd.Volume = 1 * (groundspeed * 0.000006)
+					elseif (snd.Entity:IsPlayer() and snd.Entity:Crouching()) then
+						snd.Volume = 1 * (groundspeed * 0.000006)
+					else
+						if (CLIENT and snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
+							if (LocalPlayer():ShouldDrawLocalPlayer()) then
+								if (snd.Entity:GetNWBool("Taunting",false) == true) then
+									snd.Volume = 0
+								else
+									snd.Volume = 1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.01))
+								end
+							else
+								snd.Volume = 1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.01))
+							end
+						else
+							if (snd.Entity:GetNWBool("Taunting",false) == true) then
+								snd.Volume = 0
+							else
+								snd.Volume = 1 * (groundspeed * 0.000009 * (snd.Entity:GetRunSpeed() * 0.01))
+							end
+						end
+					end
+				end
+			else
+				local speed = snd.Entity:GetVelocity():Length()
+				local groundspeed = snd.Entity:GetVelocity():Length2DSqr()
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_01.wav")
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_02.wav")
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_03.wav")
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_04.wav")
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_05.wav")
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_06.wav")
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_07.wav")
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_08.wav")
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_09.wav")
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_10.wav")
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_11.wav")
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_12.wav")
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_13.wav")
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_14.wav")
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_15.wav")
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_16.wav")
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_17.wav")
+				snd.Entity:StopSound("mvm/player/footsteps/robostep_18.wav")
+				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "mvm/player/footsteps/robostep_"..table.Random({
+					"01",
+					"02",
+					"03",
+					"04",
+					"05",
+					"06",
+					"07",
+					"08",
+					"09",
+					"10",
+					"11",
+					"12",
+					"13",
+					"14",
+					"15",
+					"16",
+					"17",
+					"18",
+				})..".wav")
+				
+				snd.Channel = CHAN_STATIC
+				snd.Pitch = math.random(95,100)
+				snd.SoundLevel = 87
+				if (snd.Entity:IsPlayer()) then
+					if (snd.Entity:GetMoveType() == MOVETYPE_LADDER) then
+						snd.Volume = 1 * (groundspeed * 0.000006)
+					elseif (snd.Entity:IsPlayer() and snd.Entity:Crouching()) then
+						snd.Volume = 1 * (groundspeed * 0.000006)
+					else
+						if (CLIENT and snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
+							if (LocalPlayer():ShouldDrawLocalPlayer()) then
+								if (snd.Entity:GetNWBool("Taunting",false) == true) then
+									snd.Volume = 0
+								else
+									snd.Volume = 1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.01))
+								end
+							else
+								snd.Volume = 1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.01))
+							end
+						else
+							if (snd.Entity:GetNWBool("Taunting",false) == true) then
+								snd.Volume = 0
+							else
+								snd.Volume = 1 * (groundspeed * 0.000009 * (snd.Entity:GetRunSpeed() * 0.01))
+							end
+						end
+					end
+				end
+				snd.Volume = snd.Volume * 0.35
+				if (snd.Entity:GetClass() == "infected_this_is_not_needed_anymore_why") then
+					if (string.find(snd.Entity:GetModel(),"clown")) then
+		
+						for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
+							if (v:GetClass() == "infected_this_is_not_needed_anymore_why" and !IsValid(v:GetEnemy()) and v.Ready) then
+								if (IsValid(snd.Entity:GetEnemy())) then
+									v:SetEnemy(snd.Entity:GetEnemy())
+									
+								end
+							end
+						end
+		
+					end
+				end
+				if (snd.Entity:IsTFPlayer() and GAMEMODE:EntityTeam(snd.Entity) != TEAM_GREEN) then
+		
+					for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
+						if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
+							--v.TargetEnt = snd.Entity
+		
+							if SERVER then
+								for _,npc in ipairs(ents.GetAll()) do
+									if npc:IsNPC() and !npc:IsFriendly(v) then
+										npc:AddEntityRelationship(v,D_HT,99)
+									end
+								end
+							end
+						end
+					end
+		
+				end
+				if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
+					for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
+						if (v:GetClass() == "infected_this_is_not_needed_anymore_why" and !IsValid(v:GetEnemy()) and v.Ready) then
+							v:SetEnemy(snd.Entity)
+							
+			
+							if SERVER then
+								local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+								--v:AddGestureSequence(anim,true)
+							end
+			
+							timer.Stop("IdleExpression"..v:EntIndex())
+							timer.Stop("AngryExpression"..v:EntIndex())
+							timer.Create("AngryExpression"..v:EntIndex(), 3, 0, function()
+								
+								if SERVER then
+									local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+									--v:AddGestureSequence(anim,true)
+								end
+			
+								timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
+							end)
+							if SERVER then
+								for _,npc in ipairs(ents.GetAll()) do
+									if npc:IsNPC() and !v:IsFriendly(npc) then
+										npc:AddEntityRelationship(v,D_HT,99)
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+			return true
+		elseif IsValid(snd.Entity) and snd.Entity:GetModel() and snd.Entity:IsPlayer() and snd.Entity:IsHL2() and (string.find(snd.SoundName, "fallpain") or string.find(snd.SoundName, "damage")) then
+			snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/pl_fallpain"..table.Random({1,3})..".wav")
+			return true
+		elseif IsValid(snd.Entity) and snd.Entity:GetModel() and snd.Entity:IsPlayer() and (snd.Entity:GetPlayerClass() == "hl1scientist" || snd.Entity:GetPlayerClass() == "hl1barney") and (string.find(snd.SoundName, "fallpain") or string.find(snd.SoundName, "damage")) then
+			snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "hl1/player/pl_fallpain"..math.random(1,3)..".wav")
+			return true
+		elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.Entity:GetModel(),"bot_") and string.find(snd.Entity:GetModel(),"buster") and string.find(snd.SoundName, "step") then
 			snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/sentrybuster/mvm_sentrybuster_step_0"..math.random(1,4)..".wav")
 			snd.SoundLevel = 95
-			snd.Channel = CHAN_STATIC
+			snd.Channel = CHAN_BODY
 			snd.Pitch = 100
 			local speed = snd.Entity:GetVelocity():Length()
 			local groundspeed = snd.Entity:GetVelocity():Length2DSqr()
@@ -2872,111 +3051,110 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 							if (snd.Entity:GetNWBool("Taunting",false) == true) then
 								snd.Volume = 0
 							else
-								snd.Volume = 1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.008))
+								snd.Volume = 1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.01))
 							end
 						else
-							snd.Volume = 1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.008))
+							snd.Volume = 1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.01))
 						end
 					else
 						if (snd.Entity:GetNWBool("Taunting",false) == true) then
 							snd.Volume = 0
 						else
-							snd.Volume = 1 * (groundspeed * 0.000009 * (snd.Entity:GetRunSpeed() * 0.008))
+							snd.Volume = 1 * (groundspeed * 0.000009 * (snd.Entity:GetRunSpeed() * 0.01))
 						end
 					end
 				end
 			end
-		else
+			return true
+		elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.StartWith(snd.Entity:GetModel(), "models/player") and !string.find(snd.Entity:GetModel(), "tfc") and snd.Entity:LookupBone("bip_head") and !string.find(snd.Entity:GetModel(), "bot") and string.find(snd.SoundName, "step") then
+			snd.SoundName = string.Replace(snd.SoundName, "wade5", "wade1")
+			snd.SoundName = string.Replace(snd.SoundName, "wade6", "wade2")
+			snd.SoundName = string.Replace(snd.SoundName, "wade7", "wade3")
+			snd.SoundName = string.Replace(snd.SoundName, "wade8", "wade4")
+			snd.SoundName = string.Replace(snd.SoundName, "snow5", "snow1")
+			snd.SoundName = string.Replace(snd.SoundName, "snow6", "snow2")
+				snd.Channel = CHAN_BODY
 			local speed = snd.Entity:GetVelocity():Length()
 			local groundspeed = snd.Entity:GetVelocity():Length2DSqr()
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_01.wav")
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_02.wav")
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_03.wav")
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_04.wav")
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_05.wav")
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_06.wav")
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_07.wav")
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_08.wav")
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_09.wav")
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_10.wav")
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_11.wav")
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_12.wav")
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_13.wav")
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_14.wav")
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_15.wav")
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_16.wav")
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_17.wav")
-			snd.Entity:StopSound("mvm/player/footsteps/robostep_18.wav")
-			snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "mvm/player/footsteps/robostep_"..table.Random({
-				"01",
-				"02",
-				"03",
-				"04",
-				"05",
-				"06",
-				"07",
-				"08",
-				"09",
-				"10",
-				"11",
-				"12",
-				"13",
-				"14",
-				"15",
-				"16",
-				"17",
-				"18",
-			})..".wav")
+			if (snd.Entity:WaterLevel() < 1) then
+				snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "tf/player/footsteps/")
+			elseif (snd.Entity:WaterLevel() < 2) then
+				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "tf/player/footsteps/slosh"..math.random(1,4)..".wav")
+			else
+				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "tf/player/footsteps/wade"..math.random(1,4)..".wav")
+			end
+			local pl = snd.Entity
 			
-			snd.Channel = CHAN_STATIC
-			snd.Pitch = math.random(95,100)
-			snd.SoundLevel = 87
+			if (CLIENT and snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
+				if (!pl:IsL4D() and !pl:IsBot()) then
+					if (pl:GetPlayerClass() != "gmodplayer") then
+						--pl:SetModel(pl:GetNWString("PlayerClassModel"))
+					end
+				elseif (pl:IsL4D()) then
+					--pl:SetModel(pl:GetNWString("L4DModel"))
+				end
+			end
+
+			--[[
+	if (IsMounted("left4dead") or IsMounted("left4dead2")) then 
+				local pos = snd.Entity:GetPos()
+				if (snd.Pos) then
+					pos = snd.Pos
+				end
+				if (snd.Channel == CHAN_BODY) then
+					if (math.random(1,6) != 1) then
+						snd.Channel = CHAN_STATIC
+						return true
+					end
+				end
+			end]]
+			snd.Pitch = math.random(95,105)
 			if (snd.Entity:IsPlayer()) then
 				if (snd.Entity:GetMoveType() == MOVETYPE_LADDER) then
-					snd.Volume = 1 * (groundspeed * 0.000006)
+					snd.Volume = 1 * (groundspeed * 0.000006) * 0.2
 				elseif (snd.Entity:IsPlayer() and snd.Entity:Crouching()) then
-					snd.Volume = 1 * (groundspeed * 0.000006)
+					snd.Volume = 1 * (groundspeed * 0.000006) * 0.2
 				else
 					if (CLIENT and snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
 						if (LocalPlayer():ShouldDrawLocalPlayer()) then
 							if (snd.Entity:GetNWBool("Taunting",false) == true) then
 								snd.Volume = 0
 							else
-								snd.Volume = 1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.008))
+								snd.Volume = ((1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.01)))) * 0.3
 							end
 						else
-							snd.Volume = 1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.008))
+							snd.Volume = ((1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.01)))) * 0.03
 						end
 					else
 						if (snd.Entity:GetNWBool("Taunting",false) == true) then
 							snd.Volume = 0
 						else
-							snd.Volume = 1 * (groundspeed * 0.000009 * (snd.Entity:GetRunSpeed() * 0.008))
+							snd.Volume = ((1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.01)))) * 0.3
 						end
 					end
 				end
 			end
-			snd.Volume = snd.Volume * 0.35
-			if (snd.Entity:GetClass() == "infected") then
+			if (snd.Entity:GetClass() == "infected_this_is_not_needed_anymore_why") then
 				if (string.find(snd.Entity:GetModel(),"clown")) then
-	
+
 					for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-						if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
+						if (v:GetClass() == "infected_this_is_not_needed_anymore_why" and !IsValid(v:GetEnemy()) and v.Ready) then
 							if (IsValid(snd.Entity:GetEnemy())) then
 								v:SetEnemy(snd.Entity:GetEnemy())
 								
 							end
 						end
 					end
-	
+
 				end
 			end
 			if (snd.Entity:IsTFPlayer() and GAMEMODE:EntityTeam(snd.Entity) != TEAM_GREEN) then
-	
+
 				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
 					if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
 						--v.TargetEnt = snd.Entity
-	
+
+						
 						if SERVER then
 							for _,npc in ipairs(ents.GetAll()) do
 								if npc:IsNPC() and !npc:IsFriendly(v) then
@@ -2986,17 +3164,21 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 						end
 					end
 				end
-	
+
 			end
 			if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
-				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
+				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
+
+					if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
+						--v.TargetEnt = snd.Entity
+					elseif (v:GetClass() == "infected_this_is_not_needed_anymore_why" and !IsValid(v:GetEnemy()) and v.Ready) then
 						v:SetEnemy(snd.Entity)
 						
 		
 						if SERVER then
-							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							--v:AddGestureSequence(anim,true)
+							--[[
+	local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+							--v:AddGestureSequence(anim,true)]]
 						end
 		
 						timer.Stop("IdleExpression"..v:EntIndex())
@@ -3012,7 +3194,7 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 						end)
 						if SERVER then
 							for _,npc in ipairs(ents.GetAll()) do
-								if npc:IsNPC() and !v:IsFriendly(npc) then
+								if npc:IsNPC() and !npc:IsFriendly(v) then
 									npc:AddEntityRelationship(v,D_HT,99)
 								end
 							end
@@ -3020,1411 +3202,573 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 					end
 				end
 			end
-		end
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.Entity:GetModel(),"infected") and (string.find(snd.SoundName, "fallpain") or string.find(snd.SoundName, "damage")) then
-		return false
-	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and snd.Entity:IsPlayer() and snd.Entity:IsHL2() and (string.find(snd.SoundName, "fallpain") or string.find(snd.SoundName, "damage")) then
-		snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/pl_fallpain"..table.Random({1,3})..".wav")
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and snd.Entity:IsPlayer() and (snd.Entity:GetPlayerClass() == "hl1scientist" || snd.Entity:GetPlayerClass() == "hl1barney") and (string.find(snd.SoundName, "fallpain") or string.find(snd.SoundName, "damage")) then
-		snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "hl1/player/pl_fallpain"..math.random(1,3)..".wav")
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.Entity:GetModel(),"bot_") and string.find(snd.Entity:GetModel(),"buster") and string.find(snd.SoundName, "step") then
-		snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/sentrybuster/mvm_sentrybuster_step_0"..math.random(1,4)..".wav")
-		snd.SoundLevel = 95
-		snd.Channel = CHAN_BODY
-		snd.Pitch = 100
-		local speed = snd.Entity:GetVelocity():Length()
-		local groundspeed = snd.Entity:GetVelocity():Length2DSqr()
-		if (snd.Entity:IsPlayer()) then
-			if (snd.Entity:GetMoveType() == MOVETYPE_LADDER) then
-				snd.Volume = 1 * (groundspeed * 0.000006)
-			elseif (snd.Entity:IsPlayer() and snd.Entity:Crouching()) then
-				snd.Volume = 1 * (groundspeed * 0.000006)
-			else
-				if (CLIENT and snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
-					if (LocalPlayer():ShouldDrawLocalPlayer()) then
-						if (snd.Entity:GetNWBool("Taunting",false) == true) then
-							snd.Volume = 0
-						else
-							snd.Volume = 1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.008))
-						end
-					else
-						snd.Volume = 1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.008))
-					end
+			
+			if (string.find(snd.Entity:GetModel(),"hwm")) then
+	 
+				if (snd.Entity.playerclass == "medicshotgun") then	
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
+				elseif (snd.Entity.playerclass == "heavy") then 
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
+				elseif (snd.Entity.playerclass == "scout") then
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/scout/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/scout/phonemes/phonemes" )
+				elseif (snd.Entity.playerclass == "soldier") then
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/soldier/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/soldier/phonemes/phonemes" )
+				elseif (snd.Entity.playerclass == "demoman") then
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/demo/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/demo/phonemes/phonemes" )
+				elseif (snd.Entity.playerclass == "engineer") then
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/engineer/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/engineer/phonemes/phonemes" )
+				elseif (snd.Entity.playerclass == "medic") then
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
+				elseif (snd.Entity.playerclass == "sniper") then
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/sniper/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/sniper/phonemes/phonemes" )
+				elseif (snd.Entity.playerclass == "spy") then
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/spy/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/spy/phonemes/phonemes" )
 				else
-					if (snd.Entity:GetNWBool("Taunting",false) == true) then
-						snd.Volume = 0
-					else
-						snd.Volume = 1 * (groundspeed * 0.000009 * (snd.Entity:GetRunSpeed() * 0.008))
-					end
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/emotions/emotions" )
+					--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
 				end
-			end
-		end
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.StartWith(snd.Entity:GetModel(), "models/player") and !string.find(snd.Entity:GetModel(), "tfc") and snd.Entity:LookupBone("bip_head") and !string.find(snd.Entity:GetModel(), "bot") and string.find(snd.SoundName, "step") then
-		snd.SoundName = string.Replace(snd.SoundName, "wade5", "wade1")
-		snd.SoundName = string.Replace(snd.SoundName, "wade6", "wade2")
-		snd.SoundName = string.Replace(snd.SoundName, "wade7", "wade3")
-		snd.SoundName = string.Replace(snd.SoundName, "wade8", "wade4")
-		snd.SoundName = string.Replace(snd.SoundName, "snow5", "snow1")
-		snd.SoundName = string.Replace(snd.SoundName, "snow6", "snow2")
-			snd.Channel = CHAN_BODY
-		local speed = snd.Entity:GetVelocity():Length()
-		local groundspeed = snd.Entity:GetVelocity():Length2DSqr()
-		if (snd.Entity:WaterLevel() < 1) then
-			snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "tf/player/footsteps/")
-		elseif (snd.Entity:WaterLevel() < 2) then
-			snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "tf/player/footsteps/slosh"..math.random(1,4)..".wav")
-		else
-			snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "tf/player/footsteps/wade"..math.random(1,4)..".wav")
-		end
-		local pl = snd.Entity
-		
-		if (CLIENT and snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
-			if (!pl:IsL4D() and !pl:IsBot()) then
-				if (pl:GetPlayerClass() != "gmodplayer") then
-					--pl:SetModel(pl:GetNWString("PlayerClassModel"))
-				end
-			elseif (pl:IsL4D()) then
-				--pl:SetModel(pl:GetNWString("L4DModel"))
-			end
-		end
 
-		--[[
-if (IsMounted("left4dead") or IsMounted("left4dead2")) then 
-			local pos = snd.Entity:GetPos()
-			if (snd.Pos) then
-				pos = snd.Pos
-			end
-			if (snd.Channel == CHAN_BODY) then
-				if (math.random(1,6) != 1) then
-					snd.Channel = CHAN_STATIC
-					return true
-				end
-			end
-		end]]
-		snd.Pitch = 100
-		if (snd.Entity:IsPlayer()) then
-			if (snd.Entity:GetMoveType() == MOVETYPE_LADDER) then
-				snd.Volume = 1 * (groundspeed * 0.000006) * 0.2
-			elseif (snd.Entity:IsPlayer() and snd.Entity:Crouching()) then
-				snd.Volume = 1 * (groundspeed * 0.000006) * 0.2
-			else
-				if (CLIENT and snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
-					if (LocalPlayer():ShouldDrawLocalPlayer()) then
-						if (snd.Entity:GetNWBool("Taunting",false) == true) then
-							snd.Volume = 0
-						else
-							snd.Volume = ((1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.008)))) * 0.3
-						end
-					else
-						snd.Volume = ((1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.008)))) * 0.03
-					end
+			elseif (string.find(snd.Entity:GetModel(),"player") && snd.Entity:LookupBone("bip_head")) then
+				if (snd.Entity.playerclass == "medicshotgun") then	
+					--snd.Entity:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
+				elseif (snd.Entity.playerclass == "heavy") then
+					--snd.Entity:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
+				elseif (snd.Entity.playerclass == "scout") then
+					--snd.Entity:SetupPhonemeMappings( "player/scout/phonemes/phonemes" )
+				elseif (snd.Entity.playerclass == "soldier") then
+					--snd.Entity:SetupPhonemeMappings( "player/soldier/phonemes/phonemes" )
+				elseif (snd.Entity.playerclass == "demoman") then
+					--snd.Entity:SetupPhonemeMappings( "player/demo/phonemes/phonemes" )
+				elseif (snd.Entity.playerclass == "engineer") then
+					--snd.Entity:SetupPhonemeMappings( "player/engineer/phonemes/phonemes" )
+				elseif (snd.Entity.playerclass == "medic") then
+					--snd.Entity:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
+				elseif (snd.Entity.playerclass == "sniper") then
+					--snd.Entity:SetupPhonemeMappings( "player/sniper/phonemes/phonemes" )
+				elseif (snd.Entity.playerclass == "spy") then
+					--snd.Entity:SetupPhonemeMappings( "player/spy/phonemes/phonemes" )
 				else
-					if (snd.Entity:GetNWBool("Taunting",false) == true) then
-						snd.Volume = 0
-					else
-						snd.Volume = ((1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.008)))) * 0.3
-					end
+					--snd.Entity:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
 				end
-			end
-		end
-		if (snd.Entity:GetClass() == "infected") then
-			if (string.find(snd.Entity:GetModel(),"clown")) then
-
-				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-						if (IsValid(snd.Entity:GetEnemy())) then
-							v:SetEnemy(snd.Entity:GetEnemy())
-							
-						end
-					end
-				end
-
-			end
-		end
-		if (snd.Entity:IsTFPlayer() and GAMEMODE:EntityTeam(snd.Entity) != TEAM_GREEN) then
-
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					--v.TargetEnt = snd.Entity
-
-					
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end
-					end
-				end
-			end
-
-		end
-		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-
-				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
-					--v.TargetEnt = snd.Entity
-				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-					v:SetEnemy(snd.Entity)
-					
-	
-					if SERVER then
-						--[[
-local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						--v:AddGestureSequence(anim,true)]]
-					end
-	
-					timer.Stop("IdleExpression"..v:EntIndex())
-					timer.Stop("AngryExpression"..v:EntIndex())
-					timer.Create("AngryExpression"..v:EntIndex(), 3, 0, function()
-						
-						if SERVER then
-							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							--v:AddGestureSequence(anim,true)
-						end
-	
-						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
-					end)
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end
-					end
-				end
-			end
-		end
-		
-		if (string.find(snd.Entity:GetModel(),"hwm")) then
- 
-			if (snd.Entity.playerclass == "medicshotgun") then	
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/emotions/emotions" )
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
-			elseif (snd.Entity.playerclass == "heavy") then 
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/emotions/emotions" )
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
-			elseif (snd.Entity.playerclass == "scout") then
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/scout/emotions/emotions" )
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/scout/phonemes/phonemes" )
-			elseif (snd.Entity.playerclass == "soldier") then
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/soldier/emotions/emotions" )
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/soldier/phonemes/phonemes" )
-			elseif (snd.Entity.playerclass == "demoman") then
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/demo/emotions/emotions" )
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/demo/phonemes/phonemes" )
-			elseif (snd.Entity.playerclass == "engineer") then
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/engineer/emotions/emotions" )
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/engineer/phonemes/phonemes" )
-			elseif (snd.Entity.playerclass == "medic") then
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/emotions/emotions" )
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
-			elseif (snd.Entity.playerclass == "sniper") then
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/sniper/emotions/emotions" )
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/sniper/phonemes/phonemes" )
-			elseif (snd.Entity.playerclass == "spy") then
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/spy/emotions/emotions" )
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/spy/phonemes/phonemes" )
-			else
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/emotions/emotions" )
-				--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
-			end
-
-		elseif (string.find(snd.Entity:GetModel(),"player") && snd.Entity:LookupBone("bip_head")) then
-			if (snd.Entity.playerclass == "medicshotgun") then	
-				--snd.Entity:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
-			elseif (snd.Entity.playerclass == "heavy") then
-				--snd.Entity:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
-			elseif (snd.Entity.playerclass == "scout") then
-				--snd.Entity:SetupPhonemeMappings( "player/scout/phonemes/phonemes" )
-			elseif (snd.Entity.playerclass == "soldier") then
-				--snd.Entity:SetupPhonemeMappings( "player/soldier/phonemes/phonemes" )
-			elseif (snd.Entity.playerclass == "demoman") then
-				--snd.Entity:SetupPhonemeMappings( "player/demo/phonemes/phonemes" )
-			elseif (snd.Entity.playerclass == "engineer") then
-				--snd.Entity:SetupPhonemeMappings( "player/engineer/phonemes/phonemes" )
-			elseif (snd.Entity.playerclass == "medic") then
-				--snd.Entity:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
-			elseif (snd.Entity.playerclass == "sniper") then
-				--snd.Entity:SetupPhonemeMappings( "player/sniper/phonemes/phonemes" )
-			elseif (snd.Entity.playerclass == "spy") then
-				--snd.Entity:SetupPhonemeMappings( "player/spy/phonemes/phonemes" )
-			else
-				--snd.Entity:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
-			end
-		end
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:IsPlayer() and snd.Entity:IsHL2() and string.find(snd.SoundName, "step") then
-		if CLIENT then
-			if (snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
-				--snd.Entity:SetupPhonemeMappings("phonemes")
-				--snd.Entity:SetModel(snd.Entity:GetNWString("PlayerClassModel"))
 			end
 			return true
-		end
-	elseif (IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.SoundName,"female") and string.find(snd.Entity:GetModel(),"common_male")) then
-		snd.SoundName = string.Replace(snd.SoundName, "female", "male")
-		return true
-	elseif (IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.SoundName,"male") and string.find(snd.Entity:GetModel(),"common_female")) then
-		snd.SoundName = string.Replace(snd.SoundName, "male", "female")
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.StartWith(snd.Entity:GetModel(), "models/infected/common_") and string.find(snd.SoundName, "step") then
-		snd.SoundName = string.Replace(snd.SoundName, "wade5", "wade1")
-		snd.SoundName = string.Replace(snd.SoundName, "wade6", "wade2")
-		snd.SoundName = string.Replace(snd.SoundName, "wade7", "wade3")
-		snd.SoundName = string.Replace(snd.SoundName, "wade8", "wade4")
-		snd.SoundName = string.Replace(snd.SoundName, "snow5", "snow1")
-		snd.SoundName = string.Replace(snd.SoundName, "snow6", "snow2")
-		snd.Channel = CHAN_BODY
-		local speed = snd.Entity:GetVelocity():Length()
-		local groundspeed = snd.Entity:GetVelocity():Length2DSqr()
-		snd.Volume = 0.5
-		--[[
-if (IsMounted("left4dead") or IsMounted("left4dead2")) then 
-			local pos = snd.Entity:GetPos()
-			if (snd.Pos) then
-				pos = snd.Pos
-			end
-			if (snd.Channel == CHAN_BODY) then
-				if (math.random(1,6) != 1) then
-					snd.Channel = CHAN_STATIC
-					return true
-				end
-			end
-		end]]
-		if (string.find(snd.Entity:GetModel(),"clown")) then
-			if (snd.Entity:WaterLevel() < 1) then
-				snd.SoundName = "player/footsteps/clown/concrete"..math.random(1,8)..".wav"
-				snd.Volume = 0.5
-			elseif (snd.Entity:WaterLevel() < 2) then
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/footsteps/boomer/run/wade"..math.random(1,4)..".wav")
-				snd.Volume = 0.5
-			else
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/footsteps/boomer/run/wade"..math.random(1,4)..".wav")
-				snd.Volume = 0.5
-			end
-		elseif (string.find(snd.Entity:GetModel(),"mud")) then
-			if (snd.Entity:WaterLevel() < 1) then
-				if (!string.find(snd.Entity:GetSequenceName(snd.Entity:SelectWeightedSequence(snd.Entity:GetNWInt("NetworkedActivity",-1))),"run_")) then
-					snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/boomer/walk/")
-					snd.Volume = 0.85
-				else
-					snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/boomer/run/")
-					snd.Volume = 0.5
-				end
-			elseif (snd.Entity:WaterLevel() < 2) then
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/footsteps/boomer/run/wade"..math.random(1,4)..".wav")
-				snd.Volume = 0.5
-			else
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/footsteps/boomer/run/wade"..math.random(1,4)..".wav")
-				snd.Volume = 0.5
-			end
-		elseif (string.find(snd.Entity:GetModel(),"riot")) then
-			snd.SoundName = table.Random(
-				{
-					"player/footsteps/infected/run/concrete1.wav",
-					"player/footsteps/infected/run/concrete2.wav",
-					"player/footsteps/infected/run/concrete3.wav",
-					"player/footsteps/infected/run/concrete4.wav",
-					"player/footsteps/survivor/run/tile1.wav",
-					"player/footsteps/survivor/run/tile2.wav",
-					"player/footsteps/survivor/run/tile3.wav",
-					"player/footsteps/survivor/run/tile4.wav",
-				}
-			)
-		else
-			if (snd.Entity:WaterLevel() < 1) then
-					
-				if (!string.find(snd.Entity:GetSequenceName(snd.Entity:SelectWeightedSequence(snd.Entity:GetNWInt("NetworkedActivity",-1))),"run_")) then
-					snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/infected/walk/")
-					snd.Volume = 0.85
-				else
-					snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/infected/run/")
-					snd.Volume = 0.5
-				end
-
-			elseif (snd.Entity:WaterLevel() < 2) then
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/footsteps/infected/run/wade"..math.random(1,4)..".wav")
-				snd.Volume = 0.5
-			else
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/footsteps/infected/run/wade"..math.random(1,4)..".wav")
-				snd.Volume = 0.5
-			end
-		end
-		if (snd.Entity:GetClass() == "infected") then
-			if (string.find(snd.Entity:GetModel(),"clown")) then
-
-				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-						if (IsValid(snd.Entity:GetEnemy())) then
-							v:SetEnemy(snd.Entity:GetEnemy())
-							
-						end
+		elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.StartWith(snd.Entity:GetModel(), "models/bots/headless_hatman") and string.find(snd.SoundName, "vo/") and !string.find(snd.SoundName, "knight") then
+			if (string.find(snd.SoundName,"demoman_") and string.find(snd.SoundName,"Pain") and !string.find(snd.SoundName,"Death")) then
+				snd.SoundName = string.Replace(snd.SoundName,snd.SoundName,"vo/halloween_boss/knight_pain0"..math.random(1,3)..".mp3")
+			elseif (string.find(snd.SoundName,"demoman_") and string.find(snd.SoundName,"Death")) then
+				snd.SoundName = string.Replace(snd.SoundName,snd.SoundName,"vo/halloween_boss/knight_death0"..math.random(1,2)..".mp3")
+			elseif (string.find(snd.SoundName,"demoman_") and !string.find(snd.SoundName,"Pain") and !string.find(snd.SoundName,"Death")) then
+				if (string.find(snd.SoundName,"Incoming")) then
+					snd.SoundName = string.Replace(snd.SoundName,snd.SoundName,"vo/halloween_boss/knight_alert0"..math.random(1,2)..".mp3")
+					local randomplr = table.Random(player.GetAll())
+					if (randomplr:EntIndex() != snd.Entity:EntIndex()) then
+						snd.Entity:SetPos(randomplr:GetPos() + Vector(0,0,72))
 					end
-				end
-
-			end
-		end
-		if (snd.Entity:IsTFPlayer() and GAMEMODE:EntityTeam(snd.Entity) != TEAM_GREEN) then
-
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					--v.TargetEnt = snd.Entity
-
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end
-					end
-				end
-			end
-
-		end
-		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-
-				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
-					--v.TargetEnt = snd.Entity
-				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-					v:SetEnemy(snd.Entity)
-					
-	
-					if SERVER then
-						--[[
-local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						--v:AddGestureSequence(anim,true)]]
-					end
-	
-					timer.Stop("IdleExpression"..v:EntIndex())
-					timer.Stop("AngryExpression"..v:EntIndex())
-					timer.Create("AngryExpression"..v:EntIndex(), 3, 0, function()
-						
-						if SERVER then
-							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							--v:AddGestureSequence(anim,true)
-						end
-	
-						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
-					end)
-					
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end
-					end
-				end
-			end
-		end
-		snd.Pitch = 100
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.StartWith(snd.Entity:GetModel(), "models/bots/headless_hatman") and string.find(snd.SoundName, "vo/") and !string.find(snd.SoundName, "knight") then
-		if (string.find(snd.SoundName,"demoman_") and string.find(snd.SoundName,"Pain") and !string.find(snd.SoundName,"Death")) then
-			snd.SoundName = string.Replace(snd.SoundName,snd.SoundName,"vo/halloween_boss/knight_pain0"..math.random(1,3)..".mp3")
-		elseif (string.find(snd.SoundName,"demoman_") and string.find(snd.SoundName,"Death")) then
-			snd.SoundName = string.Replace(snd.SoundName,snd.SoundName,"vo/halloween_boss/knight_death0"..math.random(1,2)..".mp3")
-		elseif (string.find(snd.SoundName,"demoman_") and !string.find(snd.SoundName,"Pain") and !string.find(snd.SoundName,"Death")) then
-			if (string.find(snd.SoundName,"Incoming")) then
-				snd.SoundName = string.Replace(snd.SoundName,snd.SoundName,"vo/halloween_boss/knight_alert0"..math.random(1,2)..".mp3")
-				local randomplr = table.Random(player.GetAll())
-				if (randomplr:EntIndex() != snd.Entity:EntIndex()) then
-					snd.Entity:SetPos(randomplr:GetPos() + Vector(0,0,72))
-				end
-			elseif (string.find(snd.SoundName,"Medic")) then
-				snd.SoundName = string.Replace(snd.SoundName,snd.SoundName,"vo/halloween_boss/knight_alert.mp3")
-				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),300)) do
-					if v:IsTFPlayer() and v:EntIndex() != snd.Entity:EntIndex() and v:Team() != snd.Entity:Team() then
-						if (v:IsPlayer()) then
-							v:StripWeapons()
-							v:ConCommand("tf_tp_simulation_toggle")
-							v:EmitSound("Halloween.PlayerScream")
-							v:SendLua("surface.PlaySound(\"misc/halloween/hwn_bomb_flash.wav\")")
-							local attach = v:LookupAttachment("head") or 1
-							ParticleEffectAttach("yikes_fx", PATTACH_POINT_FOLLOW, v, attach)
-							timer.Simple(5,function()
-								v:StopParticles()
-								local health = v:Health()
-								v:SetPlayerClass(v:GetPlayerClass())
+				elseif (string.find(snd.SoundName,"Medic")) then
+					snd.SoundName = string.Replace(snd.SoundName,snd.SoundName,"vo/halloween_boss/knight_alert.mp3")
+					for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),300)) do
+						if v:IsTFPlayer() and v:EntIndex() != snd.Entity:EntIndex() and v:Team() != snd.Entity:Team() then
+							if (v:IsPlayer()) then
+								v:StripWeapons()
 								v:ConCommand("tf_tp_simulation_toggle")
-								timer.Simple(0.1, function()
-									v:SetHealth(health)
+								v:EmitSound("Halloween.PlayerScream")
+								v:SendLua("surface.PlaySound(\"misc/halloween/hwn_bomb_flash.wav\")")
+								local attach = v:LookupAttachment("head") or 1
+								ParticleEffectAttach("yikes_fx", PATTACH_POINT_FOLLOW, v, attach)
+								timer.Simple(5,function()
+									v:StopParticles()
+									local health = v:Health()
+									v:SetPlayerClass(v:GetPlayerClass())
+									v:ConCommand("tf_tp_simulation_toggle")
+									timer.Simple(0.1, function()
+										v:SetHealth(health)
+									end)
 								end)
-							end)
-						elseif (v:IsNPC()) then
-							if (IsValid(v:GetActiveWeapon())) then
-								local weaponname = v:GetActiveWeapon():GetClass()
-								timer.Simple(0.1, function()
-								
-									v:StripWeapons()
+							elseif (v:IsNPC()) then
+								if (IsValid(v:GetActiveWeapon())) then
+									local weaponname = v:GetActiveWeapon():GetClass()
+									timer.Simple(0.1, function()
 									
-								end)
-								v:EmitSound("Halloween.PlayerScream")
-								
-								for k,v in ipairs(ents.GetAll()) do
-									if v:IsNPC() then
-										v:AddEntityRelationship(self,D_FR,99) 
-									end
-								end
-								v.ScaredOfHHH = true
-								local attach = v:LookupAttachment("head") or 1
-								ParticleEffectAttach("yikes_fx", PATTACH_POINT_FOLLOW, v, attach)
-								
-								timer.Simple(5,function()
-
-									v:StopParticles()
+										v:StripWeapons()
+										
+									end)
+									v:EmitSound("Halloween.PlayerScream")
+									
 									for k,v in ipairs(ents.GetAll()) do
 										if v:IsNPC() then
-											v:AddEntityRelationship(self,D_HT,99)
+											v:AddEntityRelationship(self,D_FR,99) 
 										end
 									end
-									v.ScaredOfHHH = false
+									v.ScaredOfHHH = true
+									local attach = v:LookupAttachment("head") or 1
+									ParticleEffectAttach("yikes_fx", PATTACH_POINT_FOLLOW, v, attach)
+									
+									timer.Simple(5,function()
 
-								end)
+										v:StopParticles()
+										for k,v in ipairs(ents.GetAll()) do
+											if v:IsNPC() then
+												v:AddEntityRelationship(self,D_HT,99)
+											end
+										end
+										v.ScaredOfHHH = false
+
+									end)
+								else
+
+									v:EmitSound("Halloween.PlayerScream")
+								
+									for k,v in ipairs(ents.GetAll()) do
+										if v:IsNPC() then
+											v:AddEntityRelationship(self,D_FR,99) 
+										end
+									end
+									v.ScaredOfHHH = true
+									local attach = v:LookupAttachment("head") or 1
+									ParticleEffectAttach("yikes_fx", PATTACH_POINT_FOLLOW, v, attach)
+									
+									timer.Simple(5,function()
+
+										v:StopParticles()
+										for k,v in ipairs(ents.GetAll()) do
+											if v:IsNPC() then
+												v:AddEntityRelationship(self,D_HT,99)
+											end
+										end
+										v.ScaredOfHHH = false
+
+									end)
+								end
+							end
+						end
+					end
+				else
+					snd.SoundName = string.Replace(snd.SoundName,snd.SoundName,"vo/halloween_boss/knight_laugh0"..math.random(1,4)..".mp3")
+				end
+			end
+			return true
+		elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.StartWith(snd.Entity:GetModel(), "models/player") and string.find(snd.Entity:GetModel(), "tfc") and !string.find(snd.Entity:GetModel(), "bot") and snd.Entity:LookupBone("bip_head") and string.find(snd.SoundName, "step") and (IsMounted("hl1") || IsMounted("hl1mp")) then
+			snd.SoundName = string.Replace(snd.SoundName, "wade5", "wade1")
+			snd.SoundName = string.Replace(snd.SoundName, "wade6", "wade2")
+			snd.SoundName = string.Replace(snd.SoundName, "wade7", "wade3")
+			snd.SoundName = string.Replace(snd.SoundName, "wade8", "wade4")
+			snd.Channel = CHAN_BODY
+			local speed = snd.Entity:GetVelocity():Length()
+			local groundspeed = snd.Entity:GetVelocity():Length2DSqr() 
+			if (snd.Entity:WaterLevel() < 1) then
+				snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/pl_") 
+				snd.SoundName = string.Replace(snd.SoundName, "concrete", "step")
+				snd.SoundName = string.Replace(snd.SoundName, "grass", "step")
+				snd.SoundName = string.Replace(snd.SoundName, "sand", "step")
+				snd.SoundName = string.Replace(snd.SoundName, "metalgrate", "grate")
+				snd.SoundName = string.Replace(snd.SoundName, "tile4", "tile"..math.random(4,5))
+			elseif (snd.Entity:WaterLevel() < 2) then
+				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/pl_slosh"..math.random(1,4)..".wav")
+			else
+				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/pl_wade"..math.random(1,4)..".wav")
+			end
+			if (snd.Entity:IsPlayer()) then
+				if (snd.Entity:GetMoveType() == MOVETYPE_LADDER) then
+					snd.Volume = 1 * (groundspeed * 0.000006)
+				elseif (snd.Entity:IsPlayer() and snd.Entity:Crouching()) then
+					snd.Volume = 1 * (groundspeed * 0.000006)
+				else
+					if (snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
+						if (LocalPlayer():ShouldDrawLocalPlayer()) then
+							if (snd.Entity:GetNWBool("Taunting",false) == true) then
+								snd.Volume = 0
 							else
-
-								v:EmitSound("Halloween.PlayerScream")
-							
-								for k,v in ipairs(ents.GetAll()) do
-									if v:IsNPC() then
-										v:AddEntityRelationship(self,D_FR,99) 
-									end
-								end
-								v.ScaredOfHHH = true
-								local attach = v:LookupAttachment("head") or 1
-								ParticleEffectAttach("yikes_fx", PATTACH_POINT_FOLLOW, v, attach)
-								
-								timer.Simple(5,function()
-
-									v:StopParticles()
-									for k,v in ipairs(ents.GetAll()) do
-										if v:IsNPC() then
-											v:AddEntityRelationship(self,D_HT,99)
-										end
-									end
-									v.ScaredOfHHH = false
-
-								end)
+								snd.Volume = 1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.01))
 							end
+						else
+							snd.Volume = 1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.01))
 						end
-					end
-				end
-			else
-				snd.SoundName = string.Replace(snd.SoundName,snd.SoundName,"vo/halloween_boss/knight_laugh0"..math.random(1,4)..".mp3")
-			end
-		end
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:IsPlayer() and snd.Entity:IsHL2() and string.find(snd.SoundName, "step")  and snd.Entity:GetInfoNum("civ2_enable_survivor_steps",0) == 1 then
-		if (snd.Entity:KeyDown(IN_WALK)) then
-			snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/survivor/walk/")
-		else
-			snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/survivor/run/")
-		end 
-		
-		--[[
-if (IsMounted("left4dead") or IsMounted("left4dead2")) then 
-			local pos = snd.Entity:GetPos()
-			if (snd.Pos) then
-				pos = snd.Pos
-			end
-			if (snd.Channel == CHAN_BODY) then
-				if (math.random(1,6) != 1) then
-					snd.Channel = CHAN_STATIC
-					return true
-				end
-			end
-		end]]
-		if (GetConVar("tf_enable_server_footsteps"):GetBool()) then
-			sound.Play(snd.SoundName,snd.Entity:GetPos(),snd.SoundLevel,snd.Pitch,1)
-			return false
-		end
-		if (snd.Entity:GetClass() == "infected") then
-			if (string.find(snd.Entity:GetModel(),"clown")) then
-
-				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-						if (IsValid(snd.Entity:GetEnemy())) then
-							v:SetEnemy(snd.Entity:GetEnemy())
-							
-						end
-					end
-				end
-
-			end
-		end
-		if (snd.Entity:IsTFPlayer() and GAMEMODE:EntityTeam(snd.Entity) != TEAM_GREEN) then
-
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					--v.TargetEnt = snd.Entity
-
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end
-					end
-				end
-			end
-
-		end
-		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-
-				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
-					--v.TargetEnt = snd.Entity
-				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-					v:SetEnemy(snd.Entity)
-					
-	
-					if SERVER then
-						--[[
-local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						--v:AddGestureSequence(anim,true)]]
-					end
-	
-					timer.Stop("IdleExpression"..v:EntIndex())
-					timer.Stop("AngryExpression"..v:EntIndex())
-					timer.Create("AngryExpression"..v:EntIndex(), 3, 0, function()
-						
-						if SERVER then
-							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							--v:AddGestureSequence(anim,true)
-						end
-	
-						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
-					end)
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end
-					end
-				end
-			end
-		end
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.SoundName,"female") and string.find(snd.Entity:GetModel(),"boomer") then
-		snd.SoundName = string.Replace(snd.SoundName, "female", "male")
-		
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.SoundName,"/male") and string.find(snd.Entity:GetModel(),"boomette") then
-		snd.SoundName = string.Replace(snd.SoundName, "male", "female")
-		
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.StartWith(snd.Entity:GetModel(), "models/player") and string.find(snd.Entity:GetModel(), "tfc") and !string.find(snd.Entity:GetModel(), "bot") and snd.Entity:LookupBone("bip_head") and string.find(snd.SoundName, "step") and (IsMounted("hl1") || IsMounted("hl1mp")) then
-		snd.SoundName = string.Replace(snd.SoundName, "wade5", "wade1")
-		snd.SoundName = string.Replace(snd.SoundName, "wade6", "wade2")
-		snd.SoundName = string.Replace(snd.SoundName, "wade7", "wade3")
-		snd.SoundName = string.Replace(snd.SoundName, "wade8", "wade4")
-		snd.Channel = CHAN_BODY
-		local speed = snd.Entity:GetVelocity():Length()
-		local groundspeed = snd.Entity:GetVelocity():Length2DSqr() 
-		if (snd.Entity:WaterLevel() < 1) then
-			snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/pl_") 
-			snd.SoundName = string.Replace(snd.SoundName, "concrete", "step")
-			snd.SoundName = string.Replace(snd.SoundName, "grass", "step")
-			snd.SoundName = string.Replace(snd.SoundName, "sand", "step")
-			snd.SoundName = string.Replace(snd.SoundName, "metalgrate", "grate")
-			snd.SoundName = string.Replace(snd.SoundName, "tile4", "tile"..math.random(4,5))
-		elseif (snd.Entity:WaterLevel() < 2) then
-			snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/pl_slosh"..math.random(1,4)..".wav")
-		else
-			snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/pl_wade"..math.random(1,4)..".wav")
-		end
-		if (snd.Entity:IsPlayer()) then
-			if (snd.Entity:GetMoveType() == MOVETYPE_LADDER) then
-				snd.Volume = 1 * (groundspeed * 0.000006)
-			elseif (snd.Entity:IsPlayer() and snd.Entity:Crouching()) then
-				snd.Volume = 1 * (groundspeed * 0.000006)
-			else
-				if (snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
-					if (LocalPlayer():ShouldDrawLocalPlayer()) then
+					else
 						if (snd.Entity:GetNWBool("Taunting",false) == true) then
 							snd.Volume = 0
 						else
-							snd.Volume = 1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.008))
+							snd.Volume = 1 * (groundspeed * 0.000009 * (snd.Entity:GetRunSpeed() * 0.01))
 						end
-					else
-						snd.Volume = 1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.008))
-					end
-				else
-					if (snd.Entity:GetNWBool("Taunting",false) == true) then
-						snd.Volume = 0
-					else
-						snd.Volume = 1 * (groundspeed * 0.000009 * (snd.Entity:GetRunSpeed() * 0.008))
 					end
 				end
 			end
-		end
-		if (snd.Entity:GetClass() == "infected") then
-			if (string.find(snd.Entity:GetModel(),"clown")) then
+			if (snd.Entity:GetClass() == "infected_this_is_not_needed_anymore_why") then
+				if (string.find(snd.Entity:GetModel(),"clown")) then
+
+					for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
+						if (v:GetClass() == "infected_this_is_not_needed_anymore_why" and !IsValid(v:GetEnemy()) and v.Ready) then
+							if (IsValid(snd.Entity:GetEnemy())) then
+								v:SetEnemy(snd.Entity:GetEnemy())
+								
+							end
+						end
+					end
+
+				end
+			end
+			if (snd.Entity:IsTFPlayer() and GAMEMODE:EntityTeam(snd.Entity) != TEAM_GREEN) then
 
 				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-						if (IsValid(snd.Entity:GetEnemy())) then
-							v:SetEnemy(snd.Entity:GetEnemy())
+					if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
+						--v.TargetEnt = snd.Entity
+
+						if SERVER then
+							for _,npc in ipairs(ents.GetAll()) do
+								if npc:IsNPC() and !npc:IsFriendly(v) then
+									npc:AddEntityRelationship(v,D_HT,99)
+								end
+							end
+						end
+					end
+				end
+
+			end
+			if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
+				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
+
+					if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
+						--v.TargetEnt = snd.Entity
+					elseif (v:GetClass() == "infected_this_is_not_needed_anymore_why" and !IsValid(v:GetEnemy()) and v.Ready) then
+						v:SetEnemy(snd.Entity)
+						
+		
+						if SERVER then
+							--[[
+	local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+							--v:AddGestureSequence(anim,true)]]
+						end
+		
+						timer.Stop("IdleExpression"..v:EntIndex())
+						timer.Stop("AngryExpression"..v:EntIndex())
+						timer.Create("AngryExpression"..v:EntIndex(), 3, 0, function()
 							
-						end
-					end
-				end
-
-			end
-		end
-		if (snd.Entity:IsTFPlayer() and GAMEMODE:EntityTeam(snd.Entity) != TEAM_GREEN) then
-
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					--v.TargetEnt = snd.Entity
-
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
+							if SERVER then
+								local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+								--v:AddGestureSequence(anim,true)
 							end
-						end
-					end
-				end
-			end
-
-		end
-		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-
-				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
-					--v.TargetEnt = snd.Entity
-				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-					v:SetEnemy(snd.Entity)
-					
-	
-					if SERVER then
-						--[[
-local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						--v:AddGestureSequence(anim,true)]]
-					end
-	
-					timer.Stop("IdleExpression"..v:EntIndex())
-					timer.Stop("AngryExpression"..v:EntIndex())
-					timer.Create("AngryExpression"..v:EntIndex(), 3, 0, function()
-						
+		
+							timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
+						end)
 						if SERVER then
-							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							--v:AddGestureSequence(anim,true)
-						end
-	
-						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
-					end)
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
+							for _,npc in ipairs(ents.GetAll()) do
+								if npc:IsNPC() and !npc:IsFriendly(v) then
+									npc:AddEntityRelationship(v,D_HT,99)
+								end
 							end
 						end
 					end
 				end
 			end
-		end
-		snd.Pitch = 100
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and (snd.Entity:GetModel() == "models/infected/hulk.mdl" or snd.Entity:GetModel() == "models/infected/hulk_l4d1.mdl" or snd.Entity:GetModel() == "models/infected/hulk_dlc3.mdl") and string.find(snd.SoundName, "step") then
-		if (snd.Entity:WaterLevel() > 0) then
-			snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/footsteps/tank/walk/tank_walk_water_0"..math.random(1,6)..".wav")
-		else
-			snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/footsteps/tank/walk/tank_walk0"..math.random(1,6)..".wav")
-		end
-		
-		snd.Channel = CHAN_STATIC
-		snd.Pitch = 100
-		snd.SoundLevel = 80
-		snd.Volume = 1
-		if (snd.Entity:GetClass() == "infected") then
-			if (string.find(snd.Entity:GetModel(),"clown")) then
-
-				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-						if (IsValid(snd.Entity:GetEnemy())) then
-							v:SetEnemy(snd.Entity:GetEnemy())
-							
-						end
-					end
-				end
-
-			end
-		end
-		if (snd.Entity:IsTFPlayer() and GAMEMODE:EntityTeam(snd.Entity) != TEAM_GREEN) then
-
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					--v.TargetEnt = snd.Entity
-
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end
-					end
-				end
-			end
-
-		end
-		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-
-				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
-					--v.TargetEnt = snd.Entity
-				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-					v:SetEnemy(snd.Entity)
-					
-	
-					if SERVER then
-						--[[
-local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						--v:AddGestureSequence(anim,true)]]
-					end
-	
-					timer.Stop("IdleExpression"..v:EntIndex())
-					timer.Stop("AngryExpression"..v:EntIndex())
-					timer.Create("AngryExpression"..v:EntIndex(), 3, 0, function()
-						
-						if SERVER then
-							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							--v:AddGestureSequence(anim,true)
-						end
-	
-						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
-					end)
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end
-					end
-				end
-			end
-		end
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and (snd.Entity:GetModel() == "models/infected/boomer.mdl" or snd.Entity:GetModel() == "models/infected/boomer_l4d1.mdl" or snd.Entity:GetModel() == "models/infected/boomette.mdl") and string.find(snd.SoundName, "step") then
-		snd.SoundName = string.Replace(snd.SoundName, "wade5", "wade1")
-		snd.SoundName = string.Replace(snd.SoundName, "wade6", "wade2")
-		snd.SoundName = string.Replace(snd.SoundName, "wade7", "wade3")
-		snd.SoundName = string.Replace(snd.SoundName, "wade8", "wade4")
-		snd.SoundName = string.Replace(snd.SoundName, "1", math.random(1,4))
-		snd.SoundName = string.Replace(snd.SoundName, "2", math.random(1,4))
-		snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/boomer/run/")
-		
-		snd.Pitch = 100
-		
-		--[[
-if (IsMounted("left4dead") or IsMounted("left4dead2")) then 
-			local pos = snd.Entity:GetPos()
-			if (snd.Pos) then
-				pos = snd.Pos
-			end
-			if (snd.Channel == CHAN_BODY) then
-				if (math.random(1,6) != 1) then
-					snd.Channel = CHAN_STATIC
-					return true
-				end
-			end
-		end]]
-		if (snd.Entity:GetClass() == "infected") then
-			if (string.find(snd.Entity:GetModel(),"clown")) then
-
-				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-						if (IsValid(snd.Entity:GetEnemy())) then
-							v:SetEnemy(snd.Entity:GetEnemy())
-							
-						end
-					end
-				end
-
-			end
-		end
-		if (snd.Entity:IsTFPlayer() and GAMEMODE:EntityTeam(snd.Entity) != TEAM_GREEN) then
-
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					--v.TargetEnt = snd.Entity
-
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end
-					end
-				end
-			end
-
-		end
-		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-
-				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
-					--v.TargetEnt = snd.Entity
-				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-					v:SetEnemy(snd.Entity)
-					
-	
-					if SERVER then
-						--[[
-local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						--v:AddGestureSequence(anim,true)]]
-					end
-	
-					timer.Stop("IdleExpression"..v:EntIndex())
-					timer.Stop("AngryExpression"..v:EntIndex())
-					timer.Create("AngryExpression"..v:EntIndex(), 3, 0, function()
-						
-						if SERVER then
-							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							--v:AddGestureSequence(anim,true)
-						end
-	
-						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
-					end)
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end
-					end
-				end
-			end
-		end
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:IsPlayer() and snd.Entity:GetPlayerClass() == "jockey" and string.find(snd.SoundName, "step") then
-		snd.SoundName = string.Replace(snd.SoundName, "wade5", "wade1")
-		snd.SoundName = string.Replace(snd.SoundName, "wade6", "wade2")
-		snd.SoundName = string.Replace(snd.SoundName, "wade7", "wade3")
-		snd.SoundName = string.Replace(snd.SoundName, "wade8", "wade4")
-		snd.SoundName = string.Replace(snd.SoundName, "1", math.random(1,4))
-		snd.SoundName = string.Replace(snd.SoundName, "2", math.random(1,4))
-		snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/boomer/run/")
-		
-		--[[
-if (IsMounted("left4dead") or IsMounted("left4dead2")) then 
-			local pos = snd.Entity:GetPos()
-			if (snd.Pos) then
-				pos = snd.Pos
-			end
-			if (snd.Channel == CHAN_BODY) then
-				if (math.random(1,6) != 1) then
-					snd.Channel = CHAN_STATIC
-					return true
-				end
-			end
-		end]]
-		snd.Pitch = 100
-		
-		if (snd.Entity:GetClass() == "infected") then
-			if (string.find(snd.Entity:GetModel(),"clown")) then
-
-				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-						if (IsValid(snd.Entity:GetEnemy())) then
-							v:SetEnemy(snd.Entity:GetEnemy())
-							
-						end
-					end
-				end
-
-			end
-		end
-		if (snd.Entity:IsTFPlayer() and GAMEMODE:EntityTeam(snd.Entity) != TEAM_GREEN) then
-
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					--v.TargetEnt = snd.Entity
-
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end
-					end
-				end
-			end
-
-		end
-		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-
-				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
-					--v.TargetEnt = snd.Entity
-				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-					v:SetEnemy(snd.Entity)
-					
-	
-					if SERVER then
-						--[[
-local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						--v:AddGestureSequence(anim,true)]]
-					end
-	
-					timer.Stop("IdleExpression"..v:EntIndex())
-					timer.Stop("AngryExpression"..v:EntIndex())
-					timer.Create("AngryExpression"..v:EntIndex(), 3, 0, function()
-						
-						if SERVER then
-							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							--v:AddGestureSequence(anim,true)
-						end
-	
-						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
-					end)
-					
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end
-					end
-				end
-			end
-		end
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:IsPlayer() and snd.Entity:GetPlayerClass() == "hunter" and string.find(snd.SoundName, "step") then
-		snd.SoundName = string.Replace(snd.SoundName, "wade5", "wade1")
-		snd.SoundName = string.Replace(snd.SoundName, "wade6", "wade2")
-		snd.SoundName = string.Replace(snd.SoundName, "wade7", "wade3")
-		snd.SoundName = string.Replace(snd.SoundName, "wade8", "wade4")
-		snd.SoundName = string.Replace(snd.SoundName, "1", math.random(1,4))
-		snd.SoundName = string.Replace(snd.SoundName, "2", math.random(1,4))
-		
-		
-		if (snd.Entity:KeyDown(IN_WALK)) then
-			snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/infected/walk/")
-		else
-			snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/infected/run/")
-		end
-		
-		snd.Pitch = 100
-		snd.Volume = 0
-		
-		--[[
-if (IsMounted("left4dead") or IsMounted("left4dead2")) then 
-			local pos = snd.Entity:GetPos()
-			if (snd.Pos) then
-				pos = snd.Pos
-			end
-			if (snd.Channel == CHAN_BODY) then
-				if (math.random(1,6) != 1) then
-					snd.Channel = CHAN_STATIC
-					return true
-				end
-			end
-		end]]
-		if (snd.Entity:GetClass() == "infected") then
-			if (string.find(snd.Entity:GetModel(),"clown")) then
-
-				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-						if (IsValid(snd.Entity:GetEnemy())) then
-							v:SetEnemy(snd.Entity:GetEnemy())
-							
-						end
-					end
-				end
-
-			end
-		end
-		if (snd.Entity:IsTFPlayer() and GAMEMODE:EntityTeam(snd.Entity) != TEAM_GREEN) then
-
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					--v.TargetEnt = snd.Entity
-
-					
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end
-					end
-				end
-			end
-
-		end
-		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-
-				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
-					--v.TargetEnt = snd.Entity
-				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-					v:SetEnemy(snd.Entity)
-					
-	
-					if SERVER then
-						--[[
-local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						--v:AddGestureSequence(anim,true)]]
-					end
-	
-					timer.Stop("IdleExpression"..v:EntIndex())
-					timer.Stop("AngryExpression"..v:EntIndex())
-					timer.Create("AngryExpression"..v:EntIndex(), 3, 0, function()
-						
-						if SERVER then
-							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							--v:AddGestureSequence(anim,true)
-						end
-	
-						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
-					end)
-					
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end
-					end
-				end
-			end
-		end
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:IsPlayer() and snd.Entity:GetPlayerClass() == "smoker" and string.find(snd.SoundName, "step") then
-		snd.SoundName = string.Replace(snd.SoundName, "wade5", "wade1")
-		snd.SoundName = string.Replace(snd.SoundName, "wade6", "wade2")
-		snd.SoundName = string.Replace(snd.SoundName, "wade7", "wade3")
-		snd.SoundName = string.Replace(snd.SoundName, "wade8", "wade4")
-		snd.SoundName = string.Replace(snd.SoundName, "1", math.random(1,4))
-		snd.SoundName = string.Replace(snd.SoundName, "2", math.random(1,4))
-		if (snd.Entity:KeyDown(IN_WALK)) then
-			snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/infected/walk/")
-		else
-			snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/infected/run/")
-		end
-		--[[
-if (IsMounted("left4dead") or IsMounted("left4dead2")) then 
-			local pos = snd.Entity:GetPos()
-			if (snd.Pos) then
-				pos = snd.Pos
-			end
-			if (snd.Channel == CHAN_BODY) then
-				if (math.random(1,6) != 1) then
-					snd.Channel = CHAN_STATIC
-					return true
-				end
-			end
-		end]]
-		snd.Pitch = 100
-		
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:IsPlayer() and snd.Entity:GetPlayerClass() == "spitter" and string.find(snd.SoundName, "step") then
-		snd.SoundName = string.Replace(snd.SoundName, "wade5", "wade1")
-		snd.SoundName = string.Replace(snd.SoundName, "wade6", "wade2")
-		snd.SoundName = string.Replace(snd.SoundName, "wade7", "wade3")
-		snd.SoundName = string.Replace(snd.SoundName, "wade8", "wade4")
-		snd.SoundName = string.Replace(snd.SoundName, "1", math.random(1,4))
-		snd.SoundName = string.Replace(snd.SoundName, "2", math.random(1,4))
-		if (snd.Entity:KeyDown(IN_WALK)) then
-			snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/infected/walk/")
-		else
-			snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/infected/run/")
-		end
-		snd.Pitch = 100
-		
-		--[[
-if (IsMounted("left4dead") or IsMounted("left4dead2")) then 
-			local pos = snd.Entity:GetPos()
-			if (snd.Pos) then
-				pos = snd.Pos
-			end
-			if (snd.Channel == CHAN_BODY) then
-				if (math.random(1,6) != 1) then
-					snd.Channel = CHAN_STATIC
-					return true
-				end
-			end
-		end]]
-		if (snd.Entity:GetClass() == "infected") then
-			if (string.find(snd.Entity:GetModel(),"clown")) then
-
-				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-						if (IsValid(snd.Entity:GetEnemy())) then
-							v:SetEnemy(snd.Entity:GetEnemy())
-							--v:EmitSound(table.Random({"L4D_Zombie.Alert","L4D_Zombie..alert"}))
-						end
-					end
-				end
-
-			end
-		end
-		if (snd.Entity:IsTFPlayer() and GAMEMODE:EntityTeam(snd.Entity) != TEAM_GREEN) then
-
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					--v.TargetEnt = snd.Entity
-
-					
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end
-					end
-				end
-			end
-
-		end
-		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-
-				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
-					--v.TargetEnt = snd.Entity
-				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-					v:SetEnemy(snd.Entity)
-					
-	
-					if SERVER then
-						--[[
-local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						--v:AddGestureSequence(anim,true)]]
-					end
-	
-					timer.Stop("IdleExpression"..v:EntIndex())
-					timer.Stop("AngryExpression"..v:EntIndex())
-					timer.Create("AngryExpression"..v:EntIndex(), 3, 0, function()
-						
-						if SERVER then
-							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							--v:AddGestureSequence(anim,true)
-						end
-	
-						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
-					end)
-					
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end
-					end
-				end
-			end
-		end
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:IsPlayer() and snd.Entity:GetPlayerClass() == "charger" and string.find(snd.SoundName, "step") then
-		snd.SoundName = string.Replace(snd.SoundName, "wade5", "wade1")
-		snd.SoundName = string.Replace(snd.SoundName, "wade6", "wade2")
-		snd.SoundName = string.Replace(snd.SoundName, "wade7", "wade3")
-		snd.SoundName = string.Replace(snd.SoundName, "wade8", "wade4")
-		snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/footsteps/charger/run/charger_run_"..table.Random({"left","right"}).."_0"..math.random(1,4)..".wav")
-		
-		snd.Pitch = 100
-
-		
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.Entity:GetModel(),"bot_") and snd.Entity:IsMiniBoss() and string.find(snd.SoundName, "step") then
-		snd.Volume = 1
-		snd.Channel = CHAN_BODY
-		snd.Pitch = 100
-		if (GetConVar("tf_enable_unused_mvm_sounds"):GetBool()) then
-			snd.Entity:StopSound("^mvm/giant_scout/giant_scout_step_01.wav")
-			snd.Entity:StopSound("^mvm/giant_scout/giant_scout_step_02.wav")
-			snd.Entity:StopSound("^mvm/giant_scout/giant_scout_step_03.wav")
-			snd.Entity:StopSound("^mvm/giant_scout/giant_scout_step_04.wav")
-			snd.Entity:StopSound("^mvm/giant_soldier/giant_soldier_step01.wav")
-			snd.Entity:StopSound("^mvm/giant_soldier/giant_soldier_step02.wav")
-			snd.Entity:StopSound("^mvm/giant_soldier/giant_soldier_step03.wav")
-			snd.Entity:StopSound("^mvm/giant_soldier/giant_soldier_step04.wav")
-			snd.Entity:StopSound("^mvm/giant_pyro/giant_pyro_step_01.wav")
-			snd.Entity:StopSound("^mvm/giant_pyro/giant_pyro_step_02.wav")
-			snd.Entity:StopSound("^mvm/giant_pyro/giant_pyro_step_03.wav")
-			snd.Entity:StopSound("^mvm/giant_pyro/giant_pyro_step_04.wav")
-			snd.Entity:StopSound("^mvm/giant_demoman/giant_demoman_step_01.wav")
-			snd.Entity:StopSound("^mvm/giant_demoman/giant_demoman_step_02.wav")
-			snd.Entity:StopSound("^mvm/giant_demoman/giant_demoman_step_03.wav")
-			snd.Entity:StopSound("^mvm/giant_demoman/giant_demoman_step_04.wav")
-			snd.Entity:StopSound("^mvm/giant_heavy/giant_heavy_step01.wav")
-			snd.Entity:StopSound("^mvm/giant_heavy/giant_heavy_step02.wav")
-			snd.Entity:StopSound("^mvm/giant_heavy/giant_heavy_step03.wav")
-			snd.Entity:StopSound("^mvm/giant_heavy/giant_heavy_step04.wav")
-			if (string.find(snd.Entity:GetModel(),"scout") || string.find(snd.Entity:GetModel(),"superscout") || string.find(snd.Entity:GetModel(),"superscoutfan") || string.find(snd.Entity:GetModel(),"gianscout")) then
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_scout/giant_scout_step_0"..math.random(1,4)..".wav")
-				snd.SoundLevel = 87
-			elseif (string.find(snd.Entity:GetModel(),"soldier")) then
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_soldier/giant_soldier_step0"..math.random(1,4)..".wav")
-				snd.SoundLevel = 95
-			elseif (string.find(snd.Entity:GetModel(),"pyro")) then
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_pyro/giant_pyro_step_0"..math.random(1,4)..".wav")
-				snd.SoundLevel = 95
-			elseif (string.find(snd.Entity:GetModel(),"demo") and !string.find(snd.Entity:GetModel(),"buster")) then
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_demoman/giant_demoman_step_0"..math.random(1,4)..".wav")
-				snd.SoundLevel = 95
-			elseif (string.find(snd.Entity:GetModel(),"demo") and string.find(snd.Entity:GetModel(),"buster")) then
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/sentrybuster/mvm_sentrybuster_step_0"..math.random(1,4)..".wav")
-				snd.SoundLevel = 95
-			elseif (string.find(snd.Entity:GetModel(),"heavy")) then
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_heavy/giant_heavy_step0"..math.random(1,4)..".wav")
-				snd.SoundLevel = 95
-			elseif (string.find(snd.Entity:GetModel(),"engineer")) then
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_heavy/giant_heavy_step0"..math.random(1,4)..".wav")
-				snd.SoundLevel = 95
-			elseif (string.find(snd.Entity:GetModel(),"medic")) then
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_soldier/giant_soldier_step0"..math.random(1,4)..".wav")
-				snd.SoundLevel = 95
-			elseif (string.find(snd.Entity:GetModel(),"sniper")) then
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_heavy/giant_heavy_step0"..math.random(1,4)..".wav")
-				snd.SoundLevel = 95
-			elseif (string.find(snd.Entity:GetModel(),"spy")) then
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_scout/giant_scout_step_0"..math.random(1,4)..".wav")
-				snd.SoundLevel = 95
-			end
-			snd.Channel = CHAN_STATIC
-		else
-			if (string.find(snd.Entity:GetModel(),"buster")) then
-				snd.Entity:StopSound("^mvm/sentrybuster/mvm_sentrybuster_step_01.wav")
-				snd.Entity:StopSound("^mvm/sentrybuster/mvm_sentrybuster_step_02.wav")
-				snd.Entity:StopSound("^mvm/sentrybuster/mvm_sentrybuster_step_03.wav")
-				snd.Entity:StopSound("^mvm/sentrybuster/mvm_sentrybuster_step_04.wav")
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/sentrybuster/mvm_sentrybuster_step_0"..math.random(1,4)..".wav")
-				snd.SoundLevel = 95
-				snd.Channel = CHAN_STATIC
-			else
-				snd.Entity:StopSound("^mvm/giant_common/giant_common_step_01.wav")
-				snd.Entity:StopSound("^mvm/giant_common/giant_common_step_02.wav")
-				snd.Entity:StopSound("^mvm/giant_common/giant_common_step_03.wav")
-				snd.Entity:StopSound("^mvm/giant_common/giant_common_step_04.wav")
-				snd.Entity:StopSound("^mvm/giant_common/giant_common_step_05.wav")
-				snd.Entity:StopSound("^mvm/giant_common/giant_common_step_06.wav")
-				snd.Entity:StopSound("^mvm/giant_common/giant_common_step_07.wav")
-				snd.Entity:StopSound("^mvm/giant_common/giant_common_step_08.wav")
-				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_common/giant_common_step_0"..math.random(1,8)..".wav")
-				if (string.find(snd.Entity:GetModel(),"scout") || string.find(snd.Entity:GetModel(),"scout_boss")) then
+			snd.Pitch = 100
+			return true
+		elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.find(snd.Entity:GetModel(),"bot_") and snd.Entity:IsMiniBoss() and string.find(snd.SoundName, "step") then
+			snd.Volume = 1
+			snd.Channel = CHAN_BODY
+			snd.Pitch = 100
+			if (GetConVar("tf_enable_unused_mvm_sounds"):GetBool()) then
+				snd.Entity:StopSound("^mvm/giant_scout/giant_scout_step_01.wav")
+				snd.Entity:StopSound("^mvm/giant_scout/giant_scout_step_02.wav")
+				snd.Entity:StopSound("^mvm/giant_scout/giant_scout_step_03.wav")
+				snd.Entity:StopSound("^mvm/giant_scout/giant_scout_step_04.wav")
+				snd.Entity:StopSound("^mvm/giant_soldier/giant_soldier_step01.wav")
+				snd.Entity:StopSound("^mvm/giant_soldier/giant_soldier_step02.wav")
+				snd.Entity:StopSound("^mvm/giant_soldier/giant_soldier_step03.wav")
+				snd.Entity:StopSound("^mvm/giant_soldier/giant_soldier_step04.wav")
+				snd.Entity:StopSound("^mvm/giant_pyro/giant_pyro_step_01.wav")
+				snd.Entity:StopSound("^mvm/giant_pyro/giant_pyro_step_02.wav")
+				snd.Entity:StopSound("^mvm/giant_pyro/giant_pyro_step_03.wav")
+				snd.Entity:StopSound("^mvm/giant_pyro/giant_pyro_step_04.wav")
+				snd.Entity:StopSound("^mvm/giant_demoman/giant_demoman_step_01.wav")
+				snd.Entity:StopSound("^mvm/giant_demoman/giant_demoman_step_02.wav")
+				snd.Entity:StopSound("^mvm/giant_demoman/giant_demoman_step_03.wav")
+				snd.Entity:StopSound("^mvm/giant_demoman/giant_demoman_step_04.wav")
+				snd.Entity:StopSound("^mvm/giant_heavy/giant_heavy_step01.wav")
+				snd.Entity:StopSound("^mvm/giant_heavy/giant_heavy_step02.wav")
+				snd.Entity:StopSound("^mvm/giant_heavy/giant_heavy_step03.wav")
+				snd.Entity:StopSound("^mvm/giant_heavy/giant_heavy_step04.wav")
+				if (string.find(snd.Entity:GetModel(),"scout") || string.find(snd.Entity:GetModel(),"superscout") || string.find(snd.Entity:GetModel(),"superscoutfan") || string.find(snd.Entity:GetModel(),"gianscout")) then
+					snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_scout/giant_scout_step_0"..math.random(1,4)..".wav")
 					snd.SoundLevel = 87
-					snd.Volume = snd.Volume * 0.6
 				elseif (string.find(snd.Entity:GetModel(),"soldier")) then
+					snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_soldier/giant_soldier_step0"..math.random(1,4)..".wav")
 					snd.SoundLevel = 95
-					snd.Volume = snd.Volume * 0.65
 				elseif (string.find(snd.Entity:GetModel(),"pyro")) then
+					snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_pyro/giant_pyro_step_0"..math.random(1,4)..".wav")
 					snd.SoundLevel = 95
-					snd.Volume = snd.Volume * 0.65
-				elseif (string.find(snd.Entity:GetModel(),"demo")) then
+				elseif (string.find(snd.Entity:GetModel(),"demo") and !string.find(snd.Entity:GetModel(),"buster")) then
+					snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_demoman/giant_demoman_step_0"..math.random(1,4)..".wav")
+					snd.SoundLevel = 95
+				elseif (string.find(snd.Entity:GetModel(),"demo") and string.find(snd.Entity:GetModel(),"buster")) then
+					snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/sentrybuster/mvm_sentrybuster_step_0"..math.random(1,4)..".wav")
 					snd.SoundLevel = 95
 				elseif (string.find(snd.Entity:GetModel(),"heavy")) then
+					snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_heavy/giant_heavy_step0"..math.random(1,4)..".wav")
 					snd.SoundLevel = 95
 				elseif (string.find(snd.Entity:GetModel(),"engineer")) then
+					snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_heavy/giant_heavy_step0"..math.random(1,4)..".wav")
 					snd.SoundLevel = 95
 				elseif (string.find(snd.Entity:GetModel(),"medic")) then
+					snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_soldier/giant_soldier_step0"..math.random(1,4)..".wav")
 					snd.SoundLevel = 95
 				elseif (string.find(snd.Entity:GetModel(),"sniper")) then
+					snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_heavy/giant_heavy_step0"..math.random(1,4)..".wav")
 					snd.SoundLevel = 95
 				elseif (string.find(snd.Entity:GetModel(),"spy")) then
-					snd.SoundLevel = 87
+					snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_scout/giant_scout_step_0"..math.random(1,4)..".wav")
+					snd.SoundLevel = 95
+				end
+				snd.Channel = CHAN_STATIC
+			else
+				if (string.find(snd.Entity:GetModel(),"buster")) then
+					snd.Entity:StopSound("^mvm/sentrybuster/mvm_sentrybuster_step_01.wav")
+					snd.Entity:StopSound("^mvm/sentrybuster/mvm_sentrybuster_step_02.wav")
+					snd.Entity:StopSound("^mvm/sentrybuster/mvm_sentrybuster_step_03.wav")
+					snd.Entity:StopSound("^mvm/sentrybuster/mvm_sentrybuster_step_04.wav")
+					snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/sentrybuster/mvm_sentrybuster_step_0"..math.random(1,4)..".wav")
+					snd.SoundLevel = 95
+					snd.Channel = CHAN_STATIC
+				else
+					snd.Entity:StopSound("^mvm/giant_common/giant_common_step_01.wav")
+					snd.Entity:StopSound("^mvm/giant_common/giant_common_step_02.wav")
+					snd.Entity:StopSound("^mvm/giant_common/giant_common_step_03.wav")
+					snd.Entity:StopSound("^mvm/giant_common/giant_common_step_04.wav")
+					snd.Entity:StopSound("^mvm/giant_common/giant_common_step_05.wav")
+					snd.Entity:StopSound("^mvm/giant_common/giant_common_step_06.wav")
+					snd.Entity:StopSound("^mvm/giant_common/giant_common_step_07.wav")
+					snd.Entity:StopSound("^mvm/giant_common/giant_common_step_08.wav")
+					snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "^mvm/giant_common/giant_common_step_0"..math.random(1,8)..".wav")
+					if (string.find(snd.Entity:GetModel(),"scout") || string.find(snd.Entity:GetModel(),"scout_boss")) then
+						snd.SoundLevel = 87
+						snd.Volume = snd.Volume * 0.6
+					elseif (string.find(snd.Entity:GetModel(),"soldier")) then
+						snd.SoundLevel = 95
+						snd.Volume = snd.Volume * 0.65
+					elseif (string.find(snd.Entity:GetModel(),"pyro")) then
+						snd.SoundLevel = 95
+						snd.Volume = snd.Volume * 0.65
+					elseif (string.find(snd.Entity:GetModel(),"demo")) then
+						snd.SoundLevel = 95
+					elseif (string.find(snd.Entity:GetModel(),"heavy")) then
+						snd.SoundLevel = 95
+					elseif (string.find(snd.Entity:GetModel(),"engineer")) then
+						snd.SoundLevel = 95
+					elseif (string.find(snd.Entity:GetModel(),"medic")) then
+						snd.SoundLevel = 95
+					elseif (string.find(snd.Entity:GetModel(),"sniper")) then
+						snd.SoundLevel = 95
+					elseif (string.find(snd.Entity:GetModel(),"spy")) then
+						snd.SoundLevel = 87
+					end
+				end
+				snd.Channel = CHAN_STATIC
+			end
+			if (snd.Entity:GetClass() == "infected_this_is_not_needed_anymore_why") then
+				if (string.find(snd.Entity:GetModel(),"clown")) then
+
+					for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
+						if (v:GetClass() == "infected_this_is_not_needed_anymore_why" and !IsValid(v:GetEnemy()) and v.Ready) then
+							if (IsValid(snd.Entity:GetEnemy())) then
+								v:SetEnemy(snd.Entity:GetEnemy())
+								
+							end
+						end
+					end
+
 				end
 			end
-			snd.Channel = CHAN_STATIC
-		end
-		if (snd.Entity:GetClass() == "infected") then
-			if (string.find(snd.Entity:GetModel(),"clown")) then
+			if (snd.Entity:IsTFPlayer() and GAMEMODE:EntityTeam(snd.Entity) != TEAM_GREEN) then
 
 				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-					if (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-						if (IsValid(snd.Entity:GetEnemy())) then
-							v:SetEnemy(snd.Entity:GetEnemy())
-							
-						end
-					end
-				end
+					if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
+						--v.TargetEnt = snd.Entity
 
-			end
-		end
-		if (snd.Entity:IsTFPlayer() and GAMEMODE:EntityTeam(snd.Entity) != TEAM_GREEN) then
-
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),800)) do
-				if (v:IsPlayer() and v:IsL4D() and !IsValid(v.TargetEnt) and v.TFBot) then
-					--v.TargetEnt = snd.Entity
-
-					
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
-							end
-						end
-					end
-				end
-			end
-
-		end
-		if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
-			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
-
-				if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
-					--v.TargetEnt = snd.Entity
-				elseif (v:GetClass() == "infected" and !IsValid(v:GetEnemy()) and v.Ready) then
-					v:SetEnemy(snd.Entity)
-					
-	
-					if SERVER then
-						--[[
-local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-						--v:AddGestureSequence(anim,true)]]
-					end
-	
-					timer.Stop("IdleExpression"..v:EntIndex())
-					timer.Stop("AngryExpression"..v:EntIndex())
-					timer.Create("AngryExpression"..v:EntIndex(), 3, 0, function()
 						
 						if SERVER then
-							local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
-							--v:AddGestureSequence(anim,true)
+							for _,npc in ipairs(ents.GetAll()) do
+								if npc:IsNPC() and !npc:IsFriendly(v) then
+									npc:AddEntityRelationship(v,D_HT,99)
+								end
+							end
 						end
-	
-						timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
-					end)
-					
-					if SERVER then
-						for _,npc in ipairs(ents.GetAll()) do
-							if npc:IsNPC() and !npc:IsFriendly(v) then
-								npc:AddEntityRelationship(v,D_HT,99)
+					end
+				end
+
+			end
+			if (snd.Entity:IsTFPlayer() and !snd.Entity:IsNextBot()) then
+				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),400)) do
+
+					if (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
+						--v.TargetEnt = snd.Entity
+					elseif (v:GetClass() == "infected_this_is_not_needed_anymore_why" and !IsValid(v:GetEnemy()) and v.Ready) then
+						v:SetEnemy(snd.Entity)
+						
+		
+						if SERVER then
+							--[[
+	local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+							--v:AddGestureSequence(anim,true)]]
+						end
+		
+						timer.Stop("IdleExpression"..v:EntIndex())
+						timer.Stop("AngryExpression"..v:EntIndex())
+						timer.Create("AngryExpression"..v:EntIndex(), 3, 0, function()
+							
+							if SERVER then
+								local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
+								--v:AddGestureSequence(anim,true)
+							end
+		
+							timer.Adjust("AngryExpression"..v:EntIndex(),v:SequenceDuration(anim))
+						end)
+						
+						if SERVER then
+							for _,npc in ipairs(ents.GetAll()) do
+								if npc:IsNPC() and !npc:IsFriendly(v) then
+									npc:AddEntityRelationship(v,D_HT,99)
+								end
 							end
 						end
 					end
 				end
 			end
-		end
-		return true
-	elseif IsValid(snd.Entity) and string.StartWith(snd.SoundName, "player/")  and snd.Entity:IsPlayer() then
-		if (snd.Entity:GetInfoNum("tf_special_dsp_type",-1) > -1) then
-			snd.DSP = snd.Entity:GetInfoNum("tf_special_dsp_type",-1);
-		end
-		return true
-	elseif IsValid(snd.Entity) and string.StartWith(snd.SoundName, "npc/") and snd.Entity:IsPlayer() then
-		if (snd.Entity:GetInfoNum("tf_special_dsp_type",-1) > -1) then
-			snd.DSP = snd.Entity:GetInfoNum("tf_special_dsp_type",-1);
-		end
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:IsPlayer() and (snd.Entity:GetInfoNum("tf_robot",0) == 1 and string.StartWith(snd.SoundName, "vo/") or (string.find(snd.Entity:GetModel(),"bot_") and !string.find(snd.Entity:GetModel(),"boss")) and string.StartWith(snd.SoundName, "vo/")) then
-		if (snd.Entity:IsPlayer() and snd.Entity:GetInfoNum("tf_special_dsp_type",-1) > -1) then
-			snd.DSP = snd.Entity:GetInfoNum("tf_special_dsp_type",-1);
-		end
-		
-		
-		if (snd.Entity:IsPlayer() and snd.Entity:GetPlayerClass() == "wtfdemoman") then
-			snd.Pitch = 130
-		else
+			return true
+		elseif IsValid(snd.Entity) and string.StartWith(snd.SoundName, "player/")  and snd.Entity:IsPlayer() then
+			if (snd.Entity:GetInfoNum("tf_special_dsp_type",-1) > 0) then
+				snd.DSP = snd.Entity:GetInfoNum("tf_special_dsp_type",-1);
+				return true
+			end
+		elseif IsValid(snd.Entity) and string.StartWith(snd.SoundName, "npc/") and snd.Entity:IsPlayer() then
+			if (snd.Entity:GetInfoNum("tf_special_dsp_type",-1) > 0) then
+				snd.DSP = snd.Entity:GetInfoNum("tf_special_dsp_type",-1);
+				return true	
+			end
+		elseif IsValid(snd.Entity) and snd.Entity:IsPlayer() and (snd.Entity:GetInfoNum("tf_robot",0) == 1 and string.StartWith(snd.SoundName, "vo/") or (string.find(snd.Entity:GetModel(),"bot_") and !string.find(snd.Entity:GetModel(),"boss")) and string.StartWith(snd.SoundName, "vo/")) then
+			if (snd.Entity:IsPlayer() and snd.Entity:GetInfoNum("tf_special_dsp_type",-1) > 0) then
+				snd.DSP = snd.Entity:GetInfoNum("tf_special_dsp_type",-1);
+			end
+			
+			
+			if (snd.Entity:IsPlayer() and snd.Entity:GetPlayerClass() == "wtfdemoman") then
+				snd.Pitch = 130
+			else
+				if (GetConVar("tf_pyrovision"):GetBool()) then
+					snd.SoundName = string.Replace(snd.SoundName, "PainCrticialDeath", "laughlong")
+					snd.SoundName = string.Replace(snd.SoundName, "PainSharp", "laughshort")
+					snd.SoundName = string.Replace(snd.SoundName, "PainSevere", "laughhappy")
+					snd.SoundName = string.Replace(snd.SoundName, "AutoOnFire", "PositiveVocalization")
+					snd.SoundName = string.Replace(snd.SoundName, "heavy_laughshort04", "heavy_laughshort01")
+					snd.SoundName = string.Replace(snd.SoundName, "heavy_laughshort05", "heavy_laughshort02")
+					snd.SoundName = string.Replace(snd.SoundName, "heavy_laughlong03", "heavy_laughlong02")
+				end
+				snd.SoundName = string.Replace(snd.SoundName, "vo/scout", "vo/mvm/norm/scout_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "vo/soldier", "vo/mvm/norm/soldier_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "vo/pyro", "vo/mvm/norm/pyro_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "vo/demoman", "vo/mvm/norm/demoman_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "vo/heavy", "vo/mvm/norm/heavy_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "vo/engineer", "vo/mvm/norm/engineer_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "vo/medic", "vo/mvm/norm/medic_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "vo/sniper", "vo/mvm/norm/sniper_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "vo/spy", "vo/mvm/norm/spy_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/scout", "vo/mvm/norm/taunts/scout_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/soldier", "vo/mvm/norm/taunts/soldier_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/pyro", "vo/mvm/norm/taunts/pyro_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/demoman", "vo/mvm/norm/taunts/demoman_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/heavy", "vo/mvm/norm/taunts/heavy_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/engineer", "vo/mvm/norm/taunts/engineer_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/medic", "vo/mvm/norm/taunts/medic_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/sniper", "vo/mvm/norm/taunts/sniper_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/spy", "vo/mvm/norm/taunts/spy_mvm")
+			end 
+			if (string.find(snd.SoundName,"vo/") || string.find(snd.SoundName,"vo\\")) then   
+				snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3") 
+			end
+			return true
+		elseif IsValid(snd.Entity) and string.find(snd.SoundName, "vo/") and GetConVar("tf_pyrovision"):GetBool() then
+			if (snd.Entity:GetInfoNum("tf_special_dsp_type",-1) > 0) then
+				snd.DSP = snd.Entity:GetInfoNum("tf_special_dsp_type",-1);
+			end
+			snd.SoundName = string.Replace(snd.SoundName, "PainCrticialDeath", "laughlong")
+			snd.SoundName = string.Replace(snd.SoundName, "PainSharp", "laughshort")
+			snd.SoundName = string.Replace(snd.SoundName, "PainSevere", "laughhappy")
+			snd.SoundName = string.Replace(snd.SoundName, "AutoOnFire", "PositiveVocalization")
+			snd.SoundName = string.Replace(snd.SoundName, "pyro_laughshort02", "pyro_laughshort01")
+			snd.SoundName = string.Replace(snd.SoundName, "pyro_laughshort03", "pyro_laughshort01")
+			snd.SoundName = string.Replace(snd.SoundName, "pyro_laughshort04", "pyro_laughshort01")
+			snd.SoundName = string.Replace(snd.SoundName, "pyro_laughshort05", "pyro_laughshort01")
+			snd.SoundName = string.Replace(snd.SoundName, "pyro_laughshort06", "pyro_laughshort01")
+			snd.SoundName = string.Replace(snd.SoundName, "pyro_laughshort07", "pyro_laughshort01")
+			snd.SoundName = string.Replace(snd.SoundName, "pyro_laughhappy02", "pyro_laughhappy01")
+			snd.SoundName = string.Replace(snd.SoundName, "pyro_laughhappy03", "pyro_laughhappy01")
+			snd.SoundName = string.Replace(snd.SoundName, "pyro_laughhappy04", "pyro_laughhappy01")
+			snd.SoundName = string.Replace(snd.SoundName, "pyro_laughhappy05", "pyro_laughhappy01")
+			snd.SoundName = string.Replace(snd.SoundName, "heavy_laughshort04", "heavy_laughshort01")
+			snd.SoundName = string.Replace(snd.SoundName, "heavy_laughshort05", "heavy_laughshort02")
+			snd.SoundName = string.Replace(snd.SoundName, "heavy_laughlong03", "heavy_laughlong02")
+			snd.Pitch = 100 * 1.3
+			return true
+		elseif IsValid(snd.Entity) and snd.Entity:IsPlayer() and !snd.Entity:IsHL2() and snd.Entity:GetModel() and ((snd.Entity:GetInfoNum("tf_giant_robot",0) == 1 or (string.find(snd.Entity:GetModel(),"bot") and string.find(snd.Entity:GetModel(),"boss")))) and string.StartWith(snd.SoundName, "vo/") then
+			if (snd.Entity:GetInfoNum("tf_special_dsp_type",-1) > 0) then
+				snd.DSP = snd.Entity:GetInfoNum("tf_special_dsp_type",-1)
+			end
+			if (string.find(snd.Entity:GetModel(),"boss") or string.find(snd.Entity:GetModel(),"bot_sentry_buster")) then
+				snd.SoundName = string.Replace(snd.SoundName, "vo/", "vo/mvm/mght/")
+				snd.SoundName = string.Replace(snd.SoundName, "scout", "scout_mvm_m")
+				snd.SoundName = string.Replace(snd.SoundName, "soldier", "soldier_mvm_m")
+				snd.SoundName = string.Replace(snd.SoundName, "pyro", "pyro_mvm_m")
+				snd.SoundName = string.Replace(snd.SoundName, "demoman", "demoman_mvm_m")
+				snd.SoundName = string.Replace(snd.SoundName, "heavy", "heavy_mvm_m")
+				snd.SoundName = string.Replace(snd.SoundName, "engineer", "engineer_mvm_m")
+				snd.SoundName = string.Replace(snd.SoundName, "medic", "medic_mvm_m")
+				snd.SoundName = string.Replace(snd.SoundName, "sniper", "sniper_mvm_m")
+				snd.SoundName = string.Replace(snd.SoundName, "spy", "spy_mvm_m")
+				if (string.find(snd.SoundName,"vo/")) then
+					snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
+				end
+			else
+				snd.SoundName = string.Replace(snd.SoundName, "vo/", "vo/mvm/norm/")
+				snd.SoundName = string.Replace(snd.SoundName, "scout", "scout_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "soldier", "soldier_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "pyro", "pyro_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "demoman", "demoman_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "heavy", "heavy_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "engineer", "engineer_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "medic", "medic_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "sniper", "sniper_mvm")
+				snd.SoundName = string.Replace(snd.SoundName, "spy", "spy_mvm")
+				if (string.find(snd.SoundName,"vo/")) then
+					snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
+				end
+				snd.DSP = 38
+				snd.Pitch = 100 * 0.8
+			end
+			return true
+		elseif IsValid(snd.Entity) and string.StartWith(snd.SoundName, "vo/") and snd.Entity:GetModel() and snd.Entity:IsPlayer() and !snd.Entity:IsHL2() and string.StartWith(snd.Entity:GetModel(),"models/player/") and snd.Entity.playerclass != "spy"  then
+			if (snd.Entity:GetInfoNum("tf_special_dsp_type",-1) > 0) then
+				snd.DSP = snd.Entity:GetInfoNum("tf_special_dsp_type",-1);
+			end
+			local tr = snd.Entity:GetEyeTrace()
+			if (tr.Entity) then
+				if (tr.Entity:IsPlayer() and tr.Entity:IsHL2()) then
+					if (string.find(snd.SoundName, "CloakedSpyIdentify")) then
+						if (snd.Entity.playerclass == "Soldier" || snd.Entity.playerclass == "Spy") then
+
+							snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "vo/"..snd.Entity.playerclass.."_cloakedspyidentifygmodplayer.wav")
+
+						else
+							snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "vo/"..snd.Entity.playerclass.."_cloakedspyidentifygmod.wav")
+						end
+					end
+				end
+			end
 			if (GetConVar("tf_pyrovision"):GetBool()) then
 				snd.SoundName = string.Replace(snd.SoundName, "PainCrticialDeath", "laughlong")
 				snd.SoundName = string.Replace(snd.SoundName, "PainSharp", "laughshort")
@@ -4434,67 +3778,42 @@ local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
 				snd.SoundName = string.Replace(snd.SoundName, "heavy_laughshort05", "heavy_laughshort02")
 				snd.SoundName = string.Replace(snd.SoundName, "heavy_laughlong03", "heavy_laughlong02")
 			end
-			snd.SoundName = string.Replace(snd.SoundName, "vo/scout", "vo/mvm/norm/scout_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, "vo/soldier", "vo/mvm/norm/soldier_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, "vo/pyro", "vo/mvm/norm/pyro_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, "vo/demoman", "vo/mvm/norm/demoman_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, "vo/heavy", "vo/mvm/norm/heavy_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, "vo/engineer", "vo/mvm/norm/engineer_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, "vo/medic", "vo/mvm/norm/medic_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, "vo/sniper", "vo/mvm/norm/sniper_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, "vo/spy", "vo/mvm/norm/spy_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/scout", "vo/mvm/norm/taunts/scout_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/soldier", "vo/mvm/norm/taunts/soldier_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/pyro", "vo/mvm/norm/taunts/pyro_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/demoman", "vo/mvm/norm/taunts/demoman_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/heavy", "vo/mvm/norm/taunts/heavy_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/engineer", "vo/mvm/norm/taunts/engineer_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/medic", "vo/mvm/norm/taunts/medic_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/sniper", "vo/mvm/norm/taunts/sniper_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, "vo/taunts/spy", "vo/mvm/norm/taunts/spy_mvm")
-		end
-		snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
-		return true
-	elseif IsValid(snd.Entity) and string.find(snd.SoundName, "vo/") and GetConVar("tf_pyrovision"):GetBool() then
-		if (snd.Entity:GetInfoNum("tf_special_dsp_type",-1) > -1) then
-			snd.DSP = snd.Entity:GetInfoNum("tf_special_dsp_type",-1);
-		end
-		snd.SoundName = string.Replace(snd.SoundName, "PainCrticialDeath", "laughlong")
-		snd.SoundName = string.Replace(snd.SoundName, "PainSharp", "laughshort")
-		snd.SoundName = string.Replace(snd.SoundName, "PainSevere", "laughhappy")
-		snd.SoundName = string.Replace(snd.SoundName, "AutoOnFire", "PositiveVocalization")
-		snd.SoundName = string.Replace(snd.SoundName, "pyro_laughshort02", "pyro_laughshort01")
-		snd.SoundName = string.Replace(snd.SoundName, "pyro_laughshort03", "pyro_laughshort01")
-		snd.SoundName = string.Replace(snd.SoundName, "pyro_laughshort04", "pyro_laughshort01")
-		snd.SoundName = string.Replace(snd.SoundName, "pyro_laughshort05", "pyro_laughshort01")
-		snd.SoundName = string.Replace(snd.SoundName, "pyro_laughshort06", "pyro_laughshort01")
-		snd.SoundName = string.Replace(snd.SoundName, "pyro_laughshort07", "pyro_laughshort01")
-		snd.SoundName = string.Replace(snd.SoundName, "pyro_laughhappy02", "pyro_laughhappy01")
-		snd.SoundName = string.Replace(snd.SoundName, "pyro_laughhappy03", "pyro_laughhappy01")
-		snd.SoundName = string.Replace(snd.SoundName, "pyro_laughhappy04", "pyro_laughhappy01")
-		snd.SoundName = string.Replace(snd.SoundName, "pyro_laughhappy05", "pyro_laughhappy01")
-		snd.SoundName = string.Replace(snd.SoundName, "heavy_laughshort04", "heavy_laughshort01")
-		snd.SoundName = string.Replace(snd.SoundName, "heavy_laughshort05", "heavy_laughshort02")
-		snd.SoundName = string.Replace(snd.SoundName, "heavy_laughlong03", "heavy_laughlong02")
-		snd.Pitch = 100 * 1.3
-		return true
-	elseif IsValid(snd.Entity) and snd.Entity:IsPlayer() and !snd.Entity:IsHL2() and snd.Entity:GetModel() and ((snd.Entity:GetInfoNum("tf_giant_robot",0) == 1 or (string.find(snd.Entity:GetModel(),"bot") and string.find(snd.Entity:GetModel(),"boss")))) and string.StartWith(snd.SoundName, "vo/") then
-		if (snd.Entity:GetInfoNum("tf_special_dsp_type",-1) > -1) then
-			snd.DSP = snd.Entity:GetInfoNum("tf_special_dsp_type",-1)
-		end
-		if (string.find(snd.Entity:GetModel(),"boss") or string.find(snd.Entity:GetModel(),"bot_sentry_buster")) then
-			snd.SoundName = string.Replace(snd.SoundName, "vo/", "vo/mvm/mght/")
-			snd.SoundName = string.Replace(snd.SoundName, "scout", "scout_mvm_m")
-			snd.SoundName = string.Replace(snd.SoundName, "soldier", "soldier_mvm_m")
-			snd.SoundName = string.Replace(snd.SoundName, "pyro", "pyro_mvm_m")
-			snd.SoundName = string.Replace(snd.SoundName, "demoman", "demoman_mvm_m")
-			snd.SoundName = string.Replace(snd.SoundName, "heavy", "heavy_mvm_m")
-			snd.SoundName = string.Replace(snd.SoundName, "engineer", "engineer_mvm_m")
-			snd.SoundName = string.Replace(snd.SoundName, "medic", "medic_mvm_m")
-			snd.SoundName = string.Replace(snd.SoundName, "sniper", "sniper_mvm_m")
-			snd.SoundName = string.Replace(snd.SoundName, "spy", "spy_mvm_m")
-			snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
-		else
+			if (!string.find(snd.SoundName,"announcer_") && !string.find(snd.SoundName,"mvm_")) then
+				
+				if snd.Entity:GetInfoNum("tf_player_use_female_models", 0) == 1 then
+					snd.Pitch = 130
+				end 
+			end 
+			return true	
+		elseif IsValid(snd.Entity) and string.StartWith(snd.SoundName, "vo/") and snd.Entity:IsPlayer() and snd.Entity.playerclass == "spy" then
+			if (string.find(snd.Entity:GetModel(), "scout")) then
+				snd.SoundName = string.Replace(snd.SoundName, "spy_", "scout_")
+			elseif (string.find(snd.Entity:GetModel(), "soldier")) then
+				snd.SoundName = string.Replace(snd.SoundName, "spy_", "soldier_")
+			elseif (string.find(snd.Entity:GetModel(), "pyro")) then
+				snd.SoundName = string.Replace(snd.SoundName, "spy_", "pyro_")
+			elseif (string.find(snd.Entity:GetModel(), "demo")) then
+				snd.SoundName = string.Replace(snd.SoundName, "spy_", "demoman_")
+			elseif (string.find(snd.Entity:GetModel(), "heavy")) then
+				snd.SoundName = string.Replace(snd.SoundName, "spy_", "heavy_")
+			elseif (string.find(snd.Entity:GetModel(), "engineer")) then
+				snd.SoundName = string.Replace(snd.SoundName, "spy_", "engineer_")
+			elseif (string.find(snd.Entity:GetModel(), "medic")) then
+				snd.SoundName = string.Replace(snd.SoundName, "spy_", "medic_")
+			elseif (string.find(snd.Entity:GetModel(), "sniper")) then
+				snd.SoundName = string.Replace(snd.SoundName, "spy_", "sniper_")
+			end
+			if (snd.Entity:GetInfoNum("tf_special_dsp_type",-1) > 0) then
+				snd.DSP = snd.Entity:GetInfoNum("tf_special_dsp_type",-1);
+			end
+			if (GetConVar("tf_pyrovision"):GetBool()) then
+				snd.SoundName = string.Replace(snd.SoundName, "painsharp", "laughshort")
+				snd.SoundName = string.Replace(snd.SoundName, "painsevere", "laughhappy")
+				snd.SoundName = string.Replace(snd.SoundName, "paincrticialdeath", "laughlong")
+				snd.SoundName = string.Replace(snd.SoundName, "autoonfire", "laughhappy")
+			end
+			return true
+		elseif IsValid(snd.Entity) and string.StartWith(snd.SoundName, "vo/") and snd.Entity:IsPlayer() and snd.Entity:Team() == TEAM_BLU and string.find(game.GetMap(), "mvm") then
 			snd.SoundName = string.Replace(snd.SoundName, "vo/", "vo/mvm/norm/")
 			snd.SoundName = string.Replace(snd.SoundName, "scout", "scout_mvm")
 			snd.SoundName = string.Replace(snd.SoundName, "soldier", "soldier_mvm")
@@ -4505,86 +3824,10 @@ local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
 			snd.SoundName = string.Replace(snd.SoundName, "medic", "medic_mvm")
 			snd.SoundName = string.Replace(snd.SoundName, "sniper", "sniper_mvm")
 			snd.SoundName = string.Replace(snd.SoundName, "spy", "spy_mvm")
-			snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
-			snd.DSP = 38
-			snd.Pitch = 100 * 0.8
-		end
-		return true
-	elseif IsValid(snd.Entity) and string.StartWith(snd.SoundName, "vo/") and snd.Entity:GetModel() and snd.Entity:IsPlayer() and !snd.Entity:IsHL2() and string.StartWith(snd.Entity:GetModel(),"models/player/") and snd.Entity.playerclass != "spy"  then
-		if (snd.Entity:GetInfoNum("tf_special_dsp_type",-1) > -1) then
-			snd.DSP = snd.Entity:GetInfoNum("tf_special_dsp_type",-1);
-		end
-		local tr = snd.Entity:GetEyeTrace()
-		if (tr.Entity) then
-			if (tr.Entity:IsPlayer() and tr.Entity:IsHL2()) then
-				if (string.find(snd.SoundName, "CloakedSpyIdentify")) then
-					if (snd.Entity.playerclass == "Soldier" || snd.Entity.playerclass == "Spy") then
-
-						snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "vo/"..snd.Entity.playerclass.."_cloakedspyidentifygmodplayer.wav")
-
-					else
-						snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "vo/"..snd.Entity.playerclass.."_cloakedspyidentifygmod.wav")
-					end
-				end
+			if (string.find(snd.SoundName,"vo/")) then
+				snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
 			end
+			return true 
 		end
-		if (GetConVar("tf_pyrovision"):GetBool()) then
-			snd.SoundName = string.Replace(snd.SoundName, "PainCrticialDeath", "laughlong")
-			snd.SoundName = string.Replace(snd.SoundName, "PainSharp", "laughshort")
-			snd.SoundName = string.Replace(snd.SoundName, "PainSevere", "laughhappy")
-			snd.SoundName = string.Replace(snd.SoundName, "AutoOnFire", "PositiveVocalization")
-			snd.SoundName = string.Replace(snd.SoundName, "heavy_laughshort04", "heavy_laughshort01")
-			snd.SoundName = string.Replace(snd.SoundName, "heavy_laughshort05", "heavy_laughshort02")
-			snd.SoundName = string.Replace(snd.SoundName, "heavy_laughlong03", "heavy_laughlong02")
-		end
-		if (!string.find(snd.SoundName,"announcer_") && !string.find(snd.SoundName,"mvm_")) then
-			
-			if snd.Entity:GetInfoNum("tf_player_use_female_models", 0) == 1 then
-				snd.Pitch = 130
-			end 
-		end 
-		return true	
-	elseif IsValid(snd.Entity) and string.StartWith(snd.SoundName, "vo/") and snd.Entity:IsPlayer() and snd.Entity.playerclass == "spy" then
-		if (string.find(snd.Entity:GetModel(), "scout")) then
-			snd.SoundName = string.Replace(snd.SoundName, "spy_", "scout_")
-		elseif (string.find(snd.Entity:GetModel(), "soldier")) then
-			snd.SoundName = string.Replace(snd.SoundName, "spy_", "soldier_")
-		elseif (string.find(snd.Entity:GetModel(), "pyro")) then
-			snd.SoundName = string.Replace(snd.SoundName, "spy_", "pyro_")
-		elseif (string.find(snd.Entity:GetModel(), "demo")) then
-			snd.SoundName = string.Replace(snd.SoundName, "spy_", "demoman_")
-		elseif (string.find(snd.Entity:GetModel(), "heavy")) then
-			snd.SoundName = string.Replace(snd.SoundName, "spy_", "heavy_")
-		elseif (string.find(snd.Entity:GetModel(), "engineer")) then
-			snd.SoundName = string.Replace(snd.SoundName, "spy_", "engineer_")
-		elseif (string.find(snd.Entity:GetModel(), "medic")) then
-			snd.SoundName = string.Replace(snd.SoundName, "spy_", "medic_")
-		elseif (string.find(snd.Entity:GetModel(), "sniper")) then
-			snd.SoundName = string.Replace(snd.SoundName, "spy_", "sniper_")
-		end
-		if (snd.Entity:GetInfoNum("tf_special_dsp_type",-1) > -1) then
-			snd.DSP = snd.Entity:GetInfoNum("tf_special_dsp_type",-1);
-		end
-		if (GetConVar("tf_pyrovision"):GetBool()) then
-			snd.SoundName = string.Replace(snd.SoundName, "painsharp", "laughshort")
-			snd.SoundName = string.Replace(snd.SoundName, "painsevere", "laughhappy")
-			snd.SoundName = string.Replace(snd.SoundName, "paincrticialdeath", "laughlong")
-			snd.SoundName = string.Replace(snd.SoundName, "autoonfire", "laughhappy")
-		end
-		return true
-	elseif IsValid(snd.Entity) and string.StartWith(snd.SoundName, "vo/") and snd.Entity:IsPlayer() and snd.Entity:Team() == TEAM_BLU and string.find(game.GetMap(), "mvm") then
-		snd.SoundName = string.Replace(snd.SoundName, "vo/", "vo/mvm/norm/")
-		snd.SoundName = string.Replace(snd.SoundName, "scout", "scout_mvm")
-		snd.SoundName = string.Replace(snd.SoundName, "soldier", "soldier_mvm")
-		snd.SoundName = string.Replace(snd.SoundName, "pyro", "pyro_mvm")
-		snd.SoundName = string.Replace(snd.SoundName, "demoman", "demoman_mvm")
-		snd.SoundName = string.Replace(snd.SoundName, "heavy", "heavy_mvm")
-		snd.SoundName = string.Replace(snd.SoundName, "engineer", "engineer_mvm")
-		snd.SoundName = string.Replace(snd.SoundName, "medic", "medic_mvm")
-		snd.SoundName = string.Replace(snd.SoundName, "sniper", "sniper_mvm")
-		snd.SoundName = string.Replace(snd.SoundName, "spy", "spy_mvm")
-		snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3")
-		return true 
 	end
-	return true
 end) 

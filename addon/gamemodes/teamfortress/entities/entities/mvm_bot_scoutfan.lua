@@ -7,7 +7,7 @@ ENT.Spawnable = false
 ENT.AdminOnly = false
 ENT.Difficulty = 3
 ENT.PrintName		= "Force-A-Nature Scout"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 
 list.Set( "NPC", "mvm_bot_scoutfan", {
 	Name = ENT.PrintName,

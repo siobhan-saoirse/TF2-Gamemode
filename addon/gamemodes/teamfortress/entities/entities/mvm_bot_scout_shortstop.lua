@@ -6,7 +6,7 @@ ENT.PZClass = "scout_shortstop"
 ENT.Spawnable = false
 ENT.AdminOnly = false
 ENT.PrintName		= "Shortstop Scout"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 ENT.PreferredIcon = "hud/leaderboard_class_scout_shortstop"
 
 list.Set( "NPC", "mvm_bot_scout_shortstop", {

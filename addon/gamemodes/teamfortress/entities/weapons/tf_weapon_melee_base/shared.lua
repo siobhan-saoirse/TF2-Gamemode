@@ -23,7 +23,7 @@ SWEP.HitWorld = Sound("")
 
 SWEP.MeleeAttackDelay = 0.2
 --SWEP.MeleeAttackDelayCritical = 0.25
-SWEP.MeleeRange = 48
+SWEP.MeleeRange = 66
 
 SWEP.MaxDamageRampUp = 0
 SWEP.MaxDamageFalloff = 0
@@ -74,12 +74,12 @@ function SWEP:GetSecondaryFireActivity()
 end
 
 function SWEP:CanPrimaryAttack()
-	if (self.Owner:GetNWBool("Bonked",false) == true) then return false end
+	if (self.Owner:GetNWBool("Bonked")) then return false end
 	return true
 end
 
 function SWEP:CanSecondaryAttack()
-	if (self.Owner:GetNWBool("Bonked",false) == true) then return false end
+	if (self.Owner:GetNWBool("Bonked")) then return false end
 	return true
 end
 
@@ -915,7 +915,7 @@ function SWEP:PrimaryAttack()
 	end
 	
 	if SERVER  then
-		self.Owner:Speak("TLK_FIREWEAPON", true)
+		self.Owner:Taunt("TLK_FIREWEAPON", true)
 	end
 	
 	self.NextIdle = CurTime() + self:SequenceDuration()  
@@ -980,7 +980,7 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:CanPrimaryAttack()
-	if (self.Owner:GetNWBool("Bonked",false) == true) then return false end
+	if (self.Owner:GetNWBool("Bonked")) then return false end
 	return true
 end
 

@@ -160,7 +160,7 @@ end
 function meta:TFTaunt(args)
 	local ply = self
 	if SERVER then
-		if ply:IsHL2() then return end
+		if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 		if ply:GetNWBool("Taunting") == true then return end
 		if not ply:IsOnGround() then return end
 		if ply:WaterLevel() ~= 0 then return end
@@ -174,6 +174,12 @@ function meta:TFTaunt(args)
 		for k,v in ipairs(ents.FindInSphere(ply:GetPos(), 120)) do
 			if v:GetNWBool("IWantToTaunt") ==  true then
 				self:SetNWBool("IWantToTauntToo", true)
+			end
+		end
+		if (IsValid(ply:GetActiveWeapon())) then
+			if (ply:GetActiveWeapon():GetClass() == "tf_weapon_lunchbox") then
+				ply:GetActiveWeapon():PrimaryAttack()
+				return
 			end
 		end
 		if ply:GetPlayerClass() != "spy" then

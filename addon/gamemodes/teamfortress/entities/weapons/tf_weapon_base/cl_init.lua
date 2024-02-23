@@ -12,7 +12,7 @@ SWEP.DrawWeaponInfoBox	= false
 SWEP.BounceWeaponIcon   = false
 SWEP.WepSelectIcon = surface.GetTextureID( "weapons/swep" )
 SWEP.SwayScale			= 0 -- 0.5
-SWEP.BobScale			= 1
+SWEP.BobScale			= 0.35
  
 --[[
 hook.Add("HUDPaint", "testlol", function()

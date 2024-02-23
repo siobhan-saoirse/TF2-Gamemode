@@ -3,16 +3,15 @@
 -- loadout should be done through data rather than convars, some custom classes may not work with convars
 -- should probably open a list of weapons like before but only for the selected thing
 
-CreateClientConVar("loadout_scout", "", true, true)
-CreateClientConVar("loadout_soldier", "", true, true)
-CreateClientConVar("loadout_pyro", "", true, true)
-CreateClientConVar("loadout_demoman", "", true, true)
-CreateClientConVar("loadout_heavy", "15,11,5,-1,-1", true, true)
-CreateClientConVar("loadout_engineer", "", true, true)
-CreateClientConVar("loadout_sniper", "", true, true)
-CreateClientConVar("loadout_medic", "", true, true)
-CreateClientConVar("loadout_spy", "", true, true)
-CreateClientConVar("loadout_gmodplayer", "", true, true)
+CreateConVar("loadout_scout", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
+CreateConVar("loadout_soldier", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
+CreateConVar("loadout_pyro", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
+CreateConVar("loadout_demoman", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
+CreateConVar("loadout_heavy", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
+CreateConVar("loadout_engineer", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
+CreateConVar("loadout_sniper", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
+CreateConVar("loadout_medic", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
+CreateConVar("loadout_spy", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
 
 local nextLoadoutUpdate = 0
 
@@ -79,10 +78,12 @@ concommand.Add("open_charinfo_direct", function(_, _, args)
     frame:SetTitle("Loadout (" .. class .. ")")
     frame:MakePopup()
     frame.OnClose = function()
-        RunConsoleCommand("loadout_update")
-        
-        if (GetConVar("tf_grapplinghook_enable"):GetBool()) then
-            ply:ConCommand("giveitem Grappling Hook")
+        if (!GetConVar("tf_competitive"):GetBool()) then
+            RunConsoleCommand("loadout_update")
+            
+            if (GetConVar("tf_grapplinghook_enable"):GetBool()) then
+                ply:ConCommand("giveitem Grappling Hook")
+            end
         end
     end
 

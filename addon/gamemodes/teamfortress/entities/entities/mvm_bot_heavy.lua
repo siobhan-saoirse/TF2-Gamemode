@@ -7,7 +7,7 @@ ENT.Spawnable = false
 ENT.AdminOnly = false
 ENT.IsBoss = false
 ENT.PrintName		= "Heavyweapons" 
-ENT.Category		= "TF2: MVM Bots" 
+ENT.Category		= "TFBots" 
 
 list.Set( "NPC", "mvm_bot_heavy", {
 	Name = ENT.PrintName,

@@ -157,7 +157,7 @@ function SWEP:ModelDrawn(view)
 		if view then
 			wep = (IsValid(self.CModel) and self.CModel) or self.Owner:GetViewModel()
 		else
-			wep = self
+			wep = self.WModel
 		end
 		att = wep:LookupAttachment("muzzle")
 		att = wep:GetAttachment(att)

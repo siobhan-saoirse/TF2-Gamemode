@@ -8,7 +8,7 @@ ENT.AdminOnly = true
 ENT.IsBoss = true
 ENT.Difficulty = 3
 ENT.PrintName		= "Giant Burst Fire Demo"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 
 
 function ENT:CustomOnInitialize(bot)

@@ -8,7 +8,7 @@ ENT.AdminOnly = false
 ENT.IsBoss = false
 ENT.Items = {"U-clank-a","Deflector"}	
 ENT.PrintName		= "Deflector Heavy" 
-ENT.Category		= "TF2: MVM Bots" 
+ENT.Category		= "TFBots" 
 ENT.PreferredIcon = "hud/leaderboard_class_heavy_deflector"
 list.Set( "NPC", "mvm_bot_deflectorheavy", {
 	Name = ENT.PrintName,

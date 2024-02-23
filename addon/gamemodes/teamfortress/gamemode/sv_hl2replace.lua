@@ -190,14 +190,25 @@ function GM:OnEntityCreated(ent)
 	end
 
 	-- Jarated zombies release jarated headcrabs
+	--[[
 	if (ent:IsNPC()) then
 		ent:AddFlags(FL_CLIENT)
-	end
-	if ent:IsNPC() and string.find(ent:GetClass(), "headcrab") then
+	end]]
+	if ent:IsNPC() and (string.find(ent:GetClass(), "headcrab") || string.find(ent:GetClass(), "manhack")) then
 		local owner = ent:GetOwner()
 		if owner:IsNPC() and owner:HasPlayerState(PLAYERSTATE_JARATED) then
 			ent.NextEndJarate = owner.NextEndJarate
 			ent:AddPlayerState(PLAYERSTATE_JARATED, true)
+		end
+	end
+	if ent:IsNPC() then
+		local owner = ent:GetOwner()
+		if owner:IsNPC() then
+			ent:SetNWInt("Team",owner:GetNWInt("Team",0))
+		end
+		local parent = ent:GetParent()
+		if parent:IsNPC() then
+			ent:SetNWInt("Team",parent:GetNWInt("Team",0))
 		end
 	end
 end

@@ -836,7 +836,7 @@ function ENT:ChaseEnemy( options )
 		local pos = self:GetEnemy():GetPos()
 		if (self:GetEnemy():GetPos():Distance(self:GetPos()) > self.AttackRange) then
 			for k,v in ipairs(ents.FindInSphere(self:GetPos(),180)) do -- avoid other infected
-				if (v:GetClass() == "infected" and v:EntIndex() != self:EntIndex()) then
+				if (v:GetClass() == "infected_this_is_not_needed_anymore_why" and v:EntIndex() != self:EntIndex()) then
 					self.AvoidingEntity = v
 					pos = self:GetEnemy():GetPos() + (self:GetForward() + v:GetForward()*(-100)) + (v:GetRight() * -100 - self:GetRight()*(100))
 					self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)

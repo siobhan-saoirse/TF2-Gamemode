@@ -7,7 +7,7 @@ ENT.Spawnable = false
 ENT.AdminOnly = false
 ENT.IsBoss = false
 ENT.PrintName		= "Heavyweight Champ"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 ENT.Items = {"Killing Gloves of Boxing","Pugilist's Protector"}
 ENT.PreferredIcon = "hud/leaderboard_class_heavy_champ"
 

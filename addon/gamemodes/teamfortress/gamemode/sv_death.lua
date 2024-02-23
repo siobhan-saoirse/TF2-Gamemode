@@ -337,12 +337,6 @@ function GM:PostTFPlayerDeath(ent, attacker, inflictor)
 					umsg.Short(GAMEMODE:EntityTeam(v))
 					umsg.Short(GAMEMODE:EntityID(v))
 				umsg.End()
-				if v:IsPlayer() then
-					v:SendLua("surface.PlaySound('misc/tf_domination.wav')")
-					if (ent:IsPlayer()) then
-						ent:SendLua("surface.PlaySound('misc/tf_nemesis.wav')")
-					end
-				end
 				umsg.Start("PlayerDomination")
 					umsg.Entity(ent)
 					umsg.Entity(v)
@@ -365,12 +359,6 @@ function GM:PostTFPlayerDeath(ent, attacker, inflictor)
 					umsg.Short(GAMEMODE:EntityID(v))
 				umsg.End()
 				
-				if v:IsPlayer() then
-					if (ent:IsPlayer()) then
-						ent:SendLua("surface.PlaySound('misc/tf_revenge.wav')")
-					end
-					v:SendLua("surface.PlaySound('misc/tf_revenge.wav')")
-				end
 				umsg.Start("PlayerRevenge")
 					umsg.Entity(ent)
 					umsg.Entity(v)
@@ -442,6 +430,7 @@ end
 function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	local shouldgib = false
 	local inflictor = dmginfo:GetInflictor()
+	ply:SetMoveType(MOVETYPE_NONE)
 	ply:SetNWBool("Taunting",false)
 	
 	ply.LastDamageInfo = CopyDamageInfo(dmginfo)
@@ -855,7 +844,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 					if (!dmginfo:IsDamageType(DMG_DISSOLVE) and !ply:HasDeathFlag(DF_FROZEN) and !ply:HasDeathFlag(DF_GOLDEN)) then
 						net.Start("TFRagdollCreate")
 							net.WriteEntity(ply)
-							net.WriteVector(ply:GetVelocity() + dmginfo:GetDamageForce())
+							net.WriteVector(ply:GetVelocity() + (dmginfo:GetDamageForce()))
 						net.Broadcast()
 						
 					else
@@ -1636,6 +1625,11 @@ end
 
 function GM:PlayerDeath(ent, inflictor, attacker)
 	-- Don't spawn for at least 2 seconds
+	if (ent:GetNWBool("Congaing")) then
+		ent:ConCommand("tf_taunt_conga_stop")
+	elseif (ent:GetNWBool("Russian")) then
+		ent:ConCommand("tf_taunt_russian_stop")
+	end
 	if (GetConVar("civ2_allow_respawn_with_key_press"):GetBool()) then
 		ent.NextSpawnTime = CurTime() + 2.5
 	else

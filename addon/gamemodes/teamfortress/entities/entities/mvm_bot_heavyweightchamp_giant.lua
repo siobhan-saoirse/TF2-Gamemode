@@ -9,7 +9,7 @@ ENT.IsBoss = true
 ENT.Difficulty = 3
 ENT.Items = {"Pugilist's Protector","Killing Gloves of Boxing"}
 ENT.PrintName		= "Super Heavyweight Champ"
-ENT.Category		= "TF2: MVM Bots"
+ENT.Category		= "TFBots"
 
 list.Set( "NPC", "mvm_bot_heavyweightchamp_giant", {
 	Name = ENT.PrintName,

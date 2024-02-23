@@ -241,7 +241,7 @@ function SWEP:DoAirblast()
 	for _,v in pairs(ents.FindInBox(pos-Vector(r,r,r),pos+Vector(r,r,r))) do
 		c = v:GetClass()
 		--print(v)
-		if v:GetOwner()~=self.Owner then
+		if v~=self.Owner then
 			if v:IsTFPlayer() or v:GetClass() == "tf_projectile_pipe" or v:GetClass() == "prop_physics" or v:GetClass() == "tf_projectile_ball" or v:GetClass() == "tf_projectile_cleaver" and self.Owner:IsValidEnemy(v) and v:ShouldReceiveDamageForce() then
 				if v:GetMoveType()==MOVETYPE_VPHYSICS then
 					for i=0,v:GetPhysicsObjectCount()-1 do
@@ -274,12 +274,8 @@ function SWEP:DoAirblast()
 						if (v.TFBot) then -- bots HATE getting airblasted
 							v.TargetEnt = self.Owner
 						end
-						v:SetPos(v:GetPos() + Vector(0,0,12))
-						v:SetGroundEntity(NULL)
-						v:SetVelocity(dir2 * 400)
-						v:SetThrownByExplosion(true)
-						
 						if v:IsPlayer() then
+							v:SetVelocity(((((-v:GetAimVector() * 45) * 10) + Vector(0,0,245)) * 45) * 245)
 							umsg.Start("TFAirblastImpact", v)
 							umsg.End()
 						end

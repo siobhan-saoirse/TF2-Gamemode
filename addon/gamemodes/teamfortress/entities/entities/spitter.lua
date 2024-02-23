@@ -8,7 +8,7 @@ ENT.AdminOnly = false
 ENT.PrintName		= "Spitter"
 ENT.Category		= "Left 4 Dead 2 Bots"
 
-list.Set( "NPC", "spitter", {
+list.Set( "NPC", "tf_spitter", {
 	Name = ENT.PrintName,
 	Class = "spitter",
 	Category = ENT.Category
