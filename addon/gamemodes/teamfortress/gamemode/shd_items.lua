@@ -672,6 +672,9 @@ function META:GiveItem(itemname, properties)
 	_G.TFWeaponItemOwner = self
 	_G.TFWeaponItemIndex = item.id
 	-- Initialization of the item is now done in SWEP:Deploy
+	if (self:GetPlayerClass() == "spy" && class == "tf_weapon_builder") then
+		class = "tf_weapon_sapper"
+	end
 	local weapon = NULL
 	if scripted_ents.GetStored(class) then
 		weapon = ents.Create(class)

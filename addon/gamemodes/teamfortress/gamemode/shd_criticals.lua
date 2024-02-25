@@ -146,11 +146,6 @@ function DispatchCritEffect(ent, inf, att, is_mini_crit)
 			end
 		end
 		
-		-- Notify the victim that they have been critted in the face D:
-		if ent:IsPlayer() and ent.NextSpeak and ent.NextSpeak<CurTime() then
-			SendUserMessage("CriticalHitReceived", ent)
-		end
-		
 		-- Also notify all teammates if the hit is a mini crit
 		if is_mini_crit then
 			local rp = RecipientFilter()

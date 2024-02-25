@@ -8,7 +8,7 @@ if CLIENT then
  
 SWEP.GlobalCustomHUD = {HudBuildingStatus = true}
 	SWEP.PrintName			= "Builder"
-	SWEP.Slot				= 1
+	SWEP.Slot				= 999
 end
 
 SWEP.Base				= "tf_weapon_base"

@@ -215,6 +215,48 @@ local combine = {
 	"npc_headcrab_black",
 	"npc_headcrab_black",
 	"npc_headcrab_black",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
 }
 function ENT:OnRemove()
 	for k,v in ipairs(self.bots) do
@@ -246,14 +288,15 @@ function ENT:RunBehaviour()
 		self.loco:SetAcceleration( 1400 )
 		self.loco:SetDesiredSpeed( 1400 )		-- Walk speed
 		local ply = lookForNearestPlayer(self)
-		self:SetPos(ply:GetPos())
-		local pos = self:FindSpot("random", {type = "hiding", radius = math.random(120,8000), pos = ply:GetPos()})
+		if (IsValid(ply)) then
+			self:SetPos(ply:GetPos())
+		end
+		local pos = self:FindSpot("random", {type = "hiding", radius = math.random(120,8000), pos = self:GetPos()})
 		if (pos) then
 			self:SetPos(pos)	
 		end
 			if (math.random(1,7) == 1) then 
 				local cmb = table.Random(combine)
-						for i=1,math.random(1,3) do
 							local bot = ents.Create(cmb)
 							if (!IsValid(bot)) then 
 								coroutine.wait(0.1)
@@ -266,20 +309,47 @@ function ENT:RunBehaviour()
 							if (pos) then
 								bot:SetPos(pos)	
 							else
-								bot:SetPos(self:GetPos() + Vector(0,0,20))
+								bot:SetPos(self:GetPos() + Vector(math.random(-120,120),math.random(-120,120),20))
+							end
+							if (bot:GetClass() == "env_headcrabcanister") then
+								bot:SetKeyValue( "HeadcrabType", headcrab )
+								bot:SetKeyValue( "HeadcrabCount", count )
+								bot:SetKeyValue( "FlightSpeed", speed )
+								bot:SetKeyValue( "FlightTime", time )
+								bot:SetKeyValue( "StartingHeight", height )
+								bot:SetKeyValue( "Damage", damage )
+								bot:SetKeyValue( "DamageRadius", radius )
+								bot:SetKeyValue( "SmokeLifetime", duration )
+								bot:SetKeyValue( "spawnflags", spawnflags )
+								bot:Fire( "FireCanister" )
+								bot:SetAngles(Angle(math.sin( CurTime() ) * 16 - 55,plr:GetAngles().y,0))
+								bot:SetPos(plr:GetPos() + Vector(math.random(-300,300),math.random(-300,300),0))
 							end
 							bot:Spawn()
-							bot:SetTarget(plr)
-							bot:SetEnemy(plr)
-							bot:AlertSound()
-							bot:UpdateEnemyMemory( plr, plr:GetPos() )
-							bot:SetSaveValue( "m_vecLastPosition", plr:GetPos() )
-                        	bot:SetSchedule(SCHED_FORCED_GO_RUN) 
-							bot:SetEntityTeam(TEAM_GREEN)
+							bot:Activate()
+												
+							headcrab = math.random(0,2)
+							count = 6
+							speed = 3000
+							time = 5
+							height = 0
+							damage = 150
+							radius = 750
+							duration = 30
+							spawnflags = 0
+							if (bot:IsNPC()) then
+								bot:SetTarget(plr)
+								bot:SetEnemy(plr)
+								bot:AlertSound()
+								bot:UpdateEnemyMemory( plr, plr:GetPos() )
+								bot:SetSaveValue( "m_vecLastPosition", plr:GetPos() )
+								bot:SetSchedule(SCHED_FORCED_GO_RUN) 
+								bot:SetEntityTeam(TEAM_GREEN)
+							end
 							table.insert(self.bot,bot)
 							print("Creating NPC #"..bot:EntIndex())
 							timer.Create("CheckForNoEnemies"..bot:EntIndex(), 8, 0, function()
-								if (!IsValid(bot)) then return end
+								if (!IsValid(bot) or !bot:IsNPC()) then return end
 								if (bot:GetEnemy() == nil) then -- not doing anything, kick
 									for k,v in ipairs(self.bot) do
 										if (v:EntIndex() == bot:EntIndex()) then
@@ -293,7 +363,6 @@ function ENT:RunBehaviour()
 							if (bot:GetModel()) then
 								self:SetModel(bot:GetModel())
 							end
-						end
 						coroutine.wait(3.0)
 			else
 				coroutine.yield()

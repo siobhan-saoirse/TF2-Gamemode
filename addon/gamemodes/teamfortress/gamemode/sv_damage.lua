@@ -623,14 +623,18 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		dmginfo:SetDamage(dmginfo:GetDamage() * 1.5)
 	end
 	gamemode.Call("PostScaleDamage", ent, 0, dmginfo)
-	
+	if (ent:IsPlayer() and !ent:IsHL2()) then
+		if (attacker:IsPlayer() && attacker:IsHL2()) then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 1.5)
+		end
+	end
 	if ent:IsTFPlayer() then
 		-- Increased bullet force
 		if dmginfo:IsBulletDamage() then
 			dmginfo:SetDamageForce(dmginfo:GetDamageForce() * BulletForceMultiplier)
 		elseif dmginfo:IsExplosionDamage() then
 			dmginfo:SetDamageForce(dmginfo:GetDamageForce() * BlastForceMultiplier)
-		end 
+		end  
 		
 		-- Overexaggerated explosion force
 		if (ent:IsNPC() or ent:IsPlayer()) and ent:ShouldReceiveDamageForce() and dmginfo:IsExplosionDamage() then

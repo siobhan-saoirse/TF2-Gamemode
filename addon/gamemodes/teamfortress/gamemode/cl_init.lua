@@ -930,7 +930,31 @@ Hint:SetText( "OFFENSE" )
 Hint:SetFont( "MenuClassBuckets" ) 
 Hint:SetColor( Color(117,107,94,255) )
 Hint:SizeToContents()
+local numscout = vgui.Create( "DLabel", ClassFrame )
+numscout:SetPos( ScrW() * 0.131, ScrH() * 0.16 )
+numscout:SetSize(90,12)
+numscout:SetZPos(2)
+numscout:SetText( "1" ) 
+numscout:SetFont( "MenuClassBuckets" ) 
+numscout:SetColor( Color(117,107,94,255) )
+numscout:SizeToContents()
 
+local numsoldier = vgui.Create( "DLabel", ClassFrame )
+numsoldier:SetPos( ScrW() * 0.181, ScrH() * 0.16 )
+numsoldier:SetSize(90,12)
+numsoldier:SetZPos(2)
+numsoldier:SetText( "2" ) 
+numsoldier:SetFont( "MenuClassBuckets" ) 
+numsoldier:SetColor( Color(117,107,94,255) )
+numsoldier:SizeToContents()
+local numpyro = vgui.Create( "DLabel", ClassFrame )
+numpyro:SetPos( ScrW() * 0.251, ScrH() * 0.16 )
+numpyro:SetSize(90,12)
+numpyro:SetZPos(2)
+numpyro:SetText( "3" ) 
+numpyro:SetFont( "MenuClassBuckets" ) 
+numpyro:SetColor( Color(117,107,94,255) )
+numpyro:SizeToContents()
 local Hint2 = vgui.Create( "DLabel", ClassFrame )
 Hint2:SetPos( ScrW() * 0.362, ScrH() * 0.18 )
 Hint2:SetSize(90,12)
@@ -948,6 +972,32 @@ Hint3:SetText( "SUPPORT" )
 Hint3:SetFont( "MenuClassBuckets" ) 
 Hint3:SetColor( Color(117,107,94,255) )
 Hint3:SizeToContents()
+
+local numsoldier = vgui.Create( "DLabel", ClassFrame )
+numsoldier:SetPos( ScrW() * 0.181, ScrH() * 0.16 )
+numsoldier:SetSize(90,12)
+numsoldier:SetZPos(2)
+numsoldier:SetText( "2" ) 
+numsoldier:SetFont( "MenuClassBuckets" ) 
+numsoldier:SetColor( Color(117,107,94,255) )
+numsoldier:SizeToContents()
+
+
+local menuname = vgui.Create( "DLabel", ClassFrame )
+menuname:SetPos( ScrW() * 0.545, ScrH() * 0.33 )
+menuname:SetZPos(2)
+menuname:SetText( "HEAVY" ) 
+menuname:SetFont( "ChalkboardTitle" ) 
+menuname:SizeToContents()
+
+local menutext = vgui.Create( "DLabel", ClassFrame )
+menutext:SetPos( ScrW() * 0.545, ScrH() * 0.43 )
+menutext:SetZPos(2)
+menutext:SetText( [[Spin your minigun without firing to be ready 
+for approaching enemies!]] ) 
+menutext:SetFont( "ChalkboardText" ) 
+menutext:SetColor( Color(178,178,178,255) )
+menutext:SizeToContents()
 
 local GmodButton
 local gm_img 
@@ -995,6 +1045,15 @@ if (!GetConVar("tf_disable_fun_classes"):GetBool()) then
 		else
 			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
 		end
+			
+		menuname:SetText( "GMOD PLAYER" ) 
+		menutext:SetText( [[Become any character you'd like!
+		Use Half-Life 2, Day of Defeat, Left 4 Dead 
+		and Counter-Strike weapons!
+		Do more damage towards TF2 Mercenaries!
+		Hold SHIFT to move faster!]] ) 
+		menuname:SizeToContents()
+		menutext:SizeToContents()
 	end 
 end
 ScoutButton.OnCursorEntered = function() 
@@ -1005,6 +1064,11 @@ ScoutButton.OnCursorEntered = function()
 	else
 		icon:SetModel( "models/player/scout.mdl" ) -- you can only change colors on playermodels
 	end
+	menuname:SetText( "SCOUT" ) 
+	menutext:SetText( [[You capture points faster than other classes!
+double jump while in the air!]] ) 
+		menuname:SizeToContents()
+		menutext:SizeToContents()
 	icon2:GetEntity():SetParent(icon:GetEntity()) 
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/w_models/w_scattergun.mdl") 
@@ -1040,6 +1104,11 @@ SoldierButton.OnCursorEntered = function()
 	else
 		icon:SetModel( "models/player/soldier.mdl" ) -- you can only change colors on playermodels
 	end
+	menuname:SetText( "SOLDIER" ) 
+	menutext:SetText( [[Shoot your rocket launcher at enemy's feet!
+Use your rocket launcher to rocket jump!]] ) 
+		menuname:SizeToContents()
+		menutext:SizeToContents()
 	icon2:GetEntity():SetParent(icon:GetEntity()) 
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/w_models/w_rocketlauncher.mdl") 
@@ -1079,6 +1148,12 @@ PyroButton.OnCursorEntered = function()
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_flamethrower/c_flamethrower.mdl") 
 	LocalPlayer():EmitSound( "/music/class_menu_03.wav", 100, 100, 1, CHAN_VOICE ) 
+	menuname:SetText( "PYRO" ) 
+	menutext:SetText( [[Ambush enemies at corners!
+Your flamethrower is more effective the 
+closer you are to your target!]] ) 
+		menuname:SizeToContents()
+		menutext:SizeToContents()
 	local dance = icon:GetEntity():LookupSequence( "selectionMenu_Anim01" ) 
 	icon:GetEntity():SetSequence( dance ) 
 	icon:GetEntity():SetModelScale(0.865) 
@@ -1110,6 +1185,13 @@ DemomanButton.OnCursorEntered = function()
 	else
 		icon:SetModel( "models/player/demo.mdl" ) -- you can only change colors on playermodels
 	end
+	menuname:SetText( "DEMOMAN" ) 
+	menutext:SetText( [[Remote detonate your stickybombs 
+when enemies are near them!
+Stickybomb jump by standing on 
+a stickybomb and jumping as you detonate it!]] ) 
+		menuname:SizeToContents()
+		menutext:SizeToContents()
 	icon2:GetEntity():SetParent(icon:GetEntity()) 
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_grenadelauncher/c_grenadelauncher.mdl") 
@@ -1152,6 +1234,11 @@ HeavyButton.OnCursorEntered = function()
 	local dance = icon:GetEntity():LookupSequence( "selectionMenu_Anim01" ) 
 	icon:GetEntity():SetSequence( dance ) 
 	icon:GetEntity():SetModelScale(0.865) 
+	menuname:SetText( "HEAVY" ) 
+	menutext:SetText( [[Spin your minigun without firing to be ready 
+for approaching enemies!]] ) 
+		menuname:SizeToContents()
+		menutext:SizeToContents()
 	scout_img:SetImage( "vgui/class_sel_sm_scout_inactive" )
 	sol_img:SetImage( "vgui/class_sel_sm_soldier_inactive" )
 	py_img:SetImage( "vgui/class_sel_sm_pyro_inactive" )
@@ -1182,6 +1269,16 @@ EngineerButton.OnCursorEntered = function()
 	else
 		icon:SetModel( "models/player/engineer.mdl" ) -- you can only change colors on playermodels
 	end
+	menuname:SetText( "ENGINEER" ) 
+	menutext:SetText( [[Collect metal from fallen weapons to build with!
+Build sentryguns to defend your base! 
+Upgrade them to level 3!
+Build dispensers to supply your 
+teammates with health & ammo!
+Build teleporters to help 
+team mates get to the front lines!]] ) 
+		menuname:SizeToContents()
+		menutext:SizeToContents()
 	icon2:GetEntity():SetParent(icon:GetEntity()) 
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_wrench/c_wrench.mdl") 
@@ -1223,6 +1320,14 @@ MedicButton.OnCursorEntered = function()
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_medigun/c_medigun.mdl") 
 	LocalPlayer():EmitSound( "/music/class_menu_07.wav", 100, 100, 1, CHAN_VOICE ) 
+	menuname:SetText( "MEDIC" ) 
+	menutext:SetText( [[Fill your ÜberCharge by 
+	healing your team mates!
+Use a full ÜberCharge to 
+gain invulnerability for you and 
+your medi gun target!]] ) 
+		menuname:SizeToContents()
+		menutext:SizeToContents()
 	local dance = icon:GetEntity():LookupSequence( "selectionMenu_Anim01" ) 
 	icon:GetEntity():SetSequence( dance ) 
 	icon:GetEntity():SetModelScale(0.865) 
@@ -1263,6 +1368,12 @@ SniperButton.OnCursorEntered = function()
 	local dance = icon:GetEntity():LookupSequence( "selectionMenu_Anim01" ) 
 	icon:GetEntity():SetSequence( dance ) 
 	icon:GetEntity():SetModelScale(0.865) 
+	menuname:SetText( "SNIPER" ) 
+	menutext:SetText( [[Your sniper rifle will power up 
+	to do more damage while you are zoomed in!
+aim for the head to do critical hits!]] ) 
+		menuname:SizeToContents()
+		menutext:SizeToContents()
 	scout_img:SetImage( "vgui/class_sel_sm_scout_inactive" )
 	sol_img:SetImage( "vgui/class_sel_sm_soldier_inactive" )
 	py_img:SetImage( "vgui/class_sel_sm_pyro_inactive" )
@@ -1298,6 +1409,16 @@ SpyButton.OnCursorEntered = function()
 	local dance = icon:GetEntity():LookupSequence( "selectionMenu_Anim01" ) 
 	icon:GetEntity():SetSequence( dance ) 
 	icon:GetEntity():SetModelScale(0.865) 
+	menuname:SetText( "SPY" ) 
+	menutext:SetText( [[Disguise yourself as a enemy and 
+infiltrate the enemy base!
+cloak yourself to avoid being seen!
+Backstab your enemies with 
+your knife for an instant kill!
+Plant sappers on enemy sentryguns 
+to destroy them!]] ) 
+		menuname:SizeToContents()
+		menutext:SizeToContents()
 	scout_img:SetImage( "vgui/class_sel_sm_scout_inactive" )
 	sol_img:SetImage( "vgui/class_sel_sm_soldier_inactive" )
 	py_img:SetImage( "vgui/class_sel_sm_pyro_inactive" )

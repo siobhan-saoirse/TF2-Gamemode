@@ -84,11 +84,6 @@ function SWEP:PrimaryAttack()
 		self:ShootEffects()
 		self:RustyBulletHole()	
 	end
-	if SERVER then
-		umsg.Start("TF2ShellEject")
-			umsg.Entity(self)
-		umsg.End()
-	end
 	if (self.FastDelay) then
 		self.NextIdle = CurTime() + self:SequenceDuration(self:SelectWeightedSequence(self.VM_PRIMARYATTACK)) / self.Primary.FastDelay
 	else
@@ -235,12 +230,19 @@ function SWEP:ShootEffects()
 
 				if (self:Critical()) then
 					v:SendLua("Entity("..self.Owner:EntIndex().."):EmitSound(\""..self.ShootCritSound.."\")")
-				else
+				else 
 					v:SendLua("Entity("..self.Owner:EntIndex().."):EmitSound(\""..self.ShootSound.."\")")
 				end
 
 			end
 		end
+		
+	if SERVER then
+		umsg.Start("TF2ShellEject")
+			umsg.Entity(self)
+		umsg.End()
+	end
+	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	self.Reloading = false
 	self.NextReload = nil
 	self.NextReload2 = nil

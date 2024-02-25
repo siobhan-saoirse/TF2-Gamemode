@@ -1172,7 +1172,7 @@ sound.Add( {
  
 
 hook.Add("PlayerFootstep", "RoboStep", function( ply, pos, foot, sound, volume, rf)
-	if (GetConVar("tf_enable_server_footsteps"):GetBool() or (CLIENT and !LocalPlayer():IsHL2() and LocalPlayer():ShouldDrawLocalPlayer())) then
+	if ((GetConVar("tf_enable_server_footsteps"):GetBool() or (CLIENT and !LocalPlayer():IsHL2() and LocalPlayer():ShouldDrawLocalPlayer())) && !game.SinglePlayer()) then
 		if (SERVER) then
 			return false
 		else
@@ -1240,7 +1240,11 @@ hook.Add("PlayerFootstep", "RoboStep", function( ply, pos, foot, sound, volume, 
 	if ((CLIENT and ply == LocalPlayer()) or ply:IsHL2()) then
 		return false
 	else
-		return true
+		if (game.SinglePlayer()) then
+			return false
+		else
+			return true
+		end
 	end
 end)
 
@@ -1943,7 +1947,7 @@ elseif (CLIENT) then
 
 		local pos = ply:GetPos() + Vector(0, 0, ply:GetModelRadius() + 10)
 		if (ply:LookupBone("bip_head")) then
-			pos = ply:GetBonePosition(ply:LookupBone("bip_head")) + Vector(0, 0, 16)
+			pos = ply:GetBonePosition(ply:LookupBone("bistepp_head")) + Vector(0, 0, 16)
 		elseif (ply:LookupBone("ValveBiped.Bip01_Head1")) then
 			pos = ply:GetBonePosition(ply:LookupBone("ValveBiped.Bip01_Head1")) + Vector(0, 0, 16)
 		end
