@@ -252,7 +252,8 @@ npc_rollermine  = {
 npc_turret_ceiling = {
 	team=TEAM_BLU,
 	flags=NPC_BUILDING,
-	vplayer=VPLAYER_NONE
+	vplayer=VPLAYER_NONE,
+	health=500,
 },
 npc_turret_floor = {
 	team=TEAM_BLU,

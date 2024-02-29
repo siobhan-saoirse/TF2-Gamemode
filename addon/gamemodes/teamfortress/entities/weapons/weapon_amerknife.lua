@@ -224,7 +224,11 @@ function SWEP:MeleeAttack( right )
 	end
 	local vm = self.Owner:GetViewModel()
 	if SERVER then
-		vm:SendViewModelMatchingSequence( vm:LookupSequence( anim ) )
+		if (!right) then
+			self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
+		else
+			vm:SendViewModelMatchingSequence(vm:LookupSequence(anim))
+		end
 	end
 
 	timer.Stop("Idle"..self.Owner:EntIndex())

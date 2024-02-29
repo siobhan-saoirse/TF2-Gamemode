@@ -16,7 +16,7 @@ list.Set( "NPC", "mob_zombie_director", {
 local function lookForNearestPlayer(bot)
 	local npcs = {}
 	for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 25000)) do
-		if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:EntityTeam(bot) != TEAM_NEUTRAL and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET) and v:Health() > 0 ) then
+		if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET) and v:Health() > 0 ) then
 			table.insert(npcs, v)		
 		end
 	end
@@ -305,12 +305,24 @@ function ENT:RunBehaviour()
 							bot:SetAngles(self:GetAngles())
 							bot:SetOwner(self)
 							local plr = lookForNearestPlayer(self)
-							local pos = self:FindSpot("random", {type = "hiding", radius = math.random(120,8000), pos = plr:GetPos()})
+							local pos = self:FindSpot("random", {type = "hiding", radius = math.random(120,8000), pos = self:GetPos()})
 							if (pos) then
 								bot:SetPos(pos)	
 							else
 								bot:SetPos(self:GetPos() + Vector(math.random(-120,120),math.random(-120,120),20))
 							end
+							bot:Spawn()
+							bot:Activate()
+												
+							headcrab = math.random(0,2)
+							count = 6  
+							speed = 3000
+							time = 5
+							height = 0
+							damage = 150
+							radius = 300
+							duration = 30
+							spawnflags = 0
 							if (bot:GetClass() == "env_headcrabcanister") then
 								bot:SetKeyValue( "HeadcrabType", headcrab )
 								bot:SetKeyValue( "HeadcrabCount", count )
@@ -325,18 +337,6 @@ function ENT:RunBehaviour()
 								bot:SetAngles(Angle(math.sin( CurTime() ) * 16 - 55,plr:GetAngles().y,0))
 								bot:SetPos(plr:GetPos() + Vector(math.random(-300,300),math.random(-300,300),0))
 							end
-							bot:Spawn()
-							bot:Activate()
-												
-							headcrab = math.random(0,2)
-							count = 6
-							speed = 3000
-							time = 5
-							height = 0
-							damage = 150
-							radius = 750
-							duration = 30
-							spawnflags = 0
 							if (bot:IsNPC()) then
 								bot:SetTarget(plr)
 								bot:SetEnemy(plr)

@@ -485,6 +485,13 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	local amount = dmginfo:GetDamage()
 	
 	local att = dmginfo:GetAttacker()
+	if (ent:IsPlayer() and ent:IsHL2()) then
+		if (att and att:IsPlayer() and !att:IsHL2()) then
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.7)
+			ent:StopSound("Player.ResistanceLight")
+			ent:EmitSound("Player.ResistanceLight")
+		end
+	end
 	if (!att:IsL4D() and !ent:IsL4D()) then
 		if att~=ent and att:IsTFPlayer() and att:IsFriendly(ent) and !GetConVar("mp_friendlyfire"):GetBool() then
 			dmginfo:SetDamageType(DMG_GENERIC)

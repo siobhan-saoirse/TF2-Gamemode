@@ -56,6 +56,5 @@ for k, v in pairs(engine.GetAddons()) do
 end
 
 if !IsMounted("tf") then
-	ErrorNoHalt("TF2 is not mounted! Expect errors!")
 end
 

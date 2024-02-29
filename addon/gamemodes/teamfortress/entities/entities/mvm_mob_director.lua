@@ -172,7 +172,15 @@ local combine = {
 	"npc_rollermine",
 	"npc_rollermine",
 	"npc_rollermine",
-	"npc_rollermine"
+	"npc_rollermine",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister",
+	"env_headcrabcanister"
 }
 function ENT:OnRemove()
 	for k,v in ipairs(self.bots) do
@@ -222,40 +230,66 @@ function ENT:RunBehaviour()
 							bot:SetOwner(self)
 							if (bot:GetClass() == "npc_combine_s") then
 								bot:Fire("addoutput","numgrenades 6")
+							end	
+							headcrab = math.random(0,2)
+							count = 6
+							speed = 3000
+							time = 5
+							height = 0
+							damage = 150
+							radius = 300
+							duration = 30
+							spawnflags = 0
+								local plr = table.Random(player.GetAll())
+							if (bot:GetClass() == "env_headcrabcanister") then
+								bot:SetKeyValue( "HeadcrabType", headcrab )
+								bot:SetKeyValue( "HeadcrabCount", count )
+								bot:SetKeyValue( "FlightSpeed", speed )
+								bot:SetKeyValue( "FlightTime", time )
+								bot:SetKeyValue( "StartingHeight", height )
+								bot:SetKeyValue( "Damage", damage )
+								bot:SetKeyValue( "DamageRadius", radius )
+								bot:SetKeyValue( "SmokeLifetime", duration )
+								bot:SetKeyValue( "spawnflags", spawnflags )
+								bot:Fire( "FireCanister" )
+								bot:SetAngles(Angle(math.sin( CurTime() ) * 16 - 55,plr:GetAngles().y,0))
+								bot:SetPos(plr:GetPos() + Vector(math.random(-300,300),math.random(-300,300),0))
 							end
+							
 							bot:Spawn()
-							bot:SetSquad("overwatch")
-							if (bot:GetClass() == "npc_helicopter" or bot:GetClass() == "npc_combinegunship" or bot:GetClass() == "npc_strider") then
-								bot:SetPos(self:GetPos() + Vector(0,0,300))
-							else
-								bot:SetPos(self:GetPos() + Vector(0,0,20))
-							end
-							local plr = table.Random(player.GetAll())
-							bot:SetTarget(plr)
-							bot:SetEnemy(plr)
-							bot:UpdateEnemyMemory( plr, plr:GetPos() )
-							if (bot:GetClass() == "npc_combine_s") then
-								bot:Give(table.Random({"weapon_ar2","weapon_smg1","weapon_shotgun"}))
-								if (math.random(1,3) == 1) then
-									bot:SetModel("models/combine_super_soldier.mdl")
+							if (bot:IsNPC()) then
+								bot:SetSquad("overwatch")
+								if (bot:GetClass() == "npc_helicopter" or bot:GetClass() == "npc_combinegunship" or bot:GetClass() == "npc_strider") then
+									bot:SetPos(self:GetPos() + Vector(0,0,300))
+								else
+									bot:SetPos(self:GetPos() + Vector(0,0,20))
 								end
-							elseif (bot:GetClass() == "npc_metropolice") then
-								bot:Give(table.Random({"weapon_smg1","weapon_pistol","weapon_shotgun","weapon_ar2","weapon_stunstick"}))
-							end
-							table.insert(self.bot,bot)
-							print("Creating NPC #"..bot:EntIndex())
-							timer.Create("CheckForNoEnemies"..bot:EntIndex(), 8, 0, function()
-								if (!IsValid(bot)) then return end
-								if (bot:GetEnemy() == nil) then -- not doing anything, kick
-									for k,v in ipairs(self.bot) do
-										if (v:EntIndex() == bot:EntIndex()) then
-											table.remove(self.bot,k)
-										end
+								bot:SetTarget(plr)
+								bot:SetEnemy(plr)
+								bot:UpdateEnemyMemory( plr, plr:GetPos() )
+								if (bot:GetClass() == "npc_combine_s") then
+									bot:Give(table.Random({"weapon_ar2","weapon_smg1","weapon_shotgun"}))
+									if (math.random(1,3) == 1) then
+										bot:SetModel("models/combine_super_soldier.mdl")
 									end
-									bot:Remove()
-									print("Removed NPC #"..bot:EntIndex())
+								elseif (bot:GetClass() == "npc_metropolice") then
+									bot:Give(table.Random({"weapon_smg1","weapon_pistol","weapon_shotgun","weapon_ar2","weapon_stunstick"}))
 								end
-							end)
+								table.insert(self.bot,bot)
+								print("Creating NPC #"..bot:EntIndex())
+								timer.Create("CheckForNoEnemies"..bot:EntIndex(), 8, 0, function()
+									if (!IsValid(bot)) then return end
+									if (bot:GetEnemy() == nil) then -- not doing anything, kick
+										for k,v in ipairs(self.bot) do
+											if (v:EntIndex() == bot:EntIndex()) then
+												table.remove(self.bot,k)
+											end
+										end
+										bot:Remove()
+										print("Removed NPC #"..bot:EntIndex())
+									end
+								end)
+							end
 							if (bot:GetModel()) then
 								self:SetModel(bot:GetModel())
 							end
@@ -292,7 +326,7 @@ function ENT:RunBehaviour()
 									bot:SetModel("models/combine_super_soldier.mdl")
 								end
 							elseif (bot:GetClass() == "npc_metropolice") then
-								bot:Give(table.Random({"weapon_smg1","weapon_pistol","weapon_357","weapon_stunstick"}))
+								bot:Give(table.Random({"weapon_smg1","weapon_pistol","weapon_stunstick"}))
 							end
 							table.insert(self.bot,bot)
 							print("Creating NPC #"..bot:EntIndex())

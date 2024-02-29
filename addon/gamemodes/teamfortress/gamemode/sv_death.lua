@@ -36,6 +36,147 @@ function GM:DoTFPlayerDeath(ent, attacker, dmginfo)
 	if (dmginfo and dmginfo:IsDamageType(DMG_DISSOLVE)) then
 		ent:EmitSound("TFPlayer.Dissolve")
 	end
+	if (attacker:EntIndex() != ent:EntIndex()) then
+		if (attacker:GetClass() == "npc_headcrab") then
+			if (string.find(ent:GetModel(),"combine") and (IsMounted("episodic") or IsMounted("ep2"))) then
+			
+				local zombie = ents.Create("npc_zombine")
+				zombie:SetPos(ent:GetPos())
+				zombie:SetAngles(ent:GetAngles())
+				zombie:SetKeyValue( "spawnflags", "646" )
+				zombie:Spawn()
+				zombie:Activate()
+							
+				local zombie_name = "sleeping_zomb" .. zombie:EntIndex()
+				local seq = zombie_name .. "_wake_seq"
+
+				zombie:SetName( zombie_name )
+				zombie:Fire( "AddOutput", "OnDamaged " .. seq .. ":BeginSequence::0:1", 0 )
+				zombie:Fire( "AddOutput", "OnHearPlayer " .. seq .. ":BeginSequence::0:1", 0 )
+				
+				local slumptype = "a"
+				local waking_sequence = ents.Create( "scripted_sequence" )
+				waking_sequence:SetName( seq )
+				waking_sequence:SetKeyValue( "spawnflags", "624" )
+				waking_sequence:SetKeyValue( "m_fMoveTo", "4" ) -- tp to start of sequence
+				waking_sequence:SetKeyValue( "m_iszEntity", zombie_name )
+				waking_sequence:SetKeyValue( "m_iszIdle", "slump_"..slumptype )
+				waking_sequence:SetKeyValue( "m_iszPlay", "slumprise_"..slumptype )
+
+				waking_sequence:SetPos( zombie:GetPos() )
+				waking_sequence:Spawn()
+				waking_sequence:Activate()
+				waking_sequence:SetParent( zombie )
+
+				timer.Simple( 0, function()
+					waking_sequence:SetAngles( zombie:GetAngles() )
+				end )
+
+
+			else
+				local zombie = ents.Create("npc_zombie")
+				zombie:SetPos(ent:GetPos())
+				zombie:SetAngles(ent:GetAngles())
+				zombie:SetKeyValue( "spawnflags", "646" )
+				zombie:Spawn()
+				zombie:Activate()
+				local zombie_name = "sleeping_zomb" .. zombie:EntIndex()
+				local seq = zombie_name .. "_wake_seq"
+
+				zombie:SetName( zombie_name )
+				zombie:Fire( "AddOutput", "OnDamaged " .. seq .. ":BeginSequence::0:1", 0 )
+				zombie:Fire( "AddOutput", "OnHearPlayer " .. seq .. ":BeginSequence::0:1", 0 )
+				
+				local slumptype = "a"
+				local waking_sequence = ents.Create( "scripted_sequence" )
+				waking_sequence:SetName( seq )
+				waking_sequence:SetKeyValue( "spawnflags", "624" )
+				waking_sequence:SetKeyValue( "m_fMoveTo", "4" ) -- tp to start of sequence
+				waking_sequence:SetKeyValue( "m_iszEntity", zombie_name )
+				waking_sequence:SetKeyValue( "m_iszIdle", "slump_"..slumptype )
+				waking_sequence:SetKeyValue( "m_iszPlay", "slumprise_"..slumptype )
+
+				waking_sequence:SetPos( zombie:GetPos() )
+				waking_sequence:Spawn()
+				waking_sequence:Activate()
+				waking_sequence:SetParent( zombie )
+
+				timer.Simple( 0, function()
+					waking_sequence:SetAngles( zombie:GetAngles() )
+				end )
+			end
+		elseif (attacker:GetClass() == "monster_headcrab") then
+			local zombie = ents.Create("monster_zombie")
+			zombie:SetPos(ent:GetPos())
+			zombie:SetAngles(ent:GetAngles())
+			zombie:Spawn()
+			zombie:Activate()
+		elseif (attacker:GetClass() == "npc_headcrab_fast") then
+			local zombie = ents.Create("npc_fastzombie")
+			zombie:SetPos(ent:GetPos())
+			zombie:SetAngles(ent:GetAngles())
+			zombie:SetKeyValue( "spawnflags", "646" )
+			zombie:Spawn()
+			zombie:Activate()
+				
+			local zombie_name = "sleeping_zomb" .. zombie:EntIndex()
+			local seq = zombie_name .. "_wake_seq"
+
+			zombie:SetName( zombie_name )
+			zombie:Fire( "AddOutput", "OnDamaged " .. seq .. ":BeginSequence::0:1", 0 )
+			zombie:Fire( "AddOutput", "OnHearPlayer " .. seq .. ":BeginSequence::0:1", 0 )
+			
+			local slumptype = table.Random({"a","b"})
+			local waking_sequence = ents.Create( "scripted_sequence" )
+			waking_sequence:SetName( seq )
+			waking_sequence:SetKeyValue( "spawnflags", "624" )
+			waking_sequence:SetKeyValue( "m_fMoveTo", "4" ) -- tp to start of sequence
+			waking_sequence:SetKeyValue( "m_iszEntity", zombie_name )
+			waking_sequence:SetKeyValue( "m_iszIdle", "slump_"..slumptype )
+			waking_sequence:SetKeyValue( "m_iszPlay", "slumprise_"..slumptype )
+
+			waking_sequence:SetPos( zombie:GetPos() )
+			waking_sequence:Spawn()
+			waking_sequence:Activate()
+			waking_sequence:SetParent( zombie )
+
+			timer.Simple( 0, function()
+				waking_sequence:SetAngles( zombie:GetAngles() )
+			end )
+			
+		elseif (attacker:GetClass() == "npc_headcrab_black" or attacker:GetClass() == "npc_headcrab_poison") then
+			local zombie = ents.Create("npc_poisonzombie")
+			zombie:SetPos(ent:GetPos())
+			zombie:SetAngles(ent:GetAngles())
+			zombie:SetKeyValue( "spawnflags", "646" )
+			zombie:Spawn()
+			zombie:Activate()
+			local zombie_name = "sleeping_zomb" .. zombie:EntIndex()
+			local seq = zombie_name .. "_wake_seq"
+
+			zombie:SetName( zombie_name )
+			zombie:Fire( "AddOutput", "OnDamaged " .. seq .. ":BeginSequence::0:1", 0 )
+			zombie:Fire( "AddOutput", "OnHearPlayer " .. seq .. ":BeginSequence::0:1", 0 )
+			
+			local slumptype = "a"
+			local waking_sequence = ents.Create( "scripted_sequence" )
+			waking_sequence:SetName( seq )
+			waking_sequence:SetKeyValue( "spawnflags", "624" )
+			waking_sequence:SetKeyValue( "m_fMoveTo", "4" ) -- tp to start of sequence
+			waking_sequence:SetKeyValue( "m_iszEntity", zombie_name )
+			waking_sequence:SetKeyValue( "m_iszIdle", "slump_a" )
+			waking_sequence:SetKeyValue( "m_iszPlay", "slumprise_a" )
+
+			waking_sequence:SetPos( zombie:GetPos() )
+			waking_sequence:Spawn()
+			waking_sequence:Activate()
+			waking_sequence:SetParent( zombie )
+
+			timer.Simple( 0, function()
+				waking_sequence:SetAngles( zombie:GetAngles() )
+			end )
+		end
+	end
 	if (attacker.TFBot) then
 		attacker.botPos = nil
 	end

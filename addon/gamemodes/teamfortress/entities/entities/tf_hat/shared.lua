@@ -3066,6 +3066,36 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 				end
 			end
 			return true
+		elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.StartWith(snd.Entity:GetModel(), "models/player") and string.find(snd.Entity:GetModel(), "german") and string.find(snd.SoundName, "step") then
+			snd.SoundName = string.Replace(snd.SoundName, "wade5", "wade5")
+			snd.SoundName = string.Replace(snd.SoundName, "wade6", "wade6")
+			snd.SoundName = string.Replace(snd.SoundName, "wade7", "wade3")
+			snd.SoundName = string.Replace(snd.SoundName, "wade8", "wade4")
+			snd.Channel = CHAN_STATIC
+			if (snd.Entity:WaterLevel() < 1) then
+				snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/male/")
+				snd.SoundName = string.Replace(snd.SoundName, "4", math.random(4,6))
+			elseif (snd.Entity:WaterLevel() < 2) then
+				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/footsteps/male/slosh"..math.random(1,6)..".wav")
+			else
+				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/footsteps/male/wade"..math.random(1,6)..".wav")
+			end
+			return true
+		elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.StartWith(snd.Entity:GetModel(), "models/player") and string.find(snd.Entity:GetModel(), "american") and string.find(snd.SoundName, "step") then
+			snd.SoundName = string.Replace(snd.SoundName, "wade5", "wade5")
+			snd.SoundName = string.Replace(snd.SoundName, "wade6", "wade6")
+			snd.SoundName = string.Replace(snd.SoundName, "wade7", "wade3")
+			snd.SoundName = string.Replace(snd.SoundName, "wade8", "wade4")
+			snd.Channel = CHAN_STATIC
+			if (snd.Entity:WaterLevel() < 1) then
+				snd.SoundName = string.Replace(snd.SoundName, "player/footsteps/", "player/footsteps/female/")
+				snd.SoundName = string.Replace(snd.SoundName, "4", math.random(4,6))
+			elseif (snd.Entity:WaterLevel() < 2) then
+				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/footsteps/female/slosh"..math.random(1,6)..".wav")
+			else
+				snd.SoundName = string.Replace(snd.SoundName, snd.SoundName, "player/footsteps/female/wade"..math.random(1,6)..".wav")
+			end
+			return true
 		elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.StartWith(snd.Entity:GetModel(), "models/player") and !string.find(snd.Entity:GetModel(), "tfc") and snd.Entity:LookupBone("bip_head") and !string.find(snd.Entity:GetModel(), "bot") and string.find(snd.SoundName, "step") then
 			snd.SoundName = string.Replace(snd.SoundName, "wade5", "wade1")
 			snd.SoundName = string.Replace(snd.SoundName, "wade6", "wade2")

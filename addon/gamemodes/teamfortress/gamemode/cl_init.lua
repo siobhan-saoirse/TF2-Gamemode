@@ -1051,7 +1051,8 @@ if (!GetConVar("tf_disable_fun_classes"):GetBool()) then
 		Use Half-Life 2, Day of Defeat, Left 4 Dead 
 		and Counter-Strike weapons!
 		Do more damage towards TF2 Mercenaries!
-		Hold SHIFT to move faster!]] ) 
+		Hold SHIFT to move faster!
+		Be mostly resistant to damage from TF2 Mercs!]] ) 
 		menuname:SizeToContents()
 		menutext:SizeToContents()
 	end 
