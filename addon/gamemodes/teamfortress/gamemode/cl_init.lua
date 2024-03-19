@@ -487,7 +487,7 @@ net.Receive("TauntAnim", function()
     local anim = net.ReadInt(32)
     local autokill = net.ReadBool()
 	
-	ply:AddVCDSequenceToGestureSlot( GESTURE_SLOT_FLINCH, anim, 0, autokill )
+	ply:AddVCDSequenceToGestureSlot( GESTURE_SLOT_VCD, anim, 0, autokill )
 end)
 net.Receive("TFRagdollCreate", function()
     local ply = net.ReadEntity()

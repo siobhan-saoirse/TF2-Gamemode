@@ -237,6 +237,7 @@ hook.Add("KeyPress", "tf_Spectate_", function(ply, key)
 		end
 		--cmd:ClearMovement()
 		--cmd:ClearButtons()
+		--[[
 	elseif ply.IsSpectating and ply:Team() != TEAM_SPECTATOR then
 		if key == IN_ATTACK and !ply:Crouching() then
 			ply:ConCommand("tf_spectate_respawn")
@@ -264,7 +265,7 @@ hook.Add("KeyPress", "tf_Spectate_", function(ply, key)
 			ply:ConCommand("tf_spectate_respawn2 "..number)
 		end
 		--cmd:ClearMovement()
-		--cmd:ClearButtons()
+		--cmd:ClearButtons()]]
 	end
 end)
 

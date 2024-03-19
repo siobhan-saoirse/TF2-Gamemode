@@ -169,6 +169,23 @@ monster_bigmomma = {
 	flags=NPC_CANNOTHEAL,
 	vplayer=VPLAYER_ZOMBIE
 },
+monster_ichthyosaur = {
+	team=TEAM_GREEN, 
+	accuracy=2,
+	flags=NPC_CANNOTHEAL,
+},
+monster_leech = {
+	team=TEAM_GREEN,
+	health=75,
+	accuracy=2,
+	flags=NPC_CANNOTHEAL,
+},
+monster_flyer = {
+	team=TEAM_GREEN,
+	health=100,
+	accuracy=2,
+	flags=NPC_CANNOTHEAL,
+},
 monster_barney = {
 	team=TEAM_RED,
 	health=110,
@@ -338,6 +355,12 @@ monster_human_grunt = {
 	vplayer=VPLAYER_REBEL
 },
 monster_apache = {
+	team=TEAM_SPECTATOR,
+	health=800,
+	flags=NPC_FLYING,
+	vplayer=VPLAYER_REBEL
+},
+monster_osprey = {
 	team=TEAM_SPECTATOR,
 	health=800,
 	flags=NPC_FLYING,

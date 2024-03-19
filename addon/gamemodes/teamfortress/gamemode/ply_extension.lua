@@ -158,7 +158,7 @@ function meta:CreateRagdoll()
 	self:CreateRagdollOLD()
 end
 function meta:TFTaunt(args)
-	local ply = self
+	local ply = self 
 	if SERVER then
 		if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
 		if ply:GetNWBool("Taunting") == true then return end
@@ -242,7 +242,7 @@ function meta:TFTaunt(args)
 					else
 					
 						ply:SelectWeapon(ply:GetWeapons()[1]:GetClass())
-						ply:DoAnimationEvent(ACT_DOD_CROUCH_AIM_C96, true)		
+						ply:DoTauntEvent("taunt01", true)		
 					end
 
 				elseif ply:GetPlayerClass() == "sniper" then
@@ -273,14 +273,14 @@ function meta:TFTaunt(args)
 						end)
 					else					
 						ply:SelectWeapon(ply:GetWeapons()[1]:GetClass())
-						ply:DoAnimationEvent(ACT_DOD_CROUCH_AIM_C96, true)
+						ply:DoTauntEvent("taunt01", true)
 					end
 				elseif ply:GetPlayerClass() == "heavy" then
 					ply:SelectWeapon(ply:GetWeapons()[1]:GetClass())
-					ply:DoAnimationEvent(ACT_DOD_CROUCH_AIM_C96, true)				
+					ply:DoTauntEvent("taunt01", true)
 				elseif ply:GetPlayerClass() == "medic" then		
 					ply:SelectWeapon(ply:GetWeapons()[1]:GetClass())
-					ply:DoAnimationEvent(ACT_DOD_CROUCH_AIM_C96, true)		
+					ply:DoTauntEvent("taunt01", true)
 				elseif ply:GetPlayerClass() == "soldier" then
 					
 					if ply:GetWeapons()[1]:GetClass() == "tf_weapon_rocketlauncher_dh" then
@@ -288,16 +288,17 @@ function meta:TFTaunt(args)
 						ply:DoAnimationEvent(ACT_DOD_RELOAD_DEPLOYED, true)	
 					else
 						ply:SelectWeapon(ply:GetWeapons()[1]:GetClass())
-						ply:DoAnimationEvent(ACT_DOD_CROUCH_AIM_C96, true)		
+						ply:DoTauntEvent("taunt01", true)	
 					end
 				
 				elseif ply:GetPlayerClass() == "demoman" then
 					if ply:GetWeapons()[1]:GetClass() == "tf_weapon_grenadelauncher" then
 						ply:PlayScene("scenes/player/demoman/low/taunt08.vcd")
-						ply:DoAnimationEvent(ACT_DOD_CROUCHWALK_AIM_MP40, true)
+						ply:DoTauntEvent("taunt02", true)
 						ply:SelectWeapon(ply:GetWeapons()[1]:GetClass())
 					else
 						ply:DoAnimationEvent(ACT_DOD_CROUCHWALK_AIM_MP40, true)
+						ply:DoTauntEvent("taunt02", true)
 						ply:SelectWeapon(ply:GetWeapons()[1]:GetClass())				
 					end
 				elseif ply:GetPlayerClass() == "engineer" then
@@ -337,12 +338,13 @@ function meta:TFTaunt(args)
 						end)
 					else					
 						ply:SelectWeapon(ply:GetWeapons()[1]:GetClass())
-						ply:DoAnimationEvent(ACT_DOD_CROUCH_AIM_C96, true)
+						ply:DoTauntEvent("taunt01", true)
 					end
 				else
 				
-				ply:SelectWeapon(ply:GetWeapons()[1]:GetClass())
-				ply:DoAnimationEvent(ACT_DOD_CROUCH_AIM_C96, true)
+					ply:SelectWeapon(ply:GetWeapons()[1]:GetClass())
+					ply:DoTauntEvent("taunt01", true)
+					
 				end
 			elseif table.KeyFromValue(allowedtaunts,args[1]) == 2 then
 		
@@ -385,18 +387,18 @@ function meta:TFTaunt(args)
 				elseif ply:GetPlayerClass() == "demoman" then
 					if ply:GetWeapons()[2]:GetItemData().model_player == "models/weapons/c_models/c_scottish_resistance/c_scottish_resistance.mdl" then
 						ply:SelectWeapon(ply:GetWeapons()[2]:GetClass())
-						ply:DoAnimationEvent(ACT_SIGNAL2)
+						ply:DoTauntEvent("taunt08", true)
 					else
 						ply:SelectWeapon(ply:GetWeapons()[2]:GetClass())
-						ply:DoAnimationEvent(ACT_DOD_CROUCH_AIM_C96, true)
+						ply:DoTauntEvent("taunt01", true)
 					end
 				elseif ply:GetPlayerClass() == "soldier" then
 					ply:SelectWeapon(ply:GetWeapons()[2]:GetClass())
-					ply:DoAnimationEvent(ACT_DOD_SPRINT_AIM_SPADE, true)
+					ply:DoTauntEvent("taunt04", true)
 				elseif ply:GetPlayerClass() == "pyro" then
 					if ply:GetWeapons()[2]:GetClass() == "tf_weapon_flaregun" then
 						ply:SelectWeapon(ply:GetWeapons()[2]:GetClass())
-						ply:DoAnimationEvent(ACT_RUN_HURT,true)
+						ply:DoTauntEvent("taunt_scorch_shot", true)
 						timer.Simple(2, function()
 							ply:GetWeapons()[2]:PrimaryAttack()
 							ply:GetWeapons()[2]:ShootEffects()
@@ -427,7 +429,7 @@ function meta:TFTaunt(args)
 						end)
 					
 					ply:SelectWeapon(ply:GetWeapons()[2]:GetClass())
-					ply:DoAnimationEvent(ACT_DOD_CROUCHWALK_AIM_MP40, true)
+					ply:DoTauntEvent("taunt02", true)
 					
 					end
 				else
@@ -439,13 +441,13 @@ function meta:TFTaunt(args)
 					if ply:GetWeapons()[3]:GetClass() == "tf_weapon_neonsign" then
 						ply:EmitSound("player/sign_bass_solo.wav", 95, 100)
 						ply:SelectWeapon(ply:GetWeapons()[3]:GetClass())
-						ply:DoAnimationEvent(ACT_DOD_STAND_AIM_30CAL, true)
+						ply:DoTauntEvent("taunt03", true)
 					elseif ply:GetWeapons()[3]:GetItemData().model_player == "models/weapons/c_models/c_lollichop/c_lollichop.mdl" then
 						ply:SelectWeapon(ply:GetWeapons()[3]:GetClass())
 						ply:DoAnimationEvent(ACT_COVER_MED, true)
 					else
 						ply:SelectWeapon(ply:GetWeapons()[3]:GetClass())
-						ply:DoAnimationEvent(ACT_DOD_STAND_AIM_30CAL, true)
+						ply:DoTauntEvent("taunt03", true)
 					end
 				elseif ply:GetPlayerClass() == "soldier" then
 					if ply:GetWeapons()[3]:GetClass() == "tf_weapon_katana" then
@@ -489,7 +491,7 @@ function meta:TFTaunt(args)
 						ply:DoAnimationEvent(ACT_COVER_LOW, true)
 					else
 						ply:SelectWeapon(ply:GetWeapons()[3]:GetClass())
-						ply:DoAnimationEvent(ACT_DOD_STAND_AIM_30CAL, true)
+						ply:DoTauntEvent("taunt03", true)
 					end
 				elseif ply:GetPlayerClass() == "heavy" then
 					if (ply:GetActiveWeapon():GetItemData() and ply:GetActiveWeapon():GetItemData().item_type_name and ply:GetActiveWeapon():GetItemData().item_type_name == "#TF_Weapon_Gloves") then
@@ -506,7 +508,7 @@ function meta:TFTaunt(args)
 						end)	
 					
 						ply:SelectWeapon(ply:GetWeapons()[3]:GetClass())
-						ply:DoAnimationEvent(ACT_DOD_STAND_AIM_30CAL, true)
+						ply:DoTauntEvent("taunt03", true)
 					end
 				elseif ply:GetPlayerClass() == "scout" then
 					if ply:GetWeapons()[3]:GetClass() == "tf_weapon_bat_wood" then
@@ -523,7 +525,7 @@ function meta:TFTaunt(args)
 						ply:DoAnimationEvent(ACT_COVER_LOW, true)
 					else
 						ply:SelectWeapon(ply:GetWeapons()[3]:GetClass())
-						ply:DoAnimationEvent(ACT_DOD_STAND_AIM_30CAL, true)				
+						ply:DoTauntEvent("taunt03", true)
 					end
 				elseif ply:GetPlayerClass() == "medic" then
 					timer.Simple(0.3, function()
@@ -532,6 +534,7 @@ function meta:TFTaunt(args)
 					elseif ply:GetWeapons()[3]:GetItemData().model_player != "models/weapons/c_models/c_ubersaw/c_ubersaw.mdl" then
 						ply:EmitSound("player/taunt_v0"..math.random(1,7)..".wav", 95, 100)
 					end
+					ply:DoTauntEvent("taunt03", true)
 					end)
 
 					if ply:GetWeapons()[3]:GetItemData().model_player == "models/weapons/c_models/c_ubersaw/c_ubersaw.mdl" then
@@ -665,7 +668,7 @@ function meta:TFTaunt(args)
 
 					else
 						ply:SelectWeapon(ply:GetWeapons()[3]:GetClass())
-						ply:DoAnimationEvent(ACT_DOD_STAND_AIM_30CAL, true)
+						ply:DoTauntEvent("taunt03", true)
 					end
 
 				elseif ply:GetPlayerClass() == "demoman" then
@@ -683,12 +686,12 @@ function meta:TFTaunt(args)
 						ply:DoAnimationEvent(ACT_DOD_STAND_AIM_KNIFE, true)
 					else
 						ply:SelectWeapon(ply:GetWeapons()[3]:GetClass())
-						ply:DoAnimationEvent(ACT_DOD_STAND_AIM_30CAL, true)
+						ply:DoTauntEvent("taunt03", true)
 					end
 				else
 					
 					ply:SelectWeapon(ply:GetWeapons()[3]:GetClass())
-					ply:DoAnimationEvent(ACT_DOD_STAND_AIM_30CAL, true)
+					ply:DoTauntEvent("taunt03", true)
 					
 				end
 			end
@@ -696,7 +699,7 @@ function meta:TFTaunt(args)
 		else
 			if table.KeyFromValue(allowedtaunts,args[1]) == 1 then
 				ply:SelectWeapon(ply:GetWeapons()[1]:GetClass())
-				ply:DoAnimationEvent(ACT_DOD_CROUCH_AIM_C96, true)
+				ply:DoTauntEvent("taunt01", true)
 			elseif table.KeyFromValue(allowedtaunts,args[1]) == 3 then
 				timer.Simple(2, function()
 					for k,v in pairs(ents.FindInSphere(ply:GetPos(), 90)) do 
@@ -723,10 +726,10 @@ function meta:TFTaunt(args)
 					end
 				end)			
 				ply:SelectWeapon(ply:GetWeapons()[2]:GetClass())
-				ply:DoAnimationEvent(ACT_DOD_STAND_AIM_30CAL, true)
+				ply:DoTauntEvent("taunt03", true)
 			elseif table.KeyFromValue(allowedtaunts,args[1]) == 4 then
 				ply:SelectWeapon(ply:GetWeapons()[3]:GetClass())
-				ply:DoAnimationEvent(ACT_DOD_SPRINT_AIM_SPADE, true)
+				ply:DoTauntEvent("taunt04", true)
 			elseif ply:GetActiveWeapon():GetClass() == "weapon_physcannon" then
 				ply:SelectWeapon("weapon_physcannon")
 				ply:DoAnimationEvent(ACT_DOD_HS_CROUCH_KNIFE, true)

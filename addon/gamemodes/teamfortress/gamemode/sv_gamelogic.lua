@@ -702,14 +702,16 @@ hook.Add("Think", "TFPlayerThink", function()
 			end
 			
 			-- Update the Networked health for all NPCs
-			if v:IsNPC() then
-				if not v.LastHealth and v:GetNPCData().health then
-					v:ResetMaxHealth()
-					v:ResetHealth()
+			if IsValid(v) and v:IsNPC() then
+				if (v:GetNPCData()) then
+					if not v.LastHealth and v:GetNPCData().health then
+						v:ResetMaxHealth()
+						v:ResetHealth()
+					end
+					
+					v.LastHealth = v:HealthOLD()
+					v:SetNWInt("Health", v.LastHealth)
 				end
-				
-				v.LastHealth = v:HealthOLD()
-				v:SetNWInt("Health", v.LastHealth)
 			end
 			
 			--------------------------------------------------------

@@ -1570,19 +1570,7 @@ HOOK_WARNING_THRESHOLD = 0.1
 
 local old_hook_call = hook.Call
 function hook.Call(name, gm, ...)
-	if HOOK_WARNING_THRESHOLD then
-		local time_start = SysTime()
-		local res = {old_hook_call(name, gm, ...)}
-		local time = SysTime() - time_start
-		
-		if time > HOOK_WARNING_THRESHOLD then
-			MsgFN("Warning: hook '%s' took %f seconds to execute!", name, time)
-		end
-		
-		return unpack(res)
-	else
-		return old_hook_call(name, gm, ...)
-	end
+	return old_hook_call(name, gm, ...)
 end
 
 if not util.PrecacheModel0 then
@@ -1634,6 +1622,17 @@ include("shd_ragdolls2.lua")
 
 include("shd_items_game.lua")    
 include("shd_conflict.lua") 
+if (IsMounted("tf")) then 
+	player_manager.AddValidModel("!tf_scout","models/player/scout.mdl")
+	player_manager.AddValidModel("!tf_soldier","models/player/soldier.mdl")
+	player_manager.AddValidModel("!tf_pyro","models/player/pyro.mdl")
+	player_manager.AddValidModel("!tf_demo","models/player/demo.mdl")
+	player_manager.AddValidModel("!tf_heavy","models/player/heavy.mdl")
+	player_manager.AddValidModel("!tf_engineer","models/player/engineer.mdl")
+	player_manager.AddValidModel("!tf_medic","models/player/medic.mdl")
+	player_manager.AddValidModel("!tf_sniper","models/player/sniper.mdl")
+	player_manager.AddValidModel("!tf_spy","models/player/spy.mdl")
+end
 if (IsMounted("thestanleyparable")) then 
 	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/npc_sounds_stanley.lua")
 	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/soundscapes_stanley.lua")

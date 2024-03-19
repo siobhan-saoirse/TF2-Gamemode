@@ -1398,7 +1398,7 @@ hook.Add( "OnEntityWaterLevelChanged", "UnderwaterAmbience", function(ent,old,ne
 			ent:SetDSP(14)
 			ent:SendLua('LocalPlayer():EmitSound("Player.AmbientUnderWater")')
 			timer.Create("Drown"..ent:EntIndex(), 12, 1, function()
-				if (ent:WaterLevel() > 2) then
+				if (ent:WaterLevel() > 2 and !ent:HasGodMode()) then
 					ent.IsDrowning = true
 					ent:EmitSound("Player.DrownContinue")
 					ent:TakeDamage(8)
