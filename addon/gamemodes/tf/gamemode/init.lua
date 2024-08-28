@@ -13,7 +13,7 @@ include("sv_chat.lua")
 include("sv_loadout.lua")   
 include("shd_taunts.lua")
 resource.AddFile("scenes/scenes.image")
-local LOGFILE = "teamfortress/log_server.txt" 
+local LOGFILE = "tf/log_server.txt" 
 file.Delete(LOGFILE) 
 file.Append(LOGFILE, "Loading serverside script\n")
 local load_time = SysTime() 
@@ -1703,7 +1703,7 @@ concommand.Add("changelevel2", function(ply,com,arg)
 end)
 
 
-if ( file.Exists( "teamfortress/gamemode/maps/"..game.GetMap()..".lua", "LUA" ) ) then
+if ( file.Exists( "tf/gamemode/maps/"..game.GetMap()..".lua", "LUA" ) ) then
 
 	include( "maps/"..game.GetMap()..".lua" )
 

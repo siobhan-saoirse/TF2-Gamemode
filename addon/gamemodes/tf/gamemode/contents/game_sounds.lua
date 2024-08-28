@@ -3576,7 +3576,7 @@
 		"wave"	"ui/cyoa_musicmoregun2_tv.mp3"
 		"wave"	"ui/cyoa_musicplayingwithdanger_tv.mp3"
 		"wave"	"ui/cyoa_musicrightbehindyou_tv.mp3"
-		"wave"	"ui/cyoa_musicteamfortress2_tv.mp3"
+		"wave"	"ui/cyoa_musictf2_tv.mp3"
 	}
 }
 

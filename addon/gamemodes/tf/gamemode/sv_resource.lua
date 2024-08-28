@@ -17,8 +17,8 @@ resource.AddFile("materials/HUD/d_images_custom.vtf")
 resource.AddFile("materials/HUD/dneg_images_custom.vmt")
 resource.AddFile("materials/HUD/dneg_images_custom.vtf")
 
-resource.AddFile("gamemodes/teamfortress/content/materials/sprites/tf_crosshairs.vmt")
-resource.AddFile("gamemodes/teamfortress/content/materials/sprites/tf_crosshairs.vtf")
+resource.AddFile("gamemodes/tf/content/materials/sprites/tf_crosshairs.vmt")
+resource.AddFile("gamemodes/tf/content/materials/sprites/tf_crosshairs.vtf")
 
 resource.AddFile("materials/Effects/imcookin_2.vmt")
 
@@ -32,7 +32,7 @@ resource.AddFile("materials/effects/tfred_dx8.vtf")
 
 -- Language
 
-resource.AddFile("data/teamfortress/resource/tfgm_english.txt")
+resource.AddFile("data/tf/resource/tfgm_english.txt")
 
 -- Scripts
 

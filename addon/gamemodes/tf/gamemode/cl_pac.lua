@@ -2,7 +2,7 @@ if !pac or !isfunction(pac.RegisterEvent) then return end
 
 local plyMeta = FindMetaTable('Player')
 local gamemode = engine.ActiveGamemode
-local IsTF = function() return gamemode() == 'teamfortress' end
+local IsTF = function() return gamemode() == 'tf' end
 local function try_viewmodel(ent)
 	return ent == pac.LocalPlayer:GetViewModel() and pac.LocalPlayer or ent
 end

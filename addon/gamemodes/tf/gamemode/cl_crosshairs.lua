@@ -56,7 +56,7 @@ local function DrawCrosshair(crosshair, scale)
 end
 
 function GM:DrawCrosshair()
-	if GetConVarNumber("crosshair")==0 or LocalPlayer():GetNWBool("Taunting") or !file.Exists("gamemodes/teamfortress/content/materials/sprites/tf_crosshairs.vtf","WORKSHOP") then return end
+	if GetConVarNumber("crosshair")==0 or LocalPlayer():GetNWBool("Taunting") or !file.Exists("gamemodes/tf/content/materials/sprites/tf_crosshairs.vtf","WORKSHOP") then return end
 	local w = LocalPlayer():GetActiveWeapon()
 	
 	-- false is not nil, this will exclude HL2 weapons, which do not have this property, but still have a crosshair

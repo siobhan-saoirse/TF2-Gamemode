@@ -1,6 +1,6 @@
 
 
-local LOGFILE = "teamfortress/log_client.txt"
+local LOGFILE = "tf/log_client.txt"
 file.Delete(LOGFILE)
 file.Append(LOGFILE, "Loading clientside script\n")
 local load_time = SysTime()

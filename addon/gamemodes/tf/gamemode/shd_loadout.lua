@@ -8,7 +8,7 @@ tf_items.LoadGameItems("items_game.lua")
 --==================================================
 
 -- Fixes the Homewrecker sounding like an axe (now sounds more like a hammer) and cutting zombies in half
-if file.Exists("gamemodes/teamfortress/gamemode/items/workshop/items_livetf2.lua","GAME") then
+if file.Exists("gamemodes/tf/gamemode/items/workshop/items_livetf2.lua","GAME") then
 tf_items.ItemsByID[153].visuals = {}
 tf_items.ItemsByID[153].visuals.sound_melee_miss = "Weapon_Wrench.Miss"
 tf_items.ItemsByID[153].visuals.sound_melee_hit = "Weapon_Wrench.HitFlesh"

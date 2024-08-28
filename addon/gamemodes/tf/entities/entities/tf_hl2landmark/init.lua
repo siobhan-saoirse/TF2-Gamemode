@@ -35,12 +35,12 @@ end
 
 function ENT:Load()
 	self:Clear()
-	if not file.Exists("teamfortress/landmark.txt", "DATA") then return 1 end
-	local ok, t = pcall(util.JSONToTable, file.Read("teamfortress/landmark.txt", "DATA"))
+	if not file.Exists("tf/landmark.txt", "DATA") then return 1 end
+	local ok, t = pcall(util.JSONToTable, file.Read("tf/landmark.txt", "DATA"))
 	
 	if not ok then
 		ErrorNoHalt(t)
-		file.Delete("teamfortress/landmark.txt")
+		file.Delete("tf/landmark.txt")
 		return 2
 	end
 	
@@ -49,15 +49,15 @@ function ENT:Load()
 	self.Data = t.data
 	
 	self:GetLandmarkEntity()
-	file.Delete("teamfortress/landmark.txt")
+	file.Delete("tf/landmark.txt")
 end
 
 function ENT:Save()
 	local t = {map=self.Map, landmark=self.Landmark, data=self.Data}
-	file.Write("teamfortress/landmark.txt", util.TableToJSON(t))
-	file.Write("teamfortress/landmark2.txt", util.TableToJSON(t))
+	file.Write("tf/landmark.txt", util.TableToJSON(t))
+	file.Write("tf/landmark2.txt", util.TableToJSON(t))
 	
-	file.Append("teamfortress/log.txt", Format("Saving landmark data, map: %s\n", self.Map))
+	file.Append("tf/log.txt", Format("Saving landmark data, map: %s\n", self.Map))
 end
 
 function ENT:LoadPlayerData(pl)

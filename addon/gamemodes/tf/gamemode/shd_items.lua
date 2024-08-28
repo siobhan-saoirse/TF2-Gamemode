@@ -361,9 +361,9 @@ function LoadGameItems(path)
 	local data
 	
 	if SERVER and game.IsDedicated() then
-		data = file.Read("gamemodes/teamfortress/gamemode/items/"..path, "GAME")
+		data = file.Read("gamemodes/tf/gamemode/items/"..path, "GAME")
 	else
-		data = file.Read("gamemodes/teamfortress/gamemode/items/"..path, "GAME")
+		data = file.Read("gamemodes/tf/gamemode/items/"..path, "GAME")
 	end
 	
 	if not data or data=="" then
@@ -374,7 +374,7 @@ function LoadGameItems(path)
 	ParseGameItems(data, true) -- leaving this on silent for now, results in no script errors
 end
 
-local files, dirs = file.Find("gamemodes/teamfortress/gamemode/items/workshop/*", "GAME")
+local files, dirs = file.Find("gamemodes/tf/gamemode/items/workshop/*", "GAME")
 for k,v in pairs(files) do
     if string.StartWith(v, "items_") then
         tf_items.LoadGameItems("workshop/"..v)

@@ -32,7 +32,7 @@ function PANEL:OnRemove()
 end
 
 function PANEL:Paint()
-	if not LocalPlayer():Alive() or GetConVar("tf_forcehl2hud"):GetBool() or gmod.GetGamemode() == "teamfortress_darkrp" or LocalPlayer():IsHL2() or GAMEMODE.ShowScoreboard or GetConVarNumber("cl_drawhud")==0 or LocalPlayer():Team() == TEAM_SPECTATOR or LocalPlayer():GetPlayerClass()=="" then if self.ClassPanel then self.ClassPanel:Remove() self.ClassPanel = nil end return end
+	if not LocalPlayer():Alive() or GetConVar("tf_forcehl2hud"):GetBool() or gmod.GetGamemode() == "tf_darkrp" or LocalPlayer():IsHL2() or GAMEMODE.ShowScoreboard or GetConVarNumber("cl_drawhud")==0 or LocalPlayer():Team() == TEAM_SPECTATOR or LocalPlayer():GetPlayerClass()=="" then if self.ClassPanel then self.ClassPanel:Remove() self.ClassPanel = nil end return end
 		local t = LocalPlayer():Team()
 		local tbl = LocalPlayer():GetPlayerClassTable()
 
