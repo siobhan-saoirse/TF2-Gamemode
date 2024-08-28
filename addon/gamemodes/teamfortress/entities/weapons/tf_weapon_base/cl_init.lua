@@ -12,7 +12,7 @@ SWEP.DrawWeaponInfoBox	= false
 SWEP.BounceWeaponIcon   = false
 SWEP.WepSelectIcon = surface.GetTextureID( "weapons/swep" )
 SWEP.SwayScale			= 0 -- 0.5
-SWEP.BobScale			= 0.35
+SWEP.BobScale			= 0 -- formerly 0.35, no more viewbobbing until we port cstrike's viewbob
  
 --[[
 hook.Add("HUDPaint", "testlol", function()

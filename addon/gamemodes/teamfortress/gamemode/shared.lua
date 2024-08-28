@@ -1752,11 +1752,11 @@ hook.Add("PlayerStepSoundTime", "FootTime", function(ply, iType, iWalking)
 		end
 		if (iType == STEPSOUNDTIME_NORMAL || iType == STEPSOUNDTIME_WATER_FOOT) then
 			if (ply:GetMoveType() == MOVETYPE_LADDER) then
-				local speed = math.Remap(ply:GetVelocity():Length2D(), 200, 400, 400, 200) + 100
+				local speed = math.Remap(ply:GetVelocity():Length2D(), 200, 450, 400, 200) + 100
 				return speed
 			else
 				if (ply:Crouching()) then
-					local speed = math.Remap(ply:GetVelocity():Length2D(), 200, 400, 400, 200) + 100
+					local speed = math.Remap(ply:GetVelocity():Length2D(), 200, 450, 400, 200) + 100
 					return speed
 				else
 					if (ply:GetWalkSpeed() > 450) then
@@ -1771,7 +1771,7 @@ hook.Add("PlayerStepSoundTime", "FootTime", function(ply, iType, iWalking)
 							return speed 
 							
 						else
-							local speed = math.Remap(ply:GetVelocity():Length2D(), 200, 400, 400, 200)
+							local speed = math.Remap(ply:GetVelocity():Length2D(), 200, 450, 400, 200)
 							return speed
 						end
 					end

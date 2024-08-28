@@ -161,19 +161,17 @@ SWEP.CanInspect = true
 
 SWEP.LastClass = "scout"
 
-SWEP.m_flBobTime = 0
-SWEP.m_flLastBobTime = 0
-SWEP.m_flLastSpeed = 0
-SWEP.m_flVerticalBob = 0
-SWEP.m_flLateralBob = 0
+SWEP.g_lateralBob = 0
+SWEP.g_verticalBob = 0
 CreateClientConVar("viewmodel_fov_tf", "54", true, false)
 CreateClientConVar("tf_use_viewmodel_fov", "1", true, false)
 CreateClientConVar("tf_righthand", "1", true, true)
 CreateClientConVar("tf_sprintinspect", "0", true, true)
 CreateClientConVar("tf_reloadinspect", "1", true, true)
 CreateClientConVar("tf_use_min_viewmodels", "0", true, false)
-CreateClientConVar("cl_bobup", "0.5", false, false)
-CreateClientConVar("cl_bobcycle", "0.8", false, false)
+local cl_bob = CreateClientConVar("tf_cl_bob", "0.002", false, false)
+local cl_bobup = CreateClientConVar("tf_cl_bobup", "0.5", false, false)
+local cl_bobcycle = CreateClientConVar("tf_cl_bobcycle", "0.8", false, false)
 
 -- Initialize the weapon as a TF item
 tf_item.InitializeAsBaseItem(SWEP)
@@ -191,58 +189,86 @@ function SWEP:StopTimers()
 	inspecting_post = false
 end 
 
+local bobtime = 0
+local lastbobtime = 0
+local lastspeed = 0
+local cycle = 0
 function SWEP:CalcViewModelBobHelper(  )
-	local cycle;
 
-	--NOTENOTE: For now, let this cycle continue when in the air, because it snaps badly without it
+	// Don't allow zeros, because we divide by them.
+	local flBobup = cl_bobup:GetFloat();
+	if ( flBobup <= 0 ) then
+		flBobup = 0.01;
+	end
+	local flBobCycle = cl_bobcycle:GetFloat();
+	if ( flBobCycle <= 0 ) then
+		flBobCycle = 0.01;
+	end
+
+	local player = self:GetOwner()
+ 
+	//NOTENOTE: For now, let this cycle continue when in the air, because it snaps badly without it
+
+	if ( ( !FrameTime() ) ||
+		 ( !IsValid(player) ) ||
+		 ( cl_bobcycle:GetFloat() <= 0.0 ) ||
+		 ( cl_bobup:GetFloat() <= 0.0 ) ||
+		 ( cl_bobup:GetFloat() >= 1.0 ) )
+	then
+		//NOTENOTE: We don't use this return value in our case (need to restructure the calculation function setup!)
+		return 0.0;// just use old value
+	end
+
 	//Find the speed of the player
-	local speed = self.Owner:GetAbsVelocity():Length2D()
-	local flmaxSpeedDelta = math.max( 0, (CurTime() - self.m_flLastBobTime ) * 320 );
+	local speed = LocalPlayer():GetAbsVelocity():Length2D()
+	local flmaxSpeedDelta = math.max( 0, (CurTime() - lastbobtime) * 320.0 )
 
-	-- don't allow too big speed changes
-	speed = math.Clamp( speed, self.m_flLastSpeed-flmaxSpeedDelta, self.m_flLastSpeed+flmaxSpeedDelta );
-	speed = math.Clamp( speed, -320, 320 );
+	// don't allow too big speed changes
+	speed = math.Clamp( speed, lastspeed-flmaxSpeedDelta, lastspeed+flmaxSpeedDelta )
+	speed = math.Clamp( speed, -320, 320 )
 
-	self.m_flLastSpeed = speed;
+	lastspeed = speed;
 
-	--[[FIXME: This maximum speed value must come from the server.
-			 MaxSpeed() is not sufficient for dealing with sprinting - jdw]]
+	//FIXME: This maximum speed value must come from the server.
+	//		 MaxSpeed() is not sufficient for dealing with sprinting - jdw
 
-	local bob_offset = math.Remap( speed, 0, 320, 0, 1 );
 
-	self.m_flBobTime = self.m_flBobTime + ( CurTime() - self.m_flLastBobTime ) * bob_offset;
-	self.m_flLastBobTime = CurTime();
+	local bob_offset = math.Remap( speed, 0, 320, 0.0, 1.0 );
+
+	bobtime = bobtime + ( CurTime() - lastbobtime ) * bob_offset;
+	lastbobtime = bobtime
 
 	//Calculate the vertical bob
-	cycle = self.m_flBobTime - (self.m_flBobTime/0.8)*0.8
-	cycle = cycle / 0.8;
+	cycle = bobtime - math.floor(math.abs(bobtime/cl_bobcycle:GetFloat()))*cl_bobcycle:GetFloat();
+	cycle = cycle / cl_bobcycle:GetFloat();
 
-	if ( cycle < 0.5 ) then
-		cycle = 3.14159265358979323846 * cycle / 0.5;
+	if ( cycle < cl_bobup:GetFloat() ) then
+		cycle = math.pi * cycle / cl_bobup:GetFloat();
 	else
-		cycle = 3.14159265358979323846 + 3.14159265358979323846*(cycle-0.5)/(1.0 - 0.5);
+		cycle = math.pi + math.pi*(cycle-cl_bobup:GetFloat())/(1.0 - cl_bobup:GetFloat());
 	end
 
-	self.m_flVerticalBob = speed*0.005;
-	self.m_flVerticalBob = self.m_flVerticalBob*0.3 + self.m_flVerticalBob*0.7*math.sin(cycle);
+	self.g_verticalBob = speed*0.005;
+	self.g_verticalBob = self.g_verticalBob*0.3 + self.g_verticalBob*0.7*math.sin(cycle);
 
-	self.m_flVerticalBob = math.Clamp( self.m_flVerticalBob, -7, 4 );
+	self.g_verticalBob = math.Clamp( self.g_verticalBob, -7.0, 4.0 );
 
 	//Calculate the lateral bob
-	cycle = self.m_flBobTime - (self.m_flBobTime/0.8*2)*0.8*2;
-	cycle = cycle / 0.8*2;
+	cycle = bobtime - math.floor(math.abs(bobtime/cl_bobcycle:GetFloat()*2))*cl_bobcycle:GetFloat()*2;
+	cycle = cycle / cl_bobcycle:GetFloat()*2;
 
-	if ( cycle < 0.5 ) then
-		cycle = 3.14159265358979323846 * cycle / 0.5;
+	if ( cycle < cl_bobup:GetFloat() ) then
+		cycle = math.pi * cycle / cl_bobup:GetFloat();
 	else
-		cycle = 3.14159265358979323846 + 3.14159265358979323846*(cycle-0.5)/(1.0 - 0.5);
+		cycle = math.pi + math.pi*(cycle-cl_bobup:GetFloat())/(1.0 - cl_bobup:GetFloat());
 	end
 
-	self.m_flLateralBob = speed*0.005;
-	self.m_flLateralBob = self.m_flLateralBob*0.3 + self.m_flLateralBob*0.7*math.sin(cycle);
-	self.m_flLateralBob = math.Clamp( self.m_flLateralBob, -7, 4 );
-	--NOTENOTE: We don't use this return value in our case (need to restructure the calculation function setup!)
-	return 0.0
+	self.g_lateralBob = speed*0.005;
+	self.g_lateralBob = self.g_lateralBob*0.3 + self.g_lateralBob*0.7*math.sin(cycle);
+	self.g_lateralBob = math.Clamp( self.g_lateralBob, -7.0, 4.0 );
+
+	//NOTENOTE: We don't use this return value in our case (need to restructure the calculation function setup!)
+	return 0.0;
 end
 
 function SWEP:ProjectileShootPos()
@@ -323,6 +349,14 @@ function SWEP:Equip()
 		--self.NextReplayDeployAnim = CurTime() + 0.1
 	end
 end
+
+local function VectorMA( start, scale, direction, dest )
+	dest.x = start.x + scale * direction.x;
+	dest.y = start.y + scale * direction.y;
+	dest.z = start.z + scale * direction.z;
+	return dest
+end
+
 function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 	if not self.VMMinOffset and self:GetItemData() then
 		local data = self:GetItemData()
@@ -345,7 +379,53 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 	if (string.StartWith(self.Owner:GetModel(),"models/infected/")) then
 		return oldpos, oldang
 	else
-		return newpos, newang
+		-- actual code, for reference
+		--[[
+		
+		Vector	forward, right;
+		AngleVectors( angles, &forward, &right, NULL );
+
+		CalcViewmodelBob();
+
+		// Apply bob, but scaled down to 40%
+		VectorMA( origin, g_verticalBob * 0.4f, forward, origin );
+
+		// Z bob a bit more
+		origin[2] += g_verticalBob * 0.1f;
+
+		// bob the angles
+		angles[ ROLL ]	+= g_verticalBob * 0.5f;
+		angles[ PITCH ]	-= g_verticalBob * 0.4f;
+
+		angles[ YAW ]	-= g_lateralBob  * 0.3f;
+
+	//	VectorMA( origin, g_lateralBob * 0.2f, right, origin );
+
+		]]
+		if CLIENT then
+			local forward = self.Owner:GetForward()
+			local right = self.Owner:GetRight()
+
+			self:CalcViewModelBobHelper()
+
+			// Apply bob, but scaled down to 40%
+			oldpos = VectorMA( oldpos, self.g_verticalBob * 0.4, forward, oldpos );
+			local origin = oldpos
+			local angles = oldang
+
+			// Z bob a bit more
+			origin.z = origin.z + self.g_verticalBob * 0.1;
+
+			// bob the angles
+			angles.r	= angles.r + self.g_verticalBob * 0.5;
+			angles.p	= angles.p - self.g_verticalBob * 0.4;
+			angles.y = angles.y - self.g_lateralBob  * 0.3;
+
+			VectorMA( oldpos, self.g_lateralBob * 0.2, right, oldpos );
+			return oldpos, oldang
+		else
+			return oldpos, oldang
+		end
 	end
 end
 
