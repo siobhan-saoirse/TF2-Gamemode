@@ -350,11 +350,13 @@ function SWEP:Equip()
 	end
 end
 
-local function VectorMA( start, scale, direction, dest )
+function SWEP:VectorMA( start, scale, direction, dest )
+	--[[
 	dest.x = start.x + scale * direction.x;
 	dest.y = start.y + scale * direction.y;
 	dest.z = start.z + scale * direction.z;
-	return dest
+	]]
+	return Vector(start.x + scale * direction.x,start.y + scale * direction.y,start.z + scale * direction.z)
 end
 
 function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
@@ -409,7 +411,7 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 			self:CalcViewModelBobHelper()
 
 			// Apply bob, but scaled down to 40%
-			oldpos = VectorMA( oldpos, self.g_verticalBob * 0.4, forward, oldpos );
+			oldpos = self:VectorMA( oldpos, self.g_verticalBob * 0.4, forward, oldpos );
 			local origin = oldpos
 			local angles = oldang
 
@@ -421,7 +423,7 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 			angles.p	= angles.p - self.g_verticalBob * 0.4;
 			angles.y = angles.y - self.g_lateralBob  * 0.3;
 
-			VectorMA( oldpos, self.g_lateralBob * 0.2, right, oldpos );
+			oldpos = self:VectorMA( oldpos, self.g_lateralBob * 0.2, right, oldpos );
 			return oldpos, oldang
 		else
 			return oldpos, oldang
