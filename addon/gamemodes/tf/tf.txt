@@ -1,4 +1,4 @@
-"teamfortress"
+"tf"
 {
 	"base"				"base"
 	"title"				"Team Fortress 2"
