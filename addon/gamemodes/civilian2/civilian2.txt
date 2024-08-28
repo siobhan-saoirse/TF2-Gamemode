@@ -1,6 +1,0 @@
-"civilian2"
-{
-	"base"		"teamfortress"
-	"title"		"TF2GM - Civilian 2"
-	"maps"		"^civ2_|^civ25_|^civilian_"
-}
