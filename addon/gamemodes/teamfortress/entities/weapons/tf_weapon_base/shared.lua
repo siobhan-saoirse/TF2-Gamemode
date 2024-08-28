@@ -169,9 +169,9 @@ CreateClientConVar("tf_righthand", "1", true, true)
 CreateClientConVar("tf_sprintinspect", "0", true, true)
 CreateClientConVar("tf_reloadinspect", "1", true, true)
 CreateClientConVar("tf_use_min_viewmodels", "0", true, false)
-local cl_bob = CreateClientConVar("tf_cl_bob", "0.002", false, false)
-local cl_bobup = CreateClientConVar("tf_cl_bobup", "0.5", false, false)
-local cl_bobcycle = CreateClientConVar("tf_cl_bobcycle", "0.8", false, false)
+local cvar_bob = CreateClientConVar("tf_cl_bob", "0.005", false, false)
+local cvar_bobup = CreateClientConVar("tf_cl_bobup", "0.5", false, false)
+local cvar_bobcycle = CreateClientConVar("tf_cl_bobcycle", "0.8", false, false)
 
 -- Initialize the weapon as a TF item
 tf_item.InitializeAsBaseItem(SWEP)
@@ -193,82 +193,53 @@ local bobtime = 0
 local lastbobtime = 0
 local lastspeed = 0
 local cycle = 0
+local speed = 0
+local flmaxSpeedDelta = 0
+local bob_offset = 0
 function SWEP:CalcViewModelBobHelper(  )
+	local cl_bob = cvar_bob:GetFloat()
+	local cl_bobcycle = math.max(cvar_bobcycle:GetFloat(), 0.1)
+	local cl_bobup = cvar_bobup:GetFloat()
+	
+	local ply = LocalPlayer()
+	
+	if ply:ShouldDrawLocalPlayer() or ply:GetMoveType() == MOVETYPE_NOCLIP then return 0 end
 
-	// Don't allow zeros, because we divide by them.
-	local flBobup = cl_bobup:GetFloat();
-	if ( flBobup <= 0 ) then
-		flBobup = 0.01;
-	end
-	local flBobCycle = cl_bobcycle:GetFloat();
-	if ( flBobCycle <= 0 ) then
-		flBobCycle = 0.01;
-	end
-
-	local player = self:GetOwner()
- 
-	//NOTENOTE: For now, let this cycle continue when in the air, because it snaps badly without it
-
-	if ( ( !FrameTime() ) ||
-		 ( !IsValid(player) ) ||
-		 ( cl_bobcycle:GetFloat() <= 0.0 ) ||
-		 ( cl_bobup:GetFloat() <= 0.0 ) ||
-		 ( cl_bobup:GetFloat() >= 1.0 ) )
-	then
-		//NOTENOTE: We don't use this return value in our case (need to restructure the calculation function setup!)
-		return 0.0;// just use old value
-	end
-
-	//Find the speed of the player
-	local speed = LocalPlayer():GetAbsVelocity():Length2D()
-	local flmaxSpeedDelta = math.max( 0, (CurTime() - lastbobtime) * 320.0 )
-
-	// don't allow too big speed changes
-	speed = math.Clamp( speed, lastspeed-flmaxSpeedDelta, lastspeed+flmaxSpeedDelta )
-	speed = math.Clamp( speed, -320, 320 )
-
-	lastspeed = speed;
-
-	//FIXME: This maximum speed value must come from the server.
-	//		 MaxSpeed() is not sufficient for dealing with sprinting - jdw
-
-
-	local bob_offset = math.Remap( speed, 0, 320, 0.0, 1.0 );
-
-	bobtime = bobtime + ( CurTime() - lastbobtime ) * bob_offset;
-	lastbobtime = bobtime
-
-	//Calculate the vertical bob
-	cycle = bobtime - math.floor(math.abs(bobtime/cl_bobcycle:GetFloat()))*cl_bobcycle:GetFloat();
-	cycle = cycle / cl_bobcycle:GetFloat();
-
-	if ( cycle < cl_bobup:GetFloat() ) then
-		cycle = math.pi * cycle / cl_bobup:GetFloat();
+	local cltime = CurTime()
+	local cycle = cltime - math.floor(cltime/cl_bobcycle)*cl_bobcycle
+	cycle = cycle / cl_bobcycle
+	if (cycle < cl_bobup) then
+		cycle = math.pi * cycle / cl_bobup
 	else
-		cycle = math.pi + math.pi*(cycle-cl_bobup:GetFloat())/(1.0 - cl_bobup:GetFloat());
+		cycle = math.pi + math.pi*(cycle-cl_bobup)/(1.0 - cl_bobup)
 	end
 
-	self.g_verticalBob = speed*0.005;
-	self.g_verticalBob = self.g_verticalBob*0.3 + self.g_verticalBob*0.7*math.sin(cycle);
+	local velocity = ply:GetVelocity()
 
-	self.g_verticalBob = math.Clamp( self.g_verticalBob, -7.0, 4.0 );
-
-	//Calculate the lateral bob
-	cycle = bobtime - math.floor(math.abs(bobtime/cl_bobcycle:GetFloat()*2))*cl_bobcycle:GetFloat()*2;
-	cycle = cycle / cl_bobcycle:GetFloat()*2;
-
-	if ( cycle < cl_bobup:GetFloat() ) then
-		cycle = math.pi * cycle / cl_bobup:GetFloat();
+	self.g_verticalBob = math.Clamp(math.sqrt(velocity[1]*velocity[1] + velocity[2]*velocity[2]),-320.0,320.0) * cl_bob
+	self.g_verticalBob = self.g_verticalBob*0.3 + self.g_verticalBob*0.7*math.sin(cycle)
+	if (self.g_verticalBob > 4) then
+		self.g_verticalBob = 4
+	elseif (bob < -7) then
+		self.g_verticalBob = -7
+	end
+	
+	local cycle2 = cltime - math.floor(cltime/(cl_bobcycle*2))*(cl_bobcycle*2)
+	cycle2 = cycle2 / cl_bobcycle*0.5
+	if (cycle2 < cl_bobup) then
+		cycle2 = math.pi * cycle2 / cl_bobup
 	else
-		cycle = math.pi + math.pi*(cycle-cl_bobup:GetFloat())/(1.0 - cl_bobup:GetFloat());
+		cycle2 = math.pi + math.pi*(cycle2-cl_bobup)/(1.0 - cl_bobup)
 	end
 
-	self.g_lateralBob = speed*0.005;
-	self.g_lateralBob = self.g_lateralBob*0.3 + self.g_lateralBob*0.7*math.sin(cycle);
-	self.g_lateralBob = math.Clamp( self.g_lateralBob, -7.0, 4.0 );
-
-	//NOTENOTE: We don't use this return value in our case (need to restructure the calculation function setup!)
-	return 0.0;
+	self.g_lateralBob = math.Clamp(math.sqrt(velocity[1]*velocity[1] + velocity[2]*velocity[2]),-320.0,320.0) * cl_bob
+	self.g_lateralBob = self.g_lateralBob*0.3 + self.g_lateralBob*0.7*math.sin(cycle2)
+	if (self.g_lateralBob > 4) then
+		self.g_lateralBob = 4
+	elseif (bob < -7) then
+		self.g_lateralBob = -7
+	end
+	return 0.0
 end
 
 function SWEP:ProjectileShootPos()
@@ -407,13 +378,12 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 		if CLIENT then
 			local forward = self.Owner:GetForward()
 			local right = self.Owner:GetRight()
-
+			local origin = oldpos
+			local angles = oldang
 			self:CalcViewModelBobHelper()
 
 			// Apply bob, but scaled down to 40%
-			oldpos = self:VectorMA( oldpos, self.g_verticalBob * 0.4, forward, oldpos );
-			local origin = oldpos
-			local angles = oldang
+			origin = self:VectorMA( origin, self.g_verticalBob * 0.4, forward, origin );
 
 			// Z bob a bit more
 			origin.z = origin.z + self.g_verticalBob * 0.1;
@@ -423,8 +393,8 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 			angles.p	= angles.p - self.g_verticalBob * 0.4;
 			angles.y = angles.y - self.g_lateralBob  * 0.3;
 
-			oldpos = self:VectorMA( oldpos, self.g_lateralBob * 0.2, right, oldpos );
-			return oldpos, oldang
+			origin = self:VectorMA( origin, self.g_lateralBob * 0.2, right, origin );
+			return origin, angles
 		else
 			return oldpos, oldang
 		end
