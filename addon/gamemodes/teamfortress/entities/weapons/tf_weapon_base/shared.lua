@@ -220,7 +220,7 @@ function SWEP:CalcViewModelBobHelper(  )
 	self.g_verticalBob = self.g_verticalBob*0.3 + self.g_verticalBob*0.7*math.sin(cycle)
 	if (self.g_verticalBob > 4) then
 		self.g_verticalBob = 4
-	elseif (bob < -7) then
+	elseif (self.g_verticalBob < -7) then
 		self.g_verticalBob = -7
 	end
 	
@@ -236,7 +236,7 @@ function SWEP:CalcViewModelBobHelper(  )
 	self.g_lateralBob = self.g_lateralBob*0.3 + self.g_lateralBob*0.7*math.sin(cycle2)
 	if (self.g_lateralBob > 4) then
 		self.g_lateralBob = 4
-	elseif (bob < -7) then
+	elseif (self.g_lateralBob < -7) then
 		self.g_lateralBob = -7
 	end
 	return 0.0
