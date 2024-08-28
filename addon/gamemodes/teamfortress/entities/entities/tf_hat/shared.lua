@@ -876,7 +876,7 @@ hook.Add("EntityEmitSound", "MouthFix", function(snd)
 				snd.SoundName = string.Replace(snd.SoundName, ".mp3", ".wav") 
 			end
 		else
-			if (string.find(snd.SoundName,"vo")) then   
+			if (string.find(snd.SoundName,"vo/")) then   
 				snd.SoundName = string.Replace(snd.SoundName, ".wav", ".mp3") 
 			end
 		end

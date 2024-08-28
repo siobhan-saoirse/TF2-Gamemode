@@ -1700,102 +1700,104 @@ sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds.lua")
 
 
 hook.Add("PlayerStepSoundTime", "FootTime", function(ply, iType, iWalking)
-	if (ply:GetPlayerClass() == "tank_l4d") then
-		if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
-			local speed = 250 + 100
-			return speed
-		else
-			local speed = 250
-			return speed
+	if (!ply:IsHL2()) then
+		if (ply:GetPlayerClass() == "tank_l4d") then
+			if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
+				local speed = 250 + 100
+				return speed
+			else
+				local speed = 250
+				return speed
+			end
 		end
-	end
-	if (ply:GetPlayerClass() == "boomer") then
-		if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
-			local speed = 400 + 100
-			return speed
-		else
+		if (ply:GetPlayerClass() == "boomer") then
+			if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
+				local speed = 400 + 100
+				return speed
+			else
+				local speed = 350
+				return speed
+			end
+		end
+		if (ply:GetPlayerClass() == "charger") then
+			if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
+				local speed = 300 + 100
+				return speed
+			else
+				local speed = 270
+				return speed
+			end
+		end
+		if (ply:GetPlayerClass() == "smoker") then
+			if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
+				local speed = 400 + 100
+				return speed
+			else
+				local speed = 370
+				return speed
+			end
+		end
+		if (ply:GetPlayerClass() == "hunter") then
+			if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
+				local speed = 400 + 100
+				return speed
+			else
+				local speed = 360
+				return speed
+			end
+		end
+		if (iType == STEPSOUNDTIME_ON_LADDER) then
 			local speed = 350
 			return speed
 		end
-	end
-	if (ply:GetPlayerClass() == "charger") then
-		if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
-			local speed = 300 + 100
-			return speed
-		else
-			local speed = 270
-			return speed
-		end
-	end
-	if (ply:GetPlayerClass() == "smoker") then
-		if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
-			local speed = 400 + 100
-			return speed
-		else
-			local speed = 370
-			return speed
-		end
-	end
-	if (ply:GetPlayerClass() == "hunter") then
-		if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
-			local speed = 400 + 100
-			return speed
-		else
-			local speed = 360
-			return speed
-		end
-	end
-	if (iType == STEPSOUNDTIME_ON_LADDER) then
-		local speed = 350
-		return speed
-	end
-	if (iType == STEPSOUNDTIME_NORMAL || iType == STEPSOUNDTIME_WATER_FOOT) then
-		if (ply:GetMoveType() == MOVETYPE_LADDER) then
-			local speed = math.Remap(ply:GetVelocity():Length2D(), 200, 450, 400, 200) + 100
-			return speed
-		else
-			if (ply:Crouching()) then
+		if (iType == STEPSOUNDTIME_NORMAL || iType == STEPSOUNDTIME_WATER_FOOT) then
+			if (ply:GetMoveType() == MOVETYPE_LADDER) then
 				local speed = math.Remap(ply:GetVelocity():Length2D(), 200, 450, 400, 200) + 100
 				return speed
 			else
-				if (ply:GetWalkSpeed() > 450) then
-				
-					local speed = 200 + ply:GetVelocity():Length2D()
+				if (ply:Crouching()) then
+					local speed = math.Remap(ply:GetVelocity():Length2D(), 200, 450, 400, 200) + 100
 					return speed
-					
 				else
-					if (ply:GetWalkSpeed() < 229 and !ply:KeyDown(IN_SPEED)) then
+					if (ply:GetWalkSpeed() > 450) then
 					
-						local speed = 400 + ply:GetVelocity():Length2D()
-						return speed 
+						local speed = 200 + ply:GetVelocity():Length2D()
+						return speed
 						
 					else
-						local speed = math.Remap(ply:GetVelocity():Length2D(), 200, 450, 400, 200)
-						return speed
+						if (ply:GetWalkSpeed() < 229 and !ply:KeyDown(IN_SPEED)) then
+						
+							local speed = 400 + ply:GetVelocity():Length2D()
+							return speed 
+							
+						else
+							local speed = math.Remap(ply:GetVelocity():Length2D(), 200, 450, 400, 200)
+							return speed
+						end
 					end
 				end
 			end
 		end
-	end
-	if (iType == STEPSOUNDTIME_WATER_KNEE) then
-		if (ply:Crouching()) then
-			local speed = math.Remap(ply:GetMaxSpeed(), 200, 450, 600, 200) + 100
-			return speed
-		else
-			if (ply:GetWalkSpeed() > 450) then
-			
-				local speed = 200
+		if (iType == STEPSOUNDTIME_WATER_KNEE) then
+			if (ply:Crouching()) then
+				local speed = math.Remap(ply:GetMaxSpeed(), 200, 450, 600, 200) + 100
 				return speed
-				
 			else
-				if (ply:GetWalkSpeed() < 229 and !ply:KeyDown(IN_SPEED)) then
-					
-					local speed = 400
-					return speed 
-						
-				else
-					local speed = math.Remap(ply:GetMaxSpeed(), 200, 450, 600, 200)
+				if (ply:GetWalkSpeed() > 450) then
+				
+					local speed = 200
 					return speed
+					
+				else
+					if (ply:GetWalkSpeed() < 229 and !ply:KeyDown(IN_SPEED)) then
+						
+						local speed = 400
+						return speed 
+							
+					else
+						local speed = math.Remap(ply:GetMaxSpeed(), 200, 450, 600, 200)
+						return speed
+					end
 				end
 			end
 		end
