@@ -625,7 +625,7 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 	elseif event == PLAYERANIMEVENT_CUSTOM_GESTURE then
 		if data == ACT_MP_DOUBLEJUMP then
 			-- Double jump
-			pl:AnimRestartGesture(GESTURE_SLOT_JUMP, ACT_MP_DOUBLEJUMP, true)
+			pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_DOUBLEJUMP, true)
 		elseif data == ACT_MP_GESTURE_FLINCH_CHEST then
 			-- Flinch
 			pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_GESTURE_FLINCH_CHEST, true)
