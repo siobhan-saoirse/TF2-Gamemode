@@ -64,8 +64,8 @@ AddCSLuaFile( "shared.lua" )
 ENT.HitSound = Sound("Weapon_FlameThrower.FireHit")
 ENT.HitLoopSound = Sound("Weapon_FlameThrower.FireHit")
 
-ENT.MaxDamage = 10
-ENT.MinDamage = 6
+ENT.MaxDamage = 1
+ENT.MinDamage = 4
 ENT.CritDamageMultiplier = 3
 
 ENT.Force = 1100
