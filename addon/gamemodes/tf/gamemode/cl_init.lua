@@ -1079,8 +1079,8 @@ else
 	gm_img:SetSize( SpyButton:GetSize() )	-- Size it to 150x150
 	gm_img:SetImage("vgui/class_sel_sm_random_inactive")
 	GmodButton.OnCursorEntered = function() 
-		icon2:GetEntity():SetModel("models/class_menu/random_class_icon.mdl") 
-		icon:SetModel( "" ) 
+		icon2:GetEntity():SetModel("models/empty.mdl") 
+		icon:SetModel( "models/class_menu/random_class_icon.mdl" ) 
 		icon2:GetEntity():SetParent(icon:GetEntity()) 
 		icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 		LocalPlayer():EmitSound( "ui/buttonrollover.wav", 100, 100, 1, CHAN_VOICE ) 
