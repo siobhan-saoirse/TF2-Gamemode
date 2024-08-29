@@ -117,6 +117,8 @@ function PANEL:PerformLayout()
 					weapons[2][id] = item -- weapon2:AddChoice(item.name, item.id)
 				elseif item.item_slot == "melee" then
 					weapons[3][id] = item -- weapon3:AddChoice(item.name, item.id)
+				elseif item.item_slot == "head" or item.item_slot == "misc" then
+					weapons[4][id] = item -- weapon3:AddChoice(item.name, item.id)
 				end
 			else
 				if item.item_slot == "primary" then
@@ -125,6 +127,8 @@ function PANEL:PerformLayout()
 					weapons[1][id] = item -- weapon2:AddChoice(item.name, item.id)
 				elseif item.item_slot == "melee" then
 					weapons[3][id] = item -- weapon3:AddChoice(item.name, item.id)
+				elseif item.item_slot == "head" or item.item_slot == "misc" then
+					weapons[4][id] = item -- weapon3:AddChoice(item.name, item.id)
 				end
 			end
 		end
@@ -213,11 +217,11 @@ function PANEL:PerformLayout()
 				elseif (k == 3) then
 					t.DoClick = function() itemSelector(3, weapons[3], self:GetParent(), GetConVar("tf_hud_loadout_class"):GetInt(), oldclass) end
 				elseif (k == 4) then
-					t.DoClick = function() hatSelector("hat",4,oldclass) end
+					t.DoClick = function() hatSelector("hat",4,oldclass,weapons[4]) end
 				elseif (k == 5) then
-					t.DoClick = function() hatSelector("hat",5,oldclass) end
+					t.DoClick = function() hatSelector("hat",5,oldclass,weapons[4]) end
 				elseif (k == 6) then
-					t.DoClick = function() hatSelector("hat",6,oldclass) end
+					t.DoClick = function() hatSelector("hat",6,oldclass,weapons[4]) end
 				end
 			else
 				if (k == 2) then 
@@ -227,11 +231,11 @@ function PANEL:PerformLayout()
 				elseif (k == 3) then
 					t.DoClick = function() itemSelector(3, weapons[3], self:GetParent(), GetConVar("tf_hud_loadout_class"):GetInt(), oldclass) end
 				elseif (k == 4) then
-					t.DoClick = function() hatSelector("hat",4,oldclass) end
+					t.DoClick = function() hatSelector("hat",4,oldclass,weapons[4]) end
 				elseif (k == 5) then
-					t.DoClick = function() hatSelector("hat",5,oldclass) end
+					t.DoClick = function() hatSelector("hat",5,oldclass,weapons[4]) end
 				elseif (k == 6) then
-					t.DoClick = function() hatSelector("hat",6,oldclass) end
+					t.DoClick = function() hatSelector("hat",6,oldclass,weapons[4]) end
 				end
 			end
 			
@@ -716,7 +720,7 @@ function itemSelector(type, weapons, parent, classid, oldclass)
 
     attr:MoveToFront()
 end
-function hatSelector(type, slot, oldclass)
+function hatSelector(type, slot, oldclass, weapons)
 	local Scale = ScrH()/480
 
 	local loadout_rect = surface.GetTextureID("vgui/loadout_rect")
@@ -752,8 +756,8 @@ function hatSelector(type, slot, oldclass)
 	--Frame.OnClose = function() gui.EnableScreenClicker(false) att:Remove() end
 
 	-- ugly code ahead
-	for k, v in pairs(tf_items.ReturnItems()) do
-		if v and istable(v) and v["name"] and GetImprovedItemName(v["name"]) and string.sub(GetImprovedItemName(v["name"]), 1, 3) == type then
+	for k, v in pairs(weapons) do
+		if v and istable(v) and v["name"] and GetImprovedItemName(v["name"]) then
 			local t = vgui.Create("ItemModelPanel", Frame)
 			t:SetSize(140 * Scale, 75 * Scale)
 			itemicons:Add(t)

@@ -85,26 +85,28 @@ for k, v in pairs(items_game["items"]) do
 		v.item_name = v.name
 		v.item_quality = "collectors"
 	end
-    if (!v.item_slot) then
-        v.item_slot = "misc"
-        v.item_class = "tf_wearable_item"
-		v.item_quality = "unique"
+    if (v.model_player) then
+        if (!v.item_slot) then
+            v.item_slot = "misc"
+            v.item_class = "tf_wearable_item"
+            v.item_quality = "unique"
+        end
+        if (v.item_slot == "hat" or v.equip_region == "hat" or v.prefab == "hat") then
+            v.item_class = "tf_wearable_item"
+            v.item_quality = "unique"
+            v.visuals = {}
+            v.visuals.hide_player_bodygroup_name = { "hat" }
+        elseif (v.prefab == "misc" or v.prefab == "no_craft misc" or v.prefab == "valve base_misc" or v.prefab == "base_misc" or v.prefab == "no_craft misc marketable") then
+            v.item_slot = "misc"
+            v.item_class = "tf_wearable_item"
+            v.item_quality = "unique"
+        end
     end
 	if (!v.item_quality) then
 		v.item_quality = "unique"
 	end
     if (!v.item_name) then
         v.item_name = v.name
-		v.item_quality = "unique"
-    end
-    if (v.item_slot == "hat" or v.equip_region == "hat" or v.prefab == "hat") then
-        v.item_class = "tf_wearable_item"
-		v.item_quality = "unique"
-		v.visuals = {}
-		v.visuals.hide_player_bodygroup_name = { "hat" }
-    elseif (v.prefab == "misc" or v.prefab == "no_craft misc" or v.prefab == "valve base_misc" or v.prefab == "base_misc" or v.prefab == "no_craft misc marketable") then
-        v.item_slot = "misc"
-        v.item_class = "tf_wearable_item"
 		v.item_quality = "unique"
     end
     if v.item_class == "saxxy" then
