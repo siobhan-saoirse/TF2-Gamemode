@@ -100,7 +100,7 @@ function SWEP:PrimaryAttack()
 	self.Owner.NextGiveAmmo = CurTime() + (self.Properties.ReloadTime or 5)
 	self.Owner.NextGiveAmmoType = self.Primary.Ammo
 	
-	self.NextIdle = CurTime() + self:SequenceDuration() - 0.2
+	self.NextIdle = CurTime() + self:SequenceDuration()
 	
 	--self.NextMeleeAttack = CurTime() + 0.25
 	if not self.NextMeleeAttack then

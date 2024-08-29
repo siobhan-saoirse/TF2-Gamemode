@@ -82,6 +82,7 @@ function SWEP:SecondaryAttack()
 		grenade:GetPhysicsObject():ApplyForceCenter(vel)
 	end
 	
+	self.NextIdle = CurTime() + self:SequenceDuration()
 	self:StopTimers()
 	self:ShootEffects()
 end

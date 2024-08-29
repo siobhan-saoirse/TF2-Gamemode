@@ -15,7 +15,7 @@ AddCSLuaFile( "shared.lua" )
 ENT.NoDamageCooperation = true
 
 local DamagePeriod = 0.5
-local DamagePerTick = 4
+local DamagePerTick = 1
 
 function ENT:ShouldExtinguishInWater()
 	if not IsValid(self.Target) then return false end

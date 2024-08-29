@@ -43,7 +43,7 @@ SWEP.BulletSpread = 0.0675
 SWEP.Primary.ClipSize		= 6
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
 SWEP.Primary.Ammo			= TF_PRIMARY
-SWEP.Primary.Delay          = 0.6
+SWEP.Primary.Delay          = 0.625
 SWEP.ReloadTime = 0.5
 
 SWEP.ReloadSingle = true

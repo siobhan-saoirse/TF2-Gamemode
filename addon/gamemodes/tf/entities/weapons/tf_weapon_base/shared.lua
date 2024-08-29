@@ -1336,6 +1336,7 @@ function SWEP:Reload()
 					else
 						self.NextReloadStart = CurTime() + self:SequenceDuration()
 					end
+					self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 				end
 			else
 				if SERVER then

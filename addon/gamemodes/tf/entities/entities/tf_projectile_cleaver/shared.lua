@@ -43,10 +43,6 @@ function ENT:Critical()
 	return self.critical
 end
 
-function ENT:CalculateDamage(ownerpos)
-	return tf_util.CalculateDamage(self, self:GetPos(), ownerpos)
-end
-
 function ENT:GetRocketJumpForce(owner, dmginfo)
 	local ang = dmginfo:GetDamageForce():Angle()
 	local force = dmginfo:GetDamageForce():Length() * BlastForceToVelocityMultiplier
@@ -181,25 +177,30 @@ function ENT:Break()
 end
 
 function ENT:PhysicsCollide(data, physobj)
-	if data.HitEntity and data.HitEntity:IsValid(self.WModel2) and data.HitEntity:IsPlayer() or data.HitEntity:IsNPC() and !data.HitEntity:IsFriendly(self:GetOwner()) then
+	if data.HitEntity and data.HitEntity:IsPlayer() or data.HitEntity:IsNPC() and !data.HitEntity:IsFriendly(self:GetOwner()) then
 		GAMEMODE:EntityStartBleeding(data.HitEntity, self, self:GetOwner(), 10)
 		self:EmitSound("Cleaver.ImpactFlesh", 75, 100)
 		local dmginfo = DamageInfo()
 		dmginfo:SetDamageType(DMG_SLASH)
-		dmginfo:SetDamage(math.random(8,90))
+		dmginfo:SetDamage(math.Rand(35,90))
 		dmginfo:SetAttacker(self:GetOwner())
-		dmginfo:SetInflictor(self)
-		util.BlastDamageInfo(dmginfo,self:GetPos(),200)
+		dmginfo:SetInflictor(self:GetOwner():GetActiveWeapon())
+		data.HitEntity:TakeDamageInfo(dmginfo)
 		self:DoExplosion()
 	end 
-	if data.HitEntity and data.HitEntity:IsValid(self.WModel2) and (data.HitEntity:IsNPC() or data.HitEntity:IsPlayer()) and data.HitEntity:Health()>0 then
+	if data.HitEntity and (data.HitEntity:IsNPC() or data.HitEntity:IsPlayer()) and data.HitEntity:Health()>0 then
 		
 		local dmginfo = DamageInfo()
 		dmginfo:SetDamageType(DMG_SLASH)
 		dmginfo:SetDamage(math.random(8,90))
 		dmginfo:SetAttacker(self:GetOwner())
 		dmginfo:SetInflictor(self)
-		util.BlastDamageInfo(dmginfo,self:GetPos(),200)
+		local dmginfo = DamageInfo()
+		dmginfo:SetDamageType(DMG_SLASH)
+		dmginfo:SetDamage(35)
+		dmginfo:SetAttacker(self:GetOwner())
+		dmginfo:SetInflictor(self)
+		data.HitEntity:TakeDamageInfo(dmginfo)
 	else
 		if self.DetonateMode == 2 then
 			self:Break()

@@ -13,7 +13,7 @@ if SERVER then
 AddCSLuaFile( "shared.lua" )
 
 local DamagePeriod = 0.5
-local DamagePerTick = 4
+local DamagePerTick = 1
 
 function ENT:GetInflictorName(inf)
 	--[[if inf.GetItemData then
