@@ -174,7 +174,7 @@ end
 function ENT:DoExplosion()
 	self.PhysicsCollide = nil
 	
-	self:EmitSound(self.ExplosionSound, 100, 100)
+	sound.Play(self.ExplosionSound, self:GetPos())
 	
 	--[[local effect = "peejar_impact"
 	

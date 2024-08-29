@@ -191,7 +191,7 @@ Response MeleeDareCombatSaxton
 }
 Rule MeleeDareCombatSaxton
 {
-	criteria ConceptPlayerBattleCry IsWeaponMelee IsSaxton IsCrosshairEnemy
+	criteria ConceptPlayerBattleCry IsWeaponMelee IsSaxton IsCrossHairEnemy
 	ApplyContext "IsDaring:1:5"
 	Response MeleeDareCombatSaxton
 }

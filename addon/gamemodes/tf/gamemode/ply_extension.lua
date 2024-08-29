@@ -535,7 +535,7 @@ function meta:TFTaunt(args)
 					end
 				elseif ply:GetPlayerClass() == "medic" then
 					timer.Simple(0.3, function()
-					if ply:GetWeapons()[3]:GetItemData().model_player == "models/weapons/c_models/c_uberneedle/c_uberneedle.mdl" then
+					if ply:GetWeapons()[3]:GetItemData().model_player == "models/workshop/weapons/c_models/c_uberneedle/c_uberneedle.mdl" then
 						ply:EmitSound("Taunt.MedicViolinUber")
 					elseif ply:GetWeapons()[3]:GetItemData().model_player != "models/weapons/c_models/c_ubersaw/c_ubersaw.mdl" then
 						ply:EmitSound("Taunt.MedicViolin")
@@ -548,17 +548,17 @@ function meta:TFTaunt(args)
 							for k,v in pairs(ents.FindInSphere(ply:GetPos(), 90)) do 
 								if v:IsTFPlayer() and not v:IsPlayer() and not v:IsFriendly(ply) and v:EntIndex() != ply:EntIndex() then
 									local d = DamageInfo()
-									d:SetDamage( 50 )
+									d:SetDamage( 1 )
 									d:SetAttacker( ply )
 									d:SetInflictor( ply:GetActiveWeapon() )
-									d:SetDamageType( DMG_CLUB )
+									d:SetDamageType( DMG_BULLET )
 									v:TakeDamage( d )
 								elseif v:IsPlayer() and not v:IsFriendly(ply) and v:EntIndex() != ply:EntIndex() then
 									local d = DamageInfo()
 									d:SetDamage( 50 )
 									d:SetAttacker( ply )
 									d:SetInflictor( ply:GetActiveWeapon() )
-									d:SetDamageType( DMG_CLUB )
+									d:SetDamageType( DMG_BULLET )
 									v:TakeDamageInfo( d )
 									v:ConCommand("tf_stun_me")
 								end
@@ -572,14 +572,14 @@ function meta:TFTaunt(args)
 									d:SetDamage( 500 )
 									d:SetAttacker( ply )
 									d:SetInflictor( ply:GetActiveWeapon() )
-									d:SetDamageType( DMG_CLUB )
+									d:SetDamageType( DMG_BULLET )
 									v:TakeDamageInfo( d )
 								elseif v:IsPlayer() and not v:IsFriendly(ply) and v:EntIndex() != ply:EntIndex() then
 									local d = DamageInfo()
 									d:SetDamage( 500 )
 									d:SetAttacker( ply )
 									d:SetInflictor( ply:GetActiveWeapon() )
-									d:SetDamageType( DMG_CLUB )
+									d:SetDamageType( DMG_BULLET )
 									v:TakeDamageInfo( d )
 								end
 							end

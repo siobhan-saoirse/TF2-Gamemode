@@ -13,5 +13,6 @@ ENT.PrintName		= "Blue Scout"
 list.Set( "NPC", "tf_blue_bot", {
 	Name = ENT.PrintName,
 	Class = "tf_blue_bot",
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )

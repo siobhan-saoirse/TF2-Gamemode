@@ -239,9 +239,6 @@ Response PlayerSuddenDeathScout
 
 Response PlayerJarateHitScout
 {
-	scene "scenes/Player/Scout/low/362.vcd" 
-	scene "scenes/Player/Scout/low/1281.vcd" 
-	scene "scenes/Player/Scout/low/363.vcd" 
 	scene "scenes/Player/Scout/low/364.vcd"  
 	scene "scenes/Player/Scout/low/426.vcd"  
 	scene "scenes/Player/Scout/low/450.vcd"  

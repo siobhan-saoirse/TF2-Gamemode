@@ -12,5 +12,6 @@ ENT.Category		= "TFBots - MVM"
 list.Set( "NPC", "mvm_bot_bowman_rapid_fire", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot_bowman_rapid_fire",
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )

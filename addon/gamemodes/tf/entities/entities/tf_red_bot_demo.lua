@@ -12,5 +12,6 @@ ENT.Category		= "TFBots"
 list.Set( "NPC", "tf_red_bot_demo", {
 	Name = ENT.PrintName,
 	Class = "tf_red_bot_demo",
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )

@@ -15,5 +15,6 @@ ENT.PreferredIcon = "hud/leaderboard_class_demoknight"
 list.Set( "NPC", "mvm_bot_demoknight", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot_demoknight",
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )

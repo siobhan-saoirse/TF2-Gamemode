@@ -230,7 +230,7 @@ end
 
 function ENT:DoExplosion()
 	if self.Dead then return end
-	self:EmitSound(self.ExplosionSound, 100, 100)
+	sound.Play(self.ExplosionSound, self:GetPos())
 	
 	--local flags = 0
 	local flags = 8

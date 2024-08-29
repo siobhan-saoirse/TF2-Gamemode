@@ -1428,7 +1428,7 @@ concommand.Add("tf_stun_me", function(ply)
 	if ply:GetNWBool("Taunting") == true then return end
 	if not ply:IsOnGround() then return end
 	if ply:WaterLevel() ~= 0 then return end
-	ply:EmitSound("TFPlayer.StunImpactRange")
+	ply:EmitSound("TFPlayer.StunImpact")
 	timer.Create("StunRobot25"..ply:EntIndex(), 0.001, 1, function()
 		ply:DoAnimationEvent(ACT_MP_STUN_BEGIN,2)
 			timer.Create("StunRobotloop4"..ply:EntIndex(), 0.8, 6, function()

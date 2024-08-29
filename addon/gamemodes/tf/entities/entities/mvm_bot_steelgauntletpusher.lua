@@ -13,5 +13,6 @@ ENT.Category		= "TFBots - MVM"
 list.Set( "NPC", "mvm_bot_steelgauntletpusher", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot_steelgauntletpusher",
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )

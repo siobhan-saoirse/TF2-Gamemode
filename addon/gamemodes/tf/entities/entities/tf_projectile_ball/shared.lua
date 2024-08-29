@@ -230,7 +230,7 @@ function ENT:PhysicsCollide(data, physobj)
 		end)	
 	end
 	if data.HitEntity and data.HitEntity:IsValid(self.WModel2) and data.HitEntity:IsTFPlayer() and !data.HitEntity:IsNPC() and !data.HitEntity:IsFriendly(self:GetOwner()) and data.HitEntity:Health()>0 then
-		self:EmitSound(self.ExplosionSound, 100, 100)
+		sound.Play(self.ExplosionSound, self:GetPos())
 		timer.Create("Stunned"..data.HitEntity:EntIndex(), 0.1, 80, function()
 			data.HitEntity:SetClassSpeed(data.HitEntity:GetPlayerClassTable().Speed * 0.7)
 			data.HitEntity:AddPlayerState(PLAYERSTATE_STUNNED)
@@ -243,7 +243,7 @@ function ENT:PhysicsCollide(data, physobj)
 		ParticleEffectAttach("bonk_text", PATTACH_POINT_FOLLOW, data.HitEntity, data.HitEntity:LookupAttachment("head"))
 	end 
 	if data.HitEntity and data.HitEntity:IsValid(self.WModel2) and data.HitEntity:GetClass() == "npc_antlionguard" and !data.HitEntity:IsFriendly(self:GetOwner()) and !self.critical and data.HitEntity:Health()>0 then
-		self:EmitSound(self.ExplosionSound, 100, 100)
+		sound.Play(self.ExplosionSound, self:GetPos())
 		ParticleEffectAttach("bonk_text", PATTACH_POINT_FOLLOW, data.HitEntity, data.HitEntity:LookupAttachment("head"))
 		data.HitEntity:EmitSound("NPC_AntlionGuard.FrustratedRoar")
 		data.HitEntity:Fire("EnableBark") 
@@ -271,7 +271,7 @@ function ENT:PhysicsCollide(data, physobj)
 			if self.critical then
 				self:EmitSound(self.ExplosionSound2, 100, 100)
 			else
-				self:EmitSound(self.ExplosionSound, 100, 100)
+				sound.Play(self.ExplosionSound, self:GetPos())
 			end
 			self:DoExplosion()	
 			self:GetOwner():EmitSound("vo/scout_stunballhit0"..math.random(1,9)..".wav")

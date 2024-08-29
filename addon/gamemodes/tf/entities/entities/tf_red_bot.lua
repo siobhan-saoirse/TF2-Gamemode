@@ -97,7 +97,8 @@ end
 list.Set( "NPC", "tf_red_bot", {
 	Name = ENT.PrintName,
 	Class = "tf_red_bot",
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )
 
 

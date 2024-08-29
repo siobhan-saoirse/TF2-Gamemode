@@ -14,5 +14,6 @@ ENT.Items = {"Fan O'War"}
 list.Set( "NPC", "mvm_bot_melee_scout_fanwar", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot_melee_scout_fanwar",
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )

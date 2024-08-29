@@ -13,5 +13,6 @@ ENT.Items = {"Wrap Assassin"}
 list.Set( "NPC", "mvm_bot_scout_wrap_assassin", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot_scout_wrap_assassin",
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )

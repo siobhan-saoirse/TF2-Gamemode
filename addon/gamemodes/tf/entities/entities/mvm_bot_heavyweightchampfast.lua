@@ -14,5 +14,6 @@ ENT.PreferredIcon = "hud/leaderboard_class_heavy_gru"
 list.Set( "NPC", "mvm_bot_heavyweightchampfast", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot_heavyweightchampfast",
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )

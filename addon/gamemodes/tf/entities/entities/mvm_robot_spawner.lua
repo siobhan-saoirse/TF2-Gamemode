@@ -79,6 +79,7 @@ list.Set( "NPC", "mvm_robot_spawner", {
 	Name = ENT.PrintName,
 	Class = "mvm_robot_spawner",
 	Category = ENT.Category,
+	AdminOnly = true,
 	AdminOnly = true
 } )
 function ENT:Initialize()

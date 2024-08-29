@@ -12,7 +12,8 @@ ENT.Category		= "Left 4 Dead 2 Bots"
 list.Set( "NPC", "tf_boomer", {
 	Name = ENT.PrintName,
 	Class = "boomer",
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )
 
 local function lookForNextPlayer(ply)

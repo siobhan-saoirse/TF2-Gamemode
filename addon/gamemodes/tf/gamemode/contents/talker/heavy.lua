@@ -297,15 +297,9 @@ Rule CartMovingForwardDefenseHeavy
 
 Response PlayerJarateHitHeavy
 {
-	scene "scenes/Player/Heavy/low/258.vcd" 
-	scene "scenes/Player/Heavy/low/259.vcd" 
-	scene "scenes/Player/Heavy/low/260.vcd" 
-	scene "scenes/Player/Heavy/low/261.vcd" 
-	scene "scenes/Player/Heavy/low/262.vcd" 
-	scene "scenes/Player/Heavy/low/263.vcd" 
-	scene "scenes/Player/Heavy/low/264.vcd" 
-	scene "scenes/Player/Heavy/low/265.vcd" 
-	scene "scenes/Player/Heavy/low/266.vcd" 
+	scene "scenes/Player/Heavy/low/1267.vcd"   
+	scene "scenes/Player/Heavy/low/201.vcd"   
+	scene "scenes/Player/Heavy/low/259.vcd"  
 }
 
 Rule PlayerJarateHitHeavy

@@ -12,5 +12,6 @@ ENT.Category		= "TFBots - MVM"
 list.Set( "NPC", "mvm_bot_spy", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot_spy",
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )

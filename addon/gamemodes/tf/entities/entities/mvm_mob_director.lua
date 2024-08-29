@@ -10,6 +10,7 @@ list.Set( "NPC", "mvm_mob_director", {
 	Name = ENT.PrintName,
 	Class = "mvm_mob_director",
 	Category = ENT.Category,
+	AdminOnly = true,
 	AdminOnly = true
 } )
 function ENT:Initialize()

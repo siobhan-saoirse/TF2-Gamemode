@@ -13,5 +13,6 @@ ENT.PreferredIcon = "hud/leaderboard_class_heavy_steelfist"
 list.Set( "NPC", "mvm_bot_steelgauntlet", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot_steelgauntlet",
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )

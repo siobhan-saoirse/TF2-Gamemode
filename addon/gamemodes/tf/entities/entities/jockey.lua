@@ -11,5 +11,6 @@ ENT.Category		= "Left 4 Dead 2 Bots"
 list.Set( "NPC", "tf_jockey", {
 	Name = ENT.PrintName,
 	Class = "jockey",
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )

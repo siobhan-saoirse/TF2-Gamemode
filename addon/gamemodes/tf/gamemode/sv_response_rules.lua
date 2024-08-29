@@ -264,7 +264,7 @@ function SelectResponse(ent, dbg)
 			for _,v in pairs(player.GetAll()) do
 				v[n] = bestrule.context[2]
 				if not v.TemporaryContexts then v.TemporaryContexts = {} end
-				v.TemporaryContexts[n] = CurTime() + bestrule.context[3]
+				v.TemporaryContexts[n] = CurTime() + bestrule.context[3] 
 			end
 		else
 			ent[bestrule.context[1]] = bestrule.context[2]
@@ -283,7 +283,7 @@ local function playscene_delayed(ent, scene)
 			scene = string.Replace(scene,"low","high")
 		end
 	end
-	ent:PlayScene(scene, 0)
+	ent:PlayScene(scene, 0) 
 end
 
 function PlayResponse(ent, response, nospeech, concept)

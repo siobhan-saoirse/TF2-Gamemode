@@ -12,5 +12,6 @@ ENT.PreferredIcon = "hud/leaderboard_class_scout_shortstop"
 list.Set( "NPC", "mvm_bot_scout_shortstop", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot_scout_shortstop",
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )

@@ -13,5 +13,6 @@ ENT.PreferredIcon = "hud/leaderboard_class_heavy_deflector"
 list.Set( "NPC", "mvm_bot_deflectorheavy", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot_deflectorheavy"	,
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )

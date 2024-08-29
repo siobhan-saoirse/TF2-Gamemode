@@ -15,6 +15,33 @@ Criterion "DemomanNotAssistSpeech" "DemomanAssistSpeech" "!=1" "required" weight
 Criterion "IsDrunk" "NotSober" "1" "required" weight 0
 Criterion "DemomanNotAwardSpeech" "DemomanAwardSpeech" "!=1" "required" weight 0
 
+Response DemomanJarateHit
+{
+	scene "scenes/Player/Demoman/low/871.vcd"       
+	scene "scenes/Player/Demoman/low/947.vcd"       
+	scene "scenes/Player/Demoman/low/969.vcd"       
+	scene "scenes/Player/Demoman/low/971.vcd"       
+}
+Rule DemomanJarateHit
+{
+	criteria ConceptJarateHit IsDemoman 50PercentChance
+	Response DemomanJarateHit
+}
+
+// Custom stuff - melee dare
+// Look at enemy, then do battle cry voice command while holding a melee weapon.
+Response MeleeDareCombatDemoman
+{
+	scene "scenes/Player/Demoman/low/1028.vcd"
+	scene "scenes/Player/Demoman/low/1017.vcd"
+	scene "scenes/Player/Demoman/low/1015.vcd"
+}
+Rule MeleeDareCombatDemoman
+{
+	criteria ConceptPlayerBattleCry IsWeaponMelee IsDemoman IsCrossHairEnemy
+	Response MeleeDareCombatDemoman
+}
+
 Response PlayerCloakedSpyDemomanDemoman
 {
 	scene "scenes/Player/Demoman/low/901.vcd" 

@@ -218,11 +218,11 @@ function ENT:PhysicsCollide(data, physobj)
 			self:DoExplosion()	
 	end
 	if data.HitEntity and data.HitEntity:IsValid(self.WModel2) and data.HitEntity:IsTFPlayer() and !data.HitEntity:IsNPC() and !data.HitEntity:IsFriendly(self:GetOwner()) and data.HitEntity:Health()>0 then
-		self:EmitSound(self.ExplosionSound, 100, 100)
+		sound.Play(self.ExplosionSound, self:GetPos())
 			self:DoExplosion()	
 	end 
 	if data.HitEntity and data.HitEntity:IsValid(self.WModel2) and data.HitEntity:GetClass() == "npc_antlionguard" and !data.HitEntity:IsFriendly(self:GetOwner()) and !self.critical and data.HitEntity:Health()>0 then
-		self:EmitSound(self.ExplosionSound, 100, 100)
+		sound.Play(self.ExplosionSound, self:GetPos())
 		ParticleEffectAttach("bonk_text", PATTACH_POINT_FOLLOW, data.HitEntity, data.HitEntity:LookupAttachment("head"))
 		data.HitEntity:EmitSound("NPC_AntlionGuard.FrustratedRoar")
 		data.HitEntity:Fire("EnableBark") 
@@ -250,7 +250,7 @@ function ENT:PhysicsCollide(data, physobj)
 			if self.critical then
 				self:EmitSound(self.ExplosionSound2, 100, 100)
 			else
-				self:EmitSound(self.ExplosionSound, 100, 100)
+				sound.Play(self.ExplosionSound, self:GetPos())
 			end	
 			self:DoExplosion()	
 		end
@@ -262,7 +262,7 @@ function ENT:PhysicsCollide(data, physobj)
 		
 		if data.Speed > 50 and data.DeltaTime > 0.2 then
 			self:EmitSound(self.BounceSound, 100, 100)
-			self:EmitSound(self.ExplosionSound, 100, 100)
+			sound.Play(self.ExplosionSound, self:GetPos())
 			self:DoExplosion()	
 		end
 		

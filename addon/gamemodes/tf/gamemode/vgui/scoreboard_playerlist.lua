@@ -230,21 +230,23 @@ function PANEL:Paint()
 					surface.DrawTexturedRect(199*Scale, ypos-7*Scale, 13*Scale, 13*Scale)
 				end
 			else
-				local tex
-				if d then
-					tex = c.ScoreboardImage[2]
-				else
-					tex = c.ScoreboardImage[1]
-				end
-				if tex then
-					if pl:IsMiniBoss() then
-						surface.SetDrawColor( 255, 0, 0, 255 )
-						surface.DrawRect(199*Scale, ypos-7*Scale, 13*Scale, 13*Scale)
+				if (LocalPlayer():Team() == self.PlayerTeam) then
+					local tex
+					if d then
+						tex = c.ScoreboardImage[2]
+					else
+						tex = c.ScoreboardImage[1]
 					end
-					surface.SetDrawColor(255, 255, 255, 255)
-					surface.SetTexture(tex)
-					surface.DrawTexturedRect(199*Scale, ypos-7*Scale, 13*Scale, 13*Scale)
-				end 
+					if tex then
+						if pl:IsMiniBoss() then
+							surface.SetDrawColor( 255, 0, 0, 255 )
+							surface.DrawRect(199*Scale, ypos-7*Scale, 13*Scale, 13*Scale)
+						end
+						surface.SetDrawColor(255, 255, 255, 255)
+						surface.SetTexture(tex)
+						surface.DrawTexturedRect(199*Scale, ypos-7*Scale, 13*Scale, 13*Scale)
+					end 
+				end
 			end
 		end
 		

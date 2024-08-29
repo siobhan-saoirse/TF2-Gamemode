@@ -13,5 +13,6 @@ ENT.PreferredIcon 	= "hud/leaderboard_class_teleporter"
 list.Set( "NPC", "mvm_bot_engineer", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot_engineer",
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )

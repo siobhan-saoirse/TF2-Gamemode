@@ -14,5 +14,6 @@ ENT.PreferredIcon = "hud/leaderboard_class_pyro_flare"
 list.Set( "NPC", "mvm_bot_pyro_pusher", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot_pyro_pusher",
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )

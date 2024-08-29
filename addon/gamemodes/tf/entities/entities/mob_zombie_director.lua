@@ -10,6 +10,7 @@ list.Set( "NPC", "mob_zombie_director", {
 	Name = ENT.PrintName,
 	Class = "mob_zombie_director",
 	Category = ENT.Category,
+	AdminOnly = true,
 	AdminOnly = true
 } )
 

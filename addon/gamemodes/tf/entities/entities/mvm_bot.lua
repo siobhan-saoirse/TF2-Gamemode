@@ -16,7 +16,8 @@ ENT.PreferredIcon = nil
 list.Set( "NPC", "mvm_bot", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot",
-	Category = ENT.Category
+	Category = ENT.Category,
+	AdminOnly = true
 } )
 
 local function LeadBot_S_Add_Zombie(team,class,pos,ent)

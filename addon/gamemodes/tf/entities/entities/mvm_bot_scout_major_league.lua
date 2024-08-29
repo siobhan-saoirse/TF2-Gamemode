@@ -16,6 +16,7 @@ list.Set( "NPC", "mvm_bot_scout_major_league", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot_scout_major_league",
 	Category = ENT.Category,
+	AdminOnly = true,
 	--AdminOnly = true
 	AdminOnly = false
 } )

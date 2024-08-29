@@ -15,6 +15,7 @@ list.Set( "NPC", "mvm_bot_colonelbarrage", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot_colonelbarrage",
 	Category = ENT.Category,
+	AdminOnly = true,
 	--AdminOnly = true
 	AdminOnly = false
 } )

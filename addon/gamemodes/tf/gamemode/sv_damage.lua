@@ -485,6 +485,9 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	local amount = dmginfo:GetDamage()
 	
 	local att = dmginfo:GetAttacker()
+	if (!att:CanDamage(ent)) then
+		dmginfo:SetAttacker(Entity(0))
+	end
 	if (ent:IsPlayer() and ent:IsHL2()) then
 		if (att and att:IsPlayer() and !att:IsHL2()) then
 			dmginfo:SetDamage(dmginfo:GetDamage() * 0.7)

@@ -1032,6 +1032,13 @@ d_phlogistinator={
 
 ["_images_v2"]={
 
+d_battleneedle={
+	x=256,
+	y=640,
+	w=96,
+	h=32,
+},
+
 d_demokatana={
 	x=384,
 	y=128,
