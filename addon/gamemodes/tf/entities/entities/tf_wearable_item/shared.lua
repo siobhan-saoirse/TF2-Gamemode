@@ -141,6 +141,7 @@ end
 end
 
 function ENT:Think()
+	self:AddEffects(bit.bor(EF_BONEMERGE,EF_BONEMERGE_FASTCULL))
 	if self.Model and string.find(self.Model,"_zombie") then
 		if (IsValid(self.Owner)) then
 			if (self.Owner:GetPlayerClass() == "spy") then
