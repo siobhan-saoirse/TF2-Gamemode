@@ -380,19 +380,19 @@ function PANEL:PerformLayout()
 
 		for name, wep in pairs(tf_items.Items) do
 			if istable(wep) then
-				if wep.id == tonumber(loadout[4]) then
+				if wep.id == tonumber(loadout[4]) and wep.model_player_per_class then
 
 					t:AddModel(2,wep.model_player_per_class[oldclass],{
 						Parent = 1,
 					})
 					
-				elseif wep.id == tonumber(loadout[5]) then
+				elseif wep.id == tonumber(loadout[5]) and wep.model_player_per_class then
 
 					t:AddModel(2,wep.model_player_per_class[oldclass],{
 						Parent = 1,
 					})
 					
-				elseif wep.id == tonumber(loadout[6]) then
+				elseif wep.id == tonumber(loadout[6]) and wep.model_player_per_class then
 
 					t:AddModel(2,wep.model_player_per_class[oldclass],{
 						Parent = 1,
