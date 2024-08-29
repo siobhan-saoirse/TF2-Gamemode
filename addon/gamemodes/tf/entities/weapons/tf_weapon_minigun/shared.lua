@@ -160,9 +160,7 @@ function SWEP:SpinUp()
 	
 	--self.Owner:SetAnimation(10004)
 	
-	if SERVER then
-		self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_PREFIRE, true)
-	end
+	self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_PREFIRE, true)
 	
 	self:SendWeaponAnim(self.VM_PREFIRE)
 	self:GetOwner():GetViewModel():SetPlaybackRate(1 / 0.85 / (self.MinigunSpinupMultiplier or 1))

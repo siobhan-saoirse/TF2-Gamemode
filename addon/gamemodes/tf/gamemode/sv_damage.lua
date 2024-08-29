@@ -810,7 +810,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	end
 	if hp<=0 then
 		ent.LastDamageInfo = CopyDamageInfo(dmginfo)
-	elseif not dmginfo:IsFallDamage() and not dmginfo:IsDamageType(DMG_DIRECT) and ent:WaterLevel() < 1 and !(inflictor:GetClass()=="tf_entityflame" and inflictor:GetClass()=="entityflame") then
+	elseif not dmginfo:IsFallDamage() and not dmginfo:IsDamageType(DMG_DIRECT) and not dmginfo:IsDamageType(DMG_BURN) and ent:WaterLevel() < 1 and !(inflictor:GetClass()=="tf_entityflame" and inflictor:GetClass()=="tf_flame" and inflictor:GetClass()=="entityflame") then
 		if attacker:IsPlayer() then
 			if ent:HasGodMode() == false and !ent:IsMiniBoss() then
 				if (!ent.NextPainSound or ent.NextPainSound<CurTime()) then
