@@ -504,7 +504,11 @@ function SWEP:Deploy()
 		if (self.Owner:IsHL2()) then
 			self.Owner:GetViewModel():SetMaterial("")
 		else
-			self.Owner:GetViewModel():SetMaterial("color")
+			if (string.find(self.ViewModel,"c_models")) then
+				self.Owner:GetViewModel():SetMaterial("color")
+			else
+				self.Owner:GetViewModel():SetMaterial("")
+			end
 		end
 	end
 	if (self.Owner.anim_Deployed) then
@@ -709,24 +713,26 @@ function SWEP:Deploy()
 					end
 				end
 			else
-				if IsValid(self.CModel) then
-					self.CModel:SetModel("models/empty.mdl")
-					self.CModel:SetNoDraw(true)
-					self.CModel:SetParent(vm)
-					self.CModel:AddEffects(bit.bor(EF_BONEMERGE,EF_BONEMERGE_FASTCULL))
-					self.CModel:DrawModel()
-					self.CModel:SetSkin(self.WeaponSkin or self:GetOwner():GetSkin())
-				elseif IsValid(vm) and !IsValid(self.CModel) then
-					self.CModel = ClientsideModel(wmodel)
-					if not IsValid(self.CModel) then return end
-					self.CModel:SetModel("models/empty.mdl")
-					self.CModel:SetNoDraw(true)
-					self.CModel:SetParent(vm)
-					self.CModel:AddEffects(bit.bor(EF_BONEMERGE,EF_BONEMERGE_FASTCULL))
-					self.CModel:Spawn()
-					self.CModel:Activate()
-					self.CModel:DrawModel()
-					self.CModel:SetSkin(self.WeaponSkin or self:GetOwner():GetSkin())
+				if (self:GetClass() != "tf_weapon_pda_spy") then
+					if IsValid(self.CModel) then
+						self.CModel:SetModel("models/empty.mdl")
+						self.CModel:SetNoDraw(true)
+						self.CModel:SetParent(vm)
+						self.CModel:AddEffects(bit.bor(EF_BONEMERGE,EF_BONEMERGE_FASTCULL))
+						self.CModel:DrawModel()
+						self.CModel:SetSkin(self.WeaponSkin or self:GetOwner():GetSkin())
+					elseif IsValid(vm) and !IsValid(self.CModel) then
+						self.CModel = ClientsideModel(wmodel)
+						if not IsValid(self.CModel) then return end
+						self.CModel:SetModel("models/empty.mdl")
+						self.CModel:SetNoDraw(true)
+						self.CModel:SetParent(vm)
+						self.CModel:AddEffects(bit.bor(EF_BONEMERGE,EF_BONEMERGE_FASTCULL))
+						self.CModel:Spawn()
+						self.CModel:Activate()
+						self.CModel:DrawModel()
+						self.CModel:SetSkin(self.WeaponSkin or self:GetOwner():GetSkin())
+					end
 				end
 			end
 		end
@@ -1710,24 +1716,25 @@ function SWEP:Think()
 	local vm = self.Owner:GetViewModel()
 	if (self.Owner:GetPlayerClass() != "combinesoldier") then
 		if CLIENT then 
-			if IsValid(self.CModel) then
-				self.CModel:SetModel(wmodel)
-				self.CModel:SetNoDraw(true)
-				self.CModel:DrawModel()
-				self.CModel:SetSkin(self.WeaponSkin or self:GetOwner():GetSkin())
-			elseif IsValid(vm) and !IsValid(self.CModel) then
-				self.CModel = ClientsideModel(wmodel)
-				if not IsValid(self.CModel) then return end
-				self.CModel:SetModel(wmodel)
-				self.CModel:SetNoDraw(true)
-				self.CModel:SetParent(vm)
-				self.CModel:AddEffects(bit.bor(EF_BONEMERGE,EF_BONEMERGE_FASTCULL))
-				self.CModel:Spawn()
-				self.CModel:Activate()
-				self.CModel:DrawModel()
-				self.CModel:SetSkin(self.WeaponSkin or self:GetOwner():GetSkin())
+			if (self:GetClass() != "tf_weapon_pda_spy") then
+				if IsValid(self.CModel) then
+					self.CModel:SetModel(wmodel)
+					self.CModel:SetNoDraw(true)
+					self.CModel:DrawModel()
+					self.CModel:SetSkin(self.WeaponSkin or self:GetOwner():GetSkin())
+				elseif IsValid(vm) and !IsValid(self.CModel) then
+					self.CModel = ClientsideModel(wmodel)
+					if not IsValid(self.CModel) then return end
+					self.CModel:SetModel(wmodel)
+					self.CModel:SetNoDraw(true)
+					self.CModel:SetParent(vm)
+					self.CModel:AddEffects(bit.bor(EF_BONEMERGE,EF_BONEMERGE_FASTCULL))
+					self.CModel:Spawn()
+					self.CModel:Activate()
+					self.CModel:DrawModel()
+					self.CModel:SetSkin(self.WeaponSkin or self:GetOwner():GetSkin())
+				end
 			end
-			
 		end
 	end
 	if (IsValid(self.Owner:GetHands())) then
