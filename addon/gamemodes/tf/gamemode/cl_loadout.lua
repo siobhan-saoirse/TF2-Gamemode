@@ -56,7 +56,7 @@ end
 local itemSelector
 
 concommand.Add("open_charinfo_direct", function(_, _, args)
-    local ply = LocalPlayer()
+    --[[local ply = LocalPlayer()
     local oldclass = ply:GetPlayerClass()
     local convar = GetConVar("loadout_" .. oldclass)
     if !convar then print("You're a class without a loadout?!") return end
@@ -164,7 +164,7 @@ concommand.Add("open_charinfo_direct", function(_, _, args)
     weapon3:AddChoice("Stock", -1)
     weapon3:SetPos(15, 235)
     weapon3.OnSelect = select]]
-
+--[[
 
     local weapons = {{}, {}, {}}
 
@@ -344,7 +344,7 @@ concommand.Add("open_charinfo_direct", function(_, _, args)
 
             if self.text then
                 --[[surface.SetFont("ItemFontNameSmall")
-                surface.SetTextP]]
+                surface.SetTextP]]--[[
                 draw.SimpleTextOutlined(self.text, "TFDefaultSmall", w / 2, h / 2, Colors.White, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Colors.TanDarker)
             end
         end
@@ -352,7 +352,8 @@ concommand.Add("open_charinfo_direct", function(_, _, args)
         weapon1.Paint = paintf
         weapon2.Paint = paintf
         weapon3.Paint = paintf
-    end
+    end]]
+    ply:ConCommand("hud_showloadout 1")
 end)
 
 function itemSelector(type, weapons)

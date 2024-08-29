@@ -1797,7 +1797,7 @@ hook.Add( "PlayerButtonDown", "PlayerButtonDownTF", function( pl, key )
 		pl:ConCommand("tf_changeclass")
 	end
 	if key == KEY_M then
-		pl:ConCommand("gm_showspare2")
+		pl:ConCommand("hud_showloadout 1")
 	end  	
 	if key == KEY_N then
 		pl:ConCommand("gm_showspare1")

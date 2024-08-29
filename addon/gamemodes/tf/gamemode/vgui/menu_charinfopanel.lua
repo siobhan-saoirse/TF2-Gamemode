@@ -1,5 +1,5 @@
 local hud_showloadout = CreateConVar("hud_showloadout", "0", {FCVAR_ARCHIVE})
-
+local tf_hud_loadout_class = CreateConVar("tf_hud_loadout_class", "1", {FCVAR_ARCHIVE})
 cvars.AddChangeCallback("hud_showloadout", function(cvar, old, new)
 	if not CharInfoPanel then return end
 	
@@ -89,7 +89,7 @@ function PANEL:PerformLayout()
 	self.CloseButton.labelText = "CLOSE"
 	self.CloseButton.font = "HudFontSmallBold"
 	function self.CloseButton:DoClick()
-		self:GetParent():Close()
+		RunConsoleCommand("hud_showloadout","0")
 	end
 	
 	-- Tab buttons
@@ -190,7 +190,7 @@ function PANEL:Paint()
 	}
 	
 	draw.Text{
-		text="CHARACTER INFO AND SETUP (CURRENTLY ISNT FUNCTIONAL)",
+		text="CHARACTER INFO AND SETUP",
 		font="HudFontSmallestBold",
 		pos={100*Scale, 18*Scale},
 		color=Color(117, 107, 94, 255),
