@@ -613,7 +613,7 @@ d_taunt_medic={
 	y=161,
 	w=94,
 	h=27,
-},
+}, 
 d_saw_kill={
 	x=192,
 	y=359,
