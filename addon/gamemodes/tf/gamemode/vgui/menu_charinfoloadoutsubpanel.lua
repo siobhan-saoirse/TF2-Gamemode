@@ -106,7 +106,7 @@ function PANEL:PerformLayout()
 	end
 	local convar = GetConVar("loadout_" .. oldclass)
 	
-	local weapons = {{}, {}, {}}
+	local weapons = {{}, {}, {}, {}}
 
 	for id, item in pairs(tf_items.Items) do
 		if istable(item) and item.used_by_classes and item.used_by_classes[oldclass] == 1 then
