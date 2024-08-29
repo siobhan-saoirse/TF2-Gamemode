@@ -31,7 +31,7 @@ function meta:GiveLoadout()
     
 		if (!self:IsL4D()) then
 		
-			if (self:GetInfoNum("tf_give_hl2_weapons",0) == 1 && !GetConVar("tf_competitive"):GetBool()) then
+			if (self:GetInfoNum("tf_give_hl2_weapons",0) == 1 && (!GetConVar("tf_competitive"):GetBool() || self:IsAdmin())) then
 				self:Give("weapon_physgun")
 				self:Give("weapon_physcannon")	
 				self:Give("gmod_tool")

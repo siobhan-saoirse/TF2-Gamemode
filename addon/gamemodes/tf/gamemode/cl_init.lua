@@ -392,7 +392,7 @@ end)
 concommand.Add("joinclass", function(pl, cmd, args)
 	RunConsoleCommand("changeclass "..args)
 end, function() return GAMEMODE.PlayerClassesAutoComplete end)
-RunConsoleCommand("snd_restart")
+--RunConsoleCommand("snd_restart")
 physenv.SetGravity(Vector(0,0,-386))
 usermessage.Hook("PlayerResetDominations", function(um)
 	local pl = um:ReadEntity()
@@ -1054,6 +1054,58 @@ if (!GetConVar("tf_disable_fun_classes"):GetBool()) then
 		Do more damage towards TF2 Mercenaries!
 		Hold SHIFT to move faster!
 		Be mostly resistant to damage from TF2 Mercs!]] ) 
+		menuname:SizeToContents()
+		menutext:SizeToContents()
+	end 
+else
+	GmodButton = vgui.Create("DImageButton", ClassFrame)
+	GmodButton:SetSize(ScrW() * 0.056, ScrH() * 0.195)
+	GmodButton:SetPos(ScrW() * 0.814, ScrH() * -0.015) --ScrW() * 0.088, ScrH() * 0.002
+	--GmodButton:SetText("GMod Player") --Set the name of the button
+	GmodButton:SetImage("vgui/class_sel_sm_random_inactive")
+	GmodButton:SetAlpha(255)
+	GmodButton.DoClick = function() 
+		LocalPlayer():EmitSound( "ui/buttonclick.wav", 100, 100, 1, CHAN_VOICE ) 
+		ClassFrame:Close() 
+		if string.find(game.GetMap(), "mvm_") then 
+			LocalPlayer():EmitSound("music/mvm_class_select.wav") 
+		end 
+		LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") 
+		LocalPlayer():StopSound("ClassSelection.ThemeMVM")  
+	end
+
+	gm_img = vgui.Create( "DImage", GmodButton )	-- Add image to Frame
+	gm_img:SetPos( 0, 0 )	-- Move it into frame
+	gm_img:SetSize( SpyButton:GetSize() )	-- Size it to 150x150
+	gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+	GmodButton.OnCursorEntered = function() 
+		icon2:GetEntity():SetModel("models/class_menu/random_class_icon.mdl") 
+		icon:SetModel( "" ) 
+		icon2:GetEntity():SetParent(icon:GetEntity()) 
+		icon2:GetEntity():AddEffects(EF_BONEMERGE) 
+		LocalPlayer():EmitSound( "ui/buttonrollover.wav", 100, 100, 1, CHAN_VOICE ) 
+		local dance = icon:GetEntity():LookupSequence( "selection" )
+		icon:GetEntity():SetSequence( dance )
+			
+		scout_img:SetImage( "vgui/class_sel_sm_scout_inactive" )
+		sol_img:SetImage( "vgui/class_sel_sm_soldier_inactive" )
+		py_img:SetImage( "vgui/class_sel_sm_pyro_inactive" )
+		de_img:SetImage( "vgui/class_sel_sm_demo_inactive" )
+		he_img:SetImage( "vgui/class_sel_sm_heavy_inactive" )
+		en_img:SetImage( "vgui/class_sel_sm_engineer_inactive" )
+		me_img:SetImage( "vgui/class_sel_sm_medic_inactive" )
+		sn_img:SetImage( "vgui/class_sel_sm_sniper_inactive" )
+		sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
+		if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
+			gm_img:SetImage( "vgui/class_sel_sm_random_red" )
+		elseif LocalPlayer():Team()==TEAM_BLU then
+			gm_img:SetImage( "vgui/class_sel_sm_random_blu" )
+		else
+			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		end
+			
+		menuname:SetText( "RANDOM" ) 
+		menutext:SetText( [[Let the game pick a class for you.]] ) 
 		menuname:SizeToContents()
 		menutext:SizeToContents()
 	end 
