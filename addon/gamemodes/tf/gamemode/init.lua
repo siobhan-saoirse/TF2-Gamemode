@@ -2586,8 +2586,8 @@ elseif file.Exists("maps/"..game.GetMap()..".lua", "LUA") then
 end
 
 RunConsoleCommand("sk_player_head", "1")
-RunConsoleCommand("sv_friction", "8")
-RunConsoleCommand("sv_stopspeed", "10")
+RunConsoleCommand("sv_friction", "4")
+RunConsoleCommand("sv_stopspeed", "100")
 --Disables use key on objects (Can Be Re-enabled)
 -- WHAT WERE YOU THINKING
 RunConsoleCommand("sv_playerpickupallowed", "1")
