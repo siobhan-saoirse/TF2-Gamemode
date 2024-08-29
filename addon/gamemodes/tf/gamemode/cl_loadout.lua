@@ -19,10 +19,10 @@ local function updateLoadout(type, id, update)
     local convar = GetConVar("loadout_" .. LocalPlayer():GetPlayerClass())
     local split = string.Split(convar:GetString(), ",")
 
-    if #split == 5 then
+    if #split == 6 then
         split[type] = id
     else
-        split = {-1, -1, -1, -1, -1}
+        split = {-1, -1, -1, -1, -1, -1}
         split[type] = id
     end
 
@@ -40,10 +40,10 @@ local function select(self, i, val, update)
     local convar = GetConVar("loadout_" .. LocalPlayer():GetPlayerClass())
     local split = string.Split(convar:GetString(), ",")
 
-    if #split == 5 then
+    if #split == 6 then
         split[type] = id
     else
-        split = {-1, -1, -1, -1, -1}
+        split = {-1, -1, -1, -1, -1, -1}
         split[type] = id
     end
 

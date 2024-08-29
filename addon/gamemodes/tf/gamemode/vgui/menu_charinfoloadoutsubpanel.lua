@@ -64,10 +64,10 @@ local function updateLoadout(type, id, update, class)
     local convar = GetConVar("loadout_" .. class)
     local split = string.Split(convar:GetString(), ",")
 
-    if #split == 5 then
+    if #split == 6 then
         split[type] = id
     else
-        split = {-1, -1, -1, -1, -1}
+        split = {-1, -1, -1, -1, -1, -1}
         split[type] = id
     end
 
@@ -147,8 +147,9 @@ function PANEL:PerformLayout()
 		{"REVOLVER", "Normal", w_revolver, ATT1},
 		{"THE CLOAK AND DAGGER", "Unique", c_leather_watch, ATT2},
 		{"THE CRAB-WALKING KIT", "rarity3", w_cigarette_case, ATT3},
-		{"FRIEND'S SHINEY RING", "Unique", all_halo, ATT4},
-		{"MISC", "", nil},
+		{"NONE", "Normal", surface.GetTextureID(""), ATT4},
+		{"NONE", "Normal", surface.GetTextureID(""), ATT4},
+		{"NONE", "Normal", surface.GetTextureID(""), ATT4},
 	}
 
 	for name, wep in pairs(tf_items.Items) do
@@ -160,6 +161,12 @@ function PANEL:PerformLayout()
 					Items[2] = {tf_lang.GetRaw(wep.item_name), "Unique", surface.GetTextureID(wep.image_inventory), {}}
 				elseif wep.id == tonumber(loadout[3]) then
 					Items[3] = {wep.name, "Unique", surface.GetTextureID(wep.image_inventory), {}}
+				elseif wep.id == tonumber(loadout[4]) then
+					Items[4] = {wep.name, "Unique", surface.GetTextureID(wep.image_inventory), {}}
+				elseif wep.id == tonumber(loadout[5]) then
+					Items[5] = {wep.name, "Unique", surface.GetTextureID(wep.image_inventory), {}}
+				elseif wep.id == tonumber(loadout[6]) then
+					Items[6] = {wep.name, "Unique", surface.GetTextureID(wep.image_inventory), {}}
 				end
 			else
 				if wep.id == tonumber(loadout[1]) then
@@ -168,9 +175,14 @@ function PANEL:PerformLayout()
 					Items[1] = {tf_lang.GetRaw(wep.item_name), "Unique", surface.GetTextureID(wep.image_inventory), {}}
 				elseif wep.id == tonumber(loadout[3]) then
 					Items[3] = {wep.name, "Unique", surface.GetTextureID(wep.image_inventory), {}}
+				elseif wep.id == tonumber(loadout[4]) then
+					Items[4] = {wep.name, "Unique", surface.GetTextureID(wep.image_inventory), {}}
+				elseif wep.id == tonumber(loadout[5]) then
+					Items[5] = {wep.name, "Unique", surface.GetTextureID(wep.image_inventory), {}}
+				elseif wep.id == tonumber(loadout[6]) then
+					Items[6] = {wep.name, "Unique", surface.GetTextureID(wep.image_inventory), {}}
 				end
 			end
-			Items[4] = {"HAT", "", nil};
 		end
 	end
 	-- The item panels, with the name and a picture of each item currently equipped
@@ -200,6 +212,12 @@ function PANEL:PerformLayout()
 					t.DoClick = function() itemSelector(2, weapons[2], self:GetParent(), GetConVar("tf_hud_loadout_class"):GetInt(), oldclass) end
 				elseif (k == 3) then
 					t.DoClick = function() itemSelector(3, weapons[3], self:GetParent(), GetConVar("tf_hud_loadout_class"):GetInt(), oldclass) end
+				elseif (k == 4) then
+					t.DoClick = function() hatSelector("hat",4,oldclass) end
+				elseif (k == 5) then
+					t.DoClick = function() hatSelector("hat",5,oldclass) end
+				elseif (k == 6) then
+					t.DoClick = function() hatSelector("hat",6,oldclass) end
 				end
 			else
 				if (k == 2) then 
@@ -208,6 +226,12 @@ function PANEL:PerformLayout()
 					t.DoClick = function() itemSelector(2, weapons[1], self:GetParent(), GetConVar("tf_hud_loadout_class"):GetInt(), oldclass) end
 				elseif (k == 3) then
 					t.DoClick = function() itemSelector(3, weapons[3], self:GetParent(), GetConVar("tf_hud_loadout_class"):GetInt(), oldclass) end
+				elseif (k == 4) then
+					t.DoClick = function() hatSelector("hat",4,oldclass) end
+				elseif (k == 5) then
+					t.DoClick = function() hatSelector("hat",5,oldclass) end
+				elseif (k == 6) then
+					t.DoClick = function() hatSelector("hat",6,oldclass) end
 				end
 			end
 			
@@ -356,6 +380,25 @@ function PANEL:PerformLayout()
 
 		for name, wep in pairs(tf_items.Items) do
 			if istable(wep) then
+				if wep.id == tonumber(loadout[4]) then
+
+					t:AddModel(2,wep.model_world or wep.model_player,{
+						Parent = 1,
+					})
+					
+				elseif wep.id == tonumber(loadout[5]) then
+
+					t:AddModel(2,wep.model_world or wep.model_player,{
+						Parent = 1,
+					})
+					
+				elseif wep.id == tonumber(loadout[6]) then
+
+					t:AddModel(2,wep.model_world or wep.model_player,{
+						Parent = 1,
+					})
+					
+				end
 				if (oldclass == "spy" or oldclass == "demoman") then
 					if wep.id == tonumber(loadout[2]) then
 
@@ -691,7 +734,7 @@ function itemSelector(type, weapons, parent, classid, oldclass)
 
     attr:MoveToFront()
 end
-function hatSelector(type)
+function hatSelector(type, slot, oldclass)
 	local Scale = ScrH()/480
 
 	local loadout_rect = surface.GetTextureID("vgui/loadout_rect")
@@ -770,7 +813,11 @@ function hatSelector(type)
 			t.text_xpos = -5
 			t.text_wide = 150
 			t.text_ypos = 60
-			t.DoClick = function() LocalPlayer():ConCommand("giveitem " .. t.RealName) surface.PlaySound(v["mouse_pressed_sound"] or "ui/item_hat_pickup.wav") Frame:Close() end
+			t.DoClick = function() 
+				updateLoadout(slot, v.id, true, oldclass)
+				surface.PlaySound(v["mouse_pressed_sound"] or "ui/item_hat_pickup.wav") 
+				Frame:Close() 
+			end
 			t:SetCursor("hand")
 
 			if istable(v["attributes"]) then
