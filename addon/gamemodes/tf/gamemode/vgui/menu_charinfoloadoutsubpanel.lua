@@ -430,17 +430,107 @@ function PANEL:Paint()
 		"HudFontSmallestBold",
 		"west"
 	)
-	
-	tf_draw.LabelText(
-		W/2-280*Scale,
-		15*Scale,
-		240*Scale,
-		25*Scale,
-		"SPY",
-		"TanLight",
-		"HudFontMediumBold",
-		"west"
-	)
+	if (GetConVar("tf_hud_loadout_class"):GetInt() == 1) then
+		tf_draw.LabelText(
+			W/2-280*Scale,
+			15*Scale,
+			240*Scale,
+			25*Scale,
+			"SCOUT",
+			"TanLight",
+			"HudFontMediumBold",
+			"west"
+		)
+	elseif (GetConVar("tf_hud_loadout_class"):GetInt() == 2) then
+		tf_draw.LabelText(
+			W/2-280*Scale,
+			15*Scale,
+			240*Scale,
+			25*Scale,
+			"SOLDIER",
+			"TanLight",
+			"HudFontMediumBold",
+			"west"
+		)
+	elseif (GetConVar("tf_hud_loadout_class"):GetInt() == 3) then
+		tf_draw.LabelText(
+			W/2-280*Scale,
+			15*Scale,
+			240*Scale,
+			25*Scale,
+			"PYRO",
+			"TanLight",
+			"HudFontMediumBold",
+			"west"
+		)
+	elseif (GetConVar("tf_hud_loadout_class"):GetInt() == 4) then
+		tf_draw.LabelText(
+			W/2-280*Scale,
+			15*Scale,
+			240*Scale,
+			25*Scale,
+			"DEMOMAN",
+			"TanLight",
+			"HudFontMediumBold",
+			"west"
+		)
+	elseif (GetConVar("tf_hud_loadout_class"):GetInt() == 5) then
+		tf_draw.LabelText(
+			W/2-280*Scale,
+			15*Scale,
+			240*Scale,
+			25*Scale,
+			"HEAVY",
+			"TanLight",
+			"HudFontMediumBold",
+			"west"
+		)
+	elseif (GetConVar("tf_hud_loadout_class"):GetInt() == 6) then
+		tf_draw.LabelText(
+			W/2-280*Scale,
+			15*Scale,
+			240*Scale,
+			25*Scale,
+			"ENGINEER",
+			"TanLight",
+			"HudFontMediumBold",
+			"west"
+		)
+	elseif (GetConVar("tf_hud_loadout_class"):GetInt() == 7) then
+		tf_draw.LabelText(
+			W/2-280*Scale,
+			15*Scale,
+			240*Scale,
+			25*Scale,
+			"MEDIC",
+			"TanLight",
+			"HudFontMediumBold",
+			"west"
+		)
+	elseif (GetConVar("tf_hud_loadout_class"):GetInt() == 8) then
+		tf_draw.LabelText(
+			W/2-280*Scale,
+			15*Scale,
+			240*Scale,
+			25*Scale,
+			"SNIPER",
+			"TanLight",
+			"HudFontMediumBold",
+			"west"
+		)
+	elseif (GetConVar("tf_hud_loadout_class"):GetInt() == 9) then
+
+		tf_draw.LabelText(
+			W/2-280*Scale,
+			15*Scale,
+			240*Scale,
+			25*Scale,
+			"SPY",
+			"TanLight",
+			"HudFontMediumBold",
+			"west"
+		)
+	end
 	
 	tf_draw.LabelText(
 		W/2-55*Scale,

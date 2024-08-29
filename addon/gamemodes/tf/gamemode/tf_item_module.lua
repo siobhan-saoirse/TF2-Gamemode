@@ -282,6 +282,9 @@ function ITEM:InitVisuals(owner, visuals)
 			for _,group in ipairs(visuals.player_bodygroups) do
 				--MsgFN("Setting bodygroup '%s' for player %s", group, tostring(owner))
 				local b = PlayerNamedBodygroups[owner:GetPlayerClass()]
+				if (visuals.player_bodygroups.hat) then
+					owner:SetBodygroup(owner:FindBodygroupByName("hat"), 1)
+				end
 				if b and b[group] then
 					owner:SetBodygroup(b[group], 1)
 				end
