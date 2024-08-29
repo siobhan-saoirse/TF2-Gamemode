@@ -384,6 +384,25 @@ function PANEL:PerformLayout()
 
 		for name, wep in pairs(tf_items.Items) do
 			if istable(wep) then
+				if wep.id == tonumber(loadout[4]) and isstring(wep.model_player_per_class) then
+
+					t:AddModel(3,string.Replace(wep.model_player_per_class,"%s",oldclass),{
+						Parent = 1,
+					})
+
+				elseif wep.id == tonumber(loadout[5]) and isstring(wep.model_player_per_class) then
+
+					t:AddModel(4,string.Replace(wep.model_player_per_class,"%s",oldclass),{
+						Parent = 1,
+					})
+
+				elseif wep.id == tonumber(loadout[6]) and isstring(wep.model_player_per_class) then
+
+					t:AddModel(5,string.Replace(wep.model_player_per_class,"%s",oldclass),{
+						Parent = 1,
+					})
+
+				end
 				local oldclass2 = oldclass
 				if (oldclass == "spy" or oldclass == "demoman") then
 					if wep.id == tonumber(loadout[2]) then
