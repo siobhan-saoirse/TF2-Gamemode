@@ -910,6 +910,11 @@ function hatSelector(type, slot, oldclass, weapons)
 			t.text_ypos = 60
 			t.DoClick = function() 
 				updateLoadout(slot, v.id, true, oldclass)
+				timer.Simple(0.1, function()
+				
+					CharInfoLoadoutSubPanel:SelectClassLoadout2(classid)	
+	
+				end)
 				surface.PlaySound(v["mouse_pressed_sound"] or "ui/item_hat_pickup.wav") 
 				Frame:Close() 
 			end
