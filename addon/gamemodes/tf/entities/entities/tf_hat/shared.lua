@@ -1008,7 +1008,7 @@ hook.Add("EntityEmitSound", "MouthFix", function(snd)
 		if CLIENT and !snd.Entity:IsBot() then
 			if !IsValid(snd.Entity) then return end
 			if (snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
-				--snd.Entity:SetupPhonemeMappings("phonemes")
+				snd.Entity:SetupPhonemeMappings("phonemes")
 				----snd.Entity:SetModel(snd.Entity:GetNWString("PlayerClassModel"))
 			end
 		end
@@ -1084,67 +1084,6 @@ local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
 					end
 				elseif (v:IsPlayer() and v.TFBot and !v:IsFriendly(snd.Entity) and v.TargetEnt == nil) then
 					--v.TargetEnt = snd.Entity
-				end
-			end
-		end
-	elseif (!snd.Entity:IsPlayer()) then
-		if CLIENT then
-			if !IsValid(snd.Entity) then return end
-			if (string.find(snd.Entity:GetModel(),"hwm")) then
- 
-				if (snd.Entity.playerclass == "medicshotgun") then	
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "heavy") then 
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "scout") then
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/scout/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/scout/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "soldier") then
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/soldier/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/soldier/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "demoman") then
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/demo/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/demo/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "engineer") then
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/engineer/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/engineer/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "medic") then
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "sniper") then
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/sniper/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/sniper/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "spy") then
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/spy/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/spy/phonemes/phonemes" )
-				else
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
-				end
-
-			elseif (string.find(snd.Entity:GetModel(),"player") && snd.Entity:LookupBone("bip_head")) then
-				if (snd.Entity.playerclass == "medicshotgun") then	
-					--snd.Entity:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "heavy") then
-					--snd.Entity:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "scout") then
-					--snd.Entity:SetupPhonemeMappings( "player/scout/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "soldier") then
-					--snd.Entity:SetupPhonemeMappings( "player/soldier/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "demoman") then
-					--snd.Entity:SetupPhonemeMappings( "player/demo/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "engineer") then
-					--snd.Entity:SetupPhonemeMappings( "player/engineer/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "medic") then
-					--snd.Entity:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "sniper") then
-					--snd.Entity:SetupPhonemeMappings( "player/sniper/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "spy") then
-					--snd.Entity:SetupPhonemeMappings( "player/spy/phonemes/phonemes" )
-				else
-					--snd.Entity:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
 				end
 			end
 		end
@@ -3233,63 +3172,6 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 				end
 			end
 			
-			if (string.find(snd.Entity:GetModel(),"hwm")) then
-	 
-				if (snd.Entity.playerclass == "medicshotgun") then	
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "heavy") then 
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "scout") then
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/scout/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/scout/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "soldier") then
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/soldier/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/soldier/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "demoman") then
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/demo/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/demo/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "engineer") then
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/engineer/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/engineer/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "medic") then
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "sniper") then
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/sniper/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/sniper/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "spy") then
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/spy/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/spy/phonemes/phonemes" )
-				else
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/emotions/emotions" )
-					--snd.Entity:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
-				end
-
-			elseif (string.find(snd.Entity:GetModel(),"player") && snd.Entity:LookupBone("bip_head")) then
-				if (snd.Entity.playerclass == "medicshotgun") then	
-					--snd.Entity:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "heavy") then
-					--snd.Entity:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "scout") then
-					--snd.Entity:SetupPhonemeMappings( "player/scout/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "soldier") then
-					--snd.Entity:SetupPhonemeMappings( "player/soldier/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "demoman") then
-					--snd.Entity:SetupPhonemeMappings( "player/demo/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "engineer") then
-					--snd.Entity:SetupPhonemeMappings( "player/engineer/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "medic") then
-					--snd.Entity:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "sniper") then
-					--snd.Entity:SetupPhonemeMappings( "player/sniper/phonemes/phonemes" )
-				elseif (snd.Entity.playerclass == "spy") then
-					--snd.Entity:SetupPhonemeMappings( "player/spy/phonemes/phonemes" )
-				else
-					--snd.Entity:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
-				end
-			end
 			return true
 		elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.StartWith(snd.Entity:GetModel(), "models/bots/headless_hatman") and string.find(snd.SoundName, "vo/") and !string.find(snd.SoundName, "knight") then
 			if (string.find(snd.SoundName,"demoman_") and string.find(snd.SoundName,"Pain") and !string.find(snd.SoundName,"Death")) then

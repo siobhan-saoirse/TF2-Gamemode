@@ -287,7 +287,7 @@ local function playscene_delayed(ent, scene)
 end
 
 function PlayResponse(ent, response, nospeech, concept)
-	if ent.NextSpeak and CurTime()<ent.NextSpeak and not nospeech and concept != "TLK_PLAYER_TAUNT" then
+	if ent.NextSpeak and CurTime()<ent.NextSpeak and concept != "TLK_PLAYER_TAUNT" then
 		return false
 	end
 

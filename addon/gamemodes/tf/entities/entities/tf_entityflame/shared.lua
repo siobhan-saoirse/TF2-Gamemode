@@ -15,7 +15,7 @@ AddCSLuaFile( "shared.lua" )
 ENT.NoDamageCooperation = true
 
 local DamagePeriod = 0.5
-local DamagePerTick = 1
+local DamagePerTick = 4
 
 function ENT:ShouldExtinguishInWater()
 	if not IsValid(self.Target) then return false end
@@ -140,8 +140,8 @@ function ENT:Initialize()
 				--self.Target:SetNWBool("ShouldDropBurningRagdoll", true)
 				self.Target:AddDeathFlag(DF_FIRE)
 			end
-			if self.Target:IsPlayer() and !self.Target:IsMiniBoss() then
-				--self.Target:Speak("TLK_ONFIRE")
+			if self.Target:IsPlayer() then
+				self.Target:Speak("TLK_ONFIRE")
 			end
 			
 			--print("ignite",self.Target)

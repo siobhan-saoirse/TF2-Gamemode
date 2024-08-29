@@ -803,9 +803,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	-- Pain and death sounds
 	local hp = ent:Health() - dmginfo:GetDamage()
 	ent:Speak("TLK_PLAYER_EXPRESSION", false)
-	if ((inflictor:GetClass()=="tf_entityflame" or inflictor:GetClass()=="entityflame") and (!ent.NextPainSound or CurTime()>ent.NextPainSound)) then
-		ent:PainSound("TLK_ONFIRE")
-	end
 	
 	if not ent.NextFlinch or CurTime() > ent.NextFlinch and !ent:IsL4D() then
 		ent:DoAnimationEvent(ACT_MP_GESTURE_FLINCH_CHEST, true)
