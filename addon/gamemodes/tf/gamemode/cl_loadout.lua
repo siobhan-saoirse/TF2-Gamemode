@@ -55,7 +55,7 @@ end
 
 local itemSelector
 
-concommand.Add("open_charinfo_direct", function(_, _, args)
+concommand.Add("open_charinfo_direct", function(ply, _, args)
     --[[local ply = LocalPlayer()
     local oldclass = ply:GetPlayerClass()
     local convar = GetConVar("loadout_" .. oldclass)
@@ -353,7 +353,7 @@ concommand.Add("open_charinfo_direct", function(_, _, args)
         weapon2.Paint = paintf
         weapon3.Paint = paintf
     end]]
-    ply:ConCommand("hud_showloadout 1")
+    LocalPlayer():ConCommand("hud_showloadout 1")
 end)
 
 function itemSelector(type, weapons)
