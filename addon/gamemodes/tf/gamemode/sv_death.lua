@@ -1106,8 +1106,9 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 			end
 		end
 	end
+	ply:Spectate(OBS_MODE_DEATHCAM)
+	ply:SpectateEntity(nil)
 	if (IsValid(attacker) and attacker:IsTFPlayer() and attacker:EntIndex() != ply:EntIndex() and !ply:Alive()) then
-		ply:Spectate(OBS_MODE_DEATHCAM)
 		ply:SpectateEntity(attacker)
 		timer.Simple(0 + 2.0 + 0.4 - 0.3, function()
 			if (!ply:Alive() && IsValid(attacker)) then
