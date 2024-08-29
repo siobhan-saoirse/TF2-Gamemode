@@ -536,16 +536,15 @@ function meta:TFTaunt(args)
 				elseif ply:GetPlayerClass() == "medic" then
 					timer.Simple(0.3, function()
 					if ply:GetWeapons()[3]:GetItemData().model_player == "models/weapons/c_models/c_uberneedle/c_uberneedle.mdl" then
-						ply:EmitSound("player/ubertaunt_v0"..math.random(1,7)..".wav", 95, 100)
+						ply:EmitSound("Taunt.MedicViolinUber")
 					elseif ply:GetWeapons()[3]:GetItemData().model_player != "models/weapons/c_models/c_ubersaw/c_ubersaw.mdl" then
-						ply:EmitSound("player/taunt_v0"..math.random(1,7)..".wav", 95, 100)
+						ply:EmitSound("Taunt.MedicViolin")
 					end
-					ply:DoTauntEvent("taunt03", true)
 					end)
-
+					ply:DoTauntEvent("taunt03", true)
 					if ply:GetWeapons()[3]:GetItemData().model_player == "models/weapons/c_models/c_ubersaw/c_ubersaw.mdl" then
 						timer.Simple(2, function()
-							ply:GetActiveWeapon().NameOverride = "taunt_sniper"
+							ply:GetActiveWeapon().NameOverride = "taunt_medic"
 							for k,v in pairs(ents.FindInSphere(ply:GetPos(), 90)) do 
 								if v:IsTFPlayer() and not v:IsPlayer() and not v:IsFriendly(ply) and v:EntIndex() != ply:EntIndex() then
 									local d = DamageInfo()
@@ -585,9 +584,9 @@ function meta:TFTaunt(args)
 								end
 							end
 						end)
+						ply:DoTauntEvent("taunt08", true)
 						ply:PlayScene("scenes/player/medic/low/taunt08.vcd")
 						ply:SelectWeapon(ply:GetWeapons()[3]:GetClass())
-						ply:DoAnimationEvent(ACT_SIGNAL2, true)
 
 					end
 				elseif ply:GetPlayerClass() == "engineer" then

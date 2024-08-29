@@ -603,6 +603,12 @@ d_ambassador_headshot={
 	h=32,
 },
 d_taunt_sniper={
+	x=368,
+	y=197,
+	w=128,
+	h=32,
+},
+d_taunt_medic={
 	x=263,
 	y=161,
 	w=94,

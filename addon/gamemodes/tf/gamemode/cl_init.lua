@@ -1072,6 +1072,26 @@ else
 		end 
 		LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") 
 		LocalPlayer():StopSound("ClassSelection.ThemeMVM")  
+		local random = math.random(1,9)
+		if (random == 1) then
+			RunConsoleCommand("changeclass", "scout")
+		elseif (random == 2) then
+			RunConsoleCommand("changeclass", "soldier")
+		elseif (random == 3) then
+			RunConsoleCommand("changeclass", "pyro")
+		elseif (random == 4) then
+			RunConsoleCommand("changeclass", "demoman")
+		elseif (random == 5) then
+			RunConsoleCommand("changeclass", "heavy")
+		elseif (random == 6) then
+			RunConsoleCommand("changeclass", "engineer")
+		elseif (random == 7) then
+			RunConsoleCommand("changeclass", "medic")
+		elseif (random == 8) then
+			RunConsoleCommand("changeclass", "sniper")
+		elseif (random == 9) then
+			RunConsoleCommand("changeclass", "spy")
+		end
 	end
 
 	gm_img = vgui.Create( "DImage", GmodButton )	-- Add image to Frame

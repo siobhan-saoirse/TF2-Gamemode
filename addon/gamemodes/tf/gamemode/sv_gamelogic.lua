@@ -576,7 +576,7 @@ function GM:Think()
 			self.NextUpdateDamage = CurTime() + 1
 		end
 		for k, v in ipairs(ents.GetAll()) do
-			if (v:GetClass() == "gmod_tool" && GetConVar("tf_competitive"):GetBool()) then
+			if (v:GetClass() == "gmod_tool" && GetConVar("tf_competitive"):GetBool() && IsValid(v:GetOwner()) and !v:GetOwner():IsAdmin()) then
 				v:Remove()
 			end
 		end
