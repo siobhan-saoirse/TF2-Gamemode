@@ -43,38 +43,6 @@ function PANEL:Init()
 	self:SetVisible(false)
 	
 	self.CurrentTab = 1
-	
-	
-	-- Close button
-	self.CloseButton = vgui.Create("TFButton")
-	self.CloseButton:SetParent(self)
-	self.CloseButton:SetPos(W/2 + 200*Scale,437*Scale)
-	self.CloseButton:SetSize(100*Scale,25*Scale)
-	self.CloseButton.labelText = "CLOSE"
-	self.CloseButton.font = "HudFontSmallBold"
-	function self.CloseButton:DoClick()
-		RunConsoleCommand("hud_showloadout","0")
-	end
-	
-	-- Tab buttons
-	self.TabButtons = {}
-	local x, y = tabx, taby
-	
-	for k,_ in ipairs(Tabs) do
-		local t = vgui.Create("TFButton")
-		t:SetParent(self)
-		t:SetPos(x,y)
-		t:SetSize(tabw,tabh)
-		t.invisible = true
-		
-		function t:DoClick()
-			self:GetParent():SetCurrentTab(k)
-		end
-		
-		self.TabButtons[k] = t
-		
-		x = x + tabw + tabd
-	end
 end
 
 function PANEL:Open()
@@ -193,6 +161,41 @@ function PANEL:Paint()
 		xalign=TEXT_ALIGN_LEFT,
 		yalign=TEXT_ALIGN_CENTER,
 	}
+	
+	
+	
+	-- Close button
+	if (!self.CloseButton) then
+		self.CloseButton = vgui.Create("TFButton")
+		self.CloseButton:SetParent(self)
+		self.CloseButton:SetPos(W/2 + 200*Scale,437*Scale)
+		self.CloseButton:SetSize(100*Scale,25*Scale)
+		self.CloseButton.labelText = "CLOSE"
+		self.CloseButton.font = "HudFontSmallBold"
+		function self.CloseButton:DoClick()
+			RunConsoleCommand("hud_showloadout","0")
+		end
+	end
+	
+	-- Tab buttons
+	self.TabButtons = {}
+	local x, y = tabx, taby
+	
+	for k,_ in ipairs(Tabs) do
+		local t = vgui.Create("TFButton")
+		t:SetParent(self)
+		t:SetPos(x,y)
+		t:SetSize(tabw,tabh)
+		t.invisible = true
+		
+		function t:DoClick()
+			self:GetParent():SetCurrentTab(k)
+		end
+		
+		self.TabButtons[k] = t
+		
+		x = x + tabw + tabd
+	end
 end
 
 function PANEL:PerformLayout()
