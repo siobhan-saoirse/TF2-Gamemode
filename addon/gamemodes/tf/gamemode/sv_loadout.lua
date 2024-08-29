@@ -36,8 +36,6 @@ function meta:GiveLoadout()
 				self:Give("weapon_physcannon")	
 				self:Give("gmod_tool")
 				self:Give("gmod_camera")
-			elseif (self:GetInfoNum("tf_give_hl2_weapons",0) == 1 && GetConVar("tf_competitive"):GetBool()) then
-				self:Give("weapon_physcannon")	
 			end
 				
 		end

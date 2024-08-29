@@ -1,6 +1,6 @@
 util.PrecacheSound( "vox/deeoo.wav" )
 if SERVER then
-    EmitSound("replay/downloadcomplete.wav",Vector(0,0,0),0,CHAN_AUTO,1,0,0,100,0,nil)
+    EmitSound("replay/downloadcomplete.wav",Vector(0,0,0),0,CHAN_REPLACE,1,0,0,100,0,nil)
     PrintMessage(HUD_PRINTTALK, "SERVER IS RELOADING THE GAMEMODE DUE TO AN EDIT IN THE GAMEMODE'S CODE - GRAPHICAL OR GAME-BREAKING GLITCHES MAY OCCUR")
     PrintMessage(HUD_PRINTCENTER, "SERVER IS RELOADING THE GAMEMODE DUE TO AN EDIT IN THE GAMEMODE'S CODE - GRAPHICAL OR GAME-BREAKING GLITCHES MAY OCCUR")
 end
