@@ -203,7 +203,7 @@ function SWEP:CalcViewModelBobHelper(  )
 	
 	local ply = LocalPlayer()
 	
-	if ply:ShouldDrawLocalPlayer() or ply:GetMoveType() == MOVETYPE_NOCLIP then return 0 end
+	if ply:ShouldDrawLocalPlayer() then return 0 end
 
 	local cltime = CurTime()
 	local cycle = cltime - math.floor(cltime/cl_bobcycle)*cl_bobcycle

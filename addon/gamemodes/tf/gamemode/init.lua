@@ -1733,7 +1733,7 @@ hook.Add( "PlayerButtonDown", "PlayerButtonDownTF", function( pl, key )
 					return
 				end
 			end
-			timer.Simple(0.05, function()
+			timer.Simple(0.05, function() 
 			
 				if (pl:GetNWBool("Congaing",false)) then
 					pl:ConCommand("tf_taunt_conga_stop")
