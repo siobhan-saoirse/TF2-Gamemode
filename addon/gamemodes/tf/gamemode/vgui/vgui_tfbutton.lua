@@ -48,6 +48,9 @@ end
 
 function PANEL:OnCursorEntered()
 	if self.invisible or self.disabled then return end
+	if (!self.Hover) then
+		surface.PlaySound("ui/buttonrollover.wav")
+	end
 	self.Hover = true
 end
 
@@ -59,6 +62,10 @@ end
 function PANEL:OnMousePressed(b)
 	if self.disabled then return end
 	if b==MOUSE_LEFT then
+		surface.PlaySound("ui/buttonclick.wav")
+		timer.Simple(0.1, function()
+			surface.PlaySound("ui/buttonclickrelease.wav")
+		end)
 		self:DoClick()
 	end
 end
