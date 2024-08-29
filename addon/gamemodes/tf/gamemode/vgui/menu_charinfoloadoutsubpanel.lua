@@ -110,7 +110,7 @@ function PANEL:PerformLayout()
 
 	for id, item in pairs(tf_items.Items) do
 		if istable(item) and item.used_by_classes and item.used_by_classes[oldclass] == 1 then
-			if GetConVar("tf_hud_loadout_class"):GetInt() != 4 then
+			if GetConVar("tf_hud_loadout_class"):GetInt() != 4 && GetConVar("tf_hud_loadout_class"):GetInt() != 9 then
 				if item.item_slot == "primary" then
 					weapons[1][id] = item -- table.insert(weapons[1], ) --id) -- weapon1:AddChoice(item.name, item.id)
 				elseif item.item_slot == "secondary" then
@@ -153,12 +153,22 @@ function PANEL:PerformLayout()
 
 	for name, wep in pairs(tf_items.Items) do
 		if istable(wep) then	
-			if wep.id == tonumber(loadout[1]) then
-				Items[1] = {tf_lang.GetRaw(wep.item_name), "Unique", surface.GetTextureID(wep.image_inventory), {}}
-			elseif wep.id == tonumber(loadout[2]) then
-				Items[2] = {tf_lang.GetRaw(wep.item_name), "Unique", surface.GetTextureID(wep.image_inventory), {}}
-			elseif wep.id == tonumber(loadout[3]) then
-				Items[3] = {wep.name, "Unique", surface.GetTextureID(wep.image_inventory), {}}
+			if GetConVar("tf_hud_loadout_class"):GetInt() != 4 && GetConVar("tf_hud_loadout_class"):GetInt() != 9 then
+				if wep.id == tonumber(loadout[1]) then
+					Items[1] = {tf_lang.GetRaw(wep.item_name), "Unique", surface.GetTextureID(wep.image_inventory), {}}
+				elseif wep.id == tonumber(loadout[2]) then
+					Items[2] = {tf_lang.GetRaw(wep.item_name), "Unique", surface.GetTextureID(wep.image_inventory), {}}
+				elseif wep.id == tonumber(loadout[3]) then
+					Items[3] = {wep.name, "Unique", surface.GetTextureID(wep.image_inventory), {}}
+				end
+			else
+				if wep.id == tonumber(loadout[1]) then
+					Items[2] = {tf_lang.GetRaw(wep.item_name), "Unique", surface.GetTextureID(wep.image_inventory), {}}
+				elseif wep.id == tonumber(loadout[2]) then
+					Items[1] = {tf_lang.GetRaw(wep.item_name), "Unique", surface.GetTextureID(wep.image_inventory), {}}
+				elseif wep.id == tonumber(loadout[3]) then
+					Items[3] = {wep.name, "Unique", surface.GetTextureID(wep.image_inventory), {}}
+				end
 			end
 			Items[4] = {"HAT", "", nil};
 		end
@@ -182,12 +192,23 @@ function PANEL:PerformLayout()
 			t.text_ypos = 60
 			t.attributes = v[4]
 			t:SetQuality(v[2])
-			if (k == 1) then
-				t.DoClick = function() itemSelector(1, weapons[1], self:GetParent(), GetConVar("tf_hud_loadout_class"):GetInt(), oldclass) end
-			elseif (k == 2) then
-				t.DoClick = function() itemSelector(2, weapons[2], self:GetParent(), GetConVar("tf_hud_loadout_class"):GetInt(), oldclass) end
-			elseif (k == 3) then
-				t.DoClick = function() itemSelector(3, weapons[3], self:GetParent(), GetConVar("tf_hud_loadout_class"):GetInt(), oldclass) end
+			
+			if GetConVar("tf_hud_loadout_class"):GetInt() != 4 && GetConVar("tf_hud_loadout_class"):GetInt() != 9 then
+				if (k == 1) then
+					t.DoClick = function() itemSelector(1, weapons[1], self:GetParent(), GetConVar("tf_hud_loadout_class"):GetInt(), oldclass) end
+				elseif (k == 2) then
+					t.DoClick = function() itemSelector(2, weapons[2], self:GetParent(), GetConVar("tf_hud_loadout_class"):GetInt(), oldclass) end
+				elseif (k == 3) then
+					t.DoClick = function() itemSelector(3, weapons[3], self:GetParent(), GetConVar("tf_hud_loadout_class"):GetInt(), oldclass) end
+				end
+			else
+				if (k == 2) then 
+					t.DoClick = function() itemSelector(1, weapons[2], self:GetParent(), GetConVar("tf_hud_loadout_class"):GetInt(), oldclass) end
+				elseif (k == 1) then
+					t.DoClick = function() itemSelector(2, weapons[1], self:GetParent(), GetConVar("tf_hud_loadout_class"):GetInt(), oldclass) end
+				elseif (k == 3) then
+					t.DoClick = function() itemSelector(3, weapons[3], self:GetParent(), GetConVar("tf_hud_loadout_class"):GetInt(), oldclass) end
+				end
 			end
 			
 			--t:SetAttributePanel(self.AttributePanel, xoffset, yoffset)
@@ -335,15 +356,25 @@ function PANEL:PerformLayout()
 
 		for name, wep in pairs(tf_items.Items) do
 			if istable(wep) then
-				if wep.id == tonumber(loadout[1]) then
+				if (oldclass == "spy" or oldclass == "demoman") then
+					if wep.id == tonumber(loadout[2]) then
 
-					t:AddModel(2,wep.model_world or wep.model_player,{
-						Parent = 1,
-					})
-					if (oldclass == "spy") then
-						t:StartAnimation(1,ACT_MP_STAND_BUILDING)
-					else
-						t:StartAnimation(1,ACT_MP_STAND_PRIMARY)
+						t:AddModel(2,wep.model_world or wep.model_player,{
+							Parent = 1,
+						})
+						t:StartAnimation(1,ACT_MP_STAND_SECONDARY)
+					end
+				else
+					if wep.id == tonumber(loadout[1]) then
+
+						t:AddModel(2,wep.model_world or wep.model_player,{
+							Parent = 1,
+						})
+						if (oldclass == "spy") then
+							t:StartAnimation(1,ACT_MP_STAND_BUILDING)
+						else
+							t:StartAnimation(1,ACT_MP_STAND_PRIMARY)
+						end
 					end
 				end
 			end
