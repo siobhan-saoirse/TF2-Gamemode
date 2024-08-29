@@ -1040,7 +1040,7 @@ if (!GetConVar("tf_disable_fun_classes"):GetBool()) then
 		sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 		if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
 			gm_img:SetImage( "vgui/class_sel_sm_random_red" )
-		elseif LocalPlayer():Team()==3 then
+		elseif LocalPlayer():Team()==TEAM_BLU then
 			gm_img:SetImage( "vgui/class_sel_sm_random_blu" )
 		else
 			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
@@ -1079,7 +1079,7 @@ double jump while in the air!]] )
 	icon:GetEntity():SetModelScale(0.865) 
 	if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
 		scout_img:SetImage( "vgui/class_sel_sm_scout_red" )
-	elseif LocalPlayer():Team()==3 then
+	elseif LocalPlayer():Team()==TEAM_BLU then
 		scout_img:SetImage( "vgui/class_sel_sm_scout_blu" )
 	else
 		scout_img:SetImage( "vgui/class_sel_sm_scout_inactive" )
@@ -1119,7 +1119,7 @@ Use your rocket launcher to rocket jump!]] )
 	icon:GetEntity():SetModelScale(0.865) 
 	if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
 		sol_img:SetImage( "vgui/class_sel_sm_soldier_red" )
-	elseif LocalPlayer():Team()==3 then
+	elseif LocalPlayer():Team()==TEAM_BLU then
 		sol_img:SetImage( "vgui/class_sel_sm_soldier_blu" )
 	else
 		sol_img:SetImage( "vgui/class_sel_sm_soldier_inactive" )
@@ -1160,7 +1160,7 @@ closer you are to your target!]] )
 	icon:GetEntity():SetModelScale(0.865) 
 	if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
 		py_img:SetImage( "vgui/class_sel_sm_pyro_red" )
-	elseif LocalPlayer():Team()==3 then
+	elseif LocalPlayer():Team()==TEAM_BLU then
 		py_img:SetImage( "vgui/class_sel_sm_pyro_blu" )
 	else
 		py_img:SetImage( "vgui/class_sel_sm_pyro_inactive" )
@@ -1205,7 +1205,7 @@ a stickybomb and jumping as you detonate it!]] )
 	py_img:SetImage( "vgui/class_sel_sm_pyro_inactive" )
 	if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
 		de_img:SetImage( "vgui/class_sel_sm_demo_red" )
-	elseif LocalPlayer():Team()==3 then
+	elseif LocalPlayer():Team()==TEAM_BLU then
 		de_img:SetImage( "vgui/class_sel_sm_demo_blu" )
 	else
 		de_img:SetImage( "vgui/class_sel_sm_demo_inactive" )
@@ -1246,7 +1246,7 @@ for approaching enemies!]] )
 		de_img:SetImage( "vgui/class_sel_sm_demo_inactive" )
 		if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
 			he_img:SetImage( "vgui/class_sel_sm_heavy_red" )
-		elseif LocalPlayer():Team()==3 then
+		elseif LocalPlayer():Team()==TEAM_BLU then
 			he_img:SetImage( "vgui/class_sel_sm_heavy_blu" )
 		else
 			he_img:SetImage( "vgui/class_sel_sm_heavy_inactive" )
@@ -1294,7 +1294,7 @@ team mates get to the front lines!]] )
 	he_img:SetImage( "vgui/class_sel_sm_heavy_inactive" )
 		if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
 			en_img:SetImage( "vgui/class_sel_sm_engineer_red" )
-		elseif LocalPlayer():Team()==3 then
+		elseif LocalPlayer():Team()==TEAM_BLU then
 			en_img:SetImage( "vgui/class_sel_sm_engineer_blu" )
 		else
 			en_img:SetImage( "vgui/class_sel_sm_engineer_inactive" )
@@ -1340,7 +1340,7 @@ your medi gun target!]] )
 	en_img:SetImage( "vgui/class_sel_sm_engineer_inactive" )
 		if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
 			me_img:SetImage( "vgui/class_sel_sm_medic_red" )
-		elseif LocalPlayer():Team()==3 then
+		elseif LocalPlayer():Team()==TEAM_BLU then
 			me_img:SetImage( "vgui/class_sel_sm_medic_blu" )
 		else
 			sn_img:SetImage( "vgui/class_sel_sm_medic_inactive" )
@@ -1384,7 +1384,7 @@ aim for the head to do critical hits!]] )
 	me_img:SetImage( "vgui/class_sel_sm_medic_inactive" )
 	if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
 		sn_img:SetImage( "vgui/class_sel_sm_sniper_red" )
-	elseif LocalPlayer():Team()==3 then
+	elseif LocalPlayer():Team()==TEAM_BLU then
 		sn_img:SetImage( "vgui/class_sel_sm_sniper_blu" )
 	else
 		sn_img:SetImage( "vgui/class_sel_sm_sniper_inactive" )
@@ -1430,7 +1430,7 @@ to destroy them!]] )
 	sn_img:SetImage( "vgui/class_sel_sm_sniper_inactive" )
 	if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
 		sp_img:SetImage( "vgui/class_sel_sm_spy_red" )
-	elseif LocalPlayer():Team()==3 then
+	elseif LocalPlayer():Team()==TEAM_BLU then
 		sp_img:SetImage( "vgui/class_sel_sm_spy_blu" )
 	else
 		sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
