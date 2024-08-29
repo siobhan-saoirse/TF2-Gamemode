@@ -154,6 +154,7 @@ hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
 end )
  
 if (IsValid(LocalPlayer())) then
+    EmitSound("replay/downloadcomplete.wav",Vector(0,0,0),0,CHAN_AUTO,1,0,0,100,0,nil)
 	LocalPlayer():PrintMessage(HUD_PRINTTALK, "SERVER IS RELOADING THE GAMEMODE DUE TO AN EDIT IN THE GAMEMODE'S CLIENTSIDE CODE - GRAPHICAL OR GAME-BREAKING GLITCHES MAY OCCUR")
 	LocalPlayer():PrintMessage(HUD_PRINTCENTER, "SERVER IS RELOADING THE GAMEMODE DUE TO AN EDIT IN THE GAMEMODE'S CLIENTSIDE CODE - GRAPHICAL OR GAME-BREAKING GLITCHES MAY OCCUR")
 end

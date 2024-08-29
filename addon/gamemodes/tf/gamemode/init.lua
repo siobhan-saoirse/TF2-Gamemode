@@ -22,7 +22,7 @@ include("sv_npc_relationship.lua")
 include("sv_ent_substitute.lua")  
 
 CreateConVar("grapple_distance", -1, false)  
-response_rules.Load("talker/tf_response_rules.lua")
+response_rules.Load("talker/tf_response_rules.lua") 
 response_rules.Load("talker/demoman_custom.lua")  
 response_rules.Load("talker/heavy_custom.lua") 
 
