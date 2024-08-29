@@ -238,7 +238,7 @@ end
 function PANEL:OnCursorEntered()
 	if self.invisible or self.disabled then return end
 	if (!self.Hover) then
-		surface.Play("ui/item_info_mouseover.wav")
+		surface.PlaySound("ui/item_info_mouseover.wav")
 	end
 	self.Hover = true
 	if self.AttributePanel then
