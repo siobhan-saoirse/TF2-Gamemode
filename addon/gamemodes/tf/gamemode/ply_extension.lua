@@ -500,10 +500,16 @@ function meta:TFTaunt(args)
 					else
 						ply:GetActiveWeapon().NameOverride = "taunt_heavy"
 						timer.Simple(1.7, function()
+							local dmginfo = DamageInfo()
+							dmginfo:SetDamageType(DMG_BULLET)
+							dmginfo:SetAttacker(ply)
+							dmginfo:SetInflictor(ply)
+							dmginfo:SetDamage(500)
+							dmginfo:SetDamageForce(ply:GetAimVector() * 800 + Vector(0,0,100))
 							if ply:GetEyeTrace().Entity:IsNPC() and not ply:GetEyeTrace().Entity:IsFriendly(ply) then
-								ply:GetEyeTrace().Entity:TakeDamage(500, ply, ply)
+								ply:GetEyeTrace().Entity:TakeDamageInfo(dmginfo)
 							elseif ply:GetEyeTrace().Entity:IsPlayer() and not ply:GetEyeTrace().Entity:IsFriendly(ply) then
-								ply:GetEyeTrace().Entity:TakeDamage(500, ply, ply)
+								ply:GetEyeTrace().Entity:TakeDamageInfo(dmginfo)
 							end
 						end)	
 					

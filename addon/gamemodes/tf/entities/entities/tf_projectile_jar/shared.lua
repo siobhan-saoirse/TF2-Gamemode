@@ -211,7 +211,7 @@ function ENT:DoExplosion()
 	self.CalculatedDamage = 0
 	-- Yes, I'm using blast damage because it has a complex algorithm that allows explosive damage to get around walls with a certain limit
 	-- A simple FindInSphere wouldn't be enough since players would be able to get jarated through a wall
-	util.BlastDamage(self, owner, self:GetPos(), range*1, self.BaseDamage)
+	util.BlastDamage(self, owner, self:GetPos(), range*1, 0.00001)
 	self:BugbaitTouch(owner)
 	self:Fire("kill", "", 0.01)
 end

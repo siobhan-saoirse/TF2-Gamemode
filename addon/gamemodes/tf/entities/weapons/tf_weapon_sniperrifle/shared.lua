@@ -191,9 +191,7 @@ function SWEP:ZoomIn()
 		return 
 	end
 	
-	if SERVER then
-		self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_PREFIRE, true)
-	end
+	self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_PREFIRE, true)
 	self.NextAutoZoomIn = nil
 	if not self.ZoomStatus then
 		self.ViewModelFOV = 0
@@ -229,9 +227,7 @@ function SWEP:ZoomOut()
 	
 	if (self.Owner:GetVelocity():Length() != 0) then
 	
-		if SERVER then
-			self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_POSTFIRE, true)
-		end
+		self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_POSTFIRE, true)
 		
 	end
 	self.NextAutoZoomOut = nil

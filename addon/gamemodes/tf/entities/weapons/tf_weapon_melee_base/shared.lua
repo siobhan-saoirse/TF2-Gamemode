@@ -371,9 +371,9 @@ function SWEP:MeleeHitSound(tr)
 			else
 				if tr.Entity:IsBuilding() and (tr.Entity:IsFriendly(self.Owner) && self.Owner.playerclass == "Engineer") then return end
 				if string.find(tr.Entity:GetModel(),"/bot_") == true then
-					sound.Play(self.HitRobot, tr.HitPos)
+					tr.Entity:EmitSound(self.HitRobot)
 				else
-					sound.Play(self.HitFlesh, tr.HitPos)
+					tr.Entity:EmitSound(self.HitFlesh)
 				end
 					
 			end
