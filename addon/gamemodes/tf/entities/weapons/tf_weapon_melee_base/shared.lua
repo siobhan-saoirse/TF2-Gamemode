@@ -476,10 +476,12 @@ function SWEP:MeleeAttack(dummy)
 	if self.Owner:GetPlayerClass() == "spy" then
 		if self.Owner:GetModel() == "models/player/scout.mdl" or  self.Owner:GetModel() == "models/player/soldier.mdl" or  self.Owner:GetModel() == "models/player/pyro.mdl" or  self.Owner:GetModel() == "models/player/demo.mdl" or  self.Owner:GetModel() == "models/player/heavy.mdl" or  self.Owner:GetModel() == "models/player/engineer.mdl" or  self.Owner:GetModel() == "models/player/medic.mdl" or  self.Owner:GetModel() == "models/player/sniper.mdl" or  self.Owner:GetModel() == "models/player/hwm/spy.mdl" or self.Owner:GetModel() == "models/player/kleiner.mdl" then
 			if self.Owner:KeyDown( IN_ATTACK ) then
-				if self.Owner:GetInfoNum("tf_robot", 0) == 0 then
-					self.Owner:SetModel("models/player/spy.mdl") 
-				else
-					self.Owner:SetModel("models/bots/spy/bot_spy.mdl")
+				if SERVER then
+					if self.Owner:GetInfoNum("tf_robot", 0) == 0 then
+						self.Owner:SetModel("models/player/spy.mdl") 
+					else
+						self.Owner:SetModel("models/bots/spy/bot_spy.mdl")
+					end
 				end
 				if IsValid( button) then 
 					button:Remove() 
@@ -521,6 +523,7 @@ function SWEP:MeleeAttack(dummy)
 					ply.playerclass = string.upper(string.sub(class,1,1))..string.sub(class,2)	
 				end			
 				self.Owner:EmitSound("player/spy_disguise.wav", 65, 100) 
+				self.Owner:SetAnimation(PLAYER_ATTACK1)
 			end
 		end
 	end

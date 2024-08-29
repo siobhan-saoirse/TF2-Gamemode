@@ -235,10 +235,7 @@ end
 -- Team related functions
 function meta:IsFriendly(target)
 	local t1, t2 = self:EntityTeam(), target:EntityTeam()
-	if self:EntityTeam() == TEAM_FRIENDLY and t2~=t1 then
-		return true
-	end
-	if target:EntityTeam() == TEAM_FRIENDLY and t1~=t2 then
+	if t1 == TEAM_FRIENDLY || t2 == TEAM_FRIENDLY then
 		return true
 	end
 	if self:IsPlayer() and self:EntityTeam() == TEAM_SPECTATOR and t2~=t1 then
