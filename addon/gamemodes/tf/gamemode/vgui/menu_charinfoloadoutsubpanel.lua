@@ -912,7 +912,7 @@ function hatSelector(type, slot, oldclass, weapons)
 				updateLoadout(slot, v.id, true, oldclass)
 				timer.Simple(0.1, function()
 				
-					CharInfoLoadoutSubPanel:SelectClassLoadout2(classid)	
+					CharInfoLoadoutSubPanel:SelectClassLoadout2(GetConVar("tf_hud_loadout_class"):GetInt())	
 	
 				end)
 				surface.PlaySound(v["mouse_pressed_sound"] or "ui/item_hat_pickup.wav") 
