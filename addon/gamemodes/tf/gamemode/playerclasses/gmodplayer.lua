@@ -50,6 +50,7 @@ CLASS.Loadout = {
 	"gmod_tool",
 	"gmod_camera",
 	"weapon_physgun",
+	"weapon_medkit"
 }
 
 CLASS.ModelName = "sniper"
@@ -108,10 +109,13 @@ function CLASS:Initialize()
 	self:Give("weapon_357")
 	self:Give("weapon_rpg")
 	self:Give("weapon_ar2")
+	self:Give("weapon_medkit")
+	self:Give("weapon_fists")
 
 	self:Give("gmod_tool")
 	self:Give("gmod_camera")
 	self:Give("weapon_physgun")
+	--[[
 	if (self:GetPlayerClassTable().IsHL1Mounted) then
 		if (tf_util.IsHL1SwepsMounted()) then
 			self:Give("weapon_hl1_snark")
@@ -145,7 +149,7 @@ function CLASS:Initialize()
 			self:Give("weapon_tripmine")
 			self:Give("weapon_hornetgun")
 		end
-	end
+	end]]
 	local cl_defaultweapon = self:GetInfo("cl_defaultweapon")
 
 	if self:HasWeapon(cl_defaultweapon) then
