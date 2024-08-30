@@ -2252,8 +2252,8 @@ function GM:PlayerSpawn(ply)
 		ply:SetWeaponColor(weaponcolor)
 	end
 	if (ply:Team() == TEAM_FRIENDLY) then
-		ply:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 		ply:SetAvoidPlayers(false)  
+		ply:SetCollisionGroup(COLLISION_GROUP_WORLD)
 	else
 		ply:SetAvoidPlayers(true)  
 	end
