@@ -803,6 +803,13 @@ hook.Add("EntityTakeDamage", "InfectedHurt", function(ent,dmginfo)
 		end
 	end
 end)
+
+hook.Add( "PlayerNoClip", "FriendlyNoclip", function( ply, desiredState )
+	if (ply:Team() == TEAM_FRIENDLY) then
+		return true
+	end
+end)
+
 -- Porting from Latest TF2 GM Builds, and edited.
 hook.Add("EntityEmitSound", "MouthFix", function(snd)
 	local p = snd.Pitch
