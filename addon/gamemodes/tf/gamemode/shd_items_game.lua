@@ -113,7 +113,7 @@ for k, v in pairs(items_game["items"]) do
 		v.item_quality = "unique"
     end
     if v.item_class == "saxxy" then
-        v.item_class = "tf_weapon_allclass"
+        --v.item_class = "tf_weapon_allclass"
     elseif v.item_class == "tf_weapon_grenadelauncher" then
 		v.item_slot = "secondary"
     elseif v.item_name == "#TF_Weapon_PanicAttack" then

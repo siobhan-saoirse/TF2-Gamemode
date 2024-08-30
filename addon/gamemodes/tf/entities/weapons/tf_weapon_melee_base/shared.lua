@@ -973,6 +973,7 @@ function SWEP:OnRemove()
 end
 
 function SWEP:Think()
+	self.WeaponMode = 3;
 	if self.WorldModel == "models/weapons/c_models/c_headtaker/c_headtaker.mdl" then
 		self.HitFlesh = Sound("Halloween.HeadlessBossAxeHitFlesh")
 		self.HitWorld = Sound("Halloween.HeadlessBossAxeHitWorld")

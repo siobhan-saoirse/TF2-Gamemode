@@ -141,6 +141,7 @@ function SWEP:Think()
 		self.MeleeAttackDelay = 0
 	else 
 		if (!self.Owner:IsHL2() and self.Owner:GetPlayerClass() != "mercenary") then
+			self.HoldType = "MELEE_ALLCLASS"
 			self:SetWeaponHoldType("MELEE_ALLCLASS")
 		else
 			self.HoldType = "MELEE"

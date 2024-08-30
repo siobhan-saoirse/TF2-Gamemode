@@ -676,6 +676,25 @@ function META:GiveItem(itemname, properties)
 		class = "tf_weapon_sapper"
 	end
 	local weapon = NULL
+	if (self:GetPlayerClass() == "scout" && class == "saxxy") then
+		class = "tf_weapon_bat"
+	elseif (self:GetPlayerClass() == "soldier" && class == "saxxy") then
+		class = "tf_weapon_shovel"
+	elseif (self:GetPlayerClass() == "pyro" && class == "saxxy") then
+		class = "tf_weapon_fireaxe"
+	elseif (self:GetPlayerClass() == "demoman" && class == "saxxy") then
+		class = "tf_weapon_bottle"
+	elseif (self:GetPlayerClass() == "heavy" && class == "saxxy") then
+		class = "tf_weapon_fireaxe"
+	elseif (self:GetPlayerClass() == "engineer" && class == "saxxy") then
+		class = "tf_weapon_wrench"
+	elseif (self:GetPlayerClass() == "medic" && class == "saxxy") then
+		class = "tf_weapon_bonesaw"
+	elseif (self:GetPlayerClass() == "sniper" && class == "saxxy") then
+		class = "tf_weapon_club"
+	elseif (self:GetPlayerClass() == "spy" && class == "saxxy") then
+		class = "tf_weapon_knife"
+	end
 	if scripted_ents.GetStored(class) then
 		weapon = ents.Create(class)
 		weapon.Owner = self
