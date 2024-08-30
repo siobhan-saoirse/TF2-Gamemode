@@ -49,7 +49,11 @@ concommand.Add("loadout_update", function(ply)
 			end
 		end
 		
-		if !IsValid(resupply) then pl:ChatPrint("You need to be near a Resupply Locker!") return false end
+		if !IsValid(resupply) then 
+            ply:PrintMessage(HUD_PRINTCENTER,"You need to be near a Resupply Locker!")
+            ply:ChatPrint("You need to be near a Resupply Locker!") 
+            return false 
+        end
 	end
     ply:GiveLoadout()
     return true

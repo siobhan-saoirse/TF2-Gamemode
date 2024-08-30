@@ -2138,12 +2138,12 @@ function GM:PlayerSpawn(ply)
 		end)
 	end
 
-	timer.Simple(0.02, function() -- god i'm such a timer whore
+	timer.Simple(0.0, function() -- god i'm such a timer whore
 		-- are you sure about that
 		ply:SetPlayerClass(ply:GetPlayerClass())
 		
 	end)
-	timer.Simple(0.3, function()
+	timer.Simple(0.05, function()
 	
 		local v = ply
 		if (v:Alive()) then
