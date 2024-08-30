@@ -2253,8 +2253,10 @@ function GM:PlayerSpawn(ply)
 	end
 	if (ply:Team() == TEAM_FRIENDLY) then
 		ply:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+		ply:SetAvoidPlayers(false)  
+	else
+		ply:SetAvoidPlayers(true)  
 	end
-	ply:SetAvoidPlayers(true)  
 	
 	if !ply:IsHL2() then
 		timer.Simple(0.1, function()
