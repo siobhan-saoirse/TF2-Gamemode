@@ -18,6 +18,10 @@ for k, v in pairs(items_game["items"]) do
         for i, o in pairs(tab) do
             if string.find(o, "weapon") then
                 v.prefab = o
+            elseif string.find(o, "hat") then
+                v.prefab = "hat"
+            elseif string.find(o, "misc") then
+                v.prefab = "misc"
             end
         end
     end
@@ -40,6 +44,9 @@ for k, v in pairs(items_game["items"]) do
     end
     if (!v.attributes) then
         v.attributes = {}
+    end
+    if (!v.used_by_classes) then
+        v.used_by_classes = {}
     end
     if prefabs[v.prefab] and v.static_attrs then
         local prefab = prefabs[v.prefab]
@@ -173,7 +180,7 @@ for k, v in pairs(items_game["items"]) do
 
     if v.item_name then
         v.name = tf_lang.GetRaw(v.item_name)
-        tf_items.Items[v.name] = v
+        tf_items.Items[tf_lang.GetRaw(v.item_name)] = v
   
         if v.name == "Red-Tape Recorder" then
 			v.item_class = "tf_weapon_rtr" 
@@ -323,7 +330,7 @@ for k, v in pairs(items_game["items"]) do
 			v.item_quality = "unique"
 		end 
     elseif v.name then
-        tf_items.Items[tf_lang.GetRaw(v.name)] = v
+        tf_items.Items[v.name] = v
     else
         v.name = "Test " .. math.random(30000)
         tf_items.Items[v.name] = v
