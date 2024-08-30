@@ -665,7 +665,7 @@ function ENT:Think()
 		deltatime = CurTime() - self.LastThink
 	end
 	self.LastThink = CurTime()
-	if (self:GetBuilder() != nil) then
+	if (self:GetBuilder() != nil && self:GetBuilder():IsPlayer()) then
 		if (self:GetBuilder():GetPlayerClass() != "engineer" && self:GetBuilder():GetPlayerClass() != "gmodplayer") then
 			self:Explode()
 		end

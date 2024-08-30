@@ -380,7 +380,7 @@ function ENT:Think()
 		if not self.DisableDuringUpgrade then
 			self:OnThinkActive()
 					
-			if (self:GetBuilder() != nil) then
+			if (self:GetBuilder() != nil && self:GetBuilder():IsPlayer()) then
 				if (self:GetBuilder():GetPlayerClass() != "engineer" && self:GetBuilder():GetPlayerClass() != "gmodplayer") then
 					self:Explode()
 				end
@@ -390,7 +390,7 @@ function ENT:Think()
 		end 
 	elseif state==3 then
 		self:OnThinkActive()
-		if (self:GetBuilder() != nil) then
+		if (self:GetBuilder() != nil && self:GetBuilder():IsPlayer()) then
 			if (self:GetBuilder():GetPlayerClass() != "engineer" && self:GetBuilder():GetPlayerClass() != "gmodplayer") then
 				self:Explode()
 			end

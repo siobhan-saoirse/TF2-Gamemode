@@ -36,8 +36,6 @@ function ENT:Initialize()
 	local mins, maxs = self:WorldSpaceAABB() -- https://forum.facepunch.com/gmoddev/lmcw/Brush-entitys-ent-GetPos/1/#postdwfmq
 	pos = (mins + maxs) * 0.5
 
-	self.Team = self.Team or 0		
-	self.TeamNum = self.TeamNum or 0
 	self.Pos = pos 
 	self.Players = {}
 end 
@@ -58,20 +56,25 @@ function ENT:KeyValue(key,value)
 
 		self.Team = tonumber(value)
 	end
-	if (self.Team == 2 or self.Team == 3) then
-		if (ent:IsPlayer() and ent:Team() != self.TeamNum) then
-			ent:KillSilent()
-			ent:Respawn()
-		end
-	end
-	print(key, value, tonumber(value), self.Team)
+	
+	print(key, value, tonumber(value), self.Team, self.TeamNum)
 end
 
 function ENT:StartTouch(ent) 
+	print(self.Team, self.TeamNum)
+	
+	if (self.Team == 2 and self.Team == 3) then
+		if (ent:IsPlayer()) then
+			if (ent:Team() != self.TeamNum) then
+				ent:KillSilent()
+				ent:Spawn()
+			end
+		end
+	end
 end
 
 function ENT:Touch(ent)
-	if ent:IsPlayer() and string.find(game.GetMap(),"mvm_") and ent:Team() == TEAM_BLU then
+	if ent:IsPlayer() and string.find(game.GetMap(),"mvm_") and ent:Team() == TEAM_BLU and self.TeamNum == TEAM_BLU then
 		self.Players[ent] = ent:EntIndex()
 		--print(self.Team)
 		ent:GodEnable()
