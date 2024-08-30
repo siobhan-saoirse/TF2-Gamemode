@@ -258,8 +258,6 @@ local function InitPlayerBodygroups(pl)
 end
 
 function meta:SetPlayerClass(class)
-	self.ItemLoadout = {}
-	self.ItemProperties = {}
 	self.anim_Deployed = false
 	class = string.lower(class)
 
