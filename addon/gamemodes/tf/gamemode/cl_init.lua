@@ -710,7 +710,8 @@ function L4DClassSelection()
 
 end]]
 function DoorClose()
-local ply = LocalPlayer()local ClassFrame = vgui.Create("DFrame") --create a frame
+local ply = LocalPlayer()
+local ClassFrame = vgui.Create("DFrame") --create a frame
 ClassFrame:SetSize( ScrW() * 1, ScrH() * 1 ) --set its size
 ClassFrame:Center() --position it at the center of the screen
 ClassFrame:SetTitle("TF2 Door") --set the title of the menu 
@@ -742,12 +743,34 @@ ClassFrame:Center() --position it at the center of the screen
 ClassFrame:SetTitle("TF2 Menu") --set the title of the menu 
 ClassFrame:SetDraggable(true) --can you move it around
 ClassFrame:SetSizable(true) --can you resize it?
-if ply:GetPlayerClass() ~= "" then
-	ClassFrame:ShowCloseButton(true) --can you close it
-else
-	ClassFrame:ShowCloseButton(false)
-end
-	
+ClassFrame:ShowCloseButton(false)
+	local self = ClassFrame
+	local WScale = ScrW()/640
+	local Scale = ScrH()/480
+	-- Close button
+	if (!self.CloseButton) then
+		self.CloseButton = vgui.Create("TFButton")
+		self.CloseButton:SetParent(self)
+		self.CloseButton:SetPos(ScrW()/2 + 200*Scale,437*Scale)
+		self.CloseButton:SetSize(100*Scale,25*Scale)
+		self.CloseButton.labelText = "CLOSE"
+		self.CloseButton.font = "HudFontSmallBold"
+		function self.CloseButton:DoClick()
+			ClassFrame:Close()
+		end
+	end
+	if (!self.LoadoutButton) then
+		self.LoadoutButton = vgui.Create("TFButton")
+		self.LoadoutButton:SetParent(self)
+		self.LoadoutButton:SetPos(ScrW()/2 + 80*Scale,437*Scale)
+		self.LoadoutButton:SetSize(100*Scale,25*Scale)
+		self.LoadoutButton.labelText = "LOADOUT"
+		self.LoadoutButton.font = "HudFontSmallBold"
+		function self.LoadoutButton:DoClick()
+			ClassFrame:Close()
+			RunConsoleCommand("open_charinfo_direct")
+		end
+	end
 ClassFrame.OnClose = function()
 	LocalPlayer():StopSound("ClassSelection.ThemeMVM") 
 	LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") 
@@ -761,6 +784,19 @@ else
 	LocalPlayer():EmitSound("ClassSelection.ThemeNonMVM")	
 end
 
+
+	-- Close button
+	if (!self.CloseButton) then
+		self.CloseButton = vgui.Create("TFButton")
+		self.CloseButton:SetParent(self)
+		self.CloseButton:SetPos(W/2 + 200*Scale,437*Scale)
+		self.CloseButton:SetSize(100*Scale,25*Scale)
+		self.CloseButton.labelText = "CLOSE"
+		self.CloseButton.font = "HudFontSmallBold"
+		function self.CloseButton:DoClick()
+			RunConsoleCommand("hud_showloadout","0")
+		end
+	end
 
 local iconC = vgui.Create( "DModelPanel", ClassFrame )
 iconC:SetSize( ScrW() * 1, ScrH() * 1 )
