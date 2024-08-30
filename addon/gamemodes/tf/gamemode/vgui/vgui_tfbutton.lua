@@ -25,7 +25,7 @@ function PANEL:Paint()
 		local fc, bc
 		if self.Hover then
 			fc = Colors.TanLight
-			bc = Color(145,73,59,255)
+			bc = Color(145,73,59,255) -- Colors.TFOrange
 		else
 			fc = Colors.TanLight
 			bc = Colors.TanDark
