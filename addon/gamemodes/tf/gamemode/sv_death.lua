@@ -575,7 +575,8 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	timer.Simple(0.1, function()
 		ply:SetMoveType(MOVETYPE_NONE)
 		
-		ply.ItemLoadout = {}
+		local c = GAMEMODE.PlayerClasses[ply:GetPlayerClass()]
+		ply.ItemLoadout = table.Copy(c.DefaultLoadout)
 		ply.ItemProperties = {}
 	end)
 	

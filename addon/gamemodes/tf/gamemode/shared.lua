@@ -1280,63 +1280,23 @@ hook.Add("Think", "PlayerStuff", function()
 	for k,pl in ipairs(player.GetAll()) do
 		
 		if CLIENT then
-			if (string.find(pl:GetModel(),"hwm")) then
-	
-				if (pl.playerclass == "medicshotgun") then	
-					pl:SetupPhonemeMappings( "player/hwm/medic/emotions/emotions" )
-					pl:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
-				elseif (pl.playerclass == "heavy") then 
-					pl:SetupPhonemeMappings( "player/hwm/heavy/emotions/emotions" )
-					pl:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
-				elseif (pl.playerclass == "scout") then
-					pl:SetupPhonemeMappings( "player/hwm/scout/emotions/emotions" )
-					pl:SetupPhonemeMappings( "player/hwm/scout/phonemes/phonemes" )
-				elseif (pl.playerclass == "soldier") then
-					pl:SetupPhonemeMappings( "player/hwm/soldier/emotions/emotions" )
-					pl:SetupPhonemeMappings( "player/hwm/soldier/phonemes/phonemes" )
-				elseif (pl.playerclass == "demoman") then
-					pl:SetupPhonemeMappings( "player/hwm/demo/emotions/emotions" )
-					pl:SetupPhonemeMappings( "player/hwm/demo/phonemes/phonemes" )
-				elseif (pl.playerclass == "engineer") then
-					pl:SetupPhonemeMappings( "player/hwm/engineer/emotions/emotions" )
-					pl:SetupPhonemeMappings( "player/hwm/engineer/phonemes/phonemes" )
-				elseif (pl.playerclass == "medic") then
-					pl:SetupPhonemeMappings( "player/hwm/medic/emotions/emotions" )
-					pl:SetupPhonemeMappings( "player/hwm/medic/phonemes/phonemes" )
-				elseif (pl.playerclass == "sniper") then
-					pl:SetupPhonemeMappings( "player/hwm/sniper/emotions/emotions" )
-					pl:SetupPhonemeMappings( "player/hwm/sniper/phonemes/phonemes" )
-				elseif (pl.playerclass == "spy") then
-					pl:SetupPhonemeMappings( "player/hwm/spy/emotions/emotions" )
-					pl:SetupPhonemeMappings( "player/hwm/spy/phonemes/phonemes" )
-				else
-					pl:SetupPhonemeMappings( "player/hwm/heavy/emotions/emotions" )
-					pl:SetupPhonemeMappings( "player/hwm/heavy/phonemes/phonemes" )
-				end
-
-			elseif (string.find(pl:GetModel(),"player") && pl:LookupBone("bip_head")) then
-				if (pl.playerclass == "medicshotgun") then	
-					pl:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
-				elseif (pl.playerclass == "heavy") then
+				if (pl.playerclass == "Heavy") then
 					pl:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
-				elseif (pl.playerclass == "scout") then
+				elseif (pl.playerclass == "Scout") then
 					pl:SetupPhonemeMappings( "player/scout/phonemes/phonemes" )
-				elseif (pl.playerclass == "soldier") then
+				elseif (pl.playerclass == "Soldier") then
 					pl:SetupPhonemeMappings( "player/soldier/phonemes/phonemes" )
-				elseif (pl.playerclass == "demoman") then
+				elseif (pl.playerclass == "Demoman") then
 					pl:SetupPhonemeMappings( "player/demo/phonemes/phonemes" )
-				elseif (pl.playerclass == "engineer") then
+				elseif (pl.playerclass == "Engineer") then
 					pl:SetupPhonemeMappings( "player/engineer/phonemes/phonemes" )
-				elseif (pl.playerclass == "medic") then
+				elseif (pl.playerclass == "Medic") then
 					pl:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
-				elseif (pl.playerclass == "sniper") then
+				elseif (pl.playerclass == "Sniper") then
 					pl:SetupPhonemeMappings( "player/sniper/phonemes/phonemes" )
-				elseif (pl.playerclass == "spy") then
+				elseif (pl.playerclass == "Spy") then
 					pl:SetupPhonemeMappings( "player/spy/phonemes/phonemes" )
-				else
-					pl:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
 				end
-			end
 		end
 		if not pl.anim_Jumping and !pl:IsOnGround() then
 			pl.anim_Jumping = true
