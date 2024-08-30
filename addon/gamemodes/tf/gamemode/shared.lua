@@ -1285,31 +1285,31 @@ hook.Add("Think", "PlayerStuff", function()
 				v:SetViewOffset(Vector(0,0,64 * v:GetModelScale()))
 				v:SetViewOffsetDucked(Vector(0, 0, 28 * v:GetModelScale()))
 			else
-				if (v.playerclass == "Scout") then
+				if (v:GetPlayerClass() == "scout") then
 					v:SetViewOffset(Vector(0, 0, 65 * v:GetModelScale()))
 					v:SetViewOffsetDucked(Vector(0, 0, 65 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Soldier") then
+				elseif (v:GetPlayerClass() == "soldier") then
 					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
 					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Pyro") then
+				elseif (v:GetPlayerClass() == "pyro") then
 					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
 					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Demoman") then
+				elseif (v:GetPlayerClass() == "demoman") then
 					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
 					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Heavy") then
+				elseif (v:GetPlayerClass() == "heavy") then
 					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
 					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Engineer") then
+				elseif (v:GetPlayerClass() == "engineer") then
 					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
 					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Medic") then
+				elseif (v:GetPlayerClass() == "medic") then
 					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
 					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Sniper") then
+				elseif (v:GetPlayerClass() == "sniper") then
 					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
 					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Spy") then
+				elseif (v:GetPlayerClass() == "spy") then
 					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
 					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
 				else
@@ -1318,7 +1318,7 @@ hook.Add("Think", "PlayerStuff", function()
 				end
 			end
 		end
-		
+
 		if CLIENT then
 			if (pl:GetPlayerClass() == "heavy") then
 				pl:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
