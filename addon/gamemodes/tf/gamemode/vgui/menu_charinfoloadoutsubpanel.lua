@@ -866,14 +866,14 @@ function hatSelector(type, slot, oldclass, weapons)
 
 	-- ugly code ahead
 	for k, v in pairs(weapons) do
-		if v and istable(v) and v["name"] and GetImprovedItemName(v["name"]) then
+		if v and istable(v) and (v["item_name"] or v["name"]) then
 			local t = vgui.Create("ItemModelPanel", Frame)
 			t:SetSize(140 * Scale, 75 * Scale)
 			itemicons:Add(t)
 			t.activeImage = loadout_rect_mouseover
 			t.inactiveImage = loadout_rect
 
-			t.RealName = v["name"]
+			t.RealName = v["item_name"]
 			t.centerytext = true
 			t.disabled = false
 			if !isstring(v["image_inventory"]) or Material(v["image_inventory"]):IsError() then
@@ -894,7 +894,7 @@ function hatSelector(type, slot, oldclass, weapons)
 
 			t.itemImage_low = nil
 
-			t.text = string.sub(GetImprovedItemName(v["name"]), 4)
+			t.text = tf_lang.GetRaw(v["item_name"]) or v["name"]
 			--t.text = tf_lang.GetRaw(v["item_name"]) or v["name"]
 			local quality = 0
 			if v["item_quality"] then
