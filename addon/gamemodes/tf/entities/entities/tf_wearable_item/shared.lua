@@ -32,51 +32,6 @@ function ENT:Think()
 			self:CreateShadow()
 		end
 	else
-		local item = self:GetItemData()
-		if (item.visuals) then
-			if item.visuals.player_bodygroups then
-				local bodygroups = item.visuals.player_bodygroups
-				if (bodygroups.hat) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("hat"),1)
-				elseif (bodygroups.headphones) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("headphones"),1)
-				elseif (bodygroups.medal) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("medal"),1)
-				elseif (bodygroups.grenades) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("grenades"),1)
-				elseif (bodygroups.bullets) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("bullets"),1)
-				elseif (bodygroups.arrows) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("arrows"),1)
-				elseif (bodygroups.rightarm) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("rightarm"),1)
-				elseif (bodygroups.shoes_socks) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("shoes_socks"),1)
-				end
-			end
-		end
-		if (item and item.visuals) then
-			if item.visuals.player_bodygroups then
-				local bodygroups = item.visuals.player_bodygroups
-				if (bodygroups.hat) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("hat"),1)
-				elseif (bodygroups.headphones) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("headphones"),1)
-				elseif (bodygroups.medal) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("medal"),1)
-				elseif (bodygroups.grenades) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("grenades"),1)
-				elseif (bodygroups.bullets) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("bullets"),1)
-				elseif (bodygroups.arrows) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("arrows"),1)
-				elseif (bodygroups.rightarm) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("rightarm"),1)
-				elseif (bodygroups.shoes_socks) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("shoes_socks"),1)
-				end
-			end
-		end
 		if self.ShadowCreated ~= false then
 			self.ShadowCreated = false
 			self:DestroyShadow()
@@ -177,6 +132,53 @@ end
 end
 
 function ENT:Think()
+	
+	local item = self:GetItemData()
+	if (item.visuals) then
+		if item.visuals.player_bodygroups then
+			local bodygroups = item.visuals.player_bodygroups
+			if (bodygroups.hat) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("hat"),1)
+			elseif (bodygroups.headphones) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("headphones"),1)
+			elseif (bodygroups.medal) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("medal"),1)
+			elseif (bodygroups.grenades) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("grenades"),1)
+			elseif (bodygroups.bullets) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("bullets"),1)
+			elseif (bodygroups.arrows) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("arrows"),1)
+			elseif (bodygroups.rightarm) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("rightarm"),1)
+			elseif (bodygroups.shoes_socks) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("shoes_socks"),1)
+			end
+		end
+	end
+	if (item and item.visuals) then
+		if item.visuals.player_bodygroups then
+			local bodygroups = item.visuals.player_bodygroups
+			if (bodygroups.hat) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("hat"),1)
+			elseif (bodygroups.headphones) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("headphones"),1)
+			elseif (bodygroups.medal) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("medal"),1)
+			elseif (bodygroups.grenades) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("grenades"),1)
+			elseif (bodygroups.bullets) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("bullets"),1)
+			elseif (bodygroups.arrows) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("arrows"),1)
+			elseif (bodygroups.rightarm) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("rightarm"),1)
+			elseif (bodygroups.shoes_socks) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("shoes_socks"),1)
+			end
+		end
+	end
+	
 	self:AddEffects(bit.bor(EF_BONEMERGE,EF_BONEMERGE_FASTCULL))
 	if self.Model and string.find(self.Model,"_zombie") then
 		if (IsValid(self.Owner)) then

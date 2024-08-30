@@ -276,7 +276,7 @@ function ITEM:InitVisuals(owner, visuals)
 	end
 	
 	-- Bodygroups
-	
+	--[[
 	if not self:GetItemData().hide_bodygroups_deployed_only then
 		if visuals.player_bodygroups then
 			for _,group in ipairs(visuals.player_bodygroups) do
@@ -297,7 +297,7 @@ function ITEM:InitVisuals(owner, visuals)
 				end
 			end
 		end
-	end
+	end]]
 	
 	
 	-- Muzzles, tracers, sound effects

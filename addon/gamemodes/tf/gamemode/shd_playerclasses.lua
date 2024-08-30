@@ -280,15 +280,6 @@ function meta:SetPlayerClass(class)
 	if (c.IsL4D and !IsMounted("left4dead2")) then
 		return
 	end
-	if PlayerNamedBodygroups[oldclass] then
-		for _,v in pairs(PlayerNamedBodygroups[oldclass]) do
-			self:SetBodygroup(v, 0)
-		end
-		
-		for _,v in pairs(PlayerNamedViewmodelBodygroups[oldclass]) do
-			self:GetViewModel():SetBodygroup(v, 0)
-		end
-	end
 	
 	self.TempAttributes = {}
 	self.NextSpeak = nil

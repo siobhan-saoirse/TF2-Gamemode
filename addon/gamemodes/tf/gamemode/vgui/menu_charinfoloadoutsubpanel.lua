@@ -866,7 +866,7 @@ function hatSelector(type, slot, oldclass, weapons)
 
 	-- ugly code ahead
 	for k, v in pairs(weapons) do
-		if v and istable(v) and (v["item_name"] or v["name"]) then
+		if v and istable(v) and (v["item_name"] or v["name"]) and v["equip_region"] != "medal" then
 			local t = vgui.Create("ItemModelPanel", Frame)
 			t:SetSize(140 * Scale, 75 * Scale)
 			itemicons:Add(t)

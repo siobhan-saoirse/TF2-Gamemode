@@ -1112,36 +1112,6 @@ function SWEP:Holster()
 			end
 		end
 	end
-	if IsValid(self.Owner) then
-		if self:GetItemData().hide_bodygroups_deployed_only then
-			local visuals = self:GetVisuals()
-			local owner = self.Owner
-			
-			if visuals.hide_player_bodygroup_names then
-				for _,group in ipairs(visuals.hide_player_bodygroup_names) do
-					local b = PlayerNamedBodygroups[owner:GetPlayerClass()]
-					if b and b[group] then
-						owner:SetBodygroup(b[group], 0)
-					end
-					
-					b = PlayerNamedViewmodelBodygroups[owner:GetPlayerClass()]
-					if b and b[group] then
-						if IsValid(owner:GetViewModel()) then
-							owner:GetViewModel():SetBodygroup(b[group], 0)
-						end
-					end
-				end
-			else
-				owner:SetBodygroup(self:GetItemData().hide_bodygroups_deployed_only, 0)
-			end
-		end
-	
-		for k,v in pairs(self:GetVisuals()) do
-			if k=="hide_player_bodygroup" then
-				self.Owner:SetBodygroup(v,0)
-			end
-		end
-	end
 	
 	self.NextIdle = nil
 	self.NextReloadStart = nil
@@ -1673,36 +1643,6 @@ function SWEP:Think()
 		self:SetWeaponHoldType(self.HoldTypeHL2 or self.HoldType)
 	else
 		self:SetWeaponHoldType(self.HoldType)
-	end
-	if self:GetItemData().hide_bodygroups_deployed_only and self.IsDeployed then
-		local visuals = self:GetVisuals()
-		local owner = self.Owner
-		
-		if visuals.hide_player_bodygroup_names and !string.find(owner:GetModel(), "/bot_") then
-			for _,group in ipairs(visuals.hide_player_bodygroup_names) do
-				local b = PlayerNamedBodygroups[owner:GetPlayerClass()]
-				if b and b[group] then
-					owner:SetBodygroup(b[group], 1)
-				end
-				
-				b = PlayerNamedViewmodelBodygroups[owner:GetPlayerClass()]
-				if b and b[group] then
-					if IsValid(owner:GetViewModel()) then
-						owner:GetViewModel():SetBodygroup(b[group], 1)
-					end
-				end
-			end
-		else
-			if (!string.find(owner:GetModel(), "/bot_")) then
-				owner:SetBodygroup(self:GetItemData().hide_bodygroups_deployed_only, 1)
-			end
-		end
-	end
-	
-	for k,v in pairs(self:GetVisuals()) do
-		if k=="hide_player_bodygroup" then
-			self.Owner:SetBodygroup(v,1)
-		end
 	end
 	self:AddFlags(EF_NOSHADOW)
 	if (self.Owner:GetPlayerClass() == "pyro" and self:GetClass() == "tf_weapon_rocketlauncher_qrl") then

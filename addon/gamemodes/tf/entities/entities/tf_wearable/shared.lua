@@ -27,65 +27,6 @@ end
 
 if CLIENT then
 
-function ENT:Think()
-	if self:GetOwner() ~= LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() then
-		if self.ShadowCreated ~= true then
-			self.ShadowCreated = true
-			self:CreateShadow()
-		end
-	else
-		local item = self:GetItemData()
-		if (item.visuals) then
-			if item.visuals.player_bodygroups then
-				local bodygroups = item.visuals.player_bodygroups
-				if (bodygroups.hat) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("hat"),1)
-				elseif (bodygroups.headphones) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("headphones"),1)
-				elseif (bodygroups.medal) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("medal"),1)
-				elseif (bodygroups.grenades) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("grenades"),1)
-				elseif (bodygroups.bullets) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("bullets"),1)
-				elseif (bodygroups.arrows) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("arrows"),1)
-				elseif (bodygroups.rightarm) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("rightarm"),1)
-				elseif (bodygroups.shoes_socks) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("shoes_socks"),1)
-				end
-			end
-		end
-		if (item and item.visuals) then
-			if item.visuals.player_bodygroups then
-				local bodygroups = item.visuals.player_bodygroups
-				if (bodygroups.hat) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("hat"),bodygroups.hat)
-				elseif (bodygroups.headphones) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("headphones"),bodygroups.headphones)
-				elseif (bodygroups.medal) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("medal"),bodygroups.medal)
-				elseif (bodygroups.grenades) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("grenades"),bodygroups.grenades)
-				elseif (bodygroups.bullets) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("bullets"),bodygroups.bullets)
-				elseif (bodygroups.arrows) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("arrows"),bodygroups.arrows)
-				elseif (bodygroups.rightarm) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("rightarm"),bodygroups.rightarm)
-				elseif (bodygroups.shoes_socks) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("shoes_socks"),bodygroups.shoe_socks)
-				end
-			end
-		end
-		if self.ShadowCreated ~= false then
-			self.ShadowCreated = false
-			self:DestroyShadow()
-		end
-	end
-end
-
 function ENT:Draw()
 	if self:GetOwner() ~= LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() then
 		self:StartVisualOverrides()
@@ -136,6 +77,53 @@ end
 end
 
 function ENT:Think()
+	
+	local item = self:GetItemData()
+	if (item.visuals) then
+		if item.visuals.player_bodygroups then
+			local bodygroups = item.visuals.player_bodygroups
+			if (bodygroups.hat) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("hat"),1)
+			elseif (bodygroups.headphones) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("headphones"),1)
+			elseif (bodygroups.medal) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("medal"),1)
+			elseif (bodygroups.grenades) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("grenades"),1)
+			elseif (bodygroups.bullets) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("bullets"),1)
+			elseif (bodygroups.arrows) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("arrows"),1)
+			elseif (bodygroups.rightarm) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("rightarm"),1)
+			elseif (bodygroups.shoes_socks) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("shoes_socks"),1)
+			end
+		end
+	end
+	if (item and item.visuals) then
+		if item.visuals.player_bodygroups then
+			local bodygroups = item.visuals.player_bodygroups
+			if (bodygroups.hat) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("hat"),bodygroups.hat)
+			elseif (bodygroups.headphones) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("headphones"),bodygroups.headphones)
+			elseif (bodygroups.medal) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("medal"),bodygroups.medal)
+			elseif (bodygroups.grenades) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("grenades"),bodygroups.grenades)
+			elseif (bodygroups.bullets) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("bullets"),bodygroups.bullets)
+			elseif (bodygroups.arrows) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("arrows"),bodygroups.arrows)
+			elseif (bodygroups.rightarm) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("rightarm"),bodygroups.rightarm)
+			elseif (bodygroups.shoes_socks) then
+				self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("shoes_socks"),bodygroups.shoe_socks)
+			end
+		end
+	end
+	
 	if IsValid(self.Owner) and self.Model and string.find(self.Model,"_zombie") then
 		if (self.Owner:GetPlayerClass() == "spy") then
 			if (self.Owner:Team() == TEAM_BLU) then
@@ -163,6 +151,18 @@ function ENT:Think()
 	end
 	if CLIENT then
 		self:SetPredictable( true )
+			
+		if self:GetOwner() ~= LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() then
+			if self.ShadowCreated ~= true then
+				self.ShadowCreated = true
+				self:CreateShadow()
+			end
+		else
+			if self.ShadowCreated ~= false then
+				self.ShadowCreated = false
+				self:DestroyShadow()
+			end
+		end
 	end
 end
 function ENT:Initialize()
