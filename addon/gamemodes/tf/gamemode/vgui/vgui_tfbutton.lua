@@ -49,7 +49,7 @@ end
 function PANEL:OnCursorEntered()
 	if self.invisible or self.disabled then return end
 	if (!self.Hover) then
-		surface.PlaySound("ui/buttonrollover.wav")
+		--surface.PlaySound("ui/buttonrollover.wav")
 	end
 	self.Hover = true
 end

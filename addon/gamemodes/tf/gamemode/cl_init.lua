@@ -945,7 +945,13 @@ HeavyButton.DoClick = function()  RunConsoleCommand("changeclass", "heavy") Loca
 local he_img = vgui.Create( "DImage", HeavyButton )	-- Add image to Frame
 he_img:SetPos( 0, 0 )	-- Move it into frame
 he_img:SetSize( HeavyButton:GetSize() )	-- Size it to 150x150
-HeavyButton:SetImage( "vgui/class_sel_sm_heavy_inactive" )
+if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
+	he_img:SetImage( "vgui/class_sel_sm_heavy_red" )
+elseif LocalPlayer():Team()==TEAM_BLU then
+	he_img:SetImage( "vgui/class_sel_sm_heavy_blu" )
+else
+	he_img:SetImage("vgui/class_sel_sm_heavy_inactive")
+end
 HeavyButton:SetAlpha(255)
 local EngineerButton = vgui.Create("DImageButton", ClassFrame)
 EngineerButton:SetSize(ScrW() * 0.056, ScrH() * 0.195)
@@ -993,7 +999,13 @@ scout_img:SetImage( "vgui/class_sel_sm_scout_inactive" )
 sol_img:SetImage( "vgui/class_sel_sm_soldier_inactive" )
 py_img:SetImage( "vgui/class_sel_sm_pyro_inactive" )
 de_img:SetImage( "vgui/class_sel_sm_demo_inactive" )
-he_img:SetImage( "vgui/class_sel_sm_heavy_inactive" )
+if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
+	he_img:SetImage( "vgui/class_sel_sm_heavy_red" )
+elseif LocalPlayer():Team()==TEAM_BLU then
+	he_img:SetImage( "vgui/class_sel_sm_heavy_blu" )
+else
+	he_img:SetImage("vgui/class_sel_sm_heavy_inactive")
+end
 en_img:SetImage( "vgui/class_sel_sm_engineer_inactive" )
 me_img:SetImage( "vgui/class_sel_sm_medic_inactive" )
 sn_img:SetImage( "vgui/class_sel_sm_sniper_inactive" )
