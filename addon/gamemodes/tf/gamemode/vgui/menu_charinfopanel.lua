@@ -169,7 +169,7 @@ end
 function PANEL:PerformLayout()
 	self:SetPos(0, 0)
 	self:SetSize(W, H)
-	
+
 	-- Close button
 	if (!self.CloseButton) then
 		self.CloseButton = vgui.Create("TFButton")
@@ -184,6 +184,8 @@ function PANEL:PerformLayout()
 	end
 	
 	-- Tab buttons
+	-- remove this for now
+	--[[
 	self.TabButtons = {}
 	local x, y = tabx, taby
 	
@@ -201,7 +203,7 @@ function PANEL:PerformLayout()
 		self.TabButtons[k] = t
 		
 		x = x + tabw + tabd
-	end
+	end]]
 end
 if CharInfoPanel then CharInfoPanel:Remove() end
 CharInfoPanel = vgui.CreateFromTable(vgui.RegisterTable(PANEL, "DPanel"))
