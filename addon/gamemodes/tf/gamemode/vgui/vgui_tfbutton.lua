@@ -24,11 +24,11 @@ function PANEL:Paint()
 		-- Text button
 		local fc, bc
 		if self.Hover then
-			fc = Colors.TanLight
+			fc = Color(235,226,202,255) -- Colors.TanLight
 			bc = Color(145,73,59,255) -- Colors.TFOrange
 		else
-			fc = Colors.TanLight
-			bc = Colors.TanDark
+			fc = Color(235,226,202,255) -- Colors.TanLight
+			bc = Color(117,107,94,255) -- Colors.TanDark
 		end
 		
 		draw.RoundedBox(6, 0, 0, w, h, bc)
