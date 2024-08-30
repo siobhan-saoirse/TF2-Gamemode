@@ -1905,6 +1905,8 @@ concommand.Add("randomweapon", function(ply, _, args)
 end)
   
 function GM:PlayerSpawn(ply)
+	ply.ItemLoadout = {}
+	ply.ItemProperties = {}
 	--[[
 	if (string.StartWith(game.GetMap(),"c1m") or string.StartWith(game.GetMap(),"c2m") or string.StartWith(game.GetMap(),"c3m") or string.StartWith(game.GetMap(),"c4m") 
 	or string.StartWith(game.GetMap(),"c5m") or string.StartWith(game.GetMap(),"c6m") or string.StartWith(game.GetMap(),"c7m") or string.StartWith(game.GetMap(),"c8m")

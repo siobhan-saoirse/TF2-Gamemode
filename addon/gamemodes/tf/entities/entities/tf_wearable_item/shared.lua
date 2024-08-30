@@ -25,7 +25,9 @@ function ENT:SetItemTint(t)
 end
 
 function ENT:Think()
-	
+	if (!IsValid(self.Owner) or (IsValid(self.Owner) && !self.Owner:Alive())) then
+		self:Remove()
+	end
 	if self:GetOwner() ~= LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() then
 		if self.ShadowCreated ~= true then
 			self.ShadowCreated = true
@@ -178,7 +180,7 @@ function ENT:Think()
 			end
 		end
 	end
-	
+
 	self:AddEffects(bit.bor(EF_BONEMERGE,EF_BONEMERGE_FASTCULL))
 	if self.Model and string.find(self.Model,"_zombie") then
 		if (IsValid(self.Owner)) then
@@ -224,7 +226,6 @@ function ENT:Initialize()
 	self.ProxyentPaintColor = self
 		
 	local item = self:GetItemData()
-
 	if item.model_player then
 		print(item.model_player)
 		if (string.find(item.model_player,"zombie") || (string.find(item.model_player,"/all_class/all_") and !string.find(item.model_player,"all_halo")) || string.find(item.model_player,"ugc_season12") ) then
