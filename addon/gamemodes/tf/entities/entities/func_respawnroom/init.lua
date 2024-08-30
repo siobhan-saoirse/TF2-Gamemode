@@ -56,21 +56,13 @@ function ENT:KeyValue(key,value)
 
 		self.Team = tonumber(value)
 	end
-	
+	self:SetNWInt("TeamNum",self.TeamNum)
+	self:SetNWInt("Team",self.Team)
 	print(key, value, tonumber(value), self.Team, self.TeamNum)
 end
 
 function ENT:StartTouch(ent) 
-	--print(self.Team, self.TeamNum)
-	
-	if (self.Team == 2 and self.Team == 3) then
-		if (ent:IsPlayer()) then
-			if (ent:Team() != self.TeamNum) then
-				ent:KillSilent()
-				ent:Spawn()
-			end
-		end
-	end
+	print(self.Team, self.TeamNum)
 end
 
 function ENT:Touch(ent)
@@ -80,6 +72,12 @@ function ENT:Touch(ent)
 		ent:GodEnable()
 		ent:SetSkin(3)
 	end
+	
+		if (ent:IsPlayer()) then
+			if (ent:Team() ~= self:GetNWInt("TeamNum")) then
+				ent:SetPos(ent:GetPos() + ent:GetAimVector() * -ent:GetWalkSpeed())
+			end
+		end
 end
 
 function ENT:EndTouch(ent)
