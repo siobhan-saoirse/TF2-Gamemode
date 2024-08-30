@@ -148,9 +148,9 @@ function PANEL:PerformLayout()
 	
 		
 	local Items = {
-		{"REVOLVER", "Normal", w_revolver, ATT1},
-		{"THE CLOAK AND DAGGER", "Unique", c_leather_watch, ATT2},
-		{"THE CRAB-WALKING KIT", "rarity3", w_cigarette_case, ATT3},
+		{"NONE", "Normal", surface.GetTextureID(""), ATT4},
+		{"NONE", "Normal", surface.GetTextureID(""), ATT4},
+		{"NONE", "Normal", surface.GetTextureID(""), ATT4},
 		{"NONE", "Normal", surface.GetTextureID(""), ATT4},
 		{"NONE", "Normal", surface.GetTextureID(""), ATT4},
 		{"NONE", "Normal", surface.GetTextureID(""), ATT4},
