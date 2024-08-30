@@ -95,8 +95,6 @@ for k, v in pairs(items_game["items"]) do
             v.item_slot = "misc"
             v.item_class = "tf_wearable_item"
             v.item_quality = "unique"
-            v.visuals = {}
-            v.visuals.hide_player_bodygroup_name = { "hat" }
         elseif (v.prefab == "misc" or v.prefab == "no_craft misc" or v.prefab == "valve base_misc" or v.prefab == "base_misc" or v.prefab == "no_craft misc marketable"or v.prefab == "misc") then
             v.item_slot = "misc"
             v.item_class = "tf_wearable_item"

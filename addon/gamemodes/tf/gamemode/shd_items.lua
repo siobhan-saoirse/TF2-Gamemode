@@ -159,10 +159,10 @@ function ParseGameItems(data, silent)
 				--vis.attached_models = {}
 				--vis.hide_player_bodygroup_names = {}
 				--vis.show_player_bodygroup_names = {}
-				--vis.animations = {}
-				--vis.hide_player_bodygroup_names = {}
-				--vis.player_bodygroups = {}
-				--vis.attached_particlesystems = {}
+				vis.animations = {}
+				vis.hide_player_bodygroup_names = {}
+				vis.player_bodygroups = {}
+				vis.attached_particlesystems = {}
 				
 				for a,w in pairs(vis) do
 					if string.find(a, "sound") and type(w)=="string" then
