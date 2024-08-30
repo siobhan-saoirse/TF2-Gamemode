@@ -109,9 +109,7 @@ function CLASS:Initialize()
 	self:Give("weapon_357")
 	self:Give("weapon_rpg")
 	self:Give("weapon_ar2")
-	if (scripted_ents.GetList()["none"]) then
-		self:Give("none")
-	end
+	self:Give("none")
 	self:Give("weapon_medkit")
 	self:Give("weapon_fists")
 	self:Give("gmod_tool")
