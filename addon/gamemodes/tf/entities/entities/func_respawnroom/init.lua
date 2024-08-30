@@ -75,7 +75,8 @@ function ENT:Touch(ent)
 	
 		if (ent:IsPlayer()) then
 			if (ent:Team() ~= self:GetNWInt("TeamNum")) then
-				ent:SetPos(ent:GetPos() + ent:GetAimVector() * -ent:GetWalkSpeed())
+				ent:KillSilent()
+				ent:Spawn()
 			end
 		end
 end
