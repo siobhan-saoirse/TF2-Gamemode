@@ -1280,23 +1280,25 @@ hook.Add("Think", "PlayerStuff", function()
 	for k,pl in ipairs(player.GetAll()) do
 		
 		if CLIENT then
-				if (pl.playerclass == "Heavy") then
-					pl:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
-				elseif (pl.playerclass == "Scout") then
-					pl:SetupPhonemeMappings( "player/scout/phonemes/phonemes" )
-				elseif (pl.playerclass == "Soldier") then
-					pl:SetupPhonemeMappings( "player/soldier/phonemes/phonemes" )
-				elseif (pl.playerclass == "Demoman") then
-					pl:SetupPhonemeMappings( "player/demo/phonemes/phonemes" )
-				elseif (pl.playerclass == "Engineer") then
-					pl:SetupPhonemeMappings( "player/engineer/phonemes/phonemes" )
-				elseif (pl.playerclass == "Medic") then
-					pl:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
-				elseif (pl.playerclass == "Sniper") then
-					pl:SetupPhonemeMappings( "player/sniper/phonemes/phonemes" )
-				elseif (pl.playerclass == "Spy") then
-					pl:SetupPhonemeMappings( "player/spy/phonemes/phonemes" )
-				end
+			if (pl:GetPlayerClass() == "heavy") then
+				pl:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
+			elseif (pl:GetPlayerClass() == "scout") then
+				pl:SetupPhonemeMappings( "player/scout/phonemes/phonemes" )
+			elseif (pl:GetPlayerClass() == "soldier") then
+				pl:SetupPhonemeMappings( "player/soldier/phonemes/phonemes" )
+			elseif (pl:GetPlayerClass() == "demoman") then
+				pl:SetupPhonemeMappings( "player/demo/phonemes/phonemes" )
+			elseif (pl:GetPlayerClass() == "engineer") then
+				pl:SetupPhonemeMappings( "player/engineer/phonemes/phonemes" )
+			elseif (pl:GetPlayerClass() == "medic") then
+				pl:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
+			elseif (pl:GetPlayerClass() == "sniper") then
+				pl:SetupPhonemeMappings( "player/sniper/phonemes/phonemes" )
+			elseif (pl:GetPlayerClass() == "spy") then
+				pl:SetupPhonemeMappings( "player/spy/phonemes/phonemes" )
+			else
+				pl:SetupPhonemeMappings( "phonemes" )
+			end
 		end
 		if not pl.anim_Jumping and !pl:IsOnGround() then
 			pl.anim_Jumping = true
