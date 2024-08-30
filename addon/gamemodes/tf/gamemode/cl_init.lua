@@ -691,14 +691,14 @@ function L4DClassSelection()
 	TankButton:SetSize(100, 30)
 	TankButton:SetPos(10, 35)
 	TankButton:SetText("Tank")
-	TankButton.OnCursorEntered = function() icon:SetModel( "models/infected/hulk.mdl" ) icon2:GetEntity():SetParent(icon:GetEntity()) icon2:GetEntity():AddEffects(EF_BONEMERGE) icon2:GetEntity():SetModel("models/props_debris/concrete_chunk01a.mdl") local dance = icon:GetEntity():LookupSequence( "throw_02" ) icon:GetEntity():SetSequence( dance ) icon:GetEntity():SetModelScale(0.865) end
+	TankButton.OnCursorEntered = function() icon:SetModel( "models/infected/hulk.mdl" ) icon2:GetEntity():SetParent(icon:GetEntity()) icon2:GetEntity():AddEffects(EF_BONEMERGE) icon2:GetEntity():SetModel("models/props_debris/concrete_chunk01a.mdl") local dance = icon:GetEntity():LookupSequence( "throw_02" ) icon:GetEntity():SetSequence( dance ) icon:GetEntity():SetModelScale(1.2) end
 	TankButton.DoClick = function()  RunConsoleCommand("changeclass", "tank")  LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") ClassFrame:Close()  end
 
 	local BoomerButton = vgui.Create("DImageButton", ClassFrame)
 	BoomerButton:SetSize(100, 30)
 	BoomerButton:SetPos(100, 35)
 	BoomerButton:SetText("Boomer") --Set the name of the button
-	BoomerButton.OnCursorEntered = function() icon:SetModel( "models/infected/boomer_l4d.mdl" ) icon2:GetEntity():SetParent(icon:GetEntity()) icon2:GetEntity():AddEffects(EF_BONEMERGE) local dance = icon:GetEntity():LookupSequence( "Run_Upper_KNIFE" ) icon:GetEntity():SetSequence( dance ) icon:GetEntity():SetModelScale(0.865) end
+	BoomerButton.OnCursorEntered = function() icon:SetModel( "models/infected/boomer_l4d.mdl" ) icon2:GetEntity():SetParent(icon:GetEntity()) icon2:GetEntity():AddEffects(EF_BONEMERGE) local dance = icon:GetEntity():LookupSequence( "Run_Upper_KNIFE" ) icon:GetEntity():SetSequence( dance ) icon:GetEntity():SetModelScale(1.2) end
 	BoomerButton.DoClick = function()  RunConsoleCommand("changeclass", "boomer") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") end
 	
 	local L4DZombie = vgui.Create("DImageButton", ClassFrame)
@@ -707,7 +707,7 @@ function L4DClassSelection()
 	L4DZombie:SetText("Male Zombie") --Set the name of the button
 	L4DZombie.DoClick = function()  RunConsoleCommand("changeclass", "l4d_zombie") ClassFrame:Close() LocalPlayer():EmitSound("music/safe/themonsterswithout.wav") LocalPlayer():StopSound("ClassSelection.ThemeL4D") LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 	
-	L4DZombie.OnCursorEntered = function() icon:SetModel( "models/cpthazama/l4d1/common/male_01.mdl" ) icon2:GetEntity():SetParent(icon:GetEntity()) icon2:GetEntity():AddEffects(EF_BONEMERGE)icon2:GetEntity():SetModel("models/empty.mdl")  local dance = icon:GetEntity():LookupSequence( "Run_01" ) icon:GetEntity():SetSequence( dance ) icon:GetEntity():SetModelScale(0.865) end
+	L4DZombie.OnCursorEntered = function() icon:SetModel( "models/cpthazama/l4d1/common/male_01.mdl" ) icon2:GetEntity():SetParent(icon:GetEntity()) icon2:GetEntity():AddEffects(EF_BONEMERGE)icon2:GetEntity():SetModel("models/empty.mdl")  local dance = icon:GetEntity():LookupSequence( "Run_01" ) icon:GetEntity():SetSequence( dance ) icon:GetEntity():SetModelScale(1.2) end
 
 end]]
 function DoorClose()
@@ -741,7 +741,7 @@ local ply = LocalPlayer()
 local ClassFrame = vgui.Create("DFrame") --create a frame
 ClassFrame:SetSize(ScrW() * 1, ScrH() * 1 ) --set its size
 ClassFrame:Center() --position it at the center of the screen
-ClassFrame:SetTitle("TF2 Menu") --set the title of the menu 
+ClassFrame:SetTitle("") --set the title of the menu 
 ClassFrame:SetDraggable(true) --can you move it around
 ClassFrame:SetSizable(true) --can you resize it?
 ClassFrame:ShowCloseButton(false)
@@ -822,9 +822,8 @@ function iconC:Paint()
 end
 function iconC:LayoutEntity( Entity ) return end
 local icon = vgui.Create( "DModelPanel", ClassFrame )
-icon:SetSize(ScrW() * 0.412, ScrH() * 0.571)
+icon:SetSize(ScrW() * 0.412, ScrH() * 1)
 icon:SetPos(ScrW() * 0.012, ScrH() * 0.301)
-icon:SetCamPos( Vector( 140, 0, 40 ) )
 if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1  and file.Exists("models/player/tfc_"..(c.ModelName or "scout")..".mdl", "WORKSHOP") ) then
 	icon:SetModel( "models/player/tfc_heavy.mdl" ) -- you can only change colors on playermodels
 elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
@@ -833,19 +832,23 @@ else
 	icon:SetModel( "models/player/heavy.mdl" ) -- you can only change colors on playermodels
 end
 LocalPlayer():EmitSound( "/music/class_menu_05.wav", 100, 100, 1, CHAN_VOICE ) 
-icon:GetEntity():SetModelScale(0.865)
-icon:SetZPos(-1)
-icon:SetCamPos( Vector( 90, 0, 40 ) )
+icon:GetEntity():SetModelScale(1.2)
+icon:SetCamPos( Vector( 180, 0, 40 ) )
+icon:SetFOV(50)
+icon:SetLookAt(Vector(-90,0,-15))
 icon:SetAnimated(true)
 icon.AutomaticFrameAdvance = true
 
 local icon2 = vgui.Create( "DModelPanel", ClassFrame )
-icon2:SetSize(ScrW() * 0.412, ScrH() * 0.571)
+icon2:SetSize(ScrW() * 0.412, ScrH() * 1)
 icon2:SetPos(ScrW() * 0.012, ScrH() * 0.301)
-icon2:SetZPos(-1)
-icon2:SetCamPos( Vector( 90, 0, 40 ) )
+icon2:SetCamPos( Vector( 180, 0, 40 ) )
+icon2:SetFOV(50)
+icon2:SetZPos(-0.01)
+icon2:SetLookAt(Vector(-90,0,-15))
 icon2:SetModel( "models/weapons/w_models/w_minigun.mdl" ) -- you can only change colors on playermodels
 icon2:SetAnimated(true)
+icon2:GetEntity():SetNoDraw(false)
 icon2:GetEntity():SetParent(icon:GetEntity())
 icon2:GetEntity():AddEffects(EF_BONEMERGE)
 
@@ -865,8 +868,9 @@ end
 			end
 		end
 	end)
-local dance = icon:GetEntity():LookupSequence( "selectionMenu_Anim01" )
-icon:GetEntity():SetSequence( dance )
+
+      icon:GetEntity():SetSequence("selectionmenu_startpose")
+	icon:StartScene("scenes/player/heavy/low/class_select.vcd")
 
 ClassFrame:MakePopup() --make it appear
  
@@ -929,7 +933,7 @@ PyroButton.DoClick = function()  RunConsoleCommand("changeclass", "pyro") LocalP
 
 local DemomanButton = vgui.Create("DImageButton", ClassFrame)
 DemomanButton:SetSize(ScrW() * 0.056, ScrH() * 0.195)
-DemomanButton:SetPos(ScrW() * 0.358, ScrH() * -0.015)
+DemomanButton:SetPos(ScrW() * 0.368, ScrH() * -0.015)
 --DemomanButton:SetText("Demoman") --Set the name of the button
 DemomanButton.DoClick = function()  RunConsoleCommand("changeclass", "demoman") LocalPlayer():EmitSound( "/music/class_menu_04.wav", 100, 100, 1, CHAN_VOICE ) ClassFrame:Close()  if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
 local de_img = vgui.Create( "DImage", DemomanButton )	-- Add image to Frame
@@ -1043,6 +1047,62 @@ numpyro:SetText( "3" )
 numpyro:SetFont( "MenuClassBuckets" ) 
 numpyro:SetColor( Color(117,107,94,255) )
 numpyro:SizeToContents()
+local numdemo = vgui.Create( "DLabel", ClassFrame )
+numdemo:SetPos( ScrW() * 0.366, ScrH() * 0.16 )
+numdemo:SetSize(90,12)
+numdemo:SetZPos(2)
+numdemo:SetText( "4" ) 
+numdemo:SetFont( "MenuClassBuckets" ) 
+numdemo:SetColor( Color(117,107,94,255) )
+numdemo:SizeToContents()
+local numheavy = vgui.Create( "DLabel", ClassFrame )
+numheavy:SetPos( ScrW() * 0.428, ScrH() * 0.16 )
+numheavy:SetSize(90,12)
+numheavy:SetZPos(2)
+numheavy:SetText( "5" ) 
+numheavy:SetFont( "MenuClassBuckets" ) 
+numheavy:SetColor( Color(117,107,94,255) )
+numheavy:SizeToContents()
+local numengy = vgui.Create( "DLabel", ClassFrame )
+numengy:SetPos( ScrW() * 0.478, ScrH() * 0.16 )
+numengy:SetSize(90,12)
+numengy:SetZPos(2)
+numengy:SetText( "6" ) 
+numengy:SetFont( "MenuClassBuckets" ) 
+numengy:SetColor( Color(117,107,94,255) )
+numengy:SizeToContents()
+local nummedic = vgui.Create( "DLabel", ClassFrame )
+nummedic:SetPos( ScrW() * 0.598, ScrH() * 0.16 )
+nummedic:SetSize(90,12)
+nummedic:SetZPos(2)
+nummedic:SetText( "7" ) 
+nummedic:SetFont( "MenuClassBuckets" ) 
+nummedic:SetColor( Color(117,107,94,255) )
+nummedic:SizeToContents()
+local numsniper = vgui.Create( "DLabel", ClassFrame )
+numsniper:SetPos( ScrW() * 0.658, ScrH() * 0.16 )
+numsniper:SetSize(90,12)
+numsniper:SetZPos(2)
+numsniper:SetText( "8" ) 
+numsniper:SetFont( "MenuClassBuckets" ) 
+numsniper:SetColor( Color(117,107,94,255) )
+numsniper:SizeToContents()
+local numspy = vgui.Create( "DLabel", ClassFrame )
+numspy:SetPos( ScrW() * 0.718, ScrH() * 0.16 )
+numspy:SetSize(90,12)
+numspy:SetZPos(2)
+numspy:SetText( "9" ) 
+numspy:SetFont( "MenuClassBuckets" ) 
+numspy:SetColor( Color(117,107,94,255) )
+numspy:SizeToContents()
+local numrandom = vgui.Create( "DLabel", ClassFrame )
+numrandom:SetPos( ScrW() * 0.818, ScrH() * 0.16 )
+numrandom:SetSize(90,12)
+numrandom:SetZPos(2)
+numrandom:SetText( "10" ) 
+numrandom:SetFont( "MenuClassBuckets" ) 
+numrandom:SetColor( Color(117,107,94,255) )
+numrandom:SizeToContents()
 local Hint2 = vgui.Create( "DLabel", ClassFrame )
 Hint2:SetPos( ScrW() * 0.362, ScrH() * 0.18 )
 Hint2:SetSize(90,12)
@@ -1060,15 +1120,6 @@ Hint3:SetText( "SUPPORT" )
 Hint3:SetFont( "MenuClassBuckets" ) 
 Hint3:SetColor( Color(117,107,94,255) )
 Hint3:SizeToContents()
-
-local numsoldier = vgui.Create( "DLabel", ClassFrame )
-numsoldier:SetPos( ScrW() * 0.181, ScrH() * 0.16 )
-numsoldier:SetSize(90,12)
-numsoldier:SetZPos(2)
-numsoldier:SetText( "2" ) 
-numsoldier:SetFont( "MenuClassBuckets" ) 
-numsoldier:SetColor( Color(117,107,94,255) )
-numsoldier:SizeToContents()
 
 
 local menuname = vgui.Create( "DLabel", ClassFrame )
@@ -1103,7 +1154,7 @@ if (!GetConVar("tf_disable_fun_classes"):GetBool()) then
 	gm_img:SetSize( SpyButton:GetSize() )	-- Size it to 150x150
 	gm_img:SetImage("vgui/class_sel_sm_random_inactive")
 	GmodButton.OnCursorEntered = function() 
-		icon2:GetEntity():SetModel("models/weapons/w_crowbar.mdl") 
+		icon2:GetEntity():SetModel("models/weapons/w_physics.mdl") 
 		if LocalPlayer():IsHL2() then 
 			icon:SetModel( LocalPlayer():GetModel() ) 
 		else 
@@ -1112,9 +1163,9 @@ if (!GetConVar("tf_disable_fun_classes"):GetBool()) then
 		icon2:GetEntity():SetParent(icon:GetEntity()) 
 		icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 		LocalPlayer():EmitSound( "ui/buttonrollover.wav", 100, 100, 1, CHAN_VOICE ) 
-		local dance = icon:GetEntity():LookupSequence( "run_melee" )
+		local dance = icon:GetEntity():LookupSequence( "idle_physgun" )
 		icon:GetEntity():SetSequence( dance ) 
-		icon:GetEntity():SetModelScale(0.865) 
+		icon:GetEntity():SetModelScale(1.2) 
 		icon:GetEntity():SetPoseParameter("move_x",1)  
 			
 		scout_img:SetImage( "vgui/class_sel_sm_scout_inactive" )
@@ -1234,9 +1285,10 @@ double jump while in the air!]] )
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/w_models/w_scattergun.mdl") 
 	LocalPlayer():EmitSound( "/music/class_menu_01.wav", 100, 100, 1, CHAN_VOICE ) 
-	local dance = icon:GetEntity():LookupSequence( "selectionMenu_Anim01" ) 
-	icon:GetEntity():SetSequence( dance ) 
-	icon:GetEntity():SetModelScale(0.865) 
+	
+      icon:GetEntity():SetSequence("selectionmenu_startpose")
+	icon:StartScene("scenes/player/scout/low/class_select.vcd")
+	icon:GetEntity():SetModelScale(1.2) 
 	if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
 		scout_img:SetImage( "vgui/class_sel_sm_scout_red" )
 	elseif LocalPlayer():Team()==TEAM_BLU then
@@ -1268,15 +1320,16 @@ SoldierButton.OnCursorEntered = function()
 	menuname:SetText( "SOLDIER" ) 
 	menutext:SetText( [[Shoot your rocket launcher at enemy's feet!
 Use your rocket launcher to rocket jump!]] ) 
-		menuname:SizeToContents()
-		menutext:SizeToContents()
+	menuname:SizeToContents()
+	menutext:SizeToContents()
+	icon:GetEntity():SetModelScale(1.23)
 	icon2:GetEntity():SetParent(icon:GetEntity()) 
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/w_models/w_rocketlauncher.mdl") 
 	LocalPlayer():EmitSound( "/music/class_menu_02.wav", 100, 100, 1, CHAN_VOICE ) 
-	local dance = icon:GetEntity():LookupSequence( "selectionMenu_Anim0l" ) 
-	icon:GetEntity():SetSequence( dance ) 
-	icon:GetEntity():SetModelScale(0.865) 
+	
+      icon:GetEntity():SetSequence("selectionmenu_startpose")
+	icon:StartScene("scenes/player/soldier/low/class_select.vcd")
 	if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
 		sol_img:SetImage( "vgui/class_sel_sm_soldier_red" )
 	elseif LocalPlayer():Team()==TEAM_BLU then
@@ -1315,9 +1368,10 @@ Your flamethrower is more effective the
 closer you are to your target!]] ) 
 		menuname:SizeToContents()
 		menutext:SizeToContents()
-	local dance = icon:GetEntity():LookupSequence( "selectionMenu_Anim01" ) 
-	icon:GetEntity():SetSequence( dance ) 
-	icon:GetEntity():SetModelScale(0.865) 
+		
+      icon:GetEntity():SetSequence("selectionmenu_startpose")
+	icon:StartScene("scenes/player/pyro/low/class_select.vcd")
+	icon:GetEntity():SetModelScale(1.2) 
 	if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
 		py_img:SetImage( "vgui/class_sel_sm_pyro_red" )
 	elseif LocalPlayer():Team()==TEAM_BLU then
@@ -1357,9 +1411,10 @@ a stickybomb and jumping as you detonate it!]] )
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_grenadelauncher/c_grenadelauncher.mdl") 
 	LocalPlayer():EmitSound( "/music/class_menu_04.wav", 100, 100, 1, CHAN_VOICE ) 
-	local dance = icon:GetEntity():LookupSequence( "selectionMenu_Anim01" ) 
-	icon:GetEntity():SetSequence( dance ) 
-	icon:GetEntity():SetModelScale(0.865) 
+	
+      icon:GetEntity():SetSequence("selectionmenu_startpose")
+	icon:StartScene("scenes/player/demoman/low/class_select.vcd")
+	icon:GetEntity():SetModelScale(1.2) 
 	scout_img:SetImage( "vgui/class_sel_sm_scout_inactive" )
 	sol_img:SetImage( "vgui/class_sel_sm_soldier_inactive" )
 	py_img:SetImage( "vgui/class_sel_sm_pyro_inactive" )
@@ -1392,9 +1447,10 @@ HeavyButton.OnCursorEntered = function()
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_minigun/c_minigun.mdl") 
 	LocalPlayer():EmitSound( "/music/class_menu_05.wav", 100, 100, 1, CHAN_VOICE ) 
-	local dance = icon:GetEntity():LookupSequence( "selectionMenu_Anim01" ) 
-	icon:GetEntity():SetSequence( dance ) 
-	icon:GetEntity():SetModelScale(0.865) 
+	
+      icon:GetEntity():SetSequence("selectionmenu_startpose")
+	icon:StartScene("scenes/player/heavy/low/class_select.vcd")
+	icon:GetEntity():SetModelScale(1.2) 
 	menuname:SetText( "HEAVY" ) 
 	menutext:SetText( [[Spin your minigun without firing to be ready 
 for approaching enemies!]] ) 
@@ -1444,9 +1500,10 @@ team mates get to the front lines!]] )
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_wrench/c_wrench.mdl") 
 	LocalPlayer():EmitSound( "/music/class_menu_06.wav", 100, 100, 1, CHAN_VOICE ) 
-	local dance = icon:GetEntity():LookupSequence( "selectionMenu_Anim01" ) 
-	icon:GetEntity():SetSequence( dance ) 
-	icon:GetEntity():SetModelScale(0.865) 
+	
+      icon:GetEntity():SetSequence("selectionmenu_startpose")
+	icon:StartScene("scenes/player/engineer/low/class_select.vcd")
+	icon:GetEntity():SetModelScale(1.2) 
 	scout_img:SetImage( "vgui/class_sel_sm_scout_inactive" )
 	sol_img:SetImage( "vgui/class_sel_sm_soldier_inactive" )
 	py_img:SetImage( "vgui/class_sel_sm_pyro_inactive" )
@@ -1489,9 +1546,10 @@ gain invulnerability for you and
 your medi gun target!]] ) 
 		menuname:SizeToContents()
 		menutext:SizeToContents()
-	local dance = icon:GetEntity():LookupSequence( "selectionMenu_Anim01" ) 
-	icon:GetEntity():SetSequence( dance ) 
-	icon:GetEntity():SetModelScale(0.865) 
+		
+      icon:GetEntity():SetSequence("selectionmenu_startpose")
+	icon:StartScene("scenes/player/medic/low/class_select.vcd")
+	icon:GetEntity():SetModelScale(1.2) 
 	scout_img:SetImage( "vgui/class_sel_sm_scout_inactive" )
 	sol_img:SetImage( "vgui/class_sel_sm_soldier_inactive" )
 	py_img:SetImage( "vgui/class_sel_sm_pyro_inactive" )
@@ -1526,9 +1584,10 @@ SniperButton.OnCursorEntered = function()
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_sniperrifle/c_sniperrifle.mdl") 
 	LocalPlayer():EmitSound( "/music/class_menu_08.wav", 100, 100, 1, CHAN_VOICE ) 
-	local dance = icon:GetEntity():LookupSequence( "selectionMenu_Anim01" ) 
-	icon:GetEntity():SetSequence( dance ) 
-	icon:GetEntity():SetModelScale(0.865) 
+	
+      icon:GetEntity():SetSequence("selectionmenu_startpose")
+	icon:StartScene("scenes/player/sniper/low/class_select.vcd")
+	icon:GetEntity():SetModelScale(1.2) 
 	menuname:SetText( "SNIPER" ) 
 	menutext:SetText( [[Your sniper rifle will power up 
 	to do more damage while you are zoomed in!
@@ -1567,9 +1626,10 @@ SpyButton.OnCursorEntered = function()
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_knife/c_knife.mdl") 
 	LocalPlayer():EmitSound( "/music/class_menu_09.wav", 100, 100, 1, CHAN_VOICE ) 
-	local dance = icon:GetEntity():LookupSequence( "selectionMenu_Anim01" ) 
-	icon:GetEntity():SetSequence( dance ) 
-	icon:GetEntity():SetModelScale(0.865) 
+	
+      icon:GetEntity():SetSequence("selectionmenu_startpose")
+	icon:StartScene("scenes/player/spy/low/class_select.vcd")
+	icon:GetEntity():SetModelScale(1.2) 
 	menuname:SetText( "SPY" ) 
 	menutext:SetText( [[Disguise yourself as a enemy and 
 infiltrate the enemy base!
