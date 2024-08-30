@@ -4,13 +4,16 @@ end
 
 SWEP.Slot				= 2
 if CLIENT then
-	SWEP.PrintName			= "Wrench"
-SWEP.GlobalCustomHUD = {HudAccountPanel = true}
+	SWEP.GlobalCustomHUD = {HudAccountPanel = true}
 end
 
+SWEP.Spawnable = true
+SWEP.AdminSpawnable = false
+SWEP.Category = "Team Fortress 2"
+SWEP.PrintName			= "Wrench"
 SWEP.Base				= "tf_weapon_melee_base"
 
-SWEP.ViewModel			= "models/weapons/v_models/v_wrench_engineer.mdl"
+SWEP.ViewModel			= "models/weapons/c_models/c_engineer_arms.mdl"
 SWEP.WorldModel			= "models/weapons/w_models/w_wrench.mdl"
 SWEP.Crosshair = "tf_crosshair3"
 
@@ -29,6 +32,7 @@ SWEP.MaxDamageFalloff = 0
 SWEP.Primary.Delay          = 0.8
 
 SWEP.HoldType = "MELEE"
+SWEP.HoldTypeHL2 = "melee"
 
 SWEP.NoHitSound = true
 SWEP.UpgradeSpeed = 25

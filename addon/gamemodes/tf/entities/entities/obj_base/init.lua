@@ -381,7 +381,7 @@ function ENT:Think()
 			self:OnThinkActive()
 					
 			if (self:GetBuilder() != nil) then
-				if (self:GetBuilder():GetPlayerClass() != "engineer") then
+				if (self:GetBuilder():GetPlayerClass() != "engineer" && self:GetBuilder():GetPlayerClass() != "gmodplayer") then
 					self:Explode()
 				end
 			elseif (self:GetBuilder() == nil) then
@@ -391,7 +391,7 @@ function ENT:Think()
 	elseif state==3 then
 		self:OnThinkActive()
 		if (self:GetBuilder() != nil) then
-			if (self:GetBuilder():GetPlayerClass() != "engineer") then
+			if (self:GetBuilder():GetPlayerClass() != "engineer" && self:GetBuilder():GetPlayerClass() != "gmodplayer") then
 				self:Explode()
 			end
 		elseif (self:GetBuilder() == nil) then
