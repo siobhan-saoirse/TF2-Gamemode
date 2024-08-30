@@ -109,7 +109,7 @@ function PANEL:PerformLayout()
 	local weapons = {{}, {}, {}, {}}
 
 	for id, item in pairs(tf_items.Items) do
-		if istable(item) and item.used_by_classes and item.used_by_classes[oldclass] == 1 then
+		if istable(item) and item.used_by_classes and item.used_by_classes[oldclass] then
 			if GetConVar("tf_hud_loadout_class"):GetInt() != 4 && GetConVar("tf_hud_loadout_class"):GetInt() != 9 then
 				if item.item_slot == "primary" then
 					weapons[1][id] = item -- table.insert(weapons[1], ) --id) -- weapon1:AddChoice(item.name, item.id)

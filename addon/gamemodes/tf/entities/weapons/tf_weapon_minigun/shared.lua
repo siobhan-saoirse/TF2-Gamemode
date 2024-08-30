@@ -385,16 +385,10 @@ function SWEP:Think()
 	end
 	local barrel = self:LookupBone("barrel")
 	if (barrel) then
-		local barrel = self.WModel:LookupBone("barrel")
-		if (barrel) then
-			self.WModel:ManipulateBoneAngles( barrel, Angle(0,self.barrelRotation,0) )
-		end
-		if CLIENT then
-			if (IsValid(self.FakeWorldModel)) then
-	
-				local barrel = self.FakeWorldModel:LookupBone("barrel")
-				self.FakeWorldModel:ManipulateBoneAngles( barrel, Angle(0,self.barrelRotation,0) )
-	
+		if (IsValid(self.WModel)) then
+			local barrel = self.WModel:LookupBone("barrel")
+			if (barrel) then
+				self.WModel:ManipulateBoneAngles( barrel, Angle(0,self.barrelRotation,0) )
 			end
 		end
 		self:SetSkin(self.WeaponSkin or self.Owner:GetSkin())

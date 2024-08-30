@@ -277,7 +277,7 @@ function SelectResponse(ent, dbg)
 end
 
 local function playscene_delayed(ent, scene)
-	if not IsValid(ent) then return end
+	if not IsValid(ent) then return end 
 	if (string.find(ent:GetModel(),"hwm")) then
 		if (ent:GetInfoNum("tf_usehwmvcds ",0) == 1) then
 			scene = string.Replace(scene,"low","high")

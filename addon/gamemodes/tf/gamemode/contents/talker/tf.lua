@@ -928,6 +928,11 @@
 		criteria ConceptPlayerTaunt IsScout WeaponIsPistolScout
 		response ScoutTauntSecondary
 	}
+	rule ScoutTauntPlayerSecondary2
+	{
+		criteria ConceptPlayerTaunt IsScout WeaponIsPistol
+		response ScoutTauntSecondary
+	}
 	rule ScoutTauntPlayerMelee
 	{
 		criteria ConceptPlayerTaunt IsScout WeaponIsBat
