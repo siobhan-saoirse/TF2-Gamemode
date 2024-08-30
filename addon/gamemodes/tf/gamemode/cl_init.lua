@@ -748,30 +748,6 @@ ClassFrame:ShowCloseButton(false)
 	local self = ClassFrame
 	local WScale = ScrW()/640
 	local Scale = ScrH()/480
-	-- Close button
-	if (!self.CloseButton) then
-		self.CloseButton = vgui.Create("TFButton")
-		self.CloseButton:SetParent(self)
-		self.CloseButton:SetPos(ScrW()/2 + 200*Scale,437*Scale)
-		self.CloseButton:SetSize(100*Scale,25*Scale)
-		self.CloseButton.labelText = "CLOSE"
-		self.CloseButton.font = "HudFontSmallBold"
-		function self.CloseButton:DoClick()
-			ClassFrame:Close()
-		end
-	end
-	if (!self.LoadoutButton) then
-		self.LoadoutButton = vgui.Create("TFButton")
-		self.LoadoutButton:SetParent(self)
-		self.LoadoutButton:SetPos(ScrW()/2 + 80*Scale,437*Scale)
-		self.LoadoutButton:SetSize(100*Scale,25*Scale)
-		self.LoadoutButton.labelText = "LOADOUT"
-		self.LoadoutButton.font = "HudFontSmallBold"
-		function self.LoadoutButton:DoClick()
-			ClassFrame:Close()
-			RunConsoleCommand("open_charinfo_direct")
-		end
-	end
 ClassFrame.OnClose = function()
 	LocalPlayer():StopSound("ClassSelection.ThemeMVM") 
 	LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") 
@@ -784,21 +760,6 @@ if string.find(game.GetMap(), "mvm_") then
 else
 	LocalPlayer():EmitSound("ClassSelection.ThemeNonMVM")	
 end
-
-
-	-- Close button
-	if (!self.CloseButton) then
-		self.CloseButton = vgui.Create("TFButton")
-		self.CloseButton:SetParent(self)
-		self.CloseButton:SetPos(W/2 + 200*Scale,437*Scale)
-		self.CloseButton:SetSize(100*Scale,25*Scale)
-		self.CloseButton.labelText = "CLOSE"
-		self.CloseButton.font = "HudFontSmallBold"
-		function self.CloseButton:DoClick()
-			RunConsoleCommand("hud_showloadout","0")
-		end
-	end
-
 local iconC = vgui.Create( "DModelPanel", ClassFrame )
 iconC:SetSize( ScrW() * 1, ScrH() * 1 )
 
@@ -807,6 +768,58 @@ iconC:SetPos( 0, 0)
 iconC:SetModel( "models/vgui/ui_class01.mdl" ) -- you can only change colors on playermodels
 iconC:SetZPos(-2)
 iconC:SetFOV(70)
+
+local loadout_header = surface.GetTextureID("vgui/loadout_header")
+local loadout_bottom_gradient = surface.GetTextureID("vgui/loadout_bottom_gradient")
+local loadout_solid_line = surface.GetTextureID("vgui/loadout_solid_line")
+
+local loadout_round_rect = surface.GetTextureID("vgui/loadout_round_rect")
+local loadout_round_rect_selected = surface.GetTextureID("vgui/loadout_round_rect_selected")
+
+function iconC:Paint()
+
+	if ( !IsValid( self.Entity ) ) then return end
+
+	local x, y = self:LocalToScreen( 0, 0 )
+
+	self:LayoutEntity( self.Entity )
+
+	local ang = self.aLookAngle
+	if ( !ang ) then
+		ang = ( self.vLookatPos - self.vCamPos ):Angle()
+	end
+
+	cam.Start3D( self.vCamPos, ang, self.fFOV, x, y, w, h, 5, self.FarZ )
+
+	render.SuppressEngineLighting( true )
+	render.SetLightingOrigin( self.Entity:GetPos() )
+	render.ResetModelLighting( self.colAmbientLight.r / 255, self.colAmbientLight.g / 255, self.colAmbientLight.b / 255 )
+	render.SetColorModulation( self.colColor.r / 255, self.colColor.g / 255, self.colColor.b / 255 )
+	render.SetBlend( ( self:GetAlpha() / 255 ) * ( self.colColor.a / 255 ) ) -- * surface.GetAlphaMultiplier()
+
+	for i = 0, 6 do
+		local col = self.DirectionalLight[ i ]
+		if ( col ) then
+			render.SetModelLighting( i, col.r / 255, col.g / 255, col.b / 255 )
+		end
+	end
+
+	self:DrawModel()
+
+	render.SuppressEngineLighting( false )
+	cam.End3D()
+
+	self.LastPaint = RealTime()
+	
+	-- Footer separation line
+	surface.SetDrawColor(255,255,255,255)
+	
+	tf_draw.TexturedQuadTiled(loadout_bottom_gradient, 0, 422*Scale, ScrW(), 60*Scale)
+	surface.SetTexture(loadout_solid_line)
+	surface.DrawTexturedRect(0, 422*Scale, ScrW(), 10*Scale)
+	
+
+end
 function iconC:LayoutEntity( Entity ) return end
 local icon = vgui.Create( "DModelPanel", ClassFrame )
 icon:SetSize(ScrW() * 0.412, ScrH() * 0.571)
@@ -857,6 +870,31 @@ icon:GetEntity():SetSequence( dance )
 
 ClassFrame:MakePopup() --make it appear
  
+	-- Close button
+	if (!self.CloseButton) then
+		self.CloseButton = vgui.Create("TFButton")
+		self.CloseButton:SetParent(self)
+		self.CloseButton:SetPos(ScrW()/2 + 200*Scale,437*Scale)
+		self.CloseButton:SetSize(100*Scale,25*Scale)
+		self.CloseButton.labelText = "CLOSE"
+		self.CloseButton.font = "HudFontSmallBold"
+		function self.CloseButton:DoClick()
+			ClassFrame:Close()
+		end
+	end
+	if (!self.LoadoutButton) then
+		self.LoadoutButton = vgui.Create("TFButton")
+		self.LoadoutButton:SetParent(self)
+		self.LoadoutButton:SetPos(ScrW()/2 + 80*Scale,437*Scale)
+		self.LoadoutButton:SetSize(100*Scale,25*Scale)
+		self.LoadoutButton.labelText = "LOADOUT"
+		self.LoadoutButton.font = "HudFontSmallBold"
+		function self.LoadoutButton:DoClick()
+			ClassFrame:Close()
+			RunConsoleCommand("open_charinfo_direct")
+		end
+	end
+
 local ScoutButton = vgui.Create("DImageButton", ClassFrame)
 ScoutButton:SetSize(ScrW() * 0.056, ScrH() * 0.195)
 ScoutButton:SetPos(ScrW() * 0.128, ScrH() * -0.015) --ScrW() * 0.088, ScrH() * 0.002
