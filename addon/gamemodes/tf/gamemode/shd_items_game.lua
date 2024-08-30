@@ -45,9 +45,6 @@ for k, v in pairs(items_game["items"]) do
     if (!v.attributes) then
         v.attributes = {}
     end
-    if (!v.used_by_classes) then
-        v.used_by_classes = {}
-    end
     if prefabs[v.prefab] and v.static_attrs then
         local prefab = prefabs[v.prefab]
         if prefab.static_attrs then
