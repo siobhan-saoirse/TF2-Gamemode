@@ -260,7 +260,7 @@ function PANEL:PerformLayout()
 	if not self.BackButton then
 		self.BackButton = vgui.Create("TFButton")
 		self.BackButton:SetParent(self)
-		self.BackButton:SetPos(W/2 - 200*Scale,320*Scale)
+		self.BackButton:SetPos(W/2 - 310*Scale,437*Scale)
 		self.BackButton:SetSize(100*Scale,25*Scale)
 		self.BackButton.labelText = "<< BACK"
 		self.BackButton.font = "HudFontSmallBold"
