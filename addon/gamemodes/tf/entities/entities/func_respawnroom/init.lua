@@ -58,6 +58,12 @@ function ENT:KeyValue(key,value)
 
 		self.Team = tonumber(value)
 	end
+	if (self.Team == 2 or self.Team == 3) then
+		if (ent:IsPlayer() and ent:Team() != self.TeamNum) then
+			ent:KillSilent()
+			ent:Respawn()
+		end
+	end
 	print(key, value, tonumber(value), self.Team)
 end
 
