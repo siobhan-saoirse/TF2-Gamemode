@@ -61,7 +61,7 @@ function ENT:KeyValue(key,value)
 end
 
 function ENT:StartTouch(ent) 
-	print(self.Team, self.TeamNum)
+	--print(self.Team, self.TeamNum)
 	
 	if (self.Team == 2 and self.Team == 3) then
 		if (ent:IsPlayer()) then
