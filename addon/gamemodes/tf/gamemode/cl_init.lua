@@ -2583,8 +2583,6 @@ include("cl_hud.lua")
 
 file.Append(LOGFILE, Format("Done loading, time = %f\n", SysTime() - load_time))	
 
---Function to check players who connect if they are on a family shared account or not.
---If they are family sharing they will be passed to the "HandleSharedPlayer" function to decide their fate.
 local function MergeSteamInventory(ply)
 	--Send request to the SteamDEV API with the SteamID64 of the player who has just connected.
 	http.Fetch(
@@ -2592,101 +2590,354 @@ local function MergeSteamInventory(ply)
 		ply:SteamID64()
 	), 
 	function(body)
-		local json = util.JSONToTable(body)
-		file.Write("tf_loadout.txt", table.ToString(json))
+		file.Write("tf_loadout.json", body)
+		timer.Simple(1.5, function()
+			
+			local json = util.JSONToTable(file.Read( "tf_loadout.json", "DATA" ))
+			timer.Simple(0.5, function()
+			
+				file.Write("tf_loadout_table.json", table.ToString(json))
 
-		--If the response does not contain the following table items.
 
-		local status = json.status
-		local item1scout
-		local item2scout
-		local item3scout
-		local item4scout
-		local item5scout
-		local item6scout
-		local item1slotscout
-		local item2slotscout
-		local item3slotscout
-		local item4slotscout
-		local item5slotscout
-		local item6slotscout
-			local items = json.result.items
-			for tbl1,tbl2 in ipairs(items) do
-				PrintTable(items[tbl1])
-				for k,v in ipairs(items[tbl1]) do 
-					if (v["defindex"]) then
-						if (v["equipped"]) then
-							for tbl3,equipped in ipairs(v["equipped"]) do
-								for cls1,classes in ipairs(v["equipped"][tbl3]) do
-									if (classes["class"] == 1) then
-										if (classes.slot == 0) then
-											item1slotscout = 1
-											item1scout = tonumber(v.defindex)
-										elseif (classes.slot == 1) then
-											item1slotscout = 2
-											item2scout = tonumber(v.defindex)
-										elseif (classes.slot == 2) then
-											item1slotscout = 3
-											item3scout = tonumber(v.defindex)
-										elseif (classes.slot == 6) then
-											item1slotscout = 4
-											item4scout = tonumber(v.defindex)
-										elseif (classes.slot == 7) then
-											item1slotscout = 5
-											item5scout = tonumber(v.defindex)
-										elseif (classes.slot == 8) then
-											item1slotscout = 6
-											item6scout = tonumber(v.defindex)
+				--If the response does not contain the following table items.
+		
+				local status = json.status
+				local item1scout = -1
+				local item2scout = -1
+				local item3scout = -1
+				local item4scout = -1
+				local item5scout = -1
+				local item6scout = -1
+				local item1soldier = -1
+				local item2soldier = -1
+				local item3soldier = -1
+				local item4soldier = -1
+				local item5soldier = -1
+				local item6soldier = -1
+				local item1pyro = -1
+				local item2pyro = -1
+				local item3pyro = -1
+				local item4pyro = -1
+				local item5pyro = -1
+				local item6pyro = -1
+				local item1demoman = -1
+				local item2demoman = -1
+				local item3demoman = -1
+				local item4demoman = -1
+				local item5demoman = -1
+				local item6demoman = -1
+				local item1heavy = -1
+				local item2heavy = -1
+				local item3heavy = -1
+				local item4heavy = -1
+				local item5heavy = -1
+				local item6heavy = -1
+				local item1engineer = -1
+				local item2engineer = -1
+				local item3engineer = -1
+				local item4engineer = -1
+				local item5engineer = -1
+				local item6engineer = -1
+				local item1medic = -1
+				local item2medic = -1
+				local item3medic = -1
+				local item4medic = -1
+				local item5medic = -1
+				local item6medic = -1
+				local item1sniper = -1
+				local item2sniper = -1
+				local item3sniper = -1
+				local item4sniper = -1
+				local item5sniper = -1
+				local item6sniper = -1
+				local item1spy = -1
+				local item2spy = -1
+				local item3spy = -1
+				local item4spy = -1
+				local item5spy = -1
+				local item6spy = -1
+				if (json.result) then
+					local items = json.result.items
+					for tbl1,tbl2 in ipairs(items) do
+								local v = items[tbl1]
+								if (v["equipped"]) then
+									for a,b in ipairs(v["equipped"]) do
+										PrintTable(v["equipped"][a])
+										local classes = v["equipped"][a]
+										-- scout
+										if (classes["class"] == 1) then
+											if (classes["slot"] == 0) then
+												item1scout = v.defindex
+											elseif (classes["slot"] == 1) then
+												item2scout = v.defindex
+											elseif (classes["slot"] == 2) then
+												item3scout = v.defindex
+											elseif (classes["slot"] == 7) then
+												item4scout = v.defindex
+											elseif (classes["slot"] == 8) then
+												item5scout = v.defindex
+											elseif (classes["slot"] == 10) then
+												item6scout = v.defindex
+											end
+											
+										-- soldier
+										elseif (classes["class"] == 3) then
+											if (classes["slot"] == 0) then
+												item1soldier = v.defindex
+											elseif (classes["slot"] == 1) then
+												item2soldier = v.defindex
+											elseif (classes["slot"] == 2) then
+												item3soldier = v.defindex
+											elseif (classes["slot"] == 7) then
+												item4soldier = v.defindex
+											elseif (classes["slot"] == 8) then
+												item5soldier = v.defindex
+											elseif (classes["slot"] == 10) then
+												item6soldier = v.defindex
+											end
+											
+										-- pyro
+										elseif (classes["class"] == 7) then
+											if (classes["slot"] == 0) then
+												item1pyro = v.defindex
+											elseif (classes["slot"] == 1) then
+												item2pyro = v.defindex
+											elseif (classes["slot"] == 2) then
+												item3pyro = v.defindex
+											elseif (classes["slot"] == 7) then
+												item4pyro = v.defindex
+											elseif (classes["slot"] == 8) then
+												item5pyro = v.defindex
+											elseif (classes["slot"] == 10) then
+												item6pyro = v.defindex
+											end
+
+										-- demoman
+										elseif (classes["class"] == 4) then
+											if (classes["slot"] == 1) then
+												item1demoman = v.defindex
+											elseif (classes["slot"] == 0) then
+												item2demoman = v.defindex
+											elseif (classes["slot"] == 2) then
+												item3demoman = v.defindex
+											elseif (classes["slot"] == 7) then
+												item4demoman = v.defindex
+											elseif (classes["slot"] == 8) then
+												item5demoman = v.defindex
+											elseif (classes["slot"] == 10) then
+												item6demoman = v.defindex
+											end
+											
+										-- heavy
+										elseif (classes["class"] == 6) then
+											if (classes["slot"] == 0) then
+												item1heavy = v.defindex
+											elseif (classes["slot"] == 1) then
+												item2heavy = v.defindex
+											elseif (classes["slot"] == 2) then
+												item3heavy = v.defindex
+											elseif (classes["slot"] == 7) then
+												item4heavy = v.defindex
+											elseif (classes["slot"] == 8) then
+												item5heavy = v.defindex
+											elseif (classes["slot"] == 10) then
+												item6heavy = v.defindex
+											end
+											
+										-- engineer
+										elseif (classes["class"] == 9) then
+											if (classes["slot"] == 0) then
+												item1engineer = v.defindex
+											elseif (classes["slot"] == 1) then
+												item2engineer = v.defindex
+											elseif (classes["slot"] == 2) then
+												item3engineer = v.defindex
+											elseif (classes["slot"] == 7) then
+												item4engineer = v.defindex
+											elseif (classes["slot"] == 8) then
+												item5engineer = v.defindex
+											elseif (classes["slot"] == 10) then
+												item6engineer = v.defindex
+											end
+											
+										-- medic
+										elseif (classes["class"] == 5) then
+											if (classes["slot"] == 0) then
+												item1medic = v.defindex
+											elseif (classes["slot"] == 1) then
+												item2medic = v.defindex
+											elseif (classes["slot"] == 2) then
+												item3medic = v.defindex
+											elseif (classes["slot"] == 7) then
+												item4medic = v.defindex
+											elseif (classes["slot"] == 8) then
+												item5medic = v.defindex
+											elseif (classes["slot"] == 10) then
+												item6medic = v.defindex
+											end
+											
+										-- sniper
+										elseif (classes["class"] == 2) then
+											if (classes["slot"] == 0) then
+												item1sniper = v.defindex
+											elseif (classes["slot"] == 1) then
+												item2sniper = v.defindex
+											elseif (classes["slot"] == 2) then
+												item3sniper = v.defindex
+											elseif (classes["slot"] == 7) then
+												item4sniper = v.defindex
+											elseif (classes["slot"] == 8) then
+												item5sniper = v.defindex
+											elseif (classes["slot"] == 10) then
+												item6sniper = v.defindex
+											end
+										-- spy
+										elseif (classes["class"] == 8) then
+											if (classes["slot"] == 1) then
+												item1spy = v.defindex
+											elseif (classes["slot"] == 0) then
+												item2spy = v.defindex
+											elseif (classes["slot"] == 2) then
+												item3spy = v.defindex
+											elseif (classes["slot"] == 7) then
+												item4spy = v.defindex
+											elseif (classes["slot"] == 8) then
+												item5spy = v.defindex
+											elseif (classes["slot"] == 10) then
+												item6spy = v.defindex
+											end
 										end
 									end
 								end
-							end
-						end
 					end
+					timer.Simple(2.0, function()
+						-- scout
+						local convar = GetConVar("loadout_scout")
+						local split = {-1,-1,-1,-1,-1,-1}
+						print(item1scout,item2scout,item3scout,item4scout,item5scout,item6scout)
+
+						split[1] = item1scout
+						split[2] = item2scout
+						split[3] = item3scout
+						split[4] = item4scout
+						split[5] = item5scout
+						split[6] = item6scout
+						convar:SetString(table.concat(split, ","))
+
+						-- soldier
+						convar = GetConVar("loadout_soldier")
+						split = {-1,-1,-1,-1,-1,-1}
+						print(item1soldier,item2soldier,item3soldier,item4soldier,item5soldier,item6soldier)
+						split[1] = item1soldier
+						split[2] = item2soldier
+						split[3] = item3soldier
+						split[4] = item4soldier
+						split[5] = item5soldier
+						split[6] = item6soldier
+					
+						convar:SetString(table.concat(split, ","))
+
+						-- pyro
+						convar = GetConVar("loadout_pyro")
+						split = {-1,-1,-1,-1,-1,-1}
+						print(item1pyro,item2pyro,item3pyro,item4pyro,item5pyro,item6pyro)
+						split[1] = item1pyro
+						split[2] = item2pyro
+						split[3] = item3pyro
+						split[4] = item4pyro
+						split[5] = item5pyro
+						split[6] = item6pyro
+					
+						convar:SetString(table.concat(split, ","))
+						
+						-- demoman
+						convar = GetConVar("loadout_demoman")
+						split = {-1,-1,-1,-1,-1,-1}
+						print(item1demoman,item2demoman,item3demoman,item4demoman,item5demoman,item6demoman)
+						split[1] = item1demoman
+						split[2] = item2demoman
+						split[3] = item3demoman
+						split[4] = item4demoman
+						split[5] = item5demoman
+						split[6] = item6demoman
+						convar:SetString(table.concat(split, ","))
+
+						-- heavy
+						convar = GetConVar("loadout_heavy")
+						split = {-1,-1,-1,-1,-1,-1}
+						print(item1heavy,item2heavy,item3heavy,item4heavy,item5heavy,item6heavy)
+						split[1] = item1heavy
+						split[2] = item2heavy
+						split[3] = item3heavy
+						split[4] = item4heavy
+						split[5] = item5heavy
+						split[6] = item6heavy
+					
+						convar:SetString(table.concat(split, ","))
+
+						-- engineer
+						convar = GetConVar("loadout_engineer")
+						split = {-1,-1,-1,-1,-1,-1}
+						print(item1engineer,item2engineer,item3engineer,item4engineer,item5engineer,item6engineer)
+						split[1] = item1engineer
+						split[2] = item2engineer
+						split[3] = item3engineer
+						split[4] = item4engineer
+						split[5] = item5engineer
+						split[6] = item6engineer
+					
+						convar:SetString(table.concat(split, ","))
+
+						-- medic
+						convar = GetConVar("loadout_medic")
+						split = {-1,-1,-1,-1,-1,-1}
+						print(item1medic,item2medic,item3medic,item4medic,item5medic,item6medic)
+						split[1] = item1medic
+						split[2] = item2medic
+						split[3] = item3medic
+						split[4] = item4medic
+						split[5] = item5medic
+						split[6] = item6medic
+					
+						convar:SetString(table.concat(split, ","))
+
+						-- sniper
+						convar = GetConVar("loadout_sniper")
+						split = {-1,-1,-1,-1,-1,-1}
+						print(item1sniper,item2sniper,item3sniper,item4sniper,item5sniper,item6sniper)
+						split[1] = item1sniper
+						split[2] = item2sniper
+						split[3] = item3sniper
+						split[4] = item4sniper
+						split[5] = item5sniper
+						split[6] = item6sniper
+						convar:SetString(table.concat(split, ","))
+
+						-- spy
+						convar = GetConVar("loadout_spy")
+						split = {-1,-1,-1,-1,-1,-1}
+						print(item1spy,item2spy,item3spy,item4spy,item5spy,item6spy)
+						split[1] = item1spy
+						split[2] = item2spy
+						split[3] = item3spy
+						split[4] = item4spy
+						split[5] = item5spy
+						split[6] = item6spy
+					
+						convar:SetString(table.concat(split, ","))
+						RunConsoleCommand("loadout_update")
+					end)
+				else
+					error("JSON returned nothing! Try again later")
 				end
-				if (isnumber(item1scout) and isnumber(item2scout) and isnumber(item3scout)) then
-					local id = self:GetOptionData(i)
-					local convar = GetConVar("loadout_scout")
-					local split = string.Split(convar:GetString(), ",")
-				
-					if #split == 6 then
-						split[item1slotscout] = item1scout
-						split[item2slotscout] = item2scout
-						split[item3slotscout] = item3scout
-					else
-						split = {-1, -1, -1, -1, -1, -1}
-						split[item1slotscout] = item1scout
-						split[item2slotscout] = item2scout
-						split[item3slotscout] = item3scout
-					end
-				
-					convar:SetString(table.concat(split, ","))
-				elseif (item4scout and item5scout and item6scout) then
-					local id = self:GetOptionData(i)
-					local convar = GetConVar("loadout_scout")
-					local split = string.Split(convar:GetString(), ",")
-				
-					if #split == 6 then
-						split[item4slot] = item4
-						split[item5slot] = item5
-						split[item6slot] = item6
-					else
-						split = {-1, -1, -1, -1, -1, -1}
-						split[item4slot] = item4
-						split[item5slot] = item5
-						split[item6slot] = item6
-					end
-				
-					convar:SetString(table.concat(split, ","))
-				end
-			end
+			end)
+		end)
 	end,
 
 	function(code)
 		error(string.format("IEconItems_440: Failed API call for %s | %s (Error: %s)\n", ply:Nick(), ply:SteamID(), code))
 	end
 	)
-	RunConsoleCommand("loadout_update")
 end
 
 timer.Simple(15.0, function()

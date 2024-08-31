@@ -3,15 +3,15 @@
 -- loadout should be done through data rather than convars, some custom classes may not work with convars
 -- should probably open a list of weapons like before but only for the selected thing
 
-CreateConVar("loadout_scout", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
-CreateConVar("loadout_soldier", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
-CreateConVar("loadout_pyro", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
-CreateConVar("loadout_demoman", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
-CreateConVar("loadout_heavy", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
-CreateConVar("loadout_engineer", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
-CreateConVar("loadout_sniper", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
-CreateConVar("loadout_medic", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
-CreateConVar("loadout_spy", "", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
+CreateConVar("loadout_scout", "-1,-1,-1,-1,-1,-1", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
+CreateConVar("loadout_soldier", "-1,-1,-1,-1,-1,-1", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
+CreateConVar("loadout_pyro", "-1,-1,-1,-1,-1,-1", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
+CreateConVar("loadout_demoman", "-1,-1,-1,-1,-1,-1", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
+CreateConVar("loadout_heavy", "-1,-1,-1,-1,-1,-1", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
+CreateConVar("loadout_engineer", "-1,-1,-1,-1,-1,-1", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
+CreateConVar("loadout_sniper", "-1,-1,-1,-1,-1,-1", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
+CreateConVar("loadout_medic", "-1,-1,-1,-1,-1,-1", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
+CreateConVar("loadout_spy", "-1,-1,-1,-1,-1,-1", {FCVAR_ARCHIVE,FCVAR_USERINFO}, "")
 
 local nextLoadoutUpdate = 0
 
