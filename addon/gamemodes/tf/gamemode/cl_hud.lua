@@ -355,7 +355,7 @@ end
 
 local function targetid_trace_condition(tr,ply)
 	ply = ply or LocalPlayer()
-	return !ply:IsHL2() and IsValid(tr.Entity) and (tr.Entity:IsTFPlayer() ) and (GAMEMODE:EntityTeam(tr.Entity)==LocalPlayer():Team() or hud_targetid_anyteam:GetBool() or LocalPlayer():GetPlayerClass() == "spy") or LocalPlayer():Team() == TEAM_FRIENDLY and tr.Entity:IsTFPlayer() or GAMEMODE:EntityTeam(tr.Entity) ~= LocalPlayer():EntityTeam() and tr.Entity:IsPlayer() and tr.Entity:GetPlayerClass() == "spy"
+	return !ply:IsHL2() and IsValid(tr.Entity) and (tr.Entity:IsTFPlayer() ) and (GAMEMODE:EntityTeam(tr.Entity)==LocalPlayer():Team()) and tr.Entity:GetMaterial() != "color" and tr.Entity:GetMaterial() != "models/shadertest/shader3" and tr.Entity:GetMaterial() != "models/props_combine/tprings_globe"
 end
 
 function GM:TargetIDThink()
