@@ -1153,7 +1153,7 @@ hook.Add("Think","Bacterias",function()
 			if (v.Whistle and v.Whistle:IsPlaying() and v:IsOnGround()) then
 				if (v.Whistle:IsPlaying()) then
 					v.Whistle:Stop()
-					v.m_flBlastJumpLaunchTime = CurTime()
+					v.m_flBlastJumpLaunchTime = nil
 				end
 			end
 		end

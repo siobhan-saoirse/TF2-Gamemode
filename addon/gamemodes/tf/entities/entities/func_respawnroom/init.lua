@@ -73,7 +73,7 @@ function ENT:Touch(ent)
 		ent:SetSkin(3)
 	end
 	
-		if (ent:IsPlayer()) then
+		if (ent:IsPlayer() and !string.find(game.GetMap(),"achievement_")) then
 			if (ent:Team() ~= self:GetNWInt("TeamNum") && (ent:Team() == TEAM_RED or ent:Team() == TEAM_BLU)) then
 				ent:KillSilent()
 				ent:Spawn()

@@ -281,21 +281,23 @@ function ENT:DoExplosion()
 			for k,v in ipairs(ents.FindInSphere(self:GetPos(), range*1)) do
 				if v == owner then
 					v:SetLocalVelocity(v:GetVelocity() * 1.9 + Vector(0, 0, 250)) 
-					if (!owner.Whistle) then
-						owner.Whistle = CreateSound(owner,"BlastJump.Whistle")
-						owner.Whistle:PlayEx(0.25,200)
+					if (owner.m_flBlastJumpLaunchTime == nil) then
+						if (!owner.Whistle) then
+							owner.Whistle = CreateSound(owner,"BlastJump.Whistle")
+							owner.Whistle:PlayEx(0.25,200)
+						end
+						if (owner.Whistle and !owner.Whistle:IsPlaying()) then
+							owner.Whistle:PlayEx(0.25,200)
+						end
+						owner.m_flBlastJumpLaunchTime = CurTime()
 					end
-					if (owner.Whistle and !owner.Whistle:IsPlaying()) then
-						owner.Whistle:PlayEx(0.25,200)
-					end
-					owner.m_flBlastJumpLaunchTime = CurTime()
 				end
 			end
 		else
 			util.BlastDamage(self, owner, self:GetPos(), range, 100)
 		end
 	end
-	
+
 	self.Dead = true
 	self:SetNotSolid(true)
 	self:SetNoDraw(true)

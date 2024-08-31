@@ -489,18 +489,19 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		dmginfo:ScaleDamage(0.000001)
 	end
 	if (ent:IsPlayer() and att == ent && dmginfo:IsExplosionDamage() && (ent:GetNWBool("Bonked") == true || ent:EntityTeam() == TEAM_FRIENDLY)) then
-		if (!ent.Whistle) then
-			ent.Whistle = CreateSound(ent,"BlastJump.Whistle")
-			ent.Whistle:Play()
-			ent.Whistle:ChangePitch(200,0)
-			ent.m_flBlastJumpLaunchTime = CurTime()
-		end
-		if (ent.Whistle) then
-			ent.Whistle:Play()
-			ent.Whistle:ChangePitch(200,0)
-			ent.m_flBlastJumpLaunchTime = CurTime()
-		end
-		
+		if (ent.m_flBlastJumpLaunchTime == nil) then
+			if (!ent.Whistle) then
+				ent.Whistle = CreateSound(ent,"BlastJump.Whistle")
+				ent.Whistle:Play()
+				ent.Whistle:ChangePitch(200,0)
+				ent.m_flBlastJumpLaunchTime = CurTime()
+			end
+			if (ent.Whistle) then
+				ent.Whistle:Play()
+				ent.Whistle:ChangePitch(200,0)
+				ent.m_flBlastJumpLaunchTime = CurTime()
+			end
+		end	
 	end
 
 	if (!att:CanDamage(ent)) then
