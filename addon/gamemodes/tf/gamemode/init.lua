@@ -1911,7 +1911,7 @@ function GM:PlayerSpawn(ply)
 		ply.ItemLoadout = table.Copy(c.DefaultLoadout)
 		ply.ItemProperties = {}
 	end
-	
+
 	--[[
 	if (string.StartWith(game.GetMap(),"c1m") or string.StartWith(game.GetMap(),"c2m") or string.StartWith(game.GetMap(),"c3m") or string.StartWith(game.GetMap(),"c4m") 
 	or string.StartWith(game.GetMap(),"c5m") or string.StartWith(game.GetMap(),"c6m") or string.StartWith(game.GetMap(),"c7m") or string.StartWith(game.GetMap(),"c8m")
@@ -2445,6 +2445,9 @@ function GM:PlayerSelectSpawn(pl)
 	return self.BaseClass:PlayerSelectSpawn(pl)
 end
 hook.Add( "PlayerGiveSWEP", "BlockPlayerSWEPs", function( ply, class, swep )
+	if ( GetConVar("tf_competitive"):GetBool() and not ply:IsAdmin() ) then
+		return false
+	end
 	if ( ply:Team() == TEAM_BLU and string.find(game.GetMap(), "mvm_") ) then
 		return false
 	end

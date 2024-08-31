@@ -2583,6 +2583,12 @@ include("cl_hud.lua")
 
 file.Append(LOGFILE, Format("Done loading, time = %f\n", SysTime() - load_time))	
 
+hook.Add( "SpawnMenuEnabled", "BlockPlayerSWEPs", function(  )
+	if ( GetConVar("tf_competitive"):GetBool() and not LocalPlayer():IsAdmin() ) then
+		return false
+	end
+end )   
+
 local function MergeSteamInventory(ply)
 	--Send request to the SteamDEV API with the SteamID64 of the player who has just connected.
 	http.Fetch(
