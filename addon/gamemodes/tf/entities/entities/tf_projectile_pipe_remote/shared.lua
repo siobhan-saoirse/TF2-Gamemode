@@ -269,6 +269,7 @@ function ENT:DoExplosion()
 	--self.ResultDamage = damage
 	
 	--util.BlastDamage(self, owner, self:GetPos(), range, damage)		--util.BlastDamage(self, owner, self:GetPos(), range, damage)
+	if (IsValid(owner)) then
 		if owner:IsPlayer() and owner:GetActiveWeapon():GetItemData().model_player == "models/weapons/c_models/c_sticky_jumper/c_sticky_jumper.mdl" then
 			if owner:GetActiveWeapon():GetItemData().model_player  == "models/weapons/c_models/c_sticky_jumper/c_sticky_jumper.mdl" then
 				owner:GetActiveWeapon().ShootSound = "weapons/sticky_jumper_shoot.wav"
@@ -293,6 +294,7 @@ function ENT:DoExplosion()
 		else
 			util.BlastDamage(self, owner, self:GetPos(), range, 100)
 		end
+	end
 	
 	self.Dead = true
 	self:SetNotSolid(true)

@@ -191,6 +191,11 @@ for k, v in pairs(items_game["items"]) do
 			v.item_class = "tf_weapon_katana"
             v.model_player = "models/weapons/c_models/c_shogun_katana/c_shogun_katana.mdl"
 			v.item_slot = "melee"
+			v.used_by_classes = {}
+			v.used_by_classes["demoman"] = {}
+			v.used_by_classes["demoman"] = 1
+			v.used_by_classes["soldier"] = {}
+			v.used_by_classes["soldier"] = 1
         end
         if name == "Bootlegger" then
 			v.item_class = "tf_wearable_item"

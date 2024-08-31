@@ -1097,6 +1097,45 @@ local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
 	end
 end)
 
+hook.Add( "DrawWorldModel", "DrawWorldModelTF2", function( swep,flags )
+
+	swep.WModel = ClientsideModel(swep.WorldModel)
+
+	-- Settings...
+	swep.WModel:SetNoDraw(true)
+
+	function SWEP:DrawWorldModel()
+		local _Owner = swep:GetOwner()
+
+		if (IsValid(_Owner)) then
+            -- Specify a good position
+			swep.WModel:SetSkin(swep.WeaponSkin)
+			swep.WModel:SetModel(swep.WorldModel)
+			
+			local boneid = _Owner:LookupBone("ValveBiped.Bip01_R_Hand") or _Owner:LookupBone("weapon_bone") -- Right Hand
+			if !boneid then return end
+
+			local matrix = _Owner:GetBoneMatrix(boneid)
+			if !matrix then return end
+
+			local offsetVec = Vector(0, -2, 0)
+			local offsetAng = Angle(170, 180, 0)
+			if (boneid == _Owner:LookupBone("weapon_bone")) then
+				local offsetVec = Vector(0, -2, 5)
+				local offsetAng = Angle(-90, -90, 0)
+				local newPos, newAng = LocalToWorld(offsetVec, offsetAng, matrix:GetTranslation(), matrix:GetAngles())
+
+				swep.WModel:SetPos(newPos)
+				swep.WModel:SetAngles(newAng)
+
+				swep.WModel:SetupBones()
+				swep.WModel:DrawModel()
+			end
+		end
+	end
+
+end)
+
 hook.Add("Think","Bacterias",function()
 	if SERVER then
 		for k,v in ipairs(player.GetAll()) do

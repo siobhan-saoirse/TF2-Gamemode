@@ -33,7 +33,7 @@ PrecacheParticleSystem("muzzle_revolver")
 
 SWEP.BaseDamage = 40
 SWEP.BulletsPerShot = 1
-SWEP.BulletSpread = 0.0125
+SWEP.BulletSpread = 0.0125 * 1.5
 SWEP.Primary.ClipSize		= 6
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
 SWEP.Primary.Ammo			= TF_PRIMARY

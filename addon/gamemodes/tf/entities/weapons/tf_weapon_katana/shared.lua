@@ -91,7 +91,7 @@ function SWEP:Think()
 		self.VM_HITCENTER = ACT_MELEE_VM_HITCENTER
 		self.VM_SWINGHARD = ACT_MELEE_VM_SWINGHARD
 		self.HoldType = "MELEE"
-		self:SetHoldType("MELEE")
+		self:SetWeaponHoldType("MELEE")
 	end
 	return self.BaseClass.Think(self)
 end
