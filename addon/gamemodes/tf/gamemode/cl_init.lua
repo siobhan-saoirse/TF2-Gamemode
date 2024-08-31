@@ -894,7 +894,6 @@ ClassFrame:MakePopup() --make it appear
 		self.LoadoutButton.labelText = "LOADOUT"
 		self.LoadoutButton.font = "HudFontSmallBold"
 		function self.LoadoutButton:DoClick()
-			ClassFrame:Close()
 			RunConsoleCommand("open_charinfo_direct")
 		end
 	end
