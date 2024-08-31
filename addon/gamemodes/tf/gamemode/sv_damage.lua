@@ -485,7 +485,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	local amount = dmginfo:GetDamage()
 	
 	local att = dmginfo:GetAttacker()
-	if ent:GetNWBool("Bonked") == true || ent:Team() == TEAM_FRIENDLY then
+	if ent:GetNWBool("Bonked") == true || ent:IsTFPlayer() and ent:Team() == TEAM_FRIENDLY then
 		dmginfo:ScaleDamage(0.000001)
 	end
 	if (ent:IsPlayer() and att == ent && dmginfo:IsExplosionDamage() && (ent:GetNWBool("Bonked") == true || ent:EntityTeam() == TEAM_FRIENDLY)) then
