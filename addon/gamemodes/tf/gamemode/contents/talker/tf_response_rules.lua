@@ -724,6 +724,7 @@ criterion "ConceptPlayerHealth" "Concept" "TLK_PLAYER_HEALTH_CO" required
 #include "talker/Medic.lua"
 #include "talker/Pyro.lua"
 #include "talker/Spy.lua"
+#include "talker/Gmodplayer.lua"
 // #include "talker/Civilian_.lua"
 // #include "talker/mercenary.lua"
 // #include "talker/john.lua"  
