@@ -1368,7 +1368,13 @@ double jump while in the air!]] )
 	sn_img:SetImage( "vgui/class_sel_sm_sniper_inactive" )
 	sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 	if (IsValid(GmodButton)) then
-		gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		
+		if !GetConVar("tf_disable_fun_classes"):GetBool() then
+			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+		else
+			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		end
+		
 	end
 end
 SoldierButton.OnCursorEntered = function() 
