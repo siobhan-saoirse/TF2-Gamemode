@@ -2854,8 +2854,8 @@ local function MergeSteamInventory(ply)
 						convar = GetConVar("loadout_demoman")
 						split = {-1,-1,-1,-1,-1,-1}
 						print(item1demoman,item2demoman,item3demoman,item4demoman,item5demoman,item6demoman)
-						split[1] = item1demoman
-						split[2] = item2demoman
+						split[2] = item1demoman
+						split[1] = item2demoman
 						split[3] = item3demoman
 						split[4] = item4demoman
 						split[5] = item5demoman
@@ -2917,8 +2917,8 @@ local function MergeSteamInventory(ply)
 						convar = GetConVar("loadout_spy")
 						split = {-1,-1,-1,-1,-1,-1}
 						print(item1spy,item2spy,item3spy,item4spy,item5spy,item6spy)
-						split[1] = item1spy
-						split[2] = item2spy
+						split[2] = item1spy
+						split[1] = item2spy
 						split[3] = item3spy
 						split[4] = item4spy
 						split[5] = item5spy
