@@ -1816,7 +1816,7 @@ hook.Add("PlayerStepSoundTime", "FootTime", function(ply, iType, iWalking)
 				local speed = math.Remap(ply:GetWalkSpeed(), 200, 450, 400, 200) + 100
 				return speed
 			else
-				if (ply:Crouching()) then
+				if (ply:Crouching() or ply:KeyDown(IN_WALK)) then
 					local speed = math.Remap(ply:GetWalkSpeed(), 200, 450, 400, 200) + 100
 					return speed
 				else

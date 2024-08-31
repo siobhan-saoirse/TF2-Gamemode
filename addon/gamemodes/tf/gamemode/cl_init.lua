@@ -2582,3 +2582,141 @@ end)
 include("cl_hud.lua")
 
 file.Append(LOGFILE, Format("Done loading, time = %f\n", SysTime() - load_time))	
+
+--Function to check players who connect if they are on a family shared account or not.
+--If they are family sharing they will be passed to the "HandleSharedPlayer" function to decide their fate.
+local function MergeSteamInventory(ply)
+	--Send request to the SteamDEV API with the SteamID64 of the player who has just connected.
+	http.Fetch(
+	string.format("https://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?steamid=%s&key=EFC1DC87C314EAD8164899A6AAEEC6F8",
+		ply:SteamID64()
+	),
+
+	function(body)
+		local body = util.JSONToTable(body)
+
+		--If the response does not contain the following table items.
+		if not body or not body.result or not body.result.items then
+			error(string.format("IEconItems_440: Invalid Steam API response for %s | %s\n", ply:Nick(), ply:SteamID()))
+		end 
+
+		local status = body.result.status
+		local item1scout
+		local item2scout
+		local item3scout
+		local item4scout
+		local item5scout
+		local item6scout
+		local item1slotscout
+		local item2slotscout
+		local item3slotscout
+		local item4slotscout
+		local item5slotscout
+		local item6slotscout
+		if status == "1" then
+			local items = body.result.items
+			for k,v in ipairs(items) do
+				if (v.defindex) then
+					if (v.equipped) then
+						for _,classes in ipairs(v.equipped) do
+							if (classes.class == 1) then
+								if (classes.slot == 0) then
+									item1slotscout = 1
+									item1scout = v.defindex
+								elseif (classes.slot == 1) then
+									item1slotscout = 2
+									item2scout = v.defindex
+								elseif (classes.slot == 2) then
+									item1slotscout = 3
+									item3scout = v.defindex
+								elseif (classes.slot == 6) then
+									item1slotscout = 4
+									item4scout = v.defindex
+								elseif (classes.slot == 7) then
+									item1slotscout = 5
+									item5scout = v.defindex
+								elseif (classes.slot == 8) then
+									item1slotscout = 6
+									item6scout = v.defindex
+								end
+							end
+						end
+					end
+				end
+			end
+			if (item1scout and item2scout and item3scout) then
+				local id = self:GetOptionData(i)
+				local convar = GetConVar("loadout_scout")
+				local split = string.Split(convar:GetString(), ",")
+			
+				if #split == 6 then
+					split[item1slotscout] = item1scout
+					split[item2slotscout] = item2scout
+					split[item3slotscout] = item3scout
+				else
+					split = {-1, -1, -1, -1, -1, -1}
+					split[item1slotscout] = item1scout
+					split[item2slotscout] = item2scout
+					split[item3slotscout] = item3scout
+				end
+			
+				convar:SetString(table.concat(split, ","))
+			elseif (item4scout and item5scout and item6scout) then
+				local id = self:GetOptionData(i)
+				local convar = GetConVar("loadout_scout")
+				local split = string.Split(convar:GetString(), ",")
+			
+				if #split == 6 then
+					split[item4slot] = item4
+					split[item5slot] = item5
+					split[item6slot] = item6
+				else
+					split = {-1, -1, -1, -1, -1, -1}
+					split[item4slot] = item4
+					split[item5slot] = item5
+					split[item6slot] = item6
+				end
+			
+				convar:SetString(table.concat(split, ","))
+			end
+		else
+
+		end
+	end,
+
+	function(code)
+		error(string.format("IEconItems_440: Failed API call for %s | %s (Error: %s)\n", ply:Nick(), ply:SteamID(), code))
+	end
+	)
+end
+
+timer.Simple(5.0, function()
+
+	if CLIENT then
+		local conflict_help_frame = vgui.Create( "DFrame" )
+		conflict_help_frame:SetSize(200, 200)
+		conflict_help_frame:Center()
+		conflict_help_frame:SetTitle("Steam Inventory Integration")
+		conflict_help_frame:ShowCloseButton(true)
+		conflict_help_frame:SetBackgroundBlur(true)
+		conflict_help_frame:MakePopup()
+
+		local conflicttext = vgui.Create("RichText", conflict_help_frame)
+		conflicttext:Dock(FILL)
+		conflicttext:InsertColorChange(255, 255, 255, 255)
+		conflicttext:CenterHorizontal(0.5)
+		conflicttext:SetVerticalScrollbarEnabled(false)
+		conflicttext:AppendText("Would you like to integrate your TF2 Inventory with this gamemode? Click the close button if you don't want to. It will not work if your inventory is private.")
+			local conflictbut2 = vgui.Create("DButton", conflict_help_frame)
+			conflictbut2:SetSize(100, 30)
+			conflictbut2:SetPos(0, 125)
+			conflictbut2:CenterHorizontal(0.5)
+			conflictbut2:SetText("Yes") 
+
+			function conflictbut2.DoClick()
+				conflict_help_frame:Close()
+				MergeSteamInventory(LocalPlayer())
+			end
+	end
+
+end)

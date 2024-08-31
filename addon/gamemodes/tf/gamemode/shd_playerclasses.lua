@@ -593,7 +593,7 @@ function meta:SetClassSpeed(sp)
 	if !self:IsHL2() then
 		self:SetWalkSpeed(sp) 
 		self:SetRunSpeed(sp) 
-		self:SetJumpPower(200)
+		self:SetJumpPower(220)
 		self:SetCrouchedWalkSpeed(0.33)
 		self:SetMaxSpeed(520) 
 		self:SetNWFloat("ClassSpeed", sp) 
