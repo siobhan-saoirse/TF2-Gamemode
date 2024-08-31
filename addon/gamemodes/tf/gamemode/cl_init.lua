@@ -745,6 +745,7 @@ ClassFrame:SetTitle("") --set the title of the menu
 ClassFrame:SetDraggable(true) --can you move it around
 ClassFrame:SetSizable(true) --can you resize it?
 ClassFrame:ShowCloseButton(false)
+ClassFrame:MakePopup() --make it appear
 	local self = ClassFrame
 	local WScale = ScrW()/640
 	local Scale = ScrH()/480
@@ -847,10 +848,56 @@ icon2:SetFOV(50)
 icon2:SetZPos(-0.01)
 icon2:SetLookAt(Vector(-90,0,-15))
 icon2:SetModel( "models/weapons/w_models/w_minigun.mdl" ) -- you can only change colors on playermodels
+local icon3 = vgui.Create( "DModelPanel", ClassFrame )
+icon3:SetSize(ScrW() * 0.412, ScrH() * 1)
+icon3:SetPos(ScrW() * 0.012, ScrH() * 0.301)
+icon3:SetCamPos( Vector( 180, 0, 40 ) )
+icon3:SetFOV(50)
+icon3:SetZPos(-0.01)
+icon3:SetLookAt(Vector(-90,0,-15))
+icon3:SetModel( "models/empty.mdl" ) -- you can only change colors on playermodels
+local icon4 = vgui.Create( "DModelPanel", ClassFrame )
+icon4:SetSize(ScrW() * 0.412, ScrH() * 1)
+icon4:SetPos(ScrW() * 0.012, ScrH() * 0.301)
+icon4:SetCamPos( Vector( 180, 0, 40 ) )
+icon4:SetFOV(50)
+icon4:SetZPos(-0.01)
+icon4:SetLookAt(Vector(-90,0,-15))
+icon4:SetModel( "models/empty.mdl" ) -- you can only change colors on playermodels
+local icon5 = vgui.Create( "DModelPanel", ClassFrame )
+icon5:SetSize(ScrW() * 0.412, ScrH() * 1)
+icon5:SetPos(ScrW() * 0.012, ScrH() * 0.301)
+icon5:SetCamPos( Vector( 180, 0, 40 ) )
+icon5:SetFOV(50)
+icon5:SetZPos(-0.01)
+icon5:SetLookAt(Vector(-90,0,-15))
+icon5:SetModel( "models/empty.mdl" ) -- you can only change colors on playermodels
+local convar = GetConVar("loadout_heavy")
+local split = string.Split(convar:GetString(), ",")
+print(split[1])
+for name, wep in pairs(tf_items.Items) do
+	if istable(wep) then
+		if (wep.id == tonumber(split[1])) then
+			icon2:GetEntity():SetModel(wep.model_world or wep.model_player)
+		end
+	end
+end
 icon2:SetAnimated(true)
+icon3:SetAnimated(true)
+icon4:SetAnimated(true)
+icon5:SetAnimated(true)
 icon2:GetEntity():SetNoDraw(false)
 icon2:GetEntity():SetParent(icon:GetEntity())
 icon2:GetEntity():AddEffects(EF_BONEMERGE)
+icon3:GetEntity():SetNoDraw(false)
+icon3:GetEntity():SetParent(icon:GetEntity())
+icon3:GetEntity():AddEffects(EF_BONEMERGE)
+icon4:GetEntity():SetNoDraw(false)
+icon4:GetEntity():SetParent(icon:GetEntity())
+icon4:GetEntity():AddEffects(EF_BONEMERGE)
+icon5:GetEntity():SetNoDraw(false)
+icon5:GetEntity():SetParent(icon:GetEntity())
+icon5:GetEntity():AddEffects(EF_BONEMERGE)
 
 function icon:LayoutEntity( ent )
     self:RunAnimation()
@@ -872,7 +919,6 @@ end
       icon:GetEntity():SetSequence("selectionmenu_startpose")
 	icon:StartScene("scenes/player/heavy/low/class_select.vcd")
 
-ClassFrame:MakePopup() --make it appear
  
 	-- Close button
 	if (!self.CloseButton) then
@@ -1155,6 +1201,9 @@ if (!GetConVar("tf_disable_fun_classes"):GetBool()) then
 	gm_img:SetImage("vgui/class_sel_sm_random_inactive")
 	GmodButton.OnCursorEntered = function() 
 		icon2:GetEntity():SetModel("models/weapons/w_physics.mdl") 
+		icon3:SetModel( "models/empty.mdl" ) -- you can only change colors on playermodels
+		icon4:SetModel( "models/empty.mdl" ) -- you can only change colors on playermodels
+		icon5:SetModel( "models/empty.mdl" ) -- you can only change colors on playermodels
 		if LocalPlayer():IsHL2() then 
 			icon:SetModel( LocalPlayer():GetModel() ) 
 		else 
@@ -1238,6 +1287,9 @@ else
 	gm_img:SetImage("vgui/class_sel_sm_random_inactive")
 	GmodButton.OnCursorEntered = function() 
 		icon2:GetEntity():SetModel("models/empty.mdl") 
+		icon3:GetEntity():SetModel("models/empty.mdl") 
+		icon4:GetEntity():SetModel("models/empty.mdl") 
+		icon5:GetEntity():SetModel("models/empty.mdl") 
 		icon:SetModel( "models/class_menu/random_class_icon.mdl" ) 
 		icon2:GetEntity():SetParent(icon:GetEntity()) 
 		icon2:GetEntity():AddEffects(EF_BONEMERGE) 
@@ -1284,6 +1336,17 @@ double jump while in the air!]] )
 	icon2:GetEntity():SetParent(icon:GetEntity()) 
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/w_models/w_scattergun.mdl") 
+		
+	local convar = GetConVar("loadout_scout")
+	local split = string.Split(convar:GetString(), ",")
+	print(split[1])
+	for name, wep in pairs(tf_items.Items) do
+		if istable(wep) then
+			if (wep.id == tonumber(split[1])) then
+				icon2:GetEntity():SetModel(wep.model_world or wep.model_player)
+			end
+		end
+	end
 	LocalPlayer():EmitSound( "/music/class_menu_01.wav", 100, 100, 1, CHAN_VOICE ) 
 	
       icon:GetEntity():SetSequence("selectionmenu_startpose")
@@ -1326,6 +1389,16 @@ Use your rocket launcher to rocket jump!]] )
 	icon2:GetEntity():SetParent(icon:GetEntity()) 
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/w_models/w_rocketlauncher.mdl") 
+	local convar = GetConVar("loadout_soldier")
+	local split = string.Split(convar:GetString(), ",")
+	print(split[1])
+	for name, wep in pairs(tf_items.Items) do
+		if istable(wep) then
+			if (wep.id == tonumber(split[1])) then
+				icon2:GetEntity():SetModel(wep.model_world or wep.model_player)
+			end
+		end
+	end
 	LocalPlayer():EmitSound( "/music/class_menu_02.wav", 100, 100, 1, CHAN_VOICE ) 
 	
       icon:GetEntity():SetSequence("selectionmenu_startpose")
@@ -1361,6 +1434,16 @@ PyroButton.OnCursorEntered = function()
 	icon2:GetEntity():SetParent(icon:GetEntity()) 
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_flamethrower/c_flamethrower.mdl") 
+	local convar = GetConVar("loadout_pyro")
+	local split = string.Split(convar:GetString(), ",")
+	print(split[1])
+	for name, wep in pairs(tf_items.Items) do
+		if istable(wep) then
+			if (wep.id == tonumber(split[1])) then
+				icon2:GetEntity():SetModel(wep.model_world or wep.model_player)
+			end
+		end
+	end
 	LocalPlayer():EmitSound( "/music/class_menu_03.wav", 100, 100, 1, CHAN_VOICE ) 
 	menuname:SetText( "PYRO" ) 
 	menutext:SetText( [[Ambush enemies at corners!
@@ -1410,6 +1493,16 @@ a stickybomb and jumping as you detonate it!]] )
 	icon2:GetEntity():SetParent(icon:GetEntity()) 
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_grenadelauncher/c_grenadelauncher.mdl") 
+	local convar = GetConVar("loadout_demoman")
+	local split = string.Split(convar:GetString(), ",")
+	print(split[1])
+	for name, wep in pairs(tf_items.Items) do
+		if istable(wep) then
+			if (wep.id == tonumber(split[2])) then
+				icon2:GetEntity():SetModel(wep.model_world or wep.model_player)
+			end
+		end
+	end
 	LocalPlayer():EmitSound( "/music/class_menu_04.wav", 100, 100, 1, CHAN_VOICE ) 
 	
       icon:GetEntity():SetSequence("selectionmenu_startpose")
@@ -1446,6 +1539,18 @@ HeavyButton.OnCursorEntered = function()
 	icon2:GetEntity():SetParent(icon:GetEntity()) 
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_minigun/c_minigun.mdl") 
+	
+    local convar = GetConVar("loadout_heavy")
+    local split = string.Split(convar:GetString(), ",")
+	print(split[1])
+	for name, wep in pairs(tf_items.Items) do
+		if istable(wep) then
+			if (wep.id == tonumber(split[1])) then
+				icon2:GetEntity():SetModel(wep.model_world or wep.model_player)
+			end
+		end
+	end
+
 	LocalPlayer():EmitSound( "/music/class_menu_05.wav", 100, 100, 1, CHAN_VOICE ) 
 	
       icon:GetEntity():SetSequence("selectionmenu_startpose")
@@ -1499,6 +1604,16 @@ team mates get to the front lines!]] )
 	icon2:GetEntity():SetParent(icon:GetEntity()) 
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_wrench/c_wrench.mdl") 
+	local convar = GetConVar("loadout_engineer")
+	local split = string.Split(convar:GetString(), ",")
+	print(split[3])
+	for name, wep in pairs(tf_items.Items) do
+		if istable(wep) then
+			if (wep.id == tonumber(split[3])) then
+				icon2:GetEntity():SetModel(wep.model_world or wep.model_player)
+			end
+		end
+	end
 	LocalPlayer():EmitSound( "/music/class_menu_06.wav", 100, 100, 1, CHAN_VOICE ) 
 	
       icon:GetEntity():SetSequence("selectionmenu_startpose")
@@ -1537,6 +1652,17 @@ MedicButton.OnCursorEntered = function()
 	icon2:GetEntity():SetParent(icon:GetEntity()) 
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_medigun/c_medigun.mdl") 
+	
+	local convar = GetConVar("loadout_medic")
+	local split = string.Split(convar:GetString(), ",")
+	print(split[1])
+	for name, wep in pairs(tf_items.Items) do
+		if istable(wep) then
+			if (wep.id == tonumber(split[2])) then
+				icon2:GetEntity():SetModel(wep.model_world or wep.model_player)
+			end
+		end
+	end
 	LocalPlayer():EmitSound( "/music/class_menu_07.wav", 100, 100, 1, CHAN_VOICE ) 
 	menuname:SetText( "MEDIC" ) 
 	menutext:SetText( [[Fill your ÜberCharge by 
@@ -1583,6 +1709,16 @@ SniperButton.OnCursorEntered = function()
 	icon2:GetEntity():SetParent(icon:GetEntity()) 
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_sniperrifle/c_sniperrifle.mdl") 
+	local convar = GetConVar("loadout_sniper")
+	local split = string.Split(convar:GetString(), ",")
+	print(split[1])
+	for name, wep in pairs(tf_items.Items) do
+		if istable(wep) then
+			if (wep.id == tonumber(split[1])) then
+				icon2:GetEntity():SetModel(wep.model_world or wep.model_player)
+			end
+		end
+	end
 	LocalPlayer():EmitSound( "/music/class_menu_08.wav", 100, 100, 1, CHAN_VOICE ) 
 	
       icon:GetEntity():SetSequence("selectionmenu_startpose")
@@ -1625,6 +1761,16 @@ SpyButton.OnCursorEntered = function()
 	icon2:GetEntity():SetParent(icon:GetEntity()) 
 	icon2:GetEntity():AddEffects(EF_BONEMERGE) 
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_knife/c_knife.mdl") 
+	local convar = GetConVar("loadout_spy")
+	local split = string.Split(convar:GetString(), ",")
+	print(split[1])
+	for name, wep in pairs(tf_items.Items) do
+		if istable(wep) then
+			if (wep.id == tonumber(split[3])) then
+				icon2:GetEntity():SetModel(wep.model_world or wep.model_player)
+			end
+		end
+	end
 	LocalPlayer():EmitSound( "/music/class_menu_09.wav", 100, 100, 1, CHAN_VOICE ) 
 	
       icon:GetEntity():SetSequence("selectionmenu_startpose")
@@ -2586,6 +2732,8 @@ file.Append(LOGFILE, Format("Done loading, time = %f\n", SysTime() - load_time))
 hook.Add( "SpawnMenuEnabled", "BlockPlayerSWEPs", function(  )
 	if ( GetConVar("tf_competitive"):GetBool() and not LocalPlayer():IsAdmin() ) then
 		return false
+	else
+		return true
 	end
 end )   
 

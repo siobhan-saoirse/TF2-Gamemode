@@ -485,23 +485,24 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	local amount = dmginfo:GetDamage()
 	
 	local att = dmginfo:GetAttacker()
-	
-	if (att == ent && dmginfo:IsExplosionDamage()) then
-
+	if ent:GetNWBool("Bonked") == true || ent:Team() == TEAM_FRIENDLY then
+		dmginfo:ScaleDamage(0.000001)
+	end
+	if (att == ent && dmginfo:IsExplosionDamage() && (ent:GetNWBool("Bonked") == true || ent:Team() == TEAM_FRIENDLY)) then
 		if (!ent.Whistle) then
 			ent.Whistle = CreateSound(ent,"BlastJump.Whistle")
 			ent.Whistle:Play()
 			ent.Whistle:ChangePitch(200,0)
-			ent.Whistle:ChangePitch(100,0.25)
+			ent.m_flBlastJumpLaunchTime = CurTime()
 		end
 		if (ent.Whistle) then
 			ent.Whistle:Play()
 			ent.Whistle:ChangePitch(200,0)
-			ent.Whistle:ChangePitch(100,0.25)
+			ent.m_flBlastJumpLaunchTime = CurTime()
 		end
 		
 	end
-	
+
 	if (!att:CanDamage(ent)) then
 		dmginfo:SetAttacker(Entity(0))
 	end

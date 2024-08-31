@@ -111,9 +111,6 @@ function SWEP:PrimaryAttack()
 					self:GetOwner().trail5 = util.SpriteTrail( self:GetOwner(), att5, Color( 255, 255, 255 ), false, 8, 8, 0.5, 1 / ( 96 * 1 ), "effects/beam001_red" )
 				end
 			end
-			if SERVER then
-			self.Owner:GodEnable()
-			end
 		end)
 		timer.Simple(15, function()
 			if SERVER then
@@ -124,7 +121,6 @@ function SWEP:PrimaryAttack()
 				self.Owner:ResetClassSpeed()
 			end)	
 			self.Owner:ConCommand("tf_firstperson")
-			self.Owner:GodDisable()
 			self.Owner:StopParticles() 
 			if SERVER then
 				if (IsValid(self:GetOwner().trail)) then
