@@ -74,7 +74,7 @@ function ENT:Touch(ent)
 	end
 	
 		if (ent:IsPlayer()) then
-			if (ent:Team() ~= self:GetNWInt("TeamNum")) then
+			if (ent:Team() ~= self:GetNWInt("TeamNum") && ent:Team() == TEAM_RED && ent:Team() == TEAM_BLU) then
 				ent:KillSilent()
 				ent:Spawn()
 			end
