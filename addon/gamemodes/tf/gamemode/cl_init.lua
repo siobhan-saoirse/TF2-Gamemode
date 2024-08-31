@@ -2682,6 +2682,9 @@ local function MergeSteamInventory(ply)
 											
 										-- soldier
 										elseif (classes["class"] == 3) then
+											if (v.defindex == 199 or v.defindex == 415 or v.defindex == 1153) then
+												classes["slot"] = 1
+											end
 											if (classes["slot"] == 0) then
 												item1soldier = v.defindex
 											elseif (classes["slot"] == 1) then
@@ -2698,6 +2701,9 @@ local function MergeSteamInventory(ply)
 											
 										-- pyro
 										elseif (classes["class"] == 7) then
+											if (v.defindex == 199 or v.defindex == 415 or v.defindex == 1153) then
+												classes["slot"] = 1
+											end
 											if (classes["slot"] == 0) then
 												item1pyro = v.defindex
 											elseif (classes["slot"] == 1) then
@@ -2730,6 +2736,9 @@ local function MergeSteamInventory(ply)
 											
 										-- heavy
 										elseif (classes["class"] == 6) then
+											if (v.defindex == 199 or v.defindex == 415 or v.defindex == 1153) then
+												classes["slot"] = 1
+											end
 											if (classes["slot"] == 0) then
 												item1heavy = v.defindex
 											elseif (classes["slot"] == 1) then
@@ -2956,7 +2965,7 @@ timer.Simple(15.0, function()
 		conflicttext:InsertColorChange(255, 255, 255, 255)
 		conflicttext:CenterHorizontal(0.5)
 		conflicttext:SetVerticalScrollbarEnabled(false)
-		conflicttext:AppendText("Would you like to integrate your TF2 Inventory with this gamemode? Click the close button if you don't want to. It will not work if your inventory is private.")
+		conflicttext:AppendText("Would you like to integrate your TF2 Inventory with this gamemode? Click the close button if you don't want to. It will not work if your inventory is private. Alternatively, you can type 'tf_merge_loadout' in console.")
 			local conflictbut2 = vgui.Create("DButton", conflict_help_frame)
 			conflictbut2:SetSize(100, 30)
 			conflictbut2:SetPos(0, 125)

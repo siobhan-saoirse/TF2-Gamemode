@@ -177,6 +177,7 @@ for k, v in pairs(items_game["items"]) do
 
     if v.item_name then
         tf_items.Items[tf_lang.GetRaw(v.item_name)] = v
+        tf_items.Items[v.name] = v
         local name = tf_lang.GetRaw(v.item_name)
   
         if name == "Red-Tape Recorder" then
