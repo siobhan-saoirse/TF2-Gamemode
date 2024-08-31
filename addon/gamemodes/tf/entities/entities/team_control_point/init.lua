@@ -163,6 +163,21 @@ function ENT:KeyValue(key,value)
 	if not self.Properties then
 		self.Properties = {}
 	end
+	if (key == "point_index") then
+		if (tonumber(value)) then
+			self.ID = tonumber(value)
+		end
+	elseif (key == "point_default_owner") then
+		if (tonumber(value)) then
+			if (tonumber(value) == 2) then
+				self.TeamNum = TEAM_RED
+			elseif (tonumber(value) == 3) then
+				self.TeamNum = TEAM_BLU
+			else
+				self.TeamNum = tonumber(value)
+			end
+		end
+	end
 	if tonumber(value) then value=tonumber(value) end
 	self.Properties[key] = value
 end

@@ -1320,7 +1320,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			end
 			
 			if (bot:GetPlayerClass() == "samuraidemo") then
-				bot:SetJumpPower(240 * 2.3)
+				bot:SetJumpPower(200 * 2.3)
 			end
 		
 		if (string.find(game.GetMap(),"mvm_")) then

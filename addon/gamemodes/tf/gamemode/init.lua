@@ -2259,7 +2259,7 @@ function GM:PlayerSpawn(ply)
 	end
 	
 	if !ply:IsHL2() then
-		timer.Simple(0.1, function()
+		timer.Simple(0.01, function()
 			
 			ply:GiveLoadout()
 		
@@ -2285,6 +2285,7 @@ function GM:PlayerSpawn(ply)
 	net.WriteEntity(ply)
 	net.Broadcast()
 	ply:SetMaterial("")
+	--[[
 	timer.Simple(0.5, function()
 		if (ply:IsBot()) then
 			if (ply:GetWeapons()[2]:GetClass() == "tf_weapon_lunchbox_drink" or ply:GetWeapons()[1]:GetClass() == "tf_weapon_lunchbox_drink") then
@@ -2297,8 +2298,8 @@ function GM:PlayerSpawn(ply)
 						end)
 					end)
 			end
-		end
-	end)
+		end 
+	end)]]
 end
 
 function GM:PlayerSetHandsModel( ply, ent )

@@ -312,7 +312,7 @@ function meta:SetPlayerClass(class)
 		self.PlayerJumpPower = 200
 	else
 
-		self.PlayerJumpPower = 289
+		self.PlayerJumpPower = 200
 	end
 	self:SetJumpPower(self.PlayerJumpPower)
 	self.NextCritBoostExpire = 0
@@ -593,7 +593,7 @@ function meta:SetClassSpeed(sp)
 	if !self:IsHL2() then
 		self:SetWalkSpeed(sp) 
 		self:SetRunSpeed(sp) 
-		self:SetJumpPower(289)
+		self:SetJumpPower(200)
 		self:SetCrouchedWalkSpeed(0.33)
 		self:SetMaxSpeed(520) 
 		self:SetNWFloat("ClassSpeed", sp) 

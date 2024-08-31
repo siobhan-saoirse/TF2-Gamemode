@@ -469,7 +469,7 @@ function SWEP:Think()
 				
 			if self.barrelSpeed > 12 then
 				
-				self.barrelSpeed = 12
+				self.barrelSpeed = 12 
 					
 			end
 				
@@ -482,7 +482,9 @@ function SWEP:Think()
 		end
 		
 		if !self.Spinning then
-			self.Owner:SetJumpPower(240)
+			if SERVER then
+				self.Owner:SetJumpPower(self.Owner.PlayerJumpPower)
+			end
 			if self.barrelSpeed > 0 then
 			
 				self.barrelRotation = self.barrelRotation + self.barrelSpeed

@@ -49,7 +49,7 @@ function ENT:Think()
 				pl.ItemLoadout = table.Copy(c.DefaultLoadout)
 				pl.ItemProperties = {}
 				pl:SetPlayerClass(pl:GetPlayerClass())		
-				pl:ConCommand("loadout_update")
+				pl:GiveLoadout()
 				self.Players[pl] = CurTime()
 				self.NextClose = CurTime() + 1.5
 				

@@ -388,7 +388,7 @@ function ENT:StopCharging()
 	self.dt.NextEndCharge = CurTime() + self.ChargeCooldownDuration * self.dt.ChargeCooldownMultiplier
 	self.SpeedBonus = nil
 	self:GetOwner():ResetClassSpeed()
-	self:GetOwner():SetJumpPower(250)
+	self:GetOwner():SetJumpPower(self.PlayerJumpPower)
 	
 	self:GetOwner():EmitSound(self.CritStopSound)
 	self:GetOwner():StopParticles()

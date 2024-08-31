@@ -1813,27 +1813,41 @@ hook.Add("PlayerStepSoundTime", "FootTime", function(ply, iType, iWalking)
 		end
 		if (iType == STEPSOUNDTIME_NORMAL || iType == STEPSOUNDTIME_WATER_FOOT) then
 			if (ply:GetMoveType() == MOVETYPE_LADDER) then
-				local speed = math.Remap(ply:GetVelocity():Length2D(), 200, 450, 400, 200) + 100
+				local speed = math.Remap(ply:GetWalkSpeed(), 200, 450, 400, 200) + 100
 				return speed
 			else
 				if (ply:Crouching()) then
-					local speed = math.Remap(ply:GetVelocity():Length2D(), 200, 450, 400, 200) + 100
+					local speed = math.Remap(ply:GetWalkSpeed(), 200, 450, 400, 200) + 100
 					return speed
 				else
 					if (ply:GetWalkSpeed() > 450) then
 					
-						local speed = 200 + ply:GetVelocity():Length2D()
+						local speed = 200
 						return speed
 						
 					else
-						if (ply:GetWalkSpeed() < 229 and !ply:KeyDown(IN_SPEED)) then
-						
-							local speed = 400 + ply:GetVelocity():Length2D()
-							return speed 
+						if (ply:KeyDown(IN_SPEED)) then
+
+							if (ply:GetRunSpeed() < 229 and !ply:KeyDown(IN_SPEED)) then
 							
+								local speed = 400
+								return speed 
+								
+							else
+								local speed = math.Remap(ply:GetRunSpeed(), 200, 450, 400, 200)
+								return speed
+							end
+
 						else
-							local speed = math.Remap(ply:GetVelocity():Length2D(), 200, 450, 400, 200)
-							return speed
+							if (ply:GetWalkSpeed() < 229 and !ply:KeyDown(IN_SPEED)) then
+							
+								local speed = 400
+								return speed 
+								
+							else
+								local speed = math.Remap(ply:GetWalkSpeed(), 200, 450, 400, 200)
+								return speed
+							end
 						end
 					end
 				end
@@ -1841,7 +1855,7 @@ hook.Add("PlayerStepSoundTime", "FootTime", function(ply, iType, iWalking)
 		end
 		if (iType == STEPSOUNDTIME_WATER_KNEE) then
 			if (ply:Crouching()) then
-				local speed = math.Remap(ply:GetMaxSpeed(), 200, 450, 600, 200) + 100
+				local speed = math.Remap(ply:GetWalkSpeed(), 200, 450, 600, 200) + 100
 				return speed
 			else
 				if (ply:GetWalkSpeed() > 450) then
@@ -1856,7 +1870,7 @@ hook.Add("PlayerStepSoundTime", "FootTime", function(ply, iType, iWalking)
 						return speed 
 							
 					else
-						local speed = math.Remap(ply:GetMaxSpeed(), 200, 450, 600, 200)
+						local speed = math.Remap(ply:GetWalkSpeed(), 200, 450, 600, 200)
 						return speed
 					end
 				end

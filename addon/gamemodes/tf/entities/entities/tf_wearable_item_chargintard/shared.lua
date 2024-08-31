@@ -168,7 +168,7 @@ function ENT:MeleeAttack()
 	
 	local hitent, hitpos, dmginfo
 	
-	self:GetOwner():SetJumpPower(100)
+	self:GetOwner():SetJumpPower(self.PlayerJumpPower)
 	
 	--self:GetOwner():LagCompensation(true)
 	
