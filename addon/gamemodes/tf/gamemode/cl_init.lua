@@ -1198,7 +1198,7 @@ if (!GetConVar("tf_disable_fun_classes"):GetBool()) then
 	gm_img = vgui.Create( "DImage", GmodButton )	-- Add image to Frame
 	gm_img:SetPos( 0, 0 )	-- Move it into frame
 	gm_img:SetSize( SpyButton:GetSize() )	-- Size it to 150x150
-	gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+	gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
 	GmodButton.OnCursorEntered = function() 
 		icon2:GetEntity():SetModel("models/weapons/w_physics.mdl") 
 		icon3:SetModel( "models/empty.mdl" ) -- you can only change colors on playermodels
@@ -1227,11 +1227,11 @@ if (!GetConVar("tf_disable_fun_classes"):GetBool()) then
 		sn_img:SetImage( "vgui/class_sel_sm_sniper_inactive" )
 		sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 		if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
-			gm_img:SetImage( "vgui/class_sel_sm_random_red" )
+			gm_img:SetImage( "vgui/class_sel_sm_rebel_red" )
 		elseif LocalPlayer():Team()==TEAM_BLU then
-			gm_img:SetImage( "vgui/class_sel_sm_random_blu" )
+			gm_img:SetImage( "vgui/class_sel_sm_rebel_blu" )
 		else
-			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
 		end
 			
 		menuname:SetText( "GMOD PLAYER" ) 
