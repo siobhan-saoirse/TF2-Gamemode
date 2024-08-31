@@ -1374,7 +1374,7 @@ double jump while in the air!]] )
 		else
 			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
 		end
-		
+
 	end
 end
 SoldierButton.OnCursorEntered = function() 
@@ -1425,7 +1425,12 @@ Use your rocket launcher to rocket jump!]] )
 	sn_img:SetImage( "vgui/class_sel_sm_sniper_inactive" )
 	sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 	if (IsValid(GmodButton)) then
-		gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		if !GetConVar("tf_disable_fun_classes"):GetBool() then
+			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+		else
+			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		end
+		
 	end
 end
 PyroButton.OnCursorEntered = function() 
@@ -1477,7 +1482,12 @@ closer you are to your target!]] )
 	sn_img:SetImage( "vgui/class_sel_sm_sniper_inactive" )
 	sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 	if (IsValid(GmodButton)) then
-		gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		if !GetConVar("tf_disable_fun_classes"):GetBool() then
+			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+		else
+			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		end
+		
 	end
 end
 DemomanButton.OnCursorEntered = function() 
@@ -1530,7 +1540,12 @@ a stickybomb and jumping as you detonate it!]] )
 	sn_img:SetImage( "vgui/class_sel_sm_sniper_inactive" )
 	sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 	if (IsValid(GmodButton)) then
-		gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		if !GetConVar("tf_disable_fun_classes"):GetBool() then
+			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+		else
+			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		end
+		
 	end
 end
 HeavyButton.OnCursorEntered = function() 
@@ -1583,7 +1598,12 @@ for approaching enemies!]] )
 	sn_img:SetImage( "vgui/class_sel_sm_sniper_inactive" )
 	sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 	if (IsValid(GmodButton)) then
-		gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		if !GetConVar("tf_disable_fun_classes"):GetBool() then
+			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+		else
+			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		end
+		
 	end
 end
 EngineerButton.DoClick = function()  RunConsoleCommand("changeclass", "engineer") LocalPlayer():EmitSound( "/music/class_menu_06.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
@@ -1641,7 +1661,12 @@ team mates get to the front lines!]] )
 	sn_img:SetImage( "vgui/class_sel_sm_sniper_inactive" )
 	sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 	if (IsValid(GmodButton)) then
-		gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		if !GetConVar("tf_disable_fun_classes"):GetBool() then
+			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+		else
+			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		end
+		
 	end
 end
 MedicButton.DoClick = function()  RunConsoleCommand("changeclass", "medic") LocalPlayer():EmitSound( "/music/class_menu_07.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
@@ -1698,7 +1723,12 @@ your medi gun target!]] )
 	sn_img:SetImage( "vgui/class_sel_sm_sniper_inactive" )
 	sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 	if (IsValid(GmodButton)) then
-		gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		if !GetConVar("tf_disable_fun_classes"):GetBool() then
+			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+		else
+			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		end
+		
 	end
 end
 SniperButton.DoClick = function()  RunConsoleCommand("changeclass", "sniper") LocalPlayer():EmitSound( "/music/class_menu_08.wav" ) ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM") end
@@ -1752,7 +1782,12 @@ aim for the head to do critical hits!]] )
 	end
 	sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 	if (IsValid(GmodButton)) then
-		gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		if !GetConVar("tf_disable_fun_classes"):GetBool() then
+			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+		else
+			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		end
+		
 	end
 end
 SpyButton.OnCursorEntered = function() 
@@ -1808,7 +1843,13 @@ to destroy them!]] )
 		sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 	end
 	if (IsValid(GmodButton)) then
-		gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		
+		if !GetConVar("tf_disable_fun_classes"):GetBool() then
+			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+		else
+			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
+		end
+		
 	end
 end
 --[[
