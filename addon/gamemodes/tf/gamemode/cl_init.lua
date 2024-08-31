@@ -2682,7 +2682,7 @@ local function MergeSteamInventory(ply)
 											
 										-- soldier
 										elseif (classes["class"] == 3) then
-											if (v.defindex == 199 or v.defindex == 1141 or v.defindex == 9 or v.defindex == 12 or v.defindex == 10v.defindex == 415 or v.defindex == 1153) then
+											if (v.defindex == 199 or v.defindex == 1141 or v.defindex == 9 or v.defindex == 12 or v.defindex == 10 or v.defindex == 415 or v.defindex == 1153) then
 												classes["slot"] = 1
 											end
 											if (classes["slot"] == 0) then
@@ -2701,7 +2701,7 @@ local function MergeSteamInventory(ply)
 											
 										-- pyro
 										elseif (classes["class"] == 7) then
-											if (v.defindex == 199 or v.defindex == 1141 or v.defindex == 9 or v.defindex == 12 or v.defindex == 10v.defindex == 415 or v.defindex == 1153) then
+											if (v.defindex == 199 or v.defindex == 1141 or v.defindex == 9 or v.defindex == 12 or v.defindex == 10 or v.defindex == 415 or v.defindex == 1153) then
 												classes["slot"] = 1
 											end
 											if (classes["slot"] == 0) then
@@ -2736,7 +2736,7 @@ local function MergeSteamInventory(ply)
 											
 										-- heavy
 										elseif (classes["class"] == 6) then
-											if (v.defindex == 199 or v.defindex == 1141 or v.defindex == 9 or v.defindex == 12 or v.defindex == 10v.defindex == 415 or v.defindex == 1153) then
+											if (v.defindex == 199 or v.defindex == 1141 or v.defindex == 9 or v.defindex == 12 or v.defindex == 10 or v.defindex == 415 or v.defindex == 1153) then
 												classes["slot"] = 1
 											end
 											if (classes["slot"] == 0) then
