@@ -2588,19 +2588,16 @@ file.Append(LOGFILE, Format("Done loading, time = %f\n", SysTime() - load_time))
 local function MergeSteamInventory(ply)
 	--Send request to the SteamDEV API with the SteamID64 of the player who has just connected.
 	http.Fetch(
-	string.format("https://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?steamid=%s&key=EFC1DC87C314EAD8164899A6AAEEC6F8",
+	string.format("https://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?steamid=%s&key=EFC1DC87C314EAD8164899A6AAEEC6F8&format=json",
 		ply:SteamID64()
-	),
-
+	), 
 	function(body)
-		local body = util.JSONToTable(body)
+		local json = util.JSONToTable(body)
+		file.Write("tf_loadout.txt", table.ToString(json))
 
 		--If the response does not contain the following table items.
-		if not body or not body.result or not body.result.items then
-			error(string.format("IEconItems_440: Invalid Steam API response for %s | %s\n", ply:Nick(), ply:SteamID()))
-		end 
 
-		local status = body.result.status
+		local status = json.status
 		local item1scout
 		local item2scout
 		local item3scout
@@ -2613,75 +2610,76 @@ local function MergeSteamInventory(ply)
 		local item4slotscout
 		local item5slotscout
 		local item6slotscout
-		if status == "1" then
-			local items = body.result.items
-			for k,v in ipairs(items) do
-				if (v.defindex) then
-					if (v.equipped) then
-						for _,classes in ipairs(v.equipped) do
-							if (classes.class == 1) then
-								if (classes.slot == 0) then
-									item1slotscout = 1
-									item1scout = v.defindex
-								elseif (classes.slot == 1) then
-									item1slotscout = 2
-									item2scout = v.defindex
-								elseif (classes.slot == 2) then
-									item1slotscout = 3
-									item3scout = v.defindex
-								elseif (classes.slot == 6) then
-									item1slotscout = 4
-									item4scout = v.defindex
-								elseif (classes.slot == 7) then
-									item1slotscout = 5
-									item5scout = v.defindex
-								elseif (classes.slot == 8) then
-									item1slotscout = 6
-									item6scout = v.defindex
+			local items = json.result.items
+			for tbl1,tbl2 in ipairs(items) do
+				PrintTable(items[tbl1])
+				for k,v in ipairs(items[tbl1]) do 
+					if (v["defindex"]) then
+						if (v["equipped"]) then
+							for tbl3,equipped in ipairs(v["equipped"]) do
+								for cls1,classes in ipairs(v["equipped"][tbl3]) do
+									if (classes["class"] == 1) then
+										if (classes.slot == 0) then
+											item1slotscout = 1
+											item1scout = tonumber(v.defindex)
+										elseif (classes.slot == 1) then
+											item1slotscout = 2
+											item2scout = tonumber(v.defindex)
+										elseif (classes.slot == 2) then
+											item1slotscout = 3
+											item3scout = tonumber(v.defindex)
+										elseif (classes.slot == 6) then
+											item1slotscout = 4
+											item4scout = tonumber(v.defindex)
+										elseif (classes.slot == 7) then
+											item1slotscout = 5
+											item5scout = tonumber(v.defindex)
+										elseif (classes.slot == 8) then
+											item1slotscout = 6
+											item6scout = tonumber(v.defindex)
+										end
+									end
 								end
 							end
 						end
 					end
 				end
-			end
-			if (item1scout and item2scout and item3scout) then
-				local id = self:GetOptionData(i)
-				local convar = GetConVar("loadout_scout")
-				local split = string.Split(convar:GetString(), ",")
-			
-				if #split == 6 then
-					split[item1slotscout] = item1scout
-					split[item2slotscout] = item2scout
-					split[item3slotscout] = item3scout
-				else
-					split = {-1, -1, -1, -1, -1, -1}
-					split[item1slotscout] = item1scout
-					split[item2slotscout] = item2scout
-					split[item3slotscout] = item3scout
+				if (isnumber(item1scout) and isnumber(item2scout) and isnumber(item3scout)) then
+					local id = self:GetOptionData(i)
+					local convar = GetConVar("loadout_scout")
+					local split = string.Split(convar:GetString(), ",")
+				
+					if #split == 6 then
+						split[item1slotscout] = item1scout
+						split[item2slotscout] = item2scout
+						split[item3slotscout] = item3scout
+					else
+						split = {-1, -1, -1, -1, -1, -1}
+						split[item1slotscout] = item1scout
+						split[item2slotscout] = item2scout
+						split[item3slotscout] = item3scout
+					end
+				
+					convar:SetString(table.concat(split, ","))
+				elseif (item4scout and item5scout and item6scout) then
+					local id = self:GetOptionData(i)
+					local convar = GetConVar("loadout_scout")
+					local split = string.Split(convar:GetString(), ",")
+				
+					if #split == 6 then
+						split[item4slot] = item4
+						split[item5slot] = item5
+						split[item6slot] = item6
+					else
+						split = {-1, -1, -1, -1, -1, -1}
+						split[item4slot] = item4
+						split[item5slot] = item5
+						split[item6slot] = item6
+					end
+				
+					convar:SetString(table.concat(split, ","))
 				end
-			
-				convar:SetString(table.concat(split, ","))
-			elseif (item4scout and item5scout and item6scout) then
-				local id = self:GetOptionData(i)
-				local convar = GetConVar("loadout_scout")
-				local split = string.Split(convar:GetString(), ",")
-			
-				if #split == 6 then
-					split[item4slot] = item4
-					split[item5slot] = item5
-					split[item6slot] = item6
-				else
-					split = {-1, -1, -1, -1, -1, -1}
-					split[item4slot] = item4
-					split[item5slot] = item5
-					split[item6slot] = item6
-				end
-			
-				convar:SetString(table.concat(split, ","))
 			end
-		else
-
-		end
 	end,
 
 	function(code)
@@ -2720,4 +2718,8 @@ timer.Simple(15.0, function()
 			end
 	end
 
+end)
+
+concommand.Add("tf_merge_loadout", function(ply)
+	MergeSteamInventory(ply)
 end)
