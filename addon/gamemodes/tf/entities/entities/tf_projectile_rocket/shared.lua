@@ -308,9 +308,7 @@ function ENT:DoExplosion(ent)
 	if owner:IsPlayer() and owner:GetActiveWeapon():GetItemData().model_player == "models/weapons/c_models/c_rocketjumper/c_rocketjumper.mdl" then
 		for k,v in ipairs(ents.FindInSphere(self:GetPos(), range*1)) do
 			if v == owner then
-				if (owner:IsOnGround()) then
-					owner.m_flBlastJumpLaunchTime = CurTime()
-				end
+				owner.m_flBlastJumpLaunchTime = CurTime()
 				util.BlastDamage(self, owner, self:GetPos(), range*1, damage)
 				if (!owner.Whistle) then
 					owner.Whistle = CreateSound(owner,"BlastJump.Whistle")
