@@ -73,6 +73,10 @@ hook.Add("CreateMove", "TauntMove", function(cmd)
 		cmd:SetSideMove(0)
 	end
 	
+	if (LocalPlayer():GetNWBool("Bonked")) then
+		cmd:RemoveKey(IN_ATTACK)
+		cmd:RemoveKey(IN_ATTACK2)
+	end
 	if (LocalPlayer():GetNWBool("Taunting") or LocalPlayer():IsPlayingTaunt()) and !LocalPlayer().CameraTest then
 		if lockangle == nil then
 			lockangle = taunt_angles * 1
