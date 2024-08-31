@@ -273,7 +273,7 @@ function SelectResponse(ent, dbg)
 		end
 	end
 	
-	return best
+	return best 
 end
 
 local function playscene_delayed(ent, scene) 
