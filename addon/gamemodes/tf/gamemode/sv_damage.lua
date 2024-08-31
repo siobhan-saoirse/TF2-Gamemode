@@ -488,7 +488,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	if ent:GetNWBool("Bonked") == true || ent:Team() == TEAM_FRIENDLY then
 		dmginfo:ScaleDamage(0.000001)
 	end
-	if (ent:IsPlayer() and att == ent && dmginfo:IsExplosionDamage() && (ent:GetNWBool("Bonked") == true || ent:Team() == TEAM_FRIENDLY)) then
+	if (ent:IsPlayer() and att == ent && dmginfo:IsExplosionDamage() && (ent:GetNWBool("Bonked") == true || ent:EntityTeam() == TEAM_FRIENDLY)) then
 		if (!ent.Whistle) then
 			ent.Whistle = CreateSound(ent,"BlastJump.Whistle")
 			ent.Whistle:Play()
