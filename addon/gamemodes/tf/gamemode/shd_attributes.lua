@@ -983,7 +983,7 @@ local ATTRIBUTES = {
 	_global_post_damage = function(v,ent,hitgroup,dmginfo)
 		if ent == dmginfo:GetAttacker() and dmginfo:IsExplosionDamage() then
 			dmginfo:SetDamage(0)
-			dmginfo:SetDamageForce(dmginfo:GetDamageForce() * 1.5)
+			--dmginfo:SetDamageForce(dmginfo:GetDamageForce() * 1.5)
 		end
 	end,
 },

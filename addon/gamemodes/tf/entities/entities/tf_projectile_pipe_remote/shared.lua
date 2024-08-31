@@ -266,7 +266,6 @@ function ENT:DoExplosion()
 	local range = 180
 	--local damage = self:CalculateDamage(owner:GetPos()+Vector(0,0,1))
 	
-	self:GetOwner()Damage = 0.9
 	--self.ResultDamage = damage
 	
 	--util.BlastDamage(self, owner, self:GetPos(), range, damage)		--util.BlastDamage(self, owner, self:GetPos(), range, damage)
@@ -276,9 +275,19 @@ function ENT:DoExplosion()
 				owner:GetActiveWeapon().ShootCritSound = "weapons/sticky_jumper_shoot.wav"
 			end	
 			util.BlastDamage(self, owner, self:GetPos(), range*1, 0)
+			
+
 			for k,v in ipairs(ents.FindInSphere(self:GetPos(), range*1)) do
 				if v == owner then
 					v:SetLocalVelocity(v:GetVelocity() * 1.9 + Vector(0, 0, 250)) 
+					if (!owner.Whistle) then
+						owner.Whistle = CreateSound(owner,"BlastJump.Whistle")
+						owner.Whistle:PlayEx(0.25,200)
+					end
+					if (owner.Whistle and !owner.Whistle:IsPlaying()) then
+						owner.Whistle:PlayEx(0.25,200)
+					end
+					owner.m_flBlastJumpLaunchTime = CurTime()
 				end
 			end
 		else

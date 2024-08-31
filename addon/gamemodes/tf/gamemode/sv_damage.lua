@@ -485,6 +485,23 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	local amount = dmginfo:GetDamage()
 	
 	local att = dmginfo:GetAttacker()
+	
+	if (att == ent && dmginfo:IsExplosionDamage()) then
+
+		if (!ent.Whistle) then
+			ent.Whistle = CreateSound(ent,"BlastJump.Whistle")
+			ent.Whistle:Play()
+			ent.Whistle:ChangePitch(200,0)
+			ent.Whistle:ChangePitch(100,0.25)
+		end
+		if (ent.Whistle) then
+			ent.Whistle:Play()
+			ent.Whistle:ChangePitch(200,0)
+			ent.Whistle:ChangePitch(100,0.25)
+		end
+		
+	end
+	
 	if (!att:CanDamage(ent)) then
 		dmginfo:SetAttacker(Entity(0))
 	end
@@ -547,6 +564,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		end)
 		--ent:SetThrownByExplosion(true)
 	end
+
 
 	if ent:IsTFPlayer() and ent:Health() <= 0 then
 		return
@@ -649,10 +667,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		-- Overexaggerated explosion force
 		if (ent:IsNPC() or ent:IsPlayer()) and ent:ShouldReceiveDamageForce() and dmginfo:IsExplosionDamage() then
 			local force = dmginfo:GetDamageForce() * 0.025
-			
-			ent:SetGroundEntity(NULL)
-			ent:SetThrownByExplosion(true)
-			
 			if ent:IsPlayer() and attacker==ent then
 				-- Rocket jumping
 				if inflictor.GetRocketJumpForce then

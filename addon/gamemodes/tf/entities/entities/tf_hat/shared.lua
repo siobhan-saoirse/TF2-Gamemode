@@ -1098,6 +1098,20 @@ local anim = v:LookupSequence("exp_angry_0"..math.random(1,6))
 end)
 
 hook.Add("Think","Bacterias",function()
+	if SERVER then
+		for k,v in ipairs(player.GetAll()) do
+			if (v.Whistle and v.m_flBlastJumpLaunchTime) then
+				local flTimeAloft = CurTime() - v.m_flBlastJumpLaunchTime;
+				local flPitch = math.Remap( flTimeAloft, 0.1, 3, 200, 100 );
+				local flVolume = math.Remap( flTimeAloft, 0.1, 2, 0.25, 0.95 );
+				if (flPitch < 100) then
+					flPitch = 100
+				end
+				v.Whistle:ChangePitch( flPitch, 0.1 );
+				v.Whistle:ChangeVolume( flVolume, 0.1 )
+			end
+		end
+	end
 	if (math.random(1,3+(table.Count(player.GetAll())*0.4)) == 1) then 
 		for k,v in ipairs(player.GetAll()) do
 
