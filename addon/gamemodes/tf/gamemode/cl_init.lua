@@ -1191,7 +1191,7 @@ if (!GetConVar("tf_disable_fun_classes"):GetBool()) then
 	GmodButton:SetSize(ScrW() * 0.056, ScrH() * 0.195)
 	GmodButton:SetPos(ScrW() * 0.814, ScrH() * -0.015) --ScrW() * 0.088, ScrH() * 0.002
 	--GmodButton:SetText("GMod Player") --Set the name of the button
-	GmodButton:SetImage("vgui/class_sel_sm_random_inactive")
+	GmodButton:SetImage("vgui/class_sel_sm_rebel_inactive")
 	GmodButton:SetAlpha(255)
 	GmodButton.DoClick = function() LocalPlayer():EmitSound( "ui/buttonclick.wav", 100, 100, 1, CHAN_VOICE ) RunConsoleCommand("changeclass", "gmodplayer")  ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM")  end
 	
