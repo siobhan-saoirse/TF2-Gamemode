@@ -176,11 +176,7 @@ for k, v in pairs(items_game["items"]) do
     if v.id == 424 then print(tf_lang.GetRaw(v.item_name)) end
 
     if v.item_name then
-        if (v.name) then
-            tf_items.Items[v.name] = v
-        else
-            tf_items.Items[tf_lang.GetRaw(v.item_name)] = v
-        end
+        tf_items.Items[tf_lang.GetRaw(v.item_name)] = v
         local name = tf_lang.GetRaw(v.item_name)
   
         if name == "Red-Tape Recorder" then
