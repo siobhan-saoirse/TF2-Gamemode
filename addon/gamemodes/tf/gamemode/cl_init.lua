@@ -2688,9 +2688,10 @@ local function MergeSteamInventory(ply)
 		error(string.format("IEconItems_440: Failed API call for %s | %s (Error: %s)\n", ply:Nick(), ply:SteamID(), code))
 	end
 	)
+	RunConsoleCommand("loadout_update")
 end
 
-timer.Simple(5.0, function()
+timer.Simple(15.0, function()
 
 	if CLIENT then
 		local conflict_help_frame = vgui.Create( "DFrame" )
