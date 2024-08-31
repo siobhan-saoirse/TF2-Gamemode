@@ -12,6 +12,12 @@ function GM:HandlePlayerJumping(pl)
 			pl:AnimRestartMainSequence()
 	end
 	
+	if (pl.Whistle and pl:IsOnGround()) then
+		if (pl.Whistle:IsPlaying()) then
+			pl.Whistle:Stop()
+			pl.m_flBlastJumpLaunchTime = CurTime()
+		end
+	end
 	if pl.anim_Jumping then
 		local firstjumpframe = pl.anim_FirstJumpFrame
 		
@@ -29,12 +35,6 @@ function GM:HandlePlayerJumping(pl)
 					pl:AnimRestartGesture(GESTURE_SLOT_JUMP, ACT_LAND, true)
 				else
 					pl:AnimRestartGesture(GESTURE_SLOT_JUMP, ACT_MP_JUMP_LAND, true)
-				end
-				if (pl.Whistle) then
-					if (pl.Whistle:IsPlaying()) then
-						pl.Whistle:Stop()
-						pl.m_flBlastJumpLaunchTime = CurTime()
-					end
 				end
 			end 
 		end
