@@ -276,7 +276,7 @@ function SelectResponse(ent, dbg)
 	return best
 end
 
-local function playscene_delayed(ent, scene)
+local function playscene_delayed(ent, scene) 
 	if not IsValid(ent) then return end 
 	if (string.find(ent:GetModel(),"hwm")) then
 		if (ent:GetInfoNum("tf_usehwmvcds ",0) == 1) then
