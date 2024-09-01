@@ -394,6 +394,7 @@ concommand.Add("joinclass", function(pl, cmd, args)
 end, function() return GAMEMODE.PlayerClassesAutoComplete end)
 --RunConsoleCommand("snd_restart")
 RunConsoleCommand("hud_showloadout","0")
+RunConsoleCommand("spawnmenu_reload")
 physenv.SetGravity(Vector(0,0,-386))
 usermessage.Hook("PlayerResetDominations", function(um)
 	local pl = um:ReadEntity()
@@ -1191,14 +1192,14 @@ if (!GetConVar("tf_disable_fun_classes"):GetBool()) then
 	GmodButton:SetSize(ScrW() * 0.056, ScrH() * 0.195)
 	GmodButton:SetPos(ScrW() * 0.814, ScrH() * -0.015) --ScrW() * 0.088, ScrH() * 0.002
 	--GmodButton:SetText("GMod Player") --Set the name of the button
-	GmodButton:SetImage("vgui/class_sel_sm_rebel_inactive")
+	GmodButton:SetImage("vgui/class_sel_sm_gmodplayer_inactive")
 	GmodButton:SetAlpha(255)
 	GmodButton.DoClick = function() LocalPlayer():EmitSound( "ui/buttonclick.wav", 100, 100, 1, CHAN_VOICE ) RunConsoleCommand("changeclass", "gmodplayer")  ClassFrame:Close() if string.find(game.GetMap(), "mvm_") then LocalPlayer():EmitSound("music/mvm_class_select.wav") end LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") LocalPlayer():StopSound("ClassSelection.ThemeMVM")  end
 	
 	gm_img = vgui.Create( "DImage", GmodButton )	-- Add image to Frame
 	gm_img:SetPos( 0, 0 )	-- Move it into frame
 	gm_img:SetSize( SpyButton:GetSize() )	-- Size it to 150x150
-	gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+	gm_img:SetImage("vgui/class_sel_sm_gmodplayer_inactive")
 	GmodButton.OnCursorEntered = function() 
 		icon2:GetEntity():SetModel("models/weapons/w_physics.mdl") 
 		icon3:SetModel( "models/empty.mdl" ) -- you can only change colors on playermodels
@@ -1227,11 +1228,11 @@ if (!GetConVar("tf_disable_fun_classes"):GetBool()) then
 		sn_img:SetImage( "vgui/class_sel_sm_sniper_inactive" )
 		sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 		if LocalPlayer():Team()==1 or LocalPlayer():Team()==5 then
-			gm_img:SetImage( "vgui/class_sel_sm_rebel_red" )
+			gm_img:SetImage( "vgui/class_sel_sm_gmodplayer_red" )
 		elseif LocalPlayer():Team()==TEAM_BLU then
-			gm_img:SetImage( "vgui/class_sel_sm_rebel_blu" )
+			gm_img:SetImage( "vgui/class_sel_sm_gmodplayer_blu" )
 		else
-			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+			gm_img:SetImage("vgui/class_sel_sm_gmodplayer_inactive")
 		end
 			
 		menuname:SetText( "GMOD PLAYER" ) 
@@ -1370,7 +1371,7 @@ double jump while in the air!]] )
 	if (IsValid(GmodButton)) then
 		
 		if !GetConVar("tf_disable_fun_classes"):GetBool() then
-			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+			gm_img:SetImage("vgui/class_sel_sm_gmodplayer_inactive")
 		else
 			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
 		end
@@ -1426,7 +1427,7 @@ Use your rocket launcher to rocket jump!]] )
 	sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 	if (IsValid(GmodButton)) then
 		if !GetConVar("tf_disable_fun_classes"):GetBool() then
-			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+			gm_img:SetImage("vgui/class_sel_sm_gmodplayer_inactive")
 		else
 			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
 		end
@@ -1483,7 +1484,7 @@ closer you are to your target!]] )
 	sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 	if (IsValid(GmodButton)) then
 		if !GetConVar("tf_disable_fun_classes"):GetBool() then
-			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+			gm_img:SetImage("vgui/class_sel_sm_gmodplayer_inactive")
 		else
 			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
 		end
@@ -1541,7 +1542,7 @@ a stickybomb and jumping as you detonate it!]] )
 	sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 	if (IsValid(GmodButton)) then
 		if !GetConVar("tf_disable_fun_classes"):GetBool() then
-			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+			gm_img:SetImage("vgui/class_sel_sm_gmodplayer_inactive")
 		else
 			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
 		end
@@ -1599,7 +1600,7 @@ for approaching enemies!]] )
 	sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 	if (IsValid(GmodButton)) then
 		if !GetConVar("tf_disable_fun_classes"):GetBool() then
-			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+			gm_img:SetImage("vgui/class_sel_sm_gmodplayer_inactive")
 		else
 			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
 		end
@@ -1665,7 +1666,7 @@ team mates get to the front lines!]] )
 	sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 	if (IsValid(GmodButton)) then
 		if !GetConVar("tf_disable_fun_classes"):GetBool() then
-			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+			gm_img:SetImage("vgui/class_sel_sm_gmodplayer_inactive")
 		else
 			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
 		end
@@ -1727,7 +1728,7 @@ your medi gun target!]] )
 	sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 	if (IsValid(GmodButton)) then
 		if !GetConVar("tf_disable_fun_classes"):GetBool() then
-			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+			gm_img:SetImage("vgui/class_sel_sm_gmodplayer_inactive")
 		else
 			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
 		end
@@ -1786,7 +1787,7 @@ aim for the head to do critical hits!]] )
 	sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 	if (IsValid(GmodButton)) then
 		if !GetConVar("tf_disable_fun_classes"):GetBool() then
-			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+			gm_img:SetImage("vgui/class_sel_sm_gmodplayer_inactive")
 		else
 			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
 		end
@@ -1848,7 +1849,7 @@ to destroy them!]] )
 	if (IsValid(GmodButton)) then
 
 		if !GetConVar("tf_disable_fun_classes"):GetBool() then
-			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
+			gm_img:SetImage("vgui/class_sel_sm_gmodplayer_inactive")
 		else
 			gm_img:SetImage("vgui/class_sel_sm_random_inactive")
 		end
@@ -2779,8 +2780,8 @@ include("cl_hud.lua")
 
 file.Append(LOGFILE, Format("Done loading, time = %f\n", SysTime() - load_time))	
 
-hook.Add( "SpawnMenuEnabled", "BlockPlayerSWEPs", function(  )
-	if ( GetConVar("tf_competitive"):GetBool() and not LocalPlayer():IsAdmin() ) then
+hook.Add( "SpawnMenuEnabled", "BlockThisShit", function(  )
+	if ( GetConVar("tf_competitive"):GetBool() and !LocalPlayer():IsAdmin() ) then
 		return false
 	else
 		return true
