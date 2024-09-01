@@ -67,9 +67,37 @@ function meta:EmitSound(soundName, soundLevel, pitchPercent, volume, channel, so
 			rf:AddAllPlayers()
 			filter = rf
 		end
-		EmitSound(soundName, self:GetPos(), self:EntIndex(), channel, volume, soundLevel, soundFlags, pitch, dsp, filter)
+		local soundtable = {
+			SoundName = soundName,
+			OriginalSoundName = soundName,
+			SoundTime = 0,
+			DSP = dsp,
+			SoundLevel = soundLevel,
+			Pitch = pitchPercent,
+			Flags = soundFlags,
+			Channel = channel,
+			Volume = volume,
+			Entity = self,
+			Pos = self:GetPos(),
+		}
+		hook.Call( "EntityEmitSound", soundtable)
+		EmitSound(soundtable.SoundName, self:GetPos(), self:EntIndex(), soundtable.Channel, soundtable.Volume, soundtable.SoundLevel, soundtable.Flags, soundtable.Pitch, soundtable.DSP, filter)
 	else
-		EmitSound(soundName, self:GetPos(), self:EntIndex(), channel, volume, soundLevel, soundFlags, pitch, dsp, nil)
+		local soundtable = {
+			SoundName = soundName,
+			OriginalSoundName = soundName,
+			SoundTime = 0,
+			DSP = dsp,
+			SoundLevel = soundLevel,
+			Pitch = pitchPercent,
+			Flags = soundFlags,
+			Channel = channel,
+			Volume = volume,
+			Entity = self,
+			Pos = self:GetPos(),
+		}
+		hook.Call( "EntityEmitSound", soundtable)
+		EmitSound(soundtable.SoundName, self:GetPos(), self:EntIndex(), soundtable.Channel, soundtable.Volume, soundtable.SoundLevel, soundtable.Flags, soundtable.Pitch, soundtable.DSP, nil)
 	end
 end
 function meta:SetTrigger(b)
