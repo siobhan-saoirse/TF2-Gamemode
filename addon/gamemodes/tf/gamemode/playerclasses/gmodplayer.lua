@@ -109,7 +109,7 @@ function CLASS:Initialize()
 	self:Give("weapon_357")
 	self:Give("weapon_rpg")
 	self:Give("weapon_ar2")
-	self:Give("none")
+	self:Give("hands")
 	self:Give("weapon_medkit")
 	self:Give("weapon_fists")
 	if (!GetConVar("tf_competitive"):GetBool()) then
