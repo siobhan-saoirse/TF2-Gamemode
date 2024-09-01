@@ -26,7 +26,6 @@ for k, v in pairs(items_game["items"]) do
             end
         end
     end
-	
 	if (v.prefab) then
 		if (string.find(v.prefab,"valve ")) then
 			v.prefab = string.Replace(v.prefab,"valve ", "")
@@ -42,12 +41,6 @@ for k, v in pairs(items_game["items"]) do
             local oldvisuals = prefab.visuals
             table.Merge(v.visuals, oldvisuals)
         end
-    end
-    if (!v.attributes) then
-        v.attributes = {}
-    end
-    if (!v.used_by_classes) then
-        v.used_by_classes = {}
     end
     if prefabs[v.prefab] and v.static_attrs then
         local prefab = prefabs[v.prefab]

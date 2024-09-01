@@ -58,6 +58,10 @@ end
 
 if CLIENT then
 function ENT:Think()
+	if !self.Idle_Sound and self:GetState()==3 || self.Idle_Sound and !self.Idle_Sound:IsPlaying() and self:GetState()==3 then
+		self.Idle_Sound = CreateSound(self, self.Sound_Idle)
+		self.Idle_Sound:Play()
+	end
 end
 
 function ENT:OnRemove()
