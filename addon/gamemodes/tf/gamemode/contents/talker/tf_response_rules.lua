@@ -704,7 +704,7 @@ criterion "ConceptPlayerGameOverComp" "Concept" "TLK_GAME_OVER_COMP" required
 criterion "ConceptPlayerMatchOverComp" "Concept" "TLK_MATCH_OVER_COMP" required
 
 criterion "ConceptPlayerCombine" "Concept" "TLK_PLAYER_COMBINE_CO" required 
-criterion "ConceptPlayerRebel" "Concept" "TLK_PLAYER_gmodplayer_CO" required 
+criterion "ConceptPlayerRebel" "Concept" "TLK_PLAYER_REBEL_CO" required 
 criterion "ConceptPlayerStrider" "Concept" "TLK_PLAYER_STRIDER_CO" required 
 criterion "ConceptPlayerZombie" "Concept" "TLK_PLAYER_ZOMBIE_CO" required 
 criterion "ConceptPlayerHeadcrab" "Concept" "TLK_PLAYER_HEADCRAB_CO" required 
