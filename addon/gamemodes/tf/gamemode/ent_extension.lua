@@ -38,7 +38,38 @@ function meta:EmitSoundEx(soundName, soundLevel, pitchPercent, volume, channel, 
 		end
 		EmitSound(soundName, self:GetPos(), self:EntIndex(), channel, volume, soundLevel, soundFlags, pitch, dsp, filter)
 	else
-		self:EmitSound(soundName,soundLevel,pitchPercent,volume,channel,soundFlags,dsp,filter)
+		EmitSound(soundName, self:GetPos(), self:EntIndex(), channel, volume, soundLevel, soundFlags, pitch, dsp, nil)
+	end
+end
+
+function meta:EmitSound(soundName, soundLevel, pitchPercent, volume, channel, soundFlags, dsp, filter)
+	if(!soundLevel) then
+		soundLevel = 75
+	end
+	if(!pitchPercent) then
+		pitchPercent = 100
+	end
+	if(!volume) then
+		volume = 1
+	end
+	if(!channel) then
+		channel = CHAN_AUTO
+	end
+	if(!soundFlags) then
+		soundFlags = 0
+	end
+	if(!dsp) then
+		dsp = 0
+	end
+	if SERVER then
+		if(!filter) then
+			local rf = RecipientFilter()
+			rf:AddAllPlayers()
+			filter = rf
+		end
+		EmitSound(soundName, self:GetPos(), self:EntIndex(), channel, volume, soundLevel, soundFlags, pitch, dsp, filter)
+	else
+		EmitSound(soundName, self:GetPos(), self:EntIndex(), channel, volume, soundLevel, soundFlags, pitch, dsp, nil)
 	end
 end
 function meta:SetTrigger(b)
