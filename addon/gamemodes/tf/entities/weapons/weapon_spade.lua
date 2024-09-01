@@ -12,7 +12,7 @@ SWEP.SlotPos = 0
 SWEP.Spawnable = true
 
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
-SWEP.ViewModel = Model( "models/weapons/cstrike/c_spade.mdl" )
+SWEP.ViewModel = Model( "models/weapons/v_spade.mdl" )
 SWEP.WorldModel = "models/weapons/w_spade.mdl"
 SWEP.UseHands = false
 SWEP.HoldType = "melee2"

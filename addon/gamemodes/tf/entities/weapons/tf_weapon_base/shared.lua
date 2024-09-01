@@ -196,6 +196,48 @@ local cycle = 0
 local speed = 0
 local flmaxSpeedDelta = 0
 local bob_offset = 0
+local function CalcViewModelBobHelper(self)
+	local ply = self.Owner
+	local cl_bob = cvar_bob:GetFloat()
+	local cl_bobcycle = math.max(cvar_bobcycle:GetFloat(), 0.1)
+	local cl_bobup = cvar_bobup:GetFloat()
+
+	local cltime = CurTime()
+	local cycle = cltime - math.floor(cltime/cl_bobcycle)*cl_bobcycle
+	cycle = cycle / cl_bobcycle
+	if (cycle < cl_bobup) then
+		cycle = math.pi * cycle / cl_bobup
+	else
+		cycle = math.pi + math.pi*(cycle-cl_bobup)/(1.0 - cl_bobup)
+	end
+
+	local velocity = ply:GetVelocity()
+
+	self.g_verticalBob = math.Clamp(math.sqrt(velocity[1]*velocity[1] + velocity[2]*velocity[2]),-320.0,320.0) * cl_bob
+	self.g_verticalBob = self.g_verticalBob*0.3 + self.g_verticalBob*0.7*math.sin(cycle)
+	if (self.g_verticalBob > 4) then
+		self.g_verticalBob = 4
+	elseif (self.g_verticalBob < -7) then
+		self.g_verticalBob = -7
+	end
+	
+	local cycle2 = cltime - math.floor(cltime/(cl_bobcycle*2))*(cl_bobcycle*2)
+	cycle2 = cycle2 / cl_bobcycle*0.5
+	if (cycle2 < cl_bobup) then
+		cycle2 = math.pi * cycle2 / cl_bobup
+	else
+		cycle2 = math.pi + math.pi*(cycle2-cl_bobup)/(1.0 - cl_bobup)
+	end
+
+	self.g_lateralBob = math.Clamp(math.sqrt(velocity[1]*velocity[1] + velocity[2]*velocity[2]),-320.0,320.0) * cl_bob
+	self.g_lateralBob = self.g_lateralBob*0.3 + self.g_lateralBob*0.7*math.sin(cycle2)
+	if (self.g_lateralBob > 4) then
+		self.g_lateralBob = 4
+	elseif (self.g_lateralBob < -7) then
+		self.g_lateralBob = -7
+	end
+	return 0.0
+end
 function SWEP:CalcViewModelBobHelper(  )
 	local cl_bob = cvar_bob:GetFloat()
 	local cl_bobcycle = math.max(cvar_bobcycle:GetFloat(), 0.1)
@@ -250,6 +292,68 @@ function SWEP:VectorMA( start, scale, direction, dest )
 	]]
 	return Vector(start.x + scale * direction.x,start.y + scale * direction.y,start.z + scale * direction.z)
 end
+
+local function VectorMA( start, scale, direction, dest )
+	--[[
+	dest.x = start.x + scale * direction.x;
+	dest.y = start.y + scale * direction.y;
+	dest.z = start.z + scale * direction.z;
+	]]
+	return Vector(start.x + scale * direction.x,start.y + scale * direction.y,start.z + scale * direction.z)
+end
+
+hook.Add("CalcViewModelView","TFViewmodelBob",function(wep, vm, oldpos, oldang, newpos, newang)
+	if (IsValid(wep.Owner)) then
+		if (!wep.Owner:IsHL2() and !string.find(wep:GetClass(),"tf_weapon")) then
+			wep.BobScale = 0
+			local self = wep
+				-- actual code, for reference
+				--[[
+				
+				Vector	forward, right;
+				AngleVectors( angles, &forward, &right, NULL );
+
+				CalcViewmodelBob();
+
+				// Apply bob, but scaled down to 40%
+				VectorMA( origin, g_verticalBob * 0.4f, forward, origin );
+
+				// Z bob a bit more
+				origin[2] += g_verticalBob * 0.1f;
+
+				// bob the angles
+				angles[ ROLL ]	+= g_verticalBob * 0.5f;
+				angles[ PITCH ]	-= g_verticalBob * 0.4f;
+
+				angles[ YAW ]	-= g_lateralBob  * 0.3f;
+
+			//	VectorMA( origin, g_lateralBob * 0.2f, right, origin );
+
+				]]
+				if CLIENT then
+					local forward = wep.Owner:GetForward()
+					local right = wep.Owner:GetRight()
+					local origin = oldpos
+					local angles = oldang
+					CalcViewModelBobHelper(wep)
+
+					// Apply bob, but scaled down to 40%
+					origin = VectorMA( origin, wep.g_verticalBob * 0.4, forward, origin );
+
+					// Z bob a bit more
+					origin.z = origin.z + wep.g_verticalBob * 0.1;
+
+					// bob the angles
+					angles.r	= angles.r + wep.g_verticalBob * 0.5;
+					angles.p	= angles.p - wep.g_verticalBob * 0.4;
+					angles.y = angles.y - wep.g_lateralBob  * 0.3;
+
+					origin = VectorMA( origin, wep.g_lateralBob * 0.2, right, origin );
+					return origin, angles
+				end
+		end
+	end
+end)
 
 function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 	if not self.VMMinOffset and self:GetItemData() then

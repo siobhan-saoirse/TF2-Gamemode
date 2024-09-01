@@ -12,7 +12,7 @@ SWEP.SlotPos = 0
 SWEP.Spawnable = true
 
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
-SWEP.ViewModel = Model( "models/weapons/cstrike/c_amerk.mdl" )
+SWEP.ViewModel = Model( "models/weapons/v_amerk.mdl" )
 SWEP.WorldModel = "models/weapons/w_amerk.mdl"
 SWEP.UseHands = false
 SWEP.HoldType = "knife"
@@ -26,7 +26,7 @@ SWEP.DeployAfterPickup = false
 SWEP.HitDistance = 48
 SWEP.IsTryingToBackstab = false
 SWEP.SwayScale			= 2.6
-SWEP.BobScale			= 0.35
+SWEP.BobScale			= 0
 function SWEP:Deploy()
 	self:SetWeaponHoldType( self.HoldType ) 
 	local vm = self:GetOwner():GetViewModel()
@@ -271,3 +271,4 @@ function SWEP:MeleeAttack( right )
 end
 function SWEP:Reload()
 end
+

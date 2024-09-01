@@ -531,20 +531,6 @@ hook.Add("Think", "CanYouSetMovea_XParameterToThePlayers?", function()
 			else
 				pl:SetSaveValue("m_iClass",CLASS_HUMAN_MILITARY)
 			end
-			local vm = pl:GetViewModel()
-			if (pl:IsL4D()) then
-				CopyPoseParams(pl,vm)
-			end
-			
-			if SERVER then
-				if (pl:IsHL2()) then
-					vm:SetPoseParameter("ver_aims", math.Remap(pl:GetPoseParameter("aim_pitch"),90,-45,1,-1))
-					vm:SetPoseParameter("hor_aims", math.Remap(pl:GetPoseParameter("aim_yaw"),45,-45,-1,1))
-				else
-					vm:SetPoseParameter("ver_aims", math.Remap(pl:GetPoseParameter("body_pitch"),90,-45,1,-1))
-					vm:SetPoseParameter("hor_aims", math.Remap(pl:GetPoseParameter("body_yaw"),45,-45,-1,1))
-				end
-			end
 			if (pl:WaterLevel() > 1) then
 				if (pl:IsOnFire()) then
 					pl:Extinguish()
@@ -2597,8 +2583,8 @@ elseif file.Exists("maps/"..game.GetMap()..".lua", "LUA") then
 end
 
 RunConsoleCommand("sk_player_head", "1")
-RunConsoleCommand("sv_friction", "4")
-RunConsoleCommand("sv_stopspeed", "100")
+RunConsoleCommand("sv_friction", "8")
+RunConsoleCommand("sv_stopspeed", "10")
 --Disables use key on objects (Can Be Re-enabled)
 -- WHAT WERE YOU THINKING
 RunConsoleCommand("sv_playerpickupallowed", "1")

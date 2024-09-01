@@ -136,7 +136,7 @@ end
 function ENT:Think()
 	
 	local item = self:GetItemData()
-	if (IsValid(self.OWner)) then
+	if (IsValid(self.Owner)) then
 		if (item.visuals) then
 			if item.visuals.player_bodygroups then
 				local bodygroups = item.visuals.player_bodygroups

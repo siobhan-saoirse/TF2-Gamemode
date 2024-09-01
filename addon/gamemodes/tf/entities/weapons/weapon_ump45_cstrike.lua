@@ -280,7 +280,7 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 			// Apply bob, but scaled down to 40%
 			origin = self:VectorMA( origin, self.g_verticalBob * 0.4, forward, origin );
 
-			// Z bob a bit more
+			// Z bob a bit more 
 			origin.z = origin.z + self.g_verticalBob * 0.1;
 
 			// bob the angles

@@ -18,7 +18,7 @@ SWEP.ViewModel = Model( "models/weapons/cstrike/c_smg_mac10.mdl" )
 SWEP.WorldModel = "models/weapons/w_smg_mac10.mdl"
 
 SWEP.UseHands = true
-SWEP.HoldType = "ar2"
+SWEP.HoldType = "smg"
 SWEP.Primary.Delay = 0.061
 SWEP.Primary.ClipSize = 30  -- How much bullets are in the mag
 SWEP.Primary.DefaultClip = 128 -- How much bullets preloaded when spawned

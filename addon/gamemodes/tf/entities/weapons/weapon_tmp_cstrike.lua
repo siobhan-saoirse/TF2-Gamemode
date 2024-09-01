@@ -259,7 +259,7 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 		VectorMA( origin, g_verticalBob * 0.4f, forward, origin );
 
 		// Z bob a bit more
-		origin[2] += g_verticalBob * 0.1f;
+		origin[2] += g_verticalBob * 0.1f; 
 
 		// bob the angles
 		angles[ ROLL ]	+= g_verticalBob * 0.5f;

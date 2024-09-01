@@ -378,7 +378,7 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 			local right = self.Owner:GetRight()
 			local origin = newpos
 			local angles = newang 
-			self:CalcViewModelBobHelper()
+			self:CalcViewModelBobHelper() 
 
 			// Apply bob, but scaled down to 40%
 			origin = self:VectorMA( origin, self.g_verticalBob * 0.4, forward, origin );
