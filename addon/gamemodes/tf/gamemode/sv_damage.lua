@@ -699,7 +699,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			end
 			
 			ent.ExplosionForceCalc:Add(force)
-			ent:SetVelocity(ent.ExplosionForceCalc)
+			dmginfo:SetDamageForce(force)
 			
 			if ent:IsPlayer() then
 				ent:DoAnimationEvent(ACT_MP_AIRWALK, false)
