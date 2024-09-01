@@ -2,6 +2,8 @@
 if (!IsMounted("cstrike")) then return end
 AddCSLuaFile()
 SWEP.Base = "weapon_base"
+
+SWEP.BobScale			= 0
 SWEP.Category = "Counter-Strike: Source"
 SWEP.PrintName = "P228"
 SWEP.Author = "Daisreich"
@@ -260,7 +262,7 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 		origin[2] += g_verticalBob * 0.1f;
 
 		// bob the angles
-		angles[ ROLL ]	+= g_verticalBob * 0.5f;
+		angles[ ROLL ]	+= g_verticalBob * 0.5f; 
 		angles[ PITCH ]	-= g_verticalBob * 0.4f;
 
 		angles[ YAW ]	-= g_lateralBob  * 0.3f;
@@ -271,8 +273,8 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 		if CLIENT then
 			local forward = self.Owner:GetForward()
 			local right = self.Owner:GetRight()
-			local origin = oldpos
-			local angles = oldang
+			local origin = newpos
+			local angles = newang
 			self:CalcViewModelBobHelper()
 
 			// Apply bob, but scaled down to 40%
