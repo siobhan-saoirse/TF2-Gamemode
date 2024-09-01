@@ -114,7 +114,9 @@ function CLASS:Initialize()
 	self:Give("weapon_fists")
 	self:Give("gmod_tool")
 	self:Give("gmod_camera")
-	self:Give("weapon_physgun")
+	if (!GetConVar("tf_competitive"):GetBool()) then
+		self:Give("weapon_physgun")
+	end
 	--[[
 	if (self:GetPlayerClassTable().IsHL1Mounted) then
 		if (tf_util.IsHL1SwepsMounted()) then
