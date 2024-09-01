@@ -1636,7 +1636,10 @@ team mates get to the front lines!]] )
 	for name, wep in pairs(tf_items.Items) do
 		if istable(wep) then
 			if (wep.id == tonumber(split[3])) then
-				icon2:GetEntity():SetModel(wep.model_world or wep.model_player)
+				local model = wep.model_world or wep.model_player
+				if (model ~= nil) then
+					icon2:GetEntity():SetModel(wep.model_world or wep.model_player)
+				end
 			end
 		end
 	end
@@ -1843,7 +1846,7 @@ to destroy them!]] )
 		sp_img:SetImage( "vgui/class_sel_sm_spy_inactive" )
 	end
 	if (IsValid(GmodButton)) then
-		
+
 		if !GetConVar("tf_disable_fun_classes"):GetBool() then
 			gm_img:SetImage("vgui/class_sel_sm_rebel_inactive")
 		else
