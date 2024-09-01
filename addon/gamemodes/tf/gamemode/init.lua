@@ -1472,12 +1472,12 @@ concommand.Add( "changeteam", function( pl, cmd, args )
 	if ( tonumber( args[ 1 ] ) == 0 or tonumber( args[ 1 ] ) < 0 or tonumber( args[ 1 ] ) > TEAM_FRIENDLY) then pl:ChatPrint("Invalid Team!") return end
 	if ( !GetConVar("tf_competitive"):GetBool() and pl:Team() == tonumber( args[ 1 ] ) ) then pl:PrintMessage(HUD_PRINTTALK,"You are already in this team!") return false end
 	if ( GetConVar("tf_competitive"):GetBool() and tonumber( args[ 1 ] ) == 4 ) then pl:ChatPrint("Competitive mode is on!") return end
-	if ( string.find(game.GetMap(), "mvm_") and tonumber( args[ 1 ] ) == 6 ) then pl:ChatPrint("Friendly Team is disabled!") return end
-	if ( string.find(game.GetMap(), "mvm_") and !pl:IsAdmin() and tonumber( args[ 1 ] ) == 5 ) then pl:ChatPrint("Neutral Team is disabled!") return end
-	if ( GetConVar("tf_competitive"):GetBool() and tonumber( args[ 1 ] ) == 6 ) then pl:ChatPrint("Friendly Team is disabled!") return end
-	if ( GetConVar("tf_competitive"):GetBool() and tonumber( args[ 1 ] ) == 5 ) then pl:ChatPrint("Neutral Team is disabled!") return end
-	if ( GetConVar("tf_competitive"):GetBool() and tonumber( args[ 1 ] ) == 4 ) then pl:ChatPrint("Green Team is disabled!") return end
-	if ( GetConVar("tf_competitive"):GetBool() and tonumber( args[ 1 ] ) == 3 ) then pl:ChatPrint("Yellow Team is disabled!") return end
+	if ( string.find(game.GetMap(), "mvm_") and tonumber( args[ 1 ] ) == 6 and !pl:IsAdmin() ) then pl:ChatPrint("Friendly Team is disabled!") return end
+	if ( string.find(game.GetMap(), "mvm_") and !pl:IsAdmin() and tonumber( args[ 1 ] ) == 5 and !pl:IsAdmin() ) then pl:ChatPrint("Neutral Team is disabled!") return end
+	if ( GetConVar("tf_competitive"):GetBool() and tonumber( args[ 1 ] ) == 6 and !pl:IsAdmin() ) then pl:ChatPrint("Friendly Team is disabled!") return end
+	if ( GetConVar("tf_competitive"):GetBool() and tonumber( args[ 1 ] ) == 5 and !pl:IsAdmin() ) then pl:ChatPrint("Neutral Team is disabled!") return end
+	if ( GetConVar("tf_competitive"):GetBool() and tonumber( args[ 1 ] ) == 4 and !pl:IsAdmin() ) then pl:ChatPrint("Green Team is disabled!") return end
+	if ( GetConVar("tf_competitive"):GetBool() and tonumber( args[ 1 ] ) == 3 and !pl:IsAdmin() ) then pl:ChatPrint("Yellow Team is disabled!") return end
 
 	if ( GetConVar("tf_competitive"):GetBool() ) then
 		local theteam = tonumber( args[ 1 ] )
