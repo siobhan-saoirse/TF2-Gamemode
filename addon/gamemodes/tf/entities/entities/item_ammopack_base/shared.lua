@@ -19,7 +19,7 @@ function ENT:PlayerTouched(pl)
 		a = a * pl.TempAttributes.AmmoFromPacksMultiplier
 	end
 	
-	pl:SendLua([[EmitSound("AmmoPack.Touch", Vector(]]..pl:GetPos().x..[[,]]..pl:GetPos().y..[[,]]..pl:GetPos().z..[[)]])
+	pl:SendLua([[EmitSound("AmmoPack.Touch", Vector(]]..pl:GetPos().x..[[,]]..pl:GetPos().y..[[,]]..pl:GetPos().z..[[))]])
 	self:Hide()
 	if pl:IsPlayer() then
 		GAMEMODE:GiveAmmoPercent(pl, a)
