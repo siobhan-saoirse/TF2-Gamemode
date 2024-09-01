@@ -18,9 +18,7 @@ function meta:GiveLoadout()
         end
 
         if itemname then
-            timer.Simple(0 + type * 0.05, function()
-                self:EquipInLoadout(itemname)
-            end)
+            self:EquipInLoadout(itemname)
             --tf_items.CC_GiveItem(self, _, {itemname})
             --self:ConCommand("__svgiveitem", itemname) --id)
         end
