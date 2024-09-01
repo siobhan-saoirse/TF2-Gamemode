@@ -364,7 +364,7 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 		angles[ YAW ]	-= g_lateralBob  * 0.3f;
 
 	//	VectorMA( origin, g_lateralBob * 0.2f, right, origin );
-
+ 
 		]] 
 		if CLIENT then
 			local forward = self.Owner:GetForward()

@@ -269,7 +269,7 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 
 	//	VectorMA( origin, g_lateralBob * 0.2f, right, origin );
 
-		]] 
+		]]  
 		if CLIENT then
 			local forward = self.Owner:GetForward()
 			local right = self.Owner:GetRight()
