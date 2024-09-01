@@ -63,3 +63,9 @@ end
 
 function SWEP:Reload()
 end
+
+function SWEP:OnDrop()
+    if SERVER then
+        self:Remove()
+    end
+end
