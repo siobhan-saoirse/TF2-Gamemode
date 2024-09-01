@@ -242,85 +242,6 @@ function SWEP:CalcViewModelBobHelper(  )
 	return 0.0
 end
 
-function SWEP:ProjectileShootPos()
-	local pos, ang = self.Owner:GetShootPos(), self.Owner:EyeAngles()
-	if self then
-		if self.Owner:GetInfoNum("tf_righthand", 1) == 0 then
-		return pos +
-			self.ProjectileShootOffset.x * ang:Forward() - 
-			self.ProjectileShootOffset.y * ang:Right() + 
-			self.ProjectileShootOffset.z * ang:Up()
-		else return pos +
-			self.ProjectileShootOffset.x * ang:Forward() + 
-			self.ProjectileShootOffset.y * ang:Right() + 
-			self.ProjectileShootOffset.z * ang:Up()
-		end
-	end
-end
-
-function SWEP:Precache()
-	if self.MuzzleEffect then
-		PrecacheParticleSystem(self.MuzzleEffect)
-	end
-	
-	if self.TracerEffect then
-		PrecacheParticleSystem(self.TracerEffect.."_red")
-		PrecacheParticleSystem(self.TracerEffect.."_blue")
-		PrecacheParticleSystem(self.TracerEffect.."_red_crit")
-		PrecacheParticleSystem(self.TracerEffect.."_blue_crit")
-	end
-end
-
-
-
-function SWEP:PreCalculateDamage(ent) 
-	
-end 
-
-function SWEP:PostCalculateDamage(dmg, ent)
-	return dmg
-end
-
-function SWEP:CalculateDamage(hitpos, ent)
-	return tf_util.CalculateDamage(self, self:GetPos(), self.Owner:GetPos())
-end
-
-function SWEP:Equip()
-	self.CurrentOwner = self.Owner
-	
---	if not inspectMessage and self.Owner:IsPlayer() then
-	--	self.Owner:ChatPrint("Press 'SHIFT' to Inspect!")
-	--	inspectMessage = true
-	--	timer.Simple(30, function() inspectMessage = false end)
---	end
-	
-	self:StopTimers()
-	
-	if SERVER then
-		--MsgN(Format("Equip %s (owner:%s)",tostring(self),tostring(self:GetOwner())))
-		
-		--[[if IsValid(self.Owner) and self.Owner.WeaponItemIndex then
-			self:SetItemIndex(self.Owner.WeaponItemIndex)
-		end]]
-		--MsgFN("Equip %s", tostring(self))
-		
-		if self.DeployedBeforeEquip then
-			-- FIXED since gmod update 104, this does not seem to be called anymore
-			
-			-- Call the Deploy function again if the weapon is deployed before it has an owner attributed
-			-- This happens when a player is given a weapon right after the ammo for that weapon has been stripped
-			self:Deploy()
-			self.DeployedBeforeEquip = nil
-			--MsgN("Deployed before equip!")
-		elseif _G.TFWeaponItemIndex then
-			self:SetItemIndex(_G.TFWeaponItemIndex)
-		end
-		 
-		-- quickfix for deploy animations since gmod update 104
-		--self.NextReplayDeployAnim = CurTime() + 0.1
-	end
-end
-
 function SWEP:VectorMA( start, scale, direction, dest )
 	--[[
 	dest.x = start.x + scale * direction.x;
@@ -398,6 +319,86 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 		else
 			return oldpos, oldang
 		end
+	end
+end
+
+
+function SWEP:ProjectileShootPos()
+	local pos, ang = self.Owner:GetShootPos(), self.Owner:EyeAngles()
+	if self then
+		if self.Owner:GetInfoNum("tf_righthand", 1) == 0 then
+		return pos +
+			self.ProjectileShootOffset.x * ang:Forward() - 
+			self.ProjectileShootOffset.y * ang:Right() + 
+			self.ProjectileShootOffset.z * ang:Up()
+		else return pos +
+			self.ProjectileShootOffset.x * ang:Forward() + 
+			self.ProjectileShootOffset.y * ang:Right() + 
+			self.ProjectileShootOffset.z * ang:Up()
+		end
+	end
+end
+
+function SWEP:Precache()
+	if self.MuzzleEffect then
+		PrecacheParticleSystem(self.MuzzleEffect)
+	end
+	
+	if self.TracerEffect then
+		PrecacheParticleSystem(self.TracerEffect.."_red")
+		PrecacheParticleSystem(self.TracerEffect.."_blue")
+		PrecacheParticleSystem(self.TracerEffect.."_red_crit")
+		PrecacheParticleSystem(self.TracerEffect.."_blue_crit")
+	end
+end
+
+
+
+function SWEP:PreCalculateDamage(ent) 
+	
+end 
+
+function SWEP:PostCalculateDamage(dmg, ent)
+	return dmg
+end
+
+function SWEP:CalculateDamage(hitpos, ent)
+	return tf_util.CalculateDamage(self, self:GetPos(), self.Owner:GetPos())
+end
+
+function SWEP:Equip()
+	self.CurrentOwner = self.Owner
+	
+--	if not inspectMessage and self.Owner:IsPlayer() then
+	--	self.Owner:ChatPrint("Press 'SHIFT' to Inspect!")
+	--	inspectMessage = true
+	--	timer.Simple(30, function() inspectMessage = false end)
+--	end
+	
+	self:StopTimers()
+	
+	if SERVER then
+		--MsgN(Format("Equip %s (owner:%s)",tostring(self),tostring(self:GetOwner())))
+		
+		--[[if IsValid(self.Owner) and self.Owner.WeaponItemIndex then
+			self:SetItemIndex(self.Owner.WeaponItemIndex)
+		end]]
+		--MsgFN("Equip %s", tostring(self))
+		
+		if self.DeployedBeforeEquip then
+			-- FIXED since gmod update 104, this does not seem to be called anymore
+			
+			-- Call the Deploy function again if the weapon is deployed before it has an owner attributed
+			-- This happens when a player is given a weapon right after the ammo for that weapon has been stripped
+			self:Deploy()
+			self.DeployedBeforeEquip = nil
+			--MsgN("Deployed before equip!")
+		elseif _G.TFWeaponItemIndex then
+			self:SetItemIndex(_G.TFWeaponItemIndex)
+		end
+		 
+		-- quickfix for deploy animations since gmod update 104
+		--self.NextReplayDeployAnim = CurTime() + 0.1
 	end
 end
 
