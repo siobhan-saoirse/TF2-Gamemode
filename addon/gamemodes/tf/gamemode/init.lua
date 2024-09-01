@@ -2574,7 +2574,7 @@ function GM:GrabAndSwitch()
 	
 	-- Switch maps
 	game.ConsoleCommand("changelevel "..NEXT_MAP.."\n")
-end
+end 
 
 if file.Exists("tf2/maps/"..game.GetMap()..".lua", "LUA") then
 	include("tf2/maps/"..game.GetMap()..".lua")

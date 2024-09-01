@@ -591,12 +591,21 @@ end
 
 function meta:SetClassSpeed(sp)  
 	if !self:IsHL2() then
-		self:SetWalkSpeed(sp) 
-		self:SetRunSpeed(sp) 
-		self:SetJumpPower(220)
-		self:SetCrouchedWalkSpeed(0.33)
-		self:SetMaxSpeed(520) 
-		self:SetNWFloat("ClassSpeed", sp) 
+		if (self:GetInfoNum("tf_giant_robot",0) == 1 and self:GetPlayerClass() != "scout") then
+			self:SetWalkSpeed(sp * 0.5) 
+			self:SetRunSpeed(sp * 0.5) 
+			self:SetJumpPower(220)
+			self:SetCrouchedWalkSpeed(0.33)
+			self:SetMaxSpeed(520) 
+			self:SetNWFloat("ClassSpeed", sp * 0.5) 
+		else
+			self:SetWalkSpeed(sp) 
+			self:SetRunSpeed(sp) 
+			self:SetJumpPower(220)
+			self:SetCrouchedWalkSpeed(0.33)
+			self:SetMaxSpeed(520) 
+			self:SetNWFloat("ClassSpeed", sp) 
+		end
 	else
 		self:SetWalkSpeed(240)
 		self:SetRunSpeed(420) 

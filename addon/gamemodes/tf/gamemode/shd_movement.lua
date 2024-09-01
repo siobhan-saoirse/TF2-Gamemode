@@ -8,12 +8,12 @@ hook.Add("Move", "TFMove", function(pl, move)
 	-- Players run 10% slower when moving backwards
 	local fwd = move:GetForwardSpeed()
 	if fwd<0 and not pl:IsHL2() then
-		local sp = -pl:GetRealClassSpeed() * 0.9
+		local sp = -pl:GetRunSpeed() * 0.9
 		if fwd<sp then
 			--move:SetForwardSpeed(sp)
   			if not pl:Crouching() then 
-  				move:SetMaxSpeed(math.abs(-pl:GetRealClassSpeed() * 0.9 ))
-  				move:SetMaxClientSpeed(math.abs(-pl:GetRealClassSpeed() * 0.9 ))
+  				move:SetMaxSpeed(math.abs(-pl:GetRunSpeed() * 0.9 ))
+  				move:SetMaxClientSpeed(math.abs(-pl:GetRunSpeed() * 0.9 ))
   			end
 		end
 	end
