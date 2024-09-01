@@ -71,7 +71,7 @@ function ParseGameItems(data, silent)
 	-- Loading qualities
 	smin, smax = string.find(data, '"qualities"%s*%b{}')
 	if not smin then
-		if not silent then --[[ErrorNoHalt("ITEM SCRIPT ERROR: Could not load qualities!\n")]] end
+		if not silent then ErrorNoHalt("ITEM SCRIPT ERROR: Could not load qualities!\n") end
 		return false
 	end
 	
