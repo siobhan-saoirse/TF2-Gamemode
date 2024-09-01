@@ -1,4 +1,9 @@
 
+timer.Create("ExpectErrors!2", 0, 0, function()
+	if (game.SinglePlayer()) then
+		ErrorNoHalt("Singleplayer is enabled! Expect errors!")
+	end
+end)
 if !IsMounted("tf") then
 	timer.Create("ExpectErrors!", 0, 0, function()
 		ErrorNoHalt("Team Fortress 2 is not mounted! Expect errors!")
