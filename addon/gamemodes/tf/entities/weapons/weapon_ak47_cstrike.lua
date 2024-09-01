@@ -16,7 +16,7 @@ SWEP.Spawnable = true
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
 SWEP.ViewModel = Model( "models/weapons/cstrike/c_rif_ak47.mdl" )
 SWEP.WorldModel = "models/weapons/w_rif_ak47.mdl" 
-SWEP.ViewModelFOV = GetConVar("viewmodel_fov"):GetInt()
+ 
 SWEP.UseHands = true
 SWEP.HoldType = "ar2"
 SWEP.Primary.Delay = 0.1
@@ -34,7 +34,7 @@ SWEP.Secondary.Automatic = true
 SWEP.DeployAfterPickup = false
 SWEP.HitDistance = 48
 SWEP.ShootSound = Sound(")weapons/ak47/ak47-1.wav")
-SWEP.ViewModelFlip = false
+SWEP.ViewModelFlip = false 
 function SWEP:Deploy()
 	self:SetWeaponHoldType( self.HoldType ) 
 		local vm = self:GetOwner():GetViewModel()

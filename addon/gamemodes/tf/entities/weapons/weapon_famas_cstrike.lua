@@ -16,9 +16,9 @@ SWEP.Spawnable = true
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
 SWEP.ViewModel = Model( "models/weapons/cstrike/c_rif_famas.mdl" )
 SWEP.WorldModel = "models/weapons/w_rif_famas.mdl"
-SWEP.ViewModelFOV = GetConVar("viewmodel_fov"):GetInt()
+
 SWEP.UseHands = true
-SWEP.HoldType = "ar2"
+SWEP.HoldType = "ar2" 
 SWEP.Primary.Delay = 0.1
 SWEP.Primary.ClipSize = 25  -- How much bullets are in the mag
 SWEP.Primary.DefaultClip = 128 -- How much bullets preloaded when spawned

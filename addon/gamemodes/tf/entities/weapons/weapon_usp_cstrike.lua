@@ -16,7 +16,7 @@ SWEP.Spawnable = true
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
 SWEP.ViewModel = Model( "models/weapons/cstrike/c_pist_usp.mdl" )
 SWEP.WorldModel = "models/weapons/w_pist_usp.mdl"
-SWEP.ViewModelFOV = GetConVar("viewmodel_fov"):GetInt() 
+ 
 SWEP.UseHands = true
 SWEP.HoldType = "pistol"
 SWEP.Primary.Delay = 0.1
@@ -35,7 +35,7 @@ SWEP.DeployAfterPickup = false
 SWEP.HitDistance = 48
 SWEP.ShootSound = Sound("^weapons/usp/usp_unsil-1.wav")
 SWEP.ShootSound2 = Sound("^weapons/usp/usp1.wav")
-SWEP.ViewModelFlip = false
+SWEP.ViewModelFlip = false 
 SWEP.IsSilenced = false
 function SWEP:Deploy()
 	self:SetWeaponHoldType( self.HoldType ) 

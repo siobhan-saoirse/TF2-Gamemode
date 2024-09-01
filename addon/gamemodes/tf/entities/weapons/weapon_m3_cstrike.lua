@@ -16,7 +16,7 @@ SWEP.Spawnable = true
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
 SWEP.ViewModel = Model( "models/weapons/cstrike/c_shot_m3super90.mdl" )
 SWEP.WorldModel = "models/weapons/w_shot_m3super90.mdl"
-SWEP.ViewModelFOV = GetConVar("viewmodel_fov"):GetInt()
+
 SWEP.UseHands = true
 SWEP.HoldType = "shotgun"
 SWEP.Primary.Delay = 0.8
@@ -371,7 +371,7 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 
 	//	VectorMA( origin, g_lateralBob * 0.2f, right, origin );
 
-		]]
+		]] 
 		if CLIENT then
 			local forward = self.Owner:GetForward()
 			local right = self.Owner:GetRight()

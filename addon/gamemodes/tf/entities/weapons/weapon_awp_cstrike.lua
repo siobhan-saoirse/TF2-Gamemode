@@ -16,8 +16,8 @@ SWEP.Spawnable = true
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
 SWEP.ViewModel = Model( "models/weapons/cstrike/c_snip_awp.mdl" ) 
 SWEP.WorldModel = "models/weapons/w_snip_awp.mdl"
-SWEP.ViewModelFOV = GetConVar("viewmodel_fov"):GetInt()
-SWEP.UseHands = true
+
+SWEP.UseHands = true 
 SWEP.HoldType = "crossbow"
 SWEP.Primary.Delay = 1.455
 SWEP.Primary.ClipSize = 10  -- How much bullets are in the mag

@@ -16,7 +16,7 @@ SWEP.Spawnable = true
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
 SWEP.ViewModel = Model( "models/weapons/cstrike/c_smg_tmp.mdl" )
 SWEP.WorldModel = "models/weapons/w_smg_tmp.mdl"
-SWEP.ViewModelFOV = GetConVar("viewmodel_fov"):GetInt()
+
 SWEP.UseHands = true
 SWEP.HoldType = "smg"
 SWEP.Primary.Delay = 0.066
