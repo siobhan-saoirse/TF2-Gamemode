@@ -96,7 +96,9 @@ function SWEP:OnDrop()
 	drop.AmmoPercent = self.AmmoGiven or 100
 	drop:Activate()
 	timer.Simple(15, function()
-		drop:Remove()
+		if (IsValid(drop)) then
+			drop:Remove()
+		end
 	end)
 	if mdl == "models/weapons/c_models/c_shotgun/c_shotgun.mdl" then
 		drop:SetMaterial("models/weapons/w_shotgun_tf/w_shotgun_tf")
@@ -158,9 +160,11 @@ function SWEP:OnDrop()
 	ammo:SetCollisionGroup(COLLISION_GROUP_WORLD)
 	
 	timer.Simple(15, function()
-		ammo:Remove()
+		if (IsValid(ammo)) then
+			ammo:Remove()
+		end
 	end)
-	
+
 	local phys = ammo:GetPhysicsObject()
 	if phys:IsValid() then
 		phys:SetMass(10)
