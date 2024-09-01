@@ -173,59 +173,60 @@ function SWEP:PrimaryAttack()
 	local Delay = self.Delay or -1
 	if Delay>=0 and CurTime()<Delay then return end
 	self.Delay = CurTime() + self.Primary.Delay
-	
-	if not self.Firing then
-		self.Firing = true
-		self:SetFlamethrowerEffect(1)
-		self.SpinDownSound:Stop()
-		self.SpinUpSound:Play()
-		
-		if SERVER then
-			--self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_PREFIRE, true)
-		end
-	
-		if self.Primary.Delay == 0.015 then
-			self.SpinUpSound:ChangePitch(120)
-		end
-		if (string.find(self.Owner:GetModel(),"_boss.mdl")) then
-			self.NextEndSpinUp = CurTime() + 1.5
-		else
-			self.NextEndSpinUp = CurTime() + 3
-		end
-	end
-	
-	if self.NextEndSpinUp and CurTime()>self.NextEndSpinUp then
-		self.SpinUpSound:Stop()
-		self.FireSound:Play()
-		if self.Primary.Delay == 0.015 then
-			self.FireSound:ChangePitch(120)
-		end
-		self.NextEndSpinUp = nil
-	end
-	
-	if self:RollCritical() and not self.NextEndSpinUp then
-		if not self.Critting or not self.Firing then
-			self.NextEndSpinUp = nil
-			self:SetFlamethrowerEffect(2)
-			self.FireSound:Stop()
-			self.FireCritSound:Play()
-			if self.Primary.Delay == 0.015 then
-				self.FireCritSound:ChangePitch(120)
-			end
+	if SERVER then
+		if not self.Firing then
 			self.Firing = true
-		end
-		self.Critting = true
-	elseif not self.NextEndSpinUp then
-		if self.Critting or not self.Firing then
 			self:SetFlamethrowerEffect(1)
-			self.FireCritSound:Stop()
+			self.SpinDownSound:Stop()
+			self.SpinUpSound:Play()
+			
+			if SERVER then
+				--self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_PREFIRE, true)
+			end
+		
+			if self.Primary.Delay == 0.015 then
+				self.SpinUpSound:ChangePitch(120)
+			end
+			if (string.find(self.Owner:GetModel(),"_boss.mdl")) then
+				self.NextEndSpinUp = CurTime() + 1.5
+			else
+				self.NextEndSpinUp = CurTime() + 3
+			end
+		end
+		
+		if self.NextEndSpinUp and CurTime()>self.NextEndSpinUp then
+			self.SpinUpSound:Stop()
 			self.FireSound:Play()
 			if self.Primary.Delay == 0.015 then
 				self.FireSound:ChangePitch(120)
 			end
-			self.Firing = true
+			self.NextEndSpinUp = nil
 		end
-		self.Critting = false
+		
+		if self:RollCritical() and not self.NextEndSpinUp then
+			if not self.Critting or not self.Firing then
+				self.NextEndSpinUp = nil
+				self:SetFlamethrowerEffect(2)
+				self.FireSound:Stop()
+				self.FireCritSound:Play()
+				if self.Primary.Delay == 0.015 then
+					self.FireCritSound:ChangePitch(120)
+				end
+				self.Firing = true
+			end
+			self.Critting = true
+		elseif not self.NextEndSpinUp then
+			if self.Critting or not self.Firing then
+				self:SetFlamethrowerEffect(1)
+				self.FireCritSound:Stop()
+				self.FireSound:Play()
+				if self.Primary.Delay == 0.015 then
+					self.FireSound:ChangePitch(120)
+				end
+				self.Firing = true
+			end
+			self.Critting = false
+		end
 	end
 	
 	self:SendWeaponAnim(self.VM_PRIMARYATTACK)
