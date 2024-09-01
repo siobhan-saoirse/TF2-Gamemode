@@ -943,8 +943,13 @@ function meta:RandomSentence(group)
 	
 	--[[local tbl = class.Sounds[group]
 	self:EmitSound(tbl[math.random(1,#tbl)])]]
-
-	self:EmitSoundEx(Format("%s.%s", class, group))
+	if (string.find(self:GetModel(),"/bot_") && !string.find(self:GetModel(),"_boss")) then
+		self:EmitSoundEx(Format("%s._MVM", class, group))
+	elseif (string.find(self:GetModel(),"/bot_") && string.find(self:GetModel(),"_boss")) then
+		self:EmitSoundEx(Format("%s._M_MVM", class, group))
+	else
+		self:EmitSoundEx(Format("%s.%s", class, group))
+	end
 end
 
 function meta:StripTFItems()
