@@ -8,12 +8,6 @@ RegisterNetworkedTable("TFPlayerData", {
 })
 ]]
 
-if not meta.SetTriggerOLD then
-	meta.SetTriggerOLD = meta.SetTrigger
-end
-if not meta.EmitSoundOLD then
-	meta.SetTriggerOLD = meta.SetTrigger
-end
 function meta:EmitSoundEx(soundName, soundLevel, pitchPercent, volume, channel, soundFlags, dsp, filter)
 	if(!soundLevel) then
 		soundLevel = 75
@@ -43,11 +37,6 @@ function meta:EmitSoundEx(soundName, soundLevel, pitchPercent, volume, channel, 
 	else
 		EmitSound(soundName, self:GetPos(), self:EntIndex(), channel, volume, soundLevel, soundFlags, pitch, dsp, nil)
 	end
-end
-
-function meta:SetTrigger(b)
-	self:SetTriggerOLD(b)
-	self.__IsTrigger = b
 end
 
 function meta:PlaySceneToClient(b)

@@ -142,9 +142,10 @@ function ENT:Think()
 		end
 
 		--print(self.PickupLock[v])
-
-		if v:GetPos():Distance(self:GetPos()) >= 80 and self.PickupLock[v] then
-			self.PickupLock[v] = nil
+		if (self.PickupLock ~= nil) then
+			if v:GetPos():Distance(self:GetPos()) >= 80 and self.PickupLock[v] then
+				self.PickupLock[v] = nil
+			end
 		end
 	end
 
