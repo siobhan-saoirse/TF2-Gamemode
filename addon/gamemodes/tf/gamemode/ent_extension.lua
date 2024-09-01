@@ -33,8 +33,14 @@ function meta:EmitSoundEx(soundName, soundLevel, pitchPercent, volume, channel, 
 			rf:AddAllPlayers()
 			filter = rf
 		end
+		if (channel == CHAN_VOICE) then
+			self:StopSound(soundName)
+		end
 		EmitSound(soundName, self:GetPos(), self:EntIndex(), channel, volume, soundLevel, soundFlags, pitch, dsp, filter)
 	else
+		if (channel == CHAN_VOICE) then
+			self:StopSound(soundName)
+		end
 		EmitSound(soundName, self:GetPos(), self:EntIndex(), channel, volume, soundLevel, soundFlags, pitch, dsp, nil)
 	end
 end
