@@ -112,9 +112,9 @@ function CLASS:Initialize()
 	self:Give("none")
 	self:Give("weapon_medkit")
 	self:Give("weapon_fists")
-	self:Give("gmod_tool")
-	self:Give("gmod_camera")
 	if (!GetConVar("tf_competitive"):GetBool()) then
+		self:Give("gmod_tool")
+		self:Give("gmod_camera")
 		self:Give("weapon_physgun")
 	end
 	--[[
