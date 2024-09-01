@@ -655,13 +655,84 @@ function PANEL:Init()
 		x = x + class_wide_min + class_xdelta
 	end
 	
-	--[[-- Backpack
+	-- Backpack
 	local t = vgui.Create("TFButton")
 	t:SetParent(self)
 	t:SetPos(W/2-30*Scale, 254*Scale)
 	t:SetSize(60*Scale,60*Scale)
+	t.activeImage = surface.GetTextureID("overlays/no_entry")
+	t.inactiveImage = surface.GetTextureID("overlays/no_entry")
+	
+	function t:DoClick()
+
+		local conflict_help_frame = vgui.Create( "DFrame" )
+		conflict_help_frame:SetSize(200, 200)
+		conflict_help_frame:Center()
+		conflict_help_frame:SetTitle("Oh no!")
+		conflict_help_frame:ShowCloseButton(true)
+		conflict_help_frame:SetBackgroundBlur(true)
+		conflict_help_frame:MakePopup()
+
+		local conflicttext = vgui.Create("RichText", conflict_help_frame)
+		conflicttext:Dock(FILL)
+		conflicttext:InsertColorChange(255, 255, 255, 255)
+		conflicttext:CenterHorizontal(0.5)
+		conflicttext:SetVerticalScrollbarEnabled(false)
+		conflicttext:AppendText("Are you sure? This action is irreversible and all of your items in this gamemode will be reset to default!")
+			local conflictbut2 = vgui.Create("DButton", conflict_help_frame)
+			conflictbut2:SetSize(100, 30)
+			conflictbut2:SetPos(0, 125)
+			conflictbut2:CenterHorizontal(0.5)
+			conflictbut2:SetText("I'm 100% sure.") 
+
+			function conflictbut2.DoClick()
+				conflict_help_frame:Close()
+				RunConsoleCommand("loadout_scout","-1,-1,-1,-1,-1,-1")
+				RunConsoleCommand("loadout_soldier","-1,-1,-1,-1,-1,-1")
+				RunConsoleCommand("loadout_pyro","-1,-1,-1,-1,-1,-1")
+				RunConsoleCommand("loadout_demoman","-1,-1,-1,-1,-1,-1")
+				RunConsoleCommand("loadout_heavy","-1,-1,-1,-1,-1,-1")
+				RunConsoleCommand("loadout_engineer","-1,-1,-1,-1,-1,-1")
+				RunConsoleCommand("loadout_medic","-1,-1,-1,-1,-1,-1")
+				RunConsoleCommand("loadout_sniper","-1,-1,-1,-1,-1,-1")
+				RunConsoleCommand("loadout_spy","-1,-1,-1,-1,-1,-1")
+			end
+	end
+	
+	local t = vgui.Create("TFButton")
+	t:SetParent(self)
+	t:SetPos(W/2+30*Scale, 254*Scale)
+	t:SetSize(60*Scale,60*Scale)
 	t.activeImage = backpack_01
-	t.inactiveImage = backpack_01_grey]]
+	t.inactiveImage = backpack_01_grey
+	
+	function t:DoClick()
+
+		local conflict_help_frame = vgui.Create( "DFrame" )
+		conflict_help_frame:SetSize(200, 200)
+		conflict_help_frame:Center()
+		conflict_help_frame:SetTitle("Warning")
+		conflict_help_frame:ShowCloseButton(true)
+		conflict_help_frame:SetBackgroundBlur(true)
+		conflict_help_frame:MakePopup()
+
+		local conflicttext = vgui.Create("RichText", conflict_help_frame)
+		conflicttext:Dock(FILL)
+		conflicttext:InsertColorChange(255, 255, 255, 255)
+		conflicttext:CenterHorizontal(0.5)
+		conflicttext:SetVerticalScrollbarEnabled(false)
+		conflicttext:AppendText("This will merge your TF2 loadout with the gamemode's loadout. Are you sure you want to merge?")
+			local conflictbut2 = vgui.Create("DButton", conflict_help_frame)
+			conflictbut2:SetSize(100, 30)
+			conflictbut2:SetPos(0, 125)
+			conflictbut2:CenterHorizontal(0.5)
+			conflictbut2:SetText("Yes") 
+
+			function conflictbut2.DoClick()
+				conflict_help_frame:Close()
+				RunConsoleCommand("tf_merge_loadout")
+			end
+	end
 end
 
 function PANEL:ResetButtons()
@@ -728,6 +799,14 @@ function PANEL:Paint()
 		yalign=TEXT_ALIGN_TOP,
 	}
 	
+	draw.Text{
+		text="CLICK THE NO ENTRY ICON TO RESET YOUR LOADOUT",
+		font="HudFontSmallBold",
+		pos={W/2, 360*Scale},
+		color=Color(117, 107, 94, 255),
+		xalign=TEXT_ALIGN_CENTER,
+		yalign=TEXT_ALIGN_TOP,
+	}
 	for k,v in ipairs(self.ClassButtons) do
 		if v.Hover then
 			draw.Text{
