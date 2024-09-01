@@ -658,7 +658,7 @@ function PANEL:Init()
 	-- Backpack
 	local t = vgui.Create("TFButton")
 	t:SetParent(self)
-	t:SetPos(W/2-30*Scale, 254*Scale)
+	t:SetPos(W/2-60*Scale, 254*Scale)
 	t:SetSize(60*Scale,60*Scale)
 	t.activeImage = surface.GetTextureID("overlays/no_entry")
 	t.inactiveImage = surface.GetTextureID("overlays/no_entry")
