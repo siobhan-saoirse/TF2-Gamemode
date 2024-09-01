@@ -1,5 +1,5 @@
 -- tf_items
-if !file.Exists("scripts/items/items_game.txt", "GAME") then
+if !file.Exists("scripts/items/items_game.txt", "tf") then
     Error("ERROR: items_game.txt NOT FOUND!\nLIVE TF WEAPONS WILL NOT BE LOADED!\n")
 end
 
