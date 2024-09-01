@@ -14,9 +14,9 @@ SWEP.SlotPos = 0
 SWEP.Spawnable = true
  
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
-SWEP.ViewModel = Model( "models/weapons/v_rif_aug.mdl" )
+SWEP.ViewModel = Model( "models/weapons/cstrike/c_rif_aug.mdl" )
 SWEP.WorldModel = "models/weapons/w_rif_aug.mdl"
-SWEP.ViewModelFOV = 75
+SWEP.ViewModelFOV = GetConVar("viewmodel_fov"):GetInt()
 SWEP.UseHands = true
 SWEP.HoldType = "smg"
 SWEP.Primary.Delay = 0.08
@@ -27,14 +27,14 @@ SWEP.Primary.TakeAmmo = 1
 SWEP.Primary.Spread = 1.0
 SWEP.Primary.NumberofShots = 1
 SWEP.Primary.Ammo = "ar2" 
-SWEP.Secondary.Ammo = "none"
+SWEP.Secondary.Ammo = "none" 
 SWEP.Primary.Recoil = 0.25
 SWEP.Primary.Automatic = true
 SWEP.Secondary.Automatic = true
 SWEP.DeployAfterPickup = false
 SWEP.HitDistance = 48
 SWEP.ShootSound = Sound("^weapons/aug/aug-1.wav")
-SWEP.ViewModelFlip = true
+SWEP.ViewModelFlip = false
 function SWEP:Deploy()
 	self:SetWeaponHoldType( self.HoldType ) 
 		local vm = self:GetOwner():GetViewModel()
@@ -244,7 +244,7 @@ function SWEP:VectorMA( start, scale, direction, dest )
 end
 
 function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
-	if (string.StartWith(self.Owner:GetModel(),"models/infected/")) then
+	if (IsValid(self.Owner) and string.StartWith(self.Owner:GetModel(),"models/infected/")) then
 		return oldpos, oldang
 	else
 		-- actual code, for reference
@@ -269,7 +269,7 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 
 	//	VectorMA( origin, g_lateralBob * 0.2f, right, origin );
 
-		]]
+		]] 
 		if CLIENT then
 			local forward = self.Owner:GetForward()
 			local right = self.Owner:GetRight()

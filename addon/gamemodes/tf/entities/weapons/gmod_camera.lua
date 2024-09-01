@@ -1,7 +1,7 @@
 
 AddCSLuaFile()
 
-SWEP.ViewModel = Model( "models/weapons/c_arms_animations.mdl" )
+SWEP.ViewModel = Model( "models/weapons/cstrike/c_arms_animations.mdl" )
 SWEP.WorldModel = Model( "models/MaxOfS2D/camera.mdl" )
 
 SWEP.Primary.ClipSize		= -1

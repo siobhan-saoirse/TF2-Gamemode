@@ -14,9 +14,9 @@ SWEP.SlotPos = 0
 SWEP.Spawnable = true
  
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
-SWEP.ViewModel = Model( "models/weapons/v_rif_famas.mdl" )
+SWEP.ViewModel = Model( "models/weapons/cstrike/c_rif_famas.mdl" )
 SWEP.WorldModel = "models/weapons/w_rif_famas.mdl"
-SWEP.ViewModelFOV = 75
+SWEP.ViewModelFOV = GetConVar("viewmodel_fov"):GetInt()
 SWEP.UseHands = true
 SWEP.HoldType = "ar2"
 SWEP.Primary.Delay = 0.1
@@ -24,7 +24,7 @@ SWEP.Primary.ClipSize = 25  -- How much bullets are in the mag
 SWEP.Primary.DefaultClip = 128 -- How much bullets preloaded when spawned
 SWEP.Primary.Damage = 22
 SWEP.Primary.TakeAmmo = 1
-SWEP.Primary.Spread = 1.0
+SWEP.Primary.Spread = 1.0 
 SWEP.Primary.NumberofShots = 1
 SWEP.Primary.Ammo = "ar2" 
 SWEP.Secondary.Ammo = "none"
@@ -244,7 +244,7 @@ function SWEP:VectorMA( start, scale, direction, dest )
 end
 
 function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
-	if (string.StartWith(self.Owner:GetModel(),"models/infected/")) then
+	if (IsValid(self.Owner) and string.StartWith(self.Owner:GetModel(),"models/infected/")) then
 		return oldpos, oldang
 	else
 		-- actual code, for reference

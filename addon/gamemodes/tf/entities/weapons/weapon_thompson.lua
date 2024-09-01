@@ -11,7 +11,7 @@ SWEP.SlotPos = 4
 
 SWEP.Spawnable = true
 
-SWEP.ViewModel = Model( "models/weapons/v_thompson.mdl" )
+SWEP.ViewModel = Model( "models/weapons/cstrike/c_thompson.mdl" )
 SWEP.WorldModel = "models/weapons/w_thompson.mdl"
 SWEP.UseHands = false
 SWEP.HoldType = "ar2"

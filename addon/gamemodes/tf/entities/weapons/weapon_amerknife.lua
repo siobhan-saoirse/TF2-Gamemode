@@ -12,7 +12,7 @@ SWEP.SlotPos = 0
 SWEP.Spawnable = true
 
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
-SWEP.ViewModel = Model( "models/weapons/v_amerk.mdl" )
+SWEP.ViewModel = Model( "models/weapons/cstrike/c_amerk.mdl" )
 SWEP.WorldModel = "models/weapons/w_amerk.mdl"
 SWEP.UseHands = false
 SWEP.HoldType = "knife"

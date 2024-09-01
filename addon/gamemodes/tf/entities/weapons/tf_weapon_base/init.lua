@@ -88,7 +88,7 @@ function SWEP:OnDrop()
 	
 	timer.Remove("AutoReload")
 	
-	local drop = ents.Create("item_droppedweapon")
+	local drop = ents.Create("prop_physics")
 	drop:SetSolid(SOLID_VPHYSICS)
 	drop:SetModel(mdl)
 	drop:PhysicsInit(SOLID_VPHYSICS)
@@ -123,6 +123,44 @@ function SWEP:OnDrop()
 		phys:Wake()
 		if self.DropVelocity then
 			phys:SetVelocity(self.DropVelocity)  
+		end 
+	end
+	
+	local ammo = ents.Create("item_droppedweapon")
+	ammo:SetSolid(SOLID_VPHYSICS)
+	ammo:SetModel("models/items/ammopack_medium.mdl")
+	ammo:PhysicsInit(SOLID_VPHYSICS)
+	ammo:Spawn()
+	ammo.AmmoPercent = self.AmmoGiven or 100
+	ammo:Activate()
+	
+	if mdl == "models/weapons/c_models/c_shotgun/c_shotgun.mdl" then
+		ammo:SetMaterial("models/weapons/w_shotgun_tf/w_shotgun_tf")
+	end
+	
+	if self.CustomMaterialOverride then
+		ammo:SetMaterial(self.CustomMaterialOverride)
+	end
+	
+	if self.CustomColorOverride then
+		ammo:SetColor(self.CustomColorOverride)
+	end
+	
+	ammo:SetSkin(self.WeaponSkin or 0)
+	ammo:SetMaterial(self.WeaponMaterial or 0)
+	
+	ammo:SetPos(self:GetPos())
+	ammo:SetAngles(self:GetAngles())
+	
+	ammo:SetMoveType(MOVETYPE_VPHYSICS)
+	ammo:SetCollisionGroup(COLLISION_GROUP_WORLD)
+	
+	local phys = ammo:GetPhysicsObject()
+	if phys:IsValid() then
+		phys:SetMass(10)
+		phys:Wake()
+		if self.ammoVelocity then
+			phys:SetVelocity(self.ammoVelocity)  
 		end 
 	end
 	

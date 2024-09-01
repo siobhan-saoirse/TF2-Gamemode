@@ -20,7 +20,7 @@ function ENT:PlayerTouched(pl)
 		h = h * pl.TempAttributes.HealthFromPacksMultiplier
 	end
 	
-	self:EmitSound(self.TouchSound)
+	pl:SendLua([[EmitSound("HealthKit.Touch", Vector(]]..pl:GetPos().x..[[,]]..pl:GetPos().y..[[,]]..pl:GetPos().z..[[))]])
 	self:Hide()
 	GAMEMODE:GiveHealthPercent(pl, h)
 	GAMEMODE:ExtinguishEntity(pl)

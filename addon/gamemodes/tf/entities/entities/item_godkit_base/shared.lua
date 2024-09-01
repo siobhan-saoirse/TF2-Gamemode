@@ -17,10 +17,10 @@ end
 function ENT:PlayerTouched(pl)
 	local h = self.HealthPercentage
 	if pl.TempAttributes and pl.TempAttributes.HealthFromPacksMultiplier then
-		h = h * pl.TempAttributes.HealthFromPacksMultiplier
+		h = h * pl.TempAttributes.HealthFromPacksMultiplier 
 	end
 	
-	self:EmitSound("HealthKit.Touch")
+	pl:SendLua([[EmitSound("HealthKit.Touch", Vector(]]..pl:GetPos().x..[[,]]..pl:GetPos().y..[[,]]..pl:GetPos().z..[[))]])
 	self:Hide()
 	GAMEMODE:GiveHealthPercent(pl, h)
 	GAMEMODE:ExtinguishEntity(pl)
@@ -30,7 +30,7 @@ function ENT:PlayerTouched(pl)
 		a = a * pl.TempAttributes.AmmoFromPacksMultiplier
 	end
 	
-	self:EmitSound("AmmoPack.Touch", 100, 100)
+	pl:SendLua([[EmitSound("AmmoPack.Touch", Vector(]]..pl:GetPos().x..[[,]]..pl:GetPos().y..[[,]]..pl:GetPos().z..[[)]])
 	self:Hide()
 	GAMEMODE:GiveAmmoPercent(pl, a)
 	self:Remove()

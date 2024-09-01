@@ -12,7 +12,7 @@ SWEP.SlotPos = 0
 SWEP.Spawnable = true
 
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
-SWEP.ViewModel = Model( "models/weapons/V_357.mdl" )
+SWEP.ViewModel = Model( "models/weapons/c_357.mdl" )
 SWEP.WorldModel = "models/weapons/w_357.mdl"
 SWEP.UseHands = false
 SWEP.HoldType = "revolver"

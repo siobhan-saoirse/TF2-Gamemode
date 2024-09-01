@@ -71,7 +71,7 @@ function ENT:CanPickup(ply)
 end
 
 function ENT:PlayerTouched(pl)
-	self:EmitSound("AmmoPack.Touch", 100, 100)
+	pl:SendLua([[EmitSound("AmmoPack.Touch", Vector(]]..pl:GetPos().x..[[,]]..pl:GetPos().y..[[,]]..pl:GetPos().z..[[)]])
 	self:Remove()
 	GAMEMODE:GiveAmmoPercent(pl, self.AmmoPercent)
 end

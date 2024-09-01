@@ -14,9 +14,9 @@ SWEP.SlotPos = 0
 SWEP.Spawnable = true
 
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
-SWEP.ViewModel = Model( "models/weapons/v_snip_awp.mdl" )
+SWEP.ViewModel = Model( "models/weapons/cstrike/c_snip_awp.mdl" ) 
 SWEP.WorldModel = "models/weapons/w_snip_awp.mdl"
-SWEP.ViewModelFOV = 75
+SWEP.ViewModelFOV = GetConVar("viewmodel_fov"):GetInt()
 SWEP.UseHands = true
 SWEP.HoldType = "crossbow"
 SWEP.Primary.Delay = 1.455
@@ -34,7 +34,7 @@ SWEP.Secondary.Automatic = true
 SWEP.DeployAfterPickup = false
 SWEP.HitDistance = 48
 SWEP.ShootSound = Sound("Weapon_AWP.Single")
-SWEP.ViewModelFlip = true
+SWEP.ViewModelFlip = false
 function SWEP:Deploy()
 	self:SetWeaponHoldType( self.HoldType ) 
 		local vm = self:GetOwner():GetViewModel()
@@ -349,7 +349,7 @@ function SWEP:VectorMA( start, scale, direction, dest )
 end
 
 function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
-	if (string.StartWith(self.Owner:GetModel(),"models/infected/")) then
+	if (IsValid(self.Owner) and string.StartWith(self.Owner:GetModel(),"models/infected/")) then
 		return oldpos, oldang
 	else
 		-- actual code, for reference
@@ -373,7 +373,7 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 		angles[ YAW ]	-= g_lateralBob  * 0.3f;
 
 	//	VectorMA( origin, g_lateralBob * 0.2f, right, origin );
-
+ 
 		]]
 		if CLIENT then
 			local forward = self.Owner:GetForward()

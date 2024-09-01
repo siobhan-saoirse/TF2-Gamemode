@@ -12,7 +12,7 @@ SWEP.SlotPos = 0
 SWEP.Spawnable = true
 
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
-SWEP.ViewModel = Model( "models/weapons/V_pistol.mdl" )
+SWEP.ViewModel = Model( "models/weapons/c_pistol.mdl" )
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"
 SWEP.UseHands = false
 SWEP.HoldType = "pistol"
@@ -24,7 +24,7 @@ SWEP.Primary.TakeAmmo = 1
 SWEP.Primary.Spread = 0.75
 SWEP.Primary.NumberofShots = 1
 SWEP.Primary.Ammo = "pistol" 
-SWEP.Secondary.Ammo = "none"
+SWEP.Secondary.Ammo = "none" 
 SWEP.Primary.Recoil = 0.25
 SWEP.Primary.Automatic = false
 SWEP.Secondary.Automatic = true

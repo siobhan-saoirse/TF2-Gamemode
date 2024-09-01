@@ -14,9 +14,9 @@ SWEP.SlotPos = 0
 SWEP.Spawnable = true
  
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
-SWEP.ViewModel = Model( "models/weapons/v_rif_galil.mdl" )
+SWEP.ViewModel = Model( "models/weapons/cstrike/c_rif_galil.mdl" )
 SWEP.WorldModel = "models/weapons/w_rif_galil.mdl"
-SWEP.ViewModelFOV = 75
+SWEP.ViewModelFOV = GetConVar("viewmodel_fov"):GetInt()
 SWEP.UseHands = true
 SWEP.HoldType = "ar2"
 SWEP.Primary.Delay = 0.08
@@ -244,7 +244,7 @@ function SWEP:VectorMA( start, scale, direction, dest )
 end
 
 function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
-	if (string.StartWith(self.Owner:GetModel(),"models/infected/")) then
+	if (IsValid(self.Owner) and string.StartWith(self.Owner:GetModel(),"models/infected/")) then
 		return oldpos, oldang
 	else
 		-- actual code, for reference
@@ -273,7 +273,7 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 		if CLIENT then
 			local forward = self.Owner:GetForward()
 			local right = self.Owner:GetRight()
-			local origin = newpos
+			local origin = newpos 
 			local angles = newang
 			self:CalcViewModelBobHelper()
 

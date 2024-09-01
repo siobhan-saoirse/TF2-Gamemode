@@ -87,7 +87,7 @@ SWEP.ViewModelFlip	= false
 --eugh, another ugly hack.
 if GetConVar("tf_righthand") then
 	if GetConVar("tf_righthand"):GetInt() == 0 then
-		SWEP.ViewModelFlip = true
+		SWEP.ViewModelFlip = false
 	else
 		SWEP.ViewModelFlip = false
 	end
@@ -270,7 +270,7 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 			oldpos = oldpos + (newang:Up() * self.VMMinOffset.z)
 		end
 	end
-	if (string.StartWith(self.Owner:GetModel(),"models/infected/")) then
+	if (IsValid(self.Owner) and string.StartWith(self.Owner:GetModel(),"models/infected/")) then
 		return oldpos, oldang
 	else
 		-- actual code, for reference

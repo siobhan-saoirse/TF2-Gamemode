@@ -19,7 +19,7 @@ inspect_post = NONE
 end
 
 SWEP.CustomHUD = {HudBowCharge = true}
-SWEP.ViewModelFlip = true 
+SWEP.ViewModelFlip = false 
 
 function SWEP:ClientStartCharge()
 	self.ClientCharging = true

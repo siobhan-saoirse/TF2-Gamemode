@@ -13,7 +13,7 @@ SWEP.ReadyToPounce		= true
 SWEP.Base				= "tf_weapon_base"
 SWEP.Slot				= 0
 SWEP.UseHands = false
-SWEP.ViewModel = Model( "models/weapons/c_medkit.mdl" )
+SWEP.ViewModel = Model( "models/weapons/cstrike/c_medkit.mdl" )
 SWEP.WorldModel = Model( "models/empty.mdl" )
 SWEP.Crosshair = "tf_crosshair3"
 

@@ -2052,11 +2052,7 @@ function GM:PlayerSpawn(ply)
 			umsg.End()
 		end
 	end)
-	if (ply:IsHL2()) then
-		ply:ShouldDropWeapon(true)
-	else
-		ply:ShouldDropWeapon(false)
-	end
+	ply:ShouldDropWeapon(false)
 	--[[ply:SetNWBool("ShouldDropBurningRagdoll", false)
 	ply:SetNWBool("ShouldDropDecapitatedRagdoll", false)
 	ply:SetNWBool("DeathByHeadshot", false)]]
