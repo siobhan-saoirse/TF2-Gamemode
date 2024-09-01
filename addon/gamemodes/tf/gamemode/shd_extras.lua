@@ -54,7 +54,6 @@ tf_lang.Parse(lang_data)
 
 end
 
-local item_data = [[]]
 
 -- Attributes
 local function VALID(e)			return IsValid(e) end
@@ -510,6 +509,6 @@ end
 
 -- Loading everything up
 
-tf_items.ParseGameItems(item_data)
+--tf_items.ParseGameItems(item_data)
 
 MsgN("Done!")
