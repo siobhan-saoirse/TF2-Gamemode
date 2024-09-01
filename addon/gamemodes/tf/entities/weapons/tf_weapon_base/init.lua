@@ -75,6 +75,40 @@ function SWEP:CalculateAmmoGiven()
 	end
 end
 
+function SWEP:EmitSound(soundName, soundLevel, pitchPercent, volume, channel, soundFlags, dsp, filter)
+	if(!soundLevel) then
+		soundLevel = 75
+	end
+	if(!pitchPercent) then
+		pitchPercent = 100
+	end
+	if(!volume) then
+		volume = 1
+	end
+	if(!channel) then
+		channel = CHAN_AUTO
+	end
+	if(!soundFlags) then
+		soundFlags = 0
+	end
+	if(!dsp) then
+		dsp = 0
+	end
+	if SERVER then
+		if(!filter) then
+			local rf = RecipientFilter()
+			rf:AddAllPlayers()
+			filter = rf
+		end
+		self:StopSound(soundName)
+		EmitSound(soundName, self:GetPos(), self:EntIndex(), channel, volume, soundLevel, soundFlags, pitch, dsp, filter)
+	else
+		self:StopSound(soundName)
+		EmitSound(soundName, self:GetPos(), self:EntIndex(), channel, volume, soundLevel, soundFlags, pitch, dsp, nil)
+	end
+end
+
+
 function SWEP:OnDrop()
 	if (GetConVar("tf_allow_pickup_weapons"):GetBool()) then
 		self.BaseClass.OnDrop(self)
