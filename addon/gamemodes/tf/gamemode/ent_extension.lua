@@ -36,7 +36,7 @@ function meta:EmitSoundEx(soundName, soundLevel, pitchPercent, volume, channel, 
 			rf:AddAllPlayers()
 			filter = rf
 		end
-		EmitSound(soundName, self:GetPos(), self, channel, volume, soundLevel, soundFlags, pitch, dsp, filter)
+		EmitSound(soundName, self:GetPos(), self:EntIndex(), channel, volume, soundLevel, soundFlags, pitch, dsp, filter)
 	else
 		self:EmitSound(soundName,soundLevel,pitchPercent,volume,channel,soundFlags,dsp,filter)
 	end
