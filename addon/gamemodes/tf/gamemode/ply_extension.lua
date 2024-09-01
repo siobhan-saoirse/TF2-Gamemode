@@ -944,7 +944,7 @@ function meta:RandomSentence(group)
 	--[[local tbl = class.Sounds[group]
 	self:EmitSound(tbl[math.random(1,#tbl)])]]
 
-	self:EmitSound(Format("%s.%s", class, group))
+	self:EmitSoundEx(Format("%s.%s", class, group))
 end
 
 function meta:StripTFItems()
