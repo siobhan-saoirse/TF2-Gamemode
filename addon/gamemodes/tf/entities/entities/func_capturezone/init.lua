@@ -31,7 +31,7 @@ function ENT:KeyValue(key,value)
 
 		self.Team = tonumber(value)
 	end
-	print(key, value, tonumber(value), self.Team)
+	--print(key, value, tonumber(value), self.Team)
 end
 
 function ENT:StartTouch(ply)
@@ -46,8 +46,8 @@ function ENT:StartTouch(ply)
 		end)
 	end
 	for _,v in pairs(ents.FindByClass("item_teamflag")) do
-		--print(self.Team, v.te, self.Pos:Distance(ply) <= 50)
-		--print(self.Team ~= v.te, v.Carrier == ply, v:GetPos():Distance(ply:GetPos()) <= 50)
+		----print(self.Team, v.te, self.Pos:Distance(ply) <= 50)
+		----print(self.Team ~= v.te, v.Carrier == ply, v:GetPos():Distance(ply:GetPos()) <= 50)
 		if v.Carrier==ply and self.Team ~= v.te and v.Prop:GetPos():Distance(ply:GetPos()) <= 100 then
 			if game.GetMap() == "mvm_terroristmission_v7_1" then
 				RunConsoleCommand("tf_red_wins")
@@ -87,8 +87,8 @@ function ENT:StartTouch(ply)
 		end
 	end
 	for _,v in pairs(ents.FindByClass("item_teamflag_mvm")) do
-		--print(self.Team, v.te, self.Pos:Distance(ply) <= 50)
-		--print(self.Team ~= v.te, v.Carrier == ply, v:GetPos():Distance(ply:GetPos()) <= 50)
+		----print(self.Team, v.te, self.Pos:Distance(ply) <= 50)
+		----print(self.Team ~= v.te, v.Carrier == ply, v:GetPos():Distance(ply:GetPos()) <= 50)
 		if v.Carrier==ply and self.Team ~= v.Team then
 				timer.Simple(0.1, function()
 					if string.find(v.Carrier:GetModel(),"_boss.mdl") then

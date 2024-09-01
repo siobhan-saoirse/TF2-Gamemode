@@ -184,7 +184,7 @@ function SWEP:SendWeaponAnimEx(anim)
 	if t=="number" then
 		self:SendWeaponAnim(anim)
 	elseif t=="string" then
-		print(anim)
+		--print(anim)
 		local s = self.Owner:GetViewModel():LookupSequence(anim)
 		self:SetSequence(s)
 		self.Owner:GetViewModel():ResetSequence(s)

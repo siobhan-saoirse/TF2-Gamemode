@@ -125,7 +125,7 @@ function SWEP:SecondaryAttack()
 			if v:GetClass() == "obj_sentrygun" then
 				if SERVER then
 					local builder = self.Owner:GetWeapon("tf_weapon_builder")
-					print(builder.MovedBuildingLevel)
+					--print(builder.MovedBuildingLevel)
 					if v:GetLevel()==2 then
 						builder.MovedBuildingLevel = 2
 					elseif v:GetLevel()==1 then

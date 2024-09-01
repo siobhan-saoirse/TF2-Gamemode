@@ -241,7 +241,7 @@ function SWEP:DoAirblast()
 	
 	for _,v in pairs(ents.FindInBox(pos-Vector(r,r,r),pos+Vector(r,r,r))) do
 		c = v:GetClass()
-		--print(v)
+		----print(v)
 		if v:GetOwner()~=self.Owner then
 			if v:IsTFPlayer() or v:GetClass() == "tf_projectile_pipe" or v:GetClass() == "prop_physics" or v:GetClass() == "tf_projectile_ball" or v:GetClass() == "tf_projectile_cleaver" and self.Owner:IsValidEnemy(v) and v:ShouldReceiveDamageForce() then
 				if v:GetMoveType()==MOVETYPE_VPHYSICS then

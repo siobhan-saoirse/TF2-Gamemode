@@ -82,6 +82,6 @@ function ENT:KeyValue(key, value)
 				self:SetModel(model)
 			end
 		end)
-		print(model)
+		--print(model)
 	end
 end

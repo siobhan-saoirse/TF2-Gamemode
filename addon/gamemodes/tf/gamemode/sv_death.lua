@@ -294,12 +294,12 @@ function GM:DoTFPlayerDeath(ent, attacker, dmginfo)
 	end
 	
 	--[[
-	print(ent)
-	print("Global assist table")
+	--print(ent)
+	--print("Global assist table")
 	PrintTable(attacker.GlobalAssistants or {})
-	print("Assist table")
+	--print("Assist table")
 	PrintTable(ent.DamageCooperations or {})
-	print("Assistants")
+	--print("Assistants")
 	PrintTable(assistants)
 	]]
 	
@@ -375,8 +375,8 @@ function GM:PostTFPlayerDeath(ent, attacker, inflictor)
 	end
 	
 	local cooperator = self:GetDisplayedAssistant(ent, attacker) or NULL
-	--print("Displayed assistant")
-	--print(cooperator)
+	----print("Displayed assistant")
+	----print(cooperator)
 
 	if attacker:IsWeapon() then
 		attacker = attacker:GetOwner()
@@ -574,11 +574,6 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	ply:SetNWBool("Taunting",false)
 	timer.Simple(0.1, function()
 		ply:SetMoveType(MOVETYPE_NONE)
-		if (ply:GetPlayerClass() != "") then
-			local c = GAMEMODE.PlayerClasses[ply:GetPlayerClass()]
-			ply.ItemLoadout = table.Copy(c.DefaultLoadout)
-			ply.ItemProperties = {}
-		end
 	end)
 	
 	ply.LastDamageInfo = CopyDamageInfo(dmginfo)
@@ -1639,7 +1634,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		umsg.End()
 	end
 	
-	--print("DoPlayerDeath", dmginfo:GetInflictor(), dmginfo:GetAttacker(), dmginfo:GetDamage(), dmginfo:GetDamageType())
+	----print("DoPlayerDeath", dmginfo:GetInflictor(), dmginfo:GetAttacker(), dmginfo:GetDamage(), dmginfo:GetDamageType())
 	
 	if ((string.find(ply:GetModel(),"bot_") and ply:GetModelScale() > 1.0) or ply:IsMiniBoss()) then
 		ply:GibBreakServer( dmginfo:GetDamageForce() )

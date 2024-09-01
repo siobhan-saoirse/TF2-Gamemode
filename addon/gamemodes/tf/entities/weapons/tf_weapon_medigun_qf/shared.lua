@@ -409,7 +409,7 @@ end
 			ch = self.Owner:GetNWInt("Ubercharge")
 					ch = math.Clamp(ch - 14, 0, 100)
 						self.Owner:SetNWInt("Ubercharge", ch)
-			print(ch)
+			--print(ch)
 
 				
 			--if IsValid(e) and e:IsPlayer() and e:Alive() then
@@ -440,9 +440,9 @@ end]]
 				
 			end
 			--self.Owner:GetNWInt("Ubercharge") = self.Owner:GetNWInt("Ubercharge") - 1
-		print( "uberdrop" )
+		--print( "uberdrop" )
 	else
-		print("Whewh, Thanks doc!")
+		--print("Whewh, Thanks doc!")
 		charge = 0
 	end
 

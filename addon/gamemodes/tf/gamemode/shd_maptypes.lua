@@ -1,4 +1,4 @@
 
 function abc()
-	print('test')
+	--print('test')
 end

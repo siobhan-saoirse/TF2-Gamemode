@@ -249,7 +249,7 @@ concommand.Add("muzzlepos", function(pl)
 	local att = pl:GetViewModel():GetAttachment(pl:GetViewModel():LookupAttachment("muzzle"))
 	if not att then return end
 	
-	print(att.Pos - pl:GetShootPos())
+	--print(att.Pos - pl:GetShootPos())
 end)
 
 function GetPlayerByUserID(id)
@@ -875,7 +875,7 @@ icon5:SetLookAt(Vector(-90,0,-15))
 icon5:SetModel( "models/empty.mdl" ) -- you can only change colors on playermodels
 local convar = GetConVar("loadout_heavy")
 local split = string.Split(convar:GetString(), ",")
-print(split[1])
+--print(split[1])
 for name, wep in pairs(tf_items.Items) do
 	if istable(wep) then
 		if (wep.id == tonumber(split[1])) then
@@ -1340,7 +1340,7 @@ double jump while in the air!]] )
 		
 	local convar = GetConVar("loadout_scout")
 	local split = string.Split(convar:GetString(), ",")
-	print(split[1])
+	--print(split[1])
 	for name, wep in pairs(tf_items.Items) do
 		if istable(wep) then
 			if (wep.id == tonumber(split[1])) then
@@ -1398,7 +1398,7 @@ Use your rocket launcher to rocket jump!]] )
 	icon2:GetEntity():SetModel("models/weapons/w_models/w_rocketlauncher.mdl") 
 	local convar = GetConVar("loadout_soldier")
 	local split = string.Split(convar:GetString(), ",")
-	print(split[1])
+	--print(split[1])
 	for name, wep in pairs(tf_items.Items) do
 		if istable(wep) then
 			if (wep.id == tonumber(split[1])) then
@@ -1448,7 +1448,7 @@ PyroButton.OnCursorEntered = function()
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_flamethrower/c_flamethrower.mdl") 
 	local convar = GetConVar("loadout_pyro")
 	local split = string.Split(convar:GetString(), ",")
-	print(split[1])
+	--print(split[1])
 	for name, wep in pairs(tf_items.Items) do
 		if istable(wep) then
 			if (wep.id == tonumber(split[1])) then
@@ -1512,7 +1512,7 @@ a stickybomb and jumping as you detonate it!]] )
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_grenadelauncher/c_grenadelauncher.mdl") 
 	local convar = GetConVar("loadout_demoman")
 	local split = string.Split(convar:GetString(), ",")
-	print(split[1])
+	--print(split[1])
 	for name, wep in pairs(tf_items.Items) do
 		if istable(wep) then
 			if (wep.id == tonumber(split[2])) then
@@ -1564,7 +1564,7 @@ HeavyButton.OnCursorEntered = function()
 	
     local convar = GetConVar("loadout_heavy")
     local split = string.Split(convar:GetString(), ",")
-	print(split[1])
+	--print(split[1])
 	for name, wep in pairs(tf_items.Items) do
 		if istable(wep) then
 			if (wep.id == tonumber(split[1])) then
@@ -1633,7 +1633,7 @@ team mates get to the front lines!]] )
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_wrench/c_wrench.mdl") 
 	local convar = GetConVar("loadout_engineer")
 	local split = string.Split(convar:GetString(), ",")
-	print(split[3])
+	--print(split[3])
 	for name, wep in pairs(tf_items.Items) do
 		if istable(wep) then
 			if (wep.id == tonumber(split[3])) then
@@ -1690,7 +1690,7 @@ MedicButton.OnCursorEntered = function()
 	
 	local convar = GetConVar("loadout_medic")
 	local split = string.Split(convar:GetString(), ",")
-	print(split[1])
+	--print(split[1])
 	for name, wep in pairs(tf_items.Items) do
 		if istable(wep) then
 			if (wep.id == tonumber(split[2])) then
@@ -1751,7 +1751,7 @@ SniperButton.OnCursorEntered = function()
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_sniperrifle/c_sniperrifle.mdl") 
 	local convar = GetConVar("loadout_sniper")
 	local split = string.Split(convar:GetString(), ",")
-	print(split[1])
+	--print(split[1])
 	for name, wep in pairs(tf_items.Items) do
 		if istable(wep) then
 			if (wep.id == tonumber(split[1])) then
@@ -1808,7 +1808,7 @@ SpyButton.OnCursorEntered = function()
 	icon2:GetEntity():SetModel("models/weapons/c_models/c_knife/c_knife.mdl") 
 	local convar = GetConVar("loadout_spy")
 	local split = string.Split(convar:GetString(), ",")
-	print(split[1])
+	--print(split[1])
 	for name, wep in pairs(tf_items.Items) do
 		if istable(wep) then
 			if (wep.id == tonumber(split[3])) then
@@ -1980,7 +1980,7 @@ tauntlaugh:SetSize( 90, 20 )
 tauntlaugh:SetText( "Hat Painter" )
 ]]
 --[[local function select_item(selector, data, item)
-	print(item)
+	--print(item)
 	if data and selector:GetOptionData(data) then
 		ply:ConCommand( "giveitem "..selector:GetOptionData(data) )
 	else
@@ -3031,7 +3031,7 @@ local function MergeSteamInventory(ply)
 						-- scout
 						local convar = GetConVar("loadout_scout")
 						local split = {-1,-1,-1,-1,-1,-1}
-						print(item1scout,item2scout,item3scout,item4scout,item5scout,item6scout)
+						--print(item1scout,item2scout,item3scout,item4scout,item5scout,item6scout)
 
 						split[1] = item1scout
 						split[2] = item2scout
@@ -3044,7 +3044,7 @@ local function MergeSteamInventory(ply)
 						-- soldier
 						convar = GetConVar("loadout_soldier")
 						split = {-1,-1,-1,-1,-1,-1}
-						print(item1soldier,item2soldier,item3soldier,item4soldier,item5soldier,item6soldier)
+						--print(item1soldier,item2soldier,item3soldier,item4soldier,item5soldier,item6soldier)
 						split[1] = item1soldier
 						split[2] = item2soldier
 						split[3] = item3soldier
@@ -3057,7 +3057,7 @@ local function MergeSteamInventory(ply)
 						-- pyro
 						convar = GetConVar("loadout_pyro")
 						split = {-1,-1,-1,-1,-1,-1}
-						print(item1pyro,item2pyro,item3pyro,item4pyro,item5pyro,item6pyro)
+						--print(item1pyro,item2pyro,item3pyro,item4pyro,item5pyro,item6pyro)
 						split[1] = item1pyro
 						split[2] = item2pyro
 						split[3] = item3pyro
@@ -3070,7 +3070,7 @@ local function MergeSteamInventory(ply)
 						-- demoman
 						convar = GetConVar("loadout_demoman")
 						split = {-1,-1,-1,-1,-1,-1}
-						print(item1demoman,item2demoman,item3demoman,item4demoman,item5demoman,item6demoman)
+						--print(item1demoman,item2demoman,item3demoman,item4demoman,item5demoman,item6demoman)
 						split[2] = item1demoman
 						split[1] = item2demoman
 						split[3] = item3demoman
@@ -3082,7 +3082,7 @@ local function MergeSteamInventory(ply)
 						-- heavy
 						convar = GetConVar("loadout_heavy")
 						split = {-1,-1,-1,-1,-1,-1}
-						print(item1heavy,item2heavy,item3heavy,item4heavy,item5heavy,item6heavy)
+						--print(item1heavy,item2heavy,item3heavy,item4heavy,item5heavy,item6heavy)
 						split[1] = item1heavy
 						split[2] = item2heavy
 						split[3] = item3heavy
@@ -3095,7 +3095,7 @@ local function MergeSteamInventory(ply)
 						-- engineer
 						convar = GetConVar("loadout_engineer")
 						split = {-1,-1,-1,-1,-1,-1}
-						print(item1engineer,item2engineer,item3engineer,item4engineer,item5engineer,item6engineer)
+						--print(item1engineer,item2engineer,item3engineer,item4engineer,item5engineer,item6engineer)
 						split[1] = item1engineer
 						split[2] = item2engineer
 						split[3] = item3engineer
@@ -3108,7 +3108,7 @@ local function MergeSteamInventory(ply)
 						-- medic
 						convar = GetConVar("loadout_medic")
 						split = {-1,-1,-1,-1,-1,-1}
-						print(item1medic,item2medic,item3medic,item4medic,item5medic,item6medic)
+						--print(item1medic,item2medic,item3medic,item4medic,item5medic,item6medic)
 						split[1] = item1medic
 						split[2] = item2medic
 						split[3] = item3medic
@@ -3121,7 +3121,7 @@ local function MergeSteamInventory(ply)
 						-- sniper
 						convar = GetConVar("loadout_sniper")
 						split = {-1,-1,-1,-1,-1,-1}
-						print(item1sniper,item2sniper,item3sniper,item4sniper,item5sniper,item6sniper)
+						--print(item1sniper,item2sniper,item3sniper,item4sniper,item5sniper,item6sniper)
 						split[1] = item1sniper
 						split[2] = item2sniper
 						split[3] = item3sniper
@@ -3133,7 +3133,7 @@ local function MergeSteamInventory(ply)
 						-- spy
 						convar = GetConVar("loadout_spy")
 						split = {-1,-1,-1,-1,-1,-1}
-						print(item1spy,item2spy,item3spy,item4spy,item5spy,item6spy)
+						--print(item1spy,item2spy,item3spy,item4spy,item5spy,item6spy)
 						split[2] = item1spy
 						split[1] = item2spy
 						split[3] = item3spy

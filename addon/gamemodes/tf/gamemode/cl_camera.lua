@@ -55,7 +55,7 @@ end)
 
 --[[
 hook.Add("DoPlayerDeath", "SetPlayerKiller", function(pl, attacker)
-	print("penis", attacker)
+	--print("penis", attacker)
 	if pl==attacker or attacker:IsWorld() or not attacker:IsPlayer() or not attacker:IsNPC() then
 		pl.Killer = nil
 	else
@@ -449,12 +449,12 @@ end)
 
 function StartSimulatedCamera()
 	LocalPlayer().SimulatedCamera = true
-	print(LocalPlayer().CameraAngles)
+	--print(LocalPlayer().CameraAngles)
 	LocalPlayer().CameraAngles = nil
 end
 
 function PrintSimulatedCamera()
-	print(LocalPlayer().CameraAngles)
+	--print(LocalPlayer().CameraAngles)
 end
 
 function EndSimulatedCamera()

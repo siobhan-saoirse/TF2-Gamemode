@@ -6,7 +6,7 @@ function ENT:Initialize()
 end
 
 function ENT:InitPostEntity()
-	print(self)
+	--print(self)
 	PrintTable(self.Properties or {})
 	
 	self:SendData()
@@ -22,7 +22,7 @@ function ENT:SendData(pl)
 		for _,v in ipairs(tab) do
 			layout = layout..(v.ID-1).." "
 		end
-		print("Generating layout string : "..layout)
+		--print("Generating layout string : "..layout)
 	end
 	
 	umsg.Start("TF_SetControlPointLayout", pl)

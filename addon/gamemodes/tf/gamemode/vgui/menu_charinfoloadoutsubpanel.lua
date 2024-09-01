@@ -281,7 +281,7 @@ function PANEL:PerformLayout()
 		
 			
 		-- oh no
-		print(":O")
+		--print(":O")
 		if ply:GetPlayerClass() != "demoman" then
 
 			--[[

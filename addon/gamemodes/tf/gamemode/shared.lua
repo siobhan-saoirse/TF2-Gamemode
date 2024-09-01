@@ -2124,7 +2124,7 @@ concommand.Remove("__svspeak")
 --[[concommand.Add( "changeteam", function( pl, cmd, args )
 	--if tonumber( args[ 1 ] ) >= 5 then return end
 	hook.Call( "PlayerRequestTeam", GAMEMODE, pl, tonumber( args[ 1 ] ) )
-	print("changeteam?? to what, oh, team "..tonumber( args[ 1 ] ).."!")
+	--print("changeteam?? to what, oh, team "..tonumber( args[ 1 ] ).."!")
 end )]]
 
 

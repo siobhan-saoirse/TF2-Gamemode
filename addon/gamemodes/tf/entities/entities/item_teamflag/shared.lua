@@ -134,14 +134,14 @@ function ENT:Think()
 				color = Color(0, 255, 255)
 			end
 			debugoverlay.Line(trace.StartPos, trace.HitPos, 1.1, color, true)
-			--print(trace.Entity)
+			----print(trace.Entity)
 		end
 
 		if v:GetPos():Distance(self:GetPos()) <= 80 and self:CanPickup(v) and util.QuickTrace(self:GetPos(), v:EyePos() - self:GetPos(), self.Prop).Entity == v then
 			self:PlayerTouched(v)
 		end
 
-		--print(self.PickupLock[v])
+		----print(self.PickupLock[v])
 		if (self.PickupLock ~= nil) then
 			if v:GetPos():Distance(self:GetPos()) >= 80 and self.PickupLock[v] then
 				self.PickupLock[v] = nil
@@ -237,7 +237,7 @@ function ENT:Return(nosound)
 		self.NextReturn = nil
 		self:SetPos(self.HomePosition)
 		self:SetAngles(self.HomeAngles)
-		print(self.HomePosition)
+		--print(self.HomePosition)
 		self:TriggerOutput("OnReturn")
 
 		if nosound then

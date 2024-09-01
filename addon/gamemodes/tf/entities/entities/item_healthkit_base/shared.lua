@@ -43,14 +43,14 @@ function ENT:KeyValue(key, value)
 		timer.Create("SetModel", 0.5, 0, function()
 			self:SetModel(model)
 		end)
-		print(model)
+		--print(model)
 	elseif key=="healthpercentage" then
 		local health = tostring(value) 
 		self.HealthPercentage = model
 		timer.Create("SetModel", 0.5, 0, function()
 			self.HealthPercentage = model
 		end)
-		print(model)
+		--print(model)
 	end
 end
 

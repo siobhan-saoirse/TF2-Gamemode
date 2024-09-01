@@ -71,7 +71,7 @@ end
 
 function IsHL1SwepsMounted()
 	for k, v in pairs(engine.GetAddons()) do 
-		--print("addon "..v.wsid.." aka "..v.title.." has been detected!")
+		----print("addon "..v.wsid.." aka "..v.title.." has been detected!")
 		if v.wsid == "1360233031" and v.mounted == true then
 			return true
 		end

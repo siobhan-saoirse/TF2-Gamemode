@@ -16,7 +16,7 @@ function TestSound(snd)
 		
 		local lvl = s.soundlevel
 		
-		print(snd, lvl, pitch)
+		--print(snd, lvl, pitch)
 		LocalPlayer():EmitSound(snd, lvl, pitch)
 	end
 end

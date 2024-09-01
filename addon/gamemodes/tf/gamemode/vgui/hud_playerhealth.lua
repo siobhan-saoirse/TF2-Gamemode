@@ -105,11 +105,11 @@ function PANEL:Paint()
 		yalign=TEXT_ALIGN_CENTER,
 	}
 	if health and maxhealth then
-	--print(health-maxhealth)
+	----print(health-maxhealth)
 		if health <= maxhealth and health ~= maxhealth and GetConVar("tf_maxhealth_hud"):GetInt() ~= 0 then
-		--	print(health-maxhealth+5)
-		--	print(health)
-		--	print(maxhealth)
+		--	--print(health-maxhealth+5)
+		--	--print(health)
+		--	--print(maxhealth)
 			draw.Text{
 				text=maxhealth,
 				font="HudClassHealthMax",

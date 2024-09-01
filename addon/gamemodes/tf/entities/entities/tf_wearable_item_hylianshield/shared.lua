@@ -210,7 +210,7 @@ function ENT:MeleeAttack()
 		end
 		
 		if tf_targe_enhanced_charge:GetBool() and IsValid(tr.Entity) then
-			print("charge hit", tr.Entity, tr.Entity:Health(), tr.Entity:GetMaxHealth(), self:CanChargeThrough(tr.Entity))
+			--print("charge hit", tr.Entity, tr.Entity:Health(), tr.Entity:GetMaxHealth(), self:CanChargeThrough(tr.Entity))
 			if self:CanChargeThrough(tr.Entity) then
 				return
 			--[[elseif tr.Entity:GetClass() == "prop_door_rotating" then

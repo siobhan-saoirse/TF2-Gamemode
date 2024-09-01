@@ -10,17 +10,36 @@ SWEP.Slot = 1
 SWEP.SlotPos = 0
 
 SWEP.Spawnable = true
+SWEP.ViewModelFOV = 90
 
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
 SWEP.ViewModel = Model( "models/weapons/c_arms.mdl" )
 SWEP.WorldModel = "models/empty.mdl"
 SWEP.UseHands = true
 SWEP.HoldType = "normal"
+SWEP.Primary.ClipSize      = -1
+SWEP.Primary.DefaultClip   = -1
+SWEP.Primary.Automatic     = false
+SWEP.Primary.Ammo          = "none"
+
+SWEP.Secondary.ClipSize    = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic   = false
+SWEP.Secondary.Ammo        = "none"
+
+local weaponSelectionColor = Color( 255, 220, 0, 255 )
+function SWEP:DrawWeaponSelection( x, y, w, t, a )
+    weaponSelectionColor.a = a
+    draw.SimpleText( "C", "creditslogo", x + w / 2, y, weaponSelectionColor, TEXT_ALIGN_CENTER )
+
+    --baseClass.PrintWeaponInfo( self, x + w + 20, y + t * 0.95, alpha )
+end
+
 function SWEP:Deploy()
 	self:SetWeaponHoldType( self.HoldType ) 
 		local vm = self:GetOwner():GetViewModel()
 		if SERVER then
-			self:SendWeaponAnim(vm:GetSequenceActivity(vm:LookupSequence("seq_admire")))
+			vm:SendViewModelMatchingSequence(vm:LookupSequence("seq_admire"))
 		end
 	return true
 end 
@@ -44,7 +63,13 @@ function SWEP:SetupDataTables()
 end
 
 function SWEP:Initialize()
-	self:SetWeaponHoldType( self.HoldType )
+    if self.SetHoldType then
+        self:SetHoldType( "normal" )
+    else
+        self:SetWeaponHoldType( "normal" )
+    end
+
+    self:DrawShadow( false )
 end 
 
 function SWEP:Holster()

@@ -137,7 +137,7 @@ function SWEP:Think()
 		self.CanInspect = true
 	end
 			
-	//print(deployspeed)
+	//--print(deployspeed)
 	
 	if self.NextReload and CurTime()>=self.NextReload then
 		self:SetClip1(self:Clip1() + self.AmmoAdded)

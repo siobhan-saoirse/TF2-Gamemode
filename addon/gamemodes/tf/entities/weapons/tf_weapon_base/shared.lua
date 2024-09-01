@@ -956,7 +956,7 @@ function SWEP:Deploy()
 	end
 	
 	--MsgFN("SendWeaponAnim %s %d", tostring(self), self.VM_DRAW)
-	--	print("DRAW ANIM")
+	--	--print("DRAW ANIM")
 	--[[
 	if CLIENT and self.DeploySound and not self.DeployPlayed then
 		self:EmitSound(self.DeploySound)
@@ -1279,7 +1279,7 @@ function SWEP:PrimaryAttack(noscene)
 end
 
 function SWEP:RustyBulletHole()
-	--print(self.ProjectileShootOffset)
+	----print(self.ProjectileShootOffset)
 	if self.Base ~= "tf_weapon_melee_base" and self.GetClass ~= "tf_weapon_builder" and not self.IsPDA and self.ProjectileShootOffset == Vector(0,0,0) or self.ProjectileShootOffset == Vector(3,8,-5) and self.IsDeployed == true then
 		--self:ShootBullet(0, self.BulletsPerShot, self.BulletSpread)
 		if (self.Owner:GetEyeTrace()) then  
@@ -2088,7 +2088,7 @@ function SWEP:Think()
 		self.CanInspect = true
 	end
 
-	//print(deployspeed)
+	//--print(deployspeed)
 end
 
 function SWEP:Initialize()

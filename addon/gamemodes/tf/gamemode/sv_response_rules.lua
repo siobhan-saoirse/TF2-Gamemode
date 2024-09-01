@@ -196,7 +196,7 @@ function Load(path)
 	
 	-- Criteria  
 	for str in string.gmatch(data, "([cC]riterion.-\n)") do
-		--print(str)
+		----print(str)
 		AddCriterion(str)
 		ncrit = ncrit + 1
 	end 
@@ -334,10 +334,10 @@ function PlayResponse(ent, response, nospeech, concept)
 			
 			if tf_voice_cooldown:GetBool() then
 				if (time) then
-					print("vcd time: "..1.5)
+					--print("vcd time: "..1.5)
 					ent.NextSpeak = CurTime() + 1.5
 				else
-					print("vcd time: 1.5")
+					--print("vcd time: 1.5")
 					ent.NextSpeak = CurTime() + 1.5
 				end
 				if delay then ent.NextSpeak = ent.NextSpeak + delay end
@@ -387,7 +387,7 @@ function PainfulResponse(ent, response, nospeech, attacker)
 		
 		ent.LastScene = r[1]
 		if not nospeech then
-			print("vcd time: "..time)
+			--print("vcd time: "..time)
 				if (ent:GetPlayerClass() == "scout" or ent:GetPlayerClass() == "soldier") then
 					ent.NextPainSound = CurTime() + math.random(0.2,1.2)
 				else
@@ -444,7 +444,7 @@ function FlamingResponse(ent, response, nospeech)
 		
 		ent.LastScene = r[1]
 		if not nospeech then
-			print("vcd time: "..2.5)
+			--print("vcd time: "..2.5)
 			ent.NextFireSound = CurTime() + 2.5
 			if delay then ent.NextFireSound = ent.NextFireSound + delay end
 		end
@@ -503,10 +503,10 @@ function PlayResponse2(ent, response, nospeech)
 			
 			if tf_voice_cooldown:GetBool() then
 				if (time) then
-					print("vcd time: "..time)
+					--print("vcd time: "..time)
 					ent.NextSpeak = CurTime() + time
 				else
-					print("vcd time: 1.5")
+					--print("vcd time: 1.5")
 					ent.NextSpeak = CurTime() + 1.5
 				end
 				if delay then ent.NextSpeak = ent.NextSpeak + delay end
@@ -565,10 +565,10 @@ function PlayResponse3(ent, response, nospeech)
 			
 			if tf_voice_cooldown:GetBool() then
 				if (time) then
-					print("vcd time: "..time)
+					--print("vcd time: "..time)
 					ent.NextSpeak = CurTime() + time
 				else
-					print("vcd time: 1.5")
+					--print("vcd time: 1.5")
 					ent.NextSpeak = CurTime() + 1.5
 				end
 				if delay then ent.NextSpeak = ent.NextSpeak + delay end
@@ -627,10 +627,10 @@ function PlayResponse4(ent, response, nospeech)
 			
 			if tf_voice_cooldown:GetBool() then
 				if (time) then
-					print("vcd time: "..1.5)
+					--print("vcd time: "..1.5)
 					ent.NextSpeak = CurTime() + 1.5
 				else
-					print("vcd time: 1.5")
+					--print("vcd time: 1.5")
 					ent.NextSpeak = CurTime() + 1.5
 				end
 				if delay then ent.NextSpeak = ent.NextSpeak + delay end

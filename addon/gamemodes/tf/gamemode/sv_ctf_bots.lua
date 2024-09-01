@@ -140,7 +140,7 @@ function LBFindClosest(bot)
 		end
 	end
 
-	--print(player:Nick().." is the closest!")
+	----print(player:Nick().." is the closest!")
 	bot.FollowPly = player
 end
 
@@ -1017,7 +1017,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 
 		end
 		if bot.playerclass == "Medic" or bot:GetPlayerClass() == "giantmedic" then
-				--print(intel)
+				----print(intel)
 			local targetply = player.GetAll()[1]
 			local fintel
 			for k, v in pairs(player.GetBots()) do
@@ -1205,10 +1205,10 @@ end)
 
 hook.Add("Think", "leadbot_think", function()
 	--for _, bot in pairs(player.GetBots()) do
-		--print(bot)
+		----print(bot)
 		--[[for m, n in pairs(ents.FindByClass("prop_buys")) do
 			if n:GetPos():Distance(bot:GetPos()) < 120 then
-				print(n)
+				--print(n)
 			end
 		end]]
 		--[[if bot:Team() == TEAM_SPECTATOR then
@@ -1520,7 +1520,7 @@ concommand.Add("tf_bot_say", function(ply, _, args) for k, v in pairs(player.Get
 --concommand.Add("lk.downme", function(ply) ply:DownPlayer() end)
 concommand.Add("tf_bot_add", function(ply, _, _, args) 
 	if (game.SinglePlayer()) then 
-		print("Doesn't work in Singleplayer!") 
+		--print("Doesn't work in Singleplayer!") 
 	end 
 	if ply:IsAdmin() or ply:IsSuperAdmin() then 
 		for i=0, args[1]-1 do

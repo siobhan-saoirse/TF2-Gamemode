@@ -134,7 +134,7 @@ function ENT:OnRemove()
 	if SERVER then
 			for k,v in ipairs(self.bots) do
 				v:Remove()
-				print("Removed robot #"..v:EntIndex())
+				--print("Removed robot #"..v:EntIndex())
 			end
 	end
 end
@@ -143,7 +143,7 @@ function ENT:Think()
 	if SERVER then
 		for k,v in ipairs(self.bots) do
 			table.remove(self.bots,k)
-			print("Removed robot #"..v:EntIndex())
+			--print("Removed robot #"..v:EntIndex())
 		end
 	end
 	self:NextThink(CurTime())
@@ -228,7 +228,7 @@ function ENT:Use( activator, caller )
 						bot:EmitSound("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav",70,100)
 						bot.TargetEnt = v
 						ParticleEffect("teleportedin_blue", bot:GetPos(), bot:GetAngles(), self)
-						print("Creating robot #"..bot:EntIndex())
+						--print("Creating robot #"..bot:EntIndex())
 					end
 				end
 						
@@ -261,7 +261,7 @@ function ENT:Use( activator, caller )
 								bot.TargetEnt = table.Random(team.GetPlayers(TEAM_RED))
 								bot:EmitSound("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav",70,100)
 								ParticleEffect("teleportedin_blue", bot:GetPos(), bot:GetAngles(), self)
-								print("Creating horde robot #"..bot:EntIndex())
+								--print("Creating horde robot #"..bot:EntIndex())
 							end
 					else
 						local bot = ents.Create(table.Random(stock_bots))
@@ -278,7 +278,7 @@ function ENT:Use( activator, caller )
 								bot:EmitSound("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav",70,100)
 								ParticleEffect("teleportedin_blue", bot:GetPos(), bot:GetAngles(), self)
 								bot.TargetEnt = table.Random(team.GetPlayers(TEAM_RED))
-								print("Creating robot #"..bot:EntIndex())
+								--print("Creating robot #"..bot:EntIndex())
 							end
 							
 						elseif (math.random(1,10) == 1) then
@@ -293,7 +293,7 @@ function ENT:Use( activator, caller )
 								bot:EmitSound("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav",70,100)
 								ParticleEffect("teleportedin_blue", bot:GetPos(), bot:GetAngles(), self)
 								bot.TargetEnt = table.Random(team.GetPlayers(TEAM_RED))
-								print("Creating robot #"..bot:EntIndex())
+								--print("Creating robot #"..bot:EntIndex())
 							
 						else
 
@@ -308,13 +308,13 @@ function ENT:Use( activator, caller )
 								bot:EmitSound("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav",70,100)
 								ParticleEffect("teleportedin_blue", bot:GetPos(), bot:GetAngles(), self)
 								bot.TargetEnt = table.Random(team.GetPlayers(TEAM_RED))
-								print("Creating robot #"..bot:EntIndex())
+								--print("Creating robot #"..bot:EntIndex())
 							end
 
 						end
 					end
 				else
-					print("We have reached the limits! Not spawning MVM bots...")
+					--print("We have reached the limits! Not spawning MVM bots...")
 				end
 			end
 		end)

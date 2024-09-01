@@ -157,7 +157,7 @@ function GM:EntityKeyValue(ent, key, value)
 		
 		if k=="spawnflags" then
 			--[[if bit.bor(tonumber(value),4)>0 then
-				print(ent,"previous")
+				--print(ent,"previous")
 			end]]
 		--[[else
 			ent:SetKeyValue("spawnflags", 2)]]

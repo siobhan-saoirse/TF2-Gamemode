@@ -87,7 +87,7 @@ function ENT:GetTargetIDName(nolocalize)
 	return tf_lang.GetFormatted("#TF_playerid_object", tf_lang.GetRaw(self.ObjectName), GAMEMODE:EntityName(self:GetBuilder()))
 end
 
-function ENT:SetupBlueprint(blueprint, mode)
+function ENT:SetupBlue--print(blueprint, mode)
 	blueprint.BuildHull = self.BuildHull
 	blueprint.BuildDistance = self.BuildDistance
 	--blueprint.BuildYOffset = self.BuildYOffset

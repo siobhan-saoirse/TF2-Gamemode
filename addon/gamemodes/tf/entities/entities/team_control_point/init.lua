@@ -22,7 +22,7 @@ function ENT:InitPostEntity()
 		return
 	end
 	
-	print(self)
+	--print(self)
 	
 	self.Properties.team_previouspoint_2_0 = ents.FindByName(self.Properties.team_previouspoint_2_0 or "")[1] or NULL
 	self.Properties.team_previouspoint_2_1 = ents.FindByName(self.Properties.team_previouspoint_2_1 or "")[1] or NULL
@@ -153,7 +153,7 @@ end
 
 function ENT:UpdateLockStatus()
 	local l = self:ComputeLockStatus()
-	print("Control point "..self.ID.." lock status : "..tostring(l))
+	--print("Control point "..self.ID.." lock status : "..tostring(l))
 	self:SetLocked(l)
 end
 

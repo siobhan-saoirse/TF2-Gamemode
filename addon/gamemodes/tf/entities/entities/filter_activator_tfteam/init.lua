@@ -7,7 +7,7 @@ local TeamTranslateTable = {
 }
 
 function ENT:Initialize()
-	print(self)
+	--print(self)
 	PrintTable(self.Properties or {})
 	
 	-- Bleh, can't create working filters using Lua, so we'll just spawn a similar existing filter and delete this one

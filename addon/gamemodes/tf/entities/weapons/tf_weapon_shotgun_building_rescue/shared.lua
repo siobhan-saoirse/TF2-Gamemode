@@ -84,7 +84,7 @@ function SWEP:SecondaryAttack()
 				end
 				if SERVER then
 					local builder = self.Owner:GetWeapon("tf_weapon_builder")
-					print(builder.MovedBuildingLevel)
+					--print(builder.MovedBuildingLevel)
 					if v:GetLevel()==2 then
 						builder.MovedBuildingLevel = 2
 					elseif v:GetLevel()==1 then

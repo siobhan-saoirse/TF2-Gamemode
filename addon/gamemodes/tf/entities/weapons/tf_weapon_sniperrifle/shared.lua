@@ -286,7 +286,7 @@ function SWEP:PrimaryAttack()
 	self.CritsOnHeadshot = self.ZoomStatus
 	
 	self:RollCritical()
-	--print(self.BaseDamage)
+	----print(self.BaseDamage)
 	
 	timer.Simple(0.7, function()
 		if CLIENT then

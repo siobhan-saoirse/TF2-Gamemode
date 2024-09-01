@@ -1741,8 +1741,8 @@ hook.Add( "PlayerButtonDown", "PlayerButtonDownTF", function( pl, key )
 				else
 					pl:ConCommand("tf_taunt "..pl:GetActiveWeapon():GetSlot() + 1)         
 				end
-				print("taunt")
-				print(pl:GetWeapon(pl:GetActiveWeapon():GetClass()):GetSlot() + 1)
+				--print("taunt")
+				--print(pl:GetWeapon(pl:GetActiveWeapon():GetClass()):GetSlot() + 1)
 
 			end)
 		end
@@ -2404,7 +2404,7 @@ function GM:PlayerSelectSpawn(pl)
 	local spawnsblu = {}
 
 	for k, v in pairs(ents.FindByClass("info_player_teamspawn")) do
-		--print(v, "says")
+		----print(v, "says")
 		if v:GetKeyValues()["StartDisabled"] == 0 then
 		if v:GetKeyValues()["TeamNum"] == 3 then
 			table.insert(spawnsblu, v)
@@ -2482,7 +2482,7 @@ end
 
 function GM:HealPlayer(healer, pl, h, effect, allowoverheal)
 	local health_given = pl:GiveHealth(h, false, allowoverheal)
-	--print(health_given)
+	----print(health_given)
 	if effect then
 		if pl:IsPlayer() then
 			umsg.Start("PlayerHealthBonus", pl)
@@ -2628,7 +2628,7 @@ function GM:PlayerRequestTeam( ply, teamid )
 end
 
 function GM:PlayerCanJoinTeam( ply, teamid )
-	--print("Requested "..teamid.." for "..ply:GetName().."!".." (aka team "..team.GetName(teamid).."!)")
+	----print("Requested "..teamid.." for "..ply:GetName().."!".." (aka team "..team.GetName(teamid).."!)")
 	local TimeBetweenSwitches = GAMEMODE.SecondsBetweenTeamSwitches or 5
 	if ( ply.LastTeamSwitch && RealTime()-ply.LastTeamSwitch < TimeBetweenSwitches ) then
 		ply.LastTeamSwitch = ply.LastTeamSwitch + 1

@@ -1300,14 +1300,14 @@ function SWEP:SecondaryAttack()
 				if (self.Owner:GetAngles():Up():Length() > 0.7) then
 					self.Owner:AddVCDSequenceToGestureSlot(GESTURE_SLOT_JUMP, self.Owner:LookupSequence("pounce_idle_high"),0,true)
 					timer.Create("LoopHunterAnim"..self.Owner:EntIndex(), self.Owner:SequenceDuration(self.Owner:LookupSequence("pounce_idle_high")), 0, function()
-						print(self.Owner:GetAimVector():LengthSqr())
+						--print(self.Owner:GetAimVector():LengthSqr())
 						self.Owner:AddVCDSequenceToGestureSlot(GESTURE_SLOT_JUMP, self.Owner:LookupSequence("pounce_idle_high"),0,true)
 					end)
 				else*/
 					
 					self.Owner:DoAnimationEvent("pounce_idle_low")
 					timer.Create("LoopHunterAnim"..self.Owner:EntIndex(), self.Owner:SequenceDuration(self.Owner:LookupSequence("pounce_idle_low")) , 0, function()
-						//print(self.Owner:GetAimVector():LengthSqr())
+						//--print(self.Owner:GetAimVector():LengthSqr())
 						self.Owner:DoAnimationEvent("Pounce_idle_low")
 					end)
 				//end
@@ -2153,14 +2153,14 @@ function SWEP:PrimaryAttack()
 				if (self.Owner:GetAngles():Up():Length() > 0.7) then
 					self.Owner:AddVCDSequenceToGestureSlot(GESTURE_SLOT_JUMP, self.Owner:LookupSequence("pounce_idle_high"),0,true)
 					timer.Create("LoopHunterAnim"..self.Owner:EntIndex(), self.Owner:SequenceDuration(self.Owner:LookupSequence("pounce_idle_high")), 0, function()
-						print(self.Owner:GetAimVector():LengthSqr())
+						--print(self.Owner:GetAimVector():LengthSqr())
 						self.Owner:AddVCDSequenceToGestureSlot(GESTURE_SLOT_JUMP, self.Owner:LookupSequence("pounce_idle_high"),0,true)
 					end)
 				else*/
 					
 					self.Owner:DoAnimationEvent("pounce_idle_low")
 					timer.Create("LoopHunterAnim"..self.Owner:EntIndex(), self.Owner:SequenceDuration(self.Owner:LookupSequence("pounce_idle_low")) , 0, function()
-						//print(self.Owner:GetAimVector():LengthSqr())
+						//--print(self.Owner:GetAimVector():LengthSqr())
 						self.Owner:DoAnimationEvent("Pounce_idle_low")
 					end)
 				//end

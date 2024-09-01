@@ -85,7 +85,7 @@ function PANEL:Paint()
 			--t:GetModelEntity(1):SetPoseParameter("body_pitch",90)
 			self.ClassPanel = p
 
-			--print("ACT_MP_STAND_"..LocalPlayer():GetActiveWeapon().HoldType)]]
+			----print("ACT_MP_STAND_"..LocalPlayer():GetActiveWeapon().HoldType)]]
 		local w, h = self:LocalToScreen( self:GetWide(), self:GetTall() - 30 )
 		local tex = character_bg[t] or character_bg[1]
 		if (LocalPlayer():IsL4D()) then
@@ -185,7 +185,7 @@ function PANEL:Paint()
 			self.ClassModel.LayoutEntity = function() 
 				self.ClassModel:RunAnimation()
 				ent:FrameAdvance()
-				-- print(self.ClassModel:GetCamPos(), self.ClassModel:GetFOV(), self.ClassModel:GetLookAt(), self.ClassModel:GetLookAng())
+				-- --print(self.ClassModel:GetCamPos(), self.ClassModel:GetFOV(), self.ClassModel:GetLookAt(), self.ClassModel:GetLookAng())
 			end
 		end
 	else

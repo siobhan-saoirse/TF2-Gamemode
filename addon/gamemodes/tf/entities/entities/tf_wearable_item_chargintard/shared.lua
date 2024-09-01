@@ -256,7 +256,7 @@ function ENT:MeleeAttack()
 		end
 		
 		if tf_targe_enhanced_charge:GetBool() and IsValid(tr.Entity) then
-			print("charge hit", tr.Entity, tr.Entity:Health(), tr.Entity:GetMaxHealth(), self:CanChargeThrough(tr.Entity))
+			--print("charge hit", tr.Entity, tr.Entity:Health(), tr.Entity:GetMaxHealth(), self:CanChargeThrough(tr.Entity))
 			if self:CanChargeThrough(tr.Entity) then
 				return
 			--[[elseif tr.Entity:GetClass() == "prop_door_rotating" then
@@ -394,7 +394,7 @@ function ENT:Think()
 		local cap = self.MaxSpeed * 0.8 * 0.8
 		
 		if vel < cap then
-			--print("below minimum speed, performing trace check")
+			----print("below minimum speed, performing trace check")
 			self:MeleeAttack()
 			if not self.dt.Charging then
 				return

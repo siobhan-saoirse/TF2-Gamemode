@@ -65,7 +65,7 @@ function ENT:KeyValue(key,value)
 			self:SetTeam(TEAM_BLU)
 		end
 	end
-	print(key, value, tonumber(value), self.Team)
+	--print(key, value, tonumber(value), self.Team)
 end
 
 function ENT:Initialize()

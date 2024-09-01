@@ -99,12 +99,12 @@ end
 function SWEP:Equip()
 	if SERVER then
 		if self.Owner:GetPlayerClass() != "spy" then
-		--print("Equip building", self.Owner)
+		----print("Equip building", self.Owner)
 		--PrintTable(self.Owner.Buildings)
 		
 		local group, mode = self.dt.BuildGroup, self.dt.BuildMode
 		if not self.Owner.Buildings[group] or not self.Owner.Buildings[group][mode] then
-			--print("Not a valid building, changing current building mode")
+			----print("Not a valid building, changing current building mode")
 			for group=0,tf_objects.NumObjects()-1 do
 				if self.Owner.Buildings[group] then
 					self.dt.BuildGroup = group
@@ -115,7 +115,7 @@ function SWEP:Equip()
 		end
 		
 			end
-		--print("group",self.dt.BuildGroup,"mode",self.dt.BuildMode)
+		----print("group",self.dt.BuildGroup,"mode",self.dt.BuildMode)
 	end
 	
 	return self:CallBaseFunction("Equip")
@@ -1315,7 +1315,7 @@ function SWEP:SecondaryAttack()
 	
 	if SERVER then
 		if IsValid(self.Blueprint) then
-			self.Blueprint:RotateBlueprint()
+			self.Blueprint:RotateBlue--print()
 		end
 	end
 	

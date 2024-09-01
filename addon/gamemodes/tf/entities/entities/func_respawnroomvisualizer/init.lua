@@ -23,11 +23,11 @@ function ENT:KeyValue(key,value)
 			if (v:GetName() == t) then
 				self.RespawnRoom = v
 				self.TeamNum = v.TeamNum
-				print(t)
+				--print(t)
 			end
 		end
 	end
-	print(key, value, tostring(value), self.RespawnRoom)
+	--print(key, value, tostring(value), self.RespawnRoom)
 end
 
 function ENT:StartTouch(ent)

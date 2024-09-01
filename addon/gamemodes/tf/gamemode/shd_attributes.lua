@@ -706,7 +706,7 @@ local ATTRIBUTES = {
 				inf = CURRENT_ENT
 				if IsValid(inf) and IsValid(inf.Owner) then
 					att = inf.Owner
-					print(att:IsThrownByExplosion())
+					--print(att:IsThrownByExplosion())
 					if ISPLAYER(att) and not att:OnGround() and att:IsThrownByExplosion() then return true end
 				end
 			end
@@ -1268,7 +1268,7 @@ concommand.Add("searchattrib", function(pl, cmd, args)
 	for k,v in SortedPairs(tf_items.AttributesByID) do
 		for _,n in ipairs(args) do
 			if string.find(v.name, n) then
-				print(k, v.name)
+				--print(k, v.name)
 				break
 			end
 		end

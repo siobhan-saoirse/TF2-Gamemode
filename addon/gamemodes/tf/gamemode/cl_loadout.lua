@@ -59,7 +59,7 @@ concommand.Add("open_charinfo_direct", function(ply, _, args)
     --[[local ply = LocalPlayer()
     local oldclass = ply:GetPlayerClass()
     local convar = GetConVar("loadout_" .. oldclass)
-    if !convar then print("You're a class without a loadout?!") return end
+    if !convar then --print("You're a class without a loadout?!") return end
     local class = string.upper(string.sub(oldclass, 1, 1)) .. string.sub(oldclass, 2) -- where's the function for class names?
     local loadout = string.Split(convar:GetString(), ",")
     local loadout_rect = surface.GetTextureID("vgui/loadout_rect")
@@ -94,7 +94,7 @@ concommand.Add("open_charinfo_direct", function(ply, _, args)
     classmodel.LayoutEntity = function(self, ent)
         self:RunAnimation()
 	    ent:FrameAdvance()
-        -- print(classmodel:GetCamPos(), classmodel:GetFOV(), classmodel:GetLookAt(), classmodel:GetLookAng())
+        -- --print(classmodel:GetCamPos(), classmodel:GetFOV(), classmodel:GetLookAt(), classmodel:GetLookAng())
 
         if !IsValid(ent.Weapon) and IsValid(ply:GetWeapons()[1]) then
             local wmodel = ply:GetWeapons()[1]:GetWorldModelEntity():GetModel()
@@ -278,7 +278,7 @@ concommand.Add("open_charinfo_direct", function(ply, _, args)
             nextLoadoutUpdate = CurTime() + 5
             loadout = string.Split(convar:GetString(), ",")
             -- oh no
-            print(":O")
+            --print(":O")
             if ply:GetPlayerClass() != "demoman" then
 
                 for name, wep in pairs(tf_items.Items) do

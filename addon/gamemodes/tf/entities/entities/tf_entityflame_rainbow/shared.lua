@@ -140,7 +140,7 @@ function ENT:Initialize()
 				self.Target:Speak("TLK_ONFIRE")
 			end
 			
-			--print("ignite",self.Target)
+			----print("ignite",self.Target)
 			self.Target:EmitSound("Fire.Engulf")
 			self.Target.FireEntity = self
 			self.RemainingDamage = self.DamagePerTick * math.floor(self.LifeTime / DamagePeriod)

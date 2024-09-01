@@ -58,17 +58,17 @@ function ENT:KeyValue(key,value)
 	end
 	self:SetNWInt("TeamNum",self.TeamNum)
 	self:SetNWInt("Team",self.Team)
-	print(key, value, tonumber(value), self.Team, self.TeamNum)
+	--print(key, value, tonumber(value), self.Team, self.TeamNum)
 end
 
 function ENT:StartTouch(ent) 
-	print(self.Team, self.TeamNum)
+	--print(self.Team, self.TeamNum)
 end
 
 function ENT:Touch(ent)
 	if ent:IsPlayer() and string.find(game.GetMap(),"mvm_") and ent:Team() == TEAM_BLU and self.TeamNum == TEAM_BLU then
 		self.Players[ent] = ent:EntIndex()
-		--print(self.Team)
+		----print(self.Team)
 		ent:GodEnable()
 		ent:SetSkin(3)
 	end

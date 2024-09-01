@@ -24,7 +24,7 @@ end
 if CLIENT then
 
 datastream.Hook("StreamDebugMessage", function(handler, id, enc, dec)
-	print(dec[1])
+	--print(dec[1])
 end)
 
 end

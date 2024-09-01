@@ -216,7 +216,7 @@ end
 
 	
 function SWEP:OpenClaws( boolean )
---print("Open Claws!")
+----print("Open Claws!")
 if !IsValid(self.Owner) or !self.Owner:Alive() then return end
 	local ViewModel = self.Owner:GetViewModel()
 	local WorldModel = self
@@ -317,7 +317,7 @@ end
 end
 
 function SWEP:CloseClaws( boolean )
---print("Close Claws!")
+----print("Close Claws!")
 if !IsValid(self.Owner) or !self.Owner:Alive() then return end
 	local ViewModel = self.Owner:GetViewModel()
 	local WorldModel = self
@@ -331,13 +331,13 @@ if !IsValid(self.Owner) or !self.Owner:Alive() then return end
 		if !IsValid(self.Owner) or !self.Owner:Alive() then timer.Remove("gg_move_claws_close") return end
 		if IsValid(ViewModel) then
 			if frame < 0 then ViewModel:SetPoseParameter("active", 0) end
-			--if frame <= 0 then print("doh2") timer.Remove("gg_move_claws_close") return end
+			--if frame <= 0 then --print("doh2") timer.Remove("gg_move_claws_close") return end
 			frame = frame-0.05
 			ViewModel:SetPoseParameter("active", frame)
 			end
 		if IsValid(WorldModel) then
 			if worldframe < 0 then WorldModel:SetPoseParameter("active", 0) end
-			--if worldframe <= 0 then print("doh3") timer.Remove("gg_move_claws_close") return end
+			--if worldframe <= 0 then --print("doh3") timer.Remove("gg_move_claws_close") return end
 			worldframe = worldframe-0.05
 			WorldModel:SetPoseParameter("active", worldframe)
 			end
@@ -426,7 +426,7 @@ function SWEP:Think()
 		
 		if GetConVar("gg_cone"):GetInt() > 0 and self:PickupCheck(tracetgt)==false then--and (!self.HP or !self.HP:IsValid()) then
 			tgt = self:GetConeEnt(trace)
-			--print(tgt)
+			----print(tgt)
 		else
 			tgt = tracetgt
 		end
@@ -837,7 +837,7 @@ function SWEP:PrimaryAttack()
 				entity:TakeDamageInfo(dmginfo)
 			end
 			--local callbackget = self:GetCallbacks("PhysicsCollide")
-			--print("me is here")
+			----print("me is here")
 			end
 			if tgt:GetClass() == "npc_manhack" then
 			local callback = tgt:AddCallback("PhysicsCollide", gg_Collide_Damage)
@@ -903,7 +903,7 @@ function SWEP:DropAndShoot()
 				entity:TakeDamageInfo(dmginfo)
 			end
 			--local callbackget = self:GetCallbacks("PhysicsCollide")
-			--print("me is here")
+			----print("me is here")
 		end
 		if self.HP:GetClass() == "npc_manhack" then
 		local callback = self.HP:AddCallback("PhysicsCollide", gg_Collide_Damage)
@@ -1045,7 +1045,7 @@ function SWEP:SecondaryAttack()
 		
 		if GetConVar("gg_cone"):GetInt() > 0 and self:PickupCheck(tracetgt)==false then--and (!self.HP or !self.HP:IsValid()) then
 			tgt = self:GetConeEnt(trace)
-			--print(tgt)
+			----print(tgt)
 		--[[if !tgt or !tgt:IsValid() then return end
 		local utiltrace = util.TraceLine( { 
 			start = trace.StartPos,
@@ -1141,7 +1141,7 @@ function SWEP:SecondaryAttack()
 							if bone and bone.IsValid and bone:IsValid() then
 							tgt:GetPhysicsObject():ApplyForceCenter(self.Owner:GetAimVector()*-ragvel )
 							bone:ApplyForceCenter(self.Owner:GetAimVector()*-ragvel )
-							print("bruhto")
+							--print("bruhto")
 							end
 						end--]]
 					else
@@ -1379,7 +1379,7 @@ function SWEP:Deploy()
 		--self:SetNextPrimaryFire( CurTime() + 5 )
 		self:SetNextSecondaryFire( CurTime() + 5 )
 		--[[if self.Owner:GetWeapon("weapon_physcannon"):IsValid() then
-			--print("yeah")
+			----print("yeah")
 			net.Start("gg_Deploy_DisableGrav")
 			net.Send( self.Owner )
 		end--]]
@@ -1485,7 +1485,7 @@ self:TimerDestroyAll()
 --[[if SERVER then
 	if self.Owner:GetWeapon("weapon_physcannon"):IsValid() then
 		local ply = self.Owner
-		--print("yeah2")
+		----print("yeah2")
 		net.Start("gg_Holster_EnableGrav")
 		net.Send( ply )
 	end

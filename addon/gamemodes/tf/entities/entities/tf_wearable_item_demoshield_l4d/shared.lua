@@ -611,7 +611,7 @@ function ENT:Think()
 		local cap = self.MaxSpeed * 0.8 * 0.8
 		
 		if vel < cap then
-			--print("below minimum speed, performing trace check")
+			----print("below minimum speed, performing trace check")
 			self:MeleeAttack()
 			if not self.dt.Charging then
 				return

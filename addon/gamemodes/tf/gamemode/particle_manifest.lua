@@ -4,7 +4,7 @@ if SERVER then
     PrintMessage(HUD_PRINTTALK, "SERVER IS RELOADING THE GAMEMODE DUE TO AN EDIT IN THE GAMEMODE'S CODE - GRAPHICAL OR GAME-BREAKING GLITCHES MAY OCCUR")
     PrintMessage(HUD_PRINTCENTER, "SERVER IS RELOADING THE GAMEMODE DUE TO AN EDIT IN THE GAMEMODE'S CODE - GRAPHICAL OR GAME-BREAKING GLITCHES MAY OCCUR")
 end
-print("Including TF2 Particles")
+--print("Including TF2 Particles")
 AddCSLuaFile() 
 game.AddParticles("particles/bigboom.pcf")
 game.AddParticles("particles/blood_impact.pcf")

@@ -475,7 +475,7 @@ function GM:ScaleNPCDamage(npc, hitgroup, dmginfo)
 		end
 	end]]
 	
-	--print("ScaleNPCDamage",npc,dmginfo)
+	----print("ScaleNPCDamage",npc,dmginfo)
 end
 
 function GM:EntityTakeDamage(  ent, dmginfo )
@@ -578,7 +578,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		return true
 	end
 	
-	--print("EntityTakeDamage",ent,dmginfo)
+	----print("EntityTakeDamage",ent,dmginfo)
 	
 	-- Some HL2 projectiles seem to keep the original attacker, even though their owner got changed (by Pyro's airblast, for instance)
 	-- Fixing this issue by storing the new attacker in a separate variable
@@ -636,11 +636,11 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	end
 	
 	if not ent:IsTFPlayer() then
-		--print("-> Manually calling ScaleNPCDamage")
+		----print("-> Manually calling ScaleNPCDamage")
 		self:ScaleNPCDamage(ent, 0, dmginfo)
 	elseif ent:IsNPC() then
 		if ForceScaleDamageEntityClasses[inflictor:GetClass()] or ForceDamageClasses[ent:GetClass()] then
-			--print("-> Manually calling ScaleNPCDamage")
+			----print("-> Manually calling ScaleNPCDamage")
 			self:ScaleNPCDamage(ent, 0, dmginfo)
 		end
 	end

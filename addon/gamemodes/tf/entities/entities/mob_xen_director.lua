@@ -222,12 +222,12 @@ local combine = {
 function ENT:OnRemove()
 	for k,v in ipairs(self.bots) do
 		v:Remove()
-		print("Removed special bot #"..v:EntIndex())
+		--print("Removed special bot #"..v:EntIndex())
 	end
 	for k,v in ipairs(self.bot) do
 		if (IsValid(v)) then
 			v:Remove()
-			print("Removed bot #"..v:EntIndex())
+			--print("Removed bot #"..v:EntIndex())
 		end
 	end
 end
@@ -309,7 +309,7 @@ function ENT:RunBehaviour()
 								bot:SetEntityTeam(TEAM_GREEN)
 							end
 							table.insert(self.bot,bot)
-							print("Creating NPC #"..bot:EntIndex())
+							--print("Creating NPC #"..bot:EntIndex())
 							timer.Create("CheckForNoEnemies"..bot:EntIndex(), 8, 0, function()
 								if (!IsValid(bot) or !bot:IsNPC()) then return end
 								if (bot:GetEnemy() == nil) then -- not doing anything, kick
@@ -319,7 +319,7 @@ function ENT:RunBehaviour()
 										end
 									end
 									bot:Remove()
-									print("Removed NPC #"..bot:EntIndex())
+									--print("Removed NPC #"..bot:EntIndex())
 								end
 							end)
 							if (bot:GetModel()) then

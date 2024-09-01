@@ -60,7 +60,7 @@ function ENT:Initialize()
 	end
 	if CLIENT then
 		usermessage.Receive( "SCGG_Entity_InvalidateBone", function( entity ) 
-			print("i has mesage")
+			--print("i has mesage")
 			entity:InvalidateBoneCache()
 		end )
 	end

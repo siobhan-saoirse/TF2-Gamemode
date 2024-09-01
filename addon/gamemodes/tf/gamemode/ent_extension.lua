@@ -622,7 +622,7 @@ local function DoBulletTracer(tracer, hitpos, weapon)
 	local att = ent:GetAttachment(id)
 	if not att then return end
 	
-	--print("DoBulletTracer", tracer, ent, ent:EntIndex(), id)
+	----print("DoBulletTracer", tracer, ent, ent:EntIndex(), id)
 	util.ParticleTracerEx(tracer, att.Pos, hitpos, true, ent:EntIndex(), id)
 end
 

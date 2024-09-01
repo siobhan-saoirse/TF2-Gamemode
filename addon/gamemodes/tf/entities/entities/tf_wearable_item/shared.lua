@@ -229,7 +229,7 @@ function ENT:Initialize()
 		
 	local item = self:GetItemData()
 	if item.model_player then
-		print(item.model_player)
+		--print(item.model_player)
 		if (string.find(item.model_player,"zombie") || (string.find(item.model_player,"/all_class/all_") and !string.find(item.model_player,"all_halo")) || string.find(item.model_player,"ugc_season12") ) then
 			if (string.find(item.model_player,"/zombie_"..self.Owner:GetPlayerClass()..".mdl")) then
 				self.Owner:SetSkin(self.Owner:GetSkin())
@@ -249,7 +249,7 @@ function ENT:Initialize()
 			modelperclass = string.Replace(modelperclass,"demoman","demo")
 			self.Model = modelperclass
 		else
-			print(item.model_player_per_class)
+			--print(item.model_player_per_class)
 			PrintTable(item.model_player_per_class)
 			local modelperclass = tostring(item.model_player_per_class.basename)
 			modelperclass = string.Replace(modelperclass,"%s",self.Owner:GetPlayerClass())

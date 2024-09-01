@@ -170,7 +170,7 @@ for k, v in pairs(items_game["items"]) do
         v.item_slot = "secondary"
     end
 
-    if v.id == 424 then print(tf_lang.GetRaw(v.item_name)) end
+    --if v.id == 424 then print(tf_lang.GetRaw(v.item_name)) end
 
     if v.item_name then
         v.name = tf_lang.GetRaw(v.item_name)
@@ -251,7 +251,7 @@ for k, v in pairs(items_game["items"]) do
 		end
         if v.name == "Tomislav" then
 			v.item_class = "tf_weapon_minigun"  
-            print("Tomislav Time")
+            --print("Tomislav Time")
         end   
         if v.name == "Flame Thrower" then
 			v.attach_to_hands = 1

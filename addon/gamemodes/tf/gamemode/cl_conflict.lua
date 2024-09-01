@@ -1,5 +1,5 @@
 for k, v in pairs(engine.GetAddons()) do 
-	print("addon "..v.wsid.." aka "..v.title.." has been detected!")
+	--print("addon "..v.wsid.." aka "..v.title.." has been detected!")
 	if v.wsid == "349050451" and v.mounted == true then
 		if not game.SinglePlayer() then if not LocalPlayer():IsListenServerHost() then return end end
 		local conflict_help_frame = vgui.Create( "DFrame" )

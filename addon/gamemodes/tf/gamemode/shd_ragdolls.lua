@@ -205,7 +205,7 @@ end)
 
 
 local function Decap_HL2(ent)
-	print("nyoooooooooooooooooo")
+	--print("nyoooooooooooooooooo")
 	local b1 = ent:LookupBone("ValveBiped.Bip01_Head1")
 	local b2 = ent:LookupBone("ValveBiped.Bip01_Spine2")
 	
@@ -295,13 +295,13 @@ end
 
 hook.Add("CreateClientsideRagdoll", "TF_Decapitate", function(ent, rag)
 	if ent:IsNPC() and ent:HasDeathFlag(DF_DECAP) then
-		print("Decapme!")
+		--print("Decapme!")
 	end
 end)
 
 function GM:DecapitateRagdoll(rag, owner, deathpose)
 	local b
-	--print("decap1")
+	----print("decap1")
 	b = rag:LookupBone("ValveBiped.Bip01_Head1")
 	if b and b>0 then
 		rag.NextDecapEnd = CurTime() + 5
@@ -309,7 +309,7 @@ function GM:DecapitateRagdoll(rag, owner, deathpose)
 		rag.DecapLocator:SetPos(rag:GetBonePosition(b))
 		rag.DecapLocator:SetNoDraw(true)
 		rag.DecapLocator:SetParent(rag)
-		--print("decap2")
+		----print("decap2")
 		ParticleEffectAttach("blood_decap", PATTACH_ABSORIGIN_FOLLOW, rag.DecapLocator, 0)
 		rag.Owner = owner
 		--rag.BuildBonePositions = Decap_HL2
@@ -323,7 +323,7 @@ function GM:DecapitateRagdoll(rag, owner, deathpose)
 		
 		return 1
 	end
-	--print("decap3")
+	----print("decap3")
 	b = rag:LookupBone("bip_head")
 	if b and b>0 then
 		rag.NextDecapEnd = CurTime() + 5
@@ -344,7 +344,7 @@ end
 function GM:SetupNPCRagdoll(ent, rag)
 	ent.DeathRagdoll = rag
 	
-	--print(rag,ent:GetNWBool("ShouldDropDecapitatedRagdoll"))
+	----print(rag,ent:GetNWBool("ShouldDropDecapitatedRagdoll"))
 	
 	-- Ignite the ragdoll if the NPC died from fire damage
 	rag:StopParticles()
@@ -375,7 +375,7 @@ end
 usermessage.Hook("TFServerRagdollInit", function(msg)
 	local npc = msg:ReadEntity()
 	local rag = msg:ReadEntity()
-	--print(npc,rag)
+	----print(npc,rag)
 	if IsValid(npc) and IsValid(rag) then
 		rag.IsServerRagdoll = true
 		
