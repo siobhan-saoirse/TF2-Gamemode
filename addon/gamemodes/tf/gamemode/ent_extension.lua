@@ -11,6 +11,9 @@ RegisterNetworkedTable("TFPlayerData", {
 if not meta.SetTriggerOLD then
 	meta.SetTriggerOLD = meta.SetTrigger
 end
+if not meta.EmitSoundOLD then
+	meta.SetTriggerOLD = meta.SetTrigger
+end
 function meta:EmitSoundEx(soundName, soundLevel, pitchPercent, volume, channel, soundFlags, dsp, filter)
 	if(!soundLevel) then
 		soundLevel = 75
@@ -42,64 +45,6 @@ function meta:EmitSoundEx(soundName, soundLevel, pitchPercent, volume, channel, 
 	end
 end
 
-function meta:EmitSound(soundName, soundLevel, pitchPercent, volume, channel, soundFlags, dsp, filter)
-	if(!soundLevel) then
-		soundLevel = 75
-	end
-	if(!pitchPercent) then
-		pitchPercent = 100
-	end
-	if(!volume) then
-		volume = 1
-	end
-	if(!channel) then
-		channel = CHAN_AUTO
-	end
-	if(!soundFlags) then
-		soundFlags = 0
-	end
-	if(!dsp) then
-		dsp = 0
-	end
-	if SERVER then
-		if(!filter) then
-			local rf = RecipientFilter()
-			rf:AddAllPlayers()
-			filter = rf
-		end
-		local soundtable = {
-			SoundName = soundName,
-			OriginalSoundName = soundName,
-			SoundTime = 0,
-			DSP = dsp,
-			SoundLevel = soundLevel,
-			Pitch = pitchPercent,
-			Flags = soundFlags,
-			Channel = channel,
-			Volume = volume,
-			Entity = self,
-			Pos = self:GetPos(),
-		}
-		hook.Call( "EntityEmitSound", soundtable)
-		EmitSound(soundtable.SoundName, self:GetPos(), self:EntIndex(), soundtable.Channel, soundtable.Volume, soundtable.SoundLevel, soundtable.Flags, soundtable.Pitch, soundtable.DSP, filter)
-	else
-		local soundtable = {
-			SoundName = soundName,
-			OriginalSoundName = soundName,
-			SoundTime = 0,
-			DSP = dsp,
-			SoundLevel = soundLevel,
-			Pitch = pitchPercent,
-			Flags = soundFlags,
-			Channel = channel,
-			Volume = volume,
-			Entity = self,
-			Pos = self:GetPos(),
-		}
-		hook.Call( "EntityEmitSound", soundtable)
-		EmitSound(soundtable.SoundName, self:GetPos(), self:EntIndex(), soundtable.Channel, soundtable.Volume, soundtable.SoundLevel, soundtable.Flags, soundtable.Pitch, soundtable.DSP, nil)
-	end
-end
 function meta:SetTrigger(b)
 	self:SetTriggerOLD(b)
 	self.__IsTrigger = b
