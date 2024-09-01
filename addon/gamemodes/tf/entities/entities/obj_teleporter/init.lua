@@ -106,8 +106,8 @@ function ENT:OnStartUpgrade()
 		
 		self.NextRecharge = CurTime() + 2.5
 		timer.Simple(2.5, function()
-			self:EmitSound(self.Sound_Ready)
-			self:GetLinkedTeleporter():EmitSound(self.Sound_Ready)
+			self:EmitSoundEx(self.Sound_Ready)
+			self:GetLinkedTeleporter():EmitSoundEx(self.Sound_Ready)
 		end)
 		timer.Simple(1.5, function()
 			self:SetAcceleration(0.01)
@@ -117,11 +117,13 @@ function ENT:OnStartUpgrade()
 		self:GetLinkedTeleporter():SetAcceleration(-0.01)	
 		
 		self.DoneInitialWarmup = true
+		local rf = RecipientFilter()
+		rf:AddAllPlayers()
 		if self:GetLevel()==2 then
-			self.Spin_Sound = CreateSound(self, self.Sound_Spin2)
+			self.Spin_Sound = CreateSound(self, self.Sound_Spin2,rf)
 			self.Spin_Sound:Play()
 		elseif self:GetLevel()==3 then
-			self.Spin_Sound = CreateSound(self, self.Sound_Spin3)
+			self.Spin_Sound = CreateSound(self, self.Sound_Spin3,rf)
 			self.Spin_Sound:Play()
 		end
 	end
@@ -202,7 +204,7 @@ function ENT:Teleport(pl)
 	local exit = self:GetLinkedTeleporter()
 	if not IsValid(exit) then return end
 	
-	self:EmitSound(self.Sound_Send)
+	self:EmitSoundEx(self.Sound_Send)
 	if pl:IsTFPlayer() then
 		if pl:IsPlayer() then
 		pl:SetFOV(50, 0.7)
@@ -256,7 +258,7 @@ function ENT:Teleport(pl)
 			end)
 		end
 		ParticleEffect("teleportedin_red", exit:GetPos(), exit:GetAngles(), pl)
-		exit:EmitSound(self.Sound_Receive)
+		exit:EmitSoundEx(self.Sound_Receive)
 		
 		local y = self:GetAngles().y
 		if pl:IsTFPlayer() then
@@ -281,6 +283,36 @@ function ENT:Teleport(pl)
 end
 
 function ENT:OnThinkActive()
+	
+	if !self.Spin_Sound and self:GetLinkedTeleporter() != nil and self:GetState()==3 || self.Spin_Sound and !self.Spin_Sound:IsPlaying() and self:GetLinkedTeleporter() != nil and self:GetState()==3 then
+		local rf = RecipientFilter()
+		rf:AddAllPlayers()
+		if (self:GetLevel() == 1) then
+
+			self.Spin_Sound = CreateSound(self, self.Sound_Spin1,rf)
+			self.Spin_Sound:Play()
+
+		elseif self:GetLevel() == 2 then
+
+			self.Spin_Sound = CreateSound(self, self.Sound_Spin2,rf)
+			self.Spin_Sound:Play()
+
+		else
+
+			self.Spin_Sound = CreateSound(self, self.Sound_Spin3,rf)
+			self.Spin_Sound:Play()
+
+		end
+	end
+	if (self:GetState()~=3 and self.Spin_Sound) then
+
+		self.Spin_Sound:Stop()
+
+	end
+	if self.Spin_Sound then
+		self.Spin_Sound:ChangePitch(math.Clamp(100*self:GetNWFloat("SpinSpeed",0), 1, 100), 0)
+	end
+
 	if self:IsEntrance() and IsValid(self:GetLinkedTeleporter()) then
 		self:SetBodygroup(2, 1)
 		self:SetPoseParameter("direction", self.Model:GetAngles().y-(self.Model:GetPos()-self:GetLinkedTeleporter():GetPos()):Angle().y)
@@ -352,8 +384,8 @@ function ENT:OnThinkActive()
 	local ready = self:IsReady()
 	if ready ~= self.LastReady then
 		if ready then
-			self:EmitSound(self.Sound_Ready)
-			exit:EmitSound(self.Sound_Ready)
+			self:EmitSoundEx(self.Sound_Ready)
+			exit:EmitSoundEx(self.Sound_Ready)
 			self.Clients = {}
 		end
 		self.LastReady = ready

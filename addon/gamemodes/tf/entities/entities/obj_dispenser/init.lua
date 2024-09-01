@@ -132,7 +132,7 @@ function ENT:OnStartBuilding()
 end
 
 function ENT:OnDoneBuilding()
-	self:EmitSound(self.Sound_DoneBuilding, 100, 100)
+	self:EmitSoundEx(self.Sound_DoneBuilding, 100, 100)
 	
 	self.MetalPerGeneration = 40
 	self.HealRate = 0.1
@@ -178,7 +178,7 @@ function ENT:OnDoneBuilding()
 end
 
 function ENT:OnStartUpgrade()
-	self:EmitSound(self.Sound_DoneBuilding, 100, 100)
+	self:EmitSoundEx(self.Sound_DoneBuilding, 100, 100)
 	
 	if self.level==2 then
 		self.MetalPerGeneration = 50
@@ -209,11 +209,26 @@ function ENT:OnStartUpgrade()
 end
 
 function ENT:OnThinkActive()
+	
+	local rf = RecipientFilter()
+	rf:AddAllPlayers()
+		if !self.Idle_Sound and self:GetState()==3 || self.Idle_Sound and !self.Idle_Sound:IsPlaying() and self:GetState()==3 then
+			self.Idle_Sound = CreateSound(self, self.Sound_Idle,rf)
+			self.Idle_Sound:Play()
+		end
+		if !self.Heal_Sound and self:GetNWInt("NumClients",0) >= 0 and self:GetState()==3 || self.Heal_Sound != nil and !self.Heal_Sound:IsPlaying() and self:GetNWInt("NumClients",0) >= 0 and self:GetState()==3 then
+			self.Heal_Sound = CreateSound(self, self.Sound_Heal,rf)
+			self.Heal_Sound:Play()
+		end
+		if (self.Heal_Sound != nil and self.Heal_Sound:IsPlaying() and self:GetNWInt("NumClients",0) <= 0 and self:GetState()==3) then
+			self.Heal_Sound:Stop()
+		end
+
 	self:SetNWInt("NumClients",self.NumClients)
 	if self.NextGenerate and CurTime()>=self.NextGenerate then
 		local color = self:GetColor()
 		if self:AddMetalAmount(self.MetalPerGeneration)>0 and color.a>0 then
-			self:EmitSound(self.Sound_Generate, 100, 100)
+			self:EmitSoundEx(self.Sound_Generate, 100, 100)
 		end
 		if self:GetBuildingType() == 1 then
 			self.NextGenerate = CurTime() + 2.5

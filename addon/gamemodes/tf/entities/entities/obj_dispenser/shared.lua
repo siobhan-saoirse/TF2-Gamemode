@@ -58,17 +58,6 @@ end
 
 if CLIENT then
 function ENT:Think()
-		if !self.Idle_Sound and self:GetState()==3 || self.Idle_Sound and !self.Idle_Sound:IsPlaying() and self:GetState()==3 then
-			self.Idle_Sound = CreateSound(self, self.Sound_Idle)
-			self.Idle_Sound:Play()
-		end
-		if !self.Heal_Sound and self:GetNWInt("NumClients",0) >= 0 and self:GetState()==3 || self.Heal_Sound != nil and !self.Heal_Sound:IsPlaying() and self:GetNWInt("NumClients",0) >= 0 and self:GetState()==3 then
-			self.Heal_Sound = CreateSound(self, self.Sound_Heal)
-			self.Heal_Sound:Play()
-		end
-		if (self.Heal_Sound != nil and self.Heal_Sound:IsPlaying() and self:GetNWInt("NumClients",0) <= 0 and self:GetState()==3) then
-			self.Heal_Sound:Stop()
-		end
 end
 
 function ENT:OnRemove()

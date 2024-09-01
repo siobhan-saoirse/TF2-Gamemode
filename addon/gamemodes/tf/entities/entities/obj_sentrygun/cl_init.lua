@@ -39,8 +39,8 @@ end)
 usermessage.Hook("NotifySentrySpotted", function(msg)
 	local w = msg:ReadEntity()
 	if IsValid(w) then
-		w:EmitSound("Building_Sentrygun.AlertTarget")
+		w:EmitSoundEx("Building_Sentrygun.AlertTarget")
 	else
-		LocalPlayer():EmitSound("Building_Sentrygun.AlertTarget")
+		LocalPlayer():EmitSoundEx("Building_Sentrygun.AlertTarget")
 	end
 end)

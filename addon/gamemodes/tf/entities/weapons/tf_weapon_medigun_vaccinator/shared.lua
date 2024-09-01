@@ -238,10 +238,12 @@ tf2engineeruberchargesound = {
 
 
 function SWEP:CreateSounds()
-	self.ShootSoundLoop = CreateSound(self, self.ShootSound)
-	self.ShootSoundLoop2 = CreateSound(self, self.ShootSound3)
-	self.ShootSoundLoop3 = CreateSound(self, self.ShootSound4)
-	self.ChargedLoop = CreateSound(self, self.ChargedSound)
+	local rf = RecipientFilter()
+	rf:AddAllPlayers()
+	self.ShootSoundLoop = CreateSound(self, self.ShootSound,rf)
+	self.ShootSoundLoop2 = CreateSound(self, self.ShootSound3,rf)
+	self.ShootSoundLoop3 = CreateSound(self, self.ShootSound4,rf)
+	self.ChargedLoop = CreateSound(self, self.ChargedSound,rf)
 	self.SoundsCreated = true
 end
 

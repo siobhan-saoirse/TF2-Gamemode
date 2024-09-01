@@ -11,6 +11,36 @@ RegisterNetworkedTable("TFPlayerData", {
 if not meta.SetTriggerOLD then
 	meta.SetTriggerOLD = meta.SetTrigger
 end
+function meta:EmitSoundEx(soundName, soundLevel, pitchPercent, volume, channel, soundFlags, dsp, filter)
+	if(!soundLevel) then
+		soundLevel = 75
+	end
+	if(!pitchPercent) then
+		pitchPercent = 100
+	end
+	if(!volume) then
+		volume = 1
+	end
+	if(!channel) then
+		channel = CHAN_AUTO
+	end
+	if(!soundFlags) then
+		soundFlags = 0
+	end
+	if(!dsp) then
+		dsp = 0
+	end
+	if SERVER then
+		if(!filter) then
+			local rf = RecipientFilter()
+			rf:AddAllPlayers()
+			filter = rf
+		end
+		EmitSound(soundName, self:GetPos(), self, channel, volume, soundLevel, soundFlags, pitch, dsp, filter)
+	else
+		self:EmitSound(soundName,soundLevel,pitchPercent,volume,channel,soundFlags,dsp,filter)
+	end
+end
 function meta:SetTrigger(b)
 	self:SetTriggerOLD(b)
 	self.__IsTrigger = b

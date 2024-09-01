@@ -335,7 +335,9 @@ function ENT:StartCharging()
 	self:GetOwner():SetJumpPower(0)
 	
 	if not self.ChargeSoundEnt then
-		self.ChargeSoundEnt = CreateSound(self:GetOwner(), "Heavy.BattleCry05")
+		local rf = RecipientFilter()
+		rf:AddAllPlayers()
+		self.ChargeSoundEnt = CreateSound(self:GetOwner(), "Heavy.BattleCry05",rf)
 	end
 	
 	if self.ChargeSoundEnt then
@@ -413,7 +415,9 @@ function ENT:Think()
 			self.ChargeState = 2
 			
 			if not self.CritStartSoundEnt then
-				self.CritStartSoundEnt = CreateSound(self, self.CritStartSound)
+				local rf = RecipientFilter()
+				rf:AddAllPlayers()
+				self.CritStartSoundEnt = CreateSound(self, self.CritStartSound,rf)
 			end
 			if self.CritStartSoundEnt then
 				self.CritStartSoundEnt:Play()

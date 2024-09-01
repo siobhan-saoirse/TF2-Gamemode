@@ -1138,7 +1138,7 @@ end)
 
 hook.Add("Think","Bacterias",function()
 	if SERVER then
-		for k,v in ipairs(player.GetAll()) do
+		for k,v in ipairs(player.GetAll()) do	
 			if (v.Whistle and v.Whistle:IsPlaying() and v.m_flBlastJumpLaunchTime) then
 				local flTimeAloft = CurTime() - v.m_flBlastJumpLaunchTime;
 				local flPitch = math.Remap( flTimeAloft, 0.1, 3, 200, 100 );

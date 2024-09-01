@@ -117,12 +117,13 @@ SWEP.ProjectileShootOffset = Vector(3, 8, -5)
 
 function SWEP:CreateSounds(owner)
 	if not IsValid(owner) then return end
-	
-	self.SpinUpSound = CreateSound(owner, self.ShootSound)
-	self.SpinDownSound = CreateSound(owner, self.ShootSoundEnd)
-	self.FireSound = CreateSound(owner, self.SpecialSound1)
-	self.FireCritSound = CreateSound(owner, self.ShootCritSound)
-	self.PilotSound = CreateSound(owner, self.PilotLoop)
+	local rf = RecipientFilter()
+	rf:AddAllPlayers()
+	self.SpinUpSound = CreateSound(owner, self.ShootSound,rf)
+	self.SpinDownSound = CreateSound(owner, self.ShootSoundEnd,rf)
+	self.FireSound = CreateSound(owner, self.SpecialSound1,rf)
+	self.FireCritSound = CreateSound(owner, self.ShootCritSound,rf)
+	self.PilotSound = CreateSound(owner, self.PilotLoop,rf)
 	
 	self.SoundsCreated = true
 end

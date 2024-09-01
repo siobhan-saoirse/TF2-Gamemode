@@ -311,8 +311,10 @@ function ENT:DoExplosion(ent)
 					util.BlastDamage(self, owner, self:GetPos(), range*1, damage)
 					if (owner.m_flBlastJumpLaunchTime == nil) then
 						owner.m_flBlastJumpLaunchTime = CurTime()
+						local rf = RecipientFilter()
+						rf:AddAllPlayers()
 						if (!owner.Whistle) then
-							owner.Whistle = CreateSound(owner,"BlastJump.Whistle")
+							owner.Whistle = CreateSound(owner,"BlastJump.Whistle",rf)
 							owner.Whistle:PlayEx(0.25,200)
 						end
 						if (owner.Whistle and !owner.Whistle:IsPlaying()) then

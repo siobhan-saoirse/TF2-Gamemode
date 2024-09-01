@@ -89,7 +89,7 @@ function ENT:Show()
 	--self.Prop:SetColor(255,255,255,255)
 	self:SetNoDraw(false)
 	self:DrawShadow(true)
-	self:EmitSound("items/spawn_item.wav", 100, 100)
+	self:EmitSoundEx("items/spawn_item.wav", 100, 100)
 end
 
 function ENT:Hide()

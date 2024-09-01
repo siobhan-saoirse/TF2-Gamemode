@@ -373,7 +373,9 @@ function ENT:StartCharging()
 				end
 	end
 	if not self.ChargeSoundEnt then
-		self.ChargeSoundEnt = CreateSound(self:GetOwner(), "DemoCharge.Charging")
+		local rf = RecipientFilter()
+		rf:AddAllPlayers()
+		self.ChargeSoundEnt = CreateSound(self:GetOwner(), "DemoCharge.Charging",rf)
 	end
 	
 	if self.ChargeSoundEnt then
@@ -472,7 +474,9 @@ function ENT:Think()
 			self.ChargeState = 2
 			
 			if not self.CritStartSoundEnt then
-				self.CritStartSoundEnt = CreateSound(self, self.CritStartSound)
+				local rf = RecipientFilter()
+				rf:AddAllPlayers()
+				self.CritStartSoundEnt = CreateSound(self, self.CritStartSound,rf)
 			end
 			if self.CritStartSoundEnt then
 				self.CritStartSoundEnt:Play()

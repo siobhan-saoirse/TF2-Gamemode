@@ -208,8 +208,10 @@ function ENT:Hit(ent)
 	
 	if ent:IsTFPlayer() and !ent:IsFriendly(owner) or (ent:GetClass()=="prop_physics") then
 		if not ent.FlameBurnSound then
-			ent.FlameBurnSound = CreateSound(ent, self.HitSound)
-			ent.FlameBurnSound = CreateSound(ent, self.HitLoopSound)
+			local rf = RecipientFilter()
+			rf:AddAllPlayers()
+			ent.FlameBurnSound = CreateSound(ent, self.HitSound,rf)
+			ent.FlameBurnSound = CreateSound(ent, self.HitLoopSound,rf)
 		end
 		
 		if not ent.NextStopBurnSound or CurTime()>ent.NextStopBurnSound then

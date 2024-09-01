@@ -282,8 +282,10 @@ function ENT:DoExplosion()
 				if v == owner then
 					v:SetLocalVelocity(v:GetVelocity() * 1.9 + Vector(0, 0, 250)) 
 					if (owner.m_flBlastJumpLaunchTime == nil) then
+						local rf = RecipientFilter()
+						rf:AddAllPlayers()
 						if (!owner.Whistle) then
-							owner.Whistle = CreateSound(owner,"BlastJump.Whistle")
+							owner.Whistle = CreateSound(owner,"BlastJump.Whistle",rf)
 							owner.Whistle:PlayEx(0.25,200)
 						end
 						if (owner.Whistle and !owner.Whistle:IsPlaying()) then

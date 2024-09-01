@@ -181,7 +181,7 @@ function ENT:Upgrade()
 				self.Duration = self.Model:SequenceDuration()
 				self.TimeLeft = self.Model:SequenceDuration()
 				timer.Simple(self.Model:SequenceDuration(), function()
-					self:EmitSound("Building_Sentrygun.Built")
+					self:EmitSoundEx("Building_Sentrygun.Built")
 				end) 
 			end
 	end
@@ -244,7 +244,7 @@ function ENT:Enable()
 				self.Duration = self.Model:SequenceDuration()
 				self.TimeLeft = self.Model:SequenceDuration()
 				timer.Simple(self.Model:SequenceDuration(), function()
-					self:EmitSound("Building_Sentrygun.Built")
+					self:EmitSoundEx("Building_Sentrygun.Built")
 				end) 
 			end
 			end
@@ -274,7 +274,7 @@ function ENT:Enable()
 				self.Duration = self.Model:SequenceDuration()
 				self.TimeLeft = self.Model:SequenceDuration()
 				timer.Simple(self.Model:SequenceDuration(), function()
-					self:EmitSound("Building_Sentrygun.Built")
+					self:EmitSoundEx("Building_Sentrygun.Built")
 				end) 
 			end
 			end
@@ -320,7 +320,7 @@ function ENT:Explode()
 	explosion:Activate() 
 	explosion:Fire("Kill", "", 0.1)
 	
-	self:EmitSound(self.Sound_Explode, 100, 100)
+	self:EmitSoundEx(self.Sound_Explode, 100, 100)
 	self:StopSound("Weapon_Sapper.Timer")
 	self:Remove()
 end
@@ -367,7 +367,7 @@ function ENT:Think()
 		
 		if self.BuildProgress >= self.BuildProgressMax then
 			self:OnDoneBuilding()
-			self:EmitSound("Building_Sentrygun.Built")
+			self:EmitSoundEx("Building_Sentrygun.Built")
 			self:SetHealth(self:GetMaxHealth() - (self.BuildSubstractHealth or 0))
 			self:Enable()
 		end

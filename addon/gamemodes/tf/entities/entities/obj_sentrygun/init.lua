@@ -343,8 +343,9 @@ function ENT:OnDoneBuilding()
 	2 : Targeting
 	]]
 	self:SetSentryState(1)
-	
-	self.Idle_Sound = CreateSound(self, self.Sound_Idle)
+	local rf = RecipientFilter()
+	rf:AddAllPlayers()
+	self.Idle_Sound = CreateSound(self, self.Sound_Idle,rf)
 	
 	if self:GetBuildingType() == 1 then
 		self.Shoot_Sound = self.Sound_FireMini
@@ -386,7 +387,9 @@ function ENT:OnStartUpgrade()
 		self.Gibs = SentryGibs2
 		self.FireRate = 0.125
 		self.Shoot_Sound = self.Sound_Fire2
-		self.Idle_Sound = CreateSound(self, self.Sound_Idle2)
+		local rf = RecipientFilter()
+		rf:AddAllPlayers()
+		self.Idle_Sound = CreateSound(self, self.Sound_Idle2,rf)
 		self.NameOverride = "obj_sentrygun2"
 		
 		local health_frac = self:Health() / self:GetMaxHealth()
@@ -400,7 +403,9 @@ function ENT:OnStartUpgrade()
 	elseif self:GetLevel()==3 then
 		self.Gibs = SentryGibs3
 		self.Shoot_Sound = self.Sound_Fire3
-		self.Idle_Sound = CreateSound(self, self.Sound_Idle3)
+		local rf = RecipientFilter()
+		rf:AddAllPlayers()
+		self.Idle_Sound = CreateSound(self, self.Sound_Idle3,rf)
 		self.NameOverride = "obj_sentrygun3"
 		
 		local health_frac = self:Health() / self:GetMaxHealth()
@@ -505,7 +510,9 @@ function ENT:ShootBullets()
 		if self.ShootSoundEnt then
 			self.ShootSoundEnt:Stop()
 		end
-		self.ShootSoundEnt = CreateSound(self, self.Shoot_Sound)
+		local rf = RecipientFilter()
+		rf:AddAllPlayers()
+		self.ShootSoundEnt = CreateSound(self, self.Shoot_Sound,rf)
 		
 		if self:GetLevel() == 1 then
 			self.SoundCounter = 1
@@ -563,7 +570,9 @@ function ENT:ShootRocket()
 	if self.RocketShootSoundEnt then
 		self.RocketShootSoundEnt:Stop()
 	end
-	self.RocketShootSoundEnt = CreateSound(self, self.RocketShoot_Sound)
+	local rf = RecipientFilter()
+	rf:AddAllPlayers()
+	self.RocketShootSoundEnt = CreateSound(self, self.RocketShoot_Sound,rf)
 	self.RocketShootSoundEnt:PlayEx(1, self.SoundPitch)
 	if self.Wrangled != false then
 		self.RocketShootSoundEnt:ChangePitch(120) 
@@ -641,7 +650,9 @@ function ENT:ThinkIdle()
 			if self:GetBuildingType() == 3 then
 				self:EmitSound("NPC_CeilingTurret.Active")
 			else
-				self.AlertSoundEnt = CreateSound(self, self.Sound_Alert)
+				local rf = RecipientFilter()
+				rf:AddAllPlayers()
+				self.AlertSoundEnt = CreateSound(self, self.Sound_Alert,rf)
 				self.AlertSoundEnt:PlayEx(1, self.SoundPitch)
 			end
 			
@@ -757,12 +768,16 @@ function ENT:ThinkTarget()
 		if self:GetBuildingType() == 3 then
 			self:EmitSound("NPC_CeilingTurret.Alert")
 			timer.Simple(2, function()
-				self.AlertSoundEnt = CreateSound(self, self.Sound_Alert)
+				local rf = RecipientFilter()
+				rf:AddAllPlayers()
+				self.AlertSoundEnt = CreateSound(self, self.Sound_Alert,rf)
 				self.AlertSoundEnt:PlayEx(1, self.SoundPitch)
 				self:StopSound("NPC_CeilingTurret.Alert")
 			end)
 		else
-			self.AlertSoundEnt = CreateSound(self, self.Sound_Alert)
+			local rf = RecipientFilter()
+			rf:AddAllPlayers()
+			self.AlertSoundEnt = CreateSound(self, self.Sound_Alert,rf)
 			self.AlertSoundEnt:PlayEx(1, self.SoundPitch)
 		end 
 		if self.Target:IsPlayer() then
