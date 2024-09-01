@@ -1,7 +1,7 @@
 include("shd_items.lua")
 --include("shd_workshop.lua")
 
-tf_items.LoadGameItems("items_game.lua")
+tf_items.LoadGameItems("items_game.lua") 
 --
 --==================================================
 -- DIRECT FIXES

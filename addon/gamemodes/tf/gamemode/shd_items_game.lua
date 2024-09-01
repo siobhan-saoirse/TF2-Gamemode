@@ -1,9 +1,9 @@
 -- tf_items
-if !file.Exists("scripts/items/items_game.txt", "tf") then
+if !file.Exists("scripts/items/items_game.txt", "GAME") then
     Error("ERROR: items_game.txt NOT FOUND!\nLIVE TF WEAPONS WILL NOT BE LOADED!\n")
 end
 
-local items_game = util.KeyValuesToTable(file.Read("scripts/items/items_game.txt", "tf")) 
+local items_game = util.KeyValuesToTable(file.Read("scripts/items/items_game.txt", "GAME")) 
 local prefabs = items_game["prefabs"]
 local attributes = items_game["attributes"]
 local items = items_game["items"] 
