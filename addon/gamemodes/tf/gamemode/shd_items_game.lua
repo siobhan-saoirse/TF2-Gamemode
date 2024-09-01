@@ -3,7 +3,7 @@ if !file.Exists("scripts/items/items_game.txt", "GAME") then
     Error("ERROR: items_game.txt NOT FOUND!\nLIVE TF WEAPONS WILL NOT BE LOADED!\n")
 end
 
-local items_game = util.KeyValuesToTable(file.Read("scripts/items/items_game.txt", "GAME")) 
+local items_game = util.KeyValuesToTable(file.Read("scripts/items/items_game.txt", "tf")) 
 local prefabs = items_game["prefabs"]
 local attributes = items_game["attributes"]
 local items = items_game["items"] 
@@ -35,43 +35,44 @@ for k, v in pairs(items_game["items"]) do
 	end
 
     -- load visuals
-    if (prefabs ~= nil) then
-        if prefabs[v.prefab] and v.visuals then
-            local prefab = prefabs[v.prefab] 
-            if prefab.visuals then
-                local oldvisuals = prefab.visuals
-                table.Merge(v.visuals, oldvisuals)
+    if prefabs[v.prefab] and v.visuals then
+        local prefab = prefabs[v.prefab] 
+        if prefab.visuals then
+            local oldvisuals = prefab.visuals
+            table.Merge(v.visuals, oldvisuals)
+        end
+    end
+    if (!v.attributes) then
+        v.attributes = {}
+    end
+    if (!v.used_by_classes) then
+        v.used_by_classes = {}
+    end
+    if prefabs[v.prefab] and v.static_attrs then
+        local prefab = prefabs[v.prefab]
+        if prefab.static_attrs then
+            local oldvisuals = v.static_attrs
+            v.static_attrs = prefab.static_attrs
+            table.Merge(v.static_attrs, oldvisuals)
+        end
+    end
+    if prefabs[v.prefab] and v.attributes then
+        local prefab = prefabs[v.prefab]
+        if prefab.attributes then 
+            local oldvisuals = v.attributes
+            v.attributes = prefab.attributes
+            if (v.static_attrs) then
+                table.Merge(v.static_attrs, v.attributes)
             end
+            table.Merge(v.attributes, oldvisuals)
         end
-        if (!v.attributes) then
-            v.attributes = {}
-        end
-        if prefabs[v.prefab] and v.static_attrs then
-            local prefab = prefabs[v.prefab]
-            if prefab.static_attrs then
-                local oldvisuals = v.static_attrs
-                v.static_attrs = prefab.static_attrs
-                table.Merge(v.static_attrs, oldvisuals)
-            end
-        end
-        if prefabs[v.prefab] and v.attributes then
-            local prefab = prefabs[v.prefab]
-            if prefab.attributes then 
-                local oldvisuals = v.attributes
-                v.attributes = prefab.attributes
-                if (v.static_attrs) then
-                    table.Merge(v.static_attrs, v.attributes)
-                end
-                table.Merge(v.attributes, oldvisuals)
-            end
-        end
+    end
 
-        -- add prefab variables that don't exist
-        if v.prefab and prefabs[v.prefab] then
-            for i, o in pairs(prefabs[v.prefab]) do
-                if !v[i] then
-                    v[i] = o
-                end
+    -- add prefab variables that don't exist
+    if v.prefab and prefabs[v.prefab] then
+        for i, o in pairs(prefabs[v.prefab]) do
+            if !v[i] then
+                v[i] = o
             end
         end
     end
@@ -178,8 +179,8 @@ for k, v in pairs(items_game["items"]) do
     if v.id == 424 then print(tf_lang.GetRaw(v.item_name)) end
 
     if v.item_name then
-        tf_items.Items[tf_lang.GetRaw(v.item_name)] = v
         v.name = tf_lang.GetRaw(v.item_name)
+        tf_items.Items[tf_lang.GetRaw(v.item_name)] = v
   
         if v.name == "Red-Tape Recorder" then
 			v.item_class = "tf_weapon_rtr" 
@@ -192,11 +193,6 @@ for k, v in pairs(items_game["items"]) do
 			v.item_class = "tf_weapon_katana"
             v.model_player = "models/weapons/c_models/c_shogun_katana/c_shogun_katana.mdl"
 			v.item_slot = "melee"
-			v.used_by_classes = {}
-			v.used_by_classes["demoman"] = {}
-			v.used_by_classes["demoman"] = 1
-			v.used_by_classes["soldier"] = {}
-			v.used_by_classes["soldier"] = 1
         end
         if v.name == "Bootlegger" then
 			v.item_class = "tf_wearable_item"
