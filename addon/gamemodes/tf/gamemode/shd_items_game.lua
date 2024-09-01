@@ -175,20 +175,18 @@ for k, v in pairs(items_game["items"]) do
 
     if v.id == 424 then print(tf_lang.GetRaw(v.item_name)) end
 
-    tf_items.Items[v.name] = v
-    
     if v.item_name then
         tf_items.Items[tf_lang.GetRaw(v.item_name)] = v
-        local name = tf_lang.GetRaw(v.item_name)
+        v.name = tf_lang.GetRaw(v.item_name)
   
-        if name == "Red-Tape Recorder" then
+        if v.name == "Red-Tape Recorder" then
 			v.item_class = "tf_weapon_rtr" 
             v.item_slot = "primary"
 		end
-        if name == "Sapper" then 
+        if v.name == "Sapper" then 
             v.item_slot = "primary"
 		end
-        if name == "Half-Zatoichi" then
+        if v.name == "Half-Zatoichi" then
 			v.item_class = "tf_weapon_katana"
             v.model_player = "models/weapons/c_models/c_shogun_katana/c_shogun_katana.mdl"
 			v.item_slot = "melee"
@@ -198,18 +196,18 @@ for k, v in pairs(items_game["items"]) do
 			v.used_by_classes["soldier"] = {}
 			v.used_by_classes["soldier"] = 1
         end
-        if name == "Bootlegger" then
+        if v.name == "Bootlegger" then
 			v.item_class = "tf_wearable_item"
 			v.item_slot = "secondary"
         end
-        if name == "Ali Baba's Wee Booties" then
+        if v.name == "Ali Baba's Wee Booties" then
 			v.item_class = "tf_wearable_item"
 			v.item_slot = "secondary"
         end
-        if name == "Concheror" then
+        if v.name == "Concheror" then
 			v.item_class = "tf_weapon_buff_item_conch"
 		end
-        if name == "Sandvich" then
+        if v.name == "Sandvich" then
 			v.attach_to_hands = 1
             v.item_slot = "secondary"
 			v.item_class = "tf_weapon_lunchbox"
@@ -218,7 +216,7 @@ for k, v in pairs(items_game["items"]) do
 			v.used_by_classes["heavy"] = 1
 			v.item_quality = "unique"
         end
-        if name == "Bonk! Atomic Punch" then
+        if v.name == "Bonk! Atomic Punch" then
 			v.attach_to_hands = 1
             v.item_slot = "secondary"
 			v.item_class = "tf_weapon_lunchbox_drink"
@@ -227,22 +225,22 @@ for k, v in pairs(items_game["items"]) do
 			v.used_by_classes["scout"] = 1
 			v.item_quality = "unique"
         end
-        if name == "Rainblower" then
+        if v.name == "Rainblower" then
 			v.item_class = "tf_weapon_flamethrower_rb"
         end
-        if name == "Quick-Fix" then
+        if v.name == "Quick-Fix" then
 			v.item_class = "tf_weapon_medigun_qf"
 		end
-        if name == "Vaccinator" then
+        if v.name == "Vaccinator" then
 			v.item_class = "tf_weapon_medigun_vaccinator"
 		end
-        if name == "Beggar's Bazooka" then
+        if v.name == "Beggar's Bazooka" then
 			v.item_class = "tf_weapon_rocketlauncher_rapidfire"
         end
-        if name == "Phlogistinator" then
+        if v.name == "Phlogistinator" then
             v.item_class = "tf_weapon_phlogistinator"
         end
-        if name == "Degreaser" then
+        if v.name == "Degreaser" then
             v.item_slot = "primary"
 			v.item_class = "tf_weapon_flamethrower"
 			v.used_by_classes = {}
@@ -250,20 +248,20 @@ for k, v in pairs(items_game["items"]) do
 			v.used_by_classes["pyro"] = 1
 			v.item_quality = "unique"
         end
-        if name == "Widowmaker" then
+        if v.name == "Widowmaker" then
 			v.item_class = "tf_weapon_shotgun_imalreadywidowmaker"
 		end  
-        if name == "Spy-cicle" then
+        if v.name == "Spy-cicle" then
 			v.item_class = "tf_weapon_knife_icicle" 
         end
-        if name == "Escape Plan" then
+        if v.name == "Escape Plan" then
 			v.item_class = "tf_weapon_pickaxe" 
 		end
-        if name == "Tomislav" then
+        if v.name == "Tomislav" then
 			v.item_class = "tf_weapon_minigun"  
             print("Tomislav Time")
         end   
-        if name == "Flame Thrower" then
+        if v.name == "Flame Thrower" then
 			v.attach_to_hands = 1
 			v.item_slot = "primary"
 			v.used_by_classes = {}
@@ -272,7 +270,7 @@ for k, v in pairs(items_game["items"]) do
 			v.item_class = "tf_weapon_flamethrower" 
 			v.item_quality = "unique" 
         end    
-        if name == "AWPer Hand" then
+        if v.name == "AWPer Hand" then
 			v.attach_to_hands = 1
 			v.used_by_classes = {}
 			v.used_by_classes["sniper"] = {}
@@ -281,7 +279,7 @@ for k, v in pairs(items_game["items"]) do
 			v.item_class = "tf_weapon_sniperrifle" 
 			v.item_quality = "unique" 
         end    
-		if name == "Your Eternal Reward" or v.name == "Wanga Prick" then
+		if v.name == "Your Eternal Reward" or v.name == "Wanga Prick" then
 			v.attach_to_hands = 1
             v.item_slot = "melee"
             v.show_in_armory = 1 
@@ -323,7 +321,7 @@ for k, v in pairs(items_game["items"]) do
             end
 			v.item_quality = "unique"
 		end
-		if name == "Scotsman's Skullcutter" then
+		if v.name == "Scotsman's Skullcutter" then
 			v.attach_to_hands = 1
             v.item_slot = "melee"
             v.show_in_armory = 1 
