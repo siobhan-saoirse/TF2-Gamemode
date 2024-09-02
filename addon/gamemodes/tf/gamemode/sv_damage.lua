@@ -560,11 +560,10 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		local dir2 = dir:Angle()
 		dir2.p = math.Clamp(-dir2.p - 45,-90,90)
 		dir2 = dir2:Forward()
-		ent:RemoveFlags(FL_ONGROUND)
 		timer.Simple(0.1, function()
 			ent:SetVelocity((((-ent:GetAimVector() * 45) * 10) + Vector(0,0,245)) + dmginfo:GetDamageForce() * 45)
 		end)
-		--ent:SetThrownByExplosion(true)
+		ent:SetThrownByExplosion(true)
 	end
 
 
@@ -696,6 +695,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 						umsg.Long(ent:UserID())
 					umsg.End()
 				end
+				ent:SetVelocity(force)
 			end
 			
 			if ent.ExplosionForceCalcTime ~= CurTime() then
@@ -708,7 +708,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			
 			ent.ExplosionForceCalc:Add(force)
 			dmginfo:SetDamageForce(force)
-			ent:SetVelocity(force)
 			
 			if ent:IsPlayer() then
 				ent:DoAnimationEvent(ACT_MP_AIRWALK, false)

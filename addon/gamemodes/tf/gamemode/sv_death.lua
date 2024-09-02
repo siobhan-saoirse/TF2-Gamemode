@@ -584,17 +584,6 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	net.Start("DeActivateTauntCamImmediate")
 	net.Send(ply)
 	ply.TargetEnt = nil
-	if (!ply:IsHL2() and !ply:IsL4D() and attacker:IsNPC() and attacker:Classify() == CLASS_HEADCRAB) then
-		
-		local item = ents.Create("npc_tf_zombie_old")
-		if (IsValid(item)) then 
-			local a, b = ply:WorldSpaceAABB() 
-			item:SetPos((a+b) * 0.5)
-			item.playerclassdefined = true
-			item.playerclass = ply.playerclass
-			item:Spawn()
-		end 
-	end
 	if (IsValid(ply.ControllingPlayer)) then
 		if (ply.ControllingPlayer.WasTFBot) then
 			ply.ControllingPlayer.WasTFBot = false
