@@ -1,4 +1,3 @@
-
 include("sv_clientfiles.lua")
 include("sv_resource.lua")
 include("sv_response_rules.lua")
@@ -12,6 +11,7 @@ include("shd_gravitygun.lua")
 include("sv_chat.lua")  
 include("sv_loadout.lua")   
 include("shd_taunts.lua")
+resource.AddWorkshop( "1932936017" )
 resource.AddFile("scenes/scenes.image")
 local LOGFILE = "tf/log_server.txt" 
 file.Delete(LOGFILE) 

@@ -26,6 +26,14 @@ local ATTRIBUTES = {
 	end,
 }, 
 
+["centerfire_projectile"] = {
+	equip = function(v,weapon,owner)
+		if (isvector(weapon.ProjectileShootOffset)) then
+			weapon.ProjectileShootOffset.y = 0
+		end
+	end,
+}, 
+
 ["mult_reload_time_hidden"] = {
 	equip = function(v,weapon,owner)
 		weapon.ReloadTimeMultiplier = v

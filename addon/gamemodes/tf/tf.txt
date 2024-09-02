@@ -5,7 +5,7 @@
 	"menusystem"		"1"
 	"workshopid"		"1932936017"
 
-	"author_name"		"Techy"
+	"author_name"		"Siobhan/Saoirse"
 
 	"settings"
 	{
