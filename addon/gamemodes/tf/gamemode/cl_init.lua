@@ -118,10 +118,8 @@ hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
 							}
 							newdist = 20 * tr.Fraction
 							
-							local newangles = ang
 							local view = {
 								origin = origin2,
-								angles = newangles,
 								fov = fov,
 								drawviewer = true
 							}	
@@ -137,10 +135,8 @@ hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
 							maxs = Vector( 3, 3, 3)
 						}
 						newdist = 115 * tr.Fraction
-						local newangles = angles
 						local view = {
 							origin = ragdoll:GetPos() - ( angles:Forward() * newdist ),
-							angles = newangles,
 							fov = fov,
 							drawviewer = true
 						}	

@@ -17,7 +17,7 @@ SWEP.ViewModel			= "models/weapons/c_models/c_engineer_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_sapper/c_sapper.mdl"
  
 SWEP.HoldType = "BUILDING"
-
+ 
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = false
 SWEP.Category = "Team Fortress 2"
@@ -1315,10 +1315,10 @@ function SWEP:SecondaryAttack()
 	
 	if SERVER then
 		if IsValid(self.Blueprint) then
-			self.Blueprint:RotateBlue--print()
+			self.Blueprint:RotateBlueprint()
 		end
 	end
-	
+	 
 	return true
 end
 
