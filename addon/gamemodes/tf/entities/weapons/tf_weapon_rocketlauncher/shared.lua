@@ -61,7 +61,7 @@ SWEP.ReloadSingle = true
 SWEP.HoldType = "PRIMARY"
 SWEP.HoldTypeHL2 = "rpg"
 
-SWEP.ProjectileShootOffset = Vector(0, 13, -4)
+SWEP.ProjectileShootOffset = Vector(23.5, 12.0, -3.0)
 
 SWEP.PunchView = Angle( 0, 0, 0 )
 

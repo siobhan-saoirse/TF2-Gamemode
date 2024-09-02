@@ -305,20 +305,26 @@ function ENT:DoExplosion(ent)
 	
 	--self.ResultDamage = damage
 	if (IsValid(owner)) then
-		if owner:IsPlayer() and owner:GetActiveWeapon():GetItemData().model_player == "models/weapons/c_models/c_rocketjumper/c_rocketjumper.mdl" then
-			for k,v in ipairs(ents.FindInSphere(self:GetPos(), range*1)) do
-				if v == owner then
-					util.BlastDamage(self, owner, self:GetPos(), range*1, damage)
-					if (owner.m_flBlastJumpLaunchTime == nil) then
-						owner.m_flBlastJumpLaunchTime = CurTime()
-						local rf = RecipientFilter()
-						rf:AddAllPlayers()
-						if (!owner.Whistle) then
-							owner.Whistle = CreateSound(owner,"BlastJump.Whistle",rf)
-							owner.Whistle:PlayEx(0.25,200)
-						end
-						if (owner.Whistle and !owner.Whistle:IsPlaying()) then
-							owner.Whistle:PlayEx(0.25,200)
+		if owner:IsPlayer() then
+			if owner:GetActiveWeapon() ~= nil then
+				if owner:GetActiveWeapon().GetItemData then
+					if owner:GetActiveWeapon():GetItemData().model_player == "models/weapons/c_models/c_rocketjumper/c_rocketjumper.mdl" then
+						for k,v in ipairs(ents.FindInSphere(self:GetPos(), range*1)) do
+							if v == owner then
+								util.BlastDamage(self, owner, self:GetPos(), range*1, damage)
+								if (owner.m_flBlastJumpLaunchTime == nil) then
+									owner.m_flBlastJumpLaunchTime = CurTime()
+									local rf = RecipientFilter()
+									rf:AddAllPlayers()
+									if (!owner.Whistle) then
+										owner.Whistle = CreateSound(owner,"BlastJump.Whistle",rf)
+										owner.Whistle:PlayEx(0.25,200)
+									end
+									if (owner.Whistle and !owner.Whistle:IsPlaying()) then
+										owner.Whistle:PlayEx(0.25,200)
+									end
+								end
+							end
 						end
 					end
 				end
