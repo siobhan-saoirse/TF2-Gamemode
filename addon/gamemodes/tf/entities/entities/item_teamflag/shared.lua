@@ -120,13 +120,12 @@ function ENT:KeyValue(key, value)
 		elseif t==3 then
 			self.TeamNum = TEAM_BLU
 		end
+		
+		self:SetNWInt("FlagTeamNum",self.TeamNum)
 	end
 end
 
 function ENT:Think()
-	if SERVER then
-		self:SetNWInt("TeamNum",self.TeamNum)
-	end
 	self:SetNWEntity("carrier", self.Carrier)
 
 	for k, v in pairs(player.GetAll()) do
@@ -417,8 +416,8 @@ function ENT:Draw()
 end
 
 function ENT:Think()
-	if (self:GetNWInt("TeamNum",0) ~= nil) then
-		self.TeamNum = self:GetNWInt("TeamNum")
+	if (self:GetNWInt("FlagTeamNum",0) ~= nil and self.TeamNum == nil) then
+		self.TeamNum = self:GetNWInt("FlagTeamNum")
 	end
 	if self:GetNWBool("TimerActive") then
 		if not self.NextReturn or self.OldTimeRemaining~=self:GetNWFloat("TimeRemaining") then

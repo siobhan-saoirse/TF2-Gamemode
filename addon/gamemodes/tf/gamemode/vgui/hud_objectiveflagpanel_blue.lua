@@ -33,30 +33,37 @@ function PANEL:Paint()
 	if not LocalPlayer():Alive() or (LocalPlayer():IsHL2() and !GetConVar("hud_show_ctf_as_hl2"):GetBool()) or GetConVar("tf_forcehl2hud"):GetBool() or GetConVarNumber("cl_drawhud")==0 or GAMEMODE.ShowScoreboard or !string.find(game.GetMap(), "ctf_") then return end
 	
 	surface.SetDrawColor(255,255,255,255)
-	
-	for k,v in pairs(ents.FindByClass("item_teamflag")) do
-		if (v.TeamNum == TEAM_BLU) then
-			local vecFlag = v:WorldSpaceCenter() - LocalPlayer():EyePos()
-			vecFlag.z = 0
-			local forward = LocalPlayer():GetForward()
-			local right = LocalPlayer():GetRight()
-			forward.z = 0
-			right.z = 0
-			local dot = vecFlag:DotProduct( forward )
-			local angleBetween = math.acos( dot )
-
-			dot = vecFlag:DotProduct( right )
-
-			if ( dot < 0.0 ) then
-				angleBetween = angleBetween * -1
-			end
-			
-			local flRetVal = math.deg( angleBetween )
-			surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_compass_blue"))
-			surface.DrawTexturedRectRotated((340*WScale-30*Scale) - 120, (480-85)*Scale, 104*Scale, 104*Scale, flRetVal or 0)
-			surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_briefcase"))
-			surface.DrawTexturedRect((340*WScale-50*Scale) - 120, (480-105)*Scale, 42*Scale, 42*Scale)
+	local v
+	for _,flag in pairs(ents.FindByClass("item_teamflag")) do
+		if (flag:GetNWInt("FlagTeamNum",0) == TEAM_BLU) then
+			v = flag
 		end
+	end
+	
+	if (IsValid(v)) then
+		local vecFlag = v:WorldSpaceCenter() - LocalPlayer():GetAimVector()
+		vecFlag.z = 0
+		vecFlag:Normalize()
+		local forward = LocalPlayer():GetForward()
+		local right = LocalPlayer():GetRight()
+		forward.z = 0
+		right.z = 0
+		forward:Normalize()
+		right:Normalize()
+		local dot = vecFlag:DotProduct( forward )
+		local angleBetween = math.acos( dot )
+
+		dot = vecFlag:DotProduct( right )
+
+		if ( dot < 0.0 ) then
+			angleBetween = angleBetween * -1
+		end
+		
+		local flRetVal = math.deg( angleBetween )
+		surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_compass_blue"))
+		surface.DrawTexturedRectRotated((340*WScale-30*Scale) - 120, (480-85)*Scale, 104*Scale, 104*Scale, flRetVal or 0)
+		surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_briefcase"))
+		surface.DrawTexturedRect((340*WScale-50*Scale) - 120, (480-105)*Scale, 42*Scale, 42*Scale)
 	end
 
 end
