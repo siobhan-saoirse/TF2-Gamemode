@@ -152,7 +152,7 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 	if (att:IsPlayer() and att:IsHL2() and hitgroup == HITGROUP_HEAD) then
 		dmginfo:SetDamageType(bit.bor(dmginfo:GetDamageType(),DMG_ACID))
 	end
-	
+
 	-- HL2 guns and melee weapons use the owner as the inflictor, get the real inflictor by retrieving the owner's current weapon
 	if inf == att and att:IsPlayer() then
 		inf = att:GetActiveWeapon()
@@ -691,9 +691,9 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 				end
 				
 				local vel = ent:GetVelocity() + force
-				--MsgN(tostring(vel))
+				----MsgN(tostring(vel))
 				if vel.z > 100 and vel.z > vel:Length2D() then
-					--MsgN("Dispatching rocket jump effect")
+					----MsgN("Dispatching rocket jump effect")
 					umsg.Start("PlayerRocketJumpEffect")
 						umsg.Long(ent:UserID())
 					umsg.End()

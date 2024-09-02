@@ -4,7 +4,7 @@ local old_include = include
 function include(name)
 	local time_start = SysTime()
 	old_include(name)
-	MsgN(Format("Included Lua file '%s', %f secs to load", name, SysTime() - time_start))
+	--MsgN(Format("Included Lua file '%s', %f secs to load", name, SysTime() - time_start))
 end
 ]]
 

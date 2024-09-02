@@ -204,7 +204,7 @@ function ENT:Hit(ent)
 		maxs = Vector(-self.HitboxSize, -self.HitboxSize, -self.HitboxSize),
 	}
 	
-	--MsgN("Test trace ("..tostring(self)..") : physbone "..tr.PhysicsBone)
+	----MsgN("Test trace ("..tostring(self)..") : physbone "..tr.PhysicsBone)
 	
 	self:FireBullets{
 		Src=self:GetPos(),

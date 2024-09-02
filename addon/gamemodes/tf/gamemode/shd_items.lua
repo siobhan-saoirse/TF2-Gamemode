@@ -248,10 +248,10 @@ function ParseGameItems(data, silent)
 		numreg = numreg + 1
 	end
 	ConvertStringsToNumbers(Items)
-	if not silent then MsgN(numreg.." items registered.") end
+	if not silent then --MsgN(numreg.." items registered.") end
 	
 	file.Append("hatlog.txt", hatlog)
-	--MsgN(numign.." items ignored.")
+	----MsgN(numign.." items ignored.")
 	
 	-- Loading attributes
 	smin, smax = string.find(data, '"attributes"%s*%b{}', smax+1)
@@ -356,7 +356,7 @@ end
 end]]
 
 function LoadGameItems(path)
-	MsgN("Loading items script '%s' ...", path)
+	--MsgN("Loading items script '%s' ...", path)
 	
 	local data
 	
@@ -667,7 +667,7 @@ function META:GiveItem(itemname, properties)
 		end
 	end
 	
-	--MsgN(Format("Giving '%s' to %s",itemname,tostring(self)))
+	----MsgN(Format("Giving '%s' to %s",itemname,tostring(self)))
 	--self.WeaponItemIndex = item.id
 	_G.TFWeaponItemOwner = self
 	_G.TFWeaponItemIndex = item.id
@@ -770,7 +770,7 @@ function META:GiveItem(itemname, properties)
 	_G.TFWeaponItemOwner = nil
 	_G.TFWeaponItemIndex = nil
 	--self.WeaponItemIndex = nil
-	--MsgN(Format("Done! (%s)",itemname))
+	----MsgN(Format("Done! (%s)",itemname))
 	if not weapon.IsTFItem then
 		--ErrorNoHalt(Format("Warning: item '%s' uses class '%s' which does not support the items system!\n", itemname, class))
 	end

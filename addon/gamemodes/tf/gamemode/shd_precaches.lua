@@ -1,6 +1,6 @@
 
 local function PrecacheTFContent()
-	MsgN("Precaching TF2 models")
+	--MsgN("Precaching TF2 models")
 	for _,v in pairs(HumanGibs) do
 		util.PrecacheModel0(v)
 	end

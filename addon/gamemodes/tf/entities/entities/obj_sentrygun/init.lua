@@ -176,7 +176,7 @@ function ENT:GetTargetMethod(ent, strict, dbg)
 	--local startpos = self:ShootPos()
 	local startpos = self:TargetOrigin()
 	
-	if dbg then MsgN(tostring(ent)) end
+	if dbg then --MsgN(tostring(ent)) end
 	for i,method in ipairs(targetmethods) do
 		if dbg then MsgF("  Trying %s method... ", targetmethodnames[i]) end
 		local pos = method(ent)

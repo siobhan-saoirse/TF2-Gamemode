@@ -50,11 +50,12 @@ function PANEL:Paint()
 		right.z = 0
 		forward:Normalize()
 		right:Normalize()
-		local dot = vecFlag:DotProduct( forward )
+		local dot = vecFlag:Dot( forward )
 		local angleBetween = math.acos( dot )
 
-		dot = vecFlag:DotProduct( right )
-
+		dot = vecFlag:Dot( right )
+		
+		angleBetween = math.acos( dot )
 		if ( dot < 0.0 ) then
 			angleBetween = angleBetween * -1
 		end

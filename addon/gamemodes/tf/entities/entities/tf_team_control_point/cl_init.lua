@@ -76,7 +76,7 @@ usermessage.Hook("TF_AddControlPoint", function(msg)
 	
 	UpdateControlPointTexture(cp)
 	
-	MsgN("Control point "..id)
+	--MsgN("Control point "..id)
 	PrintTable(cp)
 	
 	GAMEMODE.ControlPoints[id] = cp

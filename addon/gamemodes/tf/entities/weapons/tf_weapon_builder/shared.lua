@@ -1236,7 +1236,7 @@ function SWEP:Deploy()
 	end
 
 	if SERVER then
-		--MsgN(Format("Deploy %s (owner:%s)",tostring(self),tostring(self:GetOwner())))
+		----MsgN(Format("Deploy %s (owner:%s)",tostring(self),tostring(self:GetOwner())))
 		
 		--[[if IsValid(self.Owner) and self.Owner.WeaponItemIndex then
 			self:SetItemIndex(self.Owner.WeaponItemIndex)

@@ -75,7 +75,7 @@ local function LeadBot_S_Add_Zombie(team,class,pos,ent)
 		end
 	end)
 
-	MsgN("[LeadBot] Bot " .. ent.PrintName .. " with strategy " .. bot.BotStrategy .. " added!")
+	--MsgN("[LeadBot] Bot " .. ent.PrintName .. " with strategy " .. bot.BotStrategy .. " added!")
 	return bot
 end
 

@@ -109,7 +109,7 @@ function RegisterNetworkedTable(name, vars)
 					PendingMessages[entid][name] = {}
 				end
 				
-				MsgN(Format("Entity %d does not exist yet, pushing message into PendingMessages table", entid))
+				--MsgN(Format("Entity %d does not exist yet, pushing message into PendingMessages table", entid))
 				PendingMessages[entid][name][var] = {val = value, timeout = RealTime() + 2}
 			end
 		end)
@@ -140,7 +140,7 @@ hook.Add("OnEntityCreated", "__nwtable_ProcessPendingMessages", function(ent)
 			end
 			
 			PendingMessages[id] = nil
-			MsgN(Format("Processed messages for Entity %d", id))
+			--MsgN(Format("Processed messages for Entity %d", id))
 		end
 	end
 end)

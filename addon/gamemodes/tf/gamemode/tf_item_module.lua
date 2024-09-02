@@ -134,10 +134,10 @@ function ITEM:CheckUpdateItem()
 	if id>-1 and id~=self.CurrentItemID then
 		local item = tf_items.ItemsByID[id]
 		if item then
-			--MsgN(Format("SetupItem [%d] %s", id, tostring(self)))
+			----MsgN(Format("SetupItem [%d] %s", id, tostring(self)))
 			self:SetupItem(tf_items.ItemsByID[id])
 		else
-			--MsgN(Format("WARNING: From '%s': Item #%d not found!", self:GetClass(), id))
+			----MsgN(Format("WARNING: From '%s': Item #%d not found!", self:GetClass(), id))
 		end
 		self.CurrentItemID = id
 	end
@@ -708,7 +708,7 @@ usermessage.Hook("TF_SetExtraAttributes", function(msg)
 	
 	if not IsValid(wep) or not wep.SetExtraAttributes then
 		ExtraAttributesPending[entid] = att
-		--MsgN("Weapon not initialized, adding to pending list")
+		----MsgN("Weapon not initialized, adding to pending list")
 		return
 	end
 	

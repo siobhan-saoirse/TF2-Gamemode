@@ -482,7 +482,7 @@ function SWEP:Equip()
 	self:StopTimers()
 	
 	if SERVER then
-		--MsgN(Format("Equip %s (owner:%s)",tostring(self),tostring(self:GetOwner())))
+		----MsgN(Format("Equip %s (owner:%s)",tostring(self),tostring(self:GetOwner())))
 		
 		--[[if IsValid(self.Owner) and self.Owner.WeaponItemIndex then
 			self:SetItemIndex(self.Owner.WeaponItemIndex)
@@ -496,7 +496,7 @@ function SWEP:Equip()
 			-- This happens when a player is given a weapon right after the ammo for that weapon has been stripped
 			self:Deploy()
 			self.DeployedBeforeEquip = nil
-			--MsgN("Deployed before equip!")
+			----MsgN("Deployed before equip!")
 		elseif _G.TFWeaponItemIndex then
 			self:SetItemIndex(_G.TFWeaponItemIndex)
 		end
@@ -856,7 +856,7 @@ function SWEP:Deploy()
 	end	
 	
 	local hold = self.HoldType 
-	--MsgN(Format("SetupCModelActivities %s", tostring(self)))
+	----MsgN(Format("SetupCModelActivities %s", tostring(self)))
 	if (self.Owner:GetNWBool("NoWeapon")) then
 		--self.WorldModel = "models/empty.mdl"
 	else
@@ -913,7 +913,7 @@ function SWEP:Deploy()
 	end
 
 	if SERVER then
-		--MsgN(Format("Deploy %s (owner:%s)",tostring(self),tostring(self:GetOwner())))
+		----MsgN(Format("Deploy %s (owner:%s)",tostring(self),tostring(self:GetOwner())))
 		
 		--[[if IsValid(self.Owner) and self.Owner.WeaponItemIndex then
 			self:SetItemIndex(self.Owner.WeaponItemIndex)
@@ -1360,14 +1360,14 @@ function SWEP:Reload()
 			return false
 		end
 	else
-		--MsgN("Requested reload!")
+		----MsgN("Requested reload!")
 		self.RequestedReload = true
 		return false
 	end
 	
 	self.CanInspect = false 
 	
-	--MsgN("Reload!")
+	----MsgN("Reload!")
 	self.RequestedReload = false
 	
 	if self.Primary and self.Primary.Ammo and self.Primary.ClipSize ~= -1 then

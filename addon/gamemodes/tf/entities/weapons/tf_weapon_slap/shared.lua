@@ -48,7 +48,7 @@ end
 function SWEP:PrimaryAttack()
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	if self:CriticalEffect() then
-		--MsgN(Format("[%f] From SWEP:PrimaryAttack (%s) : Critical hit!", CurTime(), tostring(self)))
+		----MsgN(Format("[%f] From SWEP:PrimaryAttack (%s) : Critical hit!", CurTime(), tostring(self)))
 		self:EmitSound(self.SwingCrit, 100, 100)
 		--[[if SERVER then
 			self:EmitSound(self.SwingCrit, 100, 100)

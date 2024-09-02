@@ -59,7 +59,7 @@ function SWEP:SetupCModelActivities(item, noreplace)
 	
 	if item then
 		local hold = self.HoldType
-		--MsgN(Format("SetupCModelActivities %s", tostring(self)))
+		----MsgN(Format("SetupCModelActivities %s", tostring(self)))
 		if (hold == "PRIMARY2") then
 			self.VM_DRAW			= _G["ACT_PRIMARY_VM_DRAW"]
 			self.VM_IDLE			= _G["ACT_PRIMARY_VM_IDLE"]

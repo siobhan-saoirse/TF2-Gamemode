@@ -197,7 +197,7 @@ function SWEP:MeleeAttack(dummy)
 		self.Owner:LagCompensation(false)
 	end
 	
-	--MsgN(Format("HELLO %s",tostring(dummy)))
+	----MsgN(Format("HELLO %s",tostring(dummy)))
 	if dummy then return tr end
 	
 	self:OnMeleeAttack(tr)
@@ -342,7 +342,7 @@ function SWEP:PrimaryAttack()
 	end
 	
 	if self:CriticalEffect() then
-		--MsgN(Format("[%f] From SWEP:PrimaryAttack (%s) : Critical hit!", CurTime(), tostring(self)))
+		----MsgN(Format("[%f] From SWEP:PrimaryAttack (%s) : Critical hit!", CurTime(), tostring(self)))
 		self:EmitSound(self.SwingCrit, 100, 100)
 		--[[if SERVER then
 			self:EmitSound(self.SwingCrit, 100, 100)

@@ -151,10 +151,10 @@ function SWEP:CheckUpdateItem()
 	if id>-1 and id~=self.CurrentItemID then
 		local item = tf_items.ItemsByID[id]
 		if item then
-			MsgN(Format("SetupItem [%d] %s", id, tostring(self)))
+			--MsgN(Format("SetupItem [%d] %s", id, tostring(self)))
 			self:SetupItem(tf_items.ItemsByID[id])
 		else
-			MsgN(Format("WARNING: From '%s': Item #%d not found!", self:GetClass(), id))
+			--MsgN(Format("WARNING: From '%s': Item #%d not found!", self:GetClass(), id))
 		end
 		self.CurrentItemID = id
 	end
@@ -165,7 +165,7 @@ function SWEP:SetupCModelActivities(item)
 	
 	if item then
 		local hold = item.anim_slot or string.upper(item.item_slot)
-		MsgN(Format("SetupCModelActivities %s", tostring(self)))
+		--MsgN(Format("SetupCModelActivities %s", tostring(self)))
 		
 		self.VM_DRAW			= _E["ACT_"..hold.."_VM_DRAW"]
 		self.VM_IDLE			= _E["ACT_"..hold.."_VM_IDLE"]
@@ -485,7 +485,7 @@ end
 
 function SWEP:Equip()
 	if SERVER then
-		MsgN(Format("Equip %s (owner:%s)",tostring(self),tostring(self:GetOwner())))
+		--MsgN(Format("Equip %s (owner:%s)",tostring(self),tostring(self:GetOwner())))
 		
 		--[[if IsValid(self.Owner) and self.Owner.WeaponItemIndex then
 			self:SetItemIndex(self.Owner.WeaponItemIndex)
@@ -504,7 +504,7 @@ end
 
 function SWEP:Deploy()
 	if SERVER then
-		MsgN(Format("Deploy %s (owner:%s)",tostring(self),tostring(self:GetOwner())))
+		--MsgN(Format("Deploy %s (owner:%s)",tostring(self),tostring(self:GetOwner())))
 		
 		--[[if IsValid(self.Owner) and self.Owner.WeaponItemIndex then
 			self:SetItemIndex(self.Owner.WeaponItemIndex)
@@ -667,12 +667,12 @@ function SWEP:Reload()
 			return false
 		end
 	else
-		MsgN("Requested reload!")
+		--MsgN("Requested reload!")
 		self.RequestedReload = true
 		return false
 	end
 	
-	MsgN("Reload!")
+	--MsgN("Reload!")
 	self.RequestedReload = false
 	
 	if self.Primary and self.Primary.Ammo and self.Primary.ClipSize ~= -1 then
@@ -777,7 +777,7 @@ function SWEP:SetWeaponHoldType(t)
 	end
 	
 	if not _E["ACT_MP_STAND_"..t] then
-		MsgN("SWEP:SetWeaponHoldType - Unknown TF2 weapon hold type '"..t.."'! Defaulting to PRIMARY")
+		--MsgN("SWEP:SetWeaponHoldType - Unknown TF2 weapon hold type '"..t.."'! Defaulting to PRIMARY")
 		t = "PRIMARY"
 	end
 

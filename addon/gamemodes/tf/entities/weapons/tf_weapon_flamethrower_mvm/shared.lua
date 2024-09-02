@@ -306,7 +306,7 @@ function SWEP:Deploy()
 		self.PilotSound:Play()
 	end
 	
-	--MsgN(Format("Flamethrower Deploy %s",tostring(self)))
+	----MsgN(Format("Flamethrower Deploy %s",tostring(self)))
 	return self:CallBaseFunction("Deploy")
 end
 

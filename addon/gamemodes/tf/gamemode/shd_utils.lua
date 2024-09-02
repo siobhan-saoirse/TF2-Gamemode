@@ -14,7 +14,7 @@ function MsgFN(msg, ...)
 	local ok, res = pcall(Format, msg, ...)
 	
 	if ok then
-		MsgN(res)
+		--MsgN(res)
 	else
 		local info = debug.getinfo(2)
 		Error(Format("%s:%d: Error in MsgFN '%s'", info.short_src, info.currentline, res))

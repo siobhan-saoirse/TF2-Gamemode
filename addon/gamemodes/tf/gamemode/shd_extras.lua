@@ -1,4 +1,4 @@
-MsgN("Loading extra items and attributes")
+--MsgN("Loading extra items and attributes")
 
 if CLIENT then
 
@@ -511,4 +511,4 @@ end
 
 --tf_items.ParseGameItems(item_data)
 
-MsgN("Done!")
+--MsgN("Done!")

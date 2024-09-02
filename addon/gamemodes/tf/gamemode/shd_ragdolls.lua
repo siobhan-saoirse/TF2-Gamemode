@@ -166,7 +166,7 @@ hook.Add("OnEntityCreated", "TFPlayerRagdollCreated", function(ent)
 			
 			--timer.Simple(0.01, function() ent.StopParticles(ent) end)
 			
-			--MsgN(Format("Ragdoll:%s '%s'",tostring(ent),ent:GetModel()))
+			----MsgN(Format("Ragdoll:%s '%s'",tostring(ent),ent:GetModel()))
 			
 			for _,v in pairs(ents.GetAll()) do
 				if v:IsNPC() and v:GetModel()==ent:GetModel() then
@@ -175,15 +175,15 @@ hook.Add("OnEntityCreated", "TFPlayerRagdollCreated", function(ent)
 					-- actually, we wouldn't even need a health check
 					
 					--[[if v:Health()>0 and v:GetSequence()~=0 then
-						MsgN(Format(" Not dead! (health=%d)",v:Health()))
+						--MsgN(Format(" Not dead! (health=%d)",v:Health()))
 					else]]
 					if v.DoneSetupRagdoll then
-						--MsgN(" Already processed!")
+						----MsgN(" Already processed!")
 					else
 						local v1,v2 = v:GetPos(), ent:GetPos()
 						local d = v1:Distance(v2)
 						
-						--MsgN(Format(" Distance: %f",d))
+						----MsgN(Format(" Distance: %f",d))
 						
 						if not mindist or d<mindist then
 							mindist,best = d,v
@@ -193,11 +193,11 @@ hook.Add("OnEntityCreated", "TFPlayerRagdollCreated", function(ent)
 			end
 			
 			if best then
-				--MsgN(Format("Best candidate:%s Distance:%f",tostring(best),mindist))
+				----MsgN(Format("Best candidate:%s Distance:%f",tostring(best),mindist))
 				best.DoneSetupRagdoll = true
 				gamemode.Call("SetupNPCRagdoll", best, ent)
 			else
-				--MsgN(Format("No match!"))
+				----MsgN(Format("No match!"))
 			end
 		end
 	end
@@ -448,7 +448,7 @@ function GM:SetupPlayerRagdoll(pl, rag)
 	
 	--[[
 	for _,h in pairs(ents.FindByClass("tf_hat")) do
-		MsgN(Format("Hat owner : %s - Model : %s",tostring(h:GetOwner()),h:GetHatModel()))
+		--MsgN(Format("Hat owner : %s - Model : %s",tostring(h:GetOwner()),h:GetHatModel()))
 		if h:GetOwner()==pl then
 			local hat = h:GetHatData()
 			local hatmodel = h:GetHatModel()

@@ -1033,7 +1033,7 @@ local ATTRIBUTES = {
 							umsg.Float(inf.GunboatsDamageData.absorbeddamage)
 						umsg.End()
 					else
-						--MsgN("Dead, simulating damage taken")
+						----MsgN("Dead, simulating damage taken")
 						att:SetHealth(0)
 						att:TakeDamageInfo(CopyDamageInfo(dmginfo))
 					end

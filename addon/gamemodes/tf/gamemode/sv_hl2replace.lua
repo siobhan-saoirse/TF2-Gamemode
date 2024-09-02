@@ -85,15 +85,15 @@ function GM:InitPostEntity()
 	landmark:SetName(tostring(landmark))
 	
 	local err = landmark:Load()
-	-- MsgN("Loading data from previous level")
+	-- --MsgN("Loading data from previous level")
 	if err==1 then
-		-- MsgN("No data to load")
+		-- --MsgN("No data to load")
 	elseif err==2 then
-		-- MsgN("Error reading file")
+		-- --MsgN("Error reading file")
 	end
 	
 	if not landmark:IsValidMap() then
-		-- MsgN("Wrong map, landmark data will not be used")
+		-- --MsgN("Wrong map, landmark data will not be used")
 	end
 	
 	for _,v in pairs(ents.FindByClass("trigger_changelevel")) do

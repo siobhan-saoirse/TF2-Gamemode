@@ -26,7 +26,7 @@ hook.Add("Think", "BeardFlexifierThink", function()
 
 		if IsValid(parent) and parent:GetFlexNum() > 0 then
 
-			//if !TestEnts[parent] then MsgN("Started beard flexifier for ", parent, " ", parent:GetModel()) TestEnts[parent] = parent end
+			//if !TestEnts[parent] then --MsgN("Started beard flexifier for ", parent, " ", parent:GetModel()) TestEnts[parent] = parent end
 
 			local children = parent:GetChildren()
 			//Handling for ents parented to a prop_effect instead of its attachedentity

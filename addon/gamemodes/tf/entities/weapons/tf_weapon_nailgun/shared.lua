@@ -49,14 +49,14 @@ function SWEP:Reload()
 			return false
 		end
 	else
-		--MsgN("Requested reload!")
+		----MsgN("Requested reload!")
 		self.RequestedReload = true
 		return false
 	end
 	
 	self.CanInspect = false
 	
-	--MsgN("Reload!")
+	----MsgN("Reload!")
 	self.RequestedReload = false
 	
 	if self.Primary and self.Primary.Ammo and self.Primary.ClipSize ~= -1 then

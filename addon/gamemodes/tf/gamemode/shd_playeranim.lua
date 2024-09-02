@@ -676,7 +676,7 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 		elseif data == ACT_MP_ATTACK_STAND_PREFIRE then
 			-- Prefire gesture
 			local act
-			--MsgN("Restarting prefire gesture")
+			----MsgN("Restarting prefire gesture")
 			if pl.anim_InSwim then
 				pl.RgChatActiveGesture = ACT_MP_ATTACK_SWIM_PREFIRE
 				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_SWIM_PREFIRE, true)
@@ -785,7 +785,7 @@ local OldSendWeaponAnim = meta.SendWeaponAnim
 
 function meta:SendWeaponAnim(act)
 	if not act or act == -1 then return end
-	--MsgN(Format("SendWeaponAnim %d %s",act,tostring(self)))
+	----MsgN(Format("SendWeaponAnim %d %s",act,tostring(self)))
 	if IsValid(self.Owner) and self.Owner:IsPlayer() and IsValid(self.Owner:GetViewModel()) and self.ViewModelOverride then
 		for k, v in pairs(self.Owner:GetWeapons()) do
 			if IsValid(v) and v:GetClass() == "tf_weapon_robot_arm" and v.IsRoboArm then

@@ -57,7 +57,7 @@ function SWEP:SetupCModelActivities(item, noreplace)
 		elseif item.item_slot then
 			hold = string.upper(item.item_slot)
 		end
-		--MsgN(Format("SetupCModelActivities %s", tostring(self)))
+		----MsgN(Format("SetupCModelActivities %s", tostring(self)))
 		
 		self.VM_DRAW			= getfenv()["ACT_"..hold.."_VM_DRAW"]
 		self.VM_IDLE			= getfenv()["ACT_"..hold.."_VM_IDLE"]

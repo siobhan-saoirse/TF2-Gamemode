@@ -68,7 +68,7 @@ function LBAddProfile(tab)
 end
  
 function LBAddBot(team)
-	--if !profiles[name] then MsgN("That is not a valid bot!") return end
+	--if !profiles[name] then --MsgN("That is not a valid bot!") return end
 	if !navmesh.IsLoaded() then
 		navmesh.BeginGeneration()
 		for k, v in pairs(player.GetAll()) do
@@ -258,7 +258,7 @@ local function LeadBot_S_Add(team2)
 		end
 	end)
 
-	MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
+	--MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
 end
 
 local function LeadBot_S_Add_Zombie(team,class,pos)
@@ -300,7 +300,7 @@ local function LeadBot_S_Add_Zombie(team,class,pos)
 		end
 	end)
 
-	MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
+	--MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
 end
 
 local function LeadBot_S_Add_Survivor(team,class,pos)
@@ -342,7 +342,7 @@ local function LeadBot_S_Add_Survivor(team,class,pos)
 		end
 	end)
 
-	MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
+	--MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
 end
 local function LeadBot_S_Add_BlueSurvivor(team,class,pos)
 	if !navmesh.IsLoaded() then
@@ -383,7 +383,7 @@ local function LeadBot_S_Add_BlueSurvivor(team,class,pos)
 		end
 	end)
 
-	MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
+	--MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
 end
 
 hook.Add("PostCleanupMap", "LeadBot_S_PostCleanup", function()
@@ -603,7 +603,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		end
 		if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
 			for k,v in ipairs(ents.FindInSphere(bot:GetPos(),moveawayrange)) do
-				if (IsValid(v) and GAMEMODE:EntityTeam(v) == bot:Team() and v:IsPlayer() and v:EntIndex() != bot:EntIndex() and bot:GetNWBool("Taunting",false) != true) then
+				if (IsValid(v) and GAMEMODE:EntityTeam(v) == bot:Team() and v:IsTFPlayer() and v:EntIndex() != bot:EntIndex() and bot:GetNWBool("Taunting",false) != true) then
 					local forward = bot:EyeAngles():Forward()
 					local right = bot:EyeAngles():Right()
 					local avoidVector = bot:GetPos()
@@ -660,9 +660,9 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					
 					avoidVector:Normalize()
 					bot.movingAway = true
-					bot.pushAwayMove = mv:GetForwardSpeed() + (forward2 * 0.2)
-					mv:SetForwardSpeed(mv:GetForwardSpeed() + (forward2 * 0.2))
-					mv:SetSideSpeed(mv:GetSideSpeed() + (side * 0.2))
+					bot.pushAwayMove = mv:GetForwardSpeed() + (forward2 * 0.5)
+					mv:SetForwardSpeed(mv:GetForwardSpeed() + (forward2 * 0.5))
+					mv:SetSideSpeed(mv:GetSideSpeed() + (side * 0.5))
 				end
 			end
 		end
@@ -789,35 +789,32 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					bot:SetEyeAngles(LerpAngle(0.2 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
 				end
 			end
-			if IsValid(bot.intelcarrier) and bot.intelcarrier:Health() > 0 then
+			if IsValid(bot.intelcarrier) and !IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.intelcarrier:GetPos()) < 6000 and bot.intelcarrier:Health() > 0 then
 				if (bot:GetPlayerClass() != "tank_l4d") then
 					if (bot:GetNWBool("Taunting",false) == true) then 
 						return 
 					end 
 				end	
+			
+				local shouldvegoneforthehead = bot.intelcarrier:EyePos()
+				local bone = 1
+				shouldvegoneforthehead = bot.intelcarrier:GetBonePosition(bone)
 				if (!bot.isCarryingIntel) then
 					bot.botPos = bot.intelcarrier:GetPos()
 				end
-				if (IsValid(bot.TargetEnt)) then
-					if (bot.TargetEnt:Health() > 0) then
-						local shouldvegoneforthehead = bot.TargetEnt:EyePos()
-						local bone = 1
-						shouldvegoneforthehead = bot.TargetEnt:GetBonePosition(bone)
 
-						local lerp = 1.2
-						if bot.Difficulty == 0 then
-							lerp = 0.9
-						elseif bot.Difficulty == 2 then
-							lerp = 2
-						elseif bot.Difficulty == 3 then
-							lerp = 4
-						end
-						if (bot:IsL4D()) then
-							bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
-						else
-							bot:SetEyeAngles(LerpAngle(FrameTime() * math.random(8, 10) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
-						end
-					end
+				local lerp = 1.2
+				if bot.Difficulty == 0 then
+					lerp = 0.9
+				elseif bot.Difficulty == 2 then
+					lerp = 2
+				elseif bot.Difficulty == 3 then
+					lerp = 4
+				end
+				if (bot:IsL4D()) then
+					bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
+				else
+					bot:SetEyeAngles(LerpAngle(FrameTime() * math.random(8, 10) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
 				end
 			end
 		if bot.ControllerBot.P then
@@ -900,10 +897,10 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 						--bot:SetEyeAngles(LerpAngle(0.2, bot:EyeAngles(), mva))
 					else
 						if controller.LookAtTime > CurTime() then
-							local ang = LerpAngle(0.2, bot:EyeAngles(), controller.LookAt)
+							local ang = LerpAngle(FrameTime() * 2, bot:EyeAngles(), controller.LookAt)
 							bot:SetEyeAngles(Angle(ang.p, ang.y, 0))
 						else 
-							local ang = LerpAngle(0.2, bot:EyeAngles(), mva)
+							local ang = LerpAngle(FrameTime() * 2, bot:EyeAngles(), mva)
 							bot:SetEyeAngles(Angle(ang.p, ang.y, 0))
 						end
 					end
@@ -1164,27 +1161,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				end
 			else
 
-					if (!string.find(game.GetMap(),"mvm_") && !string.find(game.GetMap(),"ctf_") ) then
-						
-						bot.botPos = bot.TargetEnt:GetPos()
-						
-					else
-						if (IsValid(bot.intelcarrier)) then
-							if (!bot.isCarryingIntel) then
-								
-								bot.botPos = bot.intelcarrier:GetPos()
-							end
-						else
-
-							for k, v in pairs(ents.FindByClass("item_teamflag_mvm")) do
-								if v.TeamNum ~= bot:Team() and k == 1 then 
-									bot.botPos = v:GetPos()
-								end
-							end
-							
-						end
-
-					end
+				bot.botPos = bot.TargetEnt:GetPos()
 
 			end
 	
@@ -1245,7 +1222,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				end
 			end
 			
-			
+			bot:MoveToPos(bot.botPos)
 		cmd:SetButtons(buttons)
 	end
 end)
@@ -1694,7 +1671,7 @@ concommand.Add("sb_add_blue", function(ply, _, _, args)
 		LeadBot_S_Add_BlueSurvivor(0,args,ply:GetEyeTrace().HitPos) 
 	end 
 end)
-concommand.Add("tf_bot_name_add", function(_, _, args) table.insert(names, args[1]) MsgN(args[1].." added to names list!") end)
+concommand.Add("tf_bot_name_add", function(_, _, args) table.insert(names, args[1]) --MsgN(args[1].." added to names list!") end)
 concommand.Add("tf_bot_quota", function(_, _, args) for i=0, args[1]-1 do LeadBot_S_Add() end end)
 
 --concommand.Add("lk.playerclass", function(_, _, args) for k, v in pairs(player.GetBots()) do v:SetPlayerClass(args[1]) end end)
@@ -1709,7 +1686,7 @@ concommand.Add("tf_unspectate_bot", function(ply) ply:UnSpectate() ply:KillSilen
 concommand.Add("tf_bot_takecontrol", function(ply) local bot = ply:GetObserverTarget() ply:UnSpectate() ply:SetMoveType(MOVETYPE_WALK) ply:KillSilent() ply:Spawn() ply:SetTeam(bot:Team()) ply:SetPlayerClass(bot:GetPlayerClass()) timer.Simple(0.1, function() ply:UnSpectate() ply:SetPlayerClass(bot:GetPlayerClass()) timer.Simple(0.1, function() ply:SetHealth(bot:Health()) ply:SetPos(bot:GetPos()) ply:SetEyeAngles(bot:EyeAngles()) ply:SendLua([[surface.PlaySound("misc/freeze_cam.wav")]]) bot:Kill() end) end) end)
 
 --[[concommand.Add("tf_bot_difficulty", function(_, _, args)
-	if !args[1] then MsgN("Defines the skill of bots joining the game.") return
+	if !args[1] then --MsgN("Defines the skill of bots joining the game.") return
 	local diffn = "easy"
 	if args[1] == "2" then
 		diffn = "medium"

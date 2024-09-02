@@ -110,10 +110,11 @@ function PANEL:Paint()
 		local angleBetween = math.acos( dot )
 
 		dot = vecFlag:Dot( right )
-
+		
+		angleBetween = math.acos( dot )
 		if ( dot < 0.0 ) then
 			angleBetween = angleBetween * -1
-		end 
+		end
 		
 		local flRetVal = math.deg( angleBetween )
 		surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_compass_red"))
