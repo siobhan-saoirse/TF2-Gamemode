@@ -115,7 +115,7 @@ function SWEP:PrimaryAttack()
 				else 
 					self.Owner:SetSkin(0) 
 				end 
-				self.Owner:EmitSound("player/spy_disguise.wav", 65, 100) 
+				self.Owner:EmitSoundEx("player/spy_disguise.wav", 65, 100) 
 			end
 		end
 	end

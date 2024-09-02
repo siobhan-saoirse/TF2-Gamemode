@@ -93,7 +93,7 @@ function SWEP:OnMeleeHit(tr)
 				
 				if ent.IsTFBuilding and ent:IsFriendly(self.Owner) then
 					if ent.Sapped == true then
-						self.Owner:EmitSound("Weapon_Sapper.Removed")
+						self.Owner:EmitSoundEx("Weapon_Sapper.Removed")
 						ent:StopSound("TappedRobot")
 						timer.Stop("SapEnd"..ent:EntIndex())
 						timer.Stop("SapSentry2"..ent:EntIndex())

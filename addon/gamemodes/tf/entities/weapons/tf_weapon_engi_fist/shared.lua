@@ -82,22 +82,22 @@ function SWEP:OnMeleeHit(tr)
 			
 			if ent.IsTFBuilding and ent:IsFriendly(self.Owner) then
 				if ent.Sapped == true then
-					self.Owner:EmitSound("Weapon_Sapper.Removed")
+					self.Owner:EmitSoundEx("Weapon_Sapper.Removed")
 					ent.Sapped = false
 				end
 				if SERVER then
 
 					local m = ent:AddMetal(self.Owner, self.Owner:GetAmmoCount(TF_METAL))
 					if m > 0 then
-						self.Owner:EmitSound(self.HitBuildingSuccess)
+						self.Owner:EmitSoundEx(self.HitBuildingSuccess)
 						self.Owner:RemoveAmmo(m, TF_METAL)
 						umsg.Start("PlayerMetalBonus", self.Owner)
 							umsg.Short(-m)
 						umsg.End()
 					elseif ent:GetState() == 1 then
-						self.Owner:EmitSound(self.HitBuildingSuccess)
+						self.Owner:EmitSoundEx(self.HitBuildingSuccess)
 					else
-						self.Owner:EmitSound(self.HitBuildingFailure)
+						self.Owner:EmitSoundEx(self.HitBuildingFailure)
 					end
 				end
 			else

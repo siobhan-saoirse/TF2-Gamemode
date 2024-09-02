@@ -138,7 +138,7 @@ function SWEP:Think()
 						local deploy = "insert"
 						timer.Create("Idle"..self.Owner:EntIndex(), vm:SequenceDuration(vm:LookupSequence(deploy)), 1, function()
 							self:SendWeaponAnim(vm:GetSequenceActivity(vm:LookupSequence("pump")))
-							self.Owner:EmitSound("Weapon_Shotgun.Special1")
+							self.Owner:EmitSoundEx("Weapon_Shotgun.Special1")
 							timer.Create("Idle2"..self.Owner:EntIndex(), vm:SequenceDuration(vm:LookupSequence("pump")) , 1, function()
 								self:SendWeaponAnim(vm:GetSequenceActivity(vm:LookupSequence("idle")))
 								timer.Create("Idle2"..self.Owner:EntIndex(), vm:SequenceDuration(vm:LookupSequence("idle")) , 0, function()

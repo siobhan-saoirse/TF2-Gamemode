@@ -239,7 +239,7 @@ function SWEP:UpdateAttack()
 				
 				if !self.Owner:KeyDown( IN_JUMP ) then 
 					if SERVER then
-						self.Owner:EmitSound("Grappling")
+						self.Owner:EmitSoundEx("Grappling")
 					end
 				end
 				if self.Tr.Entity:IsTFPlayer() then
@@ -300,7 +300,7 @@ function SWEP:UpdateAttack()
 							self:SendWeaponAnim(ACT_GRAPPLE_IDLE)
 							self.Owner:DoAnimationEvent(ACT_DOD_CROUCHWALK_ZOOMED,true)
 							if SERVER then
-								self.Owner:EmitSound( sndGrappleHit )
+								self.Owner:EmitSoundEx( sndGrappleHit )
 							end
 						else
 							if (self.Beam) then
@@ -353,7 +353,7 @@ function SWEP:EndAttack( shutdownsound )
 	
 	if ( shutdownsound ) then
 		if SERVER then
-			self.Owner:EmitSound( sndGrappleAbort )
+			self.Owner:EmitSoundEx( sndGrappleAbort )
 		end
 		self.Owner:StopSound("Grappling")
 	end

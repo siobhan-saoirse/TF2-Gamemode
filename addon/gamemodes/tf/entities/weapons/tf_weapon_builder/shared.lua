@@ -258,7 +258,7 @@ function SWEP:PrimaryAttack()
 				animent:PhysicsInit( SOLID_OBB )
 				animent:SetCollisionGroup( COLLISION_GROUP_DEBRIS )
 				animent:SetParent(v, v:LookupAttachment("head"))	
-				self.Owner:EmitSound("Psap.Hacking")
+				self.Owner:EmitSoundEx("Psap.Hacking")
 				elseif self:GetItemData().model_player == "models/weapons/c_models/c_breadmonster_sapper/c_breadmonster_sapper.mdl" then
 				animent = ents.Create( 'base_gmodentity' ) -- The entity used for the death animation	
 				animent:SetModel("models/buildables/breadmonster_sapper_placed.mdl")
@@ -338,7 +338,7 @@ function SWEP:PrimaryAttack()
 				animent:PhysicsInit( SOLID_OBB )
 				animent:SetCollisionGroup( COLLISION_GROUP_DEBRIS )
 				animent:SetParent(v, v:LookupAttachment("head")) 
-				self.Owner:EmitSound("Psap.Hacking")
+				self.Owner:EmitSoundEx("Psap.Hacking")
 				animent:SetName("SappedRobot"..v:EntIndex())	
 				elseif self:GetItemData().model_player == "models/weapons/c_models/c_breadmonster_sapper/c_breadmonster_sapper.mdl" then
 				animent = ents.Create( 'base_gmodentity' ) -- The entity used for the death animation	
@@ -389,7 +389,7 @@ function SWEP:PrimaryAttack()
 				
 				v:EmitSound("weapons/sapper_plant.wav") 
 				if self:GetItemData().model_player == "models/weapons/c_models/c_p2rec/c_p2rec.mdl" then
-					self.Owner:EmitSound("Psap.Hacking")	
+					self.Owner:EmitSoundEx("Psap.Hacking")	
 				end
 				if SERVER then
 					if self:GetItemData().model_player == "models/weapons/c_models/c_p2rec/c_p2rec.mdl" then
@@ -434,14 +434,14 @@ function SWEP:PrimaryAttack()
 					v:Fire("Kill", "", 5)
 				end
 				timer.Simple(5, function()
-					self.Owner:EmitSound(table.Random({"PSap.Hacked","Psap.HackedFollowup","Psap.HackedLoud"})) 
+					self.Owner:EmitSoundEx(table.Random({"PSap.Hacked","Psap.HackedFollowup","Psap.HackedLoud"})) 
 				end)
 			end
 			if v:GetClass() == "npc_cpt_scp_173" then
 				
 				v:EmitSound("weapons/sapper_plant.wav") 
 				if self:GetItemData().model_player == "models/weapons/c_models/c_p2rec/c_p2rec.mdl" then
-					self.Owner:EmitSound("Psap.Hacking")	
+					self.Owner:EmitSoundEx("Psap.Hacking")	
 				end
 				if SERVER then
 					if self:GetItemData().model_player == "models/weapons/c_models/c_p2rec/c_p2rec.mdl" then
@@ -486,14 +486,14 @@ function SWEP:PrimaryAttack()
 					end)
 				end
 				timer.Simple(5, function()
-					self.Owner:EmitSound(table.Random({"PSap.Hacked","Psap.HackedFollowup","Psap.HackedLoud"})) 
+					self.Owner:EmitSoundEx(table.Random({"PSap.Hacked","Psap.HackedFollowup","Psap.HackedLoud"})) 
 				end)
 			end
 			if v:GetClass() == "npc_cpt_scp_049" then
 				
 				v:EmitSound("weapons/sapper_plant.wav") 
 				if self:GetItemData().model_player == "models/weapons/c_models/c_p2rec/c_p2rec.mdl" then
-					self.Owner:EmitSound("Psap.Hacking")	
+					self.Owner:EmitSoundEx("Psap.Hacking")	
 				end
 				if SERVER then
 					if self:GetItemData().model_player == "models/weapons/c_models/c_p2rec/c_p2rec.mdl" then
@@ -538,7 +538,7 @@ function SWEP:PrimaryAttack()
 					end)
 				end
 				timer.Simple(5, function()
-					self.Owner:EmitSound(table.Random({"PSap.Hacked","Psap.HackedFollowup","Psap.HackedLoud"})) 
+					self.Owner:EmitSoundEx(table.Random({"PSap.Hacked","Psap.HackedFollowup","Psap.HackedLoud"})) 
 				end)
 			end
 			if v:IsBuilding() and not v:IsFriendly(self.Owner) then
@@ -553,7 +553,7 @@ function SWEP:PrimaryAttack()
 				
 					
 				if self:GetItemData().model_player == "models/weapons/c_models/c_p2rec/c_p2rec.mdl" then
-					self.Owner:EmitSound("Psap.Hacking")	
+					self.Owner:EmitSoundEx("Psap.Hacking")	
 				end
 				if v:GetClass() == "obj_sentrygun" then
 					v:GetBuilder():EmitSound("vo/engineer_autoattackedbyspy03.wav", 80, 100) 
@@ -945,7 +945,7 @@ function SWEP:PrimaryAttack()
 					if v:GetClass() != "obj_sentrygun" and v:GetClass() != "obj_dispenser" and v:GetClass() != "obj_teleporter" then
 						if not v:IsValid() then
 							if self:GetItemData().model_player == "models/weapons/c_models/c_p2rec/c_p2rec.mdl" then
-								self.Owner:EmitSound(table.Random({"PSap.Hacked","Psap.HackedFollowup","Psap.HackedLoud"}))
+								self.Owner:EmitSoundEx(table.Random({"PSap.Hacked","Psap.HackedFollowup","Psap.HackedLoud"}))
 							end
 							timer.Stop("SapSentry2")
 						end
@@ -966,7 +966,7 @@ function SWEP:PrimaryAttack()
 						v.IdleYawSpeed = 0.75
 						if not v:IsValid() then
 							if self:GetItemData().model_player == "models/weapons/c_models/c_p2rec/c_p2rec.mdl" then
-								self.Owner:EmitSound(table.Random({"PSap.Hacked","Psap.HackedFollowup","Psap.HackedLoud"}))
+								self.Owner:EmitSoundEx(table.Random({"PSap.Hacked","Psap.HackedFollowup","Psap.HackedLoud"}))
 							end
 							timer.Stop("SapSentry2")
 						end
@@ -998,9 +998,9 @@ function SWEP:PrimaryAttack()
 						else
 							if v.Sapped == false then	
 								if self:GetItemData().model_player == "models/weapons/c_models/c_p2rec/c_p2rec.mdl" then
-									self.Owner:EmitSound("PSap.Damage")
+									self.Owner:EmitSoundEx("PSap.Damage")
 								elseif self:GetItemData().model_player == "models/weapons/c_models/c_breadmonster_sapper/c_breadmonster_sapper.mdl" then
-									self.Owner:EmitSound("Weapon_bm_sapper.scream")
+									self.Owner:EmitSoundEx("Weapon_bm_sapper.scream")
 								end
 								v.Target = nil
 			
@@ -1062,9 +1062,9 @@ function SWEP:PrimaryAttack()
 			end
 			if SERVER then	
 				if self.Owner:GetInfoNum("tf_robot", 0) == 1 then
-					--self.Owner:EmitSound("vo/mvm/norm/engineer_mvm_sentryplanting0"..math.random(1,3)..".wav", 80, 100)
+					--self.Owner:EmitSoundEx("vo/mvm/norm/engineer_mvm_sentryplanting0"..math.random(1,3)..".wav", 80, 100)
 				else
-					--self.Owner:EmitSound("vo/engineer_sentryplanting0"..math.random(1,3)..".wav", 80, 100)		
+					--self.Owner:EmitSoundEx("vo/engineer_sentryplanting0"..math.random(1,3)..".wav", 80, 100)		
 				end
 			end
 
@@ -1170,7 +1170,7 @@ function SWEP:Deploy()
 		end
 	end
 	if self.Owner:GetPlayerClass() == "spy" and self:GetItemData().model_player == "models/weapons/c_models/c_p2rec/c_p2rec.mdl" then
-		self.Owner:EmitSound("PSap.Deploy")
+		self.Owner:EmitSoundEx("PSap.Deploy")
 	end
 	if self.Owner:GetPlayerClass() != "spy" then
 		local result = self:CallBaseFunction("Deploy")
@@ -1435,7 +1435,7 @@ function SWEP:Holster()
 	if self:CallBaseFunction("Holster") == false then return false end
 	
 	if self.Owner:GetPlayerClass() == "spy" and self:GetItemData().model_player == "models/weapons/c_models/c_p2rec/c_p2rec.mdl" then
-		self.Owner:EmitSound("PSap.Holster")
+		self.Owner:EmitSoundEx("PSap.Holster")
 		
 
 	end

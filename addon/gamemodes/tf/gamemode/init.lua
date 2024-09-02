@@ -1918,7 +1918,7 @@ function GM:PlayerSpawn(ply)
 	end
 	-- engage a rare chance of getting the hacker bot's fake aim (derp)
 	if (ply:IsBot() and math.random(1,1000) == 1) then
-		ply:SetNWBool("IsDerpAim",true)
+		ply:SetNWBool("IsDerpAim",false)
 	else
 		ply:SetNWBool("IsDerpAim",false)
 	end

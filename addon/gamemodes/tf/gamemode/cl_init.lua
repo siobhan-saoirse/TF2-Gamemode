@@ -72,7 +72,7 @@ end )
 hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
 	if (!ply:Alive()) then
 		if (IsValid(ply:GetNWEntity("RagdollEntity"))) then
-			if ((ply:GetObserverMode() == OBS_MODE_DEATHCAM or (!ply:Alive() and !IsValid(ply:GetObserverTarget()))) and ply:GetObserverMode() != OBS_MODE_FREEZECAM) then
+			if ((ply:GetObserverMode() == OBS_MODE_DEATHCAM and !IsValid(ply:GetObserverTarget())) then
 				local ragdoll = ply:GetNWEntity("RagdollEntity")
 				local newdist = 115
 				local origin = ragdoll:GetPos()
@@ -1259,27 +1259,27 @@ else
 			LocalPlayer():EmitSound("music/mvm_class_select.wav") 
 		end 
 		LocalPlayer():StopSound("ClassSelection.ThemeNonMVM") 
-		LocalPlayer():StopSound("ClassSelection.ThemeMVM")  
-		local random = math.random(1,9)
-		if (random == 1) then
-			RunConsoleCommand("changeclass", "scout")
-		elseif (random == 2) then
-			RunConsoleCommand("changeclass", "soldier")
-		elseif (random == 3) then
-			RunConsoleCommand("changeclass", "pyro")
-		elseif (random == 4) then
-			RunConsoleCommand("changeclass", "demoman")
-		elseif (random == 5) then
-			RunConsoleCommand("changeclass", "heavy")
-		elseif (random == 6) then
-			RunConsoleCommand("changeclass", "engineer")
-		elseif (random == 7) then
-			RunConsoleCommand("changeclass", "medic")
-		elseif (random == 8) then
-			RunConsoleCommand("changeclass", "sniper")
-		elseif (random == 9) then
-			RunConsoleCommand("changeclass", "spy")
-		end
+			LocalPlayer():StopSound("ClassSelection.ThemeMVM")  
+			local random = math.random(1,9)
+			if (random == 1) then
+				RunConsoleCommand("changeclass", "scout")
+			elseif (random == 2) then
+				RunConsoleCommand("changeclass", "soldier")
+			elseif (random == 3) then
+				RunConsoleCommand("changeclass", "pyro")
+			elseif (random == 4) then
+				RunConsoleCommand("changeclass", "demoman")
+			elseif (random == 5) then
+				RunConsoleCommand("changeclass", "heavy")
+			elseif (random == 6) then
+				RunConsoleCommand("changeclass", "engineer")
+			elseif (random == 7) then
+				RunConsoleCommand("changeclass", "medic")
+			elseif (random == 8) then
+				RunConsoleCommand("changeclass", "sniper")
+			elseif (random == 9) then
+				RunConsoleCommand("changeclass", "spy")
+			end
 	end
 
 	gm_img = vgui.Create( "DImage", GmodButton )	-- Add image to Frame

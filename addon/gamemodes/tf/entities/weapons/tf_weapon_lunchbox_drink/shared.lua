@@ -114,7 +114,7 @@ function SWEP:PrimaryAttack()
 		end)
 		timer.Simple(15, function()
 			if SERVER then
-			self.Owner:EmitSound("TFPlayer.StunImpact")
+			self.Owner:EmitSoundEx("TFPlayer.StunImpact")
 			self.Owner:SetClassSpeed(self.Owner:GetClassSpeed() * 0.75)
 			ParticleEffectAttach("bonk_text", PATTACH_POINT_FOLLOW, self.Owner, self.Owner:LookupAttachment("head"))
 			timer.Simple(20, function()
@@ -156,7 +156,7 @@ function SWEP:PrimaryAttack()
 			if SERVER then
 				GAMEMODE:StartMiniCritBoost(self.Owner)
 				self.Owner:StopSound("Weapon_General.CritPower")
-				self.Owner:EmitSound("Weapon_General.CritPower")
+				self.Owner:EmitSoundEx("Weapon_General.CritPower")
 			end
 		end)
 		timer.Simple(15, function()
@@ -175,7 +175,7 @@ function SWEP:PrimaryAttack()
 	end
 	timer.Simple(40, function()
 		if CLIENT then
-		self.Owner:EmitSound("player/recharged.wav", 95)
+		self.Owner:EmitSoundEx("player/recharged.wav", 95)
 		end
 	end)
 end

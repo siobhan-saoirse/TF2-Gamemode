@@ -96,7 +96,7 @@ function SWEP:Reload()
 				
 				if self.ReloadSound then
 					if SERVER then
-						self.Owner:EmitSound(self.ReloadSound)
+						self.Owner:EmitSoundEx(self.ReloadSound)
 					end
 				end
 				

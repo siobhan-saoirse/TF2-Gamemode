@@ -120,7 +120,7 @@ function SWEP:SecondaryAttack()
 	self.Delay = CurTime() + self.Secondary.Delay
 	
 	if SERVER then
-	self.Owner:EmitSound("weapons/push.wav")
+	self.Owner:EmitSoundEx("weapons/push.wav")
 	end 
 
 	self.Owner:DoAnimationEvent(ACT_DOD_PRONE_FORWARD_ZOOMED)

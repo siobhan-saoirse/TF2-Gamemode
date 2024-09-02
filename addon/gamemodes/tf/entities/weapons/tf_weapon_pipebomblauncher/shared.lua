@@ -418,7 +418,7 @@ function SWEP:DetonateProjectiles(nosound, noexplode)
 		end
 		
 		if det and not nosound then
-			self.Owner:EmitSound(self.DetonateSound, 100, 100)
+			self.Owner:EmitSoundEx(self.DetonateSound, 100, 100)
 		end
 		
 		owner:SetNWInt("NumBombs", #owner.Bombs)

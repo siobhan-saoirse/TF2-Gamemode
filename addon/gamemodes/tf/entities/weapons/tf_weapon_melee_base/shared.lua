@@ -363,7 +363,7 @@ function SWEP:MeleeHitSound(tr)
 	if tr.Entity and IsValid(tr.Entity) then
 		if tr.Entity:IsTFPlayer() then
 			if tr.Entity:IsBuilding() and (!tr.Entity:IsFriendly(self.Owner) && self.Owner.playerclass == "Engineer" || self.Owner.playerclass != "Engineer") then
-				--self.Owner:EmitSound(self.HitWorld)
+				--self.Owner:EmitSoundEx(self.HitWorld)
 				--sound.Play(self.HitWorld, tr.HitPos)
 				if SERVER then
 				sound.Play(self.HitWorld, self:GetPos())
@@ -381,18 +381,18 @@ function SWEP:MeleeHitSound(tr)
 			if tr.Entity:IsBuilding() and (tr.Entity:IsFriendly(self.Owner) && self.Owner.playerclass == "Engineer") then return end
 			if not self.NoHitSound then
 				if FleshMaterials[tr.Entity:GetMaterialType()] then
-					--self.Owner:EmitSound(self.HitFlesh)
+					--self.Owner:EmitSoundEx(self.HitFlesh)
 					--sound.Play(self.HitFlesh, tr.HitPos)
-					self.Owner:EmitSound(self.HitFlesh)
+					self.Owner:EmitSoundEx(self.HitFlesh)
 				else
-					--self.Owner:EmitSound(self.HitWorld)
+					--self.Owner:EmitSoundEx(self.HitWorld)
 					--sound.Play(self.HitWorld, tr.HitPos)
 					
 					if (string.find(tr.Entity:GetModel(),"door")) then
-						self.Owner:EmitSound(self.HitWorld)
-						self.Owner:EmitSound("physics/wood/wood_panel_impact_hard1.wav",95)
+						self.Owner:EmitSoundEx(self.HitWorld)
+						self.Owner:EmitSoundEx("physics/wood/wood_panel_impact_hard1.wav",95)
 					else
-						self.Owner:EmitSound(self.HitWorld)
+						self.Owner:EmitSoundEx(self.HitWorld)
 					end
 				end
 			end
@@ -400,9 +400,9 @@ function SWEP:MeleeHitSound(tr)
 	else
 		if tr.Entity:IsBuilding() and (!tr.Entity:IsFriendly(self.Owner) && self.Owner.playerclass == "Engineer") then return end
 		if not self.NoHitSound then
-			--self.Owner:EmitSound(self.HitWorld)
+			--self.Owner:EmitSoundEx(self.HitWorld)
 			--sound.Play(self.HitWorld, tr.HitPos)
-			self.Owner:EmitSound(self.HitWorld)
+			self.Owner:EmitSoundEx(self.HitWorld)
 		end
 	end
 end
@@ -522,7 +522,7 @@ function SWEP:MeleeAttack(dummy)
 					local class = ply:GetPlayerClass()
 					ply.playerclass = string.upper(string.sub(class,1,1))..string.sub(class,2)	
 				end			
-				self.Owner:EmitSound("player/spy_disguise.wav", 65, 100) 
+				self.Owner:EmitSoundEx("player/spy_disguise.wav", 65, 100) 
 				self.Owner:SetAnimation(PLAYER_ATTACK1)
 			end
 		end
@@ -635,7 +635,7 @@ function SWEP:MeleeAttack(dummy)
 			if SERVER then
 				if v:IsBuilding() and (v:IsFriendly(self.Owner) && v.playerclass == "Engineer") then return end
 				if string.find(v:GetModel(),"/bot_") == true then
-					self.Owner:EmitSound("MVM_"..self.HitFlesh)
+					self.Owner:EmitSoundEx("MVM_"..self.HitFlesh)
 				else
 					v:EmitSound(self.HitFlesh)
 				end
@@ -973,7 +973,6 @@ function SWEP:OnRemove()
 end
 
 function SWEP:Think()
-	self.WeaponMode = 3;
 	if self.WorldModel == "models/weapons/c_models/c_headtaker/c_headtaker.mdl" then
 		self.HitFlesh = Sound("Halloween.HeadlessBossAxeHitFlesh")
 		self.HitWorld = Sound("Halloween.HeadlessBossAxeHitWorld")

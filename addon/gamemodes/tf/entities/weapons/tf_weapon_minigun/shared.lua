@@ -562,9 +562,6 @@ function SWEP:Think()
 end
 
 function SWEP:Holster()
-	if IsValid(self.Owner) and self:GetNetworkedBool("Spinning") then
-		self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_POSTFIRE, true)
-	end
 	
 	if not self.Removed and (self.Spinning or (self.NextEndSpinDown and CurTime() < self.NextEndSpinDown)) then
 		return false

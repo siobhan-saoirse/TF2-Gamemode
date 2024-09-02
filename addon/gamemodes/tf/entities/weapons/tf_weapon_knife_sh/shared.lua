@@ -94,7 +94,7 @@ function SWEP:Think()
 		if self.ShouldOccurFists == true then
 			if SERVER then
 				if self.Owner:GetPlayerClass() == "spy" and self.Owner:GetInfoNum("hahahahahahahahaowneronly_ragespy", 0) == 1 then
-					self.Owner:EmitSound("vo/spy_paincrticialdeath0"..math.random(1,3)..".mp3", 80, math.random(80,130))
+					self.Owner:EmitSoundEx("vo/spy_paincrticialdeath0"..math.random(1,3)..".mp3", 80, math.random(80,130))
 					self.ShouldOccurFists = false 
 					self.HitFlesh = Sound("NPC_AttackHelicopter.Crash")
 					self.BaseDamage = 1000000000000000000000000000000000000000000000000

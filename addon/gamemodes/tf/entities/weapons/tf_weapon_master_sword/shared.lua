@@ -77,7 +77,7 @@ if CLIENT then
 	self.Idle = 0
 	self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration()
 	if SERVER then
-		self.Owner:EmitSound("weapons/chainsaw/chainsaw_start_0"..math.random(1,2)..".wav")
+		self.Owner:EmitSoundEx("weapons/chainsaw/chainsaw_start_0"..math.random(1,2)..".wav")
 	end
 	end
 	
@@ -92,7 +92,7 @@ if CLIENT then
 	self.Owner:StopSound( "Chainsaw.Idle" )
 	self.ChainsawHighSpeed:StopSound()
 	self.Owner:StopSound( self.Primary.Sound )
-	self.Owner:EmitSound( "Chainsaw.Stop" )
+	self.Owner:EmitSoundEx( "Chainsaw.Stop" )
 	end
 	return true
 	end
@@ -142,14 +142,14 @@ if CLIENT then
 	tr.Entity:TakeDamageInfo( dmginfo )
 	if tr.Hit then
 	if tr.Entity:IsNPC() || tr.Entity:IsPlayer() || tr.Entity:Health() > 0 then
-	self.Owner:EmitSound( "Chainsaw.Gore"..math.random( 1, 6 ) )
+	self.Owner:EmitSoundEx( "Chainsaw.Gore"..math.random( 1, 6 ) )
 	end
 	end
 	end
 	end
 	
 	function SWEP:SecondaryAttack()
-	self.Owner:EmitSound( self.Secondary.Sound )
+	self.Owner:EmitSoundEx( self.Secondary.Sound )
 	--self.Owner:LagCompensation( true )
 	local tr = util.TraceLine( {
 	start = self.Owner:GetShootPos(),
@@ -168,7 +168,7 @@ if CLIENT then
 	} )
 	end
 	if SERVER and tr.Hit and !( tr.Entity:IsNPC() || tr.Entity:IsPlayer() || tr.Entity:Health() > 0 ) then
-	self.Owner:EmitSound( "Weapon.HitWorld" )
+	self.Owner:EmitSoundEx( "Weapon.HitWorld" )
 	end
 	if SERVER and IsValid( tr.Entity ) then
 	local dmginfo = DamageInfo()
@@ -183,13 +183,13 @@ if CLIENT then
 	tr.Entity:TakeDamageInfo( dmginfo )
 	if tr.Hit then
 	if tr.Entity:IsNPC() or tr.Entity:IsPlayer() and GAMEMODE:EntityTeam(tr.Entity) != self.Owner:Team() and tr.Entity:Health() > 0 then
-	self.Owner:EmitSound( "Weapon.HitInfected" )
+	self.Owner:EmitSoundEx( "Weapon.HitInfected" )
 	end
 	if tr.Entity:IsNPC() or tr.Entity:IsPlayer() and GAMEMODE:EntityTeam(tr.Entity) == self.Owner:Team() and tr.Entity:Health() > 0 then
-	self.Owner:EmitSound( "player/survivor/hit/rifle_swing_hit_survivor"..math.random(1,2)..".wav" )
+	self.Owner:EmitSoundEx( "player/survivor/hit/rifle_swing_hit_survivor"..math.random(1,2)..".wav" )
 	end
 	if !( tr.Entity:IsNPC() || tr.Entity:IsPlayer() || tr.Entity:Health() > 0 ) then
-	self.Owner:EmitSound( "Weapon.HitWorld" )
+	self.Owner:EmitSoundEx( "Weapon.HitWorld" )
 	end
 	end
 	end
@@ -208,14 +208,14 @@ if CLIENT then
 	if self.Cut == 1 and self.Owner:KeyReleased( IN_ATTACK ) then
 	if SERVER then
 	self.ChainsawHighSpeed:Stop()
-	self.Owner:EmitSound( "Chainsaw.Stop" )
+	self.Owner:EmitSoundEx( "Chainsaw.Stop" )
 	end
 	self.Cut = 0
 	end
 	if self.Cut == 1 and self.Weapon:Ammo1() <= 0 then
 	if SERVER then
 	self.Owner:StopSound( self.Primary.Sound )
-	self.Owner:EmitSound( "Chainsaw.Stop" )
+	self.Owner:EmitSoundEx( "Chainsaw.Stop" )
 	end
 	self.Cut = 0
 	end
@@ -228,7 +228,7 @@ if CLIENT then
 	if self.Idle == 0 and self.IdleTimer > CurTime() and self.IdleTimer < CurTime() + 0.1 and self:Ammo1() >= 1 then
 	self.Weapon:SendWeaponAnim( ACT_VM_IDLE )
 	if SERVER then
-	self.Owner:EmitSound("Chainsaw.Idle")
+	self.Owner:EmitSoundEx("Chainsaw.Idle")
 	end
 	self.Idle = 1
 	end

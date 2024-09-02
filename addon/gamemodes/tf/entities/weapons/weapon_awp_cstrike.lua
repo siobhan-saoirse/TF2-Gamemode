@@ -97,7 +97,7 @@ function SWEP:ZoomIn()
 	
 	if SERVER then
 		self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_PREFIRE, true)
-		self.Owner:EmitSound("Default.Zoom")
+		self.Owner:EmitSoundEx("Default.Zoom")
 	end
 	self.NextAutoZoomIn = nil
 	self.Owner:SetFOV(10,0.2,self)
@@ -214,7 +214,7 @@ function SWEP:ZoomOut()
 	self.NextAutoZoomOut = nil
 	self.Owner:SetFOV(0,0.2,self)
 	if self.ZoomStatus then
-		self.Owner:EmitSound("Default.Zoom")
+		self.Owner:EmitSoundEx("Default.Zoom")
 		self.ZoomStatus = false
 		umsg.Start("SetZoomStatus")
 			umsg.Entity(self)
@@ -240,7 +240,7 @@ function SWEP:ToggleZoom()
 		if (self.ZoomStatus and !self.ZoomedVeryClose) then
 			if SERVER then
 				self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_PREFIRE, true)
-				self.Owner:EmitSound("Default.Zoom")
+				self.Owner:EmitSoundEx("Default.Zoom")
 			end
 			self.ZoomedVeryClose = true
 			self.Owner:SetFOV(2,0.2,self)

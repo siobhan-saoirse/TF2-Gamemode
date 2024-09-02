@@ -60,7 +60,7 @@ function SWEP:PrimaryAttack()
 					else
 						v:EmitSound(v.Sound_Empty)
 						if not self.NextOuch or CurTime()>=self.NextOuch then	
-							self.Owner:EmitSound("Weapon_Wrangler.Ouch")
+							self.Owner:EmitSoundEx("Weapon_Wrangler.Ouch")
 							self.NextOuch = CurTime() + 3
 						end	
 					end

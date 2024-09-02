@@ -1882,7 +1882,7 @@ function SWEP:Think()
 			if self.ReloadTime == 1.1 then 
 				if self:GetItemData().model_player == "models/weapons/c_models/c_dumpster_device/c_dumpster_device.mdl" then
 					if CLIENT then
-						self.Owner:EmitSound("Weapon_DumpsterRocket.Reload")
+						self.Owner:EmitSoundEx("Weapon_DumpsterRocket.Reload")
 					end
 				end
 			end
@@ -1897,14 +1897,14 @@ function SWEP:Think()
 				if (self:Clip1()==self.Primary.ClipSize-1) then
 					if SERVER then
 						if (IsValid(self.ReloadSoundFinish)) then
-							self.Owner:EmitSound(self.ReloadSoundFinish)
+							self.Owner:EmitSoundEx(self.ReloadSoundFinish)
 						else
-							self.Owner:EmitSound(self.ReloadSound)
+							self.Owner:EmitSoundEx(self.ReloadSound)
 						end
 					end
 				else
 					if SERVER then
-						self.Owner:EmitSound(self.ReloadSound)
+						self.Owner:EmitSoundEx(self.ReloadSound)
 					end
 				end
 	
@@ -1957,7 +1957,7 @@ function SWEP:Think()
 		if self.ReloadTime == 1.1 then 
 			if self:GetItemData().model_player == "models/weapons/c_models/c_dumpster_device/c_dumpster_device.mdl" then
 				if CLIENT then
-					self.Owner:EmitSound("Weapon_DumpsterRocket.Reload")
+					self.Owner:EmitSoundEx("Weapon_DumpsterRocket.Reload")
 				end
 			end
 		end
@@ -1988,14 +1988,14 @@ function SWEP:Think()
 			if (self:Clip1()==self.Primary.ClipSize-1) then
 				if SERVER then
 					if (IsValid(self.ReloadSoundFinish)) then
-						self.Owner:EmitSound(self.ReloadSoundFinish)
+						self.Owner:EmitSoundEx(self.ReloadSoundFinish)
 					else
-						self.Owner:EmitSound(self.ReloadSound)
+						self.Owner:EmitSoundEx(self.ReloadSound)
 					end
 				end
 			else
 				if SERVER then
-					self.Owner:EmitSound(self.ReloadSound)
+					self.Owner:EmitSoundEx(self.ReloadSound)
 				end
 			end
 

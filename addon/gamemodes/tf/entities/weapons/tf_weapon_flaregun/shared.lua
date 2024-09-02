@@ -180,7 +180,7 @@ function SWEP:SecondaryAttack()
 		for k,v in ipairs(ents.FindByClass("tf_projectile_flare")) do
 			if v:GetOwner() == self.Owner then
 				if SERVER then
-					self.Owner:EmitSound("Weapon_FlareGun.ModeSwitch")
+					self.Owner:EmitSoundEx("Weapon_FlareGun.ModeSwitch")
 					v:DoExplosion()
 					v:Fire("Kill", "", 0.01)
 				end

@@ -308,7 +308,7 @@ if !IsValid(self.Owner) or !self.Owner:Alive() then return end
 			
 			if (!self.TP or !IsValid(self.TP)) and boolean == true then
 				self.Owner:StopSound("Weapon_PhysCannon.CloseClaws")
-				self.Owner:EmitSound("Weapon_PhysCannon.OpenClaws")
+				self.Owner:EmitSoundEx("Weapon_PhysCannon.OpenClaws")
 			end
 		end--+
 	end--
@@ -348,7 +348,7 @@ if !IsValid(self.Owner) or !self.Owner:Alive() then return end
 		if (!IsValid(self.Owner) or !self.Owner:Alive()) or (!IsValid(ViewModel) and !IsValid(WorldModel)) then timer.Remove("gg_move_claws_close") return end
 			if (frame >= 1 or worldframe >= 1) and (!self.TP or !IsValid(self.TP)) and boolean == true then
 				self.Owner:StopSound("Weapon_PhysCannon.OpenClaws")
-				self.Owner:EmitSound("Weapon_PhysCannon.CloseClaws")
+				self.Owner:EmitSoundEx("Weapon_PhysCannon.CloseClaws")
 			end
 		end
 	end
@@ -1062,7 +1062,7 @@ function SWEP:SecondaryAttack()
 		--
 		
 		if !tgt or !tgt:IsValid() then
-			self.Owner:EmitSound("Weapon_PhysCannon.TooHeavy")
+			self.Owner:EmitSoundEx("Weapon_PhysCannon.TooHeavy")
 			return
 		end
 		local getstyle = GetConVar("gg_style"):GetInt()
@@ -1156,10 +1156,10 @@ function SWEP:SecondaryAttack()
 	
 function SWEP:Pickup()
 		if !self.HP or !self.HP:IsValid() then self:SendWeaponAnim( ACT_VM_PRIMARYATTACK ) return end
-		self.Owner:EmitSound("Weapon_PhysCannon.Pickup")
+		self.Owner:EmitSoundEx("Weapon_PhysCannon.Pickup")
 		self.Owner:StopSound("Weapon_PhysCannon.OpenClaws")
 		self.Owner:StopSound("Weapon_PhysCannon.CloseClaws")
-		self.Owner:EmitSound(HoldSound)
+		self.Owner:EmitSoundEx(HoldSound)
 		
 		PropLockTime = CurTime()+1
 		
@@ -1248,7 +1248,7 @@ function SWEP:Drop()
 		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 		
 		self.Secondary.Automatic = true
-		self.Owner:EmitSound("Weapon_PhysCannon.Drop")
+		self.Owner:EmitSoundEx("Weapon_PhysCannon.Drop")
 		self:SetNextSecondaryFire( CurTime() + 0.5 );
 		if self.HP:GetClass() == "prop_combine_ball" then
 		self.Owner:SimulateGravGunPickup( self.HP )
@@ -1287,7 +1287,7 @@ function SWEP:Drop()
 function SWEP:Visual()
 		self:SendWeaponAnim( ACT_VM_SECONDARYATTACK )
 		self.Owner:SetAnimation( PLAYER_ATTACK1 )
-		self.Owner:EmitSound( "Weapon_PhysCannon.Launch" )
+		self.Owner:EmitSoundEx( "Weapon_PhysCannon.Launch" )
 		if SERVER then
 		if GetConVar("gg_muzzle_flash"):GetInt() > 0 then
 		local Light = ents.Create("light_dynamic")

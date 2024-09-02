@@ -363,7 +363,7 @@ self:SetNextSecondaryFire( 15 )
 if self.Owner:GetNWInt("Ubercharge")>=100 then
 charge = 1
 
---self.Owner:EmitSound("weapons/weapon_crit_charged_on.wav") -- You can remove the arguments that have default values.
+--self.Owner:EmitSoundEx("weapons/weapon_crit_charged_on.wav") -- You can remove the arguments that have default values.
 self.ChargedASound = Sound("WeaponMedigun_Vaccinator.InvulnerableOn")
 self.ChargedOffSoundA = Sound("WeaponMedigun_Vaccinator.InvulnerableOff")
 	self.ChargedALoop = CreateSound(self, self.ChargedASound)
@@ -469,7 +469,7 @@ end]]
 					self.Owner:SetSkin( 1 )
 				end
 				self.Owner:RemoveFlags(FL_GODMODE)
-				--self.Owner:EmitSound("weapons/weapon_crit_charged_off.wav") 
+				--self.Owner:EmitSoundEx("weapons/weapon_crit_charged_off.wav") 
 				self.ChargedOffASound:Play()
 				self.ChargedALoop:Stop()
 				--self:SetMedigunMuzzleEffect(0)
@@ -621,32 +621,32 @@ function SWEP:Think()
 					
 					local ch = self.Owner:GetNWInt("Ubercharge")
 					if self.Owner:GetNWInt("Ubercharge")==24 then
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_01")
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_01")
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_01")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_01")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_01")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_01")
 					elseif self.Owner:GetNWInt("Ubercharge")==44 then
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_02")
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_02")
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_02")
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_02")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_02")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_02")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_02")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_02")
 					elseif self.Owner:GetNWInt("Ubercharge")==64 then
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_03")
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_03")
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_03")
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_03")
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_03")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_03")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_03")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_03")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_03")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_03")
 					end
 					if ch<100 then
 						ch = math.Clamp(ch + 1 + add, 0, 100)
 						self.Owner:SetNWInt("Ubercharge", ch)
 						if ch>=100 then
 							self.Owner:Speak("TLK_PLAYER_CHARGEREADY")
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_04")
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_04")
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_04")
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_04")
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_04")
-						self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_04")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_04")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_04")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_04")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_04")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_04")
+						self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_04")
 							self:SetMedigunMuzzleEffect(1)
 						end
 					end
@@ -676,34 +676,34 @@ function SWEP:Deploy()
 	end
 	
 	if self.Owner:GetNWInt("Ubercharge")==25 then
-		self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_02")
-		self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_02")
-		self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_02")
-		self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_02")
+		self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_02")
+		self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_02")
+		self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_02")
+		self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_02")
 		if SERVER then
 			self:SetMedigunMuzzleEffect(1)
 		end
 	end
 	if self.Owner:GetNWInt("Ubercharge")==45 then
-		self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_02")
-		self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_02")
-		self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_02")
-		self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_02")
+		self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_02")
+		self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_02")
+		self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_02")
+		self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_02")
 		if SERVER then
 			self:SetMedigunMuzzleEffect(1)
 		end
 	end
 	if self.Owner:GetNWInt("Ubercharge")==65 then
-		self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_03")
-		self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_03")
-		self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_03")
-		self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_03")
+		self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_03")
+		self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_03")
+		self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_03")
+		self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_03")
 		if SERVER then
 			self:SetMedigunMuzzleEffect(1)
 		end
 	end
 	if self.Owner:GetNWInt("Ubercharge")==100 then
-		self.Owner:EmitSound("WeaponMedigun_Vaccinator.Charged_tier_04")
+		self.Owner:EmitSoundEx("WeaponMedigun_Vaccinator.Charged_tier_04")
 		if SERVER then
 			self:SetMedigunMuzzleEffect(1)
 		end

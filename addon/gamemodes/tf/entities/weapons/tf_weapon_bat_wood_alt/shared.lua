@@ -48,7 +48,7 @@ function SWEP:MeleeAttack()
 	self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_MELEE_SECONDARY)
 	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK_SPECIAL)
 	if SERVER then
-		self.Owner:EmitSound("Weapon_BaseballBat.HitBall")
+		self.Owner:EmitSoundEx("Weapon_BaseballBat.HitBall")
 		local grenade = ents.Create("tf_projectile_ball")
 		grenade:SetPos(self:ProjectileShootPos())
 		grenade:SetAngles(self.Owner:EyeAngles())

@@ -355,9 +355,9 @@ function SWEP:PrimaryAttack()
 				if SERVER then
 					tr.Entity:AddMetal(self.Owner, 2)
 					if tr.Entity:NeedsResupply() and tr.Entity:GetLevel() >= 2 then
-						self.Owner:EmitSound("items/gift_pickup.wav", 60, 100)
+						self.Owner:EmitSoundEx("items/gift_pickup.wav", 60, 100)
 					elseif tr.Entity:GetLevel() <= 3 and tr.Entity:GetBuildingType() != 1 then
-						self.Owner:EmitSound("items/gift_pickup.wav", 60, 100)					
+						self.Owner:EmitSoundEx("items/gift_pickup.wav", 60, 100)					
 					end
 				end
 			end)
@@ -410,7 +410,7 @@ self:SetNextSecondaryFire( 15 )
 if self.Owner:GetNWInt("Ubercharge")>=200 then
 charge = 1
 
---self.Owner:EmitSound("weapons/weapon_crit_charged_on.wav") -- You can remove the arguments that have default values.
+--self.Owner:EmitSoundEx("weapons/weapon_crit_charged_on.wav") -- You can remove the arguments that have default values.
 self.ChargedASound = Sound("player/invulnerable_on.wav")
 self.ChargedOffSoundA = Sound("player/invulnerable_off.wav")
 	self.ChargedALoop = CreateSound(self, self.ChargedASound)
@@ -528,7 +528,7 @@ end]]
 					self.Owner:SetSkin( 1 )
 				end
 				self.Owner:RemoveFlags(FL_GODMODE)
-				--self.Owner:EmitSound("weapons/weapon_crit_charged_off.wav") 
+				--self.Owner:EmitSoundEx("weapons/weapon_crit_charged_off.wav") 
 				self.ChargedOffASound:Play()
 				self.ChargedALoop:Stop()
 				--self:SetMedigunMuzzleEffect(0)

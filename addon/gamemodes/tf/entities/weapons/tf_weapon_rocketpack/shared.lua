@@ -123,7 +123,7 @@ function SWEP:PrimaryAttack()
 			if self.Owner:OnGround() then
 				self:EmitSound( "Weapon_RocketPack.BoostersShutdown", 85 )
 				if SERVER then
-					self.Owner:EmitSound( "Weapon_RocketPack.Land", 85 )
+					self.Owner:EmitSoundEx( "Weapon_RocketPack.Land", 85 )
 					self.Owner:StopSound("RocketJumpLoop")
 					for k,v in pairs(ents.FindInSphere(self.Owner:GetPos(), 110)) do
 						if v:Health() >= 0 then

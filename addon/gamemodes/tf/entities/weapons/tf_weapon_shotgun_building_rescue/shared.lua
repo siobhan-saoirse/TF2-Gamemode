@@ -94,7 +94,7 @@ function SWEP:SecondaryAttack()
 					end
 					v:Fire("Kill", "", 0.1)
 					self.Owner:ConCommand("move 2 0")
-					self.Owner:EmitSound("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav")
+					self.Owner:EmitSoundEx("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav")
 				end
 			elseif v:GetClass() == "obj_dispenser" then
 				v:EmitSound("weapons/rescue_ranger_teleport_receive_0"..math.random(1,2)..".wav")
@@ -118,7 +118,7 @@ function SWEP:SecondaryAttack()
 					end
 					v:Fire("Kill", "", 0.)
 					self.Owner:ConCommand("move 0 0")
-					self.Owner:EmitSound("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav")
+					self.Owner:EmitSoundEx("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav")
 				end
 			elseif v:GetClass() == "obj_teleporter" and v:IsExit() != true then
 				v:EmitSound("weapons/rescue_ranger_teleport_receive_0"..math.random(1,2)..".wav")
@@ -142,7 +142,7 @@ function SWEP:SecondaryAttack()
 					end
 					v:Fire("Kill", "", 0.1)
 					self.Owner:ConCommand("move 1 0")
-					self.Owner:EmitSound("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav")
+					self.Owner:EmitSoundEx("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav")
 				end
 			elseif v:GetClass() == "obj_teleporter" and v:IsExit() != false then
 				v:EmitSound("weapons/rescue_ranger_teleport_receive_0"..math.random(1,2)..".wav")
@@ -166,7 +166,7 @@ function SWEP:SecondaryAttack()
 					end
 					v:Fire("Kill", "", 0.1)
 					self.Owner:ConCommand("move 1 1")
-					self.Owner:EmitSound("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav")
+					self.Owner:EmitSoundEx("weapons/rescue_ranger_teleport_send_0"..math.random(1,2)..".wav")
 				end
 			end
 		end

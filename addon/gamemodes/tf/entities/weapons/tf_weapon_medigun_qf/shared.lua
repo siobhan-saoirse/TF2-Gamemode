@@ -353,7 +353,7 @@ self:SetNextSecondaryFire( 15 )
 if self.Owner:GetNWInt("Ubercharge")>=100 then
 charge = 1
 
---self.Owner:EmitSound("weapons/weapon_crit_charged_on.wav") -- You can remove the arguments that have default values.
+--self.Owner:EmitSoundEx("weapons/weapon_crit_charged_on.wav") -- You can remove the arguments that have default values.
 self.ChargedASound = Sound("player/quickfix_invulnerable_on.wav")
 self.ChargedOffSoundA = Sound("player/invulnerable_off.wav")
 	self.ChargedALoop = CreateSound(self, self.ChargedASound)
@@ -433,7 +433,7 @@ end]]
 				charge = 0
 				self:SetMedigunMuzzleEffect(0)
 				self.ChargedLoop:Stop()
-				--self.Owner:EmitSound("weapons/weapon_crit_charged_off.wav") 
+				--self.Owner:EmitSoundEx("weapons/weapon_crit_charged_off.wav") 
 				self.ChargedOffASound:Play()
 				self.ChargedALoop:Stop()
 				--self:SetMedigunMuzzleEffect(0)

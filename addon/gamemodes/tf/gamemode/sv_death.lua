@@ -574,6 +574,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	ply:SetNWBool("Taunting",false)
 	timer.Simple(0.02, function()
 		ply:SetMoveType(MOVETYPE_NONE)
+		ply:SetPos(ply:GetPos() - Vector(0,0,30))
 	end)
 	
 	ply.LastDamageInfo = CopyDamageInfo(dmginfo)

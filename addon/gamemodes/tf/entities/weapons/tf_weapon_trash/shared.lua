@@ -105,7 +105,7 @@ function SWEP:PrimaryAttack()
 	self.VM_INSPECT_END = ACT_ITEM3_VM_INSPECT_END
 	self:SendWeaponAnim(self.VM_PRIMARYATTACK)
 	self.Owner:DoAnimationEvent(ACT_MP_THROW,true)
-	self.Owner:EmitSound("misc/halloween/spell_fireball_cast.wav")
+	self.Owner:EmitSoundEx("misc/halloween/spell_fireball_cast.wav")
 	self.Owner.NextGiveAmmo = CurTime() + (self.Properties.ReloadTime or 20)
 	self.Owner.NextGiveAmmoType = self.Primary.Ammo
 	

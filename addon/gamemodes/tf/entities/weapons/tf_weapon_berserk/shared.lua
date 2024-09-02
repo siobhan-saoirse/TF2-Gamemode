@@ -53,11 +53,11 @@ SWEP.ShouldOccurFists = true
 SWEP.DamageType = DMG_BLAST 
 
 function SWEP:OnCritBoostStarted()
-	--self.Owner:EmitSound(self.CritEnabled)
+	--self.Owner:EmitSoundEx(self.CritEnabled)
 end
 
 function SWEP:OnCritBoostAdded()
-	--self.Owner:EmitSound(self.CritHit)
+	--self.Owner:EmitSoundEx(self.CritHit)
 end
 
 

@@ -58,16 +58,16 @@ SWEP.Force = 0
 SWEP.AddPitch = -2
 
 function SWEP:OnCritBoostStarted()
-	--self.Owner:EmitSound(self.CritEnabled)
+	--self.Owner:EmitSoundEx(self.CritEnabled)
 end
 
 function SWEP:OnCritBoostAdded()
-	--self.Owner:EmitSound(self.CritHit)
+	--self.Owner:EmitSoundEx(self.CritHit)
 end
  
 function SWEP:Deploy() 
 	if self:GetItemData().model_player == "models/weapons/c_models/c_breadmonster_gloves/c_breadmonster_gloves.mdl" then
-	self.Owner:EmitSound("Weapon_bm_gloves.draw")
+	self.Owner:EmitSoundEx("Weapon_bm_gloves.draw")
 	end
 	
 	if self.Owner:GetPlayerClass() == "boomer" then
@@ -890,13 +890,13 @@ function SWEP:Think()
 						self.ShouldOccurFists = true
 					end)
 				elseif self.Owner:GetPlayerClass() == "merc_dm" then
-					self.Owner:EmitSound("vo/taunts/spy_taunts1"..math.random(1,8)..".mp3", 80, 100)
+					self.Owner:EmitSoundEx("vo/taunts/spy_taunts1"..math.random(1,8)..".mp3", 80, 100)
 					self.ShouldOccurFists = false
 					timer.Simple(8, function()
 						self.ShouldOccurFists = true
 					end)
 				elseif self.Owner:GetInfoNum("jakey_antlionfbii", 0) == 1 then
-					self.Owner:EmitSound("NPC_AntlionGuard.Roar", 150, 100)
+					self.Owner:EmitSoundEx("NPC_AntlionGuard.Roar", 150, 100)
 					self.ShouldOccurFists = false
 					self.HitFlesh = Sound("npc/antlion_guard/shove1.wav", 120)
 					self.HitWorld = Sound("npc/antlion_guard/shove1.wav", 120)
@@ -905,7 +905,7 @@ function SWEP:Think()
 						self.ShouldOccurFists = true
 					end) 
 				elseif self.Owner:GetInfoNum("dylan_rageheavy", 0) == 1 then
-					self.Owner:EmitSound("vo/heavy_paincrticialdeath0"..math.random(1,3)..".mp3", 150, math.random(70,150))
+					self.Owner:EmitSoundEx("vo/heavy_paincrticialdeath0"..math.random(1,3)..".mp3", 150, math.random(70,150))
 					self.ShouldOccurFists = false
 					if self.Owner:GetInfoNum("tf_giant_robot", 0) == 1 then
 						self.HitFlesh = Sound("ambient/explosions/explode_6.wav", 120)
@@ -985,18 +985,18 @@ function SWEP:SecondaryAttack()
 				local time = 0.23
 				if (self.Owner:KeyDown(IN_ATTACK2)) then
 					if (string.find(self.Owner:GetModel(),"l4d1")) then
-						self.Owner:EmitSound("L4D1_BoomerZombie.Attack")
+						self.Owner:EmitSoundEx("L4D1_BoomerZombie.Attack")
 					else
-						self.Owner:EmitSound("BoomerZombie.Attack")
+						self.Owner:EmitSoundEx("BoomerZombie.Attack")
 					end
 				end
 				timer.Create("Growl"..self.Owner:EntIndex(), time, 0, function()
 	
 					if (self.Owner:KeyDown(IN_ATTACK2)) then
 						if (string.find(self.Owner:GetModel(),"l4d1")) then
-							self.Owner:EmitSound("L4D1_BoomerZombie.Attack")
+							self.Owner:EmitSoundEx("L4D1_BoomerZombie.Attack")
 						else
-							self.Owner:EmitSound("BoomerZombie.Attack")
+							self.Owner:EmitSoundEx("BoomerZombie.Attack")
 						end
 					end
 				end)
@@ -1006,9 +1006,9 @@ function SWEP:SecondaryAttack()
 			if (math.random(1,3) == 1) then
 				timer.Adjust("VoiceL4d"..self.Owner:EntIndex(), 1.5)
 				if (string.find(self.Owner:GetModel(),"l4d1")) then
-					self.Owner:EmitSound("L4D1_BoomerZombie.Attack")
+					self.Owner:EmitSoundEx("L4D1_BoomerZombie.Attack")
 				else
-					self.Owner:EmitSound("BoomerZombie.Attack")
+					self.Owner:EmitSoundEx("BoomerZombie.Attack")
 				end
 			end
 		end
@@ -1016,9 +1016,9 @@ function SWEP:SecondaryAttack()
 			if (math.random(1,3) == 1) then
 				timer.Adjust("VoiceL4d"..self.Owner:EntIndex(), 1.5)
 				if (string.find(self.Owner:GetModel(),"l4d1")) then
-					self.Owner:EmitSound("L4D1_SmokerZombie.Attack")
+					self.Owner:EmitSoundEx("L4D1_SmokerZombie.Attack")
 				else
-					self.Owner:EmitSound("SmokerZombie.Attack")
+					self.Owner:EmitSoundEx("SmokerZombie.Attack")
 				end
 			end
 		end
@@ -1026,12 +1026,12 @@ function SWEP:SecondaryAttack()
 			if (game.IsDedicated()) then
 				local time = 0.23
 				if (self.Owner:KeyDown(IN_ATTACK2)) then
-					self.Owner:EmitSound("PlayerZombie.Attack")
+					self.Owner:EmitSoundEx("PlayerZombie.Attack")
 				end
 				timer.Create("Growl"..self.Owner:EntIndex(), time, 0, function()
 	
 					if (self.Owner:KeyDown(IN_ATTACK2)) then
-						self.Owner:EmitSound("PlayerZombie.Attack")
+						self.Owner:EmitSoundEx("PlayerZombie.Attack")
 					end
 				end)
 			else
@@ -1039,7 +1039,7 @@ function SWEP:SecondaryAttack()
 			end
 			if (math.random(1,3) == 1) then
 				timer.Adjust("VoiceL4d"..self.Owner:EntIndex(), 1.5)
-				self.Owner:EmitSound("PlayerZombie.Attack")
+				self.Owner:EmitSoundEx("PlayerZombie.Attack")
 			end
 		end
 		if self.Owner:GetPlayerClass() == "tank_l4d" or self.Owner:GetPlayerClass() == "boomer"or self.Owner:GetPlayerClass() == "spitter"or self.Owner:GetPlayerClass() == "boomette"  or self.Owner:GetPlayerClass() == "smoker" or self.Owner:GetPlayerClass() ==  "hunter" or self.Owner:GetPlayerClass() ==  "jockey" or self.Owner:GetPlayerClass() ==  "witch" then
@@ -1052,17 +1052,17 @@ function SWEP:SecondaryAttack()
 			self.Owner:DoAnimationEvent(ACT_MELEE_ATTACK2)
 		end
 	elseif (self.Owner:IsBot() && self.Owner:GetPlayerClass() == "smoker" and !self.Smoking) then
-		self.Owner:EmitSound("SmokerZombie.Warn")
+		self.Owner:EmitSoundEx("SmokerZombie.Warn")
 		self.Owner:PlaySequence("tongue_attack_antic")
 		self:SetNextSecondaryFire(CurTime() + 8)
 		if SERVER then
 			self.Owner:SetClassSpeed(1)
 		end
 		timer.Simple(1.5, function()
-			self.Owner:EmitSound("SmokerZombie.TongueAttack") 
+			self.Owner:EmitSoundEx("SmokerZombie.TongueAttack") 
 			self.Owner:PlaySequence("tongue_attack_grab_survivor")
 			if (IsValid(self.Owner:GetEyeTrace().Entity) && self.Owner:GetEyeTrace().Entity:IsTFPlayer() && !self.Owner:GetEyeTrace().Entity:IsFriendly(self.Owner)) then
-				self.Owner:EmitSound("SmokerZombie.TongueRetract")
+				self.Owner:EmitSoundEx("SmokerZombie.TongueRetract")
 				self.Owner:PlaySequence("tongue_attack_drag_survivor_idle",false)
 				self.Smoking = true
 				local enemy = self.Owner:GetEyeTrace().Entity
@@ -1215,7 +1215,7 @@ function SWEP:SecondaryAttack()
 		local pos = self.Owner:GetShootPos()
 			self:SetNextSecondaryFire(CurTime() + 3)
 		if SERVER then
-			self.Owner:EmitSound("NPC_PoisonZombie.ThrowWarn", 125)
+			self.Owner:EmitSoundEx("NPC_PoisonZombie.ThrowWarn", 125)
 			self.Owner:SetClassSpeed(1)
 			self.Owner:DoAnimationEvent(ACT_VM_FIDGET, true)
 		end
@@ -1225,7 +1225,7 @@ function SWEP:SecondaryAttack()
 		timer.Simple(2.3, function()
 			if SERVER then
 			local animent2 = ents.Create( 'npc_headcrab_black' ) -- The entity used for the death animation	
-				self.Owner:EmitSound("NPC_PoisonZombie.Throw", 125)
+				self.Owner:EmitSoundEx("NPC_PoisonZombie.Throw", 125)
                 local headcrab = ents.Create("pill_jumper_headcrab")
                 local angs = self.Owner:EyeAngles()
                 angs.p = 0
@@ -1271,7 +1271,7 @@ function SWEP:SecondaryAttack()
 				vel = vel:Forward() * self.Force * 30 
 				grenade:GetPhysicsObject():ApplyForceCenter(vel)
 			end)
-			self.Owner:EmitSound("SpitterZombie.Spit")
+			self.Owner:EmitSoundEx("SpitterZombie.Spit")
 			timer.Simple(1.0, function()
 				self.Owner:ResetClassSpeed()
 			end)
@@ -1315,7 +1315,7 @@ function SWEP:SecondaryAttack()
 		end
 		if self.Owner:GetPlayerClass() == "hunter" and self.Owner:IsOnGround() then
 			if SERVER then
-				self.Owner:EmitSound( "HunterZombie.Pounce" )
+				self.Owner:EmitSoundEx( "HunterZombie.Pounce" )
 			end
 		end
 		
@@ -1353,7 +1353,7 @@ function SWEP:SecondaryAttack()
 										self.Owner:SetMoveType(MOVETYPE_NONE)
 										v:SetMoveType(MOVETYPE_NONE)
 										v:SetNWBool("Taunting", true)
-										self.Owner:EmitSound("HunterZombie.Pounce.Hit")
+										self.Owner:EmitSoundEx("HunterZombie.Pounce.Hit")
 										local ply = v
 										local ent = v
 										ent:SetPos(ent:GetPos() + Vector(0,0,30))
@@ -1398,7 +1398,7 @@ function SWEP:SecondaryAttack()
 										timer.Create("RIPTHATASSHOLEAPART2"..self.Owner:EntIndex(), 0.5, 0, function()
 											v:TakeDamage(5, self.Owner, self)
 											
-											self.Owner:EmitSound("HunterZombie.Pounce.shred")
+											self.Owner:EmitSoundEx("HunterZombie.Pounce.shred")
 										end)
 										timer.Create("RIPTHATASSHOLEAPART"..self.Owner:EntIndex(), 0, 0, function()
 											if v:Health() <= 1 then 
@@ -1458,7 +1458,7 @@ function SWEP:SecondaryAttack()
 										end)
 									end  
 								else
-									self.Owner:EmitSound("HunterZombie.Pounce.Miss")
+									self.Owner:EmitSoundEx("HunterZombie.Pounce.Miss")
 								end
 							end
 							elseif self.Owner:GetPlayerClass() == "jockey" then
@@ -1479,7 +1479,7 @@ function SWEP:SecondaryAttack()
 											v:EmitSound("player/charger/hit/charger_punch"..math.random(1,4)..".wav", 85, 100)
 											v:EmitSound("Jockey.Music")
 											v:EmitSound("music/tags/exenterationhit.wav")
-											self.Owner:EmitSound("jockey/voice/attack/jockey_attackloop01.wav")
+											self.Owner:EmitSoundEx("jockey/voice/attack/jockey_attackloop01.wav")
 											timer.Create("RIPTHATASSHOLEAPART"..self.Owner:EntIndex(), 1, 0, function()
 												if v:Health() <= 1 then 
 													timer.Stop("RIPTHATASSHOLEAPART"..self.Owner:EntIndex()) 
@@ -1520,7 +1520,7 @@ function SWEP:SecondaryAttack()
 											self.Owner:SetParent(v)
 											v:EmitSound("player/charger/hit/charger_punch"..math.random(1,4)..".wav", 85, 100)
 											v:EmitSound("music/tags/exenterationhit.wav")
-											self.Owner:EmitSound("jockey/voice/attack/jockey_attackloop01.wav")
+											self.Owner:EmitSoundEx("jockey/voice/attack/jockey_attackloop01.wav")
 											timer.Create("RIPTHATASSHOLEAPART"..self.Owner:EntIndex(), 1, 0, function()
 												if v:Health() <= 1 then 
 													timer.Stop("RIPTHATASSHOLEAPART"..self.Owner:EntIndex()) 
@@ -1556,7 +1556,7 @@ function SWEP:SecondaryAttack()
 		end) 
 	elseif self.Owner:GetPlayerClass() == "tank_l4d" then
 		if (!self.Owner:IsOnGround()) then
-			self.Owner:EmitSound("HulkZombie.Throw.Fail")
+			self.Owner:EmitSoundEx("HulkZombie.Throw.Fail")
 			self:SetNextSecondaryFire(CurTime() + 0.8)
 			return
 		end
@@ -1564,7 +1564,7 @@ function SWEP:SecondaryAttack()
 		self:SetNextPrimaryFire(CurTime() + 1.5)
 		self.Owner:DoAnimationEvent(ACT_RANGE_ATTACK1)
 		if SERVER then
-			self.Owner:EmitSound("HulkZombie.Throw.Pickup", 125)
+			self.Owner:EmitSoundEx("HulkZombie.Throw.Pickup", 125)
 			self:SetNextSecondaryFire(CurTime() + 5.0)
 			self.Owner:SetNWBool("Taunting",true)
 			net.Start("ActivateTauntCam")
@@ -1594,7 +1594,7 @@ function SWEP:SecondaryAttack()
 					v:Remove()
 				end
 				if (!self.Owner:IsOnGround()) then
-					self.Owner:EmitSound("HulkZombie.Throw.Fail")
+					self.Owner:EmitSoundEx("HulkZombie.Throw.Fail")
 					self:SetNextSecondaryFire(CurTime() + 0.8)
 					self.Owner:SetNWBool("Taunting",false)
 					net.Start("DeActivateTauntCam")
@@ -1604,7 +1604,7 @@ function SWEP:SecondaryAttack()
 					self.Owner:SetNWBool("Taunting",false)
 					net.Start("DeActivateTauntCam")
 					net.Send(self.Owner)
-					self.Owner:EmitSound("HulkZombie.Throw", 125)
+					self.Owner:EmitSoundEx("HulkZombie.Throw", 125)
 					local grenade = ents.Create("base_anim")
 					grenade:SetModel("models/props_debris/concrete_chunk01a.mdl") 
 					grenade:SetPos(self.Owner:GetShootPos())
@@ -1648,9 +1648,9 @@ function SWEP:SecondaryAttack()
 		self.Owner:SetWalkSpeed(1)
 		self.Owner:SetRunSpeed(1)
 		if (string.find(self.Owner:GetModel(),"l4d1")) then
-			self.Owner:EmitSound("L4D1_BoomerZombie.Warn")
+			self.Owner:EmitSoundEx("L4D1_BoomerZombie.Warn")
 		else
-			self.Owner:EmitSound("BoomerZombie.Warn")
+			self.Owner:EmitSoundEx("BoomerZombie.Warn")
 		end
 		self:SetNextPrimaryFire(CurTime() + 2.5) 
 		self:SetNextSecondaryFire(CurTime() + 30.0) 
@@ -1664,9 +1664,9 @@ function SWEP:SecondaryAttack()
 			if SERVER then
 				
 				if (string.find(self.Owner:GetModel(),"l4d1")) then
-					self.Owner:EmitSound("L4D1_Vomit.Use")
+					self.Owner:EmitSoundEx("L4D1_Vomit.Use")
 				else
-					self.Owner:EmitSound("Vomit.Use")
+					self.Owner:EmitSoundEx("Vomit.Use")
 				end
 			end
 			ParticleEffectAttach( "boomer_vomit_b", PATTACH_POINT_FOLLOW, self.Owner, 1 )
@@ -1755,7 +1755,7 @@ function SWEP:SecondaryAttack()
 			local angs = self.Owner:EyeAngles()
 			angs.p = 0
 			self.Owner:DoAnimationEvent(ACT_JUMP)
-			self.Owner:EmitSound("NPC_Headcrab.Attack")
+			self.Owner:EmitSoundEx("NPC_Headcrab.Attack")
 			self.Owner:SetRunSpeed(100)
 			self.NameOverride = "hl_headcrab"
 			self.Owner:SetLocalVelocity( self.Owner:GetAimVector() + Vector( 0, 0, 280 ) + self.Owner:GetVelocity() * 1 )
@@ -1764,12 +1764,12 @@ function SWEP:SecondaryAttack()
 				for k,v in ipairs(ents.FindInSphere(self.Owner:GetPos(), 80)) do
 					if v:IsTFPlayer() and v != self.Owner and v:Health() >= 20 then
 						v:TakeDamage(40, self.Owner, self)
-						self.Owner:EmitSound("NPC_HeadCrab.Bite")
+						self.Owner:EmitSoundEx("NPC_HeadCrab.Bite")
 						timer.Stop("HeadCrabEat"..self.Owner:EntIndex())
 					elseif v:IsTFPlayer() and v != self.Owner and v:Health() <= 20 then
 						self.Owner:SetPlayerClass("zombie")
 						v:TakeDamage(v:Health(), self.Owner, self)
-						self.Owner:EmitSound("NPC_HeadCrab.Bite")
+						self.Owner:EmitSoundEx("NPC_HeadCrab.Bite")
 						self:EmitSound("Zombie.Alert")
 						timer.Stop("HeadCrabEat"..self.Owner:EntIndex())
 					end
@@ -1778,13 +1778,13 @@ function SWEP:SecondaryAttack()
 
 	elseif self.Owner:GetPlayerClass() == "zombie" then
 		self:SetNextSecondaryFire(CurTime() + 2)
-		self.Owner:EmitSound("Zombie.Pain")
+		self.Owner:EmitSoundEx("Zombie.Pain")
 		self.Owner:DoAnimationEvent(ACT_SIGNAL_HALT, true)
 		self.Owner:SetClassSpeed(0.01)
 		timer.Simple(1, function()			
 			local angs = self.Owner:EyeAngles()
 			angs.p = 0
-			self.Owner:EmitSound("NPC_Headcrab.Attack")
+			self.Owner:EmitSoundEx("NPC_Headcrab.Attack")
 			self.Owner:SetLocalVelocity( self.Owner:GetAimVector() + Vector( 0, 0, 280 ) + self.Owner:GetVelocity() * 4 )
 			self.Owner:SetPlayerClass("headcrab")
 		end)
@@ -1793,7 +1793,7 @@ function SWEP:SecondaryAttack()
 
 
 		timer.Simple(0.6, function()
-			self.Owner:EmitSound("Zombine.ReadyGrenade")
+			self.Owner:EmitSoundEx("Zombine.ReadyGrenade")
 			self:SetHoldType("GRENADE")
 			if SERVER then
 				local nade=ents.Create("npc_grenade_frag")
@@ -1851,7 +1851,7 @@ function SWEP:PrimaryAttack()
 				vel = vel:Forward() * self.Force * 30 
 				grenade:GetPhysicsObject():ApplyForceCenter(vel)
 			end)
-			self.Owner:EmitSound("SpitterZombie.Spit")
+			self.Owner:EmitSoundEx("SpitterZombie.Spit")
 			timer.Simple(1.0, function()
 				self.Owner:ResetClassSpeed()
 			end)
@@ -1861,7 +1861,7 @@ function SWEP:PrimaryAttack()
 		
 	elseif (!self.Owner:IsBot() && self.Owner:GetPlayerClass() == "smoker") then
 		
-			self.Owner:EmitSound("SmokerZombie.TongueAttack") 
+			self.Owner:EmitSoundEx("SmokerZombie.TongueAttack") 
 			local VModel = self:GetOwner():GetViewModel()
 			VModel:SendViewModelMatchingSequence( VModel:LookupSequence("tongue") )
 			if SERVER then
@@ -1875,7 +1875,7 @@ function SWEP:PrimaryAttack()
 						net.Start("ActivateTauntCam")
 						net.Send(self.Owner)
 					end
-					self.Owner:EmitSound("SmokerZombie.TongueRetract")
+					self.Owner:EmitSoundEx("SmokerZombie.TongueRetract")
 				end)
 				self.Owner:PlaySequence("tongue_attack_drag_survivor_idle", false)
 				local enemy = self.Owner:GetEyeTrace().Entity
@@ -1966,18 +1966,18 @@ function SWEP:PrimaryAttack()
 							if SERVER then
 								enemy:TakeDamage(8,self.Owner)
 								if (string.find(self.Owner:GetModel(),"l4d1")) then
-									self.Owner:EmitSound("L4D1_SmokerZombie.Attack")
+									self.Owner:EmitSoundEx("L4D1_SmokerZombie.Attack")
 								else
-									self.Owner:EmitSound("SmokerZombie.Attack")
+									self.Owner:EmitSoundEx("SmokerZombie.Attack")
 								end
 								timer.Create("TongueAttack2"..self.Owner:EntIndex(), 1, 0, function()
 									enemy:TakeDamage(8,self.Owner)
 									if (math.random(1,3) == 1) then
 										timer.Adjust("VoiceL4d"..self.Owner:EntIndex(), 1.5)
 										if (string.find(self.Owner:GetModel(),"l4d1")) then
-											self.Owner:EmitSound("L4D1_SmokerZombie.Attack")
+											self.Owner:EmitSoundEx("L4D1_SmokerZombie.Attack")
 										else
-											self.Owner:EmitSound("SmokerZombie.Attack")
+											self.Owner:EmitSoundEx("SmokerZombie.Attack")
 										end
 									end
 								end)
@@ -2048,9 +2048,9 @@ function SWEP:PrimaryAttack()
 			if SERVER then
 				
 				if (string.find(self.Owner:GetModel(),"l4d1")) then
-					self.Owner:EmitSound("L4D1_Vomit.Use")
+					self.Owner:EmitSoundEx("L4D1_Vomit.Use")
 				else
-					self.Owner:EmitSound("Vomit.Use")
+					self.Owner:EmitSoundEx("Vomit.Use")
 				end
 			end
 			ParticleEffectAttach( "boomer_vomit_b", PATTACH_POINT_FOLLOW, self.Owner, 1 )
@@ -2168,7 +2168,7 @@ function SWEP:PrimaryAttack()
 		end
 		if self.Owner:GetPlayerClass() == "hunter" and self.Owner:IsOnGround() then
 			if SERVER then
-				self.Owner:EmitSound( "HunterZombie.Pounce" )
+				self.Owner:EmitSoundEx( "HunterZombie.Pounce" )
 			end
 		end
 		
@@ -2206,7 +2206,7 @@ function SWEP:PrimaryAttack()
 										self.Owner:SetMoveType(MOVETYPE_NONE)
 										v:SetMoveType(MOVETYPE_NONE)
 										v:SetNWBool("Taunting", true)
-										self.Owner:EmitSound("HunterZombie.Pounce.Hit")
+										self.Owner:EmitSoundEx("HunterZombie.Pounce.Hit")
 										local ply = v
 										local ent = v
 										ent:SetPos(ent:GetPos() + Vector(0,0,30))
@@ -2252,7 +2252,7 @@ function SWEP:PrimaryAttack()
 											
 											v:TakeDamage(5, self.Owner, self)
 											
-											self.Owner:EmitSound("HunterZombie.Pounce.shred")
+											self.Owner:EmitSoundEx("HunterZombie.Pounce.shred")
 										end)
 										timer.Create("RIPTHATASSHOLEAPART"..self.Owner:EntIndex(), 0, 0, function()
 											if v:Health() <= 1 then 
@@ -2312,7 +2312,7 @@ function SWEP:PrimaryAttack()
 										end)
 									end  
 								else
-									self.Owner:EmitSound("HunterZombie.Pounce.Miss")
+									self.Owner:EmitSoundEx("HunterZombie.Pounce.Miss")
 								end
 							end
 							elseif self.Owner:GetPlayerClass() == "jockey" then
@@ -2333,7 +2333,7 @@ function SWEP:PrimaryAttack()
 											v:EmitSound("player/charger/hit/charger_punch"..math.random(1,4)..".wav", 85, 100)
 											v:EmitSound("Jockey.Music")
 											v:EmitSound("music/tags/exenterationhit.wav")
-											self.Owner:EmitSound("jockey/voice/attack/jockey_attackloop01.wav")
+											self.Owner:EmitSoundEx("jockey/voice/attack/jockey_attackloop01.wav")
 											timer.Create("RIPTHATASSHOLEAPART"..self.Owner:EntIndex(), 1, 0, function()
 												if v:Health() <= 1 then 
 													timer.Stop("RIPTHATASSHOLEAPART"..self.Owner:EntIndex()) 
@@ -2374,7 +2374,7 @@ function SWEP:PrimaryAttack()
 											self.Owner:SetParent(v)
 											v:EmitSound("player/charger/hit/charger_punch"..math.random(1,4)..".wav", 85, 100)
 											v:EmitSound("music/tags/exenterationhit.wav")
-											self.Owner:EmitSound("jockey/voice/attack/jockey_attackloop01.wav")
+											self.Owner:EmitSoundEx("jockey/voice/attack/jockey_attackloop01.wav")
 											timer.Create("RIPTHATASSHOLEAPART"..self.Owner:EntIndex(), 1, 0, function()
 												if v:Health() <= 1 then 
 													timer.Stop("RIPTHATASSHOLEAPART"..self.Owner:EntIndex()) 
@@ -2423,18 +2423,18 @@ function SWEP:PrimaryAttack()
 				local time = 0.23
 				if (self.Owner:KeyDown(IN_ATTACK2)) then
 					if (string.find(self.Owner:GetModel(),"l4d1")) then
-						self.Owner:EmitSound("L4D1_BoomerZombie.Attack")
+						self.Owner:EmitSoundEx("L4D1_BoomerZombie.Attack")
 					else
-						self.Owner:EmitSound("BoomerZombie.Attack")
+						self.Owner:EmitSoundEx("BoomerZombie.Attack")
 					end
 				end
 				timer.Create("Growl"..self.Owner:EntIndex(), time, 0, function()
 	
 					if (self.Owner:KeyDown(IN_ATTACK2)) then
 						if (string.find(self.Owner:GetModel(),"l4d1")) then
-							self.Owner:EmitSound("L4D1_BoomerZombie.Attack")
+							self.Owner:EmitSoundEx("L4D1_BoomerZombie.Attack")
 						else
-							self.Owner:EmitSound("BoomerZombie.Attack")
+							self.Owner:EmitSoundEx("BoomerZombie.Attack")
 						end
 					end
 				end)
@@ -2444,9 +2444,9 @@ function SWEP:PrimaryAttack()
 			if (math.random(1,3) == 1) then
 				timer.Adjust("VoiceL4d"..self.Owner:EntIndex(), 1.5)
 				if (string.find(self.Owner:GetModel(),"l4d1")) then
-					self.Owner:EmitSound("L4D1_BoomerZombie.Attack")
+					self.Owner:EmitSoundEx("L4D1_BoomerZombie.Attack")
 				else
-					self.Owner:EmitSound("BoomerZombie.Attack")
+					self.Owner:EmitSoundEx("BoomerZombie.Attack")
 				end
 			end
 		end
@@ -2454,9 +2454,9 @@ function SWEP:PrimaryAttack()
 			if (math.random(1,3) == 1) then
 				timer.Adjust("VoiceL4d"..self.Owner:EntIndex(), 1.5)
 				if (string.find(self.Owner:GetModel(),"l4d1")) then
-					self.Owner:EmitSound("L4D1_SmokerZombie.Attack")
+					self.Owner:EmitSoundEx("L4D1_SmokerZombie.Attack")
 				else
-					self.Owner:EmitSound("SmokerZombie.Attack")
+					self.Owner:EmitSoundEx("SmokerZombie.Attack")
 				end
 			end
 		end
@@ -2464,12 +2464,12 @@ function SWEP:PrimaryAttack()
 			if (game.IsDedicated()) then
 				local time = 0.25
 				if (self.Owner:KeyDown(IN_ATTACK2)) then
-					self.Owner:EmitSound("PlayerZombie.Attack")
+					self.Owner:EmitSoundEx("PlayerZombie.Attack")
 				end
 				timer.Create("Growl"..self.Owner:EntIndex(), time, 0, function()
 	
 					if (self.Owner:KeyDown(IN_ATTACK2)) then
-						self.Owner:EmitSound("PlayerZombie.Attack")
+						self.Owner:EmitSoundEx("PlayerZombie.Attack")
 					end
 				end)
 			else
@@ -2477,7 +2477,7 @@ function SWEP:PrimaryAttack()
 			end
 			if (math.random(1,3) == 1) then
 				timer.Adjust("VoiceL4d"..self.Owner:EntIndex(), 1.5)
-				self.Owner:EmitSound("PlayerZombie.Attack")
+				self.Owner:EmitSoundEx("PlayerZombie.Attack")
 			end
 		end
 		--self.NextMeleeAttack = CurTime() + self.MeleeAttackDelay
@@ -2534,7 +2534,7 @@ function SWEP:PrimaryAttack()
 		
 		if self.Owner:GetPlayerClass() == "zombie" then
 			self.Owner:DoAnimationEvent(ACT_MELEE_ATTACK1)
-			self.Owner:EmitSound("Zombie.Attack")
+			self.Owner:EmitSoundEx("Zombie.Attack")
 			self.MeleeAttackDelay = 0.75
 			self.Owner:SetBodygroup(1,1)
 			self.Primary.Delay = 1.6
@@ -2542,7 +2542,7 @@ function SWEP:PrimaryAttack()
 		end
 		if self.Owner:GetPlayerClass() == "fastzombie" then
 			self.Owner:DoAnimationEvent(ACT_GMOD_GESTURE_RANGE_ZOMBIE_SPECIAL)
-			self.Owner:EmitSound("NPC_FastZombie.Attack")
+			self.Owner:EmitSoundEx("NPC_FastZombie.Attack")
 			self.MeleeAttackDelay = 0.5
 			self.Owner:SetBodygroup(1,1)
 			self.Primary.Delay = 1
@@ -2550,7 +2550,7 @@ function SWEP:PrimaryAttack()
 		end
 		if self.Owner:GetPlayerClass() == "poisonzombie" then
 			self.Owner:DoAnimationEvent(ACT_MELEE_ATTACK1)
-			self.Owner:EmitSound("NPC_PoisonZombie.Attack")
+			self.Owner:EmitSoundEx("NPC_PoisonZombie.Attack")
 			self.MeleeAttackDelay = 1
 			self.Owner:SetBodygroup(1,1)
 			self.Owner:SetBodygroup(2,1)
@@ -2561,7 +2561,7 @@ function SWEP:PrimaryAttack()
 		end
 		if self.Owner:GetPlayerClass() == "zombine" then
 			self:SetWeaponHoldType("MELEE")
-			self.Owner:EmitSound("Zombine.Charge")
+			self.Owner:EmitSoundEx("Zombine.Charge")
 			self.Owner:DoAnimationEvent(ACT_VM_UNLOAD, true) 
 			self.MeleeAttackDelay = 0.1
 			self.Owner:SetBodygroup(1,0)

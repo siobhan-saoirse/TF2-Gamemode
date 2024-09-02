@@ -54,7 +54,7 @@ function SWEP:SecondaryAttack()
 	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK_SPECIAL) 
 	self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
 	if SERVER then
-		self.Owner:EmitSound("BallBuster.HitBall")
+		self.Owner:EmitSoundEx("BallBuster.HitBall")
 		local grenade = ents.Create("tf_projectile_ornament")
 		grenade:SetPos(self:ProjectileShootPos())
 		grenade:SetAngles(self.Owner:EyeAngles())

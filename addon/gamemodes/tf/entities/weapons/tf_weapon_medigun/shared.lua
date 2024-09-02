@@ -431,7 +431,7 @@ function SWEP:StopFiring()
 	self:SendWeaponAnim(ACT_SECONDARY_ATTACK_STAND_POSTFIRE)
 	self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_POSTFIRE)
 	 
-	self.Owner:EmitSound("WeaponMedigun.HealingDetachHealer")
+	self.Owner:EmitSoundEx("WeaponMedigun.HealingDetachHealer")
 	self.NextIdle = CurTime() + self:SequenceDuration() - 0.2
 end
 

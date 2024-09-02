@@ -509,9 +509,9 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	end
 	if (ent:IsPlayer() and ent:IsHL2()) then
 		if (att and att:IsPlayer() and !att:IsHL2()) then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 0.7)
-			ent:StopSound("Player.ResistanceLight")
-			ent:EmitSound("Player.ResistanceLight")
+			dmginfo:SetDamage(dmginfo:GetDamage() * 0.5)
+			ent:StopSound("Player.ResistanceMedium")
+			ent:EmitSound("Player.ResistanceMedium")
 		end
 	end
 	if (!att:IsL4D() and !ent:IsL4D()) then

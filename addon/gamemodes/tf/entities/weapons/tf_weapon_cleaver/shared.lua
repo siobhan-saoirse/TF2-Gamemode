@@ -74,7 +74,7 @@ function SWEP:MeleeAttack()
 		
 		grenade:GetPhysicsObject():AddAngleVelocity(Vector(math.random(-2000,2000),math.random(-2000,2000),math.random(-2000,2000)))
 		grenade:GetPhysicsObject():ApplyForceCenter(vel)
-		self.Owner:EmitSound(self.ShootSound)
+		self.Owner:EmitSoundEx(self.ShootSound)
 	end
 end
 

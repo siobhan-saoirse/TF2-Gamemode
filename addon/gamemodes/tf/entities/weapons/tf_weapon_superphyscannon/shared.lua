@@ -544,7 +544,7 @@ end
 			
 			if !tgt or !tgt:IsValid() then
 				--self.Weapon:EmitSound("Weapon_PhysCannon.TooHeavy", 75, 100, 1)
-				self.Owner:EmitSound("Weapon_PhysCannon.TooHeavy")
+				self.Owner:EmitSoundEx("Weapon_PhysCannon.TooHeavy")
 				return
 			end
 			
@@ -554,12 +554,12 @@ end
 					local Mass = tgt:GetPhysicsObject():GetMass()
 					if ( getstyle == 0 and Mass >= (self.HL2MaxMass+1) ) or ( getstyle != 0 and Mass >= (self.MaxMass+1) ) then
 						--if GetConVar("gg_style"):GetInt() <= 0 then
-						self.Owner:EmitSound("Weapon_PhysCannon.TooHeavy")
+						self.Owner:EmitSoundEx("Weapon_PhysCannon.TooHeavy")
 						return
 						--end 
 					end
 				else 
-					self.Owner:EmitSound("Weapon_PhysCannon.TooHeavy")
+					self.Owner:EmitSoundEx("Weapon_PhysCannon.TooHeavy")
 					return
 				end
 			end
@@ -1773,10 +1773,10 @@ function SWEP:SecondaryAttack()
 	end
 	
 function SWEP:Pickup()
-		self.Owner:EmitSound("Weapon_MegaPhysCannon.Pickup")
+		self.Owner:EmitSoundEx("Weapon_MegaPhysCannon.Pickup")
 		self.Owner:StopSound("Weapon_PhysCannon.OpenClaws")
 		self.Owner:StopSound("Weapon_PhysCannon.CloseClaws")
-		self.Owner:EmitSound(HoldSound)
+		self.Owner:EmitSoundEx(HoldSound)
 		self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 		
 		PropLockTime = CurTime()+1
@@ -1897,7 +1897,7 @@ function SWEP:Drop()
 		end
 		
 		self.Secondary.Automatic = true
-		self.Owner:EmitSound("Weapon_MegaPhysCannon.Drop")
+		self.Owner:EmitSoundEx("Weapon_MegaPhysCannon.Drop")
 		self.Weapon:SetNextSecondaryFire( CurTime() + 0.5 );
 		if self.HP:GetClass() == "prop_combine_ball" then
 		self.Owner:SimulateGravGunPickup( self.HP )

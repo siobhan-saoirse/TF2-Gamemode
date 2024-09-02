@@ -56,7 +56,7 @@ function SWEP:ShootProjectile()
 			timer.Simple(1, function()
 				self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 				if SERVER then
-					self.Owner:EmitSound(")weapons/mlg_shoot.wav")
+					self.Owner:EmitSoundEx(")weapons/mlg_shoot.wav")
 					local rocket = ents.Create("tf_projectile_gibber")
 					rocket:SetPos(self:ProjectileShootPos())
 					local ang = self.Owner:EyeAngles()

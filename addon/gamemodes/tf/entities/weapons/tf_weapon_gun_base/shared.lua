@@ -156,7 +156,7 @@ function SWEP:PrimaryAttack()
 					local class = ply:GetPlayerClass()
 					ply.playerclass = string.upper(string.sub(class,1,1))..string.sub(class,2)	
 				end
-				self.Owner:EmitSound("player/spy_disguise.wav", 65, 100) 
+				self.Owner:EmitSoundEx("player/spy_disguise.wav", 65, 100) 
 			end
 		end
 	end

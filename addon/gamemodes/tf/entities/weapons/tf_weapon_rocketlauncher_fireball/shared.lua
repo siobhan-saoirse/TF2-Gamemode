@@ -85,10 +85,10 @@ function SWEP:ShootProjectile()
 		rocket:SetAngles(ang)
 		
 		if self:Critical() then
-			self.Owner:EmitSound(")weapons/dragons_fury_shoot_crit.wav")
+			self.Owner:EmitSoundEx(")weapons/dragons_fury_shoot_crit.wav")
 			rocket.critical = true
 		else
-			self.Owner:EmitSound(")weapons/dragons_fury_shoot.wav")
+			self.Owner:EmitSoundEx(")weapons/dragons_fury_shoot.wav")
 		end
 		
 		for k,v in pairs(self.Properties) do
@@ -120,10 +120,10 @@ function SWEP:SecondaryAttack()
 	if Delay>=0 and CurTime()<Delay then return end
 	self.Delay = CurTime() + self.Secondary.Delay
 	if SERVER then
-		self.Owner:EmitSound(self.AirblastSound)
-		self.Owner:EmitSound("weapons/dragons_fury_pressure_build.wav")
+		self.Owner:EmitSoundEx(self.AirblastSound)
+		self.Owner:EmitSoundEx("weapons/dragons_fury_pressure_build.wav")
 		timer.Simple(1.55, function()	
-			self.Owner:EmitSound("weapons/dragons_fury_pressure_build_stop.wav")
+			self.Owner:EmitSoundEx("weapons/dragons_fury_pressure_build_stop.wav")
 		end)
 	end
 	

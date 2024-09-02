@@ -205,7 +205,7 @@ function SWEP:DealDamage()
 	-- We need the second part for single player because SWEP:Think is ran shared in SP
 	if ( (IsValid(tr.Entity) and !tr.Entity:IsTFPlayer()) or tr.HitWorld ) then
 		if SERVER then
-			self.Owner:EmitSound( "Weapon_Punch.HitWorld" )
+			self.Owner:EmitSoundEx( "Weapon_Punch.HitWorld" )
 		end
 	end
 
@@ -213,7 +213,7 @@ function SWEP:DealDamage()
 	local scale = phys_pushscale:GetFloat()
 
 	if ( SERVER && IsValid( tr.Entity ) && ( tr.Entity:IsNPC() || tr.Entity:IsPlayer() || tr.Entity:Health() > 0 ) ) then
-		self.Owner:EmitSound( "Weapon_Punch.HitPlayer" )
+		self.Owner:EmitSoundEx( "Weapon_Punch.HitPlayer" )
 		local dmginfo = DamageInfo()
 
 		local attacker = self.Owner

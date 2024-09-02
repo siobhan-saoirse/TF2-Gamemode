@@ -96,7 +96,7 @@ end
 function SWEP:Deploy()
 	if not self:CallBaseFunction("Deploy") then return end
 	if SERVER then
-		self.Owner:EmitSound("weapons/nail_gun_draw.wav", 90)
+		self.Owner:EmitSoundEx("weapons/nail_gun_draw.wav", 90)
 	end
 end
 

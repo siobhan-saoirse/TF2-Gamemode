@@ -120,7 +120,7 @@ function SWEP:MeleeAttack()
 			self.Owner:DoAnimationEvent(ACT_DOD_PRIMARYATTACK_BOLT,true)
 			self.ShootSound = Sound("Weapon_bm_throwable.throw")
 			self.ShootCritSound = Sound("Weapon_bm_throwable.throw")
-			self.Owner:EmitSound(self.ShootSound)
+			self.Owner:EmitSoundEx(self.ShootSound)
 		end
 	end
 end

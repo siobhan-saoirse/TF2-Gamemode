@@ -130,7 +130,7 @@ function SWEP:CanSecondaryAttack()
 	return false
 end
 function SWEP:PrimaryAttack()
-	if self:Ammo1() < 1 then if SERVER then self.Owner:EmitSound("Weapon_BarretsArm.Fizzle") self:SetNextPrimaryFire(CurTime() + self.Secondary.Delay) end return end 
+	if self:Ammo1() < 1 then if SERVER then self.Owner:EmitSoundEx("Weapon_BarretsArm.Fizzle") self:SetNextPrimaryFire(CurTime() + self.Secondary.Delay) end return end 
 	if SERVER then
 		self:SetNextPrimaryFire(CurTime() + self.Primary.Delay) 
 		self.Owner:RemoveAmmo(5, self.Primary.Ammo, false)
@@ -143,7 +143,7 @@ end
 
 function SWEP:SecondaryAttack()
 	self:StopTimers()
-	if self:Ammo1() < 1 then if SERVER then self.Owner:EmitSound("Weapon_BarretsArm.Fizzle") self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay) end return end 
+	if self:Ammo1() < 1 then if SERVER then self.Owner:EmitSoundEx("Weapon_BarretsArm.Fizzle") self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay) end return end 
 	if self.Owner:GetMaterial() == "models/shadertest/predator" then return end
 	
 	auto_reload = self.Owner:GetInfoNum("tf_righthand", 1)
@@ -194,7 +194,7 @@ function SWEP:SecondaryAttack()
 				else 
 					self.Owner:SetSkin(0) 
 				end 
-				self.Owner:EmitSound("player/spy_disguise.wav", 65, 100) 
+				self.Owner:EmitSoundEx("player/spy_disguise.wav", 65, 100) 
 			end
 		end
 	end

@@ -11,7 +11,6 @@ local bots = {}
 local names = {"A Professional With Standards", "AimBot", "AmNot", "Aperture Science Prototype XR7", "Archimedes!", "BeepBeepBoop", "Big Mean Muther Hubbard", "Black Mesa", "BoomerBile", "Cannon Fodder", "CEDA", "Chell", "Chucklenuts", "Companion Cube", "Crazed Gunman", "CreditToTeam", "CRITRAWKETS", "Crowbar", "CryBaby", "CrySomeMore", "C++", "DeadHead", "Delicious Cake", "Divide by Zero", "Dog", "Force of Nature", "Freakin' Unbelievable", "Gentlemanne of Leisure", "GENTLE MANNE of LEISURE ", "GLaDOS", "Glorified Toaster with Legs", "Grim Bloody Fable", "GutsAndGlory!", "Hat-Wearing MAN", "Headful of Eyeballs", "Herr Doktor", "HI THERE", "Hostage", "Humans Are Weak", "H@XX0RZ", "I LIVE!", "It's Filthy in There!", "IvanTheSpaceBiker", "Kaboom!", "Kill Me", "LOS LOS LOS", "Maggot", "Mann Co.", "Me", "Mega Baboon", "Mentlegen", "Mindless Electrons", "MoreGun", "Nobody", "Nom Nom Nom", "NotMe", "Numnutz", "One-Man Cheeseburger Apocalypse", "Poopy Joe", "Pow!", "RageQuit", "Ribs Grow Back", "Saxton Hale", "Screamin' Eagles", "SMELLY UNFORTUNATE", "SomeDude", "Someone Else", "Soulless", "Still Alive", "TAAAAANK!", "Target Practice", "ThatGuy", "The Administrator", "The Combine", "The Freeman", "The G-Man", "THEM", "Tiny Baby Man", "Totally Not A Bot", "trigger_hurt", "WITCH", "ZAWMBEEZ", "Ze Ubermensch", "Zepheniah Mann", "0xDEADBEEF", "10001011101"}
 local classtbl4d = {"tank_l4d","boomer","boomer","boomer","jockey","charger","charger","spitter","spitter","smoker","hunter"}
 local classtb = {"scout", "soldier", "heavy", "demoman", "medic"} -- "scout", "soldier", "pyro", "engineer", "heavy", "demoman", "sniper", "medic", "spy"
-local classtbmvm = {"scout","scout","scout","scout","scout","scout","scout","scout","scout","scout","scout","scout","scout","scout","scout","scout","scout","scout","scout","scout","scout","scout","scout","scout","scoutfan","scoutfan","scoutfan","scoutfan","soldier","soldier","soldier","soldier","pyro","pyro","pyro","pyro","pyro","pyro","demoman","demoman","demoman","demoman","demoman","heavy","heavy","heavy","heavy","heavy","spy","spy","spy","sniper","sniper","engineer","engineer","engineer","engineer","engineer","engineer","medic","medic","medic","medic","sentrybuster","sentrybuster","sentrybuster","giantscout","giantpyro","giantheavy","giantsoldier","giantmedic","superscout","superscout","superscoutfan","giantheavyshotgun","giantheavyheater","giantsoldierrapidfire","giantsoldiercharged","soldierbuffed","soldierblackbox","soldierblackbox","soldierblackbox","soldierblackbox","soldierblackbox","soldierblackbox","soldierblackbox","soldierblackbox","soldierblackbox","soldierbuffed","soldierbuffed","demoknight","demoknight","demoknight","demoknight","demoknight","demoknight","demoknight","soldierbuffed","soldierbuffed","soldierbuffed","heavyshotgun","heavyshotgun","heavyshotgun","heavyshotgun","heavyweightchamp","heavyweightchamp","heavyweightchamp","heavyweightchamp","melee_scout","melee_scout_sandman","melee_scout_sandman","melee_scout_sandman","melee_scout_sandman","melee_scout","melee_scout","melee_scout","melee_scout","melee_scout","melee_scout","melee_scout","melee_scout","ubermedic","ubermedic","ubermedic","ubermedic","ubermedic","ubermedic"}
 local bot_class = CreateConVar("tf_bot_keep_class_after_death", "0", {FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY})
 local bot_diff = CreateConVar("tf_bot_difficulty", "1", {FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Sets the difficulty level for the bots. Values are: 0=easy, 1=normal, 2=hard, 3=expert. Default is \"Normal\" (1).")
 local bot_respawn = CreateConVar("tf_bot_npc_respawn", "0", {FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Should the NPC bots respawn?")
@@ -99,10 +98,25 @@ function LBAddBot(team)
 	bot.LastPath = nil
 	bot.CurSegment = 2
 	if (!bot.IsL4DZombie) then
-		if string.find(game.GetMap(), "mvm_") then
-			bot:SetPlayerClass(table.Random(classtbmvm))
-		else
-			bot:SetPlayerClass(table.Random(classtb))
+		local random = math.random(1,9)
+		if (random == 1) then
+			bot:SetPlayerClass("scout")
+		elseif (random == 2) then
+			bot:SetPlayerClass("soldier")
+		elseif (random == 3) then
+			bot:SetPlayerClass("pyro")
+		elseif (random == 4) then
+			bot:SetPlayerClass("demoman")
+		elseif (random == 5) then
+			bot:SetPlayerClass("heavy")
+		elseif (random == 6) then
+			bot:SetPlayerClass("engineer")
+		elseif (random == 7) then
+			bot:SetPlayerClass("medic")
+		elseif (random == 8) then
+			bot:SetPlayerClass("sniper")
+		elseif (random == 9) then
+			bot:SetPlayerClass("spy")
 		end
 	end
 	for k, v in pairs(player.GetAll()) do
@@ -180,10 +194,26 @@ local function LeadBot_S_Add(team2)
         ----TalkToMe(bot, "join")
     --end)
 	bot:SetTeam(teamv)
-	if string.find(game.GetMap(), "mvm_") then
-		bot:SetPlayerClass(table.Random(classtbmvm))
-	else
-		bot:SetPlayerClass(table.Random(classtb))
+	
+	local random = math.random(1,9)
+	if (random == 1) then
+		bot:SetPlayerClass("scout")
+	elseif (random == 2) then
+		bot:SetPlayerClass("soldier")
+	elseif (random == 3) then
+		bot:SetPlayerClass("pyro")
+	elseif (random == 4) then
+		bot:SetPlayerClass("demoman")
+	elseif (random == 5) then
+		bot:SetPlayerClass("heavy")
+	elseif (random == 6) then
+		bot:SetPlayerClass("engineer")
+	elseif (random == 7) then
+		bot:SetPlayerClass("medic")
+	elseif (random == 8) then
+		bot:SetPlayerClass("sniper")
+	elseif (random == 9) then
+		bot:SetPlayerClass("spy")
 	end
 
 	timer.Simple(1, function()
@@ -454,11 +484,28 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 				end)
 				if !bot_class:GetBool() then
 					if (!bot.IsL4DZombie) then
-						if string.find(game.GetMap(), "mvm_") then
-							bot:SetPlayerClass(table.Random(classtbmvm))
-						else
-							bot:SetPlayerClass(table.Random(classtb))
+										
+						local random = math.random(1,9)
+						if (random == 1) then
+							bot:SetPlayerClass("scout")
+						elseif (random == 2) then
+							bot:SetPlayerClass("soldier")
+						elseif (random == 3) then
+							bot:SetPlayerClass("pyro")
+						elseif (random == 4) then
+							bot:SetPlayerClass("demoman")
+						elseif (random == 5) then
+							bot:SetPlayerClass("heavy")
+						elseif (random == 6) then
+							bot:SetPlayerClass("engineer")
+						elseif (random == 7) then
+							bot:SetPlayerClass("medic")
+						elseif (random == 8) then
+							bot:SetPlayerClass("sniper")
+						elseif (random == 9) then
+							bot:SetPlayerClass("spy")
 						end
+						
 					end
 				end
 				timer.Simple(0.1, function()
@@ -742,32 +789,35 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					bot:SetEyeAngles(LerpAngle(0.2 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
 				end
 			end
-			if IsValid(bot.intelcarrier) and !IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.intelcarrier:GetPos()) < 6000 and bot.intelcarrier:Health() > 0 then
+			if IsValid(bot.intelcarrier) and bot.intelcarrier:Health() > 0 then
 				if (bot:GetPlayerClass() != "tank_l4d") then
 					if (bot:GetNWBool("Taunting",false) == true) then 
 						return 
 					end 
 				end	
-			
-				local shouldvegoneforthehead = bot.intelcarrier:EyePos()
-				local bone = 1
-				shouldvegoneforthehead = bot.intelcarrier:GetBonePosition(bone)
 				if (!bot.isCarryingIntel) then
 					bot.botPos = bot.intelcarrier:GetPos()
 				end
+				if (IsValid(bot.TargetEnt)) then
+					if (bot.TargetEnt:Health() > 0) then
+						local shouldvegoneforthehead = bot.TargetEnt:EyePos()
+						local bone = 1
+						shouldvegoneforthehead = bot.TargetEnt:GetBonePosition(bone)
 
-				local lerp = 1.2
-				if bot.Difficulty == 0 then
-					lerp = 0.9
-				elseif bot.Difficulty == 2 then
-					lerp = 2
-				elseif bot.Difficulty == 3 then
-					lerp = 4
-				end
-				if (bot:IsL4D()) then
-					bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
-				else
-					bot:SetEyeAngles(LerpAngle(FrameTime() * math.random(8, 10) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
+						local lerp = 1.2
+						if bot.Difficulty == 0 then
+							lerp = 0.9
+						elseif bot.Difficulty == 2 then
+							lerp = 2
+						elseif bot.Difficulty == 3 then
+							lerp = 4
+						end
+						if (bot:IsL4D()) then
+							bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
+						else
+							bot:SetEyeAngles(LerpAngle(FrameTime() * math.random(8, 10) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
+						end
+					end
 				end
 			end
 		if bot.ControllerBot.P then
@@ -847,7 +897,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				end
 				if (!IsValid(bot.TargetEnt)) then
 					if (bot:IsL4D()) then
-						bot:SetEyeAngles(LerpAngle(0.2, bot:EyeAngles(), mva))
+						--bot:SetEyeAngles(LerpAngle(0.2, bot:EyeAngles(), mva))
 					else
 						if controller.LookAtTime > CurTime() then
 							local ang = LerpAngle(0.2, bot:EyeAngles(), controller.LookAt)
@@ -1114,10 +1164,18 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				end
 			else
 
-					if (!bot.isCarryingIntel) then
+					if (!string.find(game.GetMap(),"mvm_") && !string.find(game.GetMap(),"ctf_") ) then
 						
 						bot.botPos = bot.TargetEnt:GetPos()
 						
+					else
+						if (IsValid(bot.intelcarrier)) then
+							if (!bot.isCarryingIntel) then
+								
+								bot.botPos = bot.intelcarrier:GetPos()
+							end
+						end
+
 					end
 
 			end

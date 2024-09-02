@@ -61,7 +61,7 @@ function SWEP:PrimaryAttack()
 		end
 	timer.Simple(3, function()
 		if SERVER then
-		self.Owner:EmitSound( self.HitWorld, 85	 )
+		self.Owner:EmitSoundEx( self.HitWorld, 85	 )
 		self.Owner:Speak("TLK_PLAYER_BATTLECRY")
 		self.Owner:SelectWeapon("tf_weapon_rocketlauncher")
 		self.Owner:SelectWeapon("tf_weapon_rocketlauncher_bbox")

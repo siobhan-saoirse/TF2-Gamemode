@@ -172,7 +172,7 @@ function SWEP:Think()
 			self:SendWeaponAnim(ACT_SECONDARY2_VM_RELOAD)
 			--self.Owner:SetAnimation(10000)	
 			self.Owner:DoAnimationEvent(ACT_MP_RELOAD_STAND_LOOP)	
-			self.Owner:EmitSound("Weapon_Pomson.Reload")
+			self.Owner:EmitSoundEx("Weapon_Pomson.Reload")
 			self.NextReload = CurTime() + (self.ReloadTime or self:SequenceDuration())
 			
 		end
@@ -185,7 +185,7 @@ function SWEP:Think()
 		self.NextReload = CurTime() + (self.ReloadTime or self:SequenceDuration())
 		
 		self.AmmoAdded = 1
-		self.Owner:EmitSound("Weapon_Pomson.Reload")
+		self.Owner:EmitSoundEx("Weapon_Pomson.Reload")
 		 
 		self.NextReloadStart = nil
 	end
@@ -240,7 +240,7 @@ function SWEP:PrimaryAttack()
 				else 
 					self.Owner:SetSkin(0) 
 				end 
-				self.Owner:EmitSound("player/spy_disguise.wav", 65, 100) 
+				self.Owner:EmitSoundEx("player/spy_disguise.wav", 65, 100) 
 			end
 		end
 	end

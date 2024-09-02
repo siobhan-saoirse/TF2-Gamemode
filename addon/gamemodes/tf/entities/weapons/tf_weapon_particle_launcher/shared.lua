@@ -170,7 +170,7 @@ function SWEP:SecondaryAttack()
 				else 
 					self.Owner:SetSkin(0) 
 				end 
-				self.Owner:EmitSound("player/spy_disguise.wav", 65, 100) 
+				self.Owner:EmitSoundEx("player/spy_disguise.wav", 65, 100) 
 			end
 		end
 	end
@@ -194,7 +194,7 @@ end
 function SWEP:ShootProjectile2()
 	if (self:Clip1() < 4) then return end
 	if SERVER then
-		self.Owner:EmitSound("Weapon_CowMangler.Charging")
+		self.Owner:EmitSoundEx("Weapon_CowMangler.Charging")
 	end
 	timer.Simple(2.1,function()
 		if SERVER then

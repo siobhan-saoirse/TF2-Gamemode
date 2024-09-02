@@ -65,7 +65,7 @@ function SWEP:PrimaryAttack()
 			elseif self.Owner:GetInfoNum("tf_robot",0) == 1 then
 				return
 			else
-				self.Owner:EmitSound("Heavy.SandwichEat")
+				self.Owner:EmitSoundEx("Heavy.SandwichEat")
 				self:SetBodygroup(0, 1)
 				GAMEMODE:HealPlayer(self.Owner, self.Owner, 50, true, false)
 			end
@@ -96,9 +96,9 @@ function SWEP:PrimaryAttack()
 				self:SetBodygroup(0, 0)
 			end
 			if self.Owner:GetInfoNum("tf_giant_robot",0) == 1 then
-				self.Owner:EmitSound("vo/mvm/mght/heavy_mvm_m_sandwichtaunt"..math.random(10,17)..".wav", 80, 100)
+				self.Owner:EmitSoundEx("vo/mvm/mght/heavy_mvm_m_sandwichtaunt"..math.random(10,17)..".wav", 80, 100)
 			elseif self.Owner:GetInfoNum("tf_robot",0) == 1 then
-				self.Owner:EmitSound("vo/mvm/norm/heavy_mvm_sandwichtaunt"..math.random(10,17)..".wav", 80, 100)
+				self.Owner:EmitSoundEx("vo/mvm/norm/heavy_mvm_sandwichtaunt"..math.random(10,17)..".wav", 80, 100)
 			else
 				self.Owner:PlayScene(table.Random(heavysandwichtaunt))
 			end
@@ -112,7 +112,7 @@ function SWEP:PrimaryAttack()
 			elseif self.Owner:GetInfoNum("tf_robot",0) == 1 then
 				return
 			else
-				self.Owner:EmitSound("Heavy.SandwichEat")
+				self.Owner:EmitSoundEx("Heavy.SandwichEat")
 				self:SetBodygroup(0, 1)
 				GAMEMODE:StartMiniCritBoost(self.Owner)
 				GAMEMODE:HealPlayer(self.Owner, self.Owner, 50, true, false)
@@ -137,9 +137,9 @@ function SWEP:PrimaryAttack()
 				self:SetBodygroup(0, 0)
 			end)
 			if self.Owner:GetInfoNum("tf_giant_robot",0) == 1 then
-				self.Owner:EmitSound("vo/mvm/mght/heavy_mvm_m_sandwichtaunt"..math.random(10,17)..".wav", 80, 100)
+				self.Owner:EmitSoundEx("vo/mvm/mght/heavy_mvm_m_sandwichtaunt"..math.random(10,17)..".wav", 80, 100)
 			elseif self.Owner:GetInfoNum("tf_robot",0) == 1 then
-				self.Owner:EmitSound("vo/mvm/norm/heavy_mvm_sandwichtaunt"..math.random(10,17)..".wav", 80, 100)
+				self.Owner:EmitSoundEx("vo/mvm/norm/heavy_mvm_sandwichtaunt"..math.random(10,17)..".wav", 80, 100)
 			else
 				self.Owner:PlayScene(table.Random(heavysandwichtaunt))
 			end
