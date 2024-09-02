@@ -34,27 +34,29 @@ function PANEL:Paint()
 	
 	surface.SetDrawColor(255,255,255,255)
 	
-	if (v.TeamNum == TEAM_BLU) then
-		local vecFlag = v:WorldSpaceCenter() - LocalPlayer():EyePos()
-		vecFlag.z = 0
-		local forward = LocalPlayer():GetForward()
-		local right = LocalPlayer():GetRight()
-		forward.z = 0
-		right.z = 0
-		local dot = vecFlag:DotProduct( forward )
-		local angleBetween = math.acos( dot )
+	for k,v in pairs(ents.FindByClass("item_teamflag")) do
+		if (v.TeamNum == TEAM_BLU) then
+			local vecFlag = v:WorldSpaceCenter() - LocalPlayer():EyePos()
+			vecFlag.z = 0
+			local forward = LocalPlayer():GetForward()
+			local right = LocalPlayer():GetRight()
+			forward.z = 0
+			right.z = 0
+			local dot = vecFlag:DotProduct( forward )
+			local angleBetween = math.acos( dot )
 
-		dot = vecFlag:DotProduct( right )
+			dot = vecFlag:DotProduct( right )
 
-		if ( dot < 0.0 ) then
-			angleBetween = angleBetween * -1
+			if ( dot < 0.0 ) then
+				angleBetween = angleBetween * -1
+			end
+			
+			local flRetVal = math.deg( angleBetween )
+			surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_compass_blue"))
+			surface.DrawTexturedRectRotated((340*WScale-30*Scale) - 120, (480-85)*Scale, 104*Scale, 104*Scale, flRetVal or 0)
+			surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_briefcase"))
+			surface.DrawTexturedRect((340*WScale-50*Scale) - 120, (480-105)*Scale, 42*Scale, 42*Scale)
 		end
-		
-		local flRetVal = math.deg( angleBetween )
-		surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_compass_blue"))
-		surface.DrawTexturedRectRotated((340*WScale-30*Scale) - 120, (480-85)*Scale, 104*Scale, 104*Scale, flRetVal or 0)
-		surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_briefcase"))
-		surface.DrawTexturedRect((340*WScale-50*Scale) - 120, (480-105)*Scale, 42*Scale, 42*Scale)
 	end
 
 end
