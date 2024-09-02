@@ -592,7 +592,7 @@ function meta:FireTFBullets(b)
 	b.Callback = TFBulletCallback
 	
 	
-	self.OWner:FireBullets(b)
+	self.Owner:FireBullets(b)
 end
 
 if CLIENT then

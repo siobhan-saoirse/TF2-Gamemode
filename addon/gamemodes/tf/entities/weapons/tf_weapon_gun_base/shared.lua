@@ -189,7 +189,7 @@ function SWEP:ShootProjectile(num_bullets, aimcone)
 		--self.Owner:LagCompensation(true)
 	--end
 	
-	self:FireTFBullets{
+	self:FireTFBullets{ 
 		Num = num_bullets,
 		Src = self.Owner:GetShootPos(),
 		--Src = self:ShootPos(),
