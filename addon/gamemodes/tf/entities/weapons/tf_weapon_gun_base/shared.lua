@@ -176,6 +176,56 @@ function SWEP:PrimaryAttack()
 	return true
 end
 
+local function TFBulletCallback(attacker, trace, dmginfo)
+	if CLIENT then return {effects=true} end
+	
+	local self = dmginfo:GetInflictor()
+	local dmg = self.TempDamageInfo
+	if dmg then
+		if trace.Entity and trace.Entity:IsValid() then
+			dmg.HitPos = trace.HitPos
+			--local damage = tf_util.CalculateDamage(dmg)
+			--local dir = (trace.HitPos - dmg.Src):GetNormal()
+			
+			-- Some NPCs such as the combine gunship completely ignore bullet damage, so let's force the gamemode to process this damage
+			if (trace.Entity:GetClass() == "npc_helicopter") then
+				trace.Entity:TakeDamageInfo(dmginfo)
+			end
+			if (trace.Entity:IsPlayer() or trace.Entity:IsNPC()) and dmg.Critical then
+				if attacker:EntityTeam()==TEAM_BLU or attacker:EntityTeam()==TF_TEAM_PVE_INVADERS then
+					ParticleEffect("bullet_impact1_blue_crit", trace.HitPos, Angle(0,0,0))
+				else
+					ParticleEffect("bullet_impact1_red_crit", trace.HitPos, Angle(0,0,0))
+				end
+			end
+		end
+		
+		if dmg.Tracer>0 and math.random(1,dmg.Tracer)==1 then
+			local tracer = dmg.TracerName
+			PrecacheParticleSystem(dmg.TracerName.."_red")
+			PrecacheParticleSystem(dmg.TracerName.."_blue")
+			
+			if attacker:EntityTeam()==TEAM_BLU or attacker:EntityTeam()==TF_TEAM_PVE_INVADERS then
+				tracer = tracer.."_blue"
+			else
+				tracer = tracer.."_red"
+			end
+			
+			if dmg.Critical then
+				tracer = tracer.."_crit" 
+			end
+			
+			umsg.Start("DoBulletTracer")
+				umsg.String(tracer)
+				umsg.Vector(trace.HitPos)
+				umsg.Entity(self:GetActiveWeapon())
+			umsg.End()
+		end
+	end
+	
+	return {effects=true}
+end
+
 --local force_bullets_lagcomp = CreateConVar("force_bullets_lagcomp", 0, {FCVAR_REPLICATED})
 
 function SWEP:ShootProjectile(num_bullets, aimcone)
@@ -188,8 +238,7 @@ function SWEP:ShootProjectile(num_bullets, aimcone)
 	--if b then
 		--self.Owner:LagCompensation(true)
 	--end
-	
-	self:FireTFBullets{ 
+	local b = { 
 		Num = num_bullets,
 		Src = self.Owner:GetShootPos(),
 		--Src = self:ShootPos(),
@@ -209,7 +258,26 @@ function SWEP:ShootProjectile(num_bullets, aimcone)
 		Tracer = 1,
 		TracerName = self.TracerEffect,
 		Force = 1,
+		Callback = TFBulletCallback
 	}
+	self.TempDamageInfo = {
+		BaseDamage = b.Damage,
+		Src = b.Src,
+		Critical = b.Critical,
+		Tracer = b.Tracer or 1,
+		TracerName = b.TracerName or "bullet_tracer01",
+		Force = b.Force or 1,
+	}
+
+	self.Owner.TempDamageInfo = {
+		BaseDamage = b.Damage,
+		Src = b.Src,
+		Critical = b.Critical,
+		Tracer = b.Tracer or 1,
+		TracerName = b.TracerName or "bullet_tracer01",
+		Force = b.Force or 1,
+	}
+	self.Owner:FireBullets(b)
 	
 	--if b then
 		--self.Owner:LagCompensation(false)
