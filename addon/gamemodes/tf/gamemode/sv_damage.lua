@@ -57,7 +57,6 @@ function GM:PreScaleDamage(ent, hitgroup, dmginfo)
 	local inf, att = dmginfo:GetInflictor(), dmginfo:GetAttacker()
 
 	ApplyAttributesFromEntity(dmginfo:GetInflictor(), "pre_damage", ent, hitgroup, dmginfo)
-
 	if att:IsPlayer() then
 		ApplyGlobalAttributesFromPlayer(att, "pre_damage", ent, hitgroup, dmginfo)
 	end
@@ -150,6 +149,10 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 
 	local att, inf = dmginfo:GetAttacker(), dmginfo:GetInflictor()
 
+	if (att:IsPlayer() and att:IsHL2() and hitgroup == HITGROUP_HEAD) then
+		dmginfo:SetDamageType(bit.bor(dmginfo:GetDamageType(),DMG_ACID))
+	end
+	
 	-- HL2 guns and melee weapons use the owner as the inflictor, get the real inflictor by retrieving the owner's current weapon
 	if inf == att and att:IsPlayer() then
 		inf = att:GetActiveWeapon()

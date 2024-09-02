@@ -603,7 +603,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		end
 		if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
 			for k,v in ipairs(ents.FindInSphere(bot:GetPos(),moveawayrange)) do
-				if (IsValid(v) and GAMEMODE:EntityTeam(v) == bot:Team() and v:IsTFPlayer() and v:EntIndex() != bot:EntIndex() and bot:GetNWBool("Taunting",false) != true) then
+				if (IsValid(v) and GAMEMODE:EntityTeam(v) == bot:Team() and v:IsPlayer() and v:EntIndex() != bot:EntIndex() and bot:GetNWBool("Taunting",false) != true) then
 					local forward = bot:EyeAngles():Forward()
 					local right = bot:EyeAngles():Right()
 					local avoidVector = bot:GetPos()
@@ -660,9 +660,9 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					
 					avoidVector:Normalize()
 					bot.movingAway = true
-					bot.pushAwayMove = mv:GetForwardSpeed() + (forward2 * 0.5)
-					mv:SetForwardSpeed(mv:GetForwardSpeed() + (forward2 * 0.5))
-					mv:SetSideSpeed(mv:GetSideSpeed() + (side * 0.5))
+					bot.pushAwayMove = mv:GetForwardSpeed() + (forward2 * 0.2)
+					mv:SetForwardSpeed(mv:GetForwardSpeed() + (forward2 * 0.2))
+					mv:SetSideSpeed(mv:GetSideSpeed() + (side * 0.2))
 				end
 			end
 		end
@@ -1174,6 +1174,10 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 								
 								bot.botPos = bot.intelcarrier:GetPos()
 							end
+						else
+
+							bot.botPos = bot.TargetEnt:GetPos()
+							
 						end
 
 					end
