@@ -41,7 +41,7 @@ function PANEL:Paint()
 	end
 	
 	if (IsValid(v)) then
-		local vecFlag = v:WorldSpaceCenter() - LocalPlayer():GetAimVector()
+		local vecFlag = v:WorldSpaceCenter() - LocalPlayer():GetPos()
 		vecFlag.z = 0
 		vecFlag:Normalize()
 		local forward = LocalPlayer():GetForward()
