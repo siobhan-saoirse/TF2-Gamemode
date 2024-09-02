@@ -627,10 +627,12 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	if dmginfo:GetDamageType() == bit.bor(DMG_BULLET,DMG_ALWAYSGIB) then
 		dmginfo:SetDamageType(DMG_BULLET)
 	end
-	if (IsValid(att:GetActiveWeapon())) then
-		if (att:GetActiveWeapon().Critical) then
-			if (att:GetActiveWeapon():Critical()) then
-				dmginfo:SetDamageType(bit.bor(dmginfo:GetDamageType(),DMG_ACID))
+	if (att:IsPlayer()) then
+		if (IsValid(att:GetActiveWeapon())) then
+			if (att:GetActiveWeapon().Critical) then
+				if (att:GetActiveWeapon():Critical()) then
+					dmginfo:SetDamageType(bit.bor(dmginfo:GetDamageType(),DMG_ACID))
+				end
 			end
 		end
 	end
@@ -706,6 +708,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			
 			ent.ExplosionForceCalc:Add(force)
 			dmginfo:SetDamageForce(force)
+			ent:SetVelocity(force)
 			
 			if ent:IsPlayer() then
 				ent:DoAnimationEvent(ACT_MP_AIRWALK, false)
