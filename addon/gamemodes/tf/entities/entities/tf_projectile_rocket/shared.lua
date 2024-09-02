@@ -144,7 +144,7 @@ function ENT:Initialize()
 	self:SetCollisionBounds(min, max)
 	self:SetSolid(SOLID_BBOX)
 	
-	self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
 	
 	self:SetLocalVelocity(self:GetForward() * self.BaseSpeed)
 	
@@ -307,11 +307,10 @@ function ENT:DoExplosion(ent)
 	if (IsValid(owner)) then
 		if owner:IsPlayer() then
 			if owner:GetActiveWeapon() ~= nil then
-				if owner:GetActiveWeapon().GetItemData then
+				if owner:GetActiveWeapon():GetItemData() then
 					if owner:GetActiveWeapon():GetItemData().model_player == "models/weapons/c_models/c_rocketjumper/c_rocketjumper.mdl" then
 						for k,v in ipairs(ents.FindInSphere(self:GetPos(), range*1)) do
 							if v == owner then
-								util.BlastDamage(self, owner, self:GetPos(), range*1, damage)
 								if (owner.m_flBlastJumpLaunchTime == nil) then
 									owner.m_flBlastJumpLaunchTime = CurTime()
 									local rf = RecipientFilter()
@@ -328,6 +327,13 @@ function ENT:DoExplosion(ent)
 						end
 					end
 				end
+			end
+			if self.Nuke then
+				--util.BlastDamage(self, owner, self:GetPos(), range*6, damage*6)
+				util.BlastDamage(self, owner, self:GetPos(), range*6, 100)
+			else
+				--util.BlastDamage(self, owner, self:GetPos(), range, damage)
+				util.BlastDamage(self, owner, self:GetPos(), range*1, damage)
 			end
 		else
 			if self.Nuke then
@@ -397,12 +403,7 @@ end]]
 
 function ENT:Touch(ent)
 	if not ent:IsTrigger() and ent:IsSolid() then	
-		if (ent:IsTFPlayer() and IsValid(self:GetOwner()) and ent:IsFriendly(self:GetOwner())) then
-			self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-			return
-		end
 		self:DoExplosion(ent)
-		self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
 	end
 end
 

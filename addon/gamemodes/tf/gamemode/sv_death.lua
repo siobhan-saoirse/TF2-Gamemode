@@ -572,7 +572,9 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	local shouldgib = false
 	local inflictor = dmginfo:GetInflictor()
 	ply:SetNWBool("Taunting",false)
-	ply:SetMoveType(MOVETYPE_NONE)
+	timer.Simple(0.02, function()
+		ply:SetMoveType(MOVETYPE_NONE)
+	end)
 	
 	ply.LastDamageInfo = CopyDamageInfo(dmginfo)
 

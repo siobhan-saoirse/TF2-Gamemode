@@ -84,6 +84,29 @@ SWEP.VM_RELOAD = ACT_PRIMARY_VM_RELOAD
 SWEP.VM_RELOAD_START = ACT_PRIMARY_RELOAD_START
 SWEP.VM_RELOAD_FINISH = ACT_PRIMARY_RELOAD_FINISH
 
+function SWEP:DoMuzzleFlash()
+	local betaeffect = self.BetaMuzzle
+	local ent
+	
+	if self.Owner==LocalPlayer() and not LocalPlayer():ShouldDrawLocalPlayer() then
+		ent = self.CModel
+	else
+		ent = self:GetWorldModelEntity()
+	end
+	
+	self:ResetParticles()
+	
+	if betaeffect then
+		local effectdata = EffectData()
+			effectdata:SetEntity(self)
+		util.Effect(betaeffect, effectdata)
+	else
+		--ent:MuzzleFlash()
+		ParticleEffectAttach(self.MuzzleEffect, PATTACH_POINT_FOLLOW, ent, ent:LookupAttachment("backblast"))
+	end
+end
+
+
 function SWEP:CreateSounds(owner)
 	if not IsValid(owner) then return end
 	
