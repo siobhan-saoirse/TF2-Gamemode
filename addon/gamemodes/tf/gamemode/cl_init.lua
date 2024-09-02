@@ -121,17 +121,8 @@ hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
 						
 						m_flObserverChaseDistance = (origin - eyepos):Length()
 
-						local tr = util.TraceHull{
-							start = origin,
-							endpos = origin - newdist * angles:Forward(),
-							filter = {ply,ragdoll},
-							mins = Vector(-3,-3,-3),
-							maxs = Vector( 3, 3, 3)
-						}
-						newdist = 115 * tr.Fraction
-
 						local view = {
-							origin = ragdoll:GetPos() - ( angles:Forward() * newdist ),
+							origin = thetrace.HitPos,
 							angles = theangles,
 							fov = fov,
 							drawviewer = true

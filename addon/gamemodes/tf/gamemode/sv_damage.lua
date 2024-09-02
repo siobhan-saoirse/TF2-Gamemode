@@ -904,6 +904,9 @@ function GM:IgniteEntity(ent, inf, att, dur)
 	local fl
 	
 	ent:AddFlags(FL_ONFIRE)
+	if (!ent:HasPlayerState(PLAYERSTATE_ONFIRE)) then
+		ent:EmitSound("Fire.Engulf")
+	end
 	if (ent:IsNPC()) then
 		ent:Ignite(dur)
 	end

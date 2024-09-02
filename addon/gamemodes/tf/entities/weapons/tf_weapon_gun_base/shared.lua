@@ -248,12 +248,8 @@ function SWEP:ShootProjectile(num_bullets, aimcone)
 		
 		Team = GAMEMODE:EntityTeam(self.Owner),
 		Damage = self.BaseDamage,
-		RampUp = self.MaxDamageRampUp,
-		Falloff = self.MaxDamageFalloff,
 		Critical = self:Critical(),
 		CritMultiplier = 0,
-		DamageModifier = self.DamageModifier,
-		DamageRandomize = self.DamageRandomize,
 		
 		Tracer = 1,
 		TracerName = self.TracerEffect,
