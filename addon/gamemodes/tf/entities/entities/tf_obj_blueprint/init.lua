@@ -171,7 +171,7 @@ function ENT:Think()
 		self.TargetYaw = math.NormalizeAngle(90 * self.Rotation)
 	end
 	
-	-- Rotating the blueprint
+	-- Rotating the blueprint 
 	if self.LastThink then
 		local dt = CurTime() - self.LastThink
 		

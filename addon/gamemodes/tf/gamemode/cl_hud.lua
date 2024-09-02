@@ -57,6 +57,7 @@ local VGUIFiles = {
 	"hud_weaponselection";
 	"hud_inspectpanel";
 	"hud_objectiveflagpanel";
+	"hud_objectiveflagpanel_blue";
 	"hud_objectivebombpanel";
 	
 	"hud_demomanpipes";

@@ -1176,7 +1176,11 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 							end
 						else
 
-							bot.botPos = bot.TargetEnt:GetPos()
+							for k, v in pairs(ents.FindByClass("item_teamflag_mvm")) do
+								if v.TeamNum ~= bot:Team() and k == 1 then 
+									bot.botPos = v:GetPos()
+								end
+							end
 							
 						end
 

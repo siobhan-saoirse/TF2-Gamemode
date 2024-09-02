@@ -22,7 +22,7 @@ function PANEL:Init()
 	self:SetPaintBackgroundEnabled(false)
 	self:ParentToHUD()
 	self:SetVisible(true)
-end
+end 
 
 function PANEL:PerformLayout()
 	self:SetPos(0,0)
@@ -90,36 +90,11 @@ function PANEL:Paint()
 	}
 	
 	draw.Text(param)
-	if (LocalPlayer():Team() == TEAM_RED) then
-		for k,v in pairs(ents.FindByClass("item_teamflag")) do
-			if (v.TeamNum == TEAM_BLU) then
-				local vecFlag = v:WorldSpaceCenter() - LocalPlayer():EyePos()
-				vecFlag.z = 0
-				local forward = LocalPlayer():GetForward()
-				local right = LocalPlayer():GetRight()
-				forward.z = 0
-				right.z = 0
-				local dot = vecFlag:DotProduct( forward )
-				local angleBetween = math.acos( dot )
-
-				dot = vecFlag:DotProduct( right )
-
-				if ( dot < 0.0 ) then
-					angleBetween = angleBetween * -1
-				end
-				
-				local flRetVal = math.deg( angleBetween )
-				surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_compass_blue"))
-				surface.DrawTexturedRectRotated(340*WScale-75*Scale, (485-120)*Scale, 104*Scale, 104*Scale, flRetVa or 0)
-				surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_briefcase"))
-				surface.DrawTexturedRect(340*WScale-50*Scale, (480-89)*Scale, 52*Scale, 52*Scale)
-			end
-		end
-	elseif (LocalPlayer():Team() == TEAM_BLU) then
 		for k,v in pairs(ents.FindByClass("item_teamflag")) do
 			if (v.TeamNum == TEAM_RED) then
 				local vecFlag = v:WorldSpaceCenter() - LocalPlayer():EyePos()
 				vecFlag.z = 0
+				vecFlag:Normalize()
 				local forward = LocalPlayer():GetForward()
 				local right = LocalPlayer():GetRight()
 				forward.z = 0
@@ -131,16 +106,15 @@ function PANEL:Paint()
 
 				if ( dot < 0.0 ) then
 					angleBetween = angleBetween * -1
-				end
+				end 
 				
 				local flRetVal = math.deg( angleBetween )
 				surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_compass_red"))
-				surface.DrawTexturedRectRotated(340*WScale-75*Scale, (485-120)*Scale, 104*Scale, 104*Scale, flRetVa or 0)
+				surface.DrawTexturedRectRotated((340*WScale-30*Scale) + 120, (480-85)*Scale, 104*Scale, 104*Scale, flRetVal or 0)
 				surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_briefcase"))
-				surface.DrawTexturedRect(340*WScale-50*Scale, (480-89)*Scale, 52*Scale, 52*Scale)
+				surface.DrawTexturedRect((340*WScale-50*Scale) + 120, (480-105)*Scale, 42*Scale, 42*Scale)
 			end
 		end
-	end
 
 	
 

@@ -24,7 +24,7 @@ function ENT:SetupDataTables()
 	end
 end
 
-function ENT:RotateBlue--print()
+function ENT:RotateBlueprint()
 	self.dt.Rotation = (self.dt.Rotation + 1) % 4
 end
 
@@ -36,7 +36,7 @@ function ENT:CalcPos(pl)
 		local tab = scripted_ents.Get(self.Building.class_name)
 		if tab then
 			if tab.SetupBlueprint then
-				tab:SetupBlue--print(self, self:GetOwner():GetBuildMode())
+				tab:SetupBlueprint(self, self:GetOwner():GetBuildMode())
 			end
 		end
 		
