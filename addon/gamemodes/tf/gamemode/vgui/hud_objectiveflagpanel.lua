@@ -93,7 +93,7 @@ function PANEL:Paint()
 	if (LocalPlayer():Team() == TEAM_RED) then
 		for k,v in pairs(ents.FindByClass("item_teamflag")) do
 			if (v.TeamNum == TEAM_BLU) then
-				local vecFlag = v:WorldSpaceCenter() - LocalPlayer():EyePos();
+				local vecFlag = v:WorldSpaceCenter() - LocalPlayer():EyePos()
 				vecFlag.z = 0
 				local forward = LocalPlayer():GetForward()
 				local right = LocalPlayer():GetRight()
@@ -110,7 +110,7 @@ function PANEL:Paint()
 				
 				local flRetVal = math.deg( angleBetween )
 				surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_compass_blue"))
-				surface.DrawTexturedRectRotated(340*WScale-75*Scale, (485-120)*Scale, 104*Scale, 104*Scale, flRetVa)
+				surface.DrawTexturedRectRotated(340*WScale-75*Scale, (485-120)*Scale, 104*Scale, 104*Scale, flRetVa or 0)
 				surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_briefcase"))
 				surface.DrawTexturedRect(340*WScale-50*Scale, (480-89)*Scale, 52*Scale, 52*Scale)
 			end
@@ -118,7 +118,7 @@ function PANEL:Paint()
 	elseif (LocalPlayer():Team() == TEAM_BLU) then
 		for k,v in pairs(ents.FindByClass("item_teamflag")) do
 			if (v.TeamNum == TEAM_RED) then
-				local vecFlag = v:WorldSpaceCenter() - LocalPlayer():EyePos();
+				local vecFlag = v:WorldSpaceCenter() - LocalPlayer():EyePos()
 				vecFlag.z = 0
 				local forward = LocalPlayer():GetForward()
 				local right = LocalPlayer():GetRight()
@@ -135,7 +135,7 @@ function PANEL:Paint()
 				
 				local flRetVal = math.deg( angleBetween )
 				surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_compass_red"))
-				surface.DrawTexturedRectRotated(340*WScale-75*Scale, (485-120)*Scale, 104*Scale, 104*Scale, flRetVa)
+				surface.DrawTexturedRectRotated(340*WScale-75*Scale, (485-120)*Scale, 104*Scale, 104*Scale, flRetVa or 0)
 				surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_briefcase"))
 				surface.DrawTexturedRect(340*WScale-50*Scale, (480-89)*Scale, 52*Scale, 52*Scale)
 			end
