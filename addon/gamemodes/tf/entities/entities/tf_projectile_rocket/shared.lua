@@ -68,7 +68,7 @@ AddCSLuaFile( "shared.lua" )
 ENT.Model = Model("models/weapons/w_models/w_rocket.mdl")
 ENT.ModelNuke = Model("models/props_trainyard/cart_bomb_separate.mdl")
  
-ENT.ExplosionSound = Sound("TF_BaseExplosionEffect.Sound")
+ENT.ExplosionSound = "TF_BaseExplosionEffect.Sound"
 ENT.ExplosionSoundFast = Sound("Weapon_RPG_DirectHit.Explode")
 ENT.ExplosionSoundNuke = Sound("Cart.Explode")
 ENT.BounceSound = Sound("Weapon_Grenade_Pipebomb.Bounce")
@@ -229,7 +229,13 @@ function ENT:DoExplosion(ent)
 	self.Touch = nil
 	
 	local effect, angle
-
+	if (IsValid(self:GetOwner()) and self:GetOwner():IsPlayer()) then
+		if (string.find(self:GetOwner():GetModel(),"_boss")) then
+			if (self.ExplosionSound == "TF_BaseExplosionEffect.Sound") then
+				self.ExplosionSound = "MVM.GiantSoldierRocketExplode"
+			end
+		end
+	end
 	if self.Nuke then
 		self:EmitSound(self.ExplosionSoundNuke)
 		effect = "cinefx_goldrush"
@@ -307,7 +313,7 @@ function ENT:DoExplosion(ent)
 	if (IsValid(owner)) then
 		if owner:IsPlayer() then
 			if owner:GetActiveWeapon() ~= nil then
-				if owner:GetActiveWeapon():GetItemData() then
+				if owner:GetActiveWeapon().dt ~= nil and owner:GetActiveWeapon().dt.ItemID ~= nil then
 					if owner:GetActiveWeapon():GetItemData().model_player == "models/weapons/c_models/c_rocketjumper/c_rocketjumper.mdl" then
 						for k,v in ipairs(ents.FindInSphere(self:GetPos(), range*1)) do
 							if v == owner then

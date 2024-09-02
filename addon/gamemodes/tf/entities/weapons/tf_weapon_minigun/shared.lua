@@ -129,13 +129,17 @@ SWEP.ShootCritSound = Sound("Weapon_Minigun.FireCrit")
 SWEP.DeploySound = Sound("weapons/draw_default.wav")
 
 function SWEP:CreateSounds()
-	self.SpinUpSound = CreateSound(self, self.SpecialSound1)
-	self.SpinDownSound = CreateSound(self, self.SpecialSound2)
-	self.SpinSound = CreateSound(self, self.SpecialSound3)
-	self.ShootSoundLoop = CreateSound(self, self.ShootSound2)
-	self.ShootCritSoundLoop = CreateSound(self, self.ShootCritSound)
-	
-	self.SoundsCreated = true
+	if SERVER then
+		local rf = RecipientFilter()
+		rf:AddAllPlayers()
+		self.SpinUpSound = CreateSound(self, self.SpecialSound1,rf)
+		self.SpinDownSound = CreateSound(self, self.SpecialSound2,rf)
+		self.SpinSound = CreateSound(self, self.SpecialSound3,rf)
+		self.ShootSoundLoop = CreateSound(self, self.ShootSound2,rf)
+		self.ShootCritSoundLoop = CreateSound(self, self.ShootCritSound,rf)
+		
+		self.SoundsCreated = true
+	end
 end
 
 if SERVER then
@@ -175,7 +179,7 @@ function SWEP:SpinUp()
 	self.Owner:StopSound(self.SpecialSound2)
 	self.Owner:StopSound(self.SpecialSound3)
 	if SERVER then
-		self.Owner:EmitSound(self.SpecialSound1)
+		self.Owner:EmitSoundEx(self.SpecialSound1)
 	end
 	
 	if self.Primary.Delay != 0.08 then
@@ -204,7 +208,7 @@ function SWEP:SpinDown()
 	self.Owner:StopSound(self.ShootCritSound)
 	self.Owner:StopSound(self.SpecialSound1)
 	if SERVER then
-		self.Owner:EmitSound(self.SpecialSound2)
+		self.Owner:EmitSoundEx(self.SpecialSound2)
 	end
 	self.Owner:StopSound(self.SpecialSound3)
 	if SERVER then
@@ -227,7 +231,7 @@ function SWEP:StopFiring()
 	end
 	timer.Stop("AttackAnim"..self.Owner:EntIndex())
 	if SERVER then
-		self.Owner:EmitSound(self.SpecialSound3)
+		self.Owner:EmitSoundEx(self.SpecialSound3)
 	end
 	self.Owner:StopSound(self.ShootSound2)
 	self.Owner:StopSound(self.ShootCritSound)
@@ -242,7 +246,7 @@ function SWEP:CanPrimaryAttack()
 	if self.Owner:GetAmmoCount(self.Primary.Ammo) <= 0 then
 	
 		if SERVER then
-			self.Owner:EmitSound("weapons/shotgun_empty.wav", 80, 100)
+			self.Owner:EmitSoundEx("weapons/shotgun_empty.wav", 80, 100)
 		end
 		self:SetNextPrimaryFire( CurTime() + 0.2 )
 		self:Reload()
@@ -296,7 +300,7 @@ function SWEP:PrimaryAttack(vampire)
 			self.Owner:StopSound(self.SpecialSound3)
 			self.Owner:StopSound(self.ShootSound2)
 			if SERVER then
-				self.Owner:EmitSound(self.ShootCritSound)
+				self.Owner:EmitSoundEx(self.ShootCritSound)
 			end
 			
 			if self.Primary.Delay != 0.08 then
@@ -316,7 +320,7 @@ function SWEP:PrimaryAttack(vampire)
 			self.Owner:StopSound(self.SpecialSound3)
 			self.Owner:StopSound(self.ShootCritSound)
 			if SERVER then
-				self.Owner:EmitSound(self.ShootSound2)
+				self.Owner:EmitSoundEx(self.ShootSound2)
 			end
 	
 			if self.Primary.Delay != 0.08 then
@@ -436,7 +440,7 @@ function SWEP:Think()
 	if self.NextEndSpinUpSound and CurTime()>=self.NextEndSpinUpSound then
 		self.Owner:StopSound(self.SpecialSound1)
 		if SERVER then
-			self.Owner:EmitSound(self.SpecialSound3)
+			self.Owner:EmitSoundEx(self.SpecialSound3)
 		end
 		if self.Primary.Delay != 0.08 then
 			self.SpinSound:ChangePitch(100 * self.Primary.Delay)
