@@ -2022,12 +2022,16 @@ function GM:PlayerSpawn(ply)
 		end)
 	end 	 
 	if ply:GetPlayerClass() == "engineer" and ply.TFBot then 
-		timer.Simple(0.1, function()
-			ply:SelectWeapon("tf_weapon_wrench")
-		end) 
-		timer.Simple(0.8, function() 
-			ply:Build(2,0)
-		end)
+		for k,v in ipairs(ents.FindByClass("bot_hint_sentrygun")) do
+			if (IsValid(v)) then
+				timer.Simple(0.1, function()
+					ply:SelectWeapon("tf_weapon_wrench")
+				end) 
+				timer.Simple(0.8, function() 
+					ply:Build(2,0)
+				end)
+			end
+		end
 	end
 	timer.Simple(0.5, function()
 		if ply:GetPlayerClass() == "engineer" and (string.find(ply:GetModel(),"/bot_") or (bot.TFBot and bot:Team() == TEAM_BLU and string.find(game.GetMap(),"mvm_"))) then 

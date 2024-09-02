@@ -36,6 +36,8 @@ function ENT:ChasePos( options )
 		if self.P:GetAge() > 0.3 then
 			self.P:Compute(self, self.PosGen)
 		end
+		self.P:Update( self )								-- This function moves the bot along the path
+
 		if GetConVar("developer"):GetFloat() > 0 then
 			self.P:Draw()
 		end

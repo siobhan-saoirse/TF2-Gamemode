@@ -16,12 +16,12 @@ end
 function META:ClearProxyVars()
 	self.__ProxyVars = {} 
 end
-if true then --MsgN("Skipping Material Proxies") return end
+if true then MsgN("Skipping Material Proxies") return end
 if not matproxy then
-	--MsgN("gmcl_matproxy module not found, not installing TF2 proxies")
+	MsgN("gmcl_matproxy module not found, not installing TF2 proxies")
 	return
 end
-
+ 
 function GM:LoadTFProxies()
 	local path = string.Replace(self.Folder, "gamemodes/", "").."/gamemode/proxies/"
 	for _,f in pairs(file.Find(path.."*.lua", "LUA")) do
@@ -32,9 +32,9 @@ function GM:LoadTFProxies()
 		
 		if type(PROXY.Init)=="function" and type(PROXY.OnBind)=="function" and type(PROXY.GetMaterial)=="function" then
 			matproxy.Add(proxyname, proxyname.."_TF", PROXY)
-			--MsgN(Format("Registered proxy '%s'", proxyname))
+			MsgN(Format("Registered proxy '%s'", proxyname))
 		else
-			--MsgN(Format("Error while loading proxy '%s'!", proxyname))
+			MsgN(Format("Error while loading proxy '%s'!", proxyname))
 		end
 	end
 	

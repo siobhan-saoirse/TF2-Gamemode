@@ -68,7 +68,7 @@ function LBAddProfile(tab)
 end
  
 function LBAddBot(team)
-	--if !profiles[name] then --MsgN("That is not a valid bot!") return end
+	--if !profiles[name] then MsgN("That is not a valid bot!") return end
 	if !navmesh.IsLoaded() then
 		navmesh.BeginGeneration()
 		for k, v in pairs(player.GetAll()) do
@@ -258,7 +258,7 @@ local function LeadBot_S_Add(team2)
 		end
 	end)
 
-	--MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
+	MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
 end
 
 local function LeadBot_S_Add_Zombie(team,class,pos)
@@ -300,7 +300,7 @@ local function LeadBot_S_Add_Zombie(team,class,pos)
 		end
 	end)
 
-	--MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
+	MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
 end
 
 local function LeadBot_S_Add_Survivor(team,class,pos)
@@ -342,7 +342,7 @@ local function LeadBot_S_Add_Survivor(team,class,pos)
 		end
 	end)
 
-	--MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
+	MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
 end
 local function LeadBot_S_Add_BlueSurvivor(team,class,pos)
 	if !navmesh.IsLoaded() then
@@ -383,7 +383,7 @@ local function LeadBot_S_Add_BlueSurvivor(team,class,pos)
 		end
 	end)
 
-	--MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
+	MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
 end
 
 hook.Add("PostCleanupMap", "LeadBot_S_PostCleanup", function()
@@ -802,20 +802,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				if (!bot.isCarryingIntel) then
 					bot.botPos = bot.intelcarrier:GetPos()
 				end
-
-				local lerp = 1.2
-				if bot.Difficulty == 0 then
-					lerp = 0.9
-				elseif bot.Difficulty == 2 then
-					lerp = 2
-				elseif bot.Difficulty == 3 then
-					lerp = 4
-				end
-				if (bot:IsL4D()) then
-					bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
-				else
-					bot:SetEyeAngles(LerpAngle(FrameTime() * math.random(8, 10) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
-				end
 			end
 		if bot.ControllerBot.P then
 			if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
@@ -1222,7 +1208,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				end
 			end
 			
-			bot:MoveToPos(bot.botPos)
+			
 		cmd:SetButtons(buttons)
 	end
 end)
@@ -1671,7 +1657,7 @@ concommand.Add("sb_add_blue", function(ply, _, _, args)
 		LeadBot_S_Add_BlueSurvivor(0,args,ply:GetEyeTrace().HitPos) 
 	end 
 end)
-concommand.Add("tf_bot_name_add", function(_, _, args) table.insert(names, args[1]) --MsgN(args[1].." added to names list!") end)
+concommand.Add("tf_bot_name_add", function(_, _, args) table.insert(names, args[1]) MsgN(args[1].." added to names list!") end)
 concommand.Add("tf_bot_quota", function(_, _, args) for i=0, args[1]-1 do LeadBot_S_Add() end end)
 
 --concommand.Add("lk.playerclass", function(_, _, args) for k, v in pairs(player.GetBots()) do v:SetPlayerClass(args[1]) end end)
@@ -1686,7 +1672,7 @@ concommand.Add("tf_unspectate_bot", function(ply) ply:UnSpectate() ply:KillSilen
 concommand.Add("tf_bot_takecontrol", function(ply) local bot = ply:GetObserverTarget() ply:UnSpectate() ply:SetMoveType(MOVETYPE_WALK) ply:KillSilent() ply:Spawn() ply:SetTeam(bot:Team()) ply:SetPlayerClass(bot:GetPlayerClass()) timer.Simple(0.1, function() ply:UnSpectate() ply:SetPlayerClass(bot:GetPlayerClass()) timer.Simple(0.1, function() ply:SetHealth(bot:Health()) ply:SetPos(bot:GetPos()) ply:SetEyeAngles(bot:EyeAngles()) ply:SendLua([[surface.PlaySound("misc/freeze_cam.wav")]]) bot:Kill() end) end) end)
 
 --[[concommand.Add("tf_bot_difficulty", function(_, _, args)
-	if !args[1] then --MsgN("Defines the skill of bots joining the game.") return
+	if !args[1] then MsgN("Defines the skill of bots joining the game.") return
 	local diffn = "easy"
 	if args[1] == "2" then
 		diffn = "medium"

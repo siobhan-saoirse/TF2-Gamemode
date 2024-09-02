@@ -576,7 +576,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		ply:SetMoveType(MOVETYPE_NONE)
 		ply:SetPos(ply:GetPos() - Vector(0,0,30))
 	end)
-	
+	ply:SetNWFloat("m_flDeathTime",CurTime())
 	ply.LastDamageInfo = CopyDamageInfo(dmginfo)
 
 	if (string.find(ply:GetModel(),"/bot_")) then

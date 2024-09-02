@@ -241,14 +241,14 @@ function ParseGameItems(data, silent)
 		end
 		
 		Items.n = Items.n + 1
-		v.id = tonumber(k)
+		v.id = tonumber(k) 
 		
 		Items[v.name] = v
 		ItemsByID[v.id] = v
 		numreg = numreg + 1
 	end
 	ConvertStringsToNumbers(Items)
-	if not silent then --MsgN(numreg.." items registered.") end
+	--if not silent then MsgN(numreg.." items registered.") end
 	
 	file.Append("hatlog.txt", hatlog)
 	----MsgN(numign.." items ignored.")
@@ -1006,4 +1006,4 @@ concommand.Add("givebundle", function(pl,_,args)
 	RunConsoleCommand("__svgiveitem", unpack(args))
 end, AC_GiveBundle)
 
-end
+end 

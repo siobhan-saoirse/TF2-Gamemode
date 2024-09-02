@@ -111,7 +111,6 @@ function PANEL:Paint()
 
 		dot = vecFlag:Dot( right )
 		
-		angleBetween = math.acos( dot )
 		if ( dot < 0.0 ) then
 			angleBetween = angleBetween * -1
 		end

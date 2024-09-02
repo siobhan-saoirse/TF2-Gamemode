@@ -69,6 +69,15 @@ hook.Add( "PopulateToolMenu", "Civ2Settings1", function()
 	end )
 end )
 
+local function VectorMA( start, scale, direction, dest )
+	--[[
+	dest.x = start.x + scale * direction.x;
+	dest.y = start.y + scale * direction.y;
+	dest.z = start.z + scale * direction.z;
+	]]
+	return Vector(start.x + scale * direction.x,start.y + scale * direction.y,start.z + scale * direction.z)
+end
+
 hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
 	if (!ply:Alive()) then
 		if (IsValid(ply:GetNWEntity("RagdollEntity"))) then
@@ -77,56 +86,41 @@ hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
 				local newdist = 115
 				local origin = ragdoll:GetPos()
 				if GetConVar("cam_collision"):GetBool() then
-					if (GetConVar("civ2_first_person_deathcam"):GetBool()) then
-						local ang = angles
-						if (ragdoll:LookupBone("bip_head") != nil) then
-						
-							local origin2 = ragdoll:GetBonePosition(ragdoll:LookupBone("bip_head"))
-							ang = ragdoll:GetBoneAngles(ragdoll:LookupBone("bip_head"))
-														
-							local tr = util.TraceHull{
-								start = origin2,
-								endpos = origin2,
-								angles = ang,
-								filter = {ply,ragdoll},
-								mins = Vector(-3,-3,-3),
-								maxs = Vector( 3, 3, 3)
-							}
-							newdist = 20 * tr.Fraction
-							
-							local newangles = ang
-							local view = {
-								origin = origin2,
-								angles = newangles,
-								fov = fov,
-								drawviewer = true
-							}	
-							return view
+					if (IsValid(ply:GetObserverTarget())) then
+						local killer = ply:GetObserverTarget()
+						local interpolation = ( CurTime() - ply:GetNWFloat("m_flDeathTime",CurTime()) ) / 4
+						interpolation = math.Clamp( interpolation, 0.0, 1.0 );
 
-						elseif (ragdoll:LookupBone("ValveBiped.Bip01_Head1") != nil) then
+						local flMinChaseDistance = 16;
+						local flMaxChaseDistance = 96;
+						local flScaleSquared = killer:GetModelScale() * killer:GetModelScale();
+						flMinChaseDistance = flMinChaseDistance * flScaleSquared;
+						flMaxChaseDistance = flMaxChaseDistance * flScaleSquared;
+						m_flObserverChaseDistance = math.Clamp( FrameTime() * 48.0, flMinChaseDistance, flMaxChaseDistance );
 						
-							local origin2 = ragdoll:GetBonePosition(ragdoll:LookupBone("ValveBiped.Bip01_Head1"))
-							ang = ragdoll:GetBoneAngles(ragdoll:LookupBone("ValveBiped.Bip01_Head1"))
-							
-							local tr = util.TraceHull{
-								start = origin2,
-								endpos = origin2,
-								angles = ang,
-								filter = {ply,ragdoll},
-								mins = Vector(-3,-3,-3),
-								maxs = Vector( 3, 3, 3)
-							}
-							newdist = 20 * tr.Fraction
-							
-							local view = {
-								origin = origin2,
-								fov = fov,
-								drawviewer = true
-							}	
-							return view
-						end
+						local aForward = EyeAngles()
+						local vKiller = killer:EyePos() - origin
+						local aKiller = vKiller:Angle()
+						
+						local theangles = LerpAngle(interpolation, aKiller, angles);
 
-					else
+						local vForward = angles:Forward()
+						vForward:Normalize()
+						local eyepos = VectorMA( origin, -m_flObserverChaseDistance, vForward, eyepos )
+						
+
+						local thetrace = util.TraceHull( {
+							entity = ply,
+							start = origin,
+							endpos = eyepos,
+							mins = Vector(-6, -6, -6),
+							maxs = Vector(6, 6, 6),
+							collisiongroup = COLLISION_GROUP_NONE,
+							mask = MASK_SOLID,
+						} )
+						
+						m_flObserverChaseDistance = (origin - eyepos):Length()
+
 						local tr = util.TraceHull{
 							start = origin,
 							endpos = origin - newdist * angles:Forward(),
@@ -135,14 +129,31 @@ hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
 							maxs = Vector( 3, 3, 3)
 						}
 						newdist = 115 * tr.Fraction
+
 						local view = {
 							origin = ragdoll:GetPos() - ( angles:Forward() * newdist ),
+							angles = theangles,
 							fov = fov,
 							drawviewer = true
 						}	
+						
 						return view
-
-					end				
+					end
+					local tr = util.TraceHull{
+						start = origin,
+						endpos = origin - newdist * angles:Forward(),
+						filter = {ply,ragdoll},
+						mins = Vector(-3,-3,-3),
+						maxs = Vector( 3, 3, 3)
+					}
+					newdist = 115 * tr.Fraction
+					local view = {
+						origin = ragdoll:GetPos() - ( angles:Forward() * newdist ),
+						angles = angles,
+						fov = fov,
+						drawviewer = true
+					}	
+					return view
 				end
 			end
 		end

@@ -24,7 +24,7 @@ PLAYERSTATE_SPEED		= 4096
 local function DefaultParticleNameFunc(v, p)
 	return string.format(v.particle,ParticleSuffix(p:EntityTeam()))
 end
-
+ 
 function meta:GetPlayerState()
 	return self:GetNWInt("PlayerState")
 end
