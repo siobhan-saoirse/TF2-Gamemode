@@ -14,6 +14,9 @@ local objectives_flagpanel_carried_outline = surface.GetTextureID("hud/objective
 local objectives_flagpanel_carried_red = surface.GetTextureID("hud/objectives_flagpanel_carried_red")
 local objectives_flagpanel_carried_blue = surface.GetTextureID("hud/objectives_flagpanel_carried_blue")
 local objectives_flagpanel_bg_playingto = surface.GetTextureID("hud/objectives_flagpanel_bg_playingto")
+local objectives_flagpanel_bg_mvm_bombcompass = surface.GetTextureID("hud/objectives_flagpanel_compass_grey")
+local objectives_flagpanel_bg_mvm_bombdropped = surface.GetTextureID("hud/bomb_dropped")
+local objectives_flagpanel_bg_mvm_bombcarried = surface.GetTextureID("hud/bomb_carried")
 
 function PANEL:Init()
 	self:SetPaintBackgroundEnabled(false)
@@ -87,6 +90,60 @@ function PANEL:Paint()
 	}
 	
 	draw.Text(param)
+	if (LocalPlayer():Team() == TEAM_RED) then
+		for k,v in pairs(ents.FindByClass("item_teamflag")) do
+			if (v.TeamNum == TEAM_BLU) then
+				local vecFlag = v:WorldSpaceCenter() - LocalPlayer():EyePos();
+				vecFlag.z = 0
+				local forward = LocalPlayer():GetForward()
+				local right = LocalPlayer():GetRight()
+				forward.z = 0
+				right.z = 0
+				local dot = vecFlag:DotProduct( forward )
+				local angleBetween = math.acos( dot )
+
+				dot = vecFlag:DotProduct( right )
+
+				if ( dot < 0.0 ) then
+					angleBetween = angleBetween * -1
+				end
+				
+				local flRetVal = math.deg( angleBetween )
+				surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_compass_blue"))
+				surface.DrawTexturedRectRotated(340*WScale-75*Scale, (485-120)*Scale, 104*Scale, 104*Scale, flRetVa)
+				surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_briefcase"))
+				surface.DrawTexturedRect(340*WScale-50*Scale, (480-89)*Scale, 52*Scale, 52*Scale)
+			end
+		end
+	elseif (LocalPlayer():Team() == TEAM_BLU) then
+		for k,v in pairs(ents.FindByClass("item_teamflag")) do
+			if (v.TeamNum == TEAM_RED) then
+				local vecFlag = v:WorldSpaceCenter() - LocalPlayer():EyePos();
+				vecFlag.z = 0
+				local forward = LocalPlayer():GetForward()
+				local right = LocalPlayer():GetRight()
+				forward.z = 0
+				right.z = 0
+				local dot = vecFlag:DotProduct( forward )
+				local angleBetween = math.acos( dot )
+
+				dot = vecFlag:DotProduct( right )
+
+				if ( dot < 0.0 ) then
+					angleBetween = angleBetween * -1
+				end
+				
+				local flRetVal = math.deg( angleBetween )
+				surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_compass_red"))
+				surface.DrawTexturedRectRotated(340*WScale-75*Scale, (485-120)*Scale, 104*Scale, 104*Scale, flRetVa)
+				surface.SetTexture(surface.GetTextureID("hud/objectives_flagpanel_briefcase"))
+				surface.DrawTexturedRect(340*WScale-50*Scale, (480-89)*Scale, 52*Scale, 52*Scale)
+			end
+		end
+	end
+
+	
+
 end
 
 if HudObjectiveFlagPanel then HudObjectiveFlagPanel:Remove() end

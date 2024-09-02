@@ -124,6 +124,9 @@ function ENT:KeyValue(key, value)
 end
 
 function ENT:Think()
+	if SERVER then
+		self:SetNWInt("TeamNum",self.TeamNum)
+	end
 	self:SetNWEntity("carrier", self.Carrier)
 
 	for k, v in pairs(player.GetAll()) do
@@ -414,6 +417,9 @@ function ENT:Draw()
 end
 
 function ENT:Think()
+	if (self:GetNWInt("TeamNum",0) ~= nil) then
+		self.TeamNum = self:GetNWInt("TeamNum")
+	end
 	if self:GetNWBool("TimerActive") then
 		if not self.NextReturn or self.OldTimeRemaining~=self:GetNWFloat("TimeRemaining") then
 			self.OldTimeRemaining = self:GetNWFloat("TimeRemaining")
