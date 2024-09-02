@@ -72,7 +72,7 @@ end )
 hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
 	if (!ply:Alive()) then
 		if (IsValid(ply:GetNWEntity("RagdollEntity"))) then
-			if ((ply:GetObserverMode() == OBS_MODE_DEATHCAM and !IsValid(ply:GetObserverTarget())) then
+			if ((ply:GetObserverMode() == OBS_MODE_DEATHCAM and !IsValid(ply:GetObserverTarget()))) then
 				local ragdoll = ply:GetNWEntity("RagdollEntity")
 				local newdist = 115
 				local origin = ragdoll:GetPos()
