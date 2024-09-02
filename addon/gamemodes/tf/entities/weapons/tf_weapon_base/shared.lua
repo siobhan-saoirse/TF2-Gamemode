@@ -1288,9 +1288,9 @@ function SWEP:RustyBulletHole()
 				if (ent:IsPlayer() and string.find(ent:GetModel(),"/bot_")) then 
 					return
 				end
-			end
+			end 
 		end
-		self:FireBullets({Num = self.BulletsPerShot, Src = self.Owner:GetShootPos(), Dir = self.Owner:GetAimVector(), Spread = Vector(self.BulletSpread, self.BulletSpread, 0), Tracer = 0, Force = 0, Damage = 0, AmmoType = ""})
+		self.Owner:FireBullets({Num = self.BulletsPerShot, Src = self.Owner:GetShootPos(), Dir = self.Owner:GetAimVector(), Spread = Vector(self.BulletSpread, self.BulletSpread, 0), Tracer = 0, Force = 0, Damage = 0, AmmoType = ""})
 	end
 end
 

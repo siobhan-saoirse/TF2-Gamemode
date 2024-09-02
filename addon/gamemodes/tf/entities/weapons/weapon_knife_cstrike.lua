@@ -15,7 +15,7 @@ SWEP.Spawnable = true
 
 --SWEP.ViewModel = Model( "models/v_models/v_huntingrifle.mdl" )
 SWEP.ViewModel = Model( "models/weapons/cstrike/c_knife_t.mdl" )
-SWEP.WorldModel = "models/weapons/w_knife_ct.mdl"
+SWEP.WorldModel = "models/weapons/w_knife_t.mdl"
 
 SWEP.UseHands = true
 SWEP.HoldType = "knife"
