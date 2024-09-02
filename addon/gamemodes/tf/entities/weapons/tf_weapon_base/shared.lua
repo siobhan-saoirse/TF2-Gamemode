@@ -467,7 +467,7 @@ function SWEP:PostCalculateDamage(dmg, ent)
 end
 
 function SWEP:CalculateDamage(hitpos, ent)
-	return tf_util.CalculateDamage(self, self:GetPos(), self.Owner:GetPos())
+	return self.BaseDamage
 end
 
 function SWEP:Equip()
