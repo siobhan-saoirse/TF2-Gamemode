@@ -54,7 +54,7 @@ function ENT:SpawnFunction(pl, tr)
 	ent:SetTeam(pl:Team())
 	ent:SetBuilder(pl) 
 	
-	return ent
+	return ent 
 end
 
 function ENT:StartSupply(pl)
