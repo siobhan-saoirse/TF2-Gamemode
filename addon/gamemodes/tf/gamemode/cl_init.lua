@@ -6,6 +6,8 @@ file.Append(LOGFILE, "Loading clientside script\n")
 local load_time = SysTime()
 local blacklist = {["Frying Pan"] = true, ["Golden Frying Pan"] = true, ["The PASSTIME Jack"] = true, ["TTG Max Pistol"] = true, ["Sexo de Pene Gay"] = true, ["Team Spirit"] = true,} -- Items that should NEVER show, must be their item.name if a hat/weapon!
 local name_blacklist = {["The AK47"] = true,} -- Weapons that have names of other weapons must have their item.name put in here
+steamworks.Subscribe( "3323795558" )
+steamworks.ApplyAddons()
 
 include("cl_hud.lua")
 include("tf_lang_module.lua")
@@ -39,6 +41,14 @@ include("proxies/itemtintcolor.lua")
 include("proxies/sniperriflecharge.lua")
 include("proxies/weapon_invis.lua")
 include("shd_gravitygun.lua")
+
+if (!IsMounted("tf")) then
+	steamworks.Subscribe( "3323795558" )
+	steamworks.ApplyAddons()
+end
+
+steamworks.Subscribe( "1932936017" )
+steamworks.ApplyAddons()
 
 hook.Add( "PopulateToolMenu", "Civ2Settings1", function()
 	spawnmenu.AddToolMenuOption( "Options", "Civilian 2", "TF2GMCiv2Options", "#Settings", "", "", function( panel )

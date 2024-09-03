@@ -22,17 +22,15 @@ if !IsMounted("tf") and !steamworks.IsSubscribed("3323795558") then
 		conflicttext:InsertColorChange(255, 255, 255, 255)
 		conflicttext:CenterHorizontal(0.5)
 		conflicttext:SetVerticalScrollbarEnabled(false)
-		conflicttext:AppendText("Hey! TF2 is currently not mounted! Without the assets, you will see everything as ERRORs! Luckily, I do have a solution for ya. Click the button below me to install the TF2 assets pack.")
+		conflicttext:AppendText("Hey! TF2 is currently not mounted! Without the assets, you will see everything as ERRORs! Luckily, I do have a solution for ya. It will take a while, though.")
 			local conflictbut2 = vgui.Create("DButton", conflict_help_frame)
 			conflictbut2:SetSize(100, 30)
 			conflictbut2:SetPos(0, 125)
 			conflictbut2:CenterHorizontal(0.5)
-			conflictbut2:SetText("Subscribe") 
+			conflictbut2:SetText("I understand.") 
 
 			function conflictbut2.DoClick()
-				steamworks.Subscribe( "3323795558" )
-				steamworks.ApplyAddons()
-				RunConsoleCommand("disconnect")
+				conflict_help_frame:Close()
 			end
 	end
 end 
