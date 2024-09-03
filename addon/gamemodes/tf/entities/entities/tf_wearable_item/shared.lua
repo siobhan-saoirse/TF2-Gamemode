@@ -24,57 +24,6 @@ function ENT:SetItemTint(t)
 	self.dt.ItemTint = t
 end
 
-function ENT:Think()
-	if (!IsValid(self.Owner) or (IsValid(self.Owner) && !self.Owner:Alive())) then
-		self:Remove()
-	end
-	if self:GetOwner() ~= LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() then
-		if self.ShadowCreated ~= true then
-			self.ShadowCreated = true
-			self:CreateShadow()
-		end
-	else
-		if self.ShadowCreated ~= false then
-			self.ShadowCreated = false
-			self:DestroyShadow()
-		end
-	end
-
-	if CLIENT then
-		if self:GetOwner() ~= LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() then
-			if self.ShadowCreated ~= true then
-				self.ShadowCreated = true
-				self:CreateShadow()
-			end
-		else
-			if self.ShadowCreated ~= false then
-				self.ShadowCreated = false
-				self:DestroyShadow()
-			end
-		end
-	elseif SERVER then
-		if self:GetOwner():GetNoDraw() == true then
-			self:SetNoDraw(true)
-		else
-			self:SetNoDraw(false)
-		end
-		local item = self:GetItemData()
-		if self:GetItemData()["item_slot"] == "head" then
-			if self:GetOwner():GetInfoNum("tf_hatcolor_rainbow", 0) == 1 then 
-				self:SetCosmeticTint(Vector(math.random(5, 255)/255, math.random(5, 255)/255, math.random(5, 255)/255))
-			else
-				self:SetCosmeticTint(Vector(string.ToColor(self:GetOwner():GetInfo("tf_hatcolor")).r/255, string.ToColor(self:GetOwner():GetInfo("tf_hatcolor")).g/255, string.ToColor(self:GetOwner():GetInfo("tf_hatcolor")).b/255))
-			end
-		elseif self:GetItemData()["item_slot"] == "misc" then
-			if self:GetOwner():GetInfoNum("tf_hatcolor_rainbow", 0) == 1 then
-				self:SetCosmeticTint(Vector(math.random(5, 255)/255, math.random(5, 255)/255, math.random(5, 255)/255))
-			else
-				self:SetCosmeticTint(Vector(string.ToColor(self:GetOwner():GetInfo("tf_misccolor")).r/255, string.ToColor(self:GetOwner():GetInfo("tf_misccolor")).g/255, string.ToColor(self:GetOwner():GetInfo("tf_misccolor")).b/255))
-			end
-		end
-	end
-end
-
 end
 
 if CLIENT then
@@ -85,7 +34,7 @@ CreateClientConVar( "tf_hatcolor_rainbow", "0", true, true )
 CreateClientConVar( "tf_misccolor_rainbow", "0", true, true )
 
 function ENT:Draw()
-	if (file.Exists(self:GetModel(),"GAME")) then
+	if (IsMounted("tf")) then
 		if self:GetOwner() ~= LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() then
 			self:StartVisualOverrides()
 			self:StartItemTint(self:GetItemTint())
@@ -95,9 +44,9 @@ function ENT:Draw()
 			self:EndItemTint()
 			self:EndVisualOverrides()
 		end
-	end
-	if (CLIENT and !file.Exists(self:GetModel(),"GAME")) then
+	else
 		self:SetModel("models/empty.mdl")
+		self:DrawModel()
 	end
 end
 
@@ -135,10 +84,56 @@ function ENT:SetupPlayerRagdoll(rag)
 		end
 end
 
-end
-
 function ENT:Think()
-	if (file.Exists(self:GetModel(),"GAME") and CLIENT) then
+	
+	if self:GetOwner() ~= LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() then
+		if self.ShadowCreated ~= true then
+			self.ShadowCreated = true
+			self:CreateShadow()
+		end
+	else
+		if self.ShadowCreated ~= false then
+			self.ShadowCreated = false
+			self:DestroyShadow()
+		end
+	end
+
+
+	if CLIENT then
+		if self:GetOwner() ~= LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() then
+			if self.ShadowCreated ~= true then
+				self.ShadowCreated = true
+				self:CreateShadow()
+			end
+		else
+			if self.ShadowCreated ~= false then
+				self.ShadowCreated = false
+				self:DestroyShadow()
+			end
+		end
+	elseif SERVER then
+		if self:GetOwner():GetNoDraw() == true then
+			self:SetNoDraw(true)
+		else
+			self:SetNoDraw(false)
+		end
+		local item = self:GetItemData()
+		if self:GetItemData()["item_slot"] == "head" then
+			if self:GetOwner():GetInfoNum("tf_hatcolor_rainbow", 0) == 1 then 
+				self:SetCosmeticTint(Vector(math.random(5, 255)/255, math.random(5, 255)/255, math.random(5, 255)/255))
+			else
+				self:SetCosmeticTint(Vector(string.ToColor(self:GetOwner():GetInfo("tf_hatcolor")).r/255, string.ToColor(self:GetOwner():GetInfo("tf_hatcolor")).g/255, string.ToColor(self:GetOwner():GetInfo("tf_hatcolor")).b/255))
+			end
+		elseif self:GetItemData()["item_slot"] == "misc" then
+			if self:GetOwner():GetInfoNum("tf_hatcolor_rainbow", 0) == 1 then
+				self:SetCosmeticTint(Vector(math.random(5, 255)/255, math.random(5, 255)/255, math.random(5, 255)/255))
+			else
+				self:SetCosmeticTint(Vector(string.ToColor(self:GetOwner():GetInfo("tf_misccolor")).r/255, string.ToColor(self:GetOwner():GetInfo("tf_misccolor")).g/255, string.ToColor(self:GetOwner():GetInfo("tf_misccolor")).b/255))
+			end
+		end
+	end
+
+	if (file.Exists(self:GetModel(),"GAME")) then
 		local item = self:GetItemData()
 		if (IsValid(self.Owner)) then
 			if (item.visuals) then
@@ -228,12 +223,15 @@ function ENT:Think()
 			end
 		end
 
-		if (self:GetModel() == "models/error.mdl") then -- no errors for people who don't have TF2 mounted!
-			self:SetModel("models/empty.mdl")
-		end
+	else
+		self.Model = "models/empty.mdl"
+		self:SetModel(self.Model)
 	end
 
 end
+
+end
+
 function ENT:Initialize()
 	self.Owner = self:GetOwner()
 	self:DrawShadow(false)
