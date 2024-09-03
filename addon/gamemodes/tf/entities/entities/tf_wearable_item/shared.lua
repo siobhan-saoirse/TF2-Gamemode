@@ -85,14 +85,16 @@ CreateClientConVar( "tf_hatcolor_rainbow", "0", true, true )
 CreateClientConVar( "tf_misccolor_rainbow", "0", true, true )
 
 function ENT:Draw()
-	if self:GetOwner() ~= LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() and file.Exists(self:GetModel(),"GAME") then
-		self:StartVisualOverrides()
-		self:StartItemTint(self:GetItemTint())
-		self:GetOwner().RenderingWorldModel = true
-		self:DrawModel()
-		self:GetOwner().RenderingWorldModel = false
-		self:EndItemTint()
-		self:EndVisualOverrides()
+	if (file.Exists(self:GetModel(),"GAME")) then
+		if self:GetOwner() ~= LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() then
+			self:StartVisualOverrides()
+			self:StartItemTint(self:GetItemTint())
+			self:GetOwner().RenderingWorldModel = true
+			self:DrawModel()
+			self:GetOwner().RenderingWorldModel = false
+			self:EndItemTint()
+			self:EndVisualOverrides()
+		end
 	end
 end
 
