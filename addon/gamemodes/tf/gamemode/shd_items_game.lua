@@ -159,7 +159,7 @@ for k, v in pairs(items_game["items"]) do
         v.item_class = "tf_weapon_scattergun"	
     end
     if (v.item_class == "tf_wearable") then
-        v.item_class == "tf_wearable_item"
+        v.item_class = "tf_wearable_item"
     end
     if (v.item_class == "tf_weapon_rocketlauncher_directhit") then
         v.item_class = "tf_weapon_rocketlauncher_dh"
