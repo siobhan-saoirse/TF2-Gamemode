@@ -22,19 +22,17 @@ if !IsMounted("tf") and !steamworks.IsSubscribed("3323795558") then
 		conflicttext:InsertColorChange(255, 255, 255, 255)
 		conflicttext:CenterHorizontal(0.5)
 		conflicttext:SetVerticalScrollbarEnabled(false)
-		conflicttext:AppendText("Unfortuntely, it is highly unrecommended to play this gamemode right now because you do not have Team Fortress 2 Mounted. Please get it from the steam store.")
+		conflicttext:AppendText("Hey! TF2 is currently not mounted! Without the assets, you will see everything as ERRORs! Luckily, I do have a solution for ya. Click the button below me to install the TF2 assets pack.")
 			local conflictbut2 = vgui.Create("DButton", conflict_help_frame)
 			conflictbut2:SetSize(100, 30)
 			conflictbut2:SetPos(0, 125)
 			conflictbut2:CenterHorizontal(0.5)
-			conflictbut2:SetText("I understand") 
+			conflictbut2:SetText("Subscribe") 
 
-			function conflictbut.DoClick()
-				engine.SetMounted("tf",true)
-				RunConsoleCommand("retry")
-			end
 			function conflictbut2.DoClick()
-				conflict_help_frame:Close()
+				steamworks.Subscribe( "3323795558" )
+				steamworks.ApplyAddons()
+				RunConsoleCommand("disconnect")
 			end
 	end
 end 

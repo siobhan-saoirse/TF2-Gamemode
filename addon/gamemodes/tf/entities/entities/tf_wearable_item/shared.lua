@@ -136,152 +136,158 @@ end
 
 function ENT:Think()
 	
-	local item = self:GetItemData()
-	if (IsValid(self.Owner)) then
-		if (item.visuals) then
-			if item.visuals.player_bodygroups then
-				local bodygroups = item.visuals.player_bodygroups
-				if (bodygroups.hat) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("hat"),1)
-				elseif (bodygroups.head) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("head"),1)
-				elseif (bodygroups.headphones) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("headphones"),1)
-				elseif (bodygroups.medal) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("medal"),1)
-				elseif (bodygroups.grenades) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("grenades"),1)
-				elseif (bodygroups.bullets) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("bullets"),1)
-				elseif (bodygroups.arrows) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("arrows"),1)
-				elseif (bodygroups.rightarm) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("rightarm"),1)
-				elseif (bodygroups.shoes_socks) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("shoes_socks"),1)
+	
+	if (file.Exists(self:GetModel(),"GAME") and CLIENT) then
+		local item = self:GetItemData()
+		if (IsValid(self.Owner)) then
+			if (item.visuals) then
+				if item.visuals.player_bodygroups then
+					local bodygroups = item.visuals.player_bodygroups
+					if (bodygroups.hat) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("hat"),1)
+					elseif (bodygroups.head) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("head"),1)
+					elseif (bodygroups.headphones) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("headphones"),1)
+					elseif (bodygroups.medal) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("medal"),1)
+					elseif (bodygroups.grenades) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("grenades"),1)
+					elseif (bodygroups.bullets) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("bullets"),1)
+					elseif (bodygroups.arrows) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("arrows"),1)
+					elseif (bodygroups.rightarm) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("rightarm"),1)
+					elseif (bodygroups.shoes_socks) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("shoes_socks"),1)
+					end
+				end
+			end
+			if (item and item.visuals) then
+				if item.visuals.player_bodygroups then
+					local bodygroups = item.visuals.player_bodygroups
+					if (bodygroups.hat) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("hat"),1)
+					elseif (bodygroups.head) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("head"),1)
+					elseif (bodygroups.headphones) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("headphones"),1)
+					elseif (bodygroups.medal) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("medal"),1)
+					elseif (bodygroups.grenades) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("grenades"),1)
+					elseif (bodygroups.bullets) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("bullets"),1)
+					elseif (bodygroups.arrows) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("arrows"),1)
+					elseif (bodygroups.rightarm) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("rightarm"),1)
+					elseif (bodygroups.shoes_socks) then
+						self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("shoes_socks"),1)
+					end
 				end
 			end
 		end
-		if (item and item.visuals) then
-			if item.visuals.player_bodygroups then
-				local bodygroups = item.visuals.player_bodygroups
-				if (bodygroups.hat) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("hat"),1)
-				elseif (bodygroups.head) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("head"),1)
-				elseif (bodygroups.headphones) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("headphones"),1)
-				elseif (bodygroups.medal) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("medal"),1)
-				elseif (bodygroups.grenades) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("grenades"),1)
-				elseif (bodygroups.bullets) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("bullets"),1)
-				elseif (bodygroups.arrows) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("arrows"),1)
-				elseif (bodygroups.rightarm) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("rightarm"),1)
-				elseif (bodygroups.shoes_socks) then
-					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("shoes_socks"),1)
+		if self.Model and string.find(self.Model,"_zombie") then
+			if (IsValid(self.Owner)) then
+				if (self.Owner:GetPlayerClass() == "spy") then
+					if (self.Owner:Team() == TEAM_BLU) then
+						self.Owner:SetSkin(23)
+						self:SetSkin(1)
+					else
+						self.Owner:SetSkin(22)
+						self:SetSkin(0)
+					end
+				else
+					if (self.Owner:Team() == TEAM_BLU) then
+						self.Owner:SetSkin(5)
+						self:SetSkin(1)
+					else
+						self.Owner:SetSkin(4)
+						self:SetSkin(0)
+					end
 				end
 			end
+		else
+			if (IsValid(self.Owner)) then
+				if (self.Owner:GetPlayerClass() == "spy") then
+					if (self.Owner:Team() == TEAM_BLU) then
+						self:SetSkin(1)
+					else
+						self:SetSkin(0)
+					end
+				else
+					if (self.Owner:Team() == TEAM_BLU) then
+						self:SetSkin(1)
+					else
+						self:SetSkin(0)
+					end
+				end
+			end
+		end
+
+		if (self:GetModel() == "models/error.mdl") then -- no errors for people who don't have TF2 mounted!
+			self:SetModel("models/empty.mdl")
 		end
 	end
 
-	self:AddEffects(bit.bor(EF_BONEMERGE,EF_BONEMERGE_FASTCULL,EF_NOSHADOW))
-	if self.Model and string.find(self.Model,"_zombie") then
-		if (IsValid(self.Owner)) then
-			if (self.Owner:GetPlayerClass() == "spy") then
-				if (self.Owner:Team() == TEAM_BLU) then
-					self.Owner:SetSkin(23)
-					self:SetSkin(1)
-				else
-					self.Owner:SetSkin(22)
-					self:SetSkin(0)
-				end
-			else
-				if (self.Owner:Team() == TEAM_BLU) then
-					self.Owner:SetSkin(5)
-					self:SetSkin(1)
-				else
-					self.Owner:SetSkin(4)
-					self:SetSkin(0)
-				end
-			end
-		end
-	else
-		if (IsValid(self.Owner)) then
-			if (self.Owner:GetPlayerClass() == "spy") then
-				if (self.Owner:Team() == TEAM_BLU) then
-					self:SetSkin(1)
-				else
-					self:SetSkin(0)
-				end
-			else
-				if (self.Owner:Team() == TEAM_BLU) then
-					self:SetSkin(1)
-				else
-					self:SetSkin(0)
-				end
-			end
-		end
-	end
-
-	if (self:GetModel() == "models/error.mdl") then -- no errors for people who don't have TF2 mounted!
-		self:SetModel("models/empty.mdl")
-	end
 end
 function ENT:Initialize()
 	self.Owner = self:GetOwner()
-	self:AddToPlayerItems()
-	self.ProxyentPaintColor = self
-		
-	local item = self:GetItemData()
-	if item.model_player then
-		--print(item.model_player)
-		if (string.find(item.model_player,"zombie") || (string.find(item.model_player,"/all_class/all_") and !string.find(item.model_player,"all_halo")) || string.find(item.model_player,"ugc_season12") ) then
-			if (string.find(item.model_player,"/zombie_"..self.Owner:GetPlayerClass()..".mdl")) then
-				self.Owner:SetSkin(self.Owner:GetSkin())
-			end
-			self.Model = string.Replace(string.Replace(item.model_player,"%s",self.Owner.playerclass),"demoman","demo")
-		else
-			if (string.find(item.model_player,"zombie")) then
-				self.Owner:SetSkin(self.Owner:GetSkin())   
-			end
-			self.Model = string.Replace(string.Replace(item.model_player,"%s",self.Owner:GetPlayerClass()),"demoman","demo")
-		end
-	elseif item.model_player_per_class then
-		if (item.model_player_per_class[self.Owner:GetPlayerClass()]) then
-			local modelperclass = item.model_player_per_class[self.Owner:GetPlayerClass()]
-			modelperclass = string.Replace(modelperclass,"%s",self.Owner.playerclass)
-
-			modelperclass = string.Replace(modelperclass,"demoman","demo")
-			self.Model = modelperclass
-		else
-			--print(item.model_player_per_class)
-			PrintTable(item.model_player_per_class)
-			local modelperclass = tostring(item.model_player_per_class.basename)
-			modelperclass = string.Replace(modelperclass,"%s",self.Owner:GetPlayerClass())
-			self.Model = string.Replace(modelperclass,"demoman","demo")
-		end
-	end
+	self:DrawShadow(false)
 	
-	if SERVER then
-		self:SetMoveType(MOVETYPE_NONE)
-		self:SetSolid(SOLID_NONE)
-		self:SetParent(self:GetOwner())
-		
-		if self.Model then
-			self:SetModel(self.Model)
-			self:SetKeyValue("effects", "1") 
+	if (file.Exists(self:GetModel(),"GAME")) then
+		self:AddToPlayerItems()
+		self.ProxyentPaintColor = self
 			
-			if item.set_sequence_to_class then
-				self:AddEffects(EF_NOINTERP)
-				self:ResetSequence(self:LookupSequence(self.Owner:GetPlayerClass()))
+		local item = self:GetItemData()
+		if item.model_player then
+			--print(item.model_player)
+			if (string.find(item.model_player,"zombie") || (string.find(item.model_player,"/all_class/all_") and !string.find(item.model_player,"all_halo")) || string.find(item.model_player,"ugc_season12") ) then
+				if (string.find(item.model_player,"/zombie_"..self.Owner:GetPlayerClass()..".mdl")) then
+					self.Owner:SetSkin(self.Owner:GetSkin())
+				end
+				self.Model = string.Replace(string.Replace(item.model_player,"%s",self.Owner.playerclass),"demoman","demo")
+			else
+				if (string.find(item.model_player,"zombie")) then
+					self.Owner:SetSkin(self.Owner:GetSkin())   
+				end
+				self.Model = string.Replace(string.Replace(item.model_player,"%s",self.Owner:GetPlayerClass()),"demoman","demo")
 			end
-		else
-			self:SetNoDraw(true)
-			self:DrawShadow(false)
+		elseif item.model_player_per_class then
+			if (item.model_player_per_class[self.Owner:GetPlayerClass()]) then
+				local modelperclass = item.model_player_per_class[self.Owner:GetPlayerClass()]
+				modelperclass = string.Replace(modelperclass,"%s",self.Owner.playerclass)
+
+				modelperclass = string.Replace(modelperclass,"demoman","demo")
+				self.Model = modelperclass
+			else
+				--print(item.model_player_per_class)
+				PrintTable(item.model_player_per_class)
+				local modelperclass = tostring(item.model_player_per_class.basename)
+				modelperclass = string.Replace(modelperclass,"%s",self.Owner:GetPlayerClass())
+				self.Model = string.Replace(modelperclass,"demoman","demo")
+			end
+		end
+		
+		if SERVER then
+			self:SetMoveType(MOVETYPE_NONE)
+			self:SetSolid(SOLID_NONE)
+			self:SetParent(self:GetOwner())
+			
+			if self.Model then
+				self:SetModel(self.Model)
+				self:SetKeyValue("effects", "1") 
+				
+				if item.set_sequence_to_class then
+					self:AddEffects(EF_NOINTERP)
+					self:ResetSequence(self:LookupSequence(self.Owner:GetPlayerClass()))
+				end
+			else
+				self:SetNoDraw(true)
+				self:DrawShadow(false)
+			end
 		end
 	end
 end
