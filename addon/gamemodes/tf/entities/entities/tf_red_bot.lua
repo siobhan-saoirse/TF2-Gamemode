@@ -137,9 +137,9 @@ function ENT:Initialize()
 		RandomWeapon2(npc, "primary")
 		RandomWeapon2(npc, "secondary")
 		RandomWeapon2(npc, "melee")
-		RandomCosmetic(npc, "head")
-		RandomCosmetic(npc, "misc")
-		RandomCosmetic(npc, "hat")			
+--		RandomCosmetic(npc, "head")
+--		RandomCosmetic(npc, "misc")
+--		RandomCosmetic(npc, "hat")			
 		local class = npc:GetPlayerClass()
 		if (class != "scout" and 
 			class != "soldier" and 
