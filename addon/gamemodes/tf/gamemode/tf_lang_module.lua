@@ -33,6 +33,10 @@ function Load(path)
 	Msg("Loading language script '"..path.."' ... ")
 	local data = file.Read("resource/"..path, "GAME")
 	
+	if (!IsMounted("tf")) then
+		ErrorNoHalt("LANGUAGE SCRIPT ERROR: File is empty or does not exist!\nFalling back to tf_english.lua")
+		data = file.Read("gamemodes/tf/gamemode/contents/lang/tf_english.lua","GAME")
+	end
 	if not data or data=="" then
 		ErrorNoHalt("LANGUAGE SCRIPT ERROR: File is empty or does not exist!\n")
 		return
