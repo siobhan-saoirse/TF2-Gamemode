@@ -40,13 +40,6 @@ include("proxies/sniperriflecharge.lua")
 include("proxies/weapon_invis.lua")
 include("shd_gravitygun.lua")
 
-if (!IsMounted("tf")) then
-	steamworks.Subscribe( "3323795558" )
-	steamworks.ApplyAddons()
-end
-
-steamworks.Subscribe( "1932936017" )
-steamworks.ApplyAddons()
 
 hook.Add( "PopulateToolMenu", "Civ2Settings1", function()
 	spawnmenu.AddToolMenuOption( "Options", "Civilian 2", "TF2GMCiv2Options", "#Settings", "", "", function( panel )
