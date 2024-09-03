@@ -107,26 +107,27 @@ function ENT:SetupPlayerRagdoll(rag)
 	
 	local effectdata = EffectData()
 	effectdata:SetEntity(self)
-	
-	if item.drop_type == "drop" then
-		local mat = self:GetBoneMatrix(0)
-		
-		-- Spawn a hat gib
-		effectdata:SetMagnitude(GIB_HAT)
-		if mat then
-			effectdata:SetOrigin(mat:GetTranslation())
-			effectdata:SetAngles(mat:GetAngles())
+	if (IsMounted("tf")) then
+		if item.drop_type == "drop" then
+			local mat = self:GetBoneMatrix(0)
+			
+			-- Spawn a hat gib
+			effectdata:SetMagnitude(GIB_HAT)
+			if mat then
+				effectdata:SetOrigin(mat:GetTranslation())
+				effectdata:SetAngles(mat:GetAngles())
+			else
+				effectdata:SetOrigin(self:GetOwner():GetPos())
+				effectdata:SetAngles(self:GetOwner():GetAngles())
+			end
+			effectdata:SetNormal(Vector(0,0,0.8))
+			effectdata:SetRadius(0.8)
+			util.Effect("tf_gib", effectdata)
 		else
-			effectdata:SetOrigin(self:GetOwner():GetPos())
-			effectdata:SetAngles(self:GetOwner():GetAngles())
-		end
-		effectdata:SetNormal(Vector(0,0,0.8))
-		effectdata:SetRadius(0.8)
-		util.Effect("tf_gib", effectdata)
-	else
-		if IsValid(rag) then
-			-- This hat doesn't drop, attach it to the player's ragdoll
-			util.Effect("tf_hat_attached", effectdata)
+			if IsValid(rag) then
+				-- This hat doesn't drop, attach it to the player's ragdoll
+				util.Effect("tf_hat_attached", effectdata)
+			end
 		end
 	end
 end
