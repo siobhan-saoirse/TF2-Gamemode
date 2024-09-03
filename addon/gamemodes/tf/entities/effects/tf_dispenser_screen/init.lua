@@ -52,7 +52,7 @@ function EFFECT:Render()
 		if not self.Ang then
 			self.Ang = self:CalcAngle(metal)
 		else
-			if metal>self.LastMetalAmount then
+			if metal>self.LastMetalAmount then 
 				self.DAng = -DialSpeed
 			else
 				self.DAng = DialSpeed

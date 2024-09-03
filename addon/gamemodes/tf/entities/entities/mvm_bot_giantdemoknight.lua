@@ -1,4 +1,3 @@
-if (!IsMounted("tf")) then return end
 if SERVER then AddCSLuaFile() end
 
 ENT.Base = "mvm_bot"

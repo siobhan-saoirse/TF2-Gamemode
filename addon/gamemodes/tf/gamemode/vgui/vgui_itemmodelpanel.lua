@@ -85,7 +85,6 @@ function PANEL:Paint(w, h)
 			surface.DrawTexturedRect(0, 0, w, h)
 		end
 	end
-	
 	if self.itemImage and self.model_tall then
 		local x = w/2 + (self.model_xpos or 0) * Scale
 		local y = (self.model_ypos + self.model_tall/2)*Scale
