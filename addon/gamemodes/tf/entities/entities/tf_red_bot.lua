@@ -2,7 +2,7 @@ if SERVER then AddCSLuaFile() end
 
 ENT.Base = "base_nextbot"
 ENT.Type = "nextbot"
-ENT.PZClass = "scout"
+ENT.PZClass = "scout" 
 ENT.Spawnable = false
 ENT.AdminOnly = false
 ENT.IsBoss = false

@@ -14,4 +14,4 @@ list.Set( "NPC", "tf_blue_bot", {
 	Class = "tf_blue_bot",
 	Category = ENT.Category,
 	AdminOnly = true
-} )
+} ) 

@@ -14,4 +14,4 @@ list.Set( "NPC", "tf_blue_bot_gmodplayer", {
 	Class = "tf_blue_bot_gmodplayer",
 	Category = ENT.Category,
 	AdminOnly = true
-} )
+} ) 
