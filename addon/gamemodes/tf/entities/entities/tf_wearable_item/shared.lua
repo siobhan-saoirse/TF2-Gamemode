@@ -98,16 +98,15 @@ end
 
 -- Called when the player is ragdolled or gibbed (if gibbed, rag = NULL)
 function ENT:SetupPlayerRagdoll(rag)
-	local item = self:GetItemData()
-	
-	self.CheckUpdateItem = nil
-	self:ClearParticles()
-	
-	if not self.Model or not util.IsValidModel(self.Model) then return end
-	
-	local effectdata = EffectData()
-	effectdata:SetEntity(self)
-	if (IsMounted("tf")) then
+		local item = self:GetItemData()
+		
+		self.CheckUpdateItem = nil
+		self:ClearParticles()
+		
+		if not self.Model or not util.IsValidModel(self.Model) then return end
+		
+		local effectdata = EffectData()
+		effectdata:SetEntity(self)
 		if item.drop_type == "drop" then
 			local mat = self:GetBoneMatrix(0)
 			
@@ -129,7 +128,6 @@ function ENT:SetupPlayerRagdoll(rag)
 				util.Effect("tf_hat_attached", effectdata)
 			end
 		end
-	end
 end
 
 end

@@ -126,9 +126,11 @@ function EFFECT:Think()
 end
 
 function EFFECT:Render()
-	self:StartVisualOverrides()
-	self:StartItemTint(self.ItemTint)
-	self:DrawModel()
-	self:EndItemTint()
-	self:EndVisualOverrides()
+	if (file.Exists(self:GetModel(),"GAME")) then
+		self:StartVisualOverrides()
+		self:StartItemTint(self.ItemTint)
+		self:DrawModel()
+		self:EndItemTint()
+		self:EndVisualOverrides()
+	end
 end
