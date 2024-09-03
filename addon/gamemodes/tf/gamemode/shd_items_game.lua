@@ -158,9 +158,8 @@ for k, v in pairs(items_game["items"]) do
     elseif v.item_class == "tf_weapon_soda_popper" then
         v.item_class = "tf_weapon_scattergun"	
     end
-
-    if !v.item_class then
-        v.item_class = "tf_wearable_item"
+    if (v.item_class == "tf_wearable") then
+        v.item_class == "tf_wearable_item"
     end
     if (v.item_class == "tf_weapon_rocketlauncher_directhit") then
         v.item_class = "tf_weapon_rocketlauncher_dh"

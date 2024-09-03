@@ -22,7 +22,7 @@ if !IsMounted("tf") and !steamworks.IsSubscribed("3323795558") then
 		conflicttext:InsertColorChange(255, 255, 255, 255)
 		conflicttext:CenterHorizontal(0.5)
 		conflicttext:SetVerticalScrollbarEnabled(false)
-		conflicttext:AppendText("Hey! TF2 is currently not mounted! Without the assets, you will see everything as ERRORs! Luckily, I do have a solution for ya. It will take a while, though.")
+		conflicttext:AppendText("Hey!~ TF2 is currently not mounted! Without the assets, you will see everything as ERRORs! Luckily, I do have a solution for ya. It will take a while, though.")
 			local conflictbut2 = vgui.Create("DButton", conflict_help_frame)
 			conflictbut2:SetSize(100, 30)
 			conflictbut2:SetPos(0, 125)
@@ -31,6 +31,7 @@ if !IsMounted("tf") and !steamworks.IsSubscribed("3323795558") then
 
 			function conflictbut2.DoClick()
 				conflict_help_frame:Close()
+				gui.OpenURL("https://steamcommunity.com/sharedfiles/filedetails/?id=3323795558")
 			end
 	end
 end 

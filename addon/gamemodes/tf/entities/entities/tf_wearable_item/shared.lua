@@ -96,6 +96,9 @@ function ENT:Draw()
 			self:EndVisualOverrides()
 		end
 	end
+	if (CLIENT and !file.Exists(self:GetModel(),"GAME")) then
+		self:SetModel("models/empty.mdl")
+	end
 end
 
 -- Called when the player is ragdolled or gibbed (if gibbed, rag = NULL)
@@ -135,8 +138,6 @@ end
 end
 
 function ENT:Think()
-	
-	
 	if (file.Exists(self:GetModel(),"GAME") and CLIENT) then
 		local item = self:GetItemData()
 		if (IsValid(self.Owner)) then
@@ -236,7 +237,7 @@ end
 function ENT:Initialize()
 	self.Owner = self:GetOwner()
 	self:DrawShadow(false)
-	
+
 	if (file.Exists(self:GetModel(),"GAME")) then
 		self:AddToPlayerItems()
 		self.ProxyentPaintColor = self
