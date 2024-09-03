@@ -12,6 +12,7 @@ include("sv_chat.lua")
 include("sv_loadout.lua")   
 include("shd_taunts.lua")
 resource.AddWorkshop( "1932936017" )
+resource.AddWorkshop( "3323795558" )
 resource.AddFile("scenes/scenes.image")
 local LOGFILE = "tf/log_server.txt" 
 file.Delete(LOGFILE) 

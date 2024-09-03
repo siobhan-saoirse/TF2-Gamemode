@@ -454,7 +454,7 @@ function SWEP:Precache()
 		PrecacheParticleSystem(self.TracerEffect.."_red_crit")
 		PrecacheParticleSystem(self.TracerEffect.."_blue_crit")
 	end
-end
+end 
 
 
 

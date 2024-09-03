@@ -1,9 +1,11 @@
 -- tf_items
-if !file.Exists("scripts/items/items_game.txt", "GAME") then
-    Error("ERROR: items_game.txt NOT FOUND!\nLIVE TF WEAPONS WILL NOT BE LOADED!\n")
+local theitems = file.Read("scripts/items/items_game.txt", "GAME")
+if !IsMounted("tf") then
+    Error("ERROR: items_game.txt NOT FOUND!\n")
+    theitems = file.Read("gamemodes/tf/gamemode/items/items_game_nomount.lua","GAME")
 end
  
-local items_game = util.KeyValuesToTable(file.Read("scripts/items/items_game.txt", "GAME")) 
+local items_game = util.KeyValuesToTable(theitems) 
 local prefabs = items_game["prefabs"]
 local attributes = items_game["attributes"]
 local items = items_game["items"] 
@@ -26,51 +28,52 @@ for k, v in pairs(items_game["items"]) do
             end
         end
     end
-	if (v.prefab) then
-		if (string.find(v.prefab,"valve ")) then
-			v.prefab = string.Replace(v.prefab,"valve ", "")
-		elseif (string.find(v.prefab," paintkit_base")) then 	
-			v.prefab = string.Replace(v.prefab," paintkit_base", "")
-		end
-	end
-
-    -- load visuals
-    if prefabs[v.prefab] and v.visuals then
-        local prefab = prefabs[v.prefab] 
-        if prefab.visuals then
-            local oldvisuals = prefab.visuals
-            table.Merge(v.visuals, oldvisuals)
-        end
-    end
-    if prefabs[v.prefab] and v.static_attrs then
-        local prefab = prefabs[v.prefab]
-        if prefab.static_attrs then
-            local oldvisuals = v.static_attrs
-            v.static_attrs = prefab.static_attrs
-            table.Merge(v.static_attrs, oldvisuals)
-        end
-    end
-    if prefabs[v.prefab] and v.attributes then
-        local prefab = prefabs[v.prefab]
-        if prefab.attributes then 
-            local oldvisuals = v.attributes
-            v.attributes = prefab.attributes
-            if (v.static_attrs) then
-                table.Merge(v.static_attrs, v.attributes)
-            end
-            table.Merge(v.attributes, oldvisuals)
-        end
-    end
-
-    -- add prefab variables that don't exist
-    if v.prefab and prefabs[v.prefab] then
-        for i, o in pairs(prefabs[v.prefab]) do
-            if !v[i] then
-                v[i] = o
+    if (prefabs ~= nil) then
+        if (v.prefab) then
+            if (string.find(v.prefab,"valve ")) then
+                v.prefab = string.Replace(v.prefab,"valve ", "")
+            elseif (string.find(v.prefab," paintkit_base")) then 	
+                v.prefab = string.Replace(v.prefab," paintkit_base", "")
             end
         end
-    end
 
+        -- load visuals
+        if prefabs[v.prefab] and v.visuals then
+            local prefab = prefabs[v.prefab] 
+            if prefab.visuals then
+                local oldvisuals = prefab.visuals
+                table.Merge(v.visuals, oldvisuals)
+            end
+        end
+        if prefabs[v.prefab] and v.static_attrs then
+            local prefab = prefabs[v.prefab]
+            if prefab.static_attrs then
+                local oldvisuals = v.static_attrs
+                v.static_attrs = prefab.static_attrs
+                table.Merge(v.static_attrs, oldvisuals)
+            end
+        end
+        if prefabs[v.prefab] and v.attributes then
+            local prefab = prefabs[v.prefab]
+            if prefab.attributes then 
+                local oldvisuals = v.attributes
+                v.attributes = prefab.attributes
+                if (v.static_attrs) then
+                    table.Merge(v.static_attrs, v.attributes)
+                end
+                table.Merge(v.attributes, oldvisuals)
+            end
+        end
+
+        -- add prefab variables that don't exist
+        if v.prefab and prefabs[v.prefab] then
+            for i, o in pairs(prefabs[v.prefab]) do
+                if !v[i] then
+                    v[i] = o
+                end
+            end
+        end
+    end
     v.id = k
     v.propername = 0
 	if (string.find(v.name,"Grappling")) then

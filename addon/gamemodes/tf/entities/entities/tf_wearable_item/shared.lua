@@ -85,7 +85,7 @@ CreateClientConVar( "tf_hatcolor_rainbow", "0", true, true )
 CreateClientConVar( "tf_misccolor_rainbow", "0", true, true )
 
 function ENT:Draw()
-	if self:GetOwner() ~= LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() then
+	if self:GetOwner() ~= LocalPlayer() or LocalPlayer():ShouldDrawLocalPlayer() and file.Exists(self:GetModel(),"GAME") then
 		self:StartVisualOverrides()
 		self:StartItemTint(self:GetItemTint())
 		self:GetOwner().RenderingWorldModel = true
@@ -142,6 +142,8 @@ function ENT:Think()
 				local bodygroups = item.visuals.player_bodygroups
 				if (bodygroups.hat) then
 					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("hat"),1)
+				elseif (bodygroups.head) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("head"),1)
 				elseif (bodygroups.headphones) then
 					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("headphones"),1)
 				elseif (bodygroups.medal) then
@@ -164,6 +166,8 @@ function ENT:Think()
 				local bodygroups = item.visuals.player_bodygroups
 				if (bodygroups.hat) then
 					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("hat"),1)
+				elseif (bodygroups.head) then
+					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("head"),1)
 				elseif (bodygroups.headphones) then
 					self.Owner:SetBodygroup(self.Owner:FindBodygroupByName("headphones"),1)
 				elseif (bodygroups.medal) then
@@ -220,6 +224,10 @@ function ENT:Think()
 				end
 			end
 		end
+	end
+
+	if (self:GetModel() == "models/error.mdl") then -- no errors for people who don't have TF2 mounted!
+		self:SetModel("models/empty.mdl")
 	end
 end
 function ENT:Initialize()
