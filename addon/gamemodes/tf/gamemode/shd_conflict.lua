@@ -4,7 +4,7 @@ timer.Create("ExpectErrors!2", 0, 0, function()
 		ErrorNoHalt("Singleplayer is enabled! Expect errors!")
 	end
 end)
-if !IsMounted("tf") and !steamworks.IsSubscribed("3323795558") then
+if !IsMounted("tf") and !steamworks.IsSubscribed("3324553730") then
 	timer.Create("ExpectErrors!", 0, 0, function()
 		ErrorNoHalt("Team Fortress 2 is not mounted! Expect errors!")
 	end)
