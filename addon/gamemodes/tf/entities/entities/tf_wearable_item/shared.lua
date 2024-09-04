@@ -235,6 +235,7 @@ end
 function ENT:Initialize()
 	self.Owner = self:GetOwner()
 	self:DrawShadow(false)
+	self:AddEFlags(EFL_KEEP_ON_RECREATE_ENTITIES)
 
 	if (file.Exists(self:GetModel(),"GAME")) then
 		self:AddToPlayerItems()
