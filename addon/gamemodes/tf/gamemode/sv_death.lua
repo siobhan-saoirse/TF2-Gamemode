@@ -571,6 +571,15 @@ end
 function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	local shouldgib = false
 	local inflictor = dmginfo:GetInflictor()
+	for k,v in ipairs(player.GetBots()) do
+		if (v.TFBot) then
+			if (IsValid(v.TargetEnt)) then
+				if (v.TargetEnt:EntIndex() == ply:EntIndex()) then
+					v.TargetEnt = nil
+				end
+			end
+		end
+	end
 	ply:SetNWBool("Taunting",false)
 	timer.Simple(0.02, function()
 		ply:SetMoveType(MOVETYPE_NONE)

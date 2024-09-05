@@ -243,6 +243,10 @@ function SWEP:CreateSounds()
 		self.ShootSoundLoop = CreateSound(self, self.ShootSound,rf)
 		self.ChargedLoop = CreateSound(self, self.ChargedSound,rf)
 		self.SoundsCreated = true
+	else
+		self.ShootSoundLoop = CreateSound(self, self.ShootSound)
+		self.ChargedLoop = CreateSound(self, self.ChargedSound)
+		self.SoundsCreated = true
 	end
 end
 
@@ -436,7 +440,7 @@ function SWEP:StopFiring()
 end
 
 function SWEP:Think()
-	self.BaseClass.Think(self)
+	--self.BaseClass.Think(self)
 	self:TFViewModelFOV()
 
 	if CLIENT then

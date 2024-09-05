@@ -574,22 +574,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		if (string.find(bot:GetModel(),"/bot_")) then
 			moveawayrange = 150
 		end
-		if (IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon():Ammo1() and bot:GetActiveWeapon():Clip1()) then
-					if (bot:GetActiveWeapon():Ammo1() < 1 and bot:GetActiveWeapon():Clip1() < 1 and bot:GetActiveWeapon().Primary.ClipSize ~= -1 && !bot:GetActiveWeapon().IsMeleeWeapon) then
-						if (CurTime() > bot:GetActiveWeapon():GetNextPrimaryFire()) then
-							if (bot:GetActiveWeapon().HoldType == "PRIMARY") then
-								if (IsValid(bot:GetActiveWeapon().Owner:GetWeapons()[2])) then
-									bot:GetActiveWeapon().Owner:SelectWeapon(bot:GetActiveWeapon().Owner:GetWeapons()[2]:GetClass())
-								end
-							elseif ((bot:GetActiveWeapon().HoldType == "SECONDARY" or (bot:GetActiveWeapon():GetClass() == "tf_weapon_jar" or bot:GetActiveWeapon():GetClass() == "tf_weapon_jar_milk")) and bot:GetActiveWeapon().Owner:GetPlayerClass() != "medic") then
-								if (IsValid(bot:GetActiveWeapon().Owner:GetWeapons()[3])) then
-									bot:GetActiveWeapon().Owner:SelectWeapon(bot:GetActiveWeapon().Owner:GetWeapons()[3]:GetClass())
-								end
-							end
-						end
-					end
-				end
-					
 		if controller.NextCenter > CurTime() and bot:GetNWBool("Taunting",false) != true and bot.botPos then
 			--[[if (IsValid(bot:GetActiveWeapon()) and !bot:GetActiveWeapon().IsMeleeWeapon) then
 				if controller.strafeAngle == 1 then
@@ -601,7 +585,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				end
 			end]]
 		end
-		if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
 			for k,v in ipairs(ents.FindInSphere(bot:GetPos(),moveawayrange)) do
 				if (IsValid(v) and GAMEMODE:EntityTeam(v) == bot:Team() and v:IsTFPlayer() and v:EntIndex() != bot:EntIndex() and bot:GetNWBool("Taunting",false) != true) then
 					local forward = bot:EyeAngles():Forward()
@@ -665,7 +648,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					mv:SetSideSpeed(mv:GetSideSpeed() + (side * 0.5))
 				end
 			end
-		end
 			 --[[
 		local BotCanTarget = tf_bot_notarget:GetBool()
  
@@ -699,37 +681,28 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				end
 			end
 		end]]
-		
-
-		if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
+		if (bot.playerclass == "Medic") then
 			for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 1200)) do
-				if (v:IsPlayer() and v:IsBot() and v:EntIndex() != bot:EntIndex()) then
-					if (v.TFBot and (v:GetPlayerClass() == "medic") and v:IsFriendly(bot)) then
-						if (IsValid(v.TargetEnt) and v.TargetEnt:EntIndex() == bot:EntIndex() and bot:IsFriendly(v) and bot:Health() > bot:GetMaxHealth()) then
-							if (v.TargetEnt and v.TargetEnt:IsFriendly(bot)) then
-								v.TargetEnt = nil
-							end
+				if (v:IsPlayer() and v:EntIndex() != bot:EntIndex()) then
+					if (v.TFBot and v:IsFriendly(bot) and v:Health() > 0) then
+						if (!IsValid(bot.TargetEnt)) then
+							bot.TargetEnt = v
 						end
 					end
 				end
 			end
 		end
+		if (bot.playerclass == "Medic" && IsValid(bot.TargetEnt)) then
+			if (bot.TargetEnt:EntityTeam() ~= bot:Team()) then
 
-		if bot:Health() < bot:GetMaxHealth() / 3 then
-			for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 1200)) do
-				if (v:IsPlayer() and v:IsBot() and v:EntIndex() != bot:EntIndex()) then
-					if (v.TFBot and (v.playerclass == "Medic") and v:IsFriendly(bot)) then
-						if (!IsValid(v.TargetEnt)) then
-							if (bot:Health() < bot:GetMaxHealth()) then
-								v.TargetEnt = bot
-								v:SelectWeapon(v:GetWeapons()[2]:GetClass())
-							end
-						end
-					end
-				end
+				bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())
+
+			else
+
+				bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
+
 			end
-		end 
-
+		end	
 
 				
 					
@@ -850,7 +823,21 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					mv:SetForwardSpeed(0)
 					return
 				else
-					mv:SetForwardSpeed(1200)
+					if (bot:GetPos():Distance(bot.botPos) > 100) then
+						if (IsValid(bot.TargetEnt)) then
+							if (bot.TargetEnt:IsFriendly(bot) and bot.TargetEnt.movingAway) then 
+								mv:SetForwardSpeed(0)
+								return 
+							else
+								mv:SetForwardSpeed(bot:GetWalkSpeed())
+							end
+						else
+							mv:SetForwardSpeed(bot:GetWalkSpeed())
+						end
+					else
+						mv:SetForwardSpeed(0)
+						return
+					end
 				end
 			end
 			local mva = ((goalpos + bot:GetCurrentViewOffset()) - bot:GetShootPos()):Angle()
@@ -1341,7 +1328,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			if (IsValid(bot.TargetEnt)) then
 				if (bot.TargetEnt:EntIndex() == bot:EntIndex()) then
 					bot.TargetEnt = nil
-				elseif (bot.TargetEnt:IsFriendly(bot) and bot.playerclass != "medic") then
+				elseif (bot.TargetEnt:IsFriendly(bot) and bot.playerclass != "Medic") then
 					bot.TargetEnt = nil
 				elseif (bot.TargetEnt:EntIndex() == bot.ControllerBot:EntIndex()) then
 					bot.TargetEnt = nil
@@ -1464,16 +1451,16 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 										end
 									end
 								else 
-									if (IsValid(bot:GetActiveWeapon()) and bot:Visible(bot.TargetEnt) and bot.TargetEnt:Health() > 0 and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 2600 * bot:GetModelScale() && bot:GetActiveWeapon():Ammo1() > 0) then
+									if (IsValid(bot:GetActiveWeapon()) and bot.TargetEnt:Health() > 0 and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 2600 * bot:GetModelScale()) then
 										if (bot:GetPlayerClass() != "samuraidemo" and IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging) then
 										
 										else
 											if (bot:GetActiveWeapon().IsMeleeWeapon and bot.TargetEnt:GetPos():Distance(bot:GetPos()) > 400 * bot:GetModelScale()) then return end
 											if (bot:Team() == TEAM_BLU and string.find(bot:GetModel(),"/bot_") and bot:HasGodMode()) then return end
 											if (IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging and ply:GetPlayerClass() != "samuraidemo") then return end
-											if (bot:GetActiveWeapon().ReloadSingle and (!bot:GetActiveWeapon().Reloading || !bot:IsMiniBoss() && bot:GetActiveWeapon():Ammo1() > 0)) then
+											if (bot:GetActiveWeapon().ReloadSingle and (!bot:GetActiveWeapon().Reloading || !bot:IsMiniBoss())) then
 												buttons = buttons + IN_ATTACK
-											elseif (!bot:GetActiveWeapon().ReloadSingle && bot:GetActiveWeapon():Ammo1() > 0) then
+											elseif (!bot:GetActiveWeapon().ReloadSingle) then
 												buttons = buttons + IN_ATTACK
 											end
 										end

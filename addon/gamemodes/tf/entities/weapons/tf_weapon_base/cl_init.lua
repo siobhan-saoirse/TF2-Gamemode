@@ -284,10 +284,7 @@ hook.Add("PostPlayerDraw", "ForceDrawTFWorldModel", function(pl)
 		return
 	end
 	
-	if IsValid(pl:GetActiveWeapon()) and IsValid(pl:GetActiveWeapon().WModel2) then
-		pl.RenderingWorldModel = true
-		pl:GetActiveWeapon():DrawWorldModel(true)
-		pl.RenderingWorldModel = false
+	if IsValid(pl:GetActiveWeapon()) then
 	end
 end)
 

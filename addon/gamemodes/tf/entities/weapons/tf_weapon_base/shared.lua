@@ -27,54 +27,56 @@ function SWEP:DrawWorldModel(  )
 			self.WModel = ents.CreateClientProp()
 			self.WModel:Spawn()
 			self.WModel:SetNoDraw(true)
-		end
-		if (IsValid(_Owner)) then
-			local t2 = _Owner:GetProxyVar("CritTeam") 
-			local s2 = _Owner:GetProxyVar("CritStatus")
-			self.WModel:SetProxyVar("CritTeam",t2)
-			self.WModel:SetProxyVar("CritStatus",s2)
-            -- Specify a good position
-			
-			local model = self:GetItemData().model_world or self:GetItemData().model_player or self.WorldModel
-			if (self.WModel:GetModel() != model) then
-				self.WModel:SetModel(model)
-			end
-			local offsetVec = Vector(4, -2, 0)
-			local offsetAng = Angle(170, 180, 0)
-			if (_Owner:IsHL2()) then
-				local boneid = _Owner:LookupBone("ValveBiped.Bip01_R_Hand") -- Right Hand
-				if !boneid then return end
-
-				local matrix = _Owner:GetBoneMatrix(boneid)  
-				if !matrix then return end
-
-				local newPos, newAng = LocalToWorld(offsetVec, offsetAng, matrix:GetTranslation(), matrix:GetAngles())
-
-				self.WModel:SetPos(newPos)
-				self.WModel:SetAngles(newAng)
-
-				self.WModel:SetupBones()
-			end
-			if (self.WModel:GetMaterial() != "models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())) and _Owner:HasGodMode() and (_Owner:GetSkin() == 2 or _Owner:GetSkin() == 3) and !_Owner:GetNWBool("NoWeapon",false)) then
-				self.WModel:SetMaterial("models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())))
-			elseif (_Owner:GetNWBool("NoWeapon",false) == true or _Owner:GetMaterial() == "color") then 
-				self.WModel:SetMaterial("color")
-			else
-				local mat = self.CustomMaterialOverride2 or self.MaterialOverride or self.WeaponMaterial or ""
-				if (self.WModel:GetMaterial() != mat) then
-					self.WModel:SetMaterial(mat)	
+		else
+			if (IsValid(_Owner)) then
+				local t2 = _Owner:GetProxyVar("CritTeam") 
+				local s2 = _Owner:GetProxyVar("CritStatus")
+				self.WModel:SetProxyVar("CritTeam",t2)
+				self.WModel:SetProxyVar("CritStatus",s2)
+				-- Specify a good position
+				
+				local model = self:GetItemData().model_world or self:GetItemData().model_player or self.WorldModel
+				if (self.WModel:GetModel() != model) then
+					self.WModel:SetModel(model)
 				end
-			end
-			self.WModel:SetSkin(self.WeaponSkin or self:GetOwner():GetSkin())
-			self.WModel:SetPos(self:GetPos())
-			self.WModel:SetAngles(self:GetAngles())
-			self.WModel:SetParent(self.Owner)
-			self.WModel:AddEffects(bit.bor(EF_BONEMERGE,EF_BONEMERGE_FASTCULL))	
-		else	
-			self.WModel:SetPos(self:GetPos())
-			self.WModel:SetAngles(self:GetAngles())
-		end 
-		self.WModel:DrawModel()
+				local offsetVec = Vector(4, -2, 0)
+				local offsetAng = Angle(170, 180, 0)
+				if (_Owner:IsHL2()) then
+					local boneid = _Owner:LookupBone("ValveBiped.Bip01_R_Hand") -- Right Hand
+					if !boneid then return end
+
+					local matrix = _Owner:GetBoneMatrix(boneid)  
+					if !matrix then return end
+
+					local newPos, newAng = LocalToWorld(offsetVec, offsetAng, matrix:GetTranslation(), matrix:GetAngles())
+
+					self.WModel:SetPos(newPos)
+					self.WModel:SetAngles(newAng)
+
+					self.WModel:SetupBones()
+				end
+				if (self.WModel:GetMaterial() != "models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())) and _Owner:HasGodMode() and (_Owner:GetSkin() == 2 or _Owner:GetSkin() == 3) and !_Owner:GetNWBool("NoWeapon",false)) then
+					self.WModel:SetMaterial("models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())))
+				elseif (_Owner:GetNWBool("NoWeapon",false) == true or _Owner:GetMaterial() == "color") then 
+					self.WModel:SetMaterial("color")
+				else
+					local mat = self.CustomMaterialOverride2 or self.MaterialOverride or self.WeaponMaterial or ""
+					if (self.WModel:GetMaterial() != mat) then
+						self.WModel:SetMaterial(mat)	
+					end
+				end
+				self.WModel:SetSkin(self.WeaponSkin or self:GetOwner():GetSkin())
+				self.WModel:SetPos(self:GetPos())
+				self.WModel:SetAngles(self:GetAngles())
+				self.WModel:SetParent(self.Owner)
+				self.WModel:AddEffects(bit.bor(EF_BONEMERGE,EF_BONEMERGE_FASTCULL))	
+			else	
+				self.WModel:SetPos(self:GetPos())
+				self.WModel:SetAngles(self:GetAngles())
+			end 
+			self.WModel:DrawModel()
+			self.WModel:DrawShadow(true)
+		end
 		
 end
 
@@ -1495,6 +1497,9 @@ end
 function SWEP:Think() 
 	self:Inspect()
 	self:InspectAnimCheck()
+	if ((self:GetItemData().model_world or self:GetItemData().model_player) ~= nil) then
+		self.WorldModel = "models/empty.mdl"
+	end
 	if (((self.NextReload and self.NextReload>=CurTime()) or ((self.NextReloadStart and self.NextReloadStart>=CurTime()) or self.Reloading)) and self.ReloadSingle) then
 	
 		if self.FastReloadTime and SERVER then  
