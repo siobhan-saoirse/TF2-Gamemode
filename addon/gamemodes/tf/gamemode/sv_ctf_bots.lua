@@ -542,13 +542,14 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 	local buttons = 0
 	if bot.TFBot then
 		-- if our targetent is not alive, don't do anything until it's nil
+		bot.CameraTest = true
+		cmd:ClearMovement()
+		cmd:ClearButtons()
+
 		if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then 
 			bot.TargetEnt = nil
 			return 
 		end
-		bot.CameraTest = true
-		cmd:ClearMovement()
-		cmd:ClearButtons()
 
 		bot.movingAway = false
 	
@@ -1313,15 +1314,16 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 	end
 		if bot.TFBot then 
 			-- if our targetent is not alive, don't do anything until it's nil
-			if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then 
-				bot.TargetEnt = nil
-				return 
-			end
 			local buttons = 0
 			local controller = bot.ControllerBot
 			cmd:ClearMovement()
 			cmd:ClearButtons()
 						
+			if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then 
+				bot.TargetEnt = nil
+				return 
+			end
+			
 			if (IsValid(bot:GetActiveWeapon())) then
 					if (bot:GetActiveWeapon():Ammo1() < 0 and bot:GetActiveWeapon():Clip1() < 0 and bot:GetActiveWeapon().Primary.ClipSize ~= -1 && !bot:GetActiveWeapon().IsMeleeWeapon) then
 						if (CurTime() > bot:GetActiveWeapon():GetNextPrimaryFire()) then
