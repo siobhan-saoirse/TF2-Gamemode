@@ -541,6 +541,11 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 
 	local buttons = 0
 	if bot.TFBot then
+		-- if our targetent is not alive, don't do anything until it's nil
+		if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then 
+			bot.TargetEnt = nil
+			return 
+		end
 		bot.CameraTest = true
 		cmd:ClearMovement()
 		cmd:ClearButtons()
@@ -884,14 +889,17 @@ end)
 hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 	local buttons = 0
 	if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*0.4)) == 1 then
+		-- if our targetent is not alive, don't do anything until it's nil
+		if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then 
+			bot.TargetEnt = nil
+			return 
+		end
 		local controller = bot.ControllerBot
 		bot.movement = mv
 		if bot:IsPlayer() and !bot:IsBot() then
 			bot:PrintMessage(HUD_PRINTCENTER, "You're being controlled by a bot, ask an admin to stop being controlled.")
 		end
-		if bot.ControllerBot:GetPos() ~= bot:GetPos() then
-			bot.ControllerBot:SetPos(bot:GetPos())
-		end
+		bot.ControllerBot:SetPos(bot:GetPos())
 
 		if (IsValid(bot.TargeEntity) and bot.TargeEntity:GetClass() == "tf_wearable_item_demoshield" and bot.TargeEntity.dt.Ready and bot.botPos) then
 			bot.TargeEntity:StartCharging()
@@ -1304,6 +1312,11 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 		end
 	end
 		if bot.TFBot then 
+			-- if our targetent is not alive, don't do anything until it's nil
+			if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then 
+				bot.TargetEnt = nil
+				return 
+			end
 			local buttons = 0
 			local controller = bot.ControllerBot
 			cmd:ClearMovement()
