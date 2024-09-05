@@ -5,7 +5,7 @@ GM.PlayerClasses = {}
 GM.PlayerClassesAutoComplete = {}
 GM.GibTypeTable = {}
 
-local TFHull = {Vector(-24, -24, 0), Vector(24, 24, 92)}
+local TFHull = {Vector(-24, -24, 0), Vector(24, 24, 82)}
 local TFHullDuck = {Vector(-24, -24, 0), Vector(24, 24, 62)}
 
 local DefaultHull = {Vector(-24, -24, 0), Vector(24,  24,  72)}
@@ -201,7 +201,7 @@ end
 cvars.AddChangeCallback("tf_disable_fun_classes", function(_, _, val)
 	if SERVER and val == "1" then
 		for k, v in pairs(player.GetAll()) do
-			if v:GetPlayerClass() == "gmodplayer" then
+			if v:GetPlayerClass() == "gmodplayer" and !v:IsAdmin() then
 				v:SetPlayerClass("scout")  
 				v:Kill()
 			end
@@ -261,7 +261,7 @@ function meta:SetPlayerClass(class)
 	self.anim_Deployed = false
 	class = string.lower(class)
 
-	if dgmod:GetBool() and (class == "gmodplayer" or class == "civilian") then
+	if dgmod:GetBool() and (class == "gmodplayer" or class == "civilian") and !self:IsAdmin() then
 		return
 	end
 	

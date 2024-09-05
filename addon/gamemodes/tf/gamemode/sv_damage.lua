@@ -72,6 +72,7 @@ function GM:PreScaleDamage(ent, hitgroup, dmginfo)
 
 	-- Used for recalculating custom damage falloff
 	-- (especially for the Direct Hit which does not do enough damage due to its poor blast radius)
+	--[[
 	if inf.ModifyInitialDamage then
 		dmginfo:SetDamage(inf:ModifyInitialDamage(ent, dmginfo))
 	end 
@@ -87,7 +88,7 @@ function GM:PreScaleDamage(ent, hitgroup, dmginfo)
 		else
 			dmginfo:SetDamage(frac * 100)
 		end
-	end
+	end]]
 end
 
 function GM:PostScaleDamage(ent, hitgroup, dmginfo)
@@ -833,7 +834,16 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	-- Pain and death sounds
 	local hp = ent:Health() - dmginfo:GetDamage()
 	ent:Speak("TLK_PLAYER_EXPRESSION", false)
-	
+	if (ent.TFBot) then
+		ent.TargetEnt = att 
+		for k,v in ipairs(ents.FindInSphere(ent:GetPos(), 800)) do
+			if (v.TFBot) then
+				if (v:Team() == ent:Team() and v:EntIndex() ~= ent:EntIndex()) then
+					v.TargetEnt = att
+				end
+			end
+		end
+	end
 	if not ent.NextFlinch or CurTime() > ent.NextFlinch and !ent:IsL4D() then
 		ent:DoAnimationEvent(ACT_MP_GESTURE_FLINCH_CHEST, true)
 		ent.NextFlinch = CurTime() + 0.5

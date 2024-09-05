@@ -833,50 +833,87 @@ hook.Add("EntityEmitSound", "MouthFix", function(snd)
 	end
 
 	if (IsValid(snd.Entity)) then
-		for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),22000)) do
-			if ((--[[v:IsTFPlayer() || ]]v:IsPlayer() && v.TFBot) and !IsValid(v.TargetEnt) and v:EntIndex( ) != snd.Entity:EntIndex()) then
-				local oldangles = v:EyeAngles()
-				 
-				-- for improved npcs only
-				--[[if (SERVER and v:IsNPC() and !v:IsFriendly(snd.Entity) and snd.Entity:Team() != TEAM_NEUTRAL) then
-					if (v:GetCurrentSchedule() != SCHED_FORCED_GO_RUN) then
-						v:AlertSound()
-						v:SetSaveValue( "m_vecLastPosition", snd.Entity:GetPos() )
-						v:SetSchedule( SCHED_FORCED_GO_RUN ) 
+		if (snd.Entity.TFBot) then
+			if ( math.random(1,2+(table.Count(player.GetAll())*4))) then
+				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),22000)) do
+					if ((--[[v:IsTFPlayer() || ]]v:IsPlayer() && v.TFBot) and !IsValid(v.TargetEnt) and v:EntIndex( ) != snd.Entity:EntIndex()) then
+						local oldangles = v:EyeAngles()
+						
+						-- for improved npcs only
+						--[[if (SERVER and v:IsNPC() and !v:IsFriendly(snd.Entity) and snd.Entity:Team() != TEAM_NEUTRAL) then
+							if (v:GetCurrentSchedule() != SCHED_FORCED_GO_RUN) then
+								v:AlertSound()
+								v:SetSaveValue( "m_vecLastPosition", snd.Entity:GetPos() )
+								v:SetSchedule( SCHED_FORCED_GO_RUN ) 
+							end
+						else]]
+						if (v:IsTFPlayer()) then
+							snd.Entity.LookAtEntity = v
+							timer.Stop("Look"..v:EntIndex())
+							local discoverychance = 90
+							if (snd.Entity.Difficulty == 2) then
+								discoverychance = 60
+							elseif (snd.Entity.Difficulty == 1) then
+								discoverychance = 30
+							elseif (snd.Entity.Difficulty == 0) then
+								discoverychance = 10
+							end
+							if (discoverychance > math.random(1,100)) then
+								if (!snd.Entity.LookAtEntity:IsFlagSet(FL_NOTARGET) && snd.Entity.LookAtEntity:EntityTeam() ~= TEAM_NEUTRAL) then
+									if (!IsValid(snd.Entity.TargetEnt) and snd.Entity.LookAtEntity:GetPos():Distance(v:GetPos()) < 500) then
+										if (snd.Entity.LookAtEntity:IsTFPlayer() and !snd.Entity.LookAtEntity:IsFriendly(v) and !IsValid(snd.Entity.TargetEnt)) then
+											snd.Entity.TargetEnt = snd.Entity.LookAtEntity
+										end
+									end
+								end
+							end
+
+							timer.Stop("GoBack"..v:EntIndex())
+						end
 					end
-				else]]
-				if (v:IsPlayer()) then
-					v.LookAtEntity = snd.Entity
-					timer.Stop("Look"..v:EntIndex())
-					local discoverychance = 90
-					if (v.Difficulty == 2) then
-						discoverychance = 60
-					elseif (v.Difficulty == 1) then
-						discoverychance = 30
-					elseif (v.Difficulty == 0) then
-						discoverychance = 10
-					end
-					if (discoverychance > math.random(1,100)) then
-								
-							timer.Create("Look"..v:EntIndex(), 0.01, 100, function()
-								
+				end
+				
+			end
+		end 
+		if math.random(1,2+(table.Count(player.GetAll())*4)) then
+			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),22000)) do
+				if ((--[[v:IsTFPlayer() || ]]v:IsPlayer() && v.TFBot) and !IsValid(v.TargetEnt) and v:EntIndex( ) != snd.Entity:EntIndex()) then
+					local oldangles = v:EyeAngles()
+					
+					-- for improved npcs only
+					--[[if (SERVER and v:IsNPC() and !v:IsFriendly(snd.Entity) and snd.Entity:Team() != TEAM_NEUTRAL) then
+						if (v:GetCurrentSchedule() != SCHED_FORCED_GO_RUN) then
+							v:AlertSound()
+							v:SetSaveValue( "m_vecLastPosition", snd.Entity:GetPos() )
+							v:SetSchedule( SCHED_FORCED_GO_RUN ) 
+						end
+					else]]
+					if (v:IsPlayer()) then
+						v.LookAtEntity = snd.Entity
+						timer.Stop("Look"..v:EntIndex())
+						local discoverychance = 90
+						if (v.Difficulty == 2) then
+							discoverychance = 60
+						elseif (v.Difficulty == 1) then
+							discoverychance = 30
+						elseif (v.Difficulty == 0) then
+							discoverychance = 10
+						end
+						if (discoverychance > math.random(1,100)) then
+							if (!v.LookAtEntity:IsFlagSet(FL_NOTARGET) && v.LookAtEntity:EntityTeam() ~= TEAM_NEUTRAL) then
 								if (!IsValid(v.TargetEnt) and v.LookAtEntity:GetPos():Distance(v:GetPos()) < 500) then
-									local angle = LerpAngle(0.2, v:EyeAngles(), ( v.LookAtEntity:GetPos() - v:GetPos() ):Angle())
-									v:SetEyeAngles(angle)
-									local tr = v:GetEyeTrace()
-									if (v.LookAtEntity:IsTFPlayer() and !v.LookAtEntity:IsFriendly(v)) then
+									if (v.LookAtEntity:IsTFPlayer() and !v.LookAtEntity:IsFriendly(v) and !IsValid(v.TargetEnt)) then
 										v.TargetEnt = v.LookAtEntity
 									end
 								end
+							end
+						end
 
-							end)
-
+						timer.Stop("GoBack"..v:EntIndex())
 					end
-
-					timer.Stop("GoBack"..v:EntIndex())
 				end
 			end
-		end
+		end	
 		local sound = string.Replace(snd.SoundName, ".mp3", ".wav")
 		if (file.Exists("sound/"..sound, "WORKSHOP")) then
 			if (!string.find(snd.SoundName,"announcer_") && !string.find(snd.SoundName,"mvm_")) then

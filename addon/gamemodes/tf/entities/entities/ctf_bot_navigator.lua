@@ -25,29 +25,34 @@ function ENT:Initialize()
 end
 
 function ENT:ChasePos( options )
-	self.P = Path("Follow")
-	self.P:SetMinLookAheadDistance(300)
-	self.P:SetGoalTolerance(20)
-	self.P:Compute(self, self.PosGen)
-	
-	if !self.P:IsValid() then return end
-	while self.P:IsValid() do
+	if (self.PosGen ~= nil) then
+		self.P = Path("Follow")
+		self.P:Compute(self, self.PosGen)
 		
-		if self.P:GetAge() > 0.3 then
-			self.P:Compute(self, self.PosGen)
-		end
-		self.P:Update( self )								-- This function moves the bot along the path
+		if !self.P:IsValid() then return end
+		while self.P:IsValid() do
+				
+			if (IsValid(self:GetOwner())) then
+				local owner = self:GetOwner()
+				self:SetModel(owner:GetModel())
+				self:SetVelocity(owner:GetVelocity())
+			end
 
-		if GetConVar("developer"):GetFloat() > 0 then
-			self.P:Draw()
+			self.P:Compute(self, self.PosGen)
+			self.P:Update( self )								-- This function moves the bot along the path
+
+			if GetConVar("developer"):GetFloat() > 0 then
+				self.P:Draw()
+			end
+			
+			if self.loco:IsStuck() then
+				self:HandleStuck()
+				return
+			end
+			
+			coroutine.wait(math.Rand(0.1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))))
+			coroutine.yield()
 		end
-		
-		if self.loco:IsStuck() then
-			self:HandleStuck()
-			return
-		end
-		
-		coroutine.yield()
 	end
 end
 
@@ -64,8 +69,7 @@ function ENT:RunBehaviour()
 		if self.PosGen then
 			self:ChasePos({})
 		end
-		coroutine.wait(1)
-		
+		coroutine.wait(math.Rand(0.1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))))
 		coroutine.yield()
 	end
 end

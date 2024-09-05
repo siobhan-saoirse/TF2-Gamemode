@@ -625,10 +625,10 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 	elseif event == PLAYERANIMEVENT_CUSTOM_GESTURE then
 		if data == ACT_MP_DOUBLEJUMP then
 			-- Double jump
-			pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_DOUBLEJUMP, true)
+			pl:AnimRestartGesture(GESTURE_SLOT_FLINCH, ACT_MP_DOUBLEJUMP, true)
 		elseif data == ACT_MP_GESTURE_FLINCH_CHEST then
 			-- Flinch
-			pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_GESTURE_FLINCH_CHEST, true)
+			pl:AnimRestartGesture(GESTURE_SLOT_FLINCH, ACT_MP_GESTURE_FLINCH_CHEST, true)
 			pl.RgChatActiveGesture = ACT_MP_GESTURE_FLINCH_CHEST
 		elseif data == ACT_MP_AIRWALK then
 			-- Go into airwalk animation
@@ -732,9 +732,9 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 				pl:AnimRestartMainSequence()
 			end
 		elseif VoiceCommandGestures[data] then
-			pl:AnimRestartGesture(GESTURE_SLOT_VCD, data, true)
+			pl:AnimRestartGesture(GESTURE_SLOT_FLINCH, data, true)
 		elseif TauntGestures[data] then -- laugh
-			pl:AddVCDSequenceToGestureSlot(GESTURE_SLOT_FLINCH, pl:LookupSequence(TauntGestures[data]), 0, true)
+			pl:AddVCDSequenceToGestureSlot(GESTURE_SLOT_VCD, pl:LookupSequence(TauntGestures[data]), 0, true)
 		else
 			-- just let us do custom ones man
 			if (isstring(data)) then

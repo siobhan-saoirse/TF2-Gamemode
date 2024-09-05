@@ -2734,3 +2734,36 @@ concommand.Add("-inspect", function(pl)
 	pl:SetNWString("inspect", "inspecting_released")
 	timer.Simple( 0.02, function() pl:SetNWString("inspect", "inspecting_done") end )
 end)
+
+function GM:RoundWin(team)
+	GAMEMODE.RoundHasWinner = true
+	timer.Simple(10, function()
+		GAMEMODE.RoundHasWinner = false
+		RunConsoleCommand("gmod_admin_cleanup")
+		team.SetScore(TEAM_RED,0)
+		team.SetScore(TEAM_BLU,0)
+		for k,v in ipairs(player.GetAll()) do
+			v:Spawn()
+			v:SetNWBool("Taunting",true)
+			timer.Create("SlowGuydown"..v:EntIndex(), 0.1, 48, function()
+				v:SetWalkSpeed(1)
+				v:SetRunSpeed(1)
+			end) 
+			timer.Simple(5, function()
+				v:SetNWBool("Taunting",false)
+				v:ResetClassSpeed()
+				v:Speak("TLK_ROUND_START")
+			end)
+		end
+	end)
+	for _,pl in pairs( player.GetAll() ) do
+		if pl:Team() == team then
+			pl:SendLua([[surface.PlaySound("misc/your_team_won.wav")]])
+			GAMEMODE:StartCritBoost(v)
+		else
+			pl:SendLua([[surface.PlaySound("misc/your_team_lost.wav")]])
+			pl:StripWeapons()
+		end
+	end
+
+end

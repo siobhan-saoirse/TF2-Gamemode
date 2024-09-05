@@ -19,9 +19,9 @@ local tf_bot_melee_only = CreateConVar("tf_bot_melee_only", "0", {FCVAR_ARCHIVE,
 
 function lookForNearestPlayer(bot)
 	local npcs = {}
-	if (math.random(1,1+(table.Count(player.GetAll())*0.4)) == 1) then
+	if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
 		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 3300)) do
-			if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:EntityTeam(bot) != TEAM_NEUTRAL and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET) and v:Health() > 0 ) then
+			if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:EntityTeam(bot) != TEAM_NEUTRAL and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET) and v:Health() > 0 and bot:Visible(v)) then
 				table.insert(npcs, v)		
 			end
 		end
@@ -32,9 +32,28 @@ function lookForNearestPlayer(bot)
 	return nil
 end
 
+function flagAvailable(bot)
+	local npcs = {} 
+	for k,v in ipairs(ents.FindByClass("item_teamflag")) do
+		if (IsValid(v)) then
+			table.insert(npcs, v)		
+		end
+	end
+	return table.Count(npcs) > 0
+end
+function bombAvailable(bot)
+	local npcs = {} 
+	for k,v in ipairs(ents.FindByClass("item_teamflag_mvm")) do
+		if (IsValid(v)) then
+			table.insert(npcs, v)		
+		end
+	end
+	return table.Count(npcs) > 0
+end
+
 function lookForClosestHumanPlayer(bot)
 	local npcs = {} 
-	if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
+	if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
 		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 12000)) do 
 			if (v:IsPlayer() and v:Health() > 0 and !v:IsBot() and v:EntIndex() != bot:EntIndex() and v:EntityTeam(bot) != TEAM_NEUTRAL and !IsValid(bot.TargetEnt) and !v:IsFriendly(bot) and v:Team() != TEAM_NEUTRAL and v:Team() != TEAM_FRIENDLY and v:Health() > 0 ) then
 				table.insert(npcs, v)
@@ -50,7 +69,7 @@ end
 
 function getNPCsAndPlayers()
 	local npcs = {}
-	if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
+	if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
 		for k,v in ipairs(ents.GetAll()) do
 			if (v:IsNPC() or v:IsNextBot()) then
 				if (v:Health() > 0) then
@@ -550,11 +569,55 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			bot.TargetEnt = nil
 			return 
 		end
-
+		if (IsValid(bot.TargetEnt)) then
+			if (bot.playerclass == "Scout" or bot.playerclass == "Engineer") then
+				if (IsValid(bot:GetWeapons()[2])) then
+					if (bot:GetWeapons()[1]:Clip1() == 0) then
+						bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
+					end
+				end
+			elseif (bot.playerclass == "Soldier") then
+				if (IsValid(bot:GetWeapons()[2])) then
+					if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 500) then
+						if (bot:GetWeapons()[1]:Clip1() == 0 and bot:GetWeapons()[2]:Clip1() ~= 0) then
+							bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
+						else
+							bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())		
+						end
+					end
+				end
+			elseif (bot.playerclass == "Pyro") then
+				if (IsValid(bot:GetWeapons()[2])) then
+					if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) > 750) then
+						if (bot:GetWeapons()[2]:Clip1() ~= 0) then
+							bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
+						else
+							bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())		
+						end
+					end
+				end
+			elseif (bot.playerclass == "Sniper") then
+				if (IsValid(bot:GetWeapons()[2])) then
+					if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 750) then
+						bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
+					else
+						bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())
+					end
+				end
+			end
+		else
+			if (bot:GetWeapons()[1]:Ammo1() ~= 0) then
+				bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())
+			end
+		end
 		bot.movingAway = false
 	
 		local controller = bot.ControllerBot
-		
+		if (controller ~= nil) then
+			if (bot.botPos ~= nil) then
+				controller.PosGen = bot.botPos
+			end
+		end
 		if (bot.OverrideModelScale) then
 			bot:SetModelScale(bot.OverrideModelScale)
 		end
@@ -569,7 +632,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				
 			if IsValid(controller.P) then
 				if bot.botPos != nil then
-					if (math.random(1,2+(table.Count(player.GetAll())*0.4)) == 1) then
+					if (math.random(1,2+(table.Count(player.GetAll())*0.8)) == 1) then
 						controller.P:Compute(controller, bot.botPos)
 					end
 				end
@@ -690,7 +753,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		if (bot.playerclass == "Medic") then
 			for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 1200)) do
 				if (v:IsPlayer() and v:EntIndex() != bot:EntIndex()) then
-					if (v.TFBot and v:IsFriendly(bot) and v:Health() > 0) then
+					if (v.TFBot and v:IsFriendly(bot) and v:Health() > 0 and v.playerclass ~= "Medic") then
 						if (!IsValid(bot.TargetEnt)) then
 							bot.TargetEnt = v
 						end
@@ -738,12 +801,10 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 	
 		-- force a recompute
 				if (bot.botPos) then
-					if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
-						bot.ControllerBot.PosGen = bot.botPos
-					end
+					bot.ControllerBot.PosGen = bot.botPos
 				end
 
-			if IsValid(bot.TargetEnt) and !IsValid(bot.intelcarrier) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 6000 and bot.TargetEnt:Health() > 0 then
+			if IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 6000 and bot.TargetEnt:Health() > 0 then
 				if (bot:GetPlayerClass() != "tank_l4d") then
 					if (bot:GetNWBool("Taunting",false) == true) then 
 						return 
@@ -829,7 +890,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					mv:SetForwardSpeed(0)
 					return
 				else
-					if (bot:GetPos():Distance(bot.botPos) > 100) then
+					if (bot.TargetEnt ~= nil && bot:GetPos():Distance(bot.botPos) > bot.TargetEnt:GetModelRadius() || bot.TargetEnt == nil and bot:GetPos():Distance(bot.botPos) > 50) then
 						if (IsValid(bot.TargetEnt)) then
 							if (bot.TargetEnt:IsFriendly(bot) and bot.TargetEnt.movingAway) then 
 								mv:SetForwardSpeed(0)
@@ -848,11 +909,11 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			end
 			local mva = ((goalpos + bot:GetCurrentViewOffset()) - bot:GetShootPos()):Angle()
 			
-			if bot.botPos and curgoal.area:GetAttributes() != NAV_MESH_CLIFF and bot:GetPos():Distance(curgoal.pos) > 50 * bot:GetModelScale() then
+			if bot.botPos and curgoal.area:GetAttributes() != NAV_MESH_CLIFF and bot:GetPos():Distance(curgoal.pos) > 100 * bot:GetModelScale() then
 				if (IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging) then
 					--mv:SetMoveAngles(mva)
 				else
-					mv:SetMoveAngles(mva)
+					mv:SetMoveAngles(LerpAngle(FrameTime() * 8, mv:GetMoveAngles, mva))
 				end
 			end
 
@@ -871,7 +932,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				elseif bot.Difficulty == 3 then
 					lerp = 4
 				end
-				if (!IsValid(bot.TargetEnt)) then
 					if (bot:IsL4D()) then
 						--bot:SetEyeAngles(LerpAngle(0.2, bot:EyeAngles(), mva))
 					else
@@ -883,13 +943,12 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 							bot:SetEyeAngles(Angle(ang.p, ang.y, 0))
 						end
 					end
-				end
 			end
 	end
 end)
 hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 	local buttons = 0
-	if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*0.4)) == 1 then
+	if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
 		-- if our targetent is not alive, don't do anything until it's nil
 		if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then 
 			bot.TargetEnt = nil
@@ -912,7 +971,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 		local fintelcap
 		local targetpos2 = Vector(0, 0, 0)
 
-		if string.find(game.GetMap(), "ctf_") then -- CTF AI
+		if flagAvailable(bot) then -- CTF AI
 			for k, v in pairs(ents.FindByClass("item_teamflag")) do
 				if v.TeamNum ~= bot:Team() then
 					intel = v
@@ -937,7 +996,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				bot.intelcarrier = nil
 			elseif IsValid(intel.Carrier) and bot:EntIndex() != intel.Carrier:EntIndex() then -- or else if we have it already carried
 
-				if (math.random(1,28 + table.Count(player.GetAll())) == 1) then
+				if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
 					targetpos2 = intel.Carrier:GetPos()
 				end
 				bot.intelcarrier = intel.Carrier
@@ -971,7 +1030,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 
 			bot.botPos = targetpos2
 		]]
-		elseif string.find(game.GetMap(), "mvm_") and (bot:Team() == TEAM_BLU or bot:Team() == TF_TEAM_PVE_INVADERS) and bot:GetPlayerClass() != "engineer" and bot.playerclass != "medic" and bot:GetPlayerClass() != "sentrybuster" then -- CTF AI in MVM Maps
+		elseif bombAvailable(bot) and (bot:Team() == TEAM_BLU or bot:Team() == TF_TEAM_PVE_INVADERS) and bot:GetPlayerClass() != "engineer" and bot.playerclass != "medic" and bot:GetPlayerClass() != "sentrybuster" then -- CTF AI in MVM Maps
 			for k, v in pairs(ents.FindByClass("item_teamflag_mvm")) do
 				if v.TeamNum ~= bot:Team() and k == 1 then 
 					intel = v
@@ -991,7 +1050,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 					bot.intelcarrier = nil
 				elseif IsValid(intel.Carrier) and bot:EntIndex() != intel.Carrier:EntIndex() then -- or else if we have it already carried
 
-					if (math.random(1,28 + table.Count(player.GetAll())) == 1) then
+					if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
 						targetpos2 = intel.Carrier:GetPos()
 					end
 					bot.intelcarrier = intel.carrier
@@ -1029,7 +1088,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			elseif (IsValid(bot.TargetEnt)) then
 				local trgt = bot.TargetEnt
 				if (IsValid(trgt) and trgt:Health() > 0 and trgt:EntIndex() != bot:EntIndex()) then
-					bot.botPos = trgt:GetPos()
+					bot.botPos = bot.ControllerBot:FindSpot("random", {radius = 12500, pos = trgt:GetPos()})
 				else
 					bot.botPos = bot.ControllerBot:FindSpot("random", {radius = 12500})
 				end
@@ -1084,9 +1143,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 		end
 		if (!IsValid(bot.TargetEnt)) then
 			
-			if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
-				bot.TargetEnt = lookForNearestPlayer(bot)
-			end
+			bot.TargetEnt = lookForNearestPlayer(bot)
 			
 		end
 		------------------------------
@@ -1126,18 +1183,18 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 					if (IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) then
 						mv:SetForwardSpeed(bot:GetRunSpeed())
 						
-							if (math.random(1,18 + table.Count(player.GetAll())) == 1) then
+							if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
 								bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * (110 * bot:GetModelScale()), radius = 120 * bot:GetModelScale()})
 							end
 					else
 						mv:SetForwardSpeed(-bot:GetRunSpeed())
-							if (math.random(1,18 + table.Count(player.GetAll())) == 1) then
+							if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
 								bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350 * bot:GetModelScale(), radius = 3000 * bot:GetModelScale()})
 							end
 					end
 				else
 					mv:SetForwardSpeed(-bot:GetRunSpeed())
-						if (math.random(1,18 + table.Count(player.GetAll())) == 1) then
+						if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
 							bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350 * bot:GetModelScale(), radius = 3000 * bot:GetModelScale()})
 						end
 				end

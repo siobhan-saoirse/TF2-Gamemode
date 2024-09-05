@@ -1812,12 +1812,14 @@ function GM:PlayerDeath(ent, inflictor, attacker)
 	
 	timer.Stop("Respawn"..ent:EntIndex())
 	timer.Create("Respawn"..ent:EntIndex(), 6.5, 1, function()
-		if IsValid(animent) then
-			animent:Fire("Kill", "", 0.1)
-		end
-		if IsValid(ent) then
-			if !ent:Alive() then
-				ent:Spawn()
+		if (!GAMEMODE.RoundHasWinner) then
+			if IsValid(animent) then
+				animent:Fire("Kill", "", 0.1)
+			end
+			if IsValid(ent) then
+				if !ent:Alive() then
+					ent:Spawn()
+				end
 			end
 		end
 	end)

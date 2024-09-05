@@ -1,6 +1,8 @@
 ENT.Base = "base_brush"
 ENT.Type = "brush"
 
+CreateConVar("tf_flag_caps_per_round","3",{FCVAR_REPLICATED,FCVAR_NOTIFY,FCVAR_ARCHIVE})
+
 function ENT:Initialize()
 	local pos = self:GetPos()
 	local mins, maxs = self:WorldSpaceAABB() -- https://forum.facepunch.com/gmoddev/lmcw/Brush-entitys-ent-GetPos/1/#postdwfmq
@@ -58,9 +60,15 @@ function ENT:StartTouch(ply)
 			--team.AddScore(v.TeamNum, 1)
 			if v.TeamNum == TEAM_RED then
 				team.AddScore(TEAM_BLU, 1)
+				if (team.GetScore(TEAM_BLU) > 3 and !GAMEMODE.RoundHasWinner) then
+					GAMEMODE:RoundWin(TEAM_BLU)
+				end
 				--SetGlobalFloat("tf_ctf_blu", GetGlobalFloat("tf_ctf_blu") + 1)
 			else
 				team.AddScore(TEAM_RED, 1)
+				if (team.GetScore(TEAM_RED) > 3 and !GAMEMODE.RoundHasWinner) then
+					GAMEMODE:RoundWin(TEAM_RED)
+				end
 				--SetGlobalFloat("tf_ctf_red", GetGlobalFloat("tf_ctf_red") + 1)
 			end
 
