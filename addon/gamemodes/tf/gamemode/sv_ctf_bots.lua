@@ -19,17 +19,12 @@ local tf_bot_melee_only = CreateConVar("tf_bot_melee_only", "0", {FCVAR_ARCHIVE,
 
 function lookForNearestPlayer(bot)
 	local npcs = {}
-	if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
-		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 3300)) do
+		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 8000000)) do
 			if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:EntityTeam(bot) != TEAM_NEUTRAL and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET) and v:Health() > 0 and bot:Visible(v)) then
 				table.insert(npcs, v)		
 			end
 		end
 		return table.Random(npcs)
-	else
-		return nil
-	end
-	return nil
 end
 
 function flagAvailable(bot)
@@ -212,7 +207,36 @@ local function LeadBot_S_Add(team2)
     --timer.Simple(1, function()
         ----TalkToMe(bot, "join")
     --end)
-	bot:SetTeam(teamv)
+	local ply = bot
+	
+	local nDiffBetweenTeams = 0;
+	local m_iLightestTeam = 0;
+	local m_iHeaviestTeam = 0;
+	local iMostPlayers = 0;
+	local iLeastPlayers = game.MaxPlayers() + 1;
+	local i = 1; 
+	for k,v in ipairs(team.GetAllTeams()) do
+			local iNumPlayers = team.NumPlayers(v);
+
+			if ( iNumPlayers < iLeastPlayers ) then
+				iLeastPlayers = iNumPlayers;
+				m_iLightestTeam = k; 
+			end
+
+			if ( iNumPlayers > iMostPlayers ) then
+				iMostPlayers = iNumPlayers;
+				m_iHeaviestTeam = k; 
+			end
+	end 
+
+	nDiffBetweenTeams = ( iMostPlayers - iLeastPlayers );
+	if (team.NumPlayers(1) > team.NumPlayers(2)) then
+		ply:SetTeam(2)	
+	elseif (team.NumPlayers(1) < team.NumPlayers(2)) then
+		ply:SetTeam(1)	
+	else
+		ply:SetTeam(table.Random({TEAM_RED,TEAM_BLU}))	
+	end
 	
 	local random = math.random(1,9)
 	if (random == 1) then
@@ -234,47 +258,11 @@ local function LeadBot_S_Add(team2)
 	elseif (random == 9) then
 		bot:SetPlayerClass("spy")
 	end
+	bot.TFBot = true
+	timer.Simple(0.1, function()
+	
+		bot:Spawn()
 
-	timer.Simple(1, function()
-		if IsValid(bot) then
-			bot.TFBot = true
-			if string.find(game.GetMap(), "mvm_") then
-				
-				bot:SetTeam(TF_TEAM_PVE_INVADERS)
-				bot:SetSkin(1)
-			else
-				local nDiffBetweenTeams = 0;
-				local m_iLightestTeam = 0;
-				local m_iHeaviestTeam = 0;
-				local iMostPlayers = 0;
-				local iLeastPlayers = game.MaxPlayers() + 1;
-				local i = 1; 
-				for k,v in ipairs(team.GetAllTeams()) do
-						local iNumPlayers = team.NumPlayers(v);
-
-						if ( iNumPlayers < iLeastPlayers ) then
-							iLeastPlayers = iNumPlayers;
-							m_iLightestTeam = k; 
-						end
-
-						if ( iNumPlayers > iMostPlayers ) then
-							iMostPlayers = iNumPlayers;
-							m_iHeaviestTeam = k; 
-						end
-				end 
-
-				nDiffBetweenTeams = ( iMostPlayers - iLeastPlayers );
-				if (team.NumPlayers(1) > team.NumPlayers(2)) then
-					bot:SetTeam(2)	
-				elseif (team.NumPlayers(1) < team.NumPlayers(2)) then
-					bot:SetTeam(1)	
-				else
-					bot:SetTeam(table.Random({TEAM_RED,TEAM_BLU}))	
-				end
-				bot:SetSkin(bot:Team()-1)
-			end
-			bot:Spawn()
-		end
 	end)
 
 	MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
@@ -606,8 +594,10 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				end
 			end
 		else
-			if (bot:GetWeapons()[1]:Ammo1() ~= 0) then
-				bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())
+			if (bot:GetWeapons()[1] ~= nil) then
+				if (bot:GetWeapons()[1]:Ammo1() ~= 0) then
+					bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())
+				end
 			end
 		end
 		bot.movingAway = false
@@ -913,7 +903,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				if (IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging) then
 					--mv:SetMoveAngles(mva)
 				else
-					mv:SetMoveAngles(LerpAngle(FrameTime() * 8, mv:GetMoveAngles, mva))
+					mv:SetMoveAngles(LerpAngle(FrameTime() * 48, mv:GetMoveAngles(), mva))
 				end
 			end
 
@@ -950,6 +940,13 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 	local buttons = 0
 	if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
 		-- if our targetent is not alive, don't do anything until it's nil
+		
+		if (!IsValid(bot.TargetEnt)) then
+			
+			bot.TargetEnt = lookForNearestPlayer(bot)
+			
+		end
+		
 		if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then 
 			bot.TargetEnt = nil
 			return 
@@ -971,7 +968,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 		local fintelcap
 		local targetpos2 = Vector(0, 0, 0)
 
-		if flagAvailable(bot) then -- CTF AI
+		if flagAvailable(bot) and !GAMEMODE.RoundHasWinner then -- CTF AI
 			for k, v in pairs(ents.FindByClass("item_teamflag")) do
 				if v.TeamNum ~= bot:Team() then
 					intel = v
@@ -1030,7 +1027,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 
 			bot.botPos = targetpos2
 		]]
-		elseif bombAvailable(bot) and (bot:Team() == TEAM_BLU or bot:Team() == TF_TEAM_PVE_INVADERS) and bot:GetPlayerClass() != "engineer" and bot.playerclass != "medic" and bot:GetPlayerClass() != "sentrybuster" then -- CTF AI in MVM Maps
+		elseif bombAvailable(bot) and (bot:Team() == TEAM_BLU or bot:Team() == TF_TEAM_PVE_INVADERS) and bot:GetPlayerClass() != "engineer" and bot.playerclass != "medic" and bot:GetPlayerClass() != "sentrybuster" and !GAMEMODE.RoundHasWinner then -- CTF AI in MVM Maps
 			for k, v in pairs(ents.FindByClass("item_teamflag_mvm")) do
 				if v.TeamNum ~= bot:Team() and k == 1 then 
 					intel = v
@@ -1140,11 +1137,6 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 					end
 				end
 			end
-		end
-		if (!IsValid(bot.TargetEnt)) then
-			
-			bot.TargetEnt = lookForNearestPlayer(bot)
-			
 		end
 		------------------------------
 		 -----[[ENTITY DETECTION]]-----

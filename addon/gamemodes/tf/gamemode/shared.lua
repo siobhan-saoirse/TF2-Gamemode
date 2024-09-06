@@ -1881,6 +1881,7 @@ end)
 
 
 --CreateClientConVar( "snd_soundmixer", "Default_Mix", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_ARCHIVE}, "Become a robot after respawning." )
+CreateConVar("tf_flag_caps_per_round","3",{FCVAR_REPLICATED,FCVAR_NOTIFY,FCVAR_ARCHIVE})
 CreateConVar( "civ2_legs", "0", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY, FCVAR_DEVELOPMENTONLY, FCVAR_ARCHIVE}, "LEGS!" )
 CreateConVar( "civ2_allow_respawn_with_key_press", "0", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Players will respawn on key press without waiting for the freeze cam to finish." )
 CreateConVar( "civ2_smooth_worldmodel_turning", "0", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY, FCVAR_ARCHIVE}, "" )
@@ -2735,31 +2736,37 @@ concommand.Add("-inspect", function(pl)
 	timer.Simple( 0.02, function() pl:SetNWString("inspect", "inspecting_done") end )
 end)
 
-function GM:RoundWin(team)
+function GM:RoundWin(teamnum)
 	GAMEMODE.RoundHasWinner = true
-	timer.Simple(10, function()
+	timer.Simple(15, function()
 		GAMEMODE.RoundHasWinner = false
-		RunConsoleCommand("gmod_admin_cleanup")
-		team.SetScore(TEAM_RED,0)
-		team.SetScore(TEAM_BLU,0)
-		for k,v in ipairs(player.GetAll()) do
-			v:Spawn()
-			v:SetNWBool("Taunting",true)
-			timer.Create("SlowGuydown"..v:EntIndex(), 0.1, 48, function()
-				v:SetWalkSpeed(1)
-				v:SetRunSpeed(1)
-			end) 
-			timer.Simple(5, function()
-				v:SetNWBool("Taunting",false)
-				v:ResetClassSpeed()
-				v:Speak("TLK_ROUND_START")
-			end)
+		if SERVER then
+			RunConsoleCommand("gmod_admin_cleanup")
+			for k,v in ipairs(player.GetAll()) do
+				v:Spawn()
+				v:SetNWBool("Taunting",true)
+				timer.Create("SlowGuydown"..v:EntIndex(), 0.1, 48, function()
+					v:SetWalkSpeed(1)
+					v:SetRunSpeed(1)
+				end) 
+				timer.Simple(5, function()
+					v:SetNWBool("Taunting",false)
+					v:ResetClassSpeed()
+					timer.Simple(math.Rand(0,2.0), function()
+					
+						v:Speak("TLK_ROUND_START")
+
+					end) 
+				end)
+			end
+			team.SetScore(TEAM_RED,0)
+			team.SetScore(TEAM_BLU,0)
 		end
 	end)
 	for _,pl in pairs( player.GetAll() ) do
-		if pl:Team() == team then
+		if pl:Team() == teamnum then
 			pl:SendLua([[surface.PlaySound("misc/your_team_won.wav")]])
-			GAMEMODE:StartCritBoost(v)
+			GAMEMODE:StartCritBoost(pl,15)
 		else
 			pl:SendLua([[surface.PlaySound("misc/your_team_lost.wav")]])
 			pl:StripWeapons()

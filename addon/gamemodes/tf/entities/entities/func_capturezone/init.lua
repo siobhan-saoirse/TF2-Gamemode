@@ -1,8 +1,6 @@
 ENT.Base = "base_brush"
 ENT.Type = "brush"
 
-CreateConVar("tf_flag_caps_per_round","3",{FCVAR_REPLICATED,FCVAR_NOTIFY,FCVAR_ARCHIVE})
-
 function ENT:Initialize()
 	local pos = self:GetPos()
 	local mins, maxs = self:WorldSpaceAABB() -- https://forum.facepunch.com/gmoddev/lmcw/Brush-entitys-ent-GetPos/1/#postdwfmq
@@ -60,14 +58,16 @@ function ENT:StartTouch(ply)
 			--team.AddScore(v.TeamNum, 1)
 			if v.TeamNum == TEAM_RED then
 				team.AddScore(TEAM_BLU, 1)
-				if (team.GetScore(TEAM_BLU) > 3 and !GAMEMODE.RoundHasWinner) then
+				if (team.GetScore(TEAM_BLU) > GetConVarNumber("tf_flag_caps_per_round") - 1 and !GAMEMODE.RoundHasWinner) then
 					GAMEMODE:RoundWin(TEAM_BLU)
+					return
 				end
 				--SetGlobalFloat("tf_ctf_blu", GetGlobalFloat("tf_ctf_blu") + 1)
 			else
 				team.AddScore(TEAM_RED, 1)
-				if (team.GetScore(TEAM_RED) > 3 and !GAMEMODE.RoundHasWinner) then
+				if (team.GetScore(TEAM_RED) > GetConVarNumber("tf_flag_caps_per_round") - 1 and !GAMEMODE.RoundHasWinner) then
 					GAMEMODE:RoundWin(TEAM_RED)
+					return
 				end
 				--SetGlobalFloat("tf_ctf_red", GetGlobalFloat("tf_ctf_red") + 1)
 			end
@@ -77,17 +77,15 @@ function ENT:StartTouch(ply)
 
 			for _, ply in pairs(player.GetAll()) do
 				if ply:Team() ~= v.TeamNum then
-					if game.GetMap() == "mvm_terroristmission_v7_1" then
-						ply:SendLua([[surface.PlaySound("vo/mvm_final_wave_end0"..math.random(1,6)..".mp3")]])
-					else
-						ply:SendLua([[surface.PlaySound("vo/intel_teamcaptured.mp3")]])
-					end
+					ply:SendLua([[surface.PlaySound("vo/intel_teamcaptured.mp3")]])
 					GAMEMODE:StartCritBoost(ply)
-					timer.Simple(10, function()
-						if IsValid(ply) then
-							GAMEMODE:StopCritBoost(ply)
-						end
-					end)
+					if (!GAMEMODE.RoundHasWinner) then
+						timer.Simple(10, function()
+							if IsValid(ply) then
+								GAMEMODE:StopCritBoost(ply)
+							end
+						end)
+					end
 				else
 					ply:SendLua([[surface.PlaySound("vo/intel_enemycaptured.mp3")]])
 				end
