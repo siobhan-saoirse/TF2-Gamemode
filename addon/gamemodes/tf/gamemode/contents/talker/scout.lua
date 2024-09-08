@@ -309,7 +309,7 @@ Response CartMovingBackwardsDefenseScout
 }
 Rule CartMovingBackwardsDefenseScout
 {
-	criteria ConceptCartMovingBackward IsScout ScoutNotSaidCartMovingBackwardD
+	criteria ConceptCartMovingBackward IsOnDefense IsScout ScoutNotSaidCartMovingBackwardD IsNotDisguised 75PercentChance
 	ApplyContext "SaidCartMovingBackwardD:1:20"
 	Response CartMovingBackwardsDefenseScout
 }
@@ -327,7 +327,7 @@ Response CartMovingBackwardsOffenseScout
 }
 Rule CartMovingBackwardsOffenseScout
 {
-	criteria ConceptCartMovingBackward IsScout ScoutNotSaidCartMovingBackwardO
+	criteria ConceptCartMovingBackward IsOnOffense IsScout ScoutNotSaidCartMovingBackwardO IsNotDisguised 75PercentChance
 	ApplyContext "SaidCartMovingBackwardO:1:20"
 	Response CartMovingBackwardsOffenseScout
 }
@@ -343,7 +343,7 @@ Response CartMovingForwardDefenseScout
 }
 Rule CartMovingForwardDefenseScout
 {
-	criteria ConceptCartMovingForward IsScout ScoutNotSaidCartMovingForwardD
+	criteria ConceptCartMovingForward IsOnDefense IsScout ScoutNotSaidCartMovingForwardD IsNotDisguised 75PercentChance
 	ApplyContext "SaidCartMovingForwardD:1:20"
 	Response CartMovingForwardDefenseScout
 }
@@ -365,7 +365,7 @@ Response CartMovingForwardOffenseScout
 }
 Rule CartMovingForwardOffenseScout
 {
-	criteria ConceptCartMovingForward IsScout ScoutNotSaidCartMovingForwardO
+	criteria ConceptCartMovingForward IsOnOffense IsScout ScoutNotSaidCartMovingForwardO IsNotDisguised 75PercentChance
 	ApplyContext "SaidCartMovingForwardO:1:20"
 	Response CartMovingForwardOffenseScout
 }
@@ -378,7 +378,7 @@ Response CartMovingStoppedDefenseScout
 }
 Rule CartMovingStoppedDefenseScout
 {
-	criteria ConceptCartMovingStopped IsScout ScoutNotSaidCartMovingStoppedD
+	criteria ConceptCartMovingStopped IsOnDefense IsScout ScoutNotSaidCartMovingStoppedD IsNotDisguised 75PercentChance
 	ApplyContext "SaidCartMovingStoppedD:1:20"
 	Response CartMovingStoppedDefenseScout
 }
@@ -391,7 +391,7 @@ Response CartMovingStoppedOffenseScout
 }
 Rule CartMovingStoppedOffenseScout
 {
-	criteria ConceptCartMovingStopped IsScout ScoutNotSaidCartMovingStoppedO
+	criteria ConceptCartMovingStopped IsOnOffense IsScout ScoutNotSaidCartMovingStoppedO IsNotDisguised 75PercentChance
 	ApplyContext "SaidCartMovingStoppedO:1:20"
 	Response CartMovingStoppedOffenseScout
 }

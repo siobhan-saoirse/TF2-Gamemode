@@ -107,10 +107,6 @@ function AddResponse(str)
 				end
 			end
 			table.insert(tbl, t)
-		elseif head=="speak" then
-			local sc = string.match(param, '([%a%d_/%.]+)')
-			util.PrecacheSound(sc)  
-			table.insert(tbl, t)
 		end
 	end 
 	 
@@ -278,11 +274,6 @@ end
 
 local function playscene_delayed(ent, scene) 
 	if not IsValid(ent) then return end 
-	if (string.find(ent:GetModel(),"hwm")) then
-		if (ent:GetInfoNum("tf_usehwmvcds ",0) == 1) then
-			scene = string.Replace(scene,"low","high")
-		end
-	end
 	ent:PlayScene(scene, 0) 
 end
 
@@ -297,7 +288,7 @@ function PlayResponse(ent, response, nospeech, concept)
 	local i = math.random(1,num)
 	local j = i
 	
-	while response[j][1]==ent.LastScene and not nospeech do
+	while response[j][1]==ent.LastScene do
 		j = j+1
 		if j>num then j=1 end
 		if j==i then break end
@@ -320,11 +311,6 @@ function PlayResponse(ent, response, nospeech, concept)
 				ent:SetNWBool("SpeechTime", time) 
 			end)
 		else
-			if (string.find(ent:GetModel(),"hwm")) then
-				if (ent:GetInfoNum("tf_usehwmvcds ",0) == 1) then
-					r[1] = string.Replace(r[1],"low","high")
-				end
-			end
 			time = ent:PlayScene(r[1], 0)
 			ent:SetNWBool("SpeechTime", time)
 		end
@@ -433,11 +419,6 @@ function FlamingResponse(ent, response, nospeech)
 				ent:SetNWBool("SpeechTime", time) 
 			end)
 		else
-			if (string.find(ent:GetModel(),"hwm")) then
-				if (ent:GetInfoNum("tf_usehwmvcds ",0) == 1) then
-					r[1] = string.Replace(r[1],"low","high")
-				end
-			end
 			time = ent:PlayScene(r[1], 0)
 			ent:SetNWBool("SpeechTime", time)
 		end
@@ -489,11 +470,6 @@ function PlayResponse2(ent, response, nospeech)
 				ent:SetNWBool("SpeechTime", time) 
 			end)
 		else
-			if (string.find(ent:GetModel(),"hwm")) then
-				if (ent:GetInfoNum("tf_usehwmvcds ",0) == 1) then
-					r[1] = string.Replace(r[1],"low","high")
-				end
-			end
 			time = ent:PlayScene(r[1], 0)
 			ent:SetNWBool("SpeechTime", time)
 		end
@@ -551,11 +527,6 @@ function PlayResponse3(ent, response, nospeech)
 				ent:SetNWBool("SpeechTime", time) 
 			end)
 		else
-			if (string.find(ent:GetModel(),"hwm")) then
-				if (ent:GetInfoNum("tf_usehwmvcds ",0) == 1) then
-					r[1] = string.Replace(r[1],"low","high")
-				end
-			end
 			time = ent:PlayScene(r[1], 0)
 			ent:SetNWBool("SpeechTime", time)
 		end
@@ -613,11 +584,6 @@ function PlayResponse4(ent, response, nospeech)
 				ent:SetNWBool("SpeechTime", time) 
 			end)
 		else
-			if (string.find(ent:GetModel(),"hwm")) then
-				if (ent:GetInfoNum("tf_usehwmvcds ",0) == 1) then
-					r[1] = string.Replace(r[1],"low","high")
-				end
-			end
 			time = ent:PlayScene(r[1], 0)
 			ent:SetNWBool("SpeechTime", time)
 		end
@@ -645,7 +611,7 @@ end
 local META = FindMetaTable("Player")
 
 function META:Speak(concept, nospeech, dbg)
-	if not self:Alive() then
+	if self:Health() < 0 then
 		return false
 	end
 	--[[
@@ -815,9 +781,9 @@ function META:Speak(concept, nospeech, dbg)
 		class = "heavy"
 		-- Capitalize player class because the talker system wants to :/
 		class = string.upper(string.sub(class,1,1))..string.sub(class,2)
-		
+		 
 		if self:IsValidEnemy(tr.Entity) then
-			self.crosshair_enemy = "Yes"
+			self.crosshair_enemy = "Yes" 
 		end
 	elseif tr.Entity and tr.Entity:IsNPC() then
 		if self:IsValidEnemy(tr.Entity) then

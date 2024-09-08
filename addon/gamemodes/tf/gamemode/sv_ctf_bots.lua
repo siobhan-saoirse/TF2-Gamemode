@@ -20,11 +20,21 @@ local tf_bot_melee_only = CreateConVar("tf_bot_melee_only", "0", {FCVAR_ARCHIVE,
 function lookForNearestPlayer(bot)
 	local npcs = {}
 		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 8000000)) do
-			if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:EntityTeam(bot) != TEAM_NEUTRAL and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET) and v:Health() > 0 and bot:Visible(v)) then
+			if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:GetNoDraw() == false and v:EntityTeam(bot) != TEAM_NEUTRAL and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET) and v:Health() > 0 and bot:Visible(v)) then
 				table.insert(npcs, v)		
 			end
 		end
 		return table.Random(npcs)
+end
+
+function escortAvailable(bot)
+	local npcs = {} 
+	for k,v in ipairs(ents.FindByClass("team_train_watcher")) do
+		if (IsValid(v)) then
+			table.insert(npcs, v)		
+		end
+	end
+	return table.Count(npcs) > 0
 end
 
 function flagAvailable(bot)
@@ -259,7 +269,7 @@ local function LeadBot_S_Add(team2)
 		bot:SetPlayerClass("spy")
 	end
 	bot.TFBot = true
-	timer.Simple(0.1, function()
+	timer.Simple(0.2, function()
 	
 		bot:Spawn()
 
@@ -605,7 +615,9 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		local controller = bot.ControllerBot
 		if (controller ~= nil) then
 			if (bot.botPos ~= nil) then
-				controller.PosGen = bot.botPos
+				if (math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1) hen
+					controller.PosGen = bot.botPos
+				end
 			end
 		end
 		if (bot.OverrideModelScale) then
@@ -790,7 +802,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		
 	
 		-- force a recompute
-				if (bot.botPos) then
+				if (bot.botPos and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1) then
 					bot.ControllerBot.PosGen = bot.botPos
 				end
 
@@ -849,7 +861,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		------------------------------
 		--------[[BOT EYES]]---------
 		------------------------------
-
 		if !bot.LastPath then return end
 		local curgoal = bot.LastPath[bot.CurSegment]
 		
@@ -903,7 +914,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				if (IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging) then
 					--mv:SetMoveAngles(mva)
 				else
-					mv:SetMoveAngles(LerpAngle(FrameTime() * 48, mv:GetMoveAngles(), mva))
+					mv:SetMoveAngles(mva)
 				end
 			end
 
@@ -929,7 +940,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 							local ang = LerpAngle(FrameTime() * 2, bot:EyeAngles(), controller.LookAt)
 							bot:SetEyeAngles(Angle(ang.p, ang.y, 0))
 						else 
-							local ang = LerpAngle(FrameTime() * 2, bot:EyeAngles(), mva)
+							local ang = LerpAngle(FrameTime() * 48, bot:EyeAngles(), mva)
 							bot:SetEyeAngles(Angle(ang.p, ang.y, 0))
 						end
 					end
@@ -968,7 +979,17 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 		local fintelcap
 		local targetpos2 = Vector(0, 0, 0)
 
-		if flagAvailable(bot) and !GAMEMODE.RoundHasWinner then -- CTF AI
+		if escortAvailable(bot) and !GAMEMODE.RoundHasWinner then -- Payload AI
+			
+			for k, v in pairs(ents.FindByClass("trigger_capture_area")) do
+				intel = v
+			end
+
+			bot.botPos = intel.Pos
+			
+			bot.LastSegmented = CurTime() + math.Rand(0.5, 1)
+
+		elseif flagAvailable(bot) and !GAMEMODE.RoundHasWinner then -- CTF AI
 			for k, v in pairs(ents.FindByClass("item_teamflag")) do
 				if v.TeamNum ~= bot:Team() then
 					intel = v
@@ -1061,35 +1082,6 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 
 			bot.botPos = targetpos2
 			bot.LastSegmented = CurTime() + math.Rand(0.5, 1)
-		else
-			-- find a random spot on the map, and in 10 seconds do it again!
-			if (!IsValid(bot.TargetEnt) and !bot:IsL4D()) then 
-				local trgt = lookForNearestPlayer(bot)
-				if (IsValid(trgt) and trgt:Health() > 0 and trgt:EntIndex() != bot:EntIndex()) then
-					bot.botPos = trgt:GetPos()
-				else
-					bot.botPos = nil
-				end
-				if (bot.movingAway) then
-					mv:SetForwardSpeed(bot.pushAwayMove * 0.5)
-				else
-					mv:SetForwardSpeed(0)
-				end
-			elseif (!IsValid(bot.TargetEnt) and bot:IsL4D()) then
-				local trgt = lookForNearestPlayer(bot)
-				if (IsValid(trgt) and trgt:Alive() and trgt:EntIndex() != bot:EntIndex()) then
-					bot.botPos = trgt:GetPos()
-				else
-					bot.botPos = bot.ControllerBot:FindSpot("random", {radius = 12500})
-				end
-			elseif (IsValid(bot.TargetEnt)) then
-				local trgt = bot.TargetEnt
-				if (IsValid(trgt) and trgt:Health() > 0 and trgt:EntIndex() != bot:EntIndex()) then
-					bot.botPos = bot.ControllerBot:FindSpot("random", {radius = 12500, pos = trgt:GetPos()})
-				else
-					bot.botPos = bot.ControllerBot:FindSpot("random", {radius = 12500})
-				end
-			end
 		end
 			
 		for _, intel in pairs(ents.FindByClass("item_teamflag_mvm")) do
@@ -1191,8 +1183,9 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 						end
 				end
 			else
-
-				bot.botPos = bot.TargetEnt:GetPos()
+				if (!flagAvailable(bot) && !bombAvailable(bot) && !escortAvailable(bot)) then
+					bot.botPos = bot.TargetEnt:GetPos()
+				end
 
 			end
 	

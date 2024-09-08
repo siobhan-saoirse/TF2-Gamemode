@@ -50,7 +50,7 @@ function ENT:ChasePos( options )
 				return
 			end
 			
-			coroutine.wait(math.Rand(0.1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))))
+			coroutine.wait(1)
 			coroutine.yield()
 		end
 	end
@@ -69,7 +69,7 @@ function ENT:RunBehaviour()
 		if self.PosGen then
 			self:ChasePos({})
 		end
-		coroutine.wait(math.Rand(0.1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))))
+		coroutine.wait(1)
 		coroutine.yield()
 	end
 end

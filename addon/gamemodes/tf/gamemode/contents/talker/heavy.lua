@@ -740,6 +740,62 @@ Rule RocketDestroyedHeavy
 	Response RocketDestroyedHeavy
 }
 
+
+//--------------------------------------------------------------------------------------------------------------
+// Auto Speech Cart
+//--------------------------------------------------------------------------------------------------------------
+Response CartMovingBackwardsDefenseHeavy
+{
+	scene "scenes/Player/Heavy/low/1990.vcd" 
+	scene "scenes/Player/Heavy/low/1991.vcd" 
+	scene "scenes/Player/Heavy/low/1992.vcd" 
+	scene "scenes/Player/Heavy/low/2070.vcd" 
+	scene "scenes/Player/Heavy/low/2208.vcd" 
+	scene "scenes/Player/Heavy/low/2209.vcd" 
+	scene "scenes/Player/Heavy/low/2267.vcd" 
+	scene "scenes/Player/Heavy/low/2268.vcd" 
+}
+Rule CartMovingBackwardsDefenseHeavy
+{
+	criteria ConceptCartMovingBackward IsOnDefense IsHeavy HeavyNotSaidCartMovingBackwardD IsNotDisguised 75PercentChance
+	ApplyContext "SaidCartMovingBackwardD:1:20"
+	Response CartMovingBackwardsDefenseHeavy
+}
+
+Response CartMovingBackwardsOffenseHeavy
+{
+	scene "scenes/Player/Heavy/low/1987.vcd" 
+	scene "scenes/Player/Heavy/low/1988.vcd" 
+	scene "scenes/Player/Heavy/low/1989.vcd" 
+	scene "scenes/Player/Heavy/low/2071.vcd" 
+	scene "scenes/Player/Heavy/low/2072.vcd" 
+	scene "scenes/Player/Heavy/low/2206.vcd" 
+	scene "scenes/Player/Heavy/low/2207.vcd" 
+}
+Rule CartMovingBackwardsOffenseHeavy
+{
+	criteria ConceptCartMovingBackward IsOnOffense IsHeavy HeavyNotSaidCartMovingBackwardO IsNotDisguised 75PercentChance
+	ApplyContext "SaidCartMovingBackwardO:1:20"
+	Response CartMovingBackwardsOffenseHeavy
+}
+
+Response CartMovingForwardDefenseHeavy
+{
+	scene "scenes/Player/Heavy/low/1984.vcd" 
+	scene "scenes/Player/Heavy/low/1985.vcd" 
+	scene "scenes/Player/Heavy/low/2269.vcd" 
+	scene "scenes/Player/Heavy/low/1986.vcd" 
+	scene "scenes/Player/Heavy/low/2073.vcd" 
+	scene "scenes/Player/Heavy/low/2270.vcd" 
+	scene "scenes/Player/Heavy/low/2263.vcd" 
+}
+Rule CartMovingForwardDefenseHeavy
+{
+	criteria ConceptCartMovingForward IsOnDefense IsHeavy HeavyNotSaidCartMovingForwardD IsNotDisguised 75PercentChance
+	ApplyContext "SaidCartMovingForwardD:1:20"
+	Response CartMovingForwardDefenseHeavy
+}
+
 Response CartMovingForwardOffenseHeavy
 {
 	scene "scenes/Player/Heavy/low/1963.vcd" 
@@ -767,11 +823,12 @@ Response CartMovingForwardOffenseHeavy
 	scene "scenes/Player/Heavy/low/2193.vcd" 
 	scene "scenes/Player/Heavy/low/2066.vcd" 
 	scene "scenes/Player/Heavy/low/2261.vcd" 
+	scene "scenes/Player/Heavy/low/2260.vcd" 
 	scene "scenes/Player/Heavy/low/2262.vcd" 
 }
 Rule CartMovingForwardOffenseHeavy
 {
-	criteria ConceptCartMovingForward IsHeavy HeavyNotSaidCartMovingForwardO
+	criteria ConceptCartMovingForward IsOnOffense IsHeavy HeavyNotSaidCartMovingForwardO IsNotDisguised 75PercentChance
 	ApplyContext "SaidCartMovingForwardO:1:20"
 	Response CartMovingForwardOffenseHeavy
 }
@@ -785,7 +842,7 @@ Response CartMovingStoppedDefenseHeavy
 }
 Rule CartMovingStoppedDefenseHeavy
 {
-	criteria ConceptCartMovingStopped IsHeavy HeavyNotSaidCartMovingStoppedD
+	criteria ConceptCartMovingStopped IsOnDefense IsHeavy HeavyNotSaidCartMovingStoppedD IsNotDisguised 75PercentChance
 	ApplyContext "SaidCartMovingStoppedD:1:20"
 	Response CartMovingStoppedDefenseHeavy
 }
@@ -799,11 +856,10 @@ Response CartMovingStoppedOffenseHeavy
 }
 Rule CartMovingStoppedOffenseHeavy
 {
-	criteria ConceptCartMovingStopped IsHeavy HeavyNotSaidCartMovingStoppedO
+	criteria ConceptCartMovingStopped IsOnOffense IsHeavy HeavyNotSaidCartMovingStoppedO IsNotDisguised 75PercentChance
 	ApplyContext "SaidCartMovingStoppedO:1:20"
 	Response CartMovingStoppedOffenseHeavy
 }
-
 
 //--------------------------------------------------------------------------------------------------------------
 // Auto Speech Combat

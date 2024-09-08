@@ -72,13 +72,14 @@ function ENT:Touch(ent)
 		ent:GodEnable()
 		ent:SetSkin(3)
 	end
-	
+	--[[
 		if (ent:IsPlayer() and !string.find(game.GetMap(),"achievement_")) then
 			if (ent:Team() ~= self:GetNWInt("TeamNum") && (ent:Team() == TEAM_RED or ent:Team() == TEAM_BLU)) then
 				ent:KillSilent()
 				ent:Spawn()
 			end
 		end
+		]]
 end
 
 function ENT:EndTouch(ent)

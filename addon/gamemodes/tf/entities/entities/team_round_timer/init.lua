@@ -336,12 +336,10 @@ function ENT:Input_AddTime(activator, caller, data)
 end
 
 function ENT:Input_AddTeamTime(activator, caller, data)
-	local t, sec = string.match("(.*)%s+(.*)")
-	t, sec = tonumber(t), tonumber(sec)
 	
 	if t and sec then
 		--print(Format("Added %d seconds due to team %d", sec, t))
-		self:SetTime(self:GetTime() + sec)
+		self:SetTime(self:GetTime() + tonumber(data))
 	end
 end
 

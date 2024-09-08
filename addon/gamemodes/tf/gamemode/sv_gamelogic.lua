@@ -552,6 +552,11 @@ end
 function GM:Tick()
 end
 function GM:Think()
+	for _,v in pairs(player.GetBots()) do -- if bots are in here, disable thinking
+		if (IsValid(v)) then
+			return false
+		end
+	end
 	for _,v in pairs(player.GetAll()) do
 		if (v:GetNWBool("Taunting",false) == true) then
 			if (v:IsOnGround()) then
