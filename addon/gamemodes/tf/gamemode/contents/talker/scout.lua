@@ -19,7 +19,14 @@ Criterion "IsHelpCapScout" "ScoutHelpCap" "1" "required" weight 0
 Criterion "NotSaidScoutHitBallSpeech" "ScoutHitBallSpeech" "!=1" "required"
 Criterion "NotScoutGrabbedIntelligence" "ScoutGrabbedIntelligence" "!=1" "required"
 Criterion "ScoutIsNotInvuln" "ScoutInvuln" "!=1" "required"
-
+//Custom stuff
+Criterion "ScoutNotInvulnerableSpeech" "ScoutInvulnerableSpeech" "!=1" "required" weight 0
+Criterion "ScoutNotAssistSpeech" "ScoutAssistSpeech" "!=1" "required" weight 0
+Criterion "ScoutNotDoubleJumpSpeech" "ScoutDoubleJumpSpeech" "!=1" "required" weight 0
+Criterion "ScoutNotAwardSpeech" "ScoutAwardSpeech" "!=1" "required" weight 0
+Criterion "ScoutNotDrinkReadySpeech" "ScoutDrinkReadySpeech" "!=1" "required" weight 0
+Criterion "ScoutIsNotCrit" "ScoutIsCrit" "1" "required" weight 0
+Criterion "ScoutHasFired" "ScoutFired" "1" "required" weight 0
 
 Response PlayerCloakedSpyDemomanScout
 {
@@ -30,15 +37,7 @@ Rule PlayerCloakedSpyDemomanScout
 	criteria ConceptPlayerCloakedSpy IsScout IsOnDemoman
 	Response PlayerCloakedSpyDemomanScout
 }
-Response MvMSniperCalloutScout
-{
-	scene "scenes/Player/Scout/low/sniper.vcd" 
-}
-Rule MvMSniperCalloutScout
-{
-	criteria ConceptMvMSniperCallout IsScout
-	Response MvMSniperCalloutScout
-}
+
 Response PlayerCloakedSpyEngineerScout
 {
 	scene "scenes/Player/Scout/low/389.vcd" 
@@ -119,45 +118,35 @@ Rule PlayerCloakedSpySpyScout
 	Response PlayerCloakedSpySpyScout
 }
 
-Rule MvMBombPickupScout
-{
-	criteria ConceptMvMBombPickup 5PercentChance  IsScout
-	Response MvMBombPickupScout
-}
-
-Response MvMBombPickupScout
-{
-	scene "scenes/Player/Scout/low/362.vcd" 
-	scene "scenes/Player/Scout/low/1281.vcd" 
-	scene "scenes/Player/Scout/low/363.vcd" 
-	scene "scenes/Player/Scout/low/364.vcd" 
-}
-
-// Custom stuff - melee dare
-// Look at enemy, then do battle cry voice command while holding a melee weapon.
-Response MeleeDareCombatScout
-{
-	scene "scenes/Player/Scout/low/2584.vcd"
-	scene "scenes/Player/Scout/low/2579.vcd" 
-	scene "scenes/Player/Scout/low/2580.vcd" 
-	scene "scenes/Player/Scout/low/2582.vcd" 
-	scene "scenes/Player/Scout/low/2583.vcd" 
-	scene "scenes/Player/Scout/low/2581.vcd" 
-	scene "scenes/Player/Scout/low/2642.vcd" 
-	scene "scenes/Player/Scout/low/500.vcd" 
-	scene "scenes/Player/Scout/low/494.vcd"
-	scene "scenes/Player/Scout/low/496.vcd"
-}
-Rule MeleeDareCombatScout
-{
-	criteria ConceptPlayerBattleCry IsWeaponMelee IsScout IsCrossHairEnemy
-	Response MeleeDareCombatScout
-}
-//End custom
 
 //--------------------------------------------------------------------------------------------------------------
 // Auto Speech
 //--------------------------------------------------------------------------------------------------------------
+
+// Custom achievement stuff
+Response AwardScout
+{
+	scene "scenes/Player/Scout/low/2501.vcd" predelay "2.5"
+	scene "scenes/Player/Scout/low/2502.vcd" predelay "2.5"
+	scene "scenes/Player/Scout/low/2503.vcd" predelay "2.5"
+	scene "scenes/Player/Scout/low/2504.vcd" predelay "2.5"
+	scene "scenes/Player/Scout/low/2505.vcd" predelay "2.5"
+	scene "scenes/Player/Scout/low/2507.vcd" predelay "2.5"
+	scene "scenes/Player/Scout/low/2509.vcd" predelay "2.5"
+	scene "scenes/Player/Scout/low/2510.vcd" predelay "2.5"
+	scene "scenes/Player/Scout/low/2511.vcd" predelay "2.5"
+	scene "scenes/Player/Scout/low/2681.vcd" predelay "2.5" 
+	scene "scenes/Player/Scout/low/2682.vcd" predelay "2.5"
+}
+Rule AwardScout
+{
+	criteria ConceptAchievementAward IsScout ScoutNotAwardSpeech
+	ApplyContext "ScoutAwardSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
+	Response AwardScout
+}
+//End custom achievement
+
 Response HealThanksScout
 {
 	scene "scenes/Player/Scout/low/510.vcd" 
@@ -217,7 +206,7 @@ Response PlayerGrabbedIntelligenceScout
 }
 Rule PlayerGrabbedIntelligenceScout
 {
-	criteria ConceptPlayerGrabbedIntelligence IsScout
+	criteria ConceptPlayerGrabbedIntelligence IsScout NotScoutGrabbedIntelligence 10PercentChance
 	ApplyContext "ScoutGrabbedIntelligence:1:30"
 	Response PlayerGrabbedIntelligenceScout
 }
@@ -236,33 +225,6 @@ Response PlayerSuddenDeathScout
 	scene "scenes/Player/Scout/low/428.vcd" 
 	scene "scenes/Player/Scout/low/430.vcd" 
 }
-
-Response PlayerJarateHitScout
-{
-	scene "scenes/Player/Scout/low/364.vcd"  
-	scene "scenes/Player/Scout/low/426.vcd"  
-	scene "scenes/Player/Scout/low/450.vcd"  
-	scene "scenes/Player/Scout/low/451.vcd"
-}
-// Milk toss
-Response MilkLaunchScout
-{
-	scene "scenes/player/Scout/low/504.vcd"
-	scene "scenes/player/Scout/low/2705.vcd"
-	scene "scenes/player/Scout/low/2604.vcd"
-}
-Rule MilkLaunchScout
-{
-	criteria ConceptJarateLaunch IsScout 50PercentChance
-	Response MilkLaunchScout
-}
-Rule PlayerJarateHitScout
-{
-	criteria ConceptJarateHit IsScout
-	Response PlayerJarateHitScout
-}
-
-
 Rule PlayerSuddenDeathScout
 {
 	criteria ConceptPlayerSuddenDeathStart IsScout
@@ -413,6 +375,35 @@ Rule DefendOnThePointScout
 	Response DefendOnThePointScout
 }
 
+// Custom stuff
+Response InvulnerableSpeechScout
+{
+	scene "scenes/Player/Scout/low/486.vcd" 
+	scene "scenes/Player/Scout/low/491.vcd" 
+	scene "scenes/Player/Scout/low/2505.vcd" 
+	scene "scenes/Player/Scout/low/499.vcd" 
+}
+Rule InvulnerableSpeechScout
+{
+	criteria ConceptFireWeapon IsScout IsInvulnerable ScoutNotInvulnerableSpeech
+	ApplyContext "ScoutInvulnerableSpeech:1:30"
+	Response InvulnerableSpeechScout
+}
+
+Response KilledPlayerAssistAutoScout
+{
+	scene "scenes/Player/Scout/low/487.vcd" predelay "2.5"
+	scene "scenes/Player/Scout/low/488.vcd" predelay "2.5"
+}
+Rule KilledPlayerAssistAutoScout
+{
+	criteria ConceptKilledPlayer IsScout IsBeingHealed IsManyRecentKills KilledPlayerDelay 20PercentChance ScoutNotAssistSpeech
+	ApplyContext "ScoutAssistSpeech:1:20"
+	Response KilledPlayerAssistAutoScout
+}
+// End custom stuff
+
+
 Response KilledPlayerManyScout
 {
 	scene "scenes/Player/Scout/low/396.vcd" 
@@ -429,29 +420,136 @@ Response KilledPlayerManyScout
 Rule KilledPlayerManyScout
 {
 	criteria ConceptKilledPlayer IsManyRecentKills 30PercentChance IsWeaponPrimary KilledPlayerDelay ScoutNotKillSpeech IsScout
-	ApplyContext "ScoutKillSpeech:1:10"
-	applycontexttoworld
+	ApplyContext "ScoutKillSpeech:1:5"
 	Response KilledPlayerManyScout
 }
 
-Response KilledPlayerMeleeScout
+// Custom modified stuff
+// Modified to split into groups
+// Baseball bats use generic and bat lines
+// Candy, Basher, Fish and Mace will use their own lines in addition to the generic lines
+
+Response KilledPlayerMeleeBatScout
 {
-	scene "scenes/Player/Scout/low/476.vcd" 
-	scene "scenes/Player/Scout/low/477.vcd" 
 	scene "scenes/Player/Scout/low/479.vcd" 
 	scene "scenes/Player/Scout/low/482.vcd" 
 	scene "scenes/Player/Scout/low/481.vcd" 
 	scene "scenes/Player/Scout/low/483.vcd" 
-	scene "scenes/Player/Scout/low/484.vcd" 
-	scene "scenes/Player/Scout/low/498.vcd" 
 	scene "scenes/Player/Scout/low/501.vcd" 
 }
-Rule KilledPlayerMeleeScout
+
+Response KilledPlayerMeleeGenericScout
 {
-	criteria ConceptKilledPlayer KilledPlayerDelay 30PercentChance  IsWeaponMelee ScoutNotKillSpeechMelee IsScout
+	scene "scenes/Player/Scout/low/476.vcd" 
+	scene "scenes/Player/Scout/low/477.vcd" 
+	scene "scenes/Player/Scout/low/484.vcd" 
+	scene "scenes/Player/Scout/low/498.vcd" 
+}
+
+// This rule excludes all weapons that are not the Sandman or vanilla bat
+
+Rule KilledPlayerMeleeBatScout
+{
+	criteria ConceptKilledPlayer KilledPlayerDelay 30PercentChance  IsWeaponMelee WeaponIsNotCandy WeaponIsNotBasher WeaponIsNotGunbai WeaponIsNotMace WeaponIsNotFish WeaponIsNotTRBlade WeaponIsNotSaxxy ScoutNotKillSpeechMelee IsScout
 	ApplyContext "ScoutKillSpeechMelee:1:10"
-	applycontexttoworld
-	Response KilledPlayerMeleeScout
+	Response KilledPlayerMeleeBatScout
+	Response KilledPlayerMeleeGenericScout
+}
+
+Response KilledPlayerMeleeBasherScout
+{
+	scene "scenes/player/Scout/low/2586.vcd"
+	scene "scenes/player/Scout/low/2643.vcd"
+}
+
+Rule KilledPlayerMeleeBasherScout
+{
+	criteria ConceptKilledPlayer KilledPlayerDelay 30PercentChance IsWeaponMelee WeaponIsBasher ScoutNotKillSpeechMelee IsScout
+	ApplyContext "ScoutKillSpeechMelee:1:10"
+	Response KilledPlayerMeleeBasherScout
+	Response KilledPlayerMeleeGenericScout
+}
+
+Response KilledPlayerMeleeCandyScout
+{
+	scene "scenes/player/Scout/low/377.vcd"
+	scene "scenes/player/Scout/low/503.vcd"
+	scene "scenes/player/Scout/low/505.vcd"
+}
+
+Rule KilledPlayerMeleeCandyScout
+{
+	criteria ConceptKilledPlayer KilledPlayerDelay 30PercentChance IsWeaponMelee WeaponIsCandy ScoutNotKillSpeechMelee IsScout
+	ApplyContext "ScoutKillSpeechMelee:1:10"
+	Response KilledPlayerMeleeCandyScout
+	Response KilledPlayerMeleeGenericScout
+}
+
+Response KilledPlayerMeleeMaceScout
+{
+	scene "scenes/player/Scout/low/2560.vcd"
+	scene "scenes/player/Scout/low/1289.vcd"
+	scene "scenes/player/Scout/low/2706.vcd"
+}
+
+Rule KilledPlayerMeleeMaceScout
+{
+	criteria ConceptKilledPlayer KilledPlayerDelay 30PercentChance  IsWeaponMelee WeaponIsMace ScoutNotKillSpeechMelee IsScout
+	ApplyContext "ScoutKillSpeechMelee:1:10"
+	Response KilledPlayerMeleeMaceScout
+	Response KilledPlayerMeleeGenericScout
+}
+
+Response KilledPlayerMeleeFishScout
+{
+	scene "scenes/player/Scout/low/433.vcd"
+	scene "scenes/player/Scout/low/435.vcd"
+	scene "scenes/player/Scout/low/1308.vcd"
+	scene "scenes/player/Scout/low/2554.vcd"
+}
+
+Rule KilledPlayerMeleeFishScout
+{
+	criteria ConceptKilledPlayer KilledPlayerDelay 30PercentChance  IsWeaponMelee WeaponIsHolyMackerel ScoutNotKillSpeechMelee IsScout
+	ApplyContext "ScoutKillSpeechMelee:1:10"
+	Response KilledPlayerMeleeFishScout
+	Response KilledPlayerMeleeGenericScout
+}
+
+Rule KilledPlayerMeleeFestiveFishScout
+{
+	criteria ConceptKilledPlayer KilledPlayerDelay 30PercentChance  IsWeaponMelee WeaponIsFestiveHolyMackerel ScoutNotKillSpeechMelee IsScout
+	ApplyContext "ScoutKillSpeechMelee:1:10"
+	Response KilledPlayerMeleeFishScout
+	Response KilledPlayerMeleeGenericScout
+}
+
+// A rule for the Scout Gunbai
+// it will share with the Fish as getting killed by this must be very humiliating
+// even moreso than the Fish
+Rule KilledPlayerMeleeGunbaiScout
+{
+	criteria ConceptKilledPlayer KilledPlayerDelay 30PercentChance  IsWeaponMelee WeaponIsGunbai ScoutNotKillSpeechMelee IsScout
+	ApplyContext "ScoutKillSpeechMelee:1:10"
+	Response KilledPlayerMeleeFishScout
+	Response KilledPlayerMeleeGenericScout
+}
+
+Rule KilledPlayerMeleeSwordScout
+{
+	criteria ConceptKilledPlayer KilledPlayerDelay 30PercentChance  IsWeaponMelee WeaponIsTRBlade ScoutNotKillSpeechMelee IsScout
+	ApplyContext "ScoutKillSpeechMelee:1:10"
+	Response KilledPlayerMeleeMaceScout
+	Response KilledPlayerMeleeGenericScout
+}
+
+
+Rule KilledPlayerMeleeSaxxyScout
+{
+	criteria ConceptKilledPlayer KilledPlayerDelay 30PercentChance  IsWeaponMelee WeaponIsSaxxy ScoutNotKillSpeechMelee IsScout
+	ApplyContext "ScoutKillSpeechMelee:1:10"
+	Response KilledPlayerMeleeFishScout
+	Response KilledPlayerMeleeGenericScout
 }
 
 Response KilledPlayerMeleeScoutFatScout
@@ -462,7 +560,6 @@ Rule KilledPlayerMeleeScoutFatScout
 {
 	criteria ConceptKilledPlayer KilledPlayerDelay 75PercentChance  IsWeaponMelee ScoutNotKillSpeechMeleeFat IsScout IsVictimHeavy
 	ApplyContext "ScoutKillSpeechMeleeFat:1:10"
-	applycontexttoworld
 	Response KilledPlayerMeleeScoutFatScout
 }
 
@@ -475,9 +572,22 @@ Response MedicFollowScout
 }
 Rule MedicFollowScout
 {
-	criteria ConceptPlayerMedic IsOnMedic IsScout IsNotCrossHairEnemy
+	criteria ConceptPlayerMedic IsOnMedic IsScout IsNotCrossHairEnemy NotLowHealth ScoutIsNotStillonFire
 	ApplyContext "ScoutKillSpeech:1:10"
 	Response MedicFollowScout
+}
+
+Response ScoutJarateHit
+{
+	scene "scenes/Player/Scout/low/364.vcd"  
+	scene "scenes/Player/Scout/low/426.vcd"  
+	scene "scenes/Player/Scout/low/450.vcd"  
+	scene "scenes/Player/Scout/low/451.vcd"  
+}
+Rule ScoutJarateHit
+{
+	criteria ConceptJarateHit IsScout 50PercentChance
+	Response ScoutJarateHit
 }
 
 Response PlayerBeingShotInvincibleScout
@@ -520,10 +630,12 @@ Response PlayerBeingShotInvincibleScout
 	scene "scenes/Player/Scout/low/2762.vcd" 
 	scene "scenes/Player/Scout/low/2728.vcd" 
 	scene "scenes/Player/Scout/low/2771.vcd" 
+	scene "scenes/Player/Scout/low/2729.vcd"
+	scene "scenes/Player/Scout/low/2730.vcd"
 }
 Rule PlayerBeingShotInvincibleScout
 {
-	criteria ConceptDodgeShot IsScout
+	criteria ConceptDodgeShot IsScout LoadoutIsDrink // Exclude Crit-a-Cola
 	Response PlayerBeingShotInvincibleScout
 }
 
@@ -537,11 +649,12 @@ Response PlayerDodgingScout
 }
 Rule PlayerDodgingScout
 {
-	criteria ConceptDodging IsScout ScoutIsNotInvuln
+	criteria ConceptDodging IsScout ScoutIsNotInvuln LoadoutIsDrink // Exclude Crit-a-Cola
 	ApplyContext "ScoutInvuln:1:20"
 	Response PlayerDodgingScout
 }
 
+// Custom Stuff
 Response PlayerDoubleJumpScout
 {
 	scene "scenes/Player/Scout/low/2608.vcd" 
@@ -554,6 +667,101 @@ Rule PlayerDoubleJumpScout
 	criteria ConceptFireWeapon IsScout IsDoubleJumping WeaponIsScattergunDouble 20PercentChance
 	Response PlayerDoubleJumpScout
 }
+Rule PlayerDoubleJumpScoutFestive
+{
+	criteria ConceptFireWeapon IsScout IsDoubleJumping WeaponIsScattergunDoubleFestive 20PercentChance
+	Response PlayerDoubleJumpScout
+}
+
+// Double jump response
+Response DoubleJumpScout
+{
+	scene "scenes/Player/Scout/low/2624.vcd" 
+	scene "scenes/Player/Scout/low/2625.vcd" 
+	scene "scenes/Player/Scout/low/2627.vcd" 
+	scene "scenes/Player/Scout/low/2685.vcd" 
+	scene "scenes/Player/Scout/low/2689.vcd" 
+}
+Rule DoubleJumpScout
+{
+	criteria ConceptDoubleJump IsScout IsARecentKill IsNotDoubleJumping WeaponIsNotScattergunDouble ScoutHasFired ScoutNotDoubleJumpSpeech 2PercentChance
+	ApplyContext "ScoutDoubleJumpSpeech:1:90"
+	Response DoubleJumpScout
+}
+
+// Invincible not ready
+Response DrinkNotReady
+{
+	scene "scenes/player/Scout/low/2732.vcd"
+	scene "scenes/player/Scout/low/2733.vcd"
+	scene "scenes/player/Scout/low/2734.vcd"
+	scene "scenes/player/Scout/low/2774.vcd"
+	scene "scenes/player/Scout/low/2775.vcd"
+	scene "scenes/player/Scout/low/2776.vcd"
+}
+Rule DrinkNotReady
+{
+	criteria ConceptPain IsScout WeaponIsLunchboxDrink BonkHealthContext ScoutNotDrinkReadySpeech LoadoutIsDrink // Exclude Crit-a-Cola
+	ApplyContext "ScoutDrinkReadySpeech:1:5"
+	Response DrinkNotReady
+}
+
+// Crit-a-Cola lines
+//
+// Explanation:
+//
+// When the player drinks the cola, a context called ScoutIsCrit is set to 1 for 3-ish seconds in tf.txt (saves having the rule duped here)
+// This is then picked up by the Rule PlayerCritColaVocalScout, which checks if the player has fired their weapon.
+// If they have fired, then the rule checks the ScoutIsNotCrit, which has just been set to 1 during the drinking
+// of the cola. Therefore, if the player fires during this period, they will say the response.
+//
+// We then changed the PostTired response for the cola for teh lulz.
+//
+// This is a tricky workaround, but necessary as we cannot 'layer' vcds (i.e.  play one vcd on top of the other)
+
+// These are the reesponses we play when firing under the effects.
+Response PlayerCritColaVocalScout
+{
+	scene "scenes/player/Scout/low/507.vcd"
+	scene "scenes/player/Scout/low/2510.vcd"
+	scene "scenes/player/Scout/low/396.vcd"
+}
+Rule PlayerCritColaVocalScout
+{
+	criteria ConceptFireWeapon IsScout LoadoutIsCritDrink ScoutIsNotCrit // The crit context is read in here via this criterion, which is set at the top of the file
+	Response PlayerCritColaVocalScout
+}
+
+// Here we alter what he says after the effects finish.
+// Note this is 50PercentChance, so he has 50% chance of just doing the normal tired breathing.
+Response PostCritScout
+{
+	scene "scenes/player/Scout/low/2734.vcd"
+	scene "scenes/player/Scout/low/2774.vcd"
+	scene "scenes/player/Scout/low/2775.vcd"
+	scene "scenes/player/Scout/low/2776.vcd"
+}
+
+Rule PostCritScout
+{
+	criteria ConceptTired IsScout 50PercentChance LoadoutIsCritDrink
+	Response PostCritScout
+}
+
+// Milk toss
+Response MilkLaunchScout
+{
+	scene "scenes/player/Scout/low/504.vcd"
+	scene "scenes/player/Scout/low/2705.vcd"
+	scene "scenes/player/Scout/low/2604.vcd"
+}
+Rule MilkLaunchScout
+{
+	criteria ConceptJarateLaunch IsScout 50PercentChance
+	Response MilkLaunchScout
+}
+
+// End custom
 
 Response PlayerKilledCapperScout
 {
@@ -573,6 +781,38 @@ Rule PlayerKilledCapperScout
 	Response PlayerKilledCapperScout
 }
 
+// Custom stuff
+// The other 2 unimplemented dominations do not have respective vcds.
+// Will build them sometime later.
+Response PlayerKilledDominatingScout
+{
+	scene "scenes/Player/Scout/low/2551.vcd" predelay "2.5"
+	scene "scenes/player/Scout/low/2687.vcd" predelay "2.5"
+	scene "scenes/Player/Scout/low/2764.vcd" predelay "2.5"
+	scene "scenes/Player/Scout/low/2765.vcd" predelay "2.5"
+}
+Rule PlayerKilledDominatingScout
+{
+	criteria ConceptKilledPlayer IsScout IsDominated 30PercentChance
+	ApplyContext "ScoutKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
+	Response PlayerKilledDominatingScout
+}
+
+Response PlayerKilledDominatingBatScout
+{
+	scene "scenes/player/scout/low/2648.vcd" predelay "2.5"
+	scene "scenes/player/scout/low/2643.vcd" predelay "2.5"
+}
+Rule PlayerKilledDominatingBatScout
+{
+	criteria ConceptKilledPlayer IsScout IsDominated IsWeaponMelee
+	ApplyContext "ScoutKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
+	Response PlayerKilledDominatingBatScout
+}
+//End custom
+
 Response PlayerKilledDominatingDemomanScout
 {
 	scene "scenes/Player/Scout/low/2763.vcd" predelay "2.5"
@@ -587,6 +827,7 @@ Rule PlayerKilledDominatingDemomanScout
 {
 	criteria ConceptKilledPlayer IsScout IsDominated  IsVictimDemoman
 	ApplyContext "ScoutKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingDemomanScout
 }
 
@@ -604,6 +845,7 @@ Rule PlayerKilledDominatingEngineerScout
 {
 	criteria ConceptKilledPlayer IsScout IsDominated  IsVictimEngineer
 	ApplyContext "ScoutKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingEngineerScout
 }
 
@@ -623,19 +865,17 @@ Response PlayerKilledDominatingHeavyScout
 	scene "scenes/Player/Scout/low/2712.vcd" predelay "2.5"
 	scene "scenes/Player/Scout/low/2713.vcd" predelay "2.5"
 	scene "scenes/Player/Scout/low/2642.vcd" predelay "2.5"
-	scene "scenes/Player/Scout/low/2643.vcd" predelay "2.5"
 }
 Rule PlayerKilledDominatingHeavyScout
 {
 	criteria ConceptKilledPlayer IsScout IsDominated  IsVictimHeavy
 	ApplyContext "ScoutKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingHeavyScout
 }
 
 Response PlayerKilledDominatingMedicScout
 {
-	scene "scenes/Player/Scout/low/2764.vcd" predelay "2.5"
-	scene "scenes/Player/Scout/low/2765.vcd" predelay "2.5"
 	scene "scenes/Player/Scout/low/2714.vcd" predelay "2.5"
 	scene "scenes/Player/Scout/low/2715.vcd" predelay "2.5"
 	scene "scenes/Player/Scout/low/2716.vcd" predelay "2.5"
@@ -648,11 +888,13 @@ Rule PlayerKilledDominatingMedicScout
 {
 	criteria ConceptKilledPlayer IsScout IsDominated  IsVictimMedic
 	ApplyContext "ScoutKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingMedicScout
 }
 
 Response PlayerKilledDominatingPyroScout
 {
+	scene "scenes/player/Scout/low/2688.vcd" predelay "2.5"
 	scene "scenes/Player/Scout/low/2644.vcd" predelay "2.5"
 	scene "scenes/Player/Scout/low/2560.vcd" predelay "2.5"
 	scene "scenes/Player/Scout/low/2673.vcd" predelay "2.5"
@@ -665,6 +907,7 @@ Rule PlayerKilledDominatingPyroScout
 {
 	criteria ConceptKilledPlayer IsScout IsDominated  IsVictimPyro
 	ApplyContext "ScoutKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingPyroScout
 }
 
@@ -685,6 +928,7 @@ Rule PlayerKilledDominatingScoutScout
 {
 	criteria ConceptKilledPlayer IsScout IsDominated  IsVictimScout
 	ApplyContext "ScoutKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingScoutScout
 }
 
@@ -701,6 +945,7 @@ Rule PlayerKilledDominatingSniperScout
 {
 	criteria ConceptKilledPlayer IsScout IsDominated  IsVictimSniper
 	ApplyContext "ScoutKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingSniperScout
 }
 
@@ -717,6 +962,7 @@ Rule PlayerKilledDominatingSoldierScout
 {
 	criteria ConceptKilledPlayer IsScout IsDominated  IsVictimSoldier
 	ApplyContext "ScoutKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingSoldierScout
 }
 
@@ -733,6 +979,7 @@ Rule PlayerKilledDominatingSpyScout
 {
 	criteria ConceptKilledPlayer IsScout IsDominated  IsVictimSpy
 	ApplyContext "ScoutKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingSpyScout
 }
 
@@ -758,6 +1005,7 @@ Rule PlayerKilledForRevengeScout
 {
 	criteria ConceptKilledPlayer IsScout IsRevenge
 	ApplyContext "ScoutKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledForRevengeScout
 }
 
@@ -769,7 +1017,6 @@ Rule PlayerKilledObjectScout
 {
 	criteria ConceptKilledObject IsScout 30PercentChance IsARecentKill
 	ApplyContext "ScoutKillSpeechObject:1:30"
-	applycontexttoworld
 	Response PlayerKilledObjectScout
 }
 
@@ -822,7 +1069,7 @@ Response PlayerStunBallPickUpScout
 }
 Rule PlayerStunBallPickUpScout
 {
-	criteria ConceptScoutBallGrab IsScout IsARecentKill 50PercentChance
+	criteria ConceptScoutBallGrab IsScout 50PercentChance
 	Response PlayerStunBallPickUpScout
 }
 
@@ -841,7 +1088,7 @@ Response PlayerAttackerPainScout
 }
 Rule PlayerAttackerPainScout
 {
-	criteria ConceptAttackerPain IsScout
+	criteria ConceptAttackerPain IsScout IsNotDominating
 	Response PlayerAttackerPainScout
 }
 
@@ -851,7 +1098,7 @@ Response PlayerOnFireScout
 }
 Rule PlayerOnFireScout
 {
-	criteria ConceptFire IsScout ScoutIsNotStillonFire
+	criteria ConceptFire IsScout ScoutIsNotStillonFire IsNotDominating
 	ApplyContext "ScoutOnFire:1:7"
 	Response PlayerOnFireScout
 }
@@ -862,7 +1109,7 @@ Response PlayerOnFireRareScout
 }
 Rule PlayerOnFireRareScout
 {
-	criteria ConceptFire IsScout 10PercentChance ScoutIsNotStillonFire
+	criteria ConceptFire IsScout 10PercentChance ScoutIsNotStillonFire IsNotDominating
 	ApplyContext "ScoutOnFire:1:7"
 	Response PlayerOnFireRareScout
 }
@@ -880,7 +1127,7 @@ Response PlayerPainScout
 }
 Rule PlayerPainScout
 {
-	criteria ConceptPain IsScout
+	criteria ConceptPain IsScout IsNotDominating
 	Response PlayerPainScout
 }
 
@@ -890,7 +1137,7 @@ Response PlayerStillOnFireScout
 }
 Rule PlayerStillOnFireScout
 {
-	criteria ConceptFire IsScout  ScoutIsStillonFire
+	criteria ConceptFire IsScout  ScoutIsStillonFire IsNotDominating
 	ApplyContext "ScoutOnFire:1:7"
 	Response PlayerStillOnFireScout
 }
@@ -1014,10 +1261,6 @@ Rule PlayerHelpCaptureScout
 
 Response PlayerHelpCapture2Scout
 {
-	scene "scenes/Player/Scout/low/2568.vcd" 
-	scene "scenes/Player/Scout/low/2569.vcd" 
-	scene "scenes/Player/Scout/low/2570.vcd" 
-	scene "scenes/Player/Scout/low/2572.vcd" 
 	scene "scenes/Player/Scout/low/489.vcd" 
 	scene "scenes/Player/Scout/low/1304.vcd" 
 	scene "scenes/Player/Scout/low/1305.vcd" 
@@ -1029,6 +1272,25 @@ Rule PlayerHelpCapture2Scout
 	criteria ConceptPlayerHelp IsScout IsOnCappableControlPoint IsHelpCapScout
 	Response PlayerHelpCapture2Scout
 }
+
+// Custom stuff
+// Response for when the Scout is fighting on a cappable point
+Response PlayerGetOnPointScout
+{
+	scene "scenes/Player/Scout/low/2568.vcd" 
+	scene "scenes/Player/Scout/low/2569.vcd" 
+	scene "scenes/Player/Scout/low/2570.vcd" 
+	scene "scenes/Player/Scout/low/2572.vcd" 
+}
+
+Rule PlayerGetOnPointScout
+{
+	criterion ConceptFireWeapon IsScout IsOnCappableControlPoint NotDefendOnThePointSpeech
+	ApplyContext "DefendOnThePointSpeech:1:15"
+	applycontexttoworld
+	Response PlayerGetOnPointScout
+}
+// End custom
 
 Response PlayerHelpDefendScout
 {
@@ -1052,6 +1314,15 @@ Rule PlayerMedicScout
 {
 	criteria ConceptPlayerMedic IsScout
 	Response PlayerMedicScout
+}
+
+Response PlayerAskForBallScout
+{
+}
+Rule PlayerAskForBallScout
+{
+	criteria ConceptPlayerAskForBall IsScout
+	Response PlayerAskForBallScout
 }
 
 Response PlayerMoveUpScout
@@ -1088,6 +1359,23 @@ Rule PlayerThanksScout
 	criteria ConceptPlayerThanks IsScout
 	Response PlayerThanksScout
 }
+
+// Custom Assist kill response
+// As there is no actual concept for assist kills, this is the second best method.
+// Say thanks after you kill more than one person.
+
+Response KilledPlayerAssistScout
+{
+	scene "scenes/Player/Scout/low/487.vcd"
+	scene "scenes/Player/Scout/low/488.vcd"
+}
+Rule KilledPlayerAssistScout
+{
+	criteria ConceptPlayerThanks IsScout IsARecentKill KilledPlayerDelay ScoutNotAssistSpeech
+	ApplyContext "ScoutAssistSpeech:1:20"
+	Response KilledPlayerAssistScout
+}
+// End custom
 
 Response PlayerYesScout
 {
@@ -1202,6 +1490,28 @@ Rule PlayerBattleCryScout
 	Response PlayerBattleCryScout
 }
 
+// Custom stuff - melee dare
+// Look at enemy, then do battle cry voice command while holding a melee weapon.
+Response MeleeDareCombatScout
+{
+	scene "scenes/Player/Scout/low/2584.vcd"
+	scene "scenes/Player/Scout/low/2579.vcd" 
+	scene "scenes/Player/Scout/low/2580.vcd" 
+	scene "scenes/Player/Scout/low/2582.vcd" 
+	scene "scenes/Player/Scout/low/2583.vcd" 
+	scene "scenes/Player/Scout/low/2581.vcd" 
+	scene "scenes/Player/Scout/low/2642.vcd" 
+	scene "scenes/Player/Scout/low/500.vcd" 
+	scene "scenes/Player/Scout/low/494.vcd"
+	scene "scenes/Player/Scout/low/496.vcd"
+}
+Rule MeleeDareCombatScout
+{
+	criteria ConceptPlayerBattleCry IsWeaponMelee IsScout IsCrosshairEnemy
+	Response MeleeDareCombatScout
+}
+//End custom
+
 Response PlayerCheersScout
 {
 	scene "scenes/Player/Scout/low/372.vcd" 
@@ -1298,11 +1608,6 @@ Response PlayerPositiveScout
 	scene "scenes/Player/Scout/low/470.vcd" 
 	scene "scenes/Player/Scout/low/471.vcd" 
 }
-Rule PlayerPositiveScout
-{
-	criteria ConceptPlayerPositive IsScout
-	Response PlayerPositiveScout
-}
 
 Response PlayerTauntsScout
 {
@@ -1313,9 +1618,279 @@ Response PlayerTauntsScout
 	scene "scenes/Player/Scout/low/1300.vcd" 
 	scene "scenes/Player/Scout/low/1301.vcd" 
 }
-Rule PlayerTauntsScout
+Rule PlayerPositiveScout
 {
-	criteria ConceptPlayerTaunts IsScout
+	criteria ConceptPlayerPositive IsScout
+	Response PlayerPositiveScout
 	Response PlayerTauntsScout
 }
 
+//--------------------------------------------------------------------------------------------------------------
+// Begin Competitive Mode VO
+//--------------------------------------------------------------------------------------------------------------
+Response PlayerFirstRoundStartCompScout
+{
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_05.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_06.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_07.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_08.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_09.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_10.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_11.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_12.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_13.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_14.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_15.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_16.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_17.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_18.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_05.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_06.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_07.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_08.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_09.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_10.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_11.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_12.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_13.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_14.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_15.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_16.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_17.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_18.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_19.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_20.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_21.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_05.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_06.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_07.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_08.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_09.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_10.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_rare_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_rare_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_rare_03.vcd" predelay "1.0, 5.0"
+}
+Rule PlayerFirstRoundStartCompScout
+{
+	criteria ConceptPlayerRoundStartComp IsScout IsFirstRound IsNotComp6v6 40PercentChance
+	Response PlayerFirstRoundStartCompScout
+}
+
+Response PlayerFirstRoundStartComp6sScout
+{
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_05.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_06.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_07.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_08.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_09.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_10.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_11.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_12.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_13.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_14.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_15.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_16.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_17.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_18.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_05.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_06.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_07.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_08.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_09.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_10.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_11.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_12.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_13.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_14.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_15.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_16.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_17.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_18.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_19.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_20.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_21.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_05.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_06.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_07.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_08.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_09.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_rare_10.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_rare_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_rare_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_comp_rare_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_6s_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_6s_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_6s_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_6s_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_6s_05.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamefirst_6s_rare_01.vcd" predelay "1.0, 5.0"
+}
+Rule PlayerFirstRoundStartComp6sScout
+{
+	criteria ConceptPlayerRoundStartComp IsScout IsFirstRound IsComp6v6 40PercentChance
+	Response PlayerFirstRoundStartComp6sScout
+}
+
+Response PlayerWonPrevRoundCompScout
+{
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_05.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_06.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_07.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_08.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_09.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_10.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_11.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_12.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_rare_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_rare_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_rare_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_rare_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_comp_rare_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_comp_rare_02.vcd" predelay "1.0, 5.0"
+}
+Rule PlayerWonPrevRoundCompScout
+{
+	criteria ConceptPlayerRoundStartComp IsScout IsNotFirstRound IsNotComp6v6 PlayerWonPreviousRound 40PercentChance
+	Response PlayerWonPrevRoundCompScout
+}
+
+Response PlayerWonPrevRoundComp6sScout
+{
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_05.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_06.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_07.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_08.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_09.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_10.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_11.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_12.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_rare_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_rare_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_rare_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_rare_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_comp_rare_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_comp_rare_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_6s_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamewonlast_6s_02.vcd" predelay "1.0, 5.0"
+}
+Rule PlayerWonPrevRoundComp6sScout
+{
+	criteria ConceptPlayerRoundStartComp IsScout IsNotFirstRound IsComp6v6 PlayerWonPreviousRound 40PercentChance
+	Response PlayerWonPrevRoundComp6sScout
+}
+
+Response PlayerLostPrevRoundCompScout
+{
+	scene "scenes/Player/Scout/low/cm_scout_pregamelostlast_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamelostlast_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamelostlast_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamelostlast_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamelostlast_05.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamelostlast_06.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamelostlast_07.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamelostlast_rare_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamelostlast_rare_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregamelostlast_rare_03.vcd" predelay "1.0, 5.0"
+}
+Rule PlayerLostPrevRoundCompScout
+{
+	criteria ConceptPlayerRoundStartComp IsScout IsNotFirstRound PlayerLostPreviousRound PreviousRoundWasNotTie 40PercentChance
+	Response PlayerLostPrevRoundCompScout
+}
+
+Response PlayerTiedPrevRoundCompScout
+{
+	scene "scenes/Player/Scout/low/cm_scout_pregametie_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregametie_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregametie_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregametie_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregametie_05.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregametie_06.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_pregametie_07.vcd" predelay "1.0, 5.0"
+}
+Rule PlayerTiedPrevRoundCompScout
+{
+	criteria ConceptPlayerRoundStartComp IsScout IsNotFirstRound PreviousRoundWasTie 40PercentChance
+	Response PlayerTiedPrevRoundCompScout
+}
+
+Response PlayerGameWinCompScout
+{
+	scene "scenes/Player/Scout/low/cm_scout_gamewon_01.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_gamewon_02.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_gamewon_03.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_gamewon_04.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_gamewon_05.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_gamewon_06.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_gamewon_07.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_gamewon_08.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_gamewon_09.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_gamewon_10.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_gamewon_11.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_gamewon_12.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_gamewon_13.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_gamewon_14.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_gamewon_15.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_gamewon_rare_01.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Scout/low/cm_scout_gamewon_rare_02.vcd" predelay "2.0, 5.0"
+}
+Rule PlayerGameWinCompScout
+{
+	criteria ConceptPlayerGameOverComp PlayerOnWinningTeam IsScout 40PercentChance
+	Response PlayerGameWinCompScout
+}
+
+Response PlayerMatchWinCompScout
+{
+	scene "scenes/Player/Scout/low/cm_scout_matchwon_01.vcd" predelay "1.0, 2.0"
+	scene "scenes/Player/Scout/low/cm_scout_matchwon_02.vcd" predelay "1.0, 2.0"
+	scene "scenes/Player/Scout/low/cm_scout_matchwon_03.vcd" predelay "1.0, 2.0"
+	scene "scenes/Player/Scout/low/cm_scout_matchwon_04.vcd" predelay "1.0, 2.0"
+	scene "scenes/Player/Scout/low/cm_scout_matchwon_05.vcd" predelay "1.0, 2.0"
+	scene "scenes/Player/Scout/low/cm_scout_matchwon_06.vcd" predelay "1.0, 2.0"
+	scene "scenes/Player/Scout/low/cm_scout_matchwon_07.vcd" predelay "1.0, 2.0"
+	scene "scenes/Player/Scout/low/cm_scout_matchwon_08.vcd" predelay "1.0, 2.0"
+	scene "scenes/Player/Scout/low/cm_scout_matchwon_09.vcd" predelay "1.0, 2.0"
+	scene "scenes/Player/Scout/low/cm_scout_matchwon_10.vcd" predelay "1.0, 2.0"
+}
+Rule PlayerMatchWinCompScout
+{
+	criteria ConceptPlayerMatchOverComp PlayerOnWinningTeam IsScout 40PercentChance
+	Response PlayerMatchWinCompScout
+}
+//--------------------------------------------------------------------------------------------------------------
+// End Competitive Mode VO
+//--------------------------------------------------------------------------------------------------------------

@@ -391,6 +391,12 @@ function meta:SetPlayerClass(class)
 	else
 		self.playerclass = string.upper(string.sub(class,1,1))..string.sub(class,2)	
 	end
+	
+	if (self:Team() == TEAM_BLU) then
+		self.teamrole = "offense"
+	else
+		self.teamrole = "defense"
+	end
 	if (class == "nick") then
 		self.Who = "Gambler"
 	elseif (class == "coach") then

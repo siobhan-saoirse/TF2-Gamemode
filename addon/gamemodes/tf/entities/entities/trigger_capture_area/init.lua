@@ -32,33 +32,22 @@ function ENT:KeyValue(key,value)
 end
 
 function ENT:Think()
-	if not GAMEMODE.PostEntityDone then return end
 	
 	local pos = self:GetPos()
 	local mins, maxs = self:WorldSpaceAABB() -- https://forum.facepunch.com/gmoddev/lmcw/Brush-entitys-ent-GetPos/1/#postdwfmq
 	pos = (mins + maxs) * 0.5
-	self.Pos = pos
+	if (self.Pos ~= pos) then
+		self.Pos = pos
+	end
 	
+	for k,v in ipairs(ents.FindByClass("team_train_watcher")) do
+		if (IsValid(v.Train)) then
+			self.Train = v.Train
+		end
+	end
 	if GAMEMODE.PostEntityDone and not self.PostEntityDone then
 		self:InitPostEntity()
 		self.PostEntityDone = true
-		return
-	end
-	if (IsValid(self.Train)) then
-		if (self.Players == 0) then
-			if (!timer.Exists("CartGoesBackwards"..self:EntIndex())) then
-				timer.Create("CartGoesBackwards"..self:EntIndex(), 30, 1, function()
-					self.Train:Fire("SetSpeed",tostring(-0.1),0.01)
-					for k,v in ipairs(player.GetAll()) do
-						v:Speak("TLK_CART_MOVING_BACKWARD")
-					end
-				end)
-			end
-		else
-			if (timer.Exists("CartGoesBackwards"..self:EntIndex())) then
-				timer.Stop("CartGoesBackwards"..self:EntIndex())
-			end
-		end
 	end
 end
 
@@ -67,23 +56,17 @@ function ENT:AcceptInput(name, activator, caller, data)
 end
 
 function ENT:StartTouch(ent)
-	for k,v in ipairs(ents.FindByClass("team_train_watcher")) do
-		if (IsValid(v.Train)) then
-			self.Train = v.Train
-		end
-	end
 	if (ent:IsPlayer()) then 
 		if (ent:Team() == TEAM_BLU) then
 			self.Players = self.Players + 1
 		end
 	end
 	if (IsValid(self.Train)) then
-		if (ent:IsPlayer()) then 
+		if (ent:IsPlayer()) then  
+			timer.Stop("CartGoesBackwards"..self:EntIndex())
 			if (ent:Team() == TEAM_BLU) then
 				self.Train:Fire("SetSpeed",tostring(0.3 * self.Players),0.01)
-				for k,v in ipairs(player.GetAll()) do
-					v:Speak("TLK_CART_MOVING_FORWARD")
-				end
+				ent:Speak("TLK_CART_MOVING_FORWARD")
 			else
 				self.Train:Fire("Stop","",0.01)
 				for k,v in ipairs(player.GetAll()) do
@@ -165,6 +148,10 @@ function ENT:EndTouch(ent)
 				for k,v in ipairs(player.GetAll()) do
 					v:Speak("TLK_CART_STOP")
 				end
+						
+						timer.Create("CartGoesBackwards"..self:EntIndex(), 30, 1, function()
+							self.Train:Fire("SetSpeed",tostring(-0.1),0.01)
+						end)
 			end
 		end
 	else

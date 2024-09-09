@@ -53,7 +53,7 @@ function ENT:KeyValue(key,value)
 	self.Properties[key] = value
 end
 
-function ENT:Think()
+function ENT:Think() 
 	if not GAMEMODE.PostEntityDone then return end
 	if GAMEMODE.PostEntityDone and not self.PostEntityDone then
 		self:InitPostEntity()

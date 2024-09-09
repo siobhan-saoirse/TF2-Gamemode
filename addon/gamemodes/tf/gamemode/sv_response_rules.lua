@@ -41,9 +41,11 @@ function AddCriterion(str)
 	]]
 	local name, matchkey, matchvalue, required, weight, w =
 		string.match(str, '[cC]riterion%s*(%b"")%s*(%b"")%s*(%b"")%s*(%S*)%s*(%S*)%s*(%S*)')
-	name = string.match(name, '^"(.*)"$')
-	matchkey = string.match(matchkey, '^"(.*)"$')
-	matchvalue = string.match(matchvalue, '^"(.*)"$')
+	if (name and matchkey and matchvalue) then
+		name = string.match(name, '^"(.*)"$')
+		matchkey = string.match(matchkey, '^"(.*)"$')
+		matchvalue = string.match(matchvalue, '^"(.*)"$')
+	end
 	
 	if not name then
 		return
@@ -106,7 +108,7 @@ function AddResponse(str)
 					table.insert(t.predelay, tonumber(v) or 0)
 				end
 			end
-			table.insert(tbl, t)
+			table.insert(tbl, t) 
 		end
 	end 
 	 
@@ -633,9 +635,9 @@ function META:Speak(concept, nospeech, dbg)
 			if (self:GetPlayerClass() == "engineer") then
 				self.playerweapon = "tf_weapon_wrench"
 			elseif (self:GetPlayerClass() == "heavy") then
-				self.playerweapon = "tf_weapon_fists"
+				self.playerweapon = "tf_weapon_fists" 
 			elseif (self:GetPlayerClass() == "pyro") then
-				self.playerweapon = "tf_weapon_fireaxe"
+				self.playerweapon = "tf_weapon_fireaxe" 
 			elseif (self:GetPlayerClass() == "demoman") then
 				self.playerweapon = "tf_weapon_bottle"
 			elseif (self:GetPlayerClass() == "scout") then
@@ -695,6 +697,11 @@ function META:Speak(concept, nospeech, dbg)
 	-- What class the player is looking at
 	self.crosshair_on = ""
 	self.crosshair_enemy = "No"
+	if (self:Team() == TEAM_BLU) then
+		self.teamrole = "offense"
+	else
+		self.teamrole = "defense"
+	end
 	
 	local start = self:GetShootPos()
 	local endpos = start + self:GetAimVector() * 10000
@@ -801,7 +808,7 @@ function META:Speak(concept, nospeech, dbg)
 	end
 	---------------------------------------------------------------- 
 	
-	local response = SelectResponse(self, dbg)
+	local response = SelectResponse(self, false)
 	
 	if response then
 		return PlayResponse(self, response, nospeech, concept)

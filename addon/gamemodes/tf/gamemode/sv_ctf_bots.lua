@@ -269,7 +269,7 @@ local function LeadBot_S_Add(team2)
 		bot:SetPlayerClass("spy")
 	end
 	bot.TFBot = true
-	timer.Simple(0.2, function()
+	timer.Simple(0.1, function()
 	
 		bot:Spawn()
 
@@ -615,9 +615,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		local controller = bot.ControllerBot
 		if (controller ~= nil) then
 			if (bot.botPos ~= nil) then
-				if (math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1) hen
-					controller.PosGen = bot.botPos
-				end
+				controller.PosGen = bot.botPos
 			end
 		end
 		if (bot.OverrideModelScale) then
@@ -802,7 +800,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		
 	
 		-- force a recompute
-				if (bot.botPos and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1) then
+				if (bot.botPos) then
 					bot.ControllerBot.PosGen = bot.botPos
 				end
 
@@ -861,6 +859,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		------------------------------
 		--------[[BOT EYES]]---------
 		------------------------------
+
 		if !bot.LastPath then return end
 		local curgoal = bot.LastPath[bot.CurSegment]
 		
@@ -891,7 +890,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					mv:SetForwardSpeed(0)
 					return
 				else
-					if (bot.TargetEnt ~= nil && bot:GetPos():Distance(bot.botPos) > bot.TargetEnt:GetModelRadius() || bot.TargetEnt == nil and bot:GetPos():Distance(bot.botPos) > 50) then
+					if (bot.TargetEnt ~= nil && bot:GetPos():Distance(bot.botPos) > bot.TargetEnt:GetModelRadius() || bot.TargetEnt == nil and bot:GetPos():Distance(bot.botPos) > 80) then
 						if (IsValid(bot.TargetEnt)) then
 							if (bot.TargetEnt:IsFriendly(bot) and bot.TargetEnt.movingAway) then 
 								mv:SetForwardSpeed(0)
@@ -934,14 +933,13 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					lerp = 4
 				end
 					if (bot:IsL4D()) then
-						--bot:SetEyeAngles(LerpAngle(0.2, bot:EyeAngles(), mva))
+						bot:SetEyeAngles(LerpAngle(0.2, bot:EyeAngles(), mva))
 					else
 						if controller.LookAtTime > CurTime() then
 							local ang = LerpAngle(FrameTime() * 2, bot:EyeAngles(), controller.LookAt)
 							bot:SetEyeAngles(Angle(ang.p, ang.y, 0))
 						else 
-							local ang = LerpAngle(FrameTime() * 48, bot:EyeAngles(), mva)
-							bot:SetEyeAngles(Angle(ang.p, ang.y, 0))
+							bot:SetEyeAngles(LerpAngle(0.2, bot:EyeAngles(), mva))
 						end
 					end
 			end

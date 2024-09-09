@@ -31,7 +31,7 @@ function ENT:ChasePos( options )
 		
 		if !self.P:IsValid() then return end
 		while self.P:IsValid() do
-				
+				 
 			if (IsValid(self:GetOwner())) then
 				local owner = self:GetOwner()
 				self:SetModel(owner:GetModel())
@@ -50,7 +50,6 @@ function ENT:ChasePos( options )
 				return
 			end
 			
-			coroutine.wait(1)
 			coroutine.yield()
 		end
 	end

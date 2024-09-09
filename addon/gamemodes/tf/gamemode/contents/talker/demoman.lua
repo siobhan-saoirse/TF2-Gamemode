@@ -15,32 +15,6 @@ Criterion "DemomanNotAssistSpeech" "DemomanAssistSpeech" "!=1" "required" weight
 Criterion "IsDrunk" "NotSober" "1" "required" weight 0
 Criterion "DemomanNotAwardSpeech" "DemomanAwardSpeech" "!=1" "required" weight 0
 
-Response DemomanJarateHit
-{
-	scene "scenes/Player/Demoman/low/871.vcd"       
-	scene "scenes/Player/Demoman/low/947.vcd"       
-	scene "scenes/Player/Demoman/low/969.vcd"       
-	scene "scenes/Player/Demoman/low/971.vcd"       
-}
-Rule DemomanJarateHit
-{
-	criteria ConceptJarateHit IsDemoman 50PercentChance
-	Response DemomanJarateHit
-}
-
-// Custom stuff - melee dare
-// Look at enemy, then do battle cry voice command while holding a melee weapon.
-Response MeleeDareCombatDemoman
-{
-	scene "scenes/Player/Demoman/low/1028.vcd"
-	scene "scenes/Player/Demoman/low/1017.vcd"
-	scene "scenes/Player/Demoman/low/1015.vcd"
-}
-Rule MeleeDareCombatDemoman
-{
-	criteria ConceptPlayerBattleCry IsWeaponMelee IsDemoman IsCrossHairEnemy
-	Response MeleeDareCombatDemoman
-}
 
 Response PlayerCloakedSpyDemomanDemoman
 {
@@ -62,15 +36,6 @@ Rule PlayerCloakedSpyEngineerDemoman
 	Response PlayerCloakedSpyEngineerDemoman
 }
 
-Response MvMSniperCalloutDemo
-{
-	scene "scenes/Player/Demoman/low/sniper.vcd" 
-}
-Rule MvMSniperCalloutDemo
-{
-	criteria ConceptMvMSniperCallout IsDemoman
-	Response MvMSniperCalloutDemo
-}
 Response PlayerCloakedSpyHeavyDemoman
 {
 	scene "scenes/Player/Demoman/low/897.vcd" 
@@ -130,45 +95,7 @@ Rule PlayerCloakedSpySoldierDemoman
 	criteria ConceptPlayerCloakedSpy IsDemoman IsOnSoldier
 	Response PlayerCloakedSpySoldierDemoman
 }
-// Frying pan responses
-// These are our base responses for non-sword melee weapons.
-Response KilledPlayerPanDemoman
-{
-	scene "scenes/Player/Demoman/low/3566.vcd" 
-	scene "scenes/Player/Demoman/low/3567.vcd" 
-	scene "scenes/Player/Demoman/low/3569.vcd"
-	scene "scenes/Player/Demoman/low/3570.vcd" 
-	scene "scenes/Player/Demoman/low/3571.vcd" 
-	scene "scenes/Player/Demoman/low/3572.vcd" 
-	scene "scenes/Player/Demoman/low/3573.vcd"  
-	scene "scenes/Player/Demoman/low/3575.vcd"
-}
-Rule KilledPlayerPanDemoman
-{
-	criteria ConceptKilledPlayer KilledPlayerDelay WeaponIsFryingPan 20PercentChance  DemomanNotKillSpeechMelee IsDemoman
-	ApplyContext "DemomanKillSpeechMelee:1:10"
-	Response KilledPlayerPanDemoman
-}
 
-Rule KilledPlayerSaxxyDemoman
-{
-	criteria ConceptKilledPlayer KilledPlayerDelay WeaponIsSaxxy 20PercentChance  DemomanNotKillSpeechMelee IsDemoman
-	ApplyContext "DemomanKillSpeechMelee:1:10"
-	Response KilledPlayerPanDemoman
-}
-// End Frying Pan responses
-
-// Custom rules for when Demoman drinks from Scrumpy
-// to trigger one of the above drunk lines
-Rule DrunkDemoman
-{
-	criteria ConceptFireWeapon IsDrunk IsDemoman WeaponIsBottle // Fire if he's holding the Bottle and if the drunk context is set
-	Response KilledPlayerPanDemoman
-}
-// End custom drunk rules
-
-// Modified to play for the Bottle only
-// Modified to include Frying Pan repsonses above, saves having duplicate entries.
 Response PlayerCloakedSpySpyDemoman
 {
 	scene "scenes/Player/Demoman/low/903.vcd" 
@@ -196,12 +123,28 @@ Rule HealThanksDemoman
 	Response HealThanksDemoman
 }
 
+Response AwardDemoman
+{
+	scene "scenes/Player/Demoman/low/866.vcd" predelay "2.5"
+	scene "scenes/Player/Demoman/low/868.vcd" predelay "2.5"
+	scene "scenes/Player/Demoman/low/865.vcd" predelay "2.5"
+}
+Rule AwardDemoman
+{
+	criteria ConceptAchievementAward IsDemoman DemomanNotAwardSpeech
+	ApplyContext "DemomanAwardSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
+	Response AwardDemoman
+}
+
 Response PlayerRoundStartDemoman
 {
 	scene "scenes/Player/Demoman/low/1358.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/1369.vcd" predelay "1.0, 5.0" 
 	scene "scenes/Player/Demoman/low/876.vcd" predelay "1.0, 5.0"
 	scene "scenes/Player/Demoman/low/877.vcd" predelay "1.0, 5.0"
 	scene "scenes/Player/Demoman/low/878.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/879.vcd" predelay "1.0, 5.0"
 	scene "scenes/Player/Demoman/low/880.vcd" predelay "1.0, 5.0"
 }
 Rule PlayerRoundStartDemoman
@@ -294,6 +237,65 @@ Rule DefendOnThePointDemoman
 	Response DefendOnThePointDemoman
 }
 
+Response DemomanJarateHit
+{
+	scene "scenes/Player/Demoman/low/871.vcd"       
+	scene "scenes/Player/Demoman/low/947.vcd"       
+	scene "scenes/Player/Demoman/low/969.vcd"       
+	scene "scenes/Player/Demoman/low/971.vcd"       
+}
+Rule DemomanJarateHit
+{
+	criteria ConceptJarateHit IsDemoman 50PercentChance
+	Response DemomanJarateHit
+}
+
+// Invuln responses for Grenade Launcher
+Response InvulnerableSpeechDemoman2
+{
+	scene "scenes/Player/Demoman/low/1019.vcd" 
+	scene "scenes/Player/Demoman/low/1012.vcd" 
+	scene "scenes/Player/Demoman/low/1029.vcd" 
+	scene "scenes/Player/Demoman/low/1021.vcd"
+}
+
+
+Rule InvulnerableSpeechDemoman2
+{
+	criteria ConceptFireWeapon IsDemoman WeaponIsGrenade IsInvulnerable DemomanNotInvulnerableSpeech
+	ApplyContext "DemomanInvulnerableSpeech:1:30"
+	Response InvulnerableSpeechDemoman2
+}
+// End invuln responses for GL
+
+// Invulnerable responses for Sticky launcher
+Response InvulnerableSpeechDemoman
+{
+	scene "scenes/Player/Demoman/low/1023.vcd"  
+	scene "scenes/Player/Demoman/low/1022.vcd" 
+	scene "scenes/Player/Demoman/low/1018.vcd" 
+}
+
+Rule InvulnerableSpeechDemoman
+{
+	criteria ConceptFireWeapon IsDemoman WeaponIsPipebomb IsInvulnerable DemomanNotInvulnerableSpeech
+	ApplyContext "DemomanInvulnerableSpeech:1:30"
+	Response InvulnerableSpeechDemoman
+}
+// End invuln responses for Sticky
+
+Response KilledPlayerAssistAutoDemoman
+{
+	scene "scenes/Player/Demoman/low/1009.vcd" predelay "2.5"
+	scene "scenes/Player/Demoman/low/867.vcd" predelay "2.5"
+}
+Rule KilledPlayerAssistAutoDemoman
+{
+	criteria ConceptKilledPlayer IsDemoman IsBeingHealed IsManyRecentKills KilledPlayerDelay 20PercentChance DemomanNotAssistSpeech
+	ApplyContext "DemomanAssistSpeech:1:20"
+	Response KilledPlayerAssistAutoDemoman
+}
+
 Response KilledPlayerManyDemoman
 {
 	scene "scenes/Player/Demoman/low/1000.vcd" 
@@ -303,22 +305,156 @@ Response KilledPlayerManyDemoman
 }
 Rule KilledPlayerManyDemoman
 {
-	criteria ConceptKilledPlayer IsManyRecentKills 30PercentChance IsWeaponPrimary KilledPlayerDelay DemomanNotKillSpeech IsDemoman
+	criteria ConceptKilledPlayer IsManyRecentKills 30PercentChance IsWeaponSecondary KilledPlayerDelay DemomanNotKillSpeech IsDemoman
 	ApplyContext "DemomanKillSpeech:1:10"
-	applycontexttoworld
 	Response KilledPlayerManyDemoman
 }
 
+// Custom stuff
+// Responses against killing a Soldier
+Response KilledSoldierDemoman
+{
+	scene "scenes/Player/Demoman/low/3568.vcd" 
+	scene "scenes/Player/Demoman/low/3574.vcd" 
+	scene "scenes/Player/Demoman/low/3577.vcd" 
+}
+Rule KilledSoldierDemoman
+{
+	criterion ConceptKilledPlayer KilledPlayerDelay IsVictimSoldier 10PercentChance DemomanNotKillSpeech IsDemoman WeaponClassIsNotAxe
+	ApplyContext "DemomanKillSpeech:1:60"
+	Response KilledSoldierDemoman
+}
+
+// Frying pan responses
+// These are our base responses for non-sword melee weapons.
+Response KilledPlayerPanDemoman
+{
+	scene "scenes/Player/Demoman/low/3566.vcd" 
+	scene "scenes/Player/Demoman/low/3567.vcd" 
+	scene "scenes/Player/Demoman/low/3569.vcd"
+	scene "scenes/Player/Demoman/low/3570.vcd" 
+	scene "scenes/Player/Demoman/low/3571.vcd" 
+	scene "scenes/Player/Demoman/low/3572.vcd" 
+	scene "scenes/Player/Demoman/low/3573.vcd"  
+	scene "scenes/Player/Demoman/low/3575.vcd"
+}
+Rule KilledPlayerPanDemoman
+{
+	criteria ConceptKilledPlayer KilledPlayerDelay WeaponIsFryingPan 20PercentChance  DemomanNotKillSpeechMelee IsDemoman
+	ApplyContext "DemomanKillSpeechMelee:1:10"
+	Response KilledPlayerPanDemoman
+}
+
+Rule KilledPlayerSaxxyDemoman
+{
+	criteria ConceptKilledPlayer KilledPlayerDelay WeaponIsSaxxy 20PercentChance  DemomanNotKillSpeechMelee IsDemoman
+	ApplyContext "DemomanKillSpeechMelee:1:10"
+	Response KilledPlayerPanDemoman
+}
+// End Frying Pan responses
+
+// Custom rules for when Demoman drinks from Scrumpy
+// to trigger one of the above drunk lines
+Rule DrunkDemoman
+{
+	criteria ConceptFireWeapon IsDrunk IsDemoman IsWeaponMelee WeaponIsNotFryingPan // Fire if he's holding the Bottle and if the drunk context is set
+	Response KilledPlayerPanDemoman
+}
+// End custom drunk rules
+
+// Modified to play for the Bottle only
+// Modified to include Frying Pan repsonses above, saves having duplicate entries.
 Response KilledPlayerMeleeDemoman
 {
 	scene "scenes/Player/Demoman/low/998.vcd" 
 }
 Rule KilledPlayerMeleeDemoman
 {
-	criteria ConceptKilledPlayer KilledPlayerDelay 30PercentChance  WeaponIsBottle DemomanNotKillSpeechMelee IsDemoman
+	criteria ConceptKilledPlayer KilledPlayerDelay WeaponIsBottle WeaponIsNotPainTrain WeaponIsNotSaxxy 30PercentChance  DemomanNotKillSpeechMelee IsDemoman
 	ApplyContext "DemomanKillSpeechMelee:1:10"
-	applycontexttoworld
+	Response KilledPlayerPanDemoman
 	Response KilledPlayerMeleeDemoman
+}
+//
+
+// Eyelander responses
+// These apply to all tf_weapon_sword class weapons.
+Response KilledPlayerSwordDemoman
+{
+	scene "scenes/Player/Demoman/low/3565.vcd" 
+	scene "scenes/Player/Demoman/low/910.vcd" 
+	scene "scenes/Player/Demoman/low/950.vcd"	
+	scene "scenes/Player/Demoman/low/1379.vcd"	
+}
+
+Rule KilledPlayerSwordDemoman
+{
+	criteria ConceptKilledPlayer KilledPlayerDelay WeaponIsSword 20PercentChance IsNotVictimDemoman  DemomanNotKillSpeechMelee IsDemoman
+	ApplyContext "DemomanKillSpeechMelee:1:30"
+	Response KilledPlayerSwordDemoman
+}
+
+// The above rule is for non-Demoman victims only.
+
+Response KilledPlayerSword2Demoman
+{
+	scene "scenes/Player/Demoman/low/3564.vcd"
+}
+
+Rule KilledPlayerSword2Demoman
+{
+	criteria ConceptKilledPlayer KilledPlayerDelay WeaponIsSword 20PercentChance IsVictimDemoman  DemomanNotKillSpeechMelee IsDemoman
+	ApplyContext "DemomanKillSpeechMelee:1:30"
+	Response KilledPlayerSword2Demoman
+}
+// The above rule is for Demoman victims only.
+// End Eyelander responses
+
+// Katana response rules shared with Eyelander
+Rule KilledPlayerKatanaDemoman
+{
+	criteria ConceptKilledPlayer KilledPlayerDelay WeaponIsKatana 20PercentChance IsNotVictimDemoman  DemomanNotKillSpeechMelee IsDemoman
+	ApplyContext "DemomanKillSpeechMelee:1:30"
+	Response KilledPlayerSwordDemoman
+}
+// The above rule is for non-Demoman victims only.
+Rule KilledPlayerKatana2Demoman
+{
+	criteria ConceptKilledPlayer KilledPlayerDelay WeaponIsKatana 20PercentChance IsVictimDemoman  DemomanNotKillSpeechMelee IsDemoman
+	ApplyContext "DemomanKillSpeechMelee:1:30"
+	Response KilledPlayerSword2Demoman
+}
+// The above rule is for Demoman victims only.
+// End Katana responses
+
+// Pain Train responses
+// Shares responses with Frying Pan, saves having duplicate entries.
+Response KilledPlayerClubDemoman
+{
+	scene "scenes/Player/Demoman/low/3578.vcd" 
+}
+
+Rule KilledPlayerClubDemoman
+{
+	criteria ConceptKilledPlayer KilledPlayerDelay WeaponIsPainTrain 10PercentChance  DemomanNotKillSpeechMelee IsDemoman
+	ApplyContext "DemomanKillSpeechMelee:1:15"
+	Response KilledPlayerClubDemoman
+	Response KilledPlayerPanDemoman
+}
+// End Pain Train responses
+
+// Caber responses
+Response KilledPlayerCaberDemoman
+{
+	scene "scenes/player/Demoman/low/1007.vcd"
+	scene "scenes/Player/Demoman/low/1008.vcd"
+	scene "scenes/Player/Demoman/low/997.vcd"
+}
+Rule KilledPlayerCaberDemoman
+{
+	criteria ConceptAttackerPain KilledPlayerDelay WeaponIsCaber IsCritical CaberHealthContext  DemomanNotKillSpeechMelee IsDemoman
+	ApplyContext "DemomanKillSpeechMelee:1:10"
+	Response KilledPlayerCaberDemoman
 }
 
 Response KilledPlayerVeryManyDemoman
@@ -332,9 +468,8 @@ Response KilledPlayerVeryManyDemoman
 }
 Rule KilledPlayerVeryManyDemoman
 {
-	criteria ConceptKilledPlayer IsVeryManyRecentKills 50PercentChance IsWeaponPrimary KilledPlayerDelay DemomanNotKillSpeech IsDemoman
+	criteria ConceptKilledPlayer IsVeryManyRecentKills 50PercentChance IsWeaponSecondary KilledPlayerDelay DemomanNotKillSpeech IsDemoman
 	ApplyContext "DemomanKillSpeech:1:10"
-	applycontexttoworld
 	Response KilledPlayerVeryManyDemoman
 }
 
@@ -377,6 +512,7 @@ Rule PlayerKilledDominatingDemoman
 {
 	criteria ConceptKilledPlayer IsDemoman IsDominated
 	ApplyContext "DemomanKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingDemoman
 }
 
@@ -391,6 +527,7 @@ Rule PlayerKilledDominatingDemomanDemoman
 {
 	criteria ConceptKilledPlayer IsDemoman IsDominated  IsVictimDemoman
 	ApplyContext "DemomanKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingDemomanDemoman
 }
 
@@ -407,6 +544,7 @@ Rule PlayerKilledDominatingEngineerDemoman
 {
 	criteria ConceptKilledPlayer IsDemoman IsDominated  IsVictimEngineer
 	ApplyContext "DemomanKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingEngineerDemoman
 }
 
@@ -422,6 +560,7 @@ Rule PlayerKilledDominatingHeavyDemoman
 {
 	criteria ConceptKilledPlayer IsDemoman IsDominated  IsVictimHeavy
 	ApplyContext "DemomanKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingHeavyDemoman
 }
 
@@ -436,6 +575,7 @@ Rule PlayerKilledDominatingMedicDemoman
 {
 	criteria ConceptKilledPlayer IsDemoman IsDominated  IsVictimMedic
 	ApplyContext "DemomanKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingMedicDemoman
 }
 
@@ -450,6 +590,7 @@ Rule PlayerKilledDominatingPyroDemoman
 {
 	criteria ConceptKilledPlayer IsDemoman IsDominated  IsVictimPyro
 	ApplyContext "DemomanKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingPyroDemoman
 }
 
@@ -468,6 +609,7 @@ Rule PlayerKilledDominatingScoutDemoman
 {
 	criteria ConceptKilledPlayer IsDemoman IsDominated  IsVictimScout
 	ApplyContext "DemomanKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingScoutDemoman
 }
 
@@ -482,6 +624,7 @@ Rule PlayerKilledDominatingSniperDemoman
 {
 	criteria ConceptKilledPlayer IsDemoman IsDominated  IsVictimSniper
 	ApplyContext "DemomanKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingSniperDemoman
 }
 
@@ -497,6 +640,7 @@ Rule PlayerKilledDominatingSoldierDemoman
 {
 	criteria ConceptKilledPlayer IsDemoman IsDominated  IsVictimSoldier
 	ApplyContext "DemomanKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingSoldierDemoman
 }
 
@@ -510,6 +654,7 @@ Rule PlayerKilledDominatingSpyDemoman
 {
 	criteria ConceptKilledPlayer IsDemoman IsDominated  IsVictimSpy
 	ApplyContext "DemomanKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingSpyDemoman
 }
 
@@ -524,6 +669,7 @@ Rule PlayerKilledForRevengeDemoman
 {
 	criteria ConceptKilledPlayer IsDemoman IsRevenge
 	ApplyContext "DemomanKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledForRevengeDemoman
 }
 
@@ -536,7 +682,6 @@ Rule PlayerKilledObjectDemoman
 {
 	criteria ConceptKilledObject IsDemoman 30PercentChance IsARecentKill
 	ApplyContext "DemomanKillSpeechObject:1:30"
-	applycontexttoworld
 	Response PlayerKilledObjectDemoman
 }
 
@@ -553,7 +698,7 @@ Response PlayerAttackerPainDemoman
 }
 Rule PlayerAttackerPainDemoman
 {
-	criteria ConceptAttackerPain IsDemoman
+	criteria ConceptAttackerPain IsDemoman IsNotDominating
 	Response PlayerAttackerPainDemoman
 }
 
@@ -564,7 +709,7 @@ Response PlayerOnFireDemoman
 }
 Rule PlayerOnFireDemoman
 {
-	criteria ConceptFire IsDemoman DemomanIsNotStillonFire
+	criteria ConceptFire IsDemoman DemomanIsNotStillonFire IsNotDominating
 	ApplyContext "DemomanOnFire:1:7"
 	Response PlayerOnFireDemoman
 }
@@ -575,7 +720,7 @@ Response PlayerOnFireRareDemoman
 }
 Rule PlayerOnFireRareDemoman
 {
-	criteria ConceptFire IsDemoman 10PercentChance DemomanIsNotStillonFire
+	criteria ConceptFire IsDemoman 10PercentChance DemomanIsNotStillonFire IsNotDominating
 	ApplyContext "DemomanOnFire:1:7"
 	Response PlayerOnFireRareDemoman
 }
@@ -592,7 +737,7 @@ Response PlayerPainDemoman
 }
 Rule PlayerPainDemoman
 {
-	criteria ConceptPain IsDemoman
+	criteria ConceptPain IsDemoman IsNotDominating
 	Response PlayerPainDemoman
 }
 
@@ -602,7 +747,7 @@ Response PlayerStillOnFireDemoman
 }
 Rule PlayerStillOnFireDemoman
 {
-	criteria ConceptFire IsDemoman  DemomanIsStillonFire
+	criteria ConceptFire IsDemoman  DemomanIsStillonFire IsNotDominating
 	ApplyContext "DemomanOnFire:1:7"
 	Response PlayerStillOnFireDemoman
 }
@@ -754,6 +899,16 @@ Rule PlayerMedicDemoman
 	Response PlayerMedicDemoman
 }
 
+Response PlayerAskForBallDemoman
+{
+}
+Rule PlayerAskForBallDemoman
+{
+	criteria ConceptPlayerAskForBall IsDemoman
+	Response PlayerAskForBallDemoman
+}
+
+
 Response PlayerMoveUpDemoman
 {
 	scene "scenes/Player/Demoman/low/960.vcd" 
@@ -788,6 +943,36 @@ Rule PlayerThanksDemoman
 	criteria ConceptPlayerThanks IsDemoman
 	Response PlayerThanksDemoman
 }
+
+// Custom Assist kill response
+// As there is no actual concept for assist kills, this is the second best method.
+// Say thanks after you kill more than one person.
+
+Response KilledPlayerAssistDemoman
+{
+	scene "scenes/Player/Demoman/low/1009.vcd"
+	scene "scenes/Player/Demoman/low/867.vcd"
+}
+Rule KilledPlayerAssistDemoman
+{
+	criteria ConceptPlayerThanks IsDemoman IsARecentKill KilledPlayerDelay DemomanNotAssistSpeech
+	ApplyContext "DemomanAssistSpeech:1:20"
+	Response KilledPlayerAssistDemoman
+}
+
+Response KilledPlayerAssistDemoman2
+{
+	scene "scenes/Player/Demoman/low/1010.vcd"
+}
+Rule KilledPlayerAssistDemoman2
+{
+	criteria ConceptPlayerThanks IsDemoman IsNotBeingHealed IsARecentKill KilledPlayerDelay DemomanNotAssistSpeech
+	ApplyContext "DemomanAssistSpeech:1:20"
+	Response KilledPlayerAssistDemoman
+	Response KilledPlayerAssistDemoman2
+}
+
+// End custom
 
 Response PlayerYesDemoman
 {
@@ -890,9 +1075,11 @@ Rule PlayerTeleporterHereDemoman
 Response PlayerBattleCryDemoman
 {
 	scene "scenes/Player/Demoman/low/1358.vcd" 
+	scene "scenes/Player/Demoman/low/1369.vcd" 
 	scene "scenes/Player/Demoman/low/876.vcd" 
 	scene "scenes/Player/Demoman/low/877.vcd" 
 	scene "scenes/Player/Demoman/low/878.vcd" 
+	scene "scenes/Player/Demoman/low/879.vcd" 
 	scene "scenes/Player/Demoman/low/880.vcd" 
 }
 Rule PlayerBattleCryDemoman
@@ -900,6 +1087,22 @@ Rule PlayerBattleCryDemoman
 	criteria ConceptPlayerBattleCry IsDemoman
 	Response PlayerBattleCryDemoman
 }
+
+// Custom stuff - melee dare
+// Look at enemy, then do battle cry voice command while holding a melee weapon.
+Response MeleeDareCombatDemoman
+{
+	scene "scenes/Player/Demoman/low/1028.vcd"
+	scene "scenes/Player/Demoman/low/1017.vcd"
+	scene "scenes/Player/Demoman/low/1015.vcd"
+}
+Rule MeleeDareCombatDemoman
+{
+	criteria ConceptPlayerBattleCry IsWeaponMelee IsDemoman IsCrosshairEnemy
+	Response MeleeDareCombatDemoman
+}
+//End custom
+
 
 Response PlayerCheersDemoman
 {
@@ -999,11 +1202,6 @@ Response PlayerPositiveDemoman
 	scene "scenes/Player/Demoman/low/992.vcd" 
 	scene "scenes/Player/Demoman/low/993.vcd" 
 }
-Rule PlayerPositiveDemoman
-{
-	criteria ConceptPlayerPositive IsDemoman
-	Response PlayerPositiveDemoman
-}
 
 Response PlayerTauntsDemoman
 {
@@ -1011,9 +1209,230 @@ Response PlayerTauntsDemoman
 	scene "scenes/Player/Demoman/low/1382.vcd" 
 	scene "scenes/Player/Demoman/low/1386.vcd" 
 }
-Rule PlayerTauntsDemoman
+Rule PlayerPositiveDemoman
 {
-	criteria ConceptPlayerTaunts IsDemoman
+	criteria ConceptPlayerPositive IsDemoman
+	Response PlayerPositiveDemoman
 	Response PlayerTauntsDemoman
 }
 
+//--------------------------------------------------------------------------------------------------------------
+// Auto Speech Cart
+//--------------------------------------------------------------------------------------------------------------
+Criterion "DemomanNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required" weight 0
+Criterion "DemomanNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required" weight 0
+Criterion "DemomanNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required" weight 0
+Criterion "DemomanNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required" weight 0
+Criterion "DemomanNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required" weight 0
+Criterion "DemomanNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required" weight 0
+Response CartMovingBackwardsDefenseDemoman                                                     
+{
+	scene "scenes/Player/Demoman/low/7718.vcd"
+	scene "scenes/Player/Demoman/low/7719.vcd"
+	scene "scenes/Player/Demoman/low/7720.vcd"
+}
+Rule CartMovingBackwardsDefenseDemoman                                                     
+{
+	criteria ConceptCartMovingBackward IsOnDefense IsDemoman DemomanNotSaidCartMovingBackwardD IsNotDisguised 75PercentChance                                                                                                                                                          
+	ApplyContext "SaidCartMovingBackwardD:1:20"
+	Response CartMovingBackwardsDefenseDemoman                                                     
+}
+Response CartMovingBackwardsOffenseDemoman                                                     
+{
+	scene "scenes/Player/Demoman/low/7714.vcd"
+	scene "scenes/Player/Demoman/low/7715.vcd"
+	scene "scenes/Player/Demoman/low/7713.vcd"
+	scene "scenes/Player/Demoman/low/8533.vcd"
+}
+Rule CartMovingBackwardsOffenseDemoman                                                     
+{
+	criteria ConceptCartMovingBackward IsOnOffense IsDemoman DemomanNotSaidCartMovingBackwardO IsNotDisguised 75PercentChance                                                                                                                                                          
+	ApplyContext "SaidCartMovingBackwardO:1:20"
+	Response CartMovingBackwardsOffenseDemoman                                                     
+}
+Response CartMovingForwardDefenseDemoman                                                       
+{
+	scene "scenes/Player/Demoman/low/7716.vcd"
+	scene "scenes/Player/Demoman/low/7717.vcd"
+}
+Rule CartMovingForwardDefenseDemoman                                                       
+{
+	criteria ConceptCartMovingForward IsOnDefense IsDemoman DemomanNotSaidCartMovingForwardD IsNotDisguised 75PercentChance                                                                                                                                                            
+	ApplyContext "SaidCartMovingForwardD:1:20"
+	Response CartMovingForwardDefenseDemoman                                                       
+}
+Response CartMovingForwardOffenseDemoman                                                       
+{
+	scene "scenes/Player/Demoman/low/7704.vcd"
+	scene "scenes/Player/Demoman/low/7705.vcd"
+	scene "scenes/Player/Demoman/low/7706.vcd"
+	scene "scenes/Player/Demoman/low/7707.vcd"
+	scene "scenes/Player/Demoman/low/7711.vcd"
+	scene "scenes/Player/Demoman/low/7721.vcd"
+	scene "scenes/Player/Demoman/low/7723.vcd"
+	scene "scenes/Player/Demoman/low/7724.vcd"
+}
+Rule CartMovingForwardOffenseDemoman                                                       
+{
+	criteria ConceptCartMovingForward IsOnOffense IsDemoman DemomanNotSaidCartMovingForwardO IsNotDisguised 75PercentChance                                                                                                                                                            
+	ApplyContext "SaidCartMovingForwardO:1:20"
+	Response CartMovingForwardOffenseDemoman                                                       
+}
+Response CartMovingStoppedDefenseDemoman                                                       
+{
+}
+Rule CartMovingStoppedDefenseDemoman                                                       
+{
+	criteria ConceptCartMovingStopped IsOnDefense IsDemoman DemomanNotSaidCartMovingStoppedD IsNotDisguised 75PercentChance                                                                                                                                                            
+	ApplyContext "SaidCartMovingStoppedD:1:20"
+	Response CartMovingStoppedDefenseDemoman                                                       
+}
+Response CartMovingStoppedOffenseDemoman                                                       
+{
+	scene "scenes/Player/Demoman/low/7726.vcd"
+	scene "scenes/Player/Demoman/low/7727.vcd"
+	scene "scenes/Player/Demoman/low/7725.vcd"
+}
+Rule CartMovingStoppedOffenseDemoman                                                       
+{
+	criteria ConceptCartMovingStopped IsOnOffense IsDemoman DemomanNotSaidCartMovingStoppedO IsNotDisguised 75PercentChance                                                                                                                                                            
+	ApplyContext "SaidCartMovingStoppedO:1:20"
+	Response CartMovingStoppedOffenseDemoman                                                       
+}
+//--------------------------------------------------------------------------------------------------------------
+// END OF Auto Speech Cart
+//--------------------------------------------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------------------------------------------
+// Begin Competitive Mode VO
+//--------------------------------------------------------------------------------------------------------------
+Response PlayerFirstRoundStartCompDemoman
+{
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_comp_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_comp_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_comp_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_comp_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_comp_05.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_rare_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_rare_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_rare_03.vcd" predelay "1.0, 5.0"
+}
+Rule PlayerFirstRoundStartCompDemoman
+{
+	criteria ConceptPlayerRoundStartComp IsDemoman IsFirstRound IsNotComp6v6 40PercentChance
+	Response PlayerFirstRoundStartCompDemoman
+}
+
+Response PlayerFirstRoundStartComp6sDemoman
+{
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_comp_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_comp_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_comp_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_comp_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_comp_05.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_rare_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_rare_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_rare_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_6s_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_6s_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamefirst_6s_03.vcd" predelay "1.0, 5.0"
+}
+Rule PlayerFirstRoundStartComp6sDemoman
+{
+	criteria ConceptPlayerRoundStartComp IsDemoman IsFirstRound IsComp6v6 40PercentChance
+	Response PlayerFirstRoundStartComp6sDemoman
+}
+
+Response PlayerWonPrevRoundCompDemoman
+{
+	scene "scenes/Player/Demoman/low/cm_demo_pregamewonlast_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamewonlast_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamewonlast_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamewonlast_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamewonlast_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamewonlast_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamewonlast_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamewonlast_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamewonlast_rare_01.vcd" predelay "1.0, 5.0"
+}
+Rule PlayerWonPrevRoundCompDemoman
+{
+	criteria ConceptPlayerRoundStartComp IsDemoman IsNotFirstRound PlayerWonPreviousRound 40PercentChance
+	Response PlayerWonPrevRoundCompDemoman
+}
+
+Response PlayerLostPrevRoundCompDemoman
+{
+	scene "scenes/Player/Demoman/low/cm_demo_pregamelostlast_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamelostlast_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamelostlast_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamelostlast_04.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregamelostlast_rare_01.vcd" predelay "1.0, 5.0"
+}
+Rule PlayerLostPrevRoundCompDemoman
+{
+	criteria ConceptPlayerRoundStartComp IsDemoman IsNotFirstRound PlayerLostPreviousRound PreviousRoundWasNotTie 40PercentChance
+	Response PlayerLostPrevRoundCompDemoman
+}
+
+Response PlayerTiedPrevRoundCompDemoman
+{
+	scene "scenes/Player/Demoman/low/cm_demo_pregametie_01.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregametie_02.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregametie_03.vcd" predelay "1.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_pregametie_04.vcd" predelay "1.0, 5.0"
+}
+Rule PlayerTiedPrevRoundCompDemoman
+{
+	criteria ConceptPlayerRoundStartComp IsDemoman IsNotFirstRound PreviousRoundWasTie 40PercentChance
+	Response PlayerTiedPrevRoundCompDemoman
+}
+
+Response PlayerGameWinCompDemoman
+{
+	scene "scenes/Player/Demoman/low/cm_demo_gamewon_01.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_gamewon_02.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_gamewon_03.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_gamewon_04.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_gamewon_05.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_gamewon_06.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_gamewon_01.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_gamewon_02.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_gamewon_03.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_gamewon_04.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_gamewon_05.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_gamewon_06.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_gamewon_rare_01.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_gamewon_rare_02.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_gamewon_rare_04.vcd" predelay "2.0, 5.0"
+	scene "scenes/Player/Demoman/low/cm_demo_gamewon_rare_03.vcd" predelay "2.0, 5.0"
+}
+Rule PlayerGameWinCompDemoman
+{
+	criteria ConceptPlayerGameOverComp PlayerOnWinningTeam IsDemoman 40PercentChance
+	Response PlayerGameWinCompDemoman
+}
+
+Response PlayerMatchWinCompDemoman
+{
+	scene "scenes/Player/Demoman/low/cm_demo_matchwon_01.vcd" predelay "1.0, 2.0"
+	scene "scenes/Player/Demoman/low/cm_demo_matchwon_02.vcd" predelay "1.0, 2.0"
+	scene "scenes/Player/Demoman/low/cm_demo_matchwon_03.vcd" predelay "1.0, 2.0"
+	scene "scenes/Player/Demoman/low/cm_demo_matchwon_04.vcd" predelay "1.0, 2.0"
+}
+Rule PlayerMatchWinCompDemoman
+{
+	criteria ConceptPlayerMatchOverComp PlayerOnWinningTeam IsDemoman 40PercentChance
+	Response PlayerMatchWinCompDemoman
+}
+//--------------------------------------------------------------------------------------------------------------
+// End Competitive Mode VO
+//--------------------------------------------------------------------------------------------------------------

@@ -44,7 +44,7 @@ function ENT:Think()
 				timer.Create("CartGoesBackwards"..self:EntIndex(), 30, 1, function()
 					self.Train:Fire("SetSpeed",tostring(-0.1),0.01)
 					for k,v in ipairs(player.GetAll()) do
-						v:Speak("TLK_CART_MOVING_BACKWARD")
+						v:Speak("TLK_CART_MOVING_BACKWARD",false)
 					end
 				end)
 			end
@@ -74,12 +74,12 @@ function ENT:StartTouch(ent)
 			if (ent:Team() == TEAM_BLU) then
 				self.Train:Fire("SetSpeed",tostring(0.3 * self.Players),0.01)
 				for k,v in ipairs(player.GetAll()) do
-					v:Speak("TLK_CART_MOVING_FORWARD")
+					v:Speak("TLK_CART_MOVING_FORWARD",false)
 				end
 			else
 				self.Train:Fire("Stop","",0.01)
 				for k,v in ipairs(player.GetAll()) do
-					v:Speak("TLK_CART_STOP")
+					v:Speak("TLK_CART_STOP",false)
 				end
 			end
 		end
@@ -152,7 +152,7 @@ function ENT:EndTouch(ent)
 		if (ent:IsPlayer()) then 
 			self.Train:Fire("Stop","",0.01)
 			for k,v in ipairs(player.GetAll()) do
-				v:Speak("TLK_CART_STOP")
+				v:Speak("TLK_CART_STOP",false)
 			end
 		end
 	else

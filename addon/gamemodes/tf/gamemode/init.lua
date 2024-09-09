@@ -24,15 +24,12 @@ include("sv_ent_substitute.lua")
 
 CreateConVar("grapple_distance", -1, false)  
 response_rules.Load("talker/tf_response_rules.lua") 
-response_rules.Load("talker/demoman_custom.lua")  
-response_rules.Load("talker/heavy_custom.lua") 
 
 util.AddNetworkString("TFRagdollCreate")
 util.AddNetworkString("TauntAnim")
 
 CreateConVar('tf_opentheorangebox', 0, FCVAR_ARCHIVE + FCVAR_SERVER_CAN_EXECUTE, 'Enables 2007 mode')
--- Quickfix for Valve's typo in tf_reponse_rules.txt
-response_rules.AddCriterion([[criterion "WeaponIsScattergunDouble" "item_name" "The Force-a-Nature" "required" weight 10]])
+-- Quickfix for Valve's typo in tf_reponse_rules.txt 
 
 --concommand.Add("lua_pick", function(pl, cmd, args)
 --	getfenv()[args[1]] = pl:GetEyeTrace().Entity	
@@ -191,9 +188,9 @@ end)
 
 concommand.Add("tf_stripme", function(pl, cmd, args)
 	pl:StripWeapons()
-end)
+end) 
 
-
+ 
 hook.Add("PlayerSelectSpawn", "PlayerSelectTeamSpawn", function(pl)
 	if !string.find(game.GetMap(), "mvm_") then
 		for k,v in pairs(ents.FindByClass("info_player_redspawn"), ents.FindByClass("info_player_bluspawn")) do

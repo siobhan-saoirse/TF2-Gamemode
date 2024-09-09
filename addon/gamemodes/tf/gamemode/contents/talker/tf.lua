@@ -928,11 +928,6 @@
 		criteria ConceptPlayerTaunt IsScout WeaponIsPistolScout
 		response ScoutTauntSecondary
 	}
-	rule ScoutTauntPlayerSecondary2
-	{
-		criteria ConceptPlayerTaunt IsScout WeaponIsPistol
-		response ScoutTauntSecondary
-	}
 	rule ScoutTauntPlayerMelee
 	{
 		criteria ConceptPlayerTaunt IsScout WeaponIsBat
@@ -1588,7 +1583,7 @@
 	}
 	Rule ScoutShowItemTaunt
 	{
-		// criteria ConceptPlayerShowItemTaunt IsScout
+		criteria ConceptPlayerShowItemTaunt IsScout
 		response ScoutShowItemTauntResponse
 	}
 	
@@ -1598,7 +1593,7 @@
 	}
 	Rule SniperShowItemTaunt
 	{
-		// criteria ConceptPlayerShowItemTaunt IsSniper
+		criteria ConceptPlayerShowItemTaunt IsSniper
 		response SniperShowItemTauntResponse
 	}
 
@@ -1608,7 +1603,7 @@
 	}
 	Rule SoldierShowItemTaunt
 	{
-		// criteria ConceptPlayerShowItemTaunt IsSoldier
+		criteria ConceptPlayerShowItemTaunt IsSoldier
 		response SoldierShowItemTauntResponse
 	}
 
@@ -1618,7 +1613,7 @@
 	}
 	Rule DemomanShowItemTaunt
 	{
-		// criteria ConceptPlayerShowItemTaunt IsDemoman
+		criteria ConceptPlayerShowItemTaunt IsDemoman
 		response DemomanShowItemTauntResponse
 	}
 	
@@ -1628,7 +1623,7 @@
 	}
 	Rule MedicShowItemTaunt
 	{
-		// criteria ConceptPlayerShowItemTaunt IsMedic
+		criteria ConceptPlayerShowItemTaunt IsMedic
 		response MedicShowItemTauntResponse
 	}
 	
@@ -1638,7 +1633,7 @@
 	}
 	Rule HeavyShowItemTaunt
 	{
-		// criteria ConceptPlayerShowItemTaunt IsHeavy
+		criteria ConceptPlayerShowItemTaunt IsHeavy
 		response HeavyShowItemTauntResponse
 	}
 	
@@ -1648,7 +1643,7 @@
 	}
 	Rule PyroShowItemTaunt
 	{
-		// criteria ConceptPlayerShowItemTaunt IsPyro
+		criteria ConceptPlayerShowItemTaunt IsPyro
 		response PyroShowItemTauntResponse
 	}
 
@@ -1658,7 +1653,7 @@
 	}
 	Rule SpyShowItemTaunt
 	{
-		// criteria ConceptPlayerShowItemTaunt IsSpy
+		criteria ConceptPlayerShowItemTaunt IsSpy
 		response SpyShowItemTauntResponse
 	}
 
@@ -1668,7 +1663,7 @@
 	}
 	Rule ScoutShowItemTaunt
 	{
-		// criteria ConceptPlayerShowItemTaunt IsScout
+		criteria ConceptPlayerShowItemTaunt IsScout
 		response ScoutShowItemTauntResponse
 	}
 
@@ -2021,128 +2016,6 @@
 	{
 		criteria ConceptPlayerTaunt IsAprilFoolsTaunt IsSpy
 		response SpyTauntLaugh
-	}
-
-//============================================================================================================
-// LAMBDA FORTRESS EXTENDED RESPONSE RULES
-
-	response ScoutTauntNailGun 
-	{
-		scene "scenes/player/scout/low/taunt07_vocal01.vcd"
-		scene "scenes/player/scout/low/taunt07_vocal02.vcd"
-		scene "scenes/player/scout/low/taunt07_vocal03.vcd"
-		scene "scenes/player/scout/low/taunt07_vocal04.vcd"
-		scene "scenes/player/scout/low/taunt07_vocal05.vcd"
-	}
-
-	rule ScoutTauntGravityGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsScout
-		response ScoutTauntNailgun
-	}
-
-	rule SoldierTauntGravityGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsSoldier
-		response SoldierTauntLaugh
-	}
-
-	rule PyroTauntGravityGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsPyro
-		response PyroTauntLaugh
-	}
-
-	rule DemomanTauntGravityGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsDemoman
-		response DemomanTauntLaugh
-	}
-
-	rule HeavyTauntGravityGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsHeavy
-		response HeavyTauntLaugh
-	}
-
-	rule EngineerTauntGravityGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsEngineer
-		response EngineerTauntLaugh
-	}
-
-	rule MedicTauntGravityGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsMedic
-		response MedicTauntLaugh
-	}
-
-	rule SniperTauntGravityGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsSniper
-		response SniperTauntLaugh
-	}
-
-	rule SpyTauntGravityGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhyscannon IsSpy
-		response SpyTauntLaugh
-	}
-
-
-
-	rule ScoutTauntPhysGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhysgun IsScout
-		response ScoutTauntReplay
-	}
-
-	rule SoldierTauntPhysGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhysgun IsSoldier
-		response SoldierTauntReplay 
-	}
-
-	rule PyroTauntPhysGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhysgun IsPyro
-		response PyroTauntReplay
-	}
-
-	rule DemomanTauntPhysGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhysgun IsDemoman
-		response DemomanTauntReplay
-	}
-
-	rule HeavyTauntPhysGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhysgun IsHeavy
-		response HeavyTauntReplay
-	}
-
-	rule EngineerTauntPhysGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhysgun IsEngineer
-		response EngineerTauntReplay
-	}
-
-	rule MedicTauntPhysGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhysgun IsMedic
-		response MedicTauntReplay
-	}
-
-	rule SniperTauntPhysGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhysgun IsSniper
-		response SniperTauntReplay
-	}
-
-	rule SpyTauntPhysGun
-	{
-		criteria ConceptPlayerTaunt WeaponIsPhysgun IsSpy
-		response SpyTauntReplay
 	}
 
 //============================================================================================================

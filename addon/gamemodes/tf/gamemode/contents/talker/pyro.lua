@@ -8,43 +8,12 @@ Criterion "PyroNotKillSpeech" "PyroKillSpeech" "!=1" "required" weight 0
 Criterion "PyroNotKillSpeechMelee" "PyroKillSpeechMelee" "!=1" "required" weight 0
 Criterion "PyroNotSaidHealThanks" "PyroSaidHealThanks" "!=1" "required"
 Criterion "IsHelpCapPyro" "PyroHelpCap" "1" "required" weight 0
+// Custom stuff
+Criterion "PyroNotAssistSpeech" "PyroAssistSpeech" "!=1" "required" weight 0
+Criterion "PyroNotInvulnerableSpeech" "PyroInvulnerableSpeech" "!=1" "required" weight 0
+Criterion "PyroNotKillSpeechSapper" "PyroKillSpeechSapper" "!=1" "required" weight 0
 
-// Custom stuff - melee dare
-// Look at enemy, then do battle cry voice command while holding a melee weapon.
-Response MeleeDareCombatPyro
-{
-	scene "scenes/Player/Pyro/low/1409.vcd"
-	scene "scenes/Player/Pyro/low/1517.vcd"
-	scene "scenes/Player/Pyro/low/1482.vcd"
-}
-Rule MeleeDareCombatPyro
-{
-	criteria ConceptPlayerBattleCry IsWeaponMelee IsPyro IsCrossHairEnemy
-	Response MeleeDareCombatPyro
-}
 
-Response PyroJarateHit
-{
-	scene "scenes/Player/Pyro/low/1412.vcd"
-	scene "scenes/Player/Pyro/low/1416.vcd"
-}
-Rule PyroJarateHit
-{
-	criteria ConceptJarateHit IsPyro 50PercentChance
-	Response PyroJarateHit
-}
-
-Response MvMEncourageUpgradePyro
-{
-	scene "scenes/Player/Pyro/low/1531.vcd"
-}
-Rule MvMEncourageUpgradeHeavy
-{
-	criteria ConceptMvMEncourageUpgrade IsPyro
-	Response MvMEncourageUpgradePyro
-}
-
-//End custom 
 Response PlayerCloakedSpyDemomanPyro
 {
 	scene "scenes/Player/Pyro/low/1440.vcd" 
@@ -226,21 +195,58 @@ Rule KilledPlayerManyPyro
 {
 	criteria ConceptKilledPlayer IsManyRecentKills 30PercentChance IsWeaponPrimary KilledPlayerDelay PyroNotKillSpeech IsPyro
 	ApplyContext "PyroKillSpeech:1:10"
-	applycontexttoworld
 	Response KilledPlayerManyPyro
 }
 
+// Added back unused melee kill lines
 Response KilledPlayerMeleePyro
 {
 	scene "scenes/Player/Pyro/low/1594.vcd" 
+	scene "scenes/Player/Pyro/low/1532.vcd" 
+	scene "scenes/Player/Pyro/low/1533.vcd" 
 }
 Rule KilledPlayerMeleePyro
 {
 	criteria ConceptKilledPlayer KilledPlayerDelay 30PercentChance  IsWeaponMelee PyroNotKillSpeechMelee IsPyro
 	ApplyContext "PyroKillSpeechMelee:1:10"
-	applycontexttoworld
 	Response KilledPlayerMeleePyro
 }
+
+// Custom stuff
+Response KilledPlayerAssistAutoPyro
+{
+	scene "scenes/Player/Pyro/low/1529.vcd" predelay "2.5"
+}
+Rule KilledPlayerAssistAutoPyro
+{
+	criteria ConceptKilledPlayer IsPyro IsBeingHealed IsManyRecentKills KilledPlayerDelay 20PercentChance PyroNotAssistSpeech
+	ApplyContext "PyroAssistSpeech:1:20"
+	Response KilledPlayerAssistAutoPyro
+}
+
+Response PyroJarateHit
+{
+	scene "scenes/Player/Pyro/low/1412.vcd"
+	scene "scenes/Player/Pyro/low/1416.vcd"
+}
+Rule PyroJarateHit
+{
+	criteria ConceptJarateHit IsPyro 50PercentChance
+	Response PyroJarateHit
+}
+
+Response InvulnerableSpeechPyro
+{
+	scene "scenes/Player/Pyro/low/1517.vcd" 
+	scene "scenes/Player/Pyro/low/1485.vcd" 
+}
+Rule InvulnerableSpeechPyro
+{
+	criteria ConceptFireWeapon IsPyro IsInvulnerable PyroNotInvulnerableSpeech
+	ApplyContext "PyroInvulnerableSpeech:1:30"
+	Response InvulnerableSpeechPyro
+}
+// End custom
 
 Response PlayerKilledCapperPyro
 {
@@ -264,6 +270,7 @@ Rule PlayerKilledDominatingPyro
 {
 	criteria ConceptKilledPlayer IsPyro IsDominated
 	ApplyContext "PyroKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledDominatingPyro
 }
 
@@ -276,6 +283,7 @@ Rule PlayerKilledForRevengePyro
 {
 	criteria ConceptKilledPlayer IsPyro IsRevenge
 	ApplyContext "PyroKillSpeech:1:10"
+	ApplyContext "IsDominating:1:10"
 	Response PlayerKilledForRevengePyro
 }
 
@@ -294,7 +302,7 @@ Response PlayerAttackerPainPyro
 }
 Rule PlayerAttackerPainPyro
 {
-	criteria ConceptAttackerPain IsPyro
+	criteria ConceptAttackerPain IsPyro IsNotDominating
 	Response PlayerAttackerPainPyro
 }
 
@@ -305,7 +313,7 @@ Response PlayerOnFirePyro
 }
 Rule PlayerOnFirePyro
 {
-	criteria ConceptFire IsPyro PyroIsNotStillonFire
+	criteria ConceptFire IsPyro PyroIsNotStillonFire IsNotDominating
 	ApplyContext "PyroOnFire:1:7"
 	Response PlayerOnFirePyro
 }
@@ -322,7 +330,7 @@ Response PlayerPainPyro
 }
 Rule PlayerPainPyro
 {
-	criteria ConceptPain IsPyro
+	criteria ConceptPain IsPyro IsNotDominating
 	Response PlayerPainPyro
 }
 
@@ -332,7 +340,7 @@ Response PlayerStillOnFirePyro
 }
 Rule PlayerStillOnFirePyro
 {
-	criteria ConceptFire IsPyro  PyroIsStillonFire
+	criteria ConceptFire IsPyro  PyroIsStillonFire IsNotDominating
 	ApplyContext "PyroOnFire:1:7"
 	Response PlayerStillOnFirePyro
 }
@@ -466,6 +474,15 @@ Rule PlayerMedicPyro
 	Response PlayerMedicPyro
 }
 
+Response PlayerAskForBallPyro
+{
+}
+Rule PlayerAskForBallPyro
+{
+	criteria ConceptPlayerAskForBall IsPyro
+	Response PlayerAskForBallPyro
+}
+
 Response PlayerMoveUpPyro
 {
 	scene "scenes/Player/Pyro/low/1492.vcd" 
@@ -495,6 +512,22 @@ Rule PlayerThanksPyro
 	criteria ConceptPlayerThanks IsPyro
 	Response PlayerThanksPyro
 }
+
+// Custom Assist kill response
+// As there is no actual concept for assist kills, this is the second best method.
+// Say thanks after you kill more than one person.
+
+Response KilledPlayerAssistPyro
+{
+	scene "scenes/Player/Pyro/low/1529.vcd"
+}
+Rule KilledPlayerAssistPyro
+{
+	criteria ConceptPlayerThanks IsPyro IsARecentKill KilledPlayerDelay PyroNotAssistSpeech
+	ApplyContext "PyroAssistSpeech:1:20"
+	Response KilledPlayerAssistPyro
+}
+// End custom
 
 Response PlayerYesPyro
 {
@@ -595,6 +628,21 @@ Rule PlayerBattleCryPyro
 	Response PlayerBattleCryPyro
 }
 
+// Custom stuff - melee dare
+// Look at enemy, then do battle cry voice command while holding a melee weapon.
+Response MeleeDareCombatPyro
+{
+	scene "scenes/Player/Pyro/low/1409.vcd"
+	scene "scenes/Player/Pyro/low/1517.vcd"
+	scene "scenes/Player/Pyro/low/1482.vcd"
+}
+Rule MeleeDareCombatPyro
+{
+	criteria ConceptPlayerBattleCry IsWeaponMelee IsPyro IsCrosshairEnemy
+	Response MeleeDareCombatPyro
+}
+//End custom
+
 Response PlayerCheersPyro
 {
 	scene "scenes/Player/Pyro/low/1421.vcd" 
@@ -660,11 +708,6 @@ Response PlayerPositivePyro
 {
 	scene "scenes/Player/Pyro/low/1510.vcd" 
 }
-Rule PlayerPositivePyro
-{
-	criteria ConceptPlayerPositive IsPyro
-	Response PlayerPositivePyro
-}
 
 Response PlayerTauntsPyro
 {
@@ -672,9 +715,16 @@ Response PlayerTauntsPyro
 	scene "scenes/Player/Pyro/low/1595.vcd" 
 	scene "scenes/Player/Pyro/low/1487.vcd" 
 }
-Rule PlayerTauntsPyro
+Rule PlayerPositivePyro
 {
-	criteria ConceptPlayerTaunts IsPyro
+	criteria ConceptPlayerPositive IsPyro
+	Response PlayerPositivePyro
 	Response PlayerTauntsPyro
 }
 
+//--------------------------------------------------------------------------------------------------------------
+// Begin Competitive Mode VO
+//--------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------
+// End Competitive Mode VO
+//--------------------------------------------------------------------------------------------------------------

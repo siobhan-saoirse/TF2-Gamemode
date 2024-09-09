@@ -653,13 +653,14 @@ function GM:Think()
 			end
 		end
 	end
+	--[[
 	if not self.NextLoopExpression or CurTime()>self.NextLoopExpression then
 		for _,v in pairs(player.GetAll()) do
 			v:Speak("TLK_PLAYER_EXPRESSION", true)
 		end
 		
 		self.NextLoopExpression = CurTime() + 5
-	end
+	end]]
 end
 
 --[[
