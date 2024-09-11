@@ -44,10 +44,21 @@ function ENT:Think()
 		if (IsValid(v.Train)) then
 			self.Train = v.Train
 		end
+		if (IsValid(v.Goal)) then
+			self.Goal = v.Goal
+		end
 	end
 	if GAMEMODE.PostEntityDone and not self.PostEntityDone then
 		self:InitPostEntity()
 		self.PostEntityDone = true
+	end
+	
+	if (IsValid(self.Goal)) then
+		if (self.Pos:Distance(self.Goal:GetPos()) < 180) then
+			if (!GAMEMODE.RoundHasWinner) then
+				GAMEMODE:RoundWin(TEAM_BLU)
+			end
+		end
 	end
 end
 
@@ -65,7 +76,7 @@ function ENT:StartTouch(ent)
 		if (ent:IsPlayer()) then  
 			timer.Stop("CartGoesBackwards"..self:EntIndex())
 			if (ent:Team() == TEAM_BLU) then
-				self.Train:Fire("SetSpeed",tostring(0.3 * self.Players),0.01)
+				self.Train:Fire("SetSpeedDirAccel",tostring(0.3 * self.Players),0.01)
 				ent:Speak("TLK_CART_MOVING_FORWARD")
 			else
 				self.Train:Fire("Stop","",0.01)
@@ -149,9 +160,11 @@ function ENT:EndTouch(ent)
 					v:Speak("TLK_CART_STOP")
 				end
 						
-						timer.Create("CartGoesBackwards"..self:EntIndex(), 30, 1, function()
-							self.Train:Fire("SetSpeed",tostring(-0.1),0.01)
-						end)
+				timer.Create("CartGoesBackwards"..self:EntIndex(), 30, 1, function()
+					self.Train:Fire("SetSpeedDirAccel",tostring(-0.3),0.01)
+				end)
+			else
+				self.Train:Fire("SetSpeedDirAccel",tostring(0.3 * self.Players),0.01)
 			end
 		end
 	else

@@ -978,14 +978,13 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 		local targetpos2 = Vector(0, 0, 0)
 
 		if escortAvailable(bot) and !GAMEMODE.RoundHasWinner then -- Payload AI
-			
-			for k, v in pairs(ents.FindByClass("trigger_capture_area")) do
-				intel = v
-			end
+				for k, v in pairs(ents.FindByClass("trigger_capture_area")) do
+					intel = v
+				end
 
-			bot.botPos = intel.Pos
-			
-			bot.LastSegmented = CurTime() + math.Rand(0.5, 1)
+				bot.botPos = intel.Pos
+				
+				bot.LastSegmented = CurTime() + math.Rand(0.5, 1)
 
 		elseif flagAvailable(bot) and !GAMEMODE.RoundHasWinner then -- CTF AI
 			for k, v in pairs(ents.FindByClass("item_teamflag")) do

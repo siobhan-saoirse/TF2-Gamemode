@@ -199,14 +199,17 @@ local speed = 0
 local flmaxSpeedDelta = 0
 local bob_offset = 0
 local function CalcViewModelBobHelper(self)
-	local ply = self.Owner
 	local cl_bob = cvar_bob:GetFloat()
 	local cl_bobcycle = math.max(cvar_bobcycle:GetFloat(), 0.1)
 	local cl_bobup = cvar_bobup:GetFloat()
+	
+	local ply = self.Owner
+	
+	if ply:ShouldDrawLocalPlayer() then return 0 end
 
 	local cltime = CurTime()
 	local cycle = cltime - math.floor(cltime/cl_bobcycle)*cl_bobcycle
-	cycle = cycle / cl_bobcycle
+	cycle = cycle / (cl_bobcycle)
 	if (cycle < cl_bobup) then
 		cycle = math.pi * cycle / cl_bobup
 	else
@@ -215,7 +218,15 @@ local function CalcViewModelBobHelper(self)
 
 	local velocity = ply:GetVelocity()
 
-	self.g_verticalBob = math.Clamp(math.sqrt(velocity[1]*velocity[1] + velocity[2]*velocity[2]),-320.0,320.0) * cl_bob
+	//Find the speed of the player
+	local speed = ply:GetVelocity():Length2D();
+	local flmaxSpeedDelta = math.max( 0, (CurTime() - cycle ) * 320.0 );
+
+	// don't allow too big speed changes
+	speed = math.Clamp( speed, speed-flmaxSpeedDelta, speed+flmaxSpeedDelta );
+	speed = math.Clamp( speed, -320, 320 );
+
+	self.g_verticalBob = speed * cl_bob
 	self.g_verticalBob = self.g_verticalBob*0.3 + self.g_verticalBob*0.7*math.sin(cycle)
 	if (self.g_verticalBob > 4) then
 		self.g_verticalBob = 4
@@ -224,14 +235,14 @@ local function CalcViewModelBobHelper(self)
 	end
 	
 	local cycle2 = cltime - math.floor(cltime/(cl_bobcycle*2))*(cl_bobcycle*2)
-	cycle2 = cycle2 / cl_bobcycle*0.5
+	cycle2 = cycle2 / (cl_bobcycle*2)
 	if (cycle2 < cl_bobup) then
 		cycle2 = math.pi * cycle2 / cl_bobup
 	else
 		cycle2 = math.pi + math.pi*(cycle2-cl_bobup)/(1.0 - cl_bobup)
 	end
 
-	self.g_lateralBob = math.Clamp(math.sqrt(velocity[1]*velocity[1] + velocity[2]*velocity[2]),-320.0,320.0) * cl_bob
+	self.g_lateralBob = speed * cl_bob
 	self.g_lateralBob = self.g_lateralBob*0.3 + self.g_lateralBob*0.7*math.sin(cycle2)
 	if (self.g_lateralBob > 4) then
 		self.g_lateralBob = 4
@@ -251,7 +262,7 @@ function SWEP:CalcViewModelBobHelper(  )
 
 	local cltime = CurTime()
 	local cycle = cltime - math.floor(cltime/cl_bobcycle)*cl_bobcycle
-	cycle = cycle / cl_bobcycle
+	cycle = cycle / (cl_bobcycle)
 	if (cycle < cl_bobup) then
 		cycle = math.pi * cycle / cl_bobup
 	else
@@ -260,7 +271,15 @@ function SWEP:CalcViewModelBobHelper(  )
 
 	local velocity = ply:GetVelocity()
 
-	self.g_verticalBob = math.Clamp(math.sqrt(velocity[1]*velocity[1] + velocity[2]*velocity[2]),-320.0,320.0) * cl_bob
+	//Find the speed of the player
+	local speed = ply:GetVelocity():Length2D();
+	local flmaxSpeedDelta = math.max( 0, (CurTime() - cycle ) * 320.0 );
+
+	// don't allow too big speed changes
+	speed = math.Clamp( speed, speed-flmaxSpeedDelta, speed+flmaxSpeedDelta );
+	speed = math.Clamp( speed, -320, 320 );
+
+	self.g_verticalBob = speed * cl_bob
 	self.g_verticalBob = self.g_verticalBob*0.3 + self.g_verticalBob*0.7*math.sin(cycle)
 	if (self.g_verticalBob > 4) then
 		self.g_verticalBob = 4
@@ -269,14 +288,14 @@ function SWEP:CalcViewModelBobHelper(  )
 	end
 	
 	local cycle2 = cltime - math.floor(cltime/(cl_bobcycle*2))*(cl_bobcycle*2)
-	cycle2 = cycle2 / cl_bobcycle*0.5
+	cycle2 = cycle2 / (cl_bobcycle*2)
 	if (cycle2 < cl_bobup) then
 		cycle2 = math.pi * cycle2 / cl_bobup
 	else
 		cycle2 = math.pi + math.pi*(cycle2-cl_bobup)/(1.0 - cl_bobup)
 	end
 
-	self.g_lateralBob = math.Clamp(math.sqrt(velocity[1]*velocity[1] + velocity[2]*velocity[2]),-320.0,320.0) * cl_bob
+	self.g_lateralBob = speed * cl_bob
 	self.g_lateralBob = self.g_lateralBob*0.3 + self.g_lateralBob*0.7*math.sin(cycle2)
 	if (self.g_lateralBob > 4) then
 		self.g_lateralBob = 4
