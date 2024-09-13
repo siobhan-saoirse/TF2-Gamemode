@@ -313,7 +313,7 @@ Response PlayerOnFirePyro
 }
 Rule PlayerOnFirePyro
 {
-	criteria ConceptFire IsPyro PyroIsNotStillonFire IsNotDominating
+	criteria ConceptFire IsPyro PyroIsNotStillonFire
 	ApplyContext "PyroOnFire:1:7"
 	Response PlayerOnFirePyro
 }
@@ -340,7 +340,7 @@ Response PlayerStillOnFirePyro
 }
 Rule PlayerStillOnFirePyro
 {
-	criteria ConceptFire IsPyro  PyroIsStillonFire IsNotDominating
+	criteria ConceptFire IsPyro PyroIsStillonFire
 	ApplyContext "PyroOnFire:1:7"
 	Response PlayerStillOnFirePyro
 }

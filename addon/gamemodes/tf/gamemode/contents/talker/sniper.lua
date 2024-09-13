@@ -381,7 +381,7 @@ Response CartMovingBackwardsDefenseSniper
 }
 Rule CartMovingBackwardsDefenseSniper
 {
-	criteria ConceptCartMovingBackward IsOnDefense IsSniper Unzoomed SniperNotSaidCartMovingBackwardD IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingBackward IsOnDefense IsSniper
 	ApplyContext "SaidCartMovingBackwardD:1:20"
 	Response CartMovingBackwardsDefenseSniper
 }
@@ -401,7 +401,7 @@ Response CartMovingBackwardsDefenseScopedSniper
 }
 Rule CartMovingBackwardsDefenseScopedSniper
 {
-	criteria ConceptCartMovingBackward IsOnDefense IsSniper DeployedContext SniperNotSaidCartMovingBackwardD IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingBackward IsOnDefense IsSniper DeployedContext
 	ApplyContext "SaidCartMovingBackwardD:1:20"
 	Response CartMovingBackwardsDefenseScopedSniper
 }
@@ -419,7 +419,7 @@ Response CartMovingBackwardsOffenseSniper
 }
 Rule CartMovingBackwardsOffenseSniper
 {
-	criteria ConceptCartMovingBackward IsOnOffense IsSniper Unzoomed SniperNotSaidCartMovingBackwardO IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingBackward IsOnOffense IsSniper Unzoomed
 	ApplyContext "SaidCartMovingBackwardO:1:20"
 	Response CartMovingBackwardsOffenseSniper
 }
@@ -436,7 +436,7 @@ Response CartMovingBackwardsOffenseScopedSniper
 }
 Rule CartMovingBackwardsOffenseScopedSniper
 {
-	criteria ConceptCartMovingBackward IsOnOffense IsSniper DeployedContext SniperNotSaidCartMovingBackwardO IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingBackward IsOnOffense IsSniper DeployedContext
 	ApplyContext "SaidCartMovingBackwardO:1:20"
 	Response CartMovingBackwardsOffenseScopedSniper
 }
@@ -453,7 +453,7 @@ Response CartMovingForwardDefenseSniper
 }
 Rule CartMovingForwardDefenseSniper
 {
-	criteria ConceptCartMovingForward IsOnDefense IsSniper Unzoomed SniperNotSaidCartMovingForwardD IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingForward IsOnDefense IsSniper Unzoomed
 	ApplyContext "SaidCartMovingForwardD:1:20"
 	Response CartMovingForwardDefenseSniper
 }
@@ -469,7 +469,7 @@ Response CartMovingForwardDefenseScopedSniper
 }
 Rule CartMovingForwardDefenseSniper
 {
-	criteria ConceptCartMovingForward IsOnDefense IsSniper DeployedContext SniperNotSaidCartMovingForwardD IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingForward IsOnDefense IsSniper DeployedContext
 	ApplyContext "SaidCartMovingForwardD:1:20"
 	Response CartMovingForwardDefenseScopedSniper
 }
@@ -498,7 +498,7 @@ Response CartMovingForwardOffenseSniper
 }
 Rule CartMovingForwardOffenseSniper
 {
-	criteria ConceptCartMovingForward IsOnOffense IsSniper Unzoomed SniperNotSaidCartMovingForwardO IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingForward IsOnOffense IsSniper Unzoomed
 	ApplyContext "SaidCartMovingForwardO:1:20"
 	Response CartMovingForwardOffenseSniper
 }
@@ -525,7 +525,7 @@ Response CartMovingForwardOffenseScopedSniper
 }
 Rule CartMovingForwardOffenseScopedSniper
 {
-	criteria ConceptCartMovingForward IsOnOffense IsSniper DeployedContext SniperNotSaidCartMovingForwardO IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingForward IsOnOffense IsSniper DeployedContext
 	ApplyContext "SaidCartMovingForwardO:1:20"
 	Response CartMovingForwardOffenseScopedSniper
 }
@@ -542,7 +542,7 @@ Response CartMovingStoppedDefenseSniper
 }
 Rule CartMovingStoppedDefenseSniper
 {
-	criteria ConceptCartMovingStopped IsOnDefense IsSniper Unzoomed SniperNotSaidCartMovingStoppedD IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingStopped IsOnDefense IsSniper Unzoomed
 	ApplyContext "SaidCartMovingStoppedD:1:20"
 	Response CartMovingStoppedDefenseSniper
 }
@@ -557,7 +557,7 @@ Response CartMovingStoppedDefenseScopedSniper
 }
 Rule CartMovingStoppedDefenseScopedSniper
 {
-	criteria ConceptCartMovingStopped IsOnDefense IsSniper DeployedContext SniperNotSaidCartMovingStoppedD IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingStopped IsOnDefense IsSniper DeployedContext
 	ApplyContext "SaidCartMovingStoppedD:1:20"
 	Response CartMovingStoppedDefenseScopedSniper
 }
@@ -574,7 +574,7 @@ Response CartMovingStoppedOffenseSniper
 }
 Rule CartMovingStoppedOffenseSniper
 {
-	criteria ConceptCartMovingStopped IsOnOffense IsSniper Unzoomed SniperNotSaidCartMovingStoppedO IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingStopped IsOnOffense IsSniper Unzoomed
 	ApplyContext "SaidCartMovingStoppedO:1:20"
 	Response CartMovingStoppedOffenseSniper
 }
@@ -1323,7 +1323,7 @@ Response PlayerOnFireSniper
 }
 Rule PlayerOnFireSniper
 {
-	criteria ConceptFire IsSniper SniperIsNotStillonFire IsNotDominating
+	criteria ConceptFire IsSniper SniperIsNotStillonFire
 	ApplyContext "SniperOnFire:1:7"
 	Response PlayerOnFireSniper
 }
@@ -1337,7 +1337,7 @@ Response PlayerPainSniper
 }
 Rule PlayerPainSniper
 {
-	criteria ConceptPain IsSniper IsNotDominating
+	criteria ConceptPain IsSnipe
 	Response PlayerPainSniper
 }
 

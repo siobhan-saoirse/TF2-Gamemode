@@ -53,7 +53,7 @@ function AddCriterion(str)
 	
 	local tbl = {}
 	tbl.key = matchkey
-	
+	  
 	if (required=='required' or required=='"required"') then
 		tbl.required = true
 	end

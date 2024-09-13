@@ -842,7 +842,7 @@ Response PlayerAttackerPainEngineer
 }
 Rule PlayerAttackerPainEngineer
 {
-	criteria ConceptAttackerPain IsEngineer IsNotDominating
+	criteria ConceptAttackerPain IsEngineer
 	Response PlayerAttackerPainEngineer
 }
 
@@ -854,7 +854,7 @@ Response PlayerOnFireEngineer
 }
 Rule PlayerOnFireEngineer
 {
-	criteria ConceptFire IsEngineer EngineerIsNotStillonFire IsNotDominating
+	criteria ConceptFire IsEngineer EngineerIsNotStillonFire
 	ApplyContext "EngineerOnFire:1:7"
 	Response PlayerOnFireEngineer
 }

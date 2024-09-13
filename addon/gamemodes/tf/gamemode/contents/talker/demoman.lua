@@ -709,7 +709,7 @@ Response PlayerOnFireDemoman
 }
 Rule PlayerOnFireDemoman
 {
-	criteria ConceptFire IsDemoman DemomanIsNotStillonFire IsNotDominating
+	criteria ConceptFire IsDemoman DemomanIsNotStillonFire
 	ApplyContext "DemomanOnFire:1:7"
 	Response PlayerOnFireDemoman
 }
@@ -720,7 +720,7 @@ Response PlayerOnFireRareDemoman
 }
 Rule PlayerOnFireRareDemoman
 {
-	criteria ConceptFire IsDemoman 10PercentChance DemomanIsNotStillonFire IsNotDominating
+	criteria ConceptFire IsDemoman 10PercentChance DemomanIsNotStillonFire
 	ApplyContext "DemomanOnFire:1:7"
 	Response PlayerOnFireRareDemoman
 }
@@ -1233,7 +1233,7 @@ Response CartMovingBackwardsDefenseDemoman
 }
 Rule CartMovingBackwardsDefenseDemoman                                                     
 {
-	criteria ConceptCartMovingBackward IsOnDefense IsDemoman DemomanNotSaidCartMovingBackwardD IsNotDisguised 75PercentChance                                                                                                                                                          
+	criteria ConceptCartMovingBackward IsOnDefense IsDemoman 75PercentChance
 	ApplyContext "SaidCartMovingBackwardD:1:20"
 	Response CartMovingBackwardsDefenseDemoman                                                     
 }
@@ -1246,7 +1246,7 @@ Response CartMovingBackwardsOffenseDemoman
 }
 Rule CartMovingBackwardsOffenseDemoman                                                     
 {
-	criteria ConceptCartMovingBackward IsOnOffense IsDemoman DemomanNotSaidCartMovingBackwardO IsNotDisguised 75PercentChance                                                                                                                                                          
+	criteria ConceptCartMovingBackward IsOnOffense IsDemoman 75PercentChance
 	ApplyContext "SaidCartMovingBackwardO:1:20"
 	Response CartMovingBackwardsOffenseDemoman                                                     
 }
@@ -1257,7 +1257,7 @@ Response CartMovingForwardDefenseDemoman
 }
 Rule CartMovingForwardDefenseDemoman                                                       
 {
-	criteria ConceptCartMovingForward IsOnDefense IsDemoman DemomanNotSaidCartMovingForwardD IsNotDisguised 75PercentChance                                                                                                                                                            
+	criteria ConceptCartMovingForward IsOnDefense IsDemoman 75PercentChance
 	ApplyContext "SaidCartMovingForwardD:1:20"
 	Response CartMovingForwardDefenseDemoman                                                       
 }
@@ -1274,7 +1274,7 @@ Response CartMovingForwardOffenseDemoman
 }
 Rule CartMovingForwardOffenseDemoman                                                       
 {
-	criteria ConceptCartMovingForward IsOnOffense IsDemoman DemomanNotSaidCartMovingForwardO IsNotDisguised 75PercentChance                                                                                                                                                            
+	criteria ConceptCartMovingForward IsOnOffense IsDemoman 75PercentChance
 	ApplyContext "SaidCartMovingForwardO:1:20"
 	Response CartMovingForwardOffenseDemoman                                                       
 }
@@ -1283,7 +1283,7 @@ Response CartMovingStoppedDefenseDemoman
 }
 Rule CartMovingStoppedDefenseDemoman                                                       
 {
-	criteria ConceptCartMovingStopped IsOnDefense IsDemoman DemomanNotSaidCartMovingStoppedD IsNotDisguised 75PercentChance                                                                                                                                                            
+	criteria ConceptCartMovingStopped IsOnDefense IsDemoman 75PercentChance
 	ApplyContext "SaidCartMovingStoppedD:1:20"
 	Response CartMovingStoppedDefenseDemoman                                                       
 }
@@ -1295,7 +1295,7 @@ Response CartMovingStoppedOffenseDemoman
 }
 Rule CartMovingStoppedOffenseDemoman                                                       
 {
-	criteria ConceptCartMovingStopped IsOnOffense IsDemoman DemomanNotSaidCartMovingStoppedO IsNotDisguised 75PercentChance                                                                                                                                                            
+	criteria ConceptCartMovingStopped IsOnOffense IsDemoman 75PercentChance
 	ApplyContext "SaidCartMovingStoppedO:1:20"
 	Response CartMovingStoppedOffenseDemoman                                                       
 }

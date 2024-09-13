@@ -271,7 +271,7 @@ Response CartMovingBackwardsDefenseScout
 }
 Rule CartMovingBackwardsDefenseScout
 {
-	criteria ConceptCartMovingBackward IsOnDefense IsScout ScoutNotSaidCartMovingBackwardD IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingBackward IsOnDefense IsScout 75PercentChance
 	ApplyContext "SaidCartMovingBackwardD:1:20"
 	Response CartMovingBackwardsDefenseScout
 }
@@ -289,7 +289,7 @@ Response CartMovingBackwardsOffenseScout
 }
 Rule CartMovingBackwardsOffenseScout
 {
-	criteria ConceptCartMovingBackward IsOnOffense IsScout ScoutNotSaidCartMovingBackwardO IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingBackward IsOnOffense IsScout 75PercentChance
 	ApplyContext "SaidCartMovingBackwardO:1:20"
 	Response CartMovingBackwardsOffenseScout
 }
@@ -305,7 +305,7 @@ Response CartMovingForwardDefenseScout
 }
 Rule CartMovingForwardDefenseScout
 {
-	criteria ConceptCartMovingForward IsOnDefense IsScout ScoutNotSaidCartMovingForwardD IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingForward IsOnDefense IsScout 75PercentChance
 	ApplyContext "SaidCartMovingForwardD:1:20"
 	Response CartMovingForwardDefenseScout
 }
@@ -327,7 +327,7 @@ Response CartMovingForwardOffenseScout
 }
 Rule CartMovingForwardOffenseScout
 {
-	criteria ConceptCartMovingForward IsOnOffense IsScout ScoutNotSaidCartMovingForwardO IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingForward IsOnOffense IsScout
 	ApplyContext "SaidCartMovingForwardO:1:20"
 	Response CartMovingForwardOffenseScout
 }
@@ -353,7 +353,7 @@ Response CartMovingStoppedOffenseScout
 }
 Rule CartMovingStoppedOffenseScout
 {
-	criteria ConceptCartMovingStopped IsOnOffense IsScout ScoutNotSaidCartMovingStoppedO IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingStopped IsOnOffense IsScout
 	ApplyContext "SaidCartMovingStoppedO:1:20"
 	Response CartMovingStoppedOffenseScout
 }
@@ -1098,7 +1098,7 @@ Response PlayerOnFireScout
 }
 Rule PlayerOnFireScout
 {
-	criteria ConceptFire IsScout ScoutIsNotStillonFire IsNotDominating
+	criteria ConceptFire IsScout ScoutIsNotStillonFire
 	ApplyContext "ScoutOnFire:1:7"
 	Response PlayerOnFireScout
 }
@@ -1109,7 +1109,7 @@ Response PlayerOnFireRareScout
 }
 Rule PlayerOnFireRareScout
 {
-	criteria ConceptFire IsScout 10PercentChance ScoutIsNotStillonFire IsNotDominating
+	criteria ConceptFire IsScout 10PercentChance ScoutIsNotStillonFire
 	ApplyContext "ScoutOnFire:1:7"
 	Response PlayerOnFireRareScout
 }
@@ -1137,7 +1137,7 @@ Response PlayerStillOnFireScout
 }
 Rule PlayerStillOnFireScout
 {
-	criteria ConceptFire IsScout  ScoutIsStillonFire IsNotDominating
+	criteria ConceptFire IsScout ScoutIsStillonFire
 	ApplyContext "ScoutOnFire:1:7"
 	Response PlayerStillOnFireScout
 }

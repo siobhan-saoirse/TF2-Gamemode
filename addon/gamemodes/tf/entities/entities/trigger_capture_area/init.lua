@@ -161,7 +161,10 @@ function ENT:EndTouch(ent)
 				end
 						
 				timer.Create("CartGoesBackwards"..self:EntIndex(), 30, 1, function()
-					self.Train:Fire("SetSpeedDirAccel",tostring(-0.3),0.01)
+					self.Train:Fire("SetSpeedDirAccel",tostring(-0.05),0.01)
+					for k,v in ipairs(player.GetAll()) do
+						v:Speak("TLK_CART_MOVING_BACKWARD")
+					end
 				end)
 			else
 				self.Train:Fire("SetSpeedDirAccel",tostring(0.3 * self.Players),0.01)

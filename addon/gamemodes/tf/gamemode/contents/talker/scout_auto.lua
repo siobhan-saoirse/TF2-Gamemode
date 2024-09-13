@@ -163,7 +163,7 @@ Response item_haunthat_on_fireScout
 }
 Rule item_haunthat_on_fireScout
 {
-	criteria ConceptFire IsScout ScoutIsNotStillonFire  20PercentChance IsHauntedHat
+	criteria ConceptFire IsScout ScoutIsNotStillonFire IsHauntedHat
 	ApplyContext "ScoutOnFire:1:7"
 	Response item_haunthat_on_fireScout
 }
@@ -175,7 +175,7 @@ Response item_unicorn_on_fireScout
 }
 Rule item_unicorn_on_fireScout
 {
-	criteria ConceptFire IsScout ScoutIsNotStillonFire  20PercentChance IsUnicornHead
+	criteria ConceptFire IsScout ScoutIsNotStillonFire IsUnicornHead
 	ApplyContext "ScoutOnFire:1:7"
 	Response item_unicorn_on_fireScout
 }

@@ -997,7 +997,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 
 			for k, v in pairs(ents.FindByClass("func_capturezone")) do
 				if v.TeamNum ~= bot:Team() then
-					intelcap = v
+					intelcap = v 
 				else
 					fintelcap = v
 				end

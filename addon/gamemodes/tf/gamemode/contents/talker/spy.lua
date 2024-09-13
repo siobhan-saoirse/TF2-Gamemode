@@ -612,7 +612,7 @@ Response PlayerOnFireSpy
 }
 Rule PlayerOnFireSpy
 {
-	criteria ConceptFire IsSpy SpyIsNotStillonFire IsNotDominating
+	criteria ConceptFire IsSpy SpyIsNotStillonFire
 	ApplyContext "SpyOnFire:1:7"
 	Response PlayerOnFireSpy
 }
@@ -624,7 +624,7 @@ Response PlayerOnFireRareSpy
 }
 Rule PlayerOnFireRareSpy
 {
-	criteria ConceptFire IsSpy 10PercentChance SpyIsNotStillonFire IsNotDominating
+	criteria ConceptFire IsSpy 10PercentChance SpyIsNotStillonFire
 	ApplyContext "SpyOnFire:1:7"
 	Response PlayerOnFireRareSpy
 }
@@ -1124,7 +1124,7 @@ Response CartMovingBackwardsDefenseSpy
 }
 Rule CartMovingBackwardsDefenseSpy                                                     
 {
-	criteria ConceptCartMovingBackward IsOnDefense IsSpy SpyNotSaidCartMovingBackwardD IsNotDisguised IsNotCloaked 75PercentChance                                                                                                                                                          
+	criteria ConceptCartMovingBackward IsOnDefense IsSpy 75PercentChance
 	ApplyContext "SaidCartMovingBackwardD:1:20"
 	Response CartMovingBackwardsDefenseSpy                                                     
 }
@@ -1135,7 +1135,7 @@ Response CartMovingBackwardsOffenseSpy
 }
 Rule CartMovingBackwardsOffenseSpy                                                     
 {
-	criteria ConceptCartMovingBackward IsOnOffense IsSpy SpyNotSaidCartMovingBackwardO IsNotDisguised IsNotCloaked 75PercentChance                                                                                                                                                          
+	criteria ConceptCartMovingBackward IsOnOffense IsSpy 75PercentChance
 	ApplyContext "SaidCartMovingBackwardO:1:20"
 	Response CartMovingBackwardsOffenseSpy                                                     
 }
@@ -1148,7 +1148,7 @@ Response CartMovingForwardDefenseSpy
 }
 Rule CartMovingForwardDefenseSpy                                                       
 {
-	criteria ConceptCartMovingForward IsOnDefense IsSpy SpyNotSaidCartMovingForwardD IsNotDisguised IsNotCloaked 75PercentChance                                                                                                                                                            
+	criteria ConceptCartMovingForward IsOnDefense IsSpy 75PercentChance
 	ApplyContext "SaidCartMovingForwardD:1:20"
 	Response CartMovingForwardDefenseSpy                                                       
 }
@@ -1169,7 +1169,7 @@ Response CartMovingForwardOffenseSpy
 }
 Rule CartMovingForwardOffenseSpy                                                       
 {
-	criteria ConceptCartMovingForward IsOnOffense IsSpy SpyNotSaidCartMovingForwardO IsNotDisguised IsNotCloaked 75PercentChance                                                                                                                                                            
+	criteria ConceptCartMovingForward IsOnOffense IsSpy 75PercentChance
 	ApplyContext "SaidCartMovingForwardO:1:20"
 	Response CartMovingForwardOffenseSpy                                                       
 }
@@ -1182,7 +1182,7 @@ Response CartMovingStoppedDefenseSpy
 }
 Rule CartMovingStoppedDefenseSpy                                                       
 {
-	criteria ConceptCartMovingStopped IsOnDefense IsSpy SpyNotSaidCartMovingStoppedD IsNotDisguised IsNotCloaked 75PercentChance                                                                                                                                                            
+	criteria ConceptCartMovingStopped IsOnDefense IsSpy 75PercentChance
 	ApplyContext "SaidCartMovingStoppedD:1:20"
 	Response CartMovingStoppedDefenseSpy                                                       
 }
@@ -1194,7 +1194,7 @@ Response CartMovingStoppedOffenseSpy
 }
 Rule CartMovingStoppedOffenseSpy                                                       
 {
-	criteria ConceptCartMovingStopped IsOnOffense IsSpy SpyNotSaidCartMovingStoppedO IsNotDisguised IsNotCloaked 75PercentChance                                                                                                                                                            
+	criteria ConceptCartMovingStopped IsOnOffense IsSpy 75PercentChance
 	ApplyContext "SaidCartMovingStoppedO:1:20"
 	Response CartMovingStoppedOffenseSpy                                                       
 }

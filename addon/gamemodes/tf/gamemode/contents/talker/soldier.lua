@@ -633,7 +633,7 @@ Response PlayerOnFireSoldier
 }
 Rule PlayerOnFireSoldier
 {
-	criteria ConceptFire IsSoldier SoldierIsNotStillonFire IsNotDominating
+	criteria ConceptFire IsSoldier SoldierIsNotStillonFire
 	ApplyContext "SoldierOnFire:1:7"
 	Response PlayerOnFireSoldier
 }
@@ -645,7 +645,7 @@ Response PlayerOnFireRareSoldier
 }
 Rule PlayerOnFireRareSoldier
 {
-	criteria ConceptFire IsSoldier 10PercentChance SoldierIsNotStillonFire IsNotDominating
+	criteria ConceptFire IsSoldier 10PercentChance SoldierIsNotStillonFire
 	ApplyContext "SoldierOnFire:1:7"
 	Response PlayerOnFireRareSoldier
 }
@@ -1606,7 +1606,7 @@ Response CartMovingBackwardsDefenseSoldier
 }
 Rule CartMovingBackwardsDefenseSoldier                                                     
 {
-	criteria ConceptCartMovingBackward IsOnDefense IsSoldier SoldierNotSaidCartMovingBackwardD IsNotDisguised 75PercentChance                                                                                                                                                          
+	criteria ConceptCartMovingBackward IsOnDefense IsSoldier 75PercentChance
 	ApplyContext "SaidCartMovingBackwardD:1:20"
 	Response CartMovingBackwardsDefenseSoldier                                                     
 }
@@ -1617,7 +1617,7 @@ Response CartMovingBackwardsOffenseSoldier
 }
 Rule CartMovingBackwardsOffenseSoldier                                                     
 {
-	criteria ConceptCartMovingBackward IsOnOffense IsSoldier SoldierNotSaidCartMovingBackwardO IsNotDisguised 75PercentChance                                                                                                                                                          
+	criteria ConceptCartMovingBackward IsOnOffense IsSoldier 75PercentChance
 	ApplyContext "SaidCartMovingBackwardO:1:20"
 	Response CartMovingBackwardsOffenseSoldier                                                     
 }
@@ -1629,7 +1629,7 @@ Response CartMovingForwardDefenseSoldier
 }
 Rule CartMovingForwardDefenseSoldier                                                       
 {
-	criteria ConceptCartMovingForward IsOnDefense IsSoldier SoldierNotSaidCartMovingForwardD IsNotDisguised 75PercentChance                                                                                                                                                            
+	criteria ConceptCartMovingForward IsOnDefense IsSoldier 75PercentChance
 	ApplyContext "SaidCartMovingForwardD:1:20"
 	Response CartMovingForwardDefenseSoldier                                                       
 }
@@ -1659,7 +1659,7 @@ Response CartMovingForwardOffenseSoldier
 }
 Rule CartMovingForwardOffenseSoldier                                                       
 {
-	criteria ConceptCartMovingForward IsOnOffense IsSoldier SoldierNotSaidCartMovingForwardO IsNotDisguised 75PercentChance                                                                                                                                                            
+	criteria ConceptCartMovingForward IsOnOffense IsSoldier 75PercentChance
 	ApplyContext "SaidCartMovingForwardO:1:20"
 	Response CartMovingForwardOffenseSoldier                                                       
 }
@@ -1671,7 +1671,7 @@ Response CartMovingStoppedDefenseSoldier
 }
 Rule CartMovingStoppedDefenseSoldier                                                       
 {
-	criteria ConceptCartMovingStopped IsOnDefense IsSoldier SoldierNotSaidCartMovingStoppedD IsNotDisguised 75PercentChance                                                                                                                                                            
+	criteria ConceptCartMovingStopped IsOnDefense IsSoldier 75PercentChance
 	ApplyContext "SaidCartMovingStoppedD:1:20"
 	Response CartMovingStoppedDefenseSoldier                                                       
 }
@@ -1683,7 +1683,7 @@ Response CartMovingStoppedOffenseSoldier
 }
 Rule CartMovingStoppedOffenseSoldier                                                       
 {
-	criteria ConceptCartMovingStopped IsOnOffense IsSoldier SoldierNotSaidCartMovingStoppedO IsNotDisguised 75PercentChance                                                                                                                                                            
+	criteria ConceptCartMovingStopped IsOnOffense IsSoldier 75PercentChance
 	ApplyContext "SaidCartMovingStoppedO:1:20"
 	Response CartMovingStoppedOffenseSoldier                                                       
 }

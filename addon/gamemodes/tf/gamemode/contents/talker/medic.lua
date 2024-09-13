@@ -443,7 +443,7 @@ Response PlayerOnFireMedic
 }
 Rule PlayerOnFireMedic
 {
-	criteria ConceptFire IsMedic MedicIsNotStillonFire IsNotDominating
+	criteria ConceptFire IsMedic MedicIsNotStillonFire
 	ApplyContext "MedicOnFire:1:7"
 	Response PlayerOnFireMedic
 }
@@ -455,7 +455,7 @@ Response PlayerOnFireRareMedic
 }
 Rule PlayerOnFireRareMedic
 {
-	criteria ConceptFire IsMedic 10PercentChance MedicIsNotStillonFire IsNotDominating
+	criteria ConceptFire IsMedic 10PercentChance MedicIsNotStillonFire
 	ApplyContext "MedicOnFire:1:7"
 	Response PlayerOnFireRareMedic
 }
@@ -1329,7 +1329,7 @@ Response CartMovingBackwardsDefenseMedic
 }
 Rule CartMovingBackwardsDefenseMedic                                                     
 {
-	criteria ConceptCartMovingBackward IsOnDefense IsMedic MedicNotSaidCartMovingBackwardD IsNotDisguised 75PercentChance                                                                                                                                                          
+	criteria ConceptCartMovingBackward IsOnDefense IsMedic 75PercentChance
 	ApplyContext "SaidCartMovingBackwardD:1:20"
 	Response CartMovingBackwardsDefenseMedic                                                     
 }
@@ -1340,7 +1340,7 @@ Response CartMovingBackwardsOffenseMedic
 }
 Rule CartMovingBackwardsOffenseMedic                                                     
 {
-	criteria ConceptCartMovingBackward IsOnOffense IsMedic MedicNotSaidCartMovingBackwardO IsNotDisguised 75PercentChance                                                                                                                                                          
+	criteria ConceptCartMovingBackward IsOnOffense IsMedic 75PercentChance
 	ApplyContext "SaidCartMovingBackwardO:1:20"
 	Response CartMovingBackwardsOffenseMedic                                                     
 }
@@ -1351,7 +1351,7 @@ Response CartMovingForwardDefenseMedic
 }
 Rule CartMovingForwardDefenseMedic                                                       
 {
-	criteria ConceptCartMovingForward IsOnDefense IsMedic MedicNotSaidCartMovingForwardD IsNotDisguised 75PercentChance                                                                                                                                                            
+	criteria ConceptCartMovingForward IsOnDefense IsMedic 75PercentChance
 	ApplyContext "SaidCartMovingForwardD:1:20"
 	Response CartMovingForwardDefenseMedic                                                       
 }
@@ -1371,7 +1371,7 @@ Response CartMovingForwardOffenseMedic
 }
 Rule CartMovingForwardOffenseMedic                                                       
 {
-	criteria ConceptCartMovingForward IsOnOffense IsMedic MedicNotSaidCartMovingForwardO IsNotDisguised 75PercentChance                                                                                                                                                            
+	criteria ConceptCartMovingForward IsOnOffense IsMedic
 	ApplyContext "SaidCartMovingForwardO:1:20"
 	Response CartMovingForwardOffenseMedic                                                       
 }
@@ -1381,7 +1381,7 @@ Response CartMovingStoppedDefenseMedic
 }
 Rule CartMovingStoppedDefenseMedic                                                       
 {
-	criteria ConceptCartMovingStopped IsOnDefense IsMedic MedicNotSaidCartMovingStoppedD IsNotDisguised 75PercentChance                                                                                                                                                            
+	criteria ConceptCartMovingStopped IsOnDefense IsMedic
 	ApplyContext "SaidCartMovingStoppedD:1:20"
 	Response CartMovingStoppedDefenseMedic                                                       
 }
@@ -1394,7 +1394,7 @@ Response CartMovingStoppedOffenseMedic
 }
 Rule CartMovingStoppedOffenseMedic                                                       
 {
-	criteria ConceptCartMovingStopped IsOnOffense IsMedic MedicNotSaidCartMovingStoppedO IsNotDisguised 75PercentChance                                                                                                                                                            
+	criteria ConceptCartMovingStopped IsOnOffense IsMedic
 	ApplyContext "SaidCartMovingStoppedO:1:20"
 	Response CartMovingStoppedOffenseMedic                                                       
 }

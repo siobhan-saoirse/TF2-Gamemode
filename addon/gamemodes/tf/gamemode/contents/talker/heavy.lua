@@ -266,7 +266,7 @@ Response CartMovingBackwardsDefenseHeavy
 }
 Rule CartMovingBackwardsDefenseHeavy
 {
-	criteria ConceptCartMovingBackward IsOnDefense IsHeavy HeavyNotSaidCartMovingBackwardD IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingBackward IsOnDefense IsHeavy 75PercentChance
 	ApplyContext "SaidCartMovingBackwardD:1:20"
 	Response CartMovingBackwardsDefenseHeavy
 }
@@ -283,7 +283,7 @@ Response CartMovingBackwardsOffenseHeavy
 }
 Rule CartMovingBackwardsOffenseHeavy
 {
-	criteria ConceptCartMovingBackward IsOnOffense IsHeavy HeavyNotSaidCartMovingBackwardO IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingBackward IsOnOffense IsHeavy 75PercentChance
 	ApplyContext "SaidCartMovingBackwardO:1:20"
 	Response CartMovingBackwardsOffenseHeavy
 }
@@ -300,7 +300,7 @@ Response CartMovingForwardDefenseHeavy
 }
 Rule CartMovingForwardDefenseHeavy
 {
-	criteria ConceptCartMovingForward IsOnDefense IsHeavy HeavyNotSaidCartMovingForwardD IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingForward IsOnDefense IsHeavy 75PercentChance
 	ApplyContext "SaidCartMovingForwardD:1:20"
 	Response CartMovingForwardDefenseHeavy
 }
@@ -337,7 +337,7 @@ Response CartMovingForwardOffenseHeavy
 }
 Rule CartMovingForwardOffenseHeavy
 {
-	criteria ConceptCartMovingForward IsOnOffense IsHeavy HeavyNotSaidCartMovingForwardO IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingForward IsOnOffense IsHeavy 75PercentChance
 	ApplyContext "SaidCartMovingForwardO:1:20"
 	Response CartMovingForwardOffenseHeavy
 }
@@ -351,7 +351,7 @@ Response CartMovingStoppedDefenseHeavy
 }
 Rule CartMovingStoppedDefenseHeavy
 {
-	criteria ConceptCartMovingStopped IsOnDefense IsHeavy HeavyNotSaidCartMovingStoppedD IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingStopped IsOnDefense IsHeavy 75PercentChance
 	ApplyContext "SaidCartMovingStoppedD:1:20"
 	Response CartMovingStoppedDefenseHeavy
 }
@@ -365,7 +365,7 @@ Response CartMovingStoppedOffenseHeavy
 }
 Rule CartMovingStoppedOffenseHeavy
 {
-	criteria ConceptCartMovingStopped IsOnOffense IsHeavy HeavyNotSaidCartMovingStoppedO IsNotDisguised 75PercentChance
+	criteria ConceptCartMovingStopped IsOnOffense IsHeavy 75PercentChance
 	ApplyContext "SaidCartMovingStoppedO:1:20"
 	Response CartMovingStoppedOffenseHeavy
 }
@@ -769,7 +769,7 @@ Response PlayerOnFireHeavy
 }
 Rule PlayerOnFireHeavy
 {
-	criteria ConceptFire IsHeavy HeavyIsNotStillonFire IsNotDominating
+	criteria ConceptFire IsHeavy HeavyIsNotStillonFire
 	ApplyContext "HeavyOnFire:1:7"
 	Response PlayerOnFireHeavy
 }
@@ -781,7 +781,7 @@ Response PlayerOnFireRareHeavy
 }
 Rule PlayerOnFireRareHeavy
 {
-	criteria ConceptFire IsHeavy 10PercentChance HeavyIsNotStillonFire IsNotDominating
+	criteria ConceptFire IsHeavy 10PercentChance HeavyIsNotStillonFire
 	ApplyContext "HeavyOnFire:1:7"
 	Response PlayerOnFireRareHeavy
 }
