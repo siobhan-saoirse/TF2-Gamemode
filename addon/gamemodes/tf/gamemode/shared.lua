@@ -2738,7 +2738,7 @@ end)
 
 function GM:RoundWin(teamnum)
 	GAMEMODE.RoundHasWinner = true
-	timer.Simple(15, function()
+	timer.Simple(15, function() 
 		GAMEMODE.RoundHasWinner = false
 		if SERVER then
 			RunConsoleCommand("gmod_admin_cleanup")

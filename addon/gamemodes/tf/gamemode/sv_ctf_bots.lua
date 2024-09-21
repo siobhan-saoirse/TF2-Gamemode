@@ -20,7 +20,7 @@ local tf_bot_melee_only = CreateConVar("tf_bot_melee_only", "0", {FCVAR_ARCHIVE,
 function lookForNearestPlayer(bot)
 	local npcs = {}
 		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 8000000)) do
-			if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:GetNoDraw() == false and v:EntityTeam(bot) != TEAM_NEUTRAL and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET) and v:Health() > 0 and bot:Visible(v)) then
+			if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:GetNoDraw() == false and v:EntityTeam(bot) != TEAM_NEUTRAL and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET) and v:Health() > 0) then
 				table.insert(npcs, v)		
 			end
 		end
@@ -564,8 +564,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		cmd:ClearButtons()
 
 		if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then 
-			bot.TargetEnt = nil
-			return 
+			bot.TargetEnt = lookForNearestPlayer(bot)
 		end
 		if (IsValid(bot.TargetEnt)) then
 			if (bot.playerclass == "Scout" or bot.playerclass == "Engineer") then
@@ -793,7 +792,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			
 			if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
 
-				bot.TargetEnt = nil
+				bot.TargetEnt = lookForNearestPlayer(bot)
 
 			end
 		end
@@ -844,9 +843,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				end
 			end
 		if bot.ControllerBot.P then
-			if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
-				bot.LastPath = bot.ControllerBot.P:GetAllSegments()
-			end
+			bot.LastPath = bot.ControllerBot.P:GetAllSegments()
 		end
 	
 		if !bot.ControllerBot.P then
@@ -957,8 +954,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 		end
 		
 		if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then 
-			bot.TargetEnt = nil
-			return 
+			bot.TargetEnt = lookForNearestPlayer(bot)
 		end
 		local controller = bot.ControllerBot
 		bot.movement = mv
@@ -1079,6 +1075,13 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 
 			bot.botPos = targetpos2
 			bot.LastSegmented = CurTime() + math.Rand(0.5, 1)
+		else
+			if (!IsValid(bot.TargetEnt)) then
+				bot.TargetEnt = lookForNearestPlayer(bot)
+			else
+				bot.botPos = bot.TargetEnt:GetPos()
+				bot.LastSegmented = CurTime() + math.Rand(0.5, 1)
+			end
 		end
 			
 		for _, intel in pairs(ents.FindByClass("item_teamflag_mvm")) do
@@ -1122,7 +1125,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 					bot.TargetEnt = targetply
 				else 
 					if (IsValid(fintel) and targetply ~= fintel.Carrier) then
-						bot.TargetEnt = nil
+						bot.TargetEnt = lookForNearestPlayer(bot)
 					end
 				end
 			end
@@ -1359,10 +1362,59 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			cmd:ClearButtons()
 						
 			if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then 
-				bot.TargetEnt = nil
-				return 
+				bot.TargetEnt = lookForNearestPlayer(bot)
 			end
 			
+		if (bot.LastPath ~= nil and bot.LastPath[bot.CurSegment + 1] ~= nil) then
+			local curgoal = bot.LastPath[bot.CurSegment + 1]
+			if (curgoal ~= nil) then
+					if curgoal.area:HasAttributes(NAV_MESH_JUMP) then
+						if (bot:IsOnGround()) then
+							
+							if (math.random(1,5) == 1) then
+								buttons = buttons + IN_JUMP
+							end
+
+						end
+					end
+					if curgoal.area:HasAttributes(NAV_MESH_CROUCH) then
+						if (curgoal.area:HasAttributes(NAV_MESH_JUMP) and !bot:IsOnGround()) then
+							if (math.random(1,16) == 1) then
+								buttons = buttons + IN_DUCK
+							end
+						elseif (!curgoal.area:HasAttributes(NAV_MESH_JUMP)) then
+							if (math.random(1,16) == 1) then
+								buttons = buttons + IN_DUCK
+							end
+						end
+					end
+				end
+			end
+			
+		local curgoal = navmesh.GetNavArea(bot:GetPos(),128)
+		if (curgoal ~= nil) then
+				if curgoal:HasAttributes(NAV_MESH_JUMP) then
+					if (bot:IsOnGround()) then
+						
+						if (math.random(1,5) == 1) then
+							buttons = buttons + IN_JUMP
+						end
+
+					end
+				end
+				if curgoal:HasAttributes(NAV_MESH_CROUCH) then
+					if (curgoal:HasAttributes(NAV_MESH_JUMP) and !bot:IsOnGround()) then
+						if (math.random(1,16) == 1) then
+							buttons = buttons + IN_DUCK
+						end
+					elseif (!curgoal:HasAttributes(NAV_MESH_JUMP)) then
+						if (math.random(1,16) == 1) then
+							buttons = buttons + IN_DUCK
+						end
+					end
+				end
+			end
+
 			if (IsValid(bot:GetActiveWeapon())) then
 					if (bot:GetActiveWeapon():Ammo1() < 0 and bot:GetActiveWeapon():Clip1() < 0 and bot:GetActiveWeapon().Primary.ClipSize ~= -1 && !bot:GetActiveWeapon().IsMeleeWeapon) then
 						if (CurTime() > bot:GetActiveWeapon():GetNextPrimaryFire()) then
@@ -1381,11 +1433,11 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 					
 			if (IsValid(bot.TargetEnt)) then
 				if (bot.TargetEnt:EntIndex() == bot:EntIndex()) then
-					bot.TargetEnt = nil
+					bot.TargetEnt = lookForNearestPlayer(bot)
 				elseif (bot.TargetEnt:IsFriendly(bot) and bot.playerclass != "Medic") then
-					bot.TargetEnt = nil
+					bot.TargetEnt = lookForNearestPlayer(bot)
 				elseif (bot.TargetEnt:EntIndex() == bot.ControllerBot:EntIndex()) then
-					bot.TargetEnt = nil
+					bot.TargetEnt = lookForNearestPlayer(bot)
 				end
 			end
 			

@@ -315,7 +315,7 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 	is_normal_damage = true
 	-- if the entity can receive crits
 	
-	if is_normal_damage then
+	--[[if is_normal_damage then
 		-- Not a crit, calculate the damage properly here
 		if dmginfo:IsBulletDamage() and (inf:IsWeapon() or inf.IsTFBuilding) then
 			if (inf.IsTFWeapon or inf.IsTFBuilding) and inf.CalculateDamage then
@@ -339,7 +339,7 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 		end
 		
 		ent.LastDamageWasCrit = false
-	end
+	end]]
 	
 	if dmginfo:IsBulletDamage() and (inf.IsTFWeapon or inf.IsTFBuilding) and inf.CalculateDamage then
 		dmginfo:SetDamageForce(dmginfo:GetDamageForce() * (dmginfo:GetDamage()))

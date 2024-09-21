@@ -1,7 +1,7 @@
 
-if (!IsMounted("cstrike")) then return end
+--if (!IsMounted("cstrike")) then return end
 AddCSLuaFile()
-SWEP.Base = "weapon_base"
+SWEP.Base = "weapon_csbase"
 SWEP.Category = "Civilian 2"
 SWEP.PrintName = "Hands"
 SWEP.Author = "Daisreich"

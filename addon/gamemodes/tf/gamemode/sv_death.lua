@@ -1677,7 +1677,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 				ply:GetRagdollEntity():Remove()
 			end
 		end
-	elseif inflictor.Critical and inflictor:Critical() then -- Critical damage
+	elseif inflictor.Critical and inflictor:Critical() || dmginfo:IsDamageType(DMG_ACID) then -- Critical damage
 		if not inflictor.IsSilentKiller then
 			if ply:GetMaterial() == "models/shadertest/predator" then return end
 			if (!ply:HasDeathFlag(DF_SILENCED) and !ply:IsMiniBoss()) then
