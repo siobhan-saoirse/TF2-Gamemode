@@ -1882,6 +1882,7 @@ end)
 
 --CreateClientConVar( "snd_soundmixer", "Default_Mix", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_ARCHIVE}, "Become a robot after respawning." )
 CreateConVar("tf_flag_caps_per_round","3",{FCVAR_REPLICATED,FCVAR_NOTIFY,FCVAR_ARCHIVE})
+CreateConVar("tf_airblast_bustertimer","1",{FCVAR_REPLICATED,FCVAR_NOTIFY,FCVAR_ARCHIVE})
 CreateConVar( "civ2_legs", "0", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY, FCVAR_DEVELOPMENTONLY, FCVAR_ARCHIVE}, "LEGS!" )
 CreateConVar( "civ2_allow_respawn_with_key_press", "0", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY, FCVAR_ARCHIVE}, "Players will respawn on key press without waiting for the freeze cam to finish." )
 CreateConVar( "civ2_smooth_worldmodel_turning", "0", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY, FCVAR_ARCHIVE}, "" )
