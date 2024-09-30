@@ -275,7 +275,31 @@ function SWEP:DoAirblast()
 							v.TargetEnt = self.Owner
 						end
 						if v:IsPlayer() then
-							v:SetVelocity(((((-v:GetAimVector() * 45) * 10) + Vector(0,0,245)) * 45) * 245)
+							--v:SetVelocity(((((-v:GetAimVector() * 45) * 10) + Vector(0,0,245)) * 45) * 245)
+							--The above is the old code, which does not account for player weight, fungus.
+							
+							local pushdir = (dir + Vector(0,0,0.9)):Angle():Forward()*6 -- Adjust aimdirection to push players off ground, while preventing inverted pushing, fungus.
+							v:SetVelocity( pushdir * v:GetMass() ) -- Account for player weight because we push all twinks equally, fungus.
+							
+							local ve,vi,bt = v,v:UserID(),GetConVar("tf_airblast_bustertimer"):GetFloat()
+							do
+								if bt == 0 then continue end
+								local Buststring = "TF_AIRBLAST_BUSTERTIMER" .. ve:UserID()
+								if timer.Exists( Buststring ) then
+									timer.Adjust( Buststring, bt, nil, nil )
+									continue -- If blasted again, reset the time, fungus.
+								end
+								
+								
+								ve:SetNWFloat("BusterFriction",ve:GetFriction())
+								ve:SetFriction(0.25) -- Encourage sliding, fungus.
+								timer.Create( Buststring, bt, 1, function()
+									ve:SetFriction(ve:GetNWFloat("BusterFriction",nil))
+									ve:SetNWFloat("BusterFriction",0)
+								end)
+							end
+								
+							
 							umsg.Start("TFAirblastImpact", v)
 							umsg.End()
 						end
@@ -291,6 +315,8 @@ function SWEP:DoAirblast()
 			elseif v:IsTFPlayer() and self.Owner:IsFriendly(v) and v:EntIndex() != self.Owner:EntIndex() then
 				GAMEMODE:ExtinguishEntity(v)
 				v:EmitSound("player/flame_out.wav", 90)
+				
+				GAMEMODE:HealPlayer(self.Owner, self.Owner, 20, true, false) -- Pat on the back, good job for saving your teammates, fungus.
 			end
 		end
 	end
