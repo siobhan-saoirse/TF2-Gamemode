@@ -2775,3 +2775,15 @@ function GM:RoundWin(teamnum)
 	end
 
 end
+
+hook.Add( "Move", "TF_AIRBLAST_BUSTERSUPPRESION", function( ply, mv )
+	if ply:GetNWFloat("BusterFriction",0) == 0 then 
+		
+	else
+			if !ply:IsOnGround() then
+				local speed = mv:GetMaxSpeed() / 4
+				mv:SetMaxSpeed( speed )
+				mv:SetMaxClientSpeed( speed )
+			end
+	end
+end)
