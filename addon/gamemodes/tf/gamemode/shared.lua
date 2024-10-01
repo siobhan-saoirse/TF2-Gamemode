@@ -2777,8 +2777,11 @@ function GM:RoundWin(teamnum)
 end
 
 hook.Add( "Move", "TF_AIRBLAST_BUSTERSUPPRESION", function( ply, mv )
-	if not ply:GetNWFloat("BusterFriction",nil) then return false end
-	if !ply:IsOnGround() then
-	  mv:SetVelocity(mv:GetVelocity() / 4)
+	if not ply:GetNWFloat("BusterFriction",nil) then 
+		
+	else
+		if !ply:IsOnGround() then
+			mv:SetVelocity(mv:GetVelocity() / 4)
+		end
 	end
 end)
