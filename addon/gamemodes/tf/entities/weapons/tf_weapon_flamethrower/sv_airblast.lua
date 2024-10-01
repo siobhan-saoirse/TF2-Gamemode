@@ -290,10 +290,12 @@ function SWEP:DoAirblast()
 									continue -- If blasted again, reset the time, fungus.
 								end
 								
-								
+								ve:AddPlayerState(PLAYERSTATE_STUNNED)
+								ve:SetViewPunchAngles(Angle(4,0,0))
 								ve:SetNWFloat("BusterFriction",ve:GetFriction())
 								ve:SetFriction(0.25) -- Encourage sliding, fungus.
 								timer.Create( Buststring, bt, 1, function()
+									ve:RemovePlayerState(PLAYERSTATE_STUNNED)
 									ve:SetFriction(ve:GetNWFloat("BusterFriction",nil))
 									ve:SetNWFloat("BusterFriction",0)
 								end)
