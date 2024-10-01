@@ -279,7 +279,7 @@ function SWEP:DoAirblast()
 							--The above is the old code, which does not account for player weight, fungus.
 							
 							local pushdir = (dir + Vector(0,0,0.9)):Angle():Forward()*6 -- Adjust aimdirection to push players off ground, while preventing inverted pushing, fungus.
-							v:SetVelocity( pushdir * v:GetMass() ) -- Account for player weight because we push all twinks equally, fungus.
+							v:SetVelocity( pushdir * v:GetPhysicsObject():GetMass() ) -- Account for player weight because we push all twinks equally, fungus.
 							
 							local ve,vi,bt = v,v:UserID(),GetConVar("tf_airblast_bustertimer"):GetFloat()
 							do

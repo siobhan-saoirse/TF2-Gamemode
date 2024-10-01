@@ -320,13 +320,15 @@ function SWEP:StopFiring()
 	self.Firing = false
 	self.Critting = false
 	self:SetFlamethrowerEffect(0)
-	self.SpinUpSound:Stop()
-	self.SpinDownSound:Play()
-	if self.Primary.Delay == 0.06 then
-		self.SpinDownSound:ChangePitch(120)
+	if SERVER then
+		self.SpinUpSound:Stop()
+		self.SpinDownSound:Play()
+		if self.Primary.Delay == 0.06 then
+			self.SpinDownSound:ChangePitch(120)
+		end
+		self.FireSound:Stop()
+		self.FireCritSound:Stop()
 	end
-	self.FireSound:Stop()
-	self.FireCritSound:Stop()
 	if SERVER then
 		--self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_POSTFIRE, true)
 	end
