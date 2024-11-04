@@ -1,7 +1,9 @@
 ## Team Fortress 2 Gamemode
+Despite my endless efforts to archive and private my TF2 related repositories, This is still supported and won't be affected as it's still an ongoing community project that is attempting to correctly remake Live TF2 in Garry's Mod, despite being worked on alone by myself, I'm still hiring and looking for anyone who could help with this project.
+
 The Gamemode that allows you to play TF2 in Gmod! Now frequently updated!
-# WARNING
-This gamemode is **EXTREMELY UNSTABLE** and needs a lot of fixes. Until further notice, it is highly recommended you wait for a fix.
+# Warning
+This gamemode is **unstable** and needs a lot of fixes. Community fixes are welcome.
 
 ## Installation
 Drop the addon folder into the addons folder.
