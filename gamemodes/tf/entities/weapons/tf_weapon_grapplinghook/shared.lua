@@ -1,3 +1,8 @@
+-- todo: rewrite this
+-- this was shamelessly used from another addon with formerly no credit what so ever, i plan to rewrite this using leaked tf2 code and no longer base it off of kurome's weapon
+
+
+
 -- credit to https://steamcommunity.com/sharedfiles/filedetails/?id=1696595790
 
 if CLIENT then
