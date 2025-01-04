@@ -16,7 +16,7 @@ SWEP.Crosshair = "tf_crosshair3"
 SWEP.UseHands = true
 SWEP.Spawnable = true
 SWEP.AdminOnly = true
-SWEP.Category = "Civilian 2"
+SWEP.Category = "Team Fortress 2 Gamemode"
 
 SWEP.Swing = Sound("Weapon_Fist.Miss")
 SWEP.SwingCrit = Sound("Weapon_Fist.MissCrit")

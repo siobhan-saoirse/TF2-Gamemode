@@ -42,7 +42,7 @@ include("shd_gravitygun.lua")
 
 
 hook.Add( "PopulateToolMenu", "Civ2Settings1", function()
-	spawnmenu.AddToolMenuOption( "Options", "Civilian 2", "TF2GMCiv2Options", "#Settings", "", "", function( panel )
+	spawnmenu.AddToolMenuOption( "Options", "Team Fortress 2 Gamemode", "TF2GMCiv2Options", "#Settings", "", "", function( panel )
 		panel:ClearControls()
 		panel:CheckBox( "TF2 CLASSES: Use Minimized Viewmodels", "tf_use_min_viewmodels" )
 		panel:CheckBox( "TF2 CLASSES: Give Extra Weapons on Spawn", "tf_give_hl2_weapons" )
@@ -60,7 +60,7 @@ hook.Add( "PopulateToolMenu", "Civ2Settings1", function()
 		panel:CheckBox( "Right Handed", "tf_righthand" )
 		-- Add stuff here
 	end )
-	spawnmenu.AddToolMenuOption( "Options", "Civilian 2", "TF2GMCiv2Customization", "#Customization Settings", "", "", function( panel )
+	spawnmenu.AddToolMenuOption( "Options", "Team Fortress 2 Gamemode", "TF2GMCiv2Customization", "#Customization Settings", "", "", function( panel )
 		panel:ClearControls()
 		panel:CheckBox( "Become a Robot", "tf_robot" )
 		panel:CheckBox( "Become a Skeleton", "tf_skeleton" )

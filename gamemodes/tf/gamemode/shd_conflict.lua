@@ -1,13 +1,9 @@
 
 timer.Create("ExpectErrors!2", 0, 0, function()
-	if (game.SinglePlayer()) then
-		ErrorNoHalt("Singleplayer is enabled! Expect errors!")
-	end
+	ErrorNoHalt("Singleplayer is enabled! Expect errors!\n")
 end)
 if !IsMounted("tf") and !steamworks.IsSubscribed("3324553730") then
-	timer.Create("ExpectErrors!", 0, 0, function()
-		ErrorNoHalt("Team Fortress 2 is not mounted! Expect errors!")
-	end)
+	ErrorNoHalt("Team Fortress 2 is not mounted! Expect errors!\n")
 	if CLIENT then
 		local conflict_help_frame = vgui.Create( "DFrame" )
 		conflict_help_frame:SetSize(200, 200)
@@ -22,7 +18,7 @@ if !IsMounted("tf") and !steamworks.IsSubscribed("3324553730") then
 		conflicttext:InsertColorChange(255, 255, 255, 255)
 		conflicttext:CenterHorizontal(0.5)
 		conflicttext:SetVerticalScrollbarEnabled(false)
-		conflicttext:AppendText("Hey!~ TF2 is currently not mounted! Without the assets, you will see everything as ERRORs! Luckily, I do have a solution for ya. It will take a while, though.")
+		conflicttext:AppendText("Hey~! TF2 is currently not mounted! Without the assets, you will see everything as ERRORs! Luckily, I do have a solution for ya. It will take a while, though.")
 			local conflictbut2 = vgui.Create("DButton", conflict_help_frame)
 			conflictbut2:SetSize(100, 30)
 			conflictbut2:SetPos(0, 125)

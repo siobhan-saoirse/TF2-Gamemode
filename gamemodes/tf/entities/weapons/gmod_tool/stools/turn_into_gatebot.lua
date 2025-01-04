@@ -1,5 +1,5 @@
  
-TOOL.Category = "Civilian 2"
+TOOL.Category = "Team Fortress 2 Gamemode"
 TOOL.Name = "#tool.turn_into_gatebot.name"
 
 TOOL.LeftClickAutomatic = false

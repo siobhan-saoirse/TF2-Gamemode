@@ -2,7 +2,7 @@
 --if (!IsMounted("cstrike")) then return end
 AddCSLuaFile()
 SWEP.Base = "weapon_csbase"
-SWEP.Category = "Civilian 2"
+SWEP.Category = "Team Fortress 2 Gamemode"
 SWEP.PrintName = "Hands"
 SWEP.Author = "Daisreich"
 
