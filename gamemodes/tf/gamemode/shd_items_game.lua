@@ -175,33 +175,32 @@ for k, v in pairs(items_game["items"]) do
     --if v.id == 424 then print(tf_lang.GetRaw(v.item_name)) end
 
     if v.item_name then
-        v.name = tf_lang.GetRaw(v.item_name)
+        v.name = tf_lang.GetRaw(v.item_name).." "..v.id
         tf_items.Items[tf_lang.GetRaw(v.item_name)] = v
-  
-        if v.name == "Red-Tape Recorder" then
+        if tf_lang.GetRaw(v.item_name) == "Red-Tape Recorder" then
 			v.item_class = "tf_weapon_rtr" 
             v.item_slot = "primary"
 		end
-        if v.name == "Sapper" then 
+        if tf_lang.GetRaw(v.item_name) == "Sapper" then 
             v.item_slot = "primary"
 		end
-        if v.name == "Half-Zatoichi" then
+        if tf_lang.GetRaw(v.item_name) == "Half-Zatoichi" then
 			v.item_class = "tf_weapon_katana"
             v.model_player = "models/weapons/c_models/c_shogun_katana/c_shogun_katana.mdl"
 			v.item_slot = "melee"
         end
-        if v.name == "Bootlegger" then
+        if tf_lang.GetRaw(v.item_name) == "Bootlegger" then
 			v.item_class = "tf_wearable_item"
 			v.item_slot = "secondary"
         end
-        if v.name == "Ali Baba's Wee Booties" then
+        if tf_lang.GetRaw(v.item_name) == "Ali Baba's Wee Booties" then
 			v.item_class = "tf_wearable_item"
 			v.item_slot = "secondary"
         end
-        if v.name == "Concheror" then
+        if tf_lang.GetRaw(v.item_name) == "Concheror" then
 			v.item_class = "tf_weapon_buff_item_conch"
 		end
-        if v.name == "Sandvich" then
+        if tf_lang.GetRaw(v.item_name) == "Sandvich" then
 			v.attach_to_hands = 1
             v.item_slot = "secondary"
 			v.item_class = "tf_weapon_lunchbox"
@@ -210,7 +209,7 @@ for k, v in pairs(items_game["items"]) do
 			v.used_by_classes["heavy"] = 1
 			v.item_quality = "unique"
         end
-        if v.name == "Bonk! Atomic Punch" then
+        if tf_lang.GetRaw(v.item_name) == "Bonk! Atomic Punch" then
 			v.attach_to_hands = 1
             v.item_slot = "secondary"
 			v.item_class = "tf_weapon_lunchbox_drink"
@@ -219,22 +218,22 @@ for k, v in pairs(items_game["items"]) do
 			v.used_by_classes["scout"] = 1
 			v.item_quality = "unique"
         end
-        if v.name == "Rainblower" then
+        if tf_lang.GetRaw(v.item_name) == "Rainblower" then
 			v.item_class = "tf_weapon_flamethrower_rb"
         end
-        if v.name == "Quick-Fix" then
+        if tf_lang.GetRaw(v.item_name) == "Quick-Fix" then
 			v.item_class = "tf_weapon_medigun_qf"
 		end
-        if v.name == "Vaccinator" then
+        if tf_lang.GetRaw(v.item_name) == "Vaccinator" then
 			v.item_class = "tf_weapon_medigun_vaccinator"
 		end
-        if v.name == "Beggar's Bazooka" then
+        if tf_lang.GetRaw(v.item_name) == "Beggar's Bazooka" then
 			v.item_class = "tf_weapon_rocketlauncher_rapidfire"
         end
-        if v.name == "Phlogistinator" then
+        if tf_lang.GetRaw(v.item_name) == "Phlogistinator" then
             v.item_class = "tf_weapon_phlogistinator"
         end
-        if v.name == "Degreaser" then
+        if tf_lang.GetRaw(v.item_name) == "Degreaser" then
             v.item_slot = "primary"
 			v.item_class = "tf_weapon_flamethrower"
 			v.used_by_classes = {}
@@ -242,20 +241,20 @@ for k, v in pairs(items_game["items"]) do
 			v.used_by_classes["pyro"] = 1
 			v.item_quality = "unique"
         end
-        if v.name == "Widowmaker" then
+        if tf_lang.GetRaw(v.item_name) == "Widowmaker" then
 			v.item_class = "tf_weapon_shotgun_imalreadywidowmaker"
 		end  
-        if v.name == "Spy-cicle" then
+        if tf_lang.GetRaw(v.item_name) == "Spy-cicle" then
 			v.item_class = "tf_weapon_knife_icicle" 
         end
-        if v.name == "Escape Plan" then
+        if tf_lang.GetRaw(v.item_name) == "Escape Plan" then
 			v.item_class = "tf_weapon_pickaxe" 
 		end
-        if v.name == "Tomislav" then
+        if tf_lang.GetRaw(v.item_name) == "Tomislav" then
 			v.item_class = "tf_weapon_minigun"  
             --print("Tomislav Time")
         end   
-        if v.name == "Flame Thrower" then
+        if tf_lang.GetRaw(v.item_name) == "Flame Thrower" then
 			v.attach_to_hands = 1
 			v.item_slot = "primary"
 			v.used_by_classes = {}
@@ -264,7 +263,7 @@ for k, v in pairs(items_game["items"]) do
 			v.item_class = "tf_weapon_flamethrower" 
 			v.item_quality = "unique" 
         end    
-        if v.name == "AWPer Hand" then
+        if tf_lang.GetRaw(v.item_name) == "AWPer Hand" then
 			v.attach_to_hands = 1
 			v.used_by_classes = {}
 			v.used_by_classes["sniper"] = {}
@@ -273,7 +272,7 @@ for k, v in pairs(items_game["items"]) do
 			v.item_class = "tf_weapon_sniperrifle" 
 			v.item_quality = "unique" 
         end    
-		if v.name == "Your Eternal Reward" or v.name == "Wanga Prick" then
+		if tf_lang.GetRaw(v.item_name) == "Your Eternal Reward" or tf_lang.GetRaw(v.item_name) == "Wanga Prick" then
 			v.attach_to_hands = 1
             v.item_slot = "melee"
             v.show_in_armory = 1 
@@ -307,7 +306,7 @@ for k, v in pairs(items_game["items"]) do
 			v.used_by_classes = {}
 			v.used_by_classes["demoman"] = {}
 			v.used_by_classes["demoman"] = 1
-            if (v.name != "Half-Zatoichi") then
+            if (tf_lang.GetRaw(v.item_name) != "Half-Zatoichi") then
 			    v.item_class = "tf_weapon_sword"	
             else
                 v.used_by_classes["soldier"] = {}
@@ -315,7 +314,7 @@ for k, v in pairs(items_game["items"]) do
             end
 			v.item_quality = "unique"
 		end
-		if v.name == "Scotsman's Skullcutter" then
+		if tf_lang.GetRaw(v.item_name) == "Scotsman's Skullcutter" then
 			v.attach_to_hands = 1
             v.item_slot = "melee"
             v.show_in_armory = 1 
@@ -325,6 +324,7 @@ for k, v in pairs(items_game["items"]) do
 			v.used_by_classes["demoman"] = 1
 			v.item_quality = "unique"
 		end 
+  
     elseif v.name then
         tf_items.Items[v.name] = v
     else

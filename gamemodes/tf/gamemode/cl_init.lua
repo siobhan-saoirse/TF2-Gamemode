@@ -3156,8 +3156,7 @@ local function MergeSteamInventory(ply)
 	)
 end
 
-timer.Simple(15.0, function()
-
+concommand.Add("tf_merge_loadout_ask", function(ply)
 	if CLIENT then
 		local conflict_help_frame = vgui.Create( "DFrame" )
 		conflict_help_frame:SetSize(200, 200)
@@ -3184,7 +3183,6 @@ timer.Simple(15.0, function()
 				MergeSteamInventory(LocalPlayer())
 			end
 	end
-
 end)
 
 concommand.Add("tf_merge_loadout", function(ply)
