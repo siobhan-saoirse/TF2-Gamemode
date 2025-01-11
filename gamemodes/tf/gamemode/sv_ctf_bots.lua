@@ -1059,6 +1059,9 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 		else
 			if (IsValid(bot.TargetEnt)) then
 				bot.botPos = bot.TargetEnt:GetPos()
+			else
+				-- our enemy doesn't exist anymore, set it to nil
+				bot.botPos = nil
 			end
 		end
 			
@@ -1141,12 +1144,12 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 		if IsValid(bot.TargetEnt) then
 			
 			-- move to our target
-			local distance = bot.TargetEnt:GetPos():DistToSqr(bot:GetPos())
+			local distance = bot.TargetEnt:GetPos():Distance(bot:GetPos())
 
 			-- back up if the target is really close
 			-- TODO: find a random spot rather than trying to back up into what could just be a wall
 			-- something like controller.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350, radius = 1000})?
-			if distance <= 90000 * bot:GetModelScale() and bot:Visible(bot.TargetEnt) and !bot:GetNWBool("Taunting",false) then
+			if distance <= bot:GetModelRadius() * bot:GetModelScale() and bot:Visible(bot.TargetEnt) and !bot:GetNWBool("Taunting",false) then
 				if (((IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) or !bot.TargetEnt:IsFriendly(bot)) and !bot:GetNWBool("Taunting",false)) then   
 					if (IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) then
 						mv:SetForwardSpeed((bot.ControllerBot:GetAngles():Forward()*bot:GetWalkSpeed()):Length())

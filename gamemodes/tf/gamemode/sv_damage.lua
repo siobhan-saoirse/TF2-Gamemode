@@ -503,7 +503,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			dmginfo:ScaleDamage(0.000001)
 		end
 	if (ent:IsPlayer()) then
-		if (dmginfo:GetDamageType() != DMG_GENERIC) then
+		if (dmginfo:GetDamageType() != DMG_GENERIC and !ent:HasGodMode()) then
 			ent:SetViewPunchAngles(Angle(-2,0,0))
 			if not ent.NextFlinch or CurTime() > ent.NextFlinch then
 				ent:DoTauntEvent("a_flinch01", true)
@@ -546,7 +546,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		if att~=ent and att:IsTFPlayer() and att:IsFriendly(ent) and !GetConVar("mp_friendlyfire"):GetBool() then
 			dmginfo:SetDamageType(DMG_GENERIC)
 			dmginfo:SetDamage(0)
-			dmginfo:SetAttacker(att)
+			dmginfo:SetAttacker(Entity( 0 ))
 			if (ent:IsPlayer()) then
 				ent:SetBloodColor(DONT_BLEED)
 			end
@@ -895,6 +895,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 					effectdata:SetOrigin( dmginfo:GetDamagePosition() )
 					util.Effect( "MetalSpark", effectdata )
 					sound.Play( "FX_RicochetSound.Ricochet", dmginfo:GetDamagePosition(), 75, 100, 1 )
+					ent:SetBloodColor(DONT_BLEED)
 				end
 			end
 		else
@@ -902,13 +903,11 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 				ent:PainSound("TLK_PLAYER_PAIN")
 			else
 				if (!ent:IsMiniBoss()) then
-					if ent:GetPlayerClass() == "scout" then
-						ent:EmitSound("Scout.BeingShotInvincible"..math.random(10,36))
-					end
 					local effectdata = EffectData()
 					effectdata:SetOrigin( dmginfo:GetDamagePosition() )
 					util.Effect( "MetalSpark", effectdata )
 					sound.Play( "FX_RicochetSound.Ricochet", dmginfo:GetDamagePosition(), 75, 100, 1 )
+					ent:SetBloodColor(DONT_BLEED)
 				end
 			end
 		end
