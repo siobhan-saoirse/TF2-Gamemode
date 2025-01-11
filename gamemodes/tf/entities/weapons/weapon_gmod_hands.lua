@@ -63,12 +63,6 @@ function SWEP:SetupDataTables()
 end
 
 function SWEP:Initialize()
-    if self.SetHoldType then
-        self:SetHoldType( "normal" )
-    else
-        self:SetWeaponHoldType( "normal" )
-    end
-
     self:DrawShadow( false )
 end 
 
@@ -76,11 +70,6 @@ function SWEP:Holster()
 	return true
 
 end
-
-function SWEP:Initialize()
-	self:SetWeaponHoldType( self.HoldType )
-end 
-
 function SWEP:PrimaryAttack()
 end 
 function SWEP:SecondaryAttack()

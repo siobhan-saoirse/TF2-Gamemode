@@ -203,7 +203,7 @@ local function LeadBot_S_Add(team2)
 
 	if !IsValid(bot) then ErrorNoHalt("[LeadBot] Player limit reached!\n") return end
 
-	bot.LastSegmented = CurTime() + 1
+	--bot.LastSegmented = CurTime() + 1
 
 	bot.ControllerBot = ents.Create("ctf_bot_navigator")
 	bot.ControllerBot:Spawn()
@@ -292,7 +292,7 @@ local function LeadBot_S_Add_Zombie(team,class,pos)
 	end
 
 	if !IsValid(bot) then ErrorNoHalt("[LeadBot] Player limit reached!\n") return end
-	bot.LastSegmented = CurTime() + 1
+	--bot.LastSegmented = CurTime() + 1
 
 	bot.ControllerBot = ents.Create("ctf_bot_navigator")
 	bot.ControllerBot:Spawn()
@@ -334,7 +334,7 @@ local function LeadBot_S_Add_Survivor(team,class,pos)
 	end
 
 	if !IsValid(bot) then ErrorNoHalt("[LeadBot] Player limit reached!\n") return end
-	bot.LastSegmented = CurTime() + 1
+	--bot.LastSegmented = CurTime() + 1
 
 	bot.ControllerBot = ents.Create("ctf_bot_navigator")
 	bot.ControllerBot:Spawn()
@@ -375,7 +375,7 @@ local function LeadBot_S_Add_BlueSurvivor(team,class,pos)
 	end
 
 	if !IsValid(bot) then ErrorNoHalt("[LeadBot] Player limit reached!\n") return end
-	bot.LastSegmented = CurTime() + 1
+	--bot.LastSegmented = CurTime() + 1
 
 	bot.ControllerBot = ents.Create("ctf_bot_navigator")
 	bot.ControllerBot:Spawn()
@@ -559,11 +559,12 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 	local buttons = 0
 	if bot.TFBot then
 		-- if our targetent is not alive, don't do anything until it's nil
+		bot.LastSegmented = CurTime() + 0.1
 		bot.CameraTest = true
 		cmd:ClearMovement()
 		cmd:ClearButtons()
 
-		if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then 
+		if (!IsValid(bot.TargetEnt)) then 
 			bot.TargetEnt = lookForNearestPlayer(bot)
 		end
 		if (IsValid(bot.TargetEnt)) then
@@ -788,14 +789,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		if (controller.nextStuckJump > CurTime()) then
 			buttons = buttons + IN_JUMP
 		end
-		if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then
-			
-			if (math.random(1,1+(table.Count(player.GetAll()))) == 1) then
-
-				bot.TargetEnt = lookForNearestPlayer(bot)
-
-			end
-		end
 		
 	
 		-- force a recompute
@@ -845,10 +838,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		if bot.ControllerBot.P then
 			bot.LastPath = bot.ControllerBot.P:GetAllSegments()
 		end
-	
-		if !bot.ControllerBot.P then
-			return
-		end
 		if bot.CurSegment ~= 2 and !table.EqualValues( bot.LastPath, bot.ControllerBot.P:GetAllSegments() ) then
 			bot.CurSegment = 2
 		end
@@ -859,15 +848,15 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 
 		if !bot.LastPath then return end
 		local curgoal = bot.LastPath[bot.CurSegment]
-		
 		-- got nowhere to go, why keep moving?
 		if !curgoal then
 			mv:SetForwardSpeed(0)
+			mv:SetMoveAngles(Angle(0,0,0))
 			return
 		end
 		
 			-- think one step ahead!
-			if bot:GetPos():Distance(curgoal.pos) < 50 * bot:GetModelScale() and bot.LastPath[bot.CurSegment + 1] then
+			if bot:GetPos():Distance(curgoal.pos) < 90 * bot:GetModelScale() and bot.LastPath[bot.CurSegment + 1] then
 				curgoal = bot.LastPath[bot.CurSegment + 1]
 			end
 			
@@ -875,8 +864,8 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			local controller = bot.ControllerBot
 			local lerpc = FrameTime() * 8
 			
-			if bot:GetPos():Distance(curgoal.pos) < 50 * bot:GetModelScale() then
-				bot.LastSegmented = CurTime()
+			if bot:GetPos():Distance(curgoal.pos) < 90 * bot:GetModelScale() then
+				--bot.LastSegmented = CurTime()
 				if bot.LastPath[bot.CurSegment + 1] then
 					curgoal = bot.LastPath[bot.CurSegment + 1] 
 				end
@@ -944,18 +933,9 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 end)
 hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 	local buttons = 0
-	if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
+	if bot.TFBot then
 		-- if our targetent is not alive, don't do anything until it's nil
 		
-		if (!IsValid(bot.TargetEnt)) then
-			
-			bot.TargetEnt = lookForNearestPlayer(bot)
-			
-		end
-		
-		if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then 
-			bot.TargetEnt = lookForNearestPlayer(bot)
-		end
 		local controller = bot.ControllerBot
 		bot.movement = mv
 		if bot:IsPlayer() and !bot:IsBot() then
@@ -980,7 +960,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 
 				bot.botPos = intel.Pos
 				
-				bot.LastSegmented = CurTime() + math.Rand(0.5, 1)
+				--bot.LastSegmented = CurTime() + math.Rand(0.5, 1)
 
 		elseif flagAvailable(bot) and !GAMEMODE.RoundHasWinner then -- CTF AI
 			for k, v in pairs(ents.FindByClass("item_teamflag")) do
@@ -1021,7 +1001,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 
 			bot.botPos = targetpos2
 			
-			bot.LastSegmented = CurTime() + math.Rand(0.5, 1)
+			--bot.LastSegmented = CurTime() + math.Rand(0.5, 1)
 		--[[
 		elseif string.find(game.GetMap(), "cp_") then -- CP AI
 
@@ -1074,16 +1054,18 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			end
 
 			bot.botPos = targetpos2
-			bot.LastSegmented = CurTime() + math.Rand(0.5, 1)
 		else
-			if (!IsValid(bot.TargetEnt)) then
-				bot.TargetEnt = lookForNearestPlayer(bot)
-			else
+			if (IsValid(bot.TargetEnt)) then
 				bot.botPos = bot.TargetEnt:GetPos()
-				bot.LastSegmented = CurTime() + math.Rand(0.5, 1)
 			end
 		end
 			
+		if (IsValid(bot.TargetEnt)) then
+			if (bot.TargetEnt:IsPlayer() and !bot.TargetEnt:Alive()) then
+				bot.TargetEnt = lookForNearestPlayer(bot)
+			end
+		end
+		
 		for _, intel in pairs(ents.FindByClass("item_teamflag_mvm")) do
 						
 			if IsValid(intel.Carrier) and bot:GetPos():Distance(intel.Carrier:GetPos()) < 180 and bot:EntIndex() != intel.Carrier:EntIndex() then -- dont move if too close!
@@ -1209,7 +1191,6 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 					mv:SetForwardSpeed(1200)
 				end
 			end
-			bot.LastSegmented = CurTime()
 		end
 
 			if (bot:GetPlayerClass() == "engineer") then
@@ -1361,9 +1342,6 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			cmd:ClearMovement()
 			cmd:ClearButtons()
 						
-			if (IsValid(bot.TargetEnt) and bot.TargetEnt:Health() < 0) then 
-				bot.TargetEnt = lookForNearestPlayer(bot)
-			end
 			
 		if (bot.LastPath ~= nil and bot.LastPath[bot.CurSegment + 1] ~= nil) then
 			local curgoal = bot.LastPath[bot.CurSegment + 1]
@@ -1431,10 +1409,12 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 					end
 				end
 					
-			if (IsValid(bot.TargetEnt)) then
+			if (IsValid(bot.TaretEnt)) then
 				if (bot.TargetEnt:EntIndex() == bot:EntIndex()) then
 					bot.TargetEnt = lookForNearestPlayer(bot)
 				elseif (bot.TargetEnt:IsFriendly(bot) and bot.playerclass != "Medic") then
+					bot.TargetEnt = lookForNearestPlayer(bot)
+				elseif (bot.TargetEnt:Health() < 0) then
 					bot.TargetEnt = lookForNearestPlayer(bot)
 				elseif (bot.TargetEnt:EntIndex() == bot.ControllerBot:EntIndex()) then
 					bot.TargetEnt = lookForNearestPlayer(bot)

@@ -246,10 +246,8 @@ function ENT:Use( activator, caller )
 						local bottable = table.Random(horde_bots)
 						if (math.random(1,4) == 1) then -- unlocked bots
 							bottable = table.Random(unlock_bots)
-						elseif (math.random(1,20) == 1) then
-							bot = ents.Create(table.Random(giant_bots)) 
 						end 
-							for i=1,math.random(2,5) do
+							for i=1,math.random(2,10) do
 								local bot = ents.Create(bottable)
 								if (!IsValid(bot)) then
 									return
@@ -267,7 +265,7 @@ function ENT:Use( activator, caller )
 						local bot = ents.Create(table.Random(stock_bots))
 						if (math.random(1,6) == 1) then -- unlocked bots
 							bot = ents.Create(table.Random(unlock_bots))
-							for i=1,math.random(1,6) do
+							for i=1,math.random(1,10) do
 								if (!IsValid(bot)) then
 									return
 								end
@@ -297,7 +295,7 @@ function ENT:Use( activator, caller )
 							
 						else
 
-							for i=1,math.random(1,6) do
+							for i=1,math.random(1,10) do
 								if (!IsValid(bot)) then
 									return
 								end

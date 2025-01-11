@@ -175,8 +175,8 @@ for k, v in pairs(items_game["items"]) do
     --if v.id == 424 then print(tf_lang.GetRaw(v.item_name)) end
 
     if v.item_name then
-        v.name = tf_lang.GetRaw(v.item_name).." "..v.id
-        tf_items.Items[tf_lang.GetRaw(v.item_name)] = v
+        v.name = tf_lang.GetRaw(v.item_name)
+        tf_items.Items[v.name] = v
         if tf_lang.GetRaw(v.item_name) == "Red-Tape Recorder" then
 			v.item_class = "tf_weapon_rtr" 
             v.item_slot = "primary"

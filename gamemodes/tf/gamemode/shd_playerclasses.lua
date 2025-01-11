@@ -276,10 +276,6 @@ function meta:SetPlayerClass(class)
 		ErrorNoHalt("WARNING : Class \""..class.."\" not found\n")
 		return
 	end
-	
-	if (c.IsL4D and !IsMounted("left4dead2")) then
-		return
-	end
 
 	self.TempAttributes = {}
 	self.NextSpeak = nil
@@ -613,10 +609,11 @@ function meta:SetClassSpeed(sp)
 			self:SetNWFloat("ClassSpeed", sp) 
 		end
 	else
-		self:SetWalkSpeed(240)
-		self:SetRunSpeed(420) 
+		self:SetWalkSpeed(190)
+		self:SetSlowWalkSpeed(150)
+		self:SetRunSpeed(320) 
 		self:SetJumpPower(200)
-		self:SetCrouchedWalkSpeed(0.30)
+		self:SetCrouchedWalkSpeed(0.4)
 		self:SetMaxSpeed(520) 
 		self:SetNWFloat("ClassSpeed", sp)
 	end
@@ -653,12 +650,7 @@ function meta:ResetClassSpeed()
 		
 		sp = sp * mul_speedbonus + add_speedbonus
 	end
-	
-	if (self.playerclass != "Scout" and self:IsMiniBoss() and !string.find(self:GetPlayerClass(),"giant")) then
-		self:SetClassSpeed(sp)
-	else
-		self:SetClassSpeed(sp)
-	end
+	self:SetClassSpeed(sp)
 	self:SetJumpPower(self.PlayerJumpPower)
 end
 

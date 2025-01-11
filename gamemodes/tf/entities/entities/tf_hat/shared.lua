@@ -2920,16 +2920,16 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 								if (snd.Entity:GetNWBool("Taunting",false) == true) then
 									snd.Volume = 0
 								else
-									snd.Volume = 1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.01))
+									snd.Volume = 1 * (groundspeed * 0.000006)
 								end
 							else
-								snd.Volume = 1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.01))
+								snd.Volume = 1 * (groundspeed * 0.00005)
 							end
 						else
 							if (snd.Entity:GetNWBool("Taunting",false) == true) then
 								snd.Volume = 0
 							else
-								snd.Volume = 1 * (groundspeed * 0.000009 * (snd.Entity:GetRunSpeed() * 0.01))
+								snd.Volume = 1 * (groundspeed * 0.000009)
 							end
 						end
 					end
@@ -2990,16 +2990,16 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 								if (snd.Entity:GetNWBool("Taunting",false) == true) then
 									snd.Volume = 0
 								else
-									snd.Volume = 1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.01))
+									snd.Volume = 1 * (groundspeed * 0.000006)
 								end
 							else
-								snd.Volume = 1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.01))
+								snd.Volume = 1 * (groundspeed * 0.00005)
 							end
 						else
 							if (snd.Entity:GetNWBool("Taunting",false) == true) then
 								snd.Volume = 0
 							else
-								snd.Volume = 1 * (groundspeed * 0.000009 * (snd.Entity:GetRunSpeed() * 0.01))
+								snd.Volume = 1 * (groundspeed * 0.000009)
 							end
 						end
 					end
@@ -3094,16 +3094,16 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 							if (snd.Entity:GetNWBool("Taunting",false) == true) then
 								snd.Volume = 0
 							else
-								snd.Volume = 1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.01))
+								snd.Volume = 1 * (groundspeed * 0.000006)
 							end
 						else
-							snd.Volume = 1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.01))
+							snd.Volume = 1 * (groundspeed * 0.00005)
 						end
 					else
 						if (snd.Entity:GetNWBool("Taunting",false) == true) then
 							snd.Volume = 0
 						else
-							snd.Volume = 1 * (groundspeed * 0.000009 * (snd.Entity:GetRunSpeed() * 0.01))
+							snd.Volume = 1 * (groundspeed * 0.000009)
 						end
 					end
 				end
@@ -3183,28 +3183,10 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 			end]]
 			snd.Pitch = math.random(95,105)
 			if (snd.Entity:IsPlayer()) then
-				if (snd.Entity:GetMoveType() == MOVETYPE_LADDER) then
-					snd.Volume = 1 * (groundspeed * 0.000006) * 0.2
-				elseif (snd.Entity:IsPlayer() and snd.Entity:Crouching()) then
-					snd.Volume = 1 * (groundspeed * 0.000006) * 0.2
+				if (snd.Entity:Crouching()) then
+					snd.Volume = 1 * (groundspeed * 0.000006) * 4
 				else
-					if (CLIENT and snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
-						if (LocalPlayer():ShouldDrawLocalPlayer()) then
-							if (snd.Entity:GetNWBool("Taunting",false) == true) then
-								snd.Volume = 0
-							else
-								snd.Volume = ((1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.01)))) * 0.3
-							end
-						else
-							snd.Volume = ((1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.01)))) * 0.03
-						end
-					else
-						if (snd.Entity:GetNWBool("Taunting",false) == true) then
-							snd.Volume = 0
-						else
-							snd.Volume = ((1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.01)))) * 0.3
-						end
-					end
+					snd.Volume = 1 * (groundspeed * 0.000006)
 				end
 			end
 			if (snd.Entity:GetClass() == "infected_this_is_not_needed_anymore_why") then
@@ -3403,16 +3385,16 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 							if (snd.Entity:GetNWBool("Taunting",false) == true) then
 								snd.Volume = 0
 							else
-								snd.Volume = 1 * (groundspeed * 0.000006 * (snd.Entity:GetRunSpeed() * 0.01))
+								snd.Volume = 1 * (groundspeed * 0.000006)
 							end
 						else
-							snd.Volume = 1 * (groundspeed * 0.00005 * (snd.Entity:GetRunSpeed() * 0.01))
+							snd.Volume = 1 * (groundspeed * 0.000006)
 						end
 					else
 						if (snd.Entity:GetNWBool("Taunting",false) == true) then
 							snd.Volume = 0
 						else
-							snd.Volume = 1 * (groundspeed * 0.000009 * (snd.Entity:GetRunSpeed() * 0.01))
+							snd.Volume = 1 * (groundspeed * 0.000006)
 						end
 					end
 				end

@@ -10,7 +10,7 @@ include("sv_death.lua")
 include("shd_gravitygun.lua")
 include("sv_chat.lua")  
 include("sv_loadout.lua")   
-include("shd_taunts.lua")
+include("shd_taunts.lua") 
 resource.AddWorkshop( "1932936017" )
 resource.AddWorkshop( "3323795558" )
 resource.AddFile("scenes/scenes.image")
@@ -130,28 +130,6 @@ concommand.Add("addcond", function(pl, cmd, args)
 
 			end)
 		end 
-		if a == 66691 then
-			pl:GetWeapons()[1].Primary.ClipSize = pl:GetWeapons()[1].Primary.ClipSize + 200
-			pl:GetWeapons()[2].Primary.ClipSize = pl:GetWeapons()[1].Primary.ClipSize + 200
-			pl:GetWeapons()[1].ReloadTime = pl:GetWeapons()[1].ReloadTime - 200
-			pl:GetWeapons()[2].ReloadTime = pl:GetWeapons()[2].ReloadTime - 200
-			pl:GetWeapons()[1].Primary.Delay = pl:GetWeapons()[1].Primary.Delay - 200
-			pl:GetWeapons()[2].Primary.Delay = pl:GetWeapons()[2].Primary.Delay - 200
-			pl:GetWeapons()[3].Primary.Delay = pl:GetWeapons()[3].Primary.Delay - 200
-			pl:EmitSound("items/powerup_pickup_haste.wav",150,200)
-			pl:EmitSound("items/powerup_pickup_haste.wav",150,200)
-			pl:EmitSound("items/powerup_pickup_haste.wav",150,200)
-			pl:EmitSound("items/powerup_pickup_haste.wav",150,200)
-			pl:EmitSound("items/powerup_pickup_haste.wav",150,200)
-			pl:SetMaxHealth(pl:Health() + 10000)
-			pl:SetHealth(pl:GetMaxHealth())
-			timer.Create("Haste1"..pl:EntIndex(), 0.00, 0, function()
-				if !pl:Alive() then timer.Stop("Haste1"..pl:EntIndex()) return end
-			
-				pl:SetClassSpeed(pl:GetPlayerClassTable().Speed + 200)
-
-			end)
-		end 
 		if a == 666 then
 			pl:GetWeapons()[3].DamageType = DMG_DISSOLVE
 		end 
@@ -163,7 +141,7 @@ concommand.Add("addcond", function(pl, cmd, args)
 			timer.Create("Haste2"..pl:EntIndex(), 0.00, 0, function()
 				if !pl:Alive() then timer.Stop("Haste2"..pl:EntIndex()) return end
 			
-				pl:SetClassSpeed(pl:GetPlayerClassTable().Speed + 70)
+				pl:SetClassSpeed(pl:GetPlayerClassTable().Speed * 1.2)
 
 			end)
 		end 

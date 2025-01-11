@@ -110,9 +110,6 @@ end
 
 
 function SWEP:OnDrop()
-	if (GetConVar("tf_allow_pickup_weapons"):GetBool()) then
-		self.BaseClass.OnDrop(self)
-	end
 	local mdl
 	if self.WorldModelOverride2 then
 		mdl = self.WorldModelOverride2
@@ -121,7 +118,7 @@ function SWEP:OnDrop()
 	end
 	
 	timer.Remove("AutoReload")
-	
+	--[[
 	local drop = ents.Create("prop_physics")
 	drop:SetSolid(SOLID_VPHYSICS)
 	drop:SetModel(mdl)
@@ -209,7 +206,7 @@ function SWEP:OnDrop()
 	end
 
 	timer.Stop("AutoReload")
-	
+	]]
 	self:Remove()
 end
 

@@ -50,6 +50,7 @@ function ENT:ChasePos( options )
 				return
 			end
 			
+			coroutine.wait(0.1)
 			coroutine.yield()
 		end
 	end
@@ -68,7 +69,7 @@ function ENT:RunBehaviour()
 		if self.PosGen then
 			self:ChasePos({})
 		end
-		coroutine.wait(1)
+		coroutine.wait(0.1)
 		coroutine.yield()
 	end
 end

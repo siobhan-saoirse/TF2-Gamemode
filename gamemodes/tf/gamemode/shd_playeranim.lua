@@ -593,13 +593,10 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 	local w = pl:GetActiveWeapon()
 	if event == PLAYERANIMEVENT_ATTACK_PRIMARY then
 		if pl.anim_InSwim then
-			pl.RgChatActiveGesture = _G["ACT_MP_ATTACK_SWIM_"..pl:GetActiveWeapon().HoldType]
 			pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_SWIM_PRIMARYFIRE, true)
 		elseif pl:Crouching() then
-			pl.RgChatActiveGesture = _G["ACT_MP_ATTACK_CROUCH_"..pl:GetActiveWeapon().HoldType]
 			pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_CROUCH_PRIMARYFIRE, true)
 		else
-			pl.RgChatActiveGesture = _G["ACT_MP_ATTACK_STAND_"..pl:GetActiveWeapon().HoldType]
 			pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_STAND_PRIMARYFIRE, true)
 		end
 		
@@ -611,13 +608,10 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 		end
 	elseif event == PLAYERANIMEVENT_RELOAD then
 		if pl.anim_InSwim then
-			pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_SWIM_"..pl:GetActiveWeapon().HoldType]
 			pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_SWIM, true)
 		elseif pl:Crouching() then
-			pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_CROUCH_"..pl:GetActiveWeapon().HoldType]
 			pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_CROUCH, true)
 		else
-			pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_STAND_"..pl:GetActiveWeapon().HoldType]
 			pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_STAND, true)
 		end
 		
@@ -629,7 +623,7 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 		elseif data == ACT_MP_GESTURE_FLINCH_CHEST then
 			-- Flinch
 			pl:AnimRestartGesture(GESTURE_SLOT_FLINCH, ACT_MP_GESTURE_FLINCH_CHEST, true)
-			pl.RgChatActiveGesture = ACT_MP_GESTURE_FLINCH_CHEST
+			--pl.RgChatActiveGesture = ACT_MP_GESTURE_FLINCH_CHEST
 		elseif data == ACT_MP_AIRWALK then
 			-- Go into airwalk animation
 			if pl.anim_Jumping then
@@ -640,37 +634,37 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 		elseif data == ACT_MP_RELOAD_STAND then
 			-- Reload loop
 			if pl.anim_InSwim then
-				pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_SWIM_"..pl:GetActiveWeapon().HoldType]
+				--pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_SWIM_"..pl:GetActiveWeapon().HoldType]
 				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_SWIM, true)
 			elseif pl:Crouching() then
-				pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_CROUCH_"..pl:GetActiveWeapon().HoldType]
+				--pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_CROUCH_"..pl:GetActiveWeapon().HoldType]
 				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_CROUCH, true)
 			else
-				pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_STAND_"..pl:GetActiveWeapon().HoldType]
+				--pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_STAND_"..pl:GetActiveWeapon().HoldType]
 				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_STAND, true)
 			end
 		elseif data == ACT_MP_RELOAD_STAND_LOOP then
 			-- Reload loop
 			if pl.anim_InSwim then
-				pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_STAND_"..pl:GetActiveWeapon().HoldType.."_LOOP"]
+				--pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_STAND_"..pl:GetActiveWeapon().HoldType.."_LOOP"]
 				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_SWIM_LOOP, true)
 			elseif pl:Crouching() then
-				pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_STAND_"..pl:GetActiveWeapon().HoldType.."_LOOP"]
+				--pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_STAND_"..pl:GetActiveWeapon().HoldType.."_LOOP"]
 				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_CROUCH_LOOP, true)
 			else
-				pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_STAND_"..pl:GetActiveWeapon().HoldType.."_LOOP"]
+				--pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_STAND_"..pl:GetActiveWeapon().HoldType.."_LOOP"]
 				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_STAND_LOOP, true)
 			end
 		elseif data == ACT_MP_RELOAD_STAND_END then
 			-- Reload end
 			if pl.anim_InSwim then
-				pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_STAND_"..pl:GetActiveWeapon().HoldType.."_END"]
+				--pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_STAND_"..pl:GetActiveWeapon().HoldType.."_END"]
 				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_SWIM_END, true)
 			elseif pl:Crouching() then
-				pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_STAND_"..pl:GetActiveWeapon().HoldType.."_END"]
+				--pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_STAND_"..pl:GetActiveWeapon().HoldType.."_END"]
 				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_CROUCH_END, true)
 			else
-				pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_STAND_"..pl:GetActiveWeapon().HoldType.."_END"]
+				--pl.RgChatActiveGesture = _G["ACT_MP_RELOAD_STAND_"..pl:GetActiveWeapon().HoldType.."_END"]
 				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_STAND_END, true)
 			end
 		elseif data == ACT_MP_ATTACK_STAND_PREFIRE then
@@ -678,26 +672,26 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 			local act
 			----MsgN("Restarting prefire gesture")
 			if pl.anim_InSwim then
-				pl.RgChatActiveGesture = ACT_MP_ATTACK_SWIM_PREFIRE
+				--pl.RgChatActiveGesture = ACT_MP_ATTACK_SWIM_PREFIRE
 				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_SWIM_PREFIRE, true)
 			elseif pl:Crouching() then
-				pl.RgChatActiveGesture = ACT_MP_ATTACK_CROUCH_PREFIRE
+				--pl.RgChatActiveGesture = ACT_MP_ATTACK_CROUCH_PREFIRE
 				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_CROUCH_PREFIRE, true)
 			else
-				pl.RgChatActiveGesture = ACT_MP_ATTACK_STAND_PREFIRE
+				--pl.RgChatActiveGesture = ACT_MP_ATTACK_STAND_PREFIRE
 				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_STAND_PREFIRE, true)
 			end
 			pl.anim_Deployed = true
 		elseif data == ACT_MP_ATTACK_STAND_POSTFIRE then
 			-- Postfire gesture
 			if pl.anim_InSwim then
-				pl.RgChatActiveGesture = ACT_MP_ATTACK_SWIM_POSTFIRE
+				--pl.RgChatActiveGesture = ACT_MP_ATTACK_SWIM_POSTFIRE
 				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_SWIM_POSTFIRE, true)
 			elseif pl:Crouching() then
-				pl.RgChatActiveGesture = ACT_MP_ATTACK_CROUCH_POSTFIRE
+				--pl.RgChatActiveGesture = ACT_MP_ATTACK_CROUCH_POSTFIRE
 				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_CROUCH_POSTFIRE, true)
 			else
-				pl.RgChatActiveGesture = ACT_MP_ATTACK_STAND_POSTFIRE
+				--pl.RgChatActiveGesture = ACT_MP_ATTACK_STAND_POSTFIRE
 				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_STAND_POSTFIRE, true)
 			end
 			pl.anim_Deployed = false
@@ -765,16 +759,28 @@ function plyr:DoTauntEvent(anim,autokill)
 		if (autokill == nil) then
 			autokill = true
 		end 
+		if (isnumber(anim)) then
+			self:AnimRestartGesture( GESTURE_SLOT_VCD, self:SelectWeightedSequence(anim), autokill )
+			if SERVER then
 
-		self:AnimRestartGesture( GESTURE_SLOT_VCD, self:LookupSequence(anim), autokill )
-		if SERVER then
+				self:AddVCDSequenceToGestureSlot( GESTURE_SLOT_VCD, self:SelectWeightedSequence(anim), 0, autokill )
+				net.Start("TauntAnim")
+					net.WriteEntity(self)
+					net.WriteInt(self:SelectWeightedSequence(anim),32)
+					net.WriteBool(autokill)
+				net.Broadcast()
+			end
+		elseif (isstring(anim)) then
+			self:AnimRestartGesture( GESTURE_SLOT_VCD, self:LookupSequence(anim), autokill )
+			if SERVER then
 
-			self:AddVCDSequenceToGestureSlot( GESTURE_SLOT_VCD, self:LookupSequence(anim), 0, autokill )
-			net.Start("TauntAnim")
-				net.WriteEntity(self)
-				net.WriteInt(self:LookupSequence(anim),32)
-				net.WriteBool(autokill)
-			net.Broadcast()
+				self:AddVCDSequenceToGestureSlot( GESTURE_SLOT_VCD, self:LookupSequence(anim), 0, autokill )
+				net.Start("TauntAnim")
+					net.WriteEntity(self)
+					net.WriteInt(self:LookupSequence(anim),32)
+					net.WriteBool(autokill)
+				net.Broadcast()
+			end
 		end
 	end
 end

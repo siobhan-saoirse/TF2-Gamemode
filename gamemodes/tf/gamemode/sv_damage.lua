@@ -151,7 +151,17 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 	local att, inf = dmginfo:GetAttacker(), dmginfo:GetInflictor()
 
 	if (att:IsPlayer() and att:IsHL2() and hitgroup == HITGROUP_HEAD) then
-		dmginfo:SetDamageType(bit.bor(dmginfo:GetDamageType(),DMG_ACID))
+		local mul
+
+		if ent:IsPlayer() and (!ent.NextPainSound or ent.NextPainSound<CurTime()) then
+			SendUserMessage("CriticalHitReceived", ent)
+		end
+		
+		-- Modify the damage
+		-- (apparently, minicrits don't suffer from damage spread either)
+		dmginfo:ScaleDamage(1.35)
+		
+		DispatchCritEffect(ent, inf, att, true)
 	end
 
 	-- HL2 guns and melee weapons use the owner as the inflictor, get the real inflictor by retrieving the owner's current weapon
@@ -492,6 +502,15 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		if ent:GetNWBool("Bonked") == true || ent:IsPlayer() and ent:Team() == TEAM_FRIENDLY then
 			dmginfo:ScaleDamage(0.000001)
 		end
+	if (ent:IsPlayer()) then
+		if (dmginfo:GetDamageType() != DMG_GENERIC) then
+			ent:SetViewPunchAngles(Angle(-2,0,0))
+			if not ent.NextFlinch or CurTime() > ent.NextFlinch then
+				ent:DoTauntEvent("a_flinch01", true)
+				ent.NextFlinch = CurTime() + ent:SequenceDuration(ent:LookupSequence("a_flinch01"))
+			end
+		end
+	end
 	if (ent:IsPlayer() and att == ent && dmginfo:IsExplosionDamage() && (ent:GetNWBool("Bonked") == true || ent:EntityTeam() == TEAM_FRIENDLY)) then
 		if (ent.m_flBlastJumpLaunchTime == nil) then
 			if (!ent.Whistle) then
@@ -666,7 +685,8 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	gamemode.Call("PostScaleDamage", ent, 0, dmginfo)
 	if (ent:IsPlayer() and !ent:IsHL2()) then
 		if (attacker:IsPlayer() && attacker:IsHL2()) then
-			dmginfo:SetDamage(dmginfo:GetDamage() * 1.5)
+			-- too overpowered! eugh!
+			--dmginfo:SetDamage(dmginfo:GetDamage() * 1.5)
 		end
 	end
 	if ent:IsTFPlayer() then
@@ -844,10 +864,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			end
 		end
 	end
-	if not ent.NextFlinch or CurTime() > ent.NextFlinch and !ent:IsL4D() then
-		ent:DoAnimationEvent(ACT_MP_GESTURE_FLINCH_CHEST, true)
-		ent.NextFlinch = CurTime() + 0.5
-	end
 	if hp<=0 then
 		ent.LastDamageInfo = CopyDamageInfo(dmginfo)
 	elseif not dmginfo:IsFallDamage() and not dmginfo:IsDamageType(DMG_DIRECT) and not dmginfo:IsDamageType(DMG_BURN) and ent:WaterLevel() < 1 and !(inflictor:GetClass()=="tf_entityflame" and inflictor:GetClass()=="tf_flame" and inflictor:GetClass()=="entityflame") then
@@ -870,9 +886,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 				end
 			else
 				if (!ent:IsMiniBoss()) then
-					if ent:GetPlayerClass() == "scout" then
-						ent:EmitSound("Scout.BeingShotInvincible"..math.random(10,36))
-					end
 					local effectdata = EffectData()
 					effectdata:SetOrigin( dmginfo:GetDamagePosition() )
 					util.Effect( "MetalSpark", effectdata )
