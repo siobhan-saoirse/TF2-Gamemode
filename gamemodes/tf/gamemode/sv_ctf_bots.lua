@@ -559,8 +559,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 	local buttons = 0
 	if bot.TFBot then
 		-- if our targetent is not alive, don't do anything until it's nil
-		bot.LastSegmented = CurTime() + 0.1
-		bot.CameraTest = true
+		bot.LastSegmented = CurTime() + 1
 		cmd:ClearMovement()
 		cmd:ClearButtons()
 
@@ -640,7 +639,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		end
 	
 		local moveawayrange = 80
-		if (string.find(bot:GetModel(),"/bot_")) then
+		if (string.find(bot:GetModel(),"/bot_") and !string.find(bot:GetModel(),"/bot_")) then
 			moveawayrange = 150
 		end
 		if controller.NextCenter > CurTime() and bot:GetNWBool("Taunting",false) != true and bot.botPos then

@@ -510,6 +510,11 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 				ent.NextFlinch = CurTime() + ent:SequenceDuration(ent:LookupSequence("a_flinch01"))
 			end
 		end
+		if (ent:HasPlayerState(PLAYERSTATE_MARKED)) then
+			if (ent:IsHL2()) then
+				dmginfo:SetDamageType(bit.bor(dmginfo:GetDamageType(),DMG_POISON))
+			end
+		end
 	end
 	if (ent:IsPlayer() and att == ent && dmginfo:IsExplosionDamage() && (ent:GetNWBool("Bonked") == true || ent:EntityTeam() == TEAM_FRIENDLY)) then
 		if (ent.m_flBlastJumpLaunchTime == nil) then

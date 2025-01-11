@@ -40,6 +40,8 @@ function ENT:ChasePos( options )
 
 			self.P:Compute(self, self.PosGen)
 			self.P:Update( self )								-- This function moves the bot along the path
+			self.P:Compute(self:GetOwner(), self.PosGen)
+			self.P:Update( self:GetOwner() )
 
 			if GetConVar("developer"):GetFloat() > 0 then
 				self.P:Draw()
