@@ -38,11 +38,8 @@ function ENT:ChasePos( options )
 				self:SetVelocity(owner:GetVelocity())
 			end
 
-			self.P:Compute(self, self.PosGen)
-			self.P:Update( self )								-- This function moves the bot along the path
 			self.loco:FaceTowards(self.PosGen)
 			self.loco:Approach( self.PosGen, 1 )
-	
 			--self.P:Compute(self:GetOwner(), self.PosGen)
 			--self.P:Update( self:GetOwner() )
 			
@@ -51,7 +48,7 @@ function ENT:ChasePos( options )
 				return
 			end
 			
-			coroutine.wait(0.1)
+			coroutine.wait(1)
 			coroutine.yield()
 		end
 	end
@@ -81,6 +78,7 @@ function ENT:Think()
 		if GetConVar("developer"):GetFloat() > 0 and self.P:IsValid() then
 			self.P:Draw()
 		end
+
 		if (IsValid(self:GetOwner())) then
 			self.loco:SetDesiredSpeed(self:GetOwner():GetWalkSpeed())
 		end

@@ -806,14 +806,15 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		
 		ent.LastDamageWasCrit = true
 	else
-	
-		if (string.find(ent:GetModel(),"/bot_") and ent:IsPlayer() and ent.TFBot and ent:Team() == TEAM_BLU and attacker:IsPlayer() and attacker:GetPlayerClass() == "gmodplayer") then
-			dmginfo:ScaleDamage(3)
-		else
-			if (IsValid(attacker) and attacker:IsPlayer() and (attacker:GetPlayerClass() == "captainpunch" || attacker:GetPlayerClass() == "chieftavish" || attacker:GetPlayerClass() == "chiefpyro")) then
-				dmginfo:ScaleDamage(5)
+		if (ent:IsPlayer()) then
+			if (string.find(ent:GetModel(),"/bot_") and ent:IsPlayer() and ent.TFBot and ent:Team() == TEAM_BLU and attacker:IsPlayer() and attacker:GetPlayerClass() == "gmodplayer") then
+				dmginfo:ScaleDamage(3)
 			else
-				dmginfo:ScaleDamage(1)
+				if (IsValid(attacker) and attacker:IsPlayer() and (attacker:GetPlayerClass() == "captainpunch" || attacker:GetPlayerClass() == "chieftavish" || attacker:GetPlayerClass() == "chiefpyro")) then
+					dmginfo:ScaleDamage(5)
+				else
+					dmginfo:ScaleDamage(1)
+				end
 			end
 		end
 	end

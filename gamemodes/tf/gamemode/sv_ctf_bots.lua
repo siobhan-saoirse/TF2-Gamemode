@@ -559,7 +559,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 	local buttons = 0
 	if bot.TFBot then
 		-- if our targetent is not alive, don't do anything until it's nil
-		bot.LastSegmented = CurTime() + 0.1
+		bot.LastSegmented = CurTime() + 1
 		cmd:ClearMovement()
 		cmd:ClearButtons()
 
@@ -820,8 +820,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					else
 						bot:SetEyeAngles(LerpAngle(0.2 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
 					end
-				else
-					bot:SetEyeAngles(LerpAngle(0.2 * lerp, bot:EyeAngles(), (goalpos - bot:GetShootPos()):GetNormalized():Angle()))
 				end
 			end
 			if IsValid(bot.intelcarrier) and !IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.intelcarrier:GetPos()) < 6000 and bot.intelcarrier:Health() > 0 then
@@ -1149,7 +1147,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			-- back up if the target is really close
 			-- TODO: find a random spot rather than trying to back up into what could just be a wall
 			-- something like controller.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350, radius = 1000})?
-			if distance <= bot:GetModelRadius() * bot:GetModelScale() and bot:Visible(bot.TargetEnt) and !bot:GetNWBool("Taunting",false) then
+			if distance <= bot:GetModelRadius() and bot:Visible(bot.TargetEnt) and !bot:GetNWBool("Taunting",false) then
 				if (((IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) or !bot.TargetEnt:IsFriendly(bot)) and !bot:GetNWBool("Taunting",false)) then   
 					if (IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) then
 						mv:SetForwardSpeed((bot.ControllerBot:GetAngles():Forward()*bot:GetWalkSpeed()):Length())

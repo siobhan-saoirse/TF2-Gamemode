@@ -1874,6 +1874,10 @@ function GM:PlayerSpawn(ply)
 		ply.ItemLoadout = table.Copy(c.DefaultLoadout)
 		ply.ItemProperties = {}
 	end
+	ply:SetNWBool("SpawnGlows",true)
+	timer.Simple(10, function()
+		ply:SetNWBool("SpawnGlows",false)
+	end)
 	--[[
 	if (string.StartWith(game.GetMap(),"c1m") or string.StartWith(game.GetMap(),"c2m") or string.StartWith(game.GetMap(),"c3m") or string.StartWith(game.GetMap(),"c4m") 
 	or string.StartWith(game.GetMap(),"c5m") or string.StartWith(game.GetMap(),"c6m") or string.StartWith(game.GetMap(),"c7m") or string.StartWith(game.GetMap(),"c8m")
