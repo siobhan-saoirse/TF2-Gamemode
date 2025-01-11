@@ -11,6 +11,7 @@ local stock_bots = {
 	"mvm_bot",
 	"mvm_bot_melee_scout",
 	"mvm_bot_soldier",
+	"mvm_bot_pyro",
 	"mvm_bot_demoman",
 	"mvm_bot_heavy",
 	"mvm_bot_medic",
@@ -18,6 +19,7 @@ local stock_bots = {
 local horde_bots = {
 	"mvm_bot",	
 	"mvm_bot_soldier",
+	"mvm_bot_pyro",
 	"mvm_bot_demoman",
 	"mvm_bot_heavy",
 	"mvm_bot_demoknight",

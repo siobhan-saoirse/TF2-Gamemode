@@ -559,7 +559,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 	local buttons = 0
 	if bot.TFBot then
 		-- if our targetent is not alive, don't do anything until it's nil
-		bot.LastSegmented = CurTime() + 1
+		bot.LastSegmented = CurTime() + 0.1
 		cmd:ClearMovement()
 		cmd:ClearButtons()
 
@@ -639,7 +639,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		end
 	
 		local moveawayrange = 80
-		if (string.find(bot:GetModel(),"/bot_") and !string.find(bot:GetModel(),"/bot_")) then
+		if (string.find(bot:GetModel(),"/bot_") and !string.find(bot:GetModel(),"medic")) then
 			moveawayrange = 150
 		end
 		if controller.NextCenter > CurTime() and bot:GetNWBool("Taunting",false) != true and bot.botPos then
@@ -814,10 +814,14 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				elseif bot.Difficulty == 3 then
 					lerp = 4
 				end
-				if (bot:IsL4D()) then
-					bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
+				if (bot:Visible(bot.TargetEnt)) then
+					if (bot:IsL4D()) then
+						bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
+					else
+						bot:SetEyeAngles(LerpAngle(0.2 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
+					end
 				else
-					bot:SetEyeAngles(LerpAngle(0.2 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
+					bot:SetEyeAngles(LerpAngle(0.2 * lerp, bot:EyeAngles(), (goalpos - bot:GetShootPos()):GetNormalized():Angle()))
 				end
 			end
 			if IsValid(bot.intelcarrier) and !IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.intelcarrier:GetPos()) < 6000 and bot.intelcarrier:Health() > 0 then
@@ -892,9 +896,8 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					end
 				end
 			end
-			local mva = ((goalpos + bot:GetCurrentViewOffset()) - bot:GetShootPos()):Angle()
-			
-			if bot.botPos and curgoal.area:GetAttributes() != NAV_MESH_CLIFF and bot:GetPos():Distance(curgoal.pos) > 100 * bot:GetModelScale() then
+			local mva = ((goalpos + bot:GetCurrentViewOffset()) - bot.ControllerBot:EyePos()):Angle()
+			if bot.botPos and curgoal.area:GetAttributes() != NAV_MESH_CLIFF then
 				if (IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging) then
 					--mv:SetMoveAngles(mva)
 				else
@@ -1146,19 +1149,19 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			if distance <= 90000 * bot:GetModelScale() and bot:Visible(bot.TargetEnt) and !bot:GetNWBool("Taunting",false) then
 				if (((IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) or !bot.TargetEnt:IsFriendly(bot)) and !bot:GetNWBool("Taunting",false)) then   
 					if (IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) then
-						mv:SetForwardSpeed(bot:GetRunSpeed())
+						mv:SetForwardSpeed((bot.ControllerBot:GetAngles():Forward()*bot:GetWalkSpeed()):Length())
 						
 							if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
 								bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * (110 * bot:GetModelScale()), radius = 120 * bot:GetModelScale()})
 							end
 					else
-						mv:SetForwardSpeed(-bot:GetRunSpeed())
+						mv:SetForwardSpeed(-(bot.ControllerBot:GetAngles():Forward()*bot:GetWalkSpeed()):Length())
 							if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
 								bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350 * bot:GetModelScale(), radius = 3000 * bot:GetModelScale()})
 							end
 					end
 				else
-					mv:SetForwardSpeed(-bot:GetRunSpeed())
+					mv:SetForwardSpeed(-(bot.ControllerBot:GetAngles():Forward()*bot:GetWalkSpeed()):Length())
 						if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
 							bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350 * bot:GetModelScale(), radius = 3000 * bot:GetModelScale()})
 						end

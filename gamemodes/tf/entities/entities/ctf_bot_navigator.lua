@@ -40,12 +40,11 @@ function ENT:ChasePos( options )
 
 			self.P:Compute(self, self.PosGen)
 			self.P:Update( self )								-- This function moves the bot along the path
-			self.P:Compute(self:GetOwner(), self.PosGen)
-			self.P:Update( self:GetOwner() )
-
-			if GetConVar("developer"):GetFloat() > 0 then
-				self.P:Draw()
-			end
+			self.loco:FaceTowards(self.PosGen)
+			self.loco:Approach( self.PosGen, 1 )
+	
+			--self.P:Compute(self:GetOwner(), self.PosGen)
+			--self.P:Update( self:GetOwner() )
 			
 			if self.loco:IsStuck() then
 				self:HandleStuck()
@@ -73,5 +72,17 @@ function ENT:RunBehaviour()
 		end
 		coroutine.wait(0.1)
 		coroutine.yield()
+	end
+end
+
+
+function ENT:Think()
+	if self.PosGen then -- If the bot has a target location (i.e., an ally), go for it.
+		if GetConVar("developer"):GetFloat() > 0 and self.P:IsValid() then
+			self.P:Draw()
+		end
+		if (IsValid(self:GetOwner())) then
+			self.loco:SetDesiredSpeed(self:GetOwner():GetWalkSpeed())
+		end
 	end
 end

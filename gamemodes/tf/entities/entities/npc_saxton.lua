@@ -96,7 +96,7 @@ end
 function ENT:FireAnimationEvent( pos, ang, event, name )
 	if (event == 6004 or event == 7001) then
 		timer.Simple(0.02, function()
-			self:EmitSound("Selection.MedicHeelClick")
+			self:EmitSound("Concrete.Step"..table.Random({"Left","Right"}))
 		end)
 	end
 end
@@ -244,7 +244,7 @@ function ENT:RunBehaviour()
 				-- Now that we have an enemy, the code in this block will run
 				self.loco:FaceTowards(self:GetEnemy():GetPos())	-- Face our enemy
 				self:StartActivity( self:GetSequenceActivity(self:LookupSequence("run_melee")) )			-- Set the animation
-				self.loco:SetDesiredSpeed( 300 )		-- Set the speed that we will be moving at. Don't worry, the animation will speed up/slow down to match
+				self.loco:SetDesiredSpeed( 400 )		-- Set the speed that we will be moving at. Don't worry, the animation will speed up/slow down to match
 				self:ChaseEnemy( ) 						-- The new function like MoveToPos.
 				self:StartActivity( self:GetSequenceActivity(self:LookupSequence("stand_melee")) )			-- Set the animation
 				-- Now once the above function is finished doing what it needs to do, the code will loop back to the start
@@ -257,8 +257,8 @@ function ENT:RunBehaviour()
 					-- Since we can't find an enemy, lets wander
 					-- Its the same code used in Garry's test bot
 					self:StartActivity( self:GetSequenceActivity(self:LookupSequence("run_melee")) )			-- Set the animation
-					self.loco:SetDesiredSpeed( 300 )		-- Walk speed
-					self.loco:SetAcceleration(300)
+					self.loco:SetDesiredSpeed( 400 )		-- Walk speed
+					self.loco:SetAcceleration(400)
 					self:MoveToPos( self:GetPos() + Vector( math.Rand( -1, 1 ), math.Rand( -1, 1 ), 0 ) * 800 ) -- Walk to a random place within about 400 units (yielding)
 					self:StartActivity( self:GetSequenceActivity(self:LookupSequence("stand_melee")) )			-- Set the animation
 
@@ -368,8 +368,8 @@ function ENT:Think()
 					self:StartActivity( self:GetSequenceActivity(self:LookupSequence("run_melee")) )	
 				end
 			end
-			self.loco:SetDesiredSpeed( 300 )
-			self.loco:SetAcceleration(300)
+			self.loco:SetDesiredSpeed( 400 )
+			self.loco:SetAcceleration(400)
 		end
 	elseif (IsValid(self:GetEnemy()) and (self:GetEnemy():Health() < 1) and self.Ready) then
 		self:SetEnemy(nil)
