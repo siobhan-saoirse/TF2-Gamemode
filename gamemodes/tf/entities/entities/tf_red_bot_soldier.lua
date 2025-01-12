@@ -3,7 +3,7 @@ if SERVER then AddCSLuaFile() end
 ENT.Base = "tf_red_bot"
 ENT.PZClass = "soldier"
 ENT.Spawnable = false
-ENT.AdminOnly = false
+ENT.AdminOnly = true
 ENT.IsBoss = false
 ENT.PrintName		= "Red Soldier"
 ENT.Category		= "TFBots"

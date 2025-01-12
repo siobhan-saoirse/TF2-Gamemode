@@ -576,6 +576,9 @@ function meta:SetPlayerClass(class)
 		timer.Simple(0.8, function()
 			self:SelectWeapon("tf_weapon_lunchbox_drink")
 			self:GetActiveWeapon():PrimaryAttack()
+			timer.Simple(1.1, function()
+				self:SelectWeapon(self:GetWeapons()[3])	
+			end)
 		end)
 		
 	end

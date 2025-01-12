@@ -1,12 +1,13 @@
 if SERVER then AddCSLuaFile() end
 
 ENT.Base = "mvm_bot"
-ENT.PZClass = "scoutfan"
+ENT.PZClass = "scout"
 ENT.Spawnable = false
-ENT.AdminOnly = false
+ENT.AdminOnly = true
 ENT.Difficulty = 3
 ENT.PrintName		= "Force-A-Nature Scout"
 ENT.Category		= "TFBots - MVM"
+ENT.Items = {"Force-A-Nature","Bolt Boy","Fed-Fightin' Fedora"}
 
 list.Set( "NPC", "mvm_bot_scoutfan", {
 	Name = ENT.PrintName,

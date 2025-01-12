@@ -58,7 +58,7 @@ function SWEP:InspectAnimCheck()
 			self.BulletsPerShot = 10 + 3
 			self.HoldType = "SECONDARY"
 			self.Primary.Ammo			= TF_SECONDARY
-			self:SetWeaponHoldType("SECONDARY")
+			self:SetHoldType("SECONDARY")
 		end
 		if (self.Owner:GetPlayerClass() == "soldier"
 		|| self.Owner:GetPlayerClass() == "heavy"
@@ -75,7 +75,7 @@ function SWEP:InspectAnimCheck()
 			self.Slot				= 1
 			self.HoldType = "SECONDARY"
 			self.Primary.Ammo			= TF_SECONDARY
-			self:SetWeaponHoldType("SECONDARY")
+			self:SetHoldType("SECONDARY")
 		elseif (self.Owner:GetPlayerClass() == "scout"
 		|| self.Owner:GetPlayerClass() == "engineer") then
 			self.VM_DRAW = ACT_PRIMARY_VM_DRAW	
@@ -87,7 +87,7 @@ function SWEP:InspectAnimCheck()
 			self.Slot				= 0
 			self.Primary.Ammo			= TF_PRIMARY
 			self.HoldType = "PRIMARY"
-			self:SetWeaponHoldType("PRIMARY")
+			self:SetHoldType("PRIMARY")
 		else
 			self.VM_DRAW = ACT_SECONDARY_VM_DRAW	
 			self.VM_IDLE = ACT_SECONDARY_VM_IDLE
@@ -98,7 +98,7 @@ function SWEP:InspectAnimCheck()
 			self.Slot				= 1
 			self.Primary.Ammo			= TF_SECONDARY
 			self.HoldType = "PRIMARY"
-			self:SetWeaponHoldType("PRIMARY")
+			self:SetHoldType("PRIMARY")
 		end
 	end
 	return self.BaseClass.InspectAnimCheck(self)
@@ -112,12 +112,12 @@ function SWEP:Think()
 			self.BulletsPerShot = 10 + 3
 			self.HoldType = "SECONDARY"
 			self.Primary.Ammo			= TF_SECONDARY
-			self:SetWeaponHoldType("SECONDARY")
+			self:SetHoldType("SECONDARY")
 		end
 		if (self.Owner:GetPlayerClass() == "soldier"
 		|| self.Owner:GetPlayerClass() == "heavy"
-		|| self.Owner:GetPlayerClass() == "giantheavyshotgun"
 		|| self.Owner:GetPlayerClass() == "heavyshotgun"
+		|| self.Owner:GetPlayerClass() == "giantheavyshotgun"
 		|| self.Owner:GetPlayerClass() == "pyro") then
 			self.item_slot = "SECONDARY"
 			self.VM_DRAW = ACT_SECONDARY_VM_DRAW	
@@ -129,7 +129,7 @@ function SWEP:Think()
 			self.Slot				= 1
 			self.HoldType = "SECONDARY"
 			self.Primary.Ammo			= TF_SECONDARY
-			self:SetWeaponHoldType("SECONDARY")
+			self:SetHoldType("SECONDARY")
 		elseif (self.Owner:GetPlayerClass() == "scout"
 		|| self.Owner:GetPlayerClass() == "engineer") then
 			self.VM_DRAW = ACT_PRIMARY_VM_DRAW	
@@ -141,7 +141,7 @@ function SWEP:Think()
 			self.Slot				= 0
 			self.Primary.Ammo			= TF_PRIMARY
 			self.HoldType = "PRIMARY"
-			self:SetWeaponHoldType("PRIMARY")
+			self:SetHoldType("PRIMARY")
 		else
 			self.VM_DRAW = ACT_SECONDARY_VM_DRAW	
 			self.VM_IDLE = ACT_SECONDARY_VM_IDLE
@@ -151,12 +151,12 @@ function SWEP:Think()
 			self.VM_RELOAD_FINISH = ACT_SECONDARY_RELOAD_FINISH
 			self.Slot				= 1
 			self.Primary.Ammo			= TF_SECONDARY
-			self.HoldType = "SECONDARY"
-			self:SetWeaponHoldType("SECONDARY")
+			self.HoldType = "PRIMARY"
+			self:SetHoldType("PRIMARY")
 		end
 	end
 	if self.Owner:GetInfoNum("tf_robot", 0) == 1 then
-		self:SetWeaponHoldType("ITEM1")
+		self:SetHoldType("ITEM1")
 	end
 	if self.Owner:GetPlayerClass() == "medicshotgun" then
 		self.Slot = 0

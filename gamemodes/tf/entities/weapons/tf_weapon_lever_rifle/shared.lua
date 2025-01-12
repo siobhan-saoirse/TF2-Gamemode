@@ -91,32 +91,6 @@ function SWEP:DoOwnerKnockback()
 	self.Owner:SetThrownByExplosion(true)
 end
 
-hook.Add("OnPlayerHitGround", "TFKnockbackJumpsReset", function(pl)
-	pl.KnockbackJumpsRemaining = 1
-end)
-
-hook.Add("PostScaleDamage", "TFKnockbackDamage", function(ent, hitgroup, dmginfo)
-	local inf = dmginfo:GetInflictor()
-	local att = dmginfo:GetAttacker()
-	
-	if inf.ScattergunHasKnockback and not ent:IsThrownByExplosion() then
-		local dist = inf:GetPos():Distance(ent:GetPos())
-		if dist < inf.MinKnockbackDistance then
-			if not inf.MaxKnockbackDamage then
-				inf.MaxKnockbackDamage = inf.BaseDamage * (1 + inf.MaxDamageRampUp + inf.DamageRandomize) * inf.BulletsPerShot
-			end
-			
-			local force = inf.KnockbackMaxForce * dmginfo:GetDamage() / inf.MaxKnockbackDamage
-			local ang = att:EyeAngles()
-			ang.p = ang.p + inf.KnockbackAddPitch
-			
-			ent:SetGroundEntity(NULL)
-			ent:SetVelocity(ang:Forward() * force)
-			ent:SetThrownByExplosion(true)
-		end
-	end
-end)
-
 end
 
 function SWEP:PrimaryAttack()

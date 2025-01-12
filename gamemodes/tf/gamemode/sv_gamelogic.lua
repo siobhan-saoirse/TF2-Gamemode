@@ -642,15 +642,6 @@ function GM:Think()
 			if (string.find(bot:GetModel(),"/bot_")) then
 				GAMEMODE:GiveAmmoPercent(bot, 100)
 			end
-			if (bot.TargetEnt and math.random(1,16 + table.Count(player.GetAll())) == 1) then 
-				for k,v in pairs(ents.GetAll()) do
-					if (v:IsTFPlayer() and v:EntIndex() == bot.TargetEnt) then
-						if (v:Health() < 1) then
-							bot.TargetEnt = table.Random({team.GetPlayers(v:Team())})
-						end
-					end
-				end
-			end
 		end
 	end
 	--[[

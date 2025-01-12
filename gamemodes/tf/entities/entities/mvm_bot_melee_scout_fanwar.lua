@@ -3,7 +3,7 @@ if SERVER then AddCSLuaFile() end
 ENT.Base = "mvm_bot"
 ENT.PZClass = "melee_scout"
 ENT.Spawnable = false
-ENT.AdminOnly = false
+ENT.AdminOnly = true
 ENT.PrintName		= "Fan O' War Scout"
 ENT.Category		= "TFBots - MVM"
 ENT.PreferredName = "Scout"

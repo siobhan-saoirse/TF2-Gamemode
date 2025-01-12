@@ -4,7 +4,7 @@ if (!file.Exists("models/player/civilian.mdl","WORKSHOP")) then return end
 ENT.Base = "tf_red_bot"
 ENT.PZClass = "civilian_"
 ENT.Spawnable = false
-ENT.AdminOnly = false
+ENT.AdminOnly = true
 ENT.IsBoss = false
 ENT.PrintName		= "Blue Civilian"
 ENT.Category		= "TFBots"

@@ -13,8 +13,7 @@ local stock_bots = {
 	"mvm_bot_soldier",
 	"mvm_bot_pyro",
 	"mvm_bot_demoman",
-	"mvm_bot_heavy",
-	"mvm_bot_medic",
+	"mvm_bot_heavy"
 }
 local horde_bots = {
 	"mvm_bot",	
@@ -26,6 +25,13 @@ local horde_bots = {
 	"mvm_bot_melee_scout",
 	"mvm_bot_melee_scout_sandman",
 	"mvm_bot_scout_minor_league",
+	"mvm_bot_scoutfan",
+	"mvm_bot_bowman",
+	"mvm_bot_heavyweightchamp",
+	"mvm_bot_heavyweightchampfast",
+	"mvm_bot_scout_minor_league",
+	"mvm_bot_deflectorheavy",
+	"mvm_bot_pyro_flare"
 }
 local unlock_bots = {
 	"mvm_bot_scout_minor_league",
@@ -51,7 +57,8 @@ local unlock_bots = {
 	"mvm_bot_bowman",
 	"mvm_bot_samurai_demo",
 	"mvm_bot_scout_shortstop",
-	"mvm_bot_engineer"
+	"mvm_bot_engineer",
+	"mvm_bot_scoutfan"
 }
 
 local giant_bots = {

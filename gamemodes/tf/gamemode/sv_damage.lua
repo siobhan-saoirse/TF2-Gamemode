@@ -808,7 +808,9 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	else
 		if (ent:IsPlayer()) then
 			if (string.find(ent:GetModel(),"/bot_") and ent:IsPlayer() and ent.TFBot and ent:Team() == TEAM_BLU and attacker:IsPlayer() and attacker:GetPlayerClass() == "gmodplayer") then
-				dmginfo:ScaleDamage(3)
+				-- reduce the damage, so it's fair
+				-- 30% damage resistance
+				dmginfo:ScaleDamage(0.7)
 			else
 				if (IsValid(attacker) and attacker:IsPlayer() and (attacker:GetPlayerClass() == "captainpunch" || attacker:GetPlayerClass() == "chieftavish" || attacker:GetPlayerClass() == "chiefpyro")) then
 					dmginfo:ScaleDamage(5)
@@ -856,11 +858,11 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	end
 	
 	if not ent:IsPlayer() or not ent:Alive() then return end
-	
+	dmginfo:SetDamageForce(dmginfo:GetDamageForce() / ent:GetModelScale())
 	-- Pain and death sounds
 	local hp = ent:Health() - dmginfo:GetDamage()
 	ent:Speak("TLK_PLAYER_EXPRESSION", false)
-	if (ent.TFBot) then
+	if (ent.TFBot and att:IsTFPlayer() and !att:IsFriendly(ent)) then
 		ent.TargetEnt = att 
 		for k,v in ipairs(ents.FindInSphere(ent:GetPos(), 800)) do
 			if (v.TFBot) then

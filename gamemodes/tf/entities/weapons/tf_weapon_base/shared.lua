@@ -1516,6 +1516,9 @@ end
 function SWEP:Think() 
 	self:Inspect()
 	self:InspectAnimCheck()
+	if (string.find(self.Owner:GetModel(),"/bot_")) then
+		self.CriticalChance = 0
+	end
 	if ((self:GetItemData().model_world or self:GetItemData().model_player) ~= nil) then
 		self.WorldModel = "models/empty.mdl"
 	end

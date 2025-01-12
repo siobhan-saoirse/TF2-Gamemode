@@ -63,6 +63,9 @@ end
 
 function ENT:StartTouch(ent) 
 	--print(self.Team, self.TeamNum)
+	if ent:IsPlayer() then
+		ent:SetNWBool("InRespawnRoom",true)
+	end
 end
 
 function ENT:Touch(ent)
@@ -84,6 +87,7 @@ end
 
 function ENT:EndTouch(ent)
 	if ent:IsPlayer() then
+		ent:SetNWBool("InRespawnRoom",false)
 		self.Players[ent] = nil
 		if (string.find(game.GetMap(),"mvm_") and ent:Team() == TEAM_BLU) then
 			ent:GodDisable()

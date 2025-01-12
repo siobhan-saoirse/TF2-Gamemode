@@ -212,6 +212,13 @@ function ENT:Think()
 		self:SetAngles(self:GetVelocity():Angle())
 		return
 	end
+	for k,v in ipairs(ents.FindInSphere(self:GetPos(),180)) do
+		if (IsValid(self:GetOwner())) then
+			if (v:IsTFPlayer() and !v:IsFriendly(self:GetOwner())) then
+				self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+			end
+		end
+	end
 end
 
 function ENT:OnRemove()
@@ -334,21 +341,9 @@ function ENT:DoExplosion(ent)
 					end
 				end
 			end
-			if self.Nuke then
-				--util.BlastDamage(self, owner, self:GetPos(), range*6, damage*6)
-				util.BlastDamage(self, owner, self:GetPos(), range*6, 100)
-			else
-				--util.BlastDamage(self, owner, self:GetPos(), range, damage)
-				util.BlastDamage(self, owner, self:GetPos(), range*1, damage)
-			end
+			util.BlastDamage(self, owner, self:GetPos(), range, damage)
 		else
-			if self.Nuke then
-				--util.BlastDamage(self, owner, self:GetPos(), range*6, damage*6)
-				util.BlastDamage(self, owner, self:GetPos(), range*6, 100)
-			else
-				--util.BlastDamage(self, owner, self:GetPos(), range, damage)
-				util.BlastDamage(self, owner, self:GetPos(), range*1, damage)
-			end
+			util.BlastDamage(self, owner, self:GetPos(), range, damage)
 		end
 	end
 	
@@ -409,6 +404,13 @@ end]]
 
 function ENT:Touch(ent)
 	if not ent:IsTrigger() and ent:IsSolid() then	
+		-- if we're hitting a friendly, don't blow up, that'll be a waste!
+		if (IsValid(self:GetOwner()) and ent:IsTFPlayer()) then 
+			if (ent:IsFriendly(self:GetOwner())) then 
+				self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+				return
+			end
+		end
 		self:DoExplosion(ent)
 	end
 end

@@ -3,7 +3,7 @@ if SERVER then AddCSLuaFile() end
 ENT.Base = "mvm_bot"
 ENT.PZClass = "demoknight"
 ENT.Spawnable = false
-ENT.AdminOnly = false		
+ENT.AdminOnly = true		
 ENT.IsBoss = false
 ENT.Difficulty = 2
 ENT.PrintName		= "Demoknight"

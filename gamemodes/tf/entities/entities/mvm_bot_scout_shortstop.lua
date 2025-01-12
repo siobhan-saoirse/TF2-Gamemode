@@ -3,7 +3,7 @@ if SERVER then AddCSLuaFile() end
 ENT.Base = "mvm_bot"
 ENT.PZClass = "scout_shortstop"
 ENT.Spawnable = false
-ENT.AdminOnly = false
+ENT.AdminOnly = true
 ENT.PrintName		= "Shortstop Scout"
 ENT.Category		= "TFBots - MVM"
 ENT.PreferredIcon = "hud/leaderboard_class_scout_shortstop"

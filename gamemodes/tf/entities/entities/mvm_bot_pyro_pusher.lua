@@ -3,7 +3,7 @@ if SERVER then AddCSLuaFile() end
 ENT.Base = "mvm_bot"
 ENT.PZClass = "pyro_flare"
 ENT.Spawnable = false
-ENT.AdminOnly = false		
+ENT.AdminOnly = true		
 ENT.IsBoss = false
 ENT.PrintName		= "Pyro Pusher"
 ENT.Items = {"Scorch Shot"}

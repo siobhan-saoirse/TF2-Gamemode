@@ -20,8 +20,8 @@ local tf_bot_melee_only = CreateConVar("tf_bot_melee_only", "0", {FCVAR_ARCHIVE,
 function lookForNearestPlayer(bot)
 	local npcs = {}
 		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 8000000)) do
-			if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:GetNoDraw() == false and v:EntityTeam(bot) != TEAM_NEUTRAL and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET) and v:Health() > 0) then
-				table.insert(npcs, v)		
+			if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:GetNoDraw() == false and v:EntityTeam(bot) != TEAM_NEUTRAL and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET) and !v:GetNWBool("InRespawnRoom",false)) then
+				table.insert(npcs, v)
 			end
 		end
 		return table.Random(npcs)
@@ -567,7 +567,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			bot.TargetEnt = lookForNearestPlayer(bot)
 		end
 		if (IsValid(bot.TargetEnt)) then
-			if (bot.playerclass == "Scout" or bot.playerclass == "Engineer") then
+			if (((bot.playerclass == "Scout" and !string.find(bot:GetModel(),"bot")) or bot.playerclass == "Engineer")) then
 				if (IsValid(bot:GetWeapons()[2])) then
 					if (bot:GetWeapons()[1]:Clip1() == 0) then
 						bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
@@ -583,7 +583,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 						end
 					end
 				end
-			elseif (bot.playerclass == "Pyro") then
+			elseif (bot.playerclass == "Pyro" and !string.find(bot:GetModel(),"bot")) then
 				if (IsValid(bot:GetWeapons()[2])) then
 					if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) > 750) then
 						if (bot:GetWeapons()[2]:Clip1() ~= 0) then
@@ -628,14 +628,14 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		else
 			controller:SetPos(bot:GetPos())
 			controller:SetAngles(bot:GetAngles())
-				
+				--[[
 			if IsValid(controller.P) then
 				if bot.botPos != nil then
 					if (math.random(1,2+(table.Count(player.GetAll())*0.8)) == 1) then
 						controller.P:Compute(controller, bot.botPos)
 					end
 				end
-			end
+			end]]
 		end
 	
 		local moveawayrange = 80
@@ -716,7 +716,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					mv:SetSideSpeed(mv:GetSideSpeed() + (side * 0.5))
 				end
 			end
-			 --[[
+			--[[
 		local BotCanTarget = tf_bot_notarget:GetBool()
  
 		if ( bot:IsBot() and !BotCanTarget and !IsValid(bot.TargetEnt) ) then 
@@ -773,24 +773,10 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		end	
 
 				
-					
-		if bot:GetVelocity():Length2DSqr() <= 225 then
-			if controller.NextCenter < CurTime() then
-				controller.strafeAngle = ((controller.strafeAngle == 1 and 2) or 1)
-				controller.NextCenter = CurTime() + math.Rand(0.3, 0.65)
-			elseif controller.nextStuckJump < CurTime() then
-				if !bot:Crouching() then
-					controller.NextJump = 0
-				end
-				controller.nextStuckJump = CurTime() + math.Rand(1, 2)
-			end
-		end
-		if (controller.nextStuckJump > CurTime()) then
-			buttons = buttons + IN_JUMP
-		end
 		
 	
 		-- force a recompute
+		
 				if (bot.botPos) then
 					bot.ControllerBot.PosGen = bot.botPos
 				end
@@ -814,13 +800,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				elseif bot.Difficulty == 3 then
 					lerp = 4
 				end
-				if (bot:Visible(bot.TargetEnt)) then
-					if (bot:IsL4D()) then
-						bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
-					else
-						bot:SetEyeAngles(LerpAngle(0.2 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
-					end
-				end
+				bot:SetEyeAngles(LerpAngle((FrameTime() * 5) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):GetNormalized():Angle()))
 			end
 			if IsValid(bot.intelcarrier) and !IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.intelcarrier:GetPos()) < 6000 and bot.intelcarrier:Health() > 0 then
 				if (bot:GetPlayerClass() != "tank_l4d") then
@@ -835,6 +815,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				if (!bot.isCarryingIntel) then
 					bot.botPos = bot.intelcarrier:GetPos()
 				end
+				bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), mva + (controller.LookAt * 0.5)))
 			end
 		if bot.ControllerBot.P then
 			bot.LastPath = bot.ControllerBot.P:GetAllSegments()
@@ -894,10 +875,10 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					end
 				end
 			end
-			local mva = ((goalpos + bot:GetCurrentViewOffset()) - bot.ControllerBot:EyePos()):Angle()
 			if bot.botPos and curgoal.area:GetAttributes() != NAV_MESH_CLIFF then
+				local mva = ((curgoal.pos + bot:GetCurrentViewOffset()) - bot.ControllerBot:EyePos()):Angle()
 				if (IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging) then
-					--mv:SetMoveAngles(mva)
+					return
 				else
 					mv:SetMoveAngles(mva)
 				end
@@ -918,16 +899,11 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				elseif bot.Difficulty == 3 then
 					lerp = 4
 				end
-					if (bot:IsL4D()) then
-						bot:SetEyeAngles(LerpAngle(0.2, bot:EyeAngles(), mva))
-					else
-						if controller.LookAtTime > CurTime() then
-							local ang = LerpAngle(FrameTime() * 2, bot:EyeAngles(), controller.LookAt)
-							bot:SetEyeAngles(Angle(ang.p, ang.y, 0))
-						else 
-							bot:SetEyeAngles(LerpAngle(0.2, bot:EyeAngles(), mva))
-						end
-					end
+				bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), mva + (controller.LookAt * 0.5)))
+			end
+			if !controller.nextRandomLook or controller.nextRandomLook < CurTime() then
+				controller.LookAt = Angle(math.Rand(-45,45),math.Rand(-360,360),0)
+				controller.nextRandomLook = CurTime() + math.Rand(1,3)
 			end
 	end
 end)
@@ -952,7 +928,15 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 		local intelcap
 		local fintelcap
 		local targetpos2 = Vector(0, 0, 0)
-
+		if (IsValid(bot.TargetEnt)) then
+			if (!bot:Visible(bot.TargetEnt)) then -- if our current target isn't visible, find a new one
+				for k,v in ipairs(ents.FindInSphere(bot:GetPos(),2500)) do
+					if (v:IsPlayer() and !v:IsFriendly(bot) and v:Health() > 0 and v:Visible(bot)) then
+						bot.TargetEnt = v
+					end
+				end
+			end
+		end
 		if escortAvailable(bot) and !GAMEMODE.RoundHasWinner then -- Payload AI
 				for k, v in pairs(ents.FindByClass("trigger_capture_area")) do
 					intel = v
@@ -986,10 +970,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				targetpos2 = fintelcap.Pos -- goto friendly cap spot
 				bot.intelcarrier = nil
 			elseif IsValid(intel.Carrier) and bot:EntIndex() != intel.Carrier:EntIndex() then -- or else if we have it already carried
-
-				if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
-					targetpos2 = intel.Carrier:GetPos()
-				end
+				targetpos2 = intel.Carrier:GetPos()
 				bot.intelcarrier = intel.Carrier
 			elseif fintel.Carrier and bot:EntIndex() != fintel.Carrier:EntIndex() then -- if our intel is being stolen...
 				targetpos2 = fintel.Carrier:GetPos() -- defend our intel
@@ -1055,14 +1036,14 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 
 			bot.botPos = targetpos2
 		else
-			if (IsValid(bot.TargetEnt)) then
-				bot.botPos = bot.TargetEnt:GetPos()
-			else
-				-- our enemy doesn't exist anymore, set it to nil
-				bot.botPos = nil
+			if (!IsValid(bot.TargetEnt)) then
+				-- our enemy doesn't exist anymore, don't move
+				mv:SetForwardSpeed(0)
+				mv:SetSideSpeed(0)
+				mv:SetMoveAngles(Angle(0,0,0))
+				return
 			end
 		end
-			
 		if (IsValid(bot.TargetEnt)) then
 			if (bot.TargetEnt:IsPlayer() and !bot.TargetEnt:Alive()) then
 				bot.TargetEnt = lookForNearestPlayer(bot)
@@ -1344,7 +1325,27 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			local controller = bot.ControllerBot
 			cmd:ClearMovement()
 			cmd:ClearButtons()
+			if (IsValid(bot.TargetEnt)) then
+				if (bot:IsFriendly(bot.TargetEnt) and bot:GetPlayerClass() != "medic") then -- can we please get along? unless if you're healing...
+					bot.TargetEnt = nil
+				end
+			end
+							
 						
+			if bot:GetVelocity():Length2DSqr() <= 225 then
+				if controller.NextCenter < CurTime() then
+					controller.strafeAngle = ((controller.strafeAngle == 1 and 2) or 1)
+					controller.NextCenter = CurTime() + math.Rand(0.3, 0.65)
+				elseif controller.nextStuckJump < CurTime() then
+					if !bot:Crouching() then
+						controller.NextJump = 0
+					end
+					controller.nextStuckJump = CurTime() + math.Rand(1, 2)
+				end
+			end
+			if (controller.nextStuckJump > CurTime()) then
+				buttons = buttons + IN_JUMP
+			end
 			
 		if (bot.LastPath ~= nil and bot.LastPath[bot.CurSegment + 1] ~= nil) then
 			local curgoal = bot.LastPath[bot.CurSegment + 1]
@@ -1372,8 +1373,8 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 				end
 			end
 			
-		local curgoal = navmesh.GetNavArea(bot:GetPos(),128)
-		if (curgoal ~= nil) then
+			local curgoal = navmesh.GetNavArea(bot:GetPos(),128)
+			if (curgoal ~= nil) then
 				if curgoal:HasAttributes(NAV_MESH_JUMP) then
 					if (bot:IsOnGround()) then
 						
@@ -1585,7 +1586,7 @@ hook.Add("PostPlayerDeath", "leadbot_respawn", function(bot)
 			end
 
 		end)
-		timer.Simple(6.5, function() if IsValid(bot) and bot.TFBot and !bot:Alive() then bot:Spawn() end end)
+		timer.Simple(6.5, function() if IsValid(bot) and bot.TFBot and !bot:Alive() and !GAMEMODE.RoundHasWinner then bot:Spawn() end end)
 	end
 end)
 
@@ -1623,7 +1624,7 @@ concommand.Add("tf_bot_say", function(ply, _, args) for k, v in pairs(player.Get
 
 --concommand.Add("lk.noclip", function(ply) if ply:GetMoveType() == MOVETYPE_NOCLIP then ply:SetMoveType(MOVETYPE_WALK) else ply:SetMoveType(MOVETYPE_NOCLIP) end end)
 --concommand.Add("lk.downme", function(ply) ply:DownPlayer() end)
-concommand.Add("tf_bot_add", function(ply, _, _, args) 
+concommand.Add("tf_bot_add", function(ply, cmd, args, argStr) 
 	if (game.SinglePlayer()) then 
 		--print("Doesn't work in Singleplayer!") 
 	end 

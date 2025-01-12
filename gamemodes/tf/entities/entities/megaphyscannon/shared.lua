@@ -4,7 +4,7 @@ ENT.PrintName		= "Super Gravity Gun"
 ENT.Category		= "Half-Life 2"
 
 ENT.Spawnable		= true
-ENT.AdminOnly = false
+ENT.AdminOnly = true
 ENT.DoNotDuplicate = true
 
 --[[

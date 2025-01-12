@@ -125,20 +125,14 @@ hook.Add("PostScaleDamage", "TFKnockbackDamage", function(ent, hitgroup, dmginfo
 	local inf = dmginfo:GetInflictor()
 	local att = dmginfo:GetAttacker()
 	
-	if inf.ScattergunHasKnockback and not ent:IsThrownByExplosion() then
+	if inf.ScattergunHasKnockback then
 		local dist = inf:GetPos():Distance(ent:GetPos())
 		if dist < inf.MinKnockbackDistance then
 			
-		local dir = -ent:GetAimVector() * 45
-		local dir2 = dir:Angle()
-		dir2.p = math.Clamp(-dir2.p - 45,-90,90)
-		dir2 = dir2:Forward()
-		ent:RemoveFlags(FL_ONGROUND)
-		timer.Simple(0.1, function()
-			ent:SetVelocity((((-ent:GetAimVector() * 45) * 10) + Vector(0,0,245)) + dmginfo:GetDamageForce() * 45)
-		end)
-
-			ent:SetThrownByExplosion(true)
+			local dir = self.Owner:GetAimVector()
+			local pushdir = (dir + Vector(0,0,0.9)):Angle():Forward()*6 -- Adjust aimdirection to push players off ground, while preventing inverted pushing, fungus.
+			ent:SetVelocity( pushdir * ent:GetPhysicsObject():GetMass() ) -- Account for player weight because we push all twinks equally, fungus.
+			ent:SetViewPunchAngles(Angle(4,0,0))
 		end
 	end
 end)

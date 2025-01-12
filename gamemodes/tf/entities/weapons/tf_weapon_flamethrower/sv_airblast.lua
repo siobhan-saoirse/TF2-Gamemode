@@ -274,7 +274,7 @@ function SWEP:DoAirblast()
 						if (v.TFBot) then -- bots HATE getting airblasted
 							v.TargetEnt = self.Owner
 						end
-						if v:IsPlayer() then
+						if v:IsPlayer() and !v:IsFriendly(self.Owner) then
 							--v:SetVelocity(((((-v:GetAimVector() * 45) * 10) + Vector(0,0,245)) * 45) * 245)
 							--The above is the old code, which does not account for player weight, fungus.
 							

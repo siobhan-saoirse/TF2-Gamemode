@@ -417,12 +417,12 @@ function GM:Think()
 	hook.Add( "PreDrawHalos", "AddWeaponHalos", function()
 		if (LocalPlayer():GetNWBool("SpawnGlows",false) == true) then
 			if (LocalPlayer():Team() == TEAM_RED) then 
-				halo.Add( team.GetPlayers(TEAM_RED), Color(255, 64, 64), 0, 0, 2, true, true )
+				halo.Add( team.GetPlayers(TEAM_RED), Color(0.74 * 255, 0.23 * 255, 0.23 * 255), 0, 0, 2, true, true )
 			elseif (LocalPlayer():Team() == TEAM_BLU) then 
-				halo.Add( team.GetPlayers(TEAM_BLU), Color(153, 204, 255), 0, 0, 2, true, true )
+				halo.Add( team.GetPlayers(TEAM_BLU), Color(0.49 * 255, 0.66 * 255, 0.77 * 255), 0, 0, 2, true, true )
 			else
-				halo.Add( team.GetPlayers(TEAM_RED), Color(255, 64, 64), 0, 0, 2, true, true )
-				halo.Add( team.GetPlayers(TEAM_BLU), Color(153, 204, 255), 0, 0, 2, true, true )
+				halo.Add( team.GetPlayers(TEAM_RED), Color(0.74 * 255, 0.23 * 255, 0.23 * 255), 0, 0, 2, true, true )
+				halo.Add( team.GetPlayers(TEAM_BLU), Color(0.49 * 255, 0.66 * 255, 0.77 * 255), 0, 0, 2, true, true )
 			end
 		end
 	end)

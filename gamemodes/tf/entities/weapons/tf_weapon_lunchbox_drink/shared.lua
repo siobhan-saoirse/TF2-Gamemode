@@ -69,16 +69,8 @@ function SWEP:PrimaryAttack()
 	self.Owner:ConCommand("tf_tp_simulation_toggle")
 	end
 	if (self:GetItemData().name != "Crit-a-Cola") then
-
 		timer.Simple(1.2, function() 
 			self.Owner:DoTauntEvent("a_flinch01", true)
-			if SERVER then
-				if (self.Owner:GetWeapons()[1] == self) then
-					self.Owner:SelectWeapon(self.Owner:GetWeapons()[2])	
-				else
-					self.Owner:SelectWeapon(self.Owner:GetWeapons()[1])	
-				end
-			end
 			self.Owner:SetNWBool("Taunting", false) 
 			self.Owner:SetNWBool("Bonked", true) 
 			if SERVER then
@@ -112,7 +104,7 @@ function SWEP:PrimaryAttack()
 				end
 			end
 		end)
-		timer.Simple(15, function()
+		timer.Simple(10, function()
 			if SERVER then
 			self.Owner:EmitSoundEx("TFPlayer.StunImpact")
 			self.Owner:SetClassSpeed(self.Owner:GetClassSpeed() * 0.75)
@@ -159,7 +151,7 @@ function SWEP:PrimaryAttack()
 				self.Owner:EmitSoundEx("Weapon_General.CritPower")
 			end
 		end)
-		timer.Simple(15, function()
+		timer.Simple(10, function()
 			if SERVER then
 			timer.Simple(20, function()
 				self.Owner:ResetClassSpeed()
