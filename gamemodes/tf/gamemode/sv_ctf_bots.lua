@@ -614,14 +614,14 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		if (IsValid(bot.TargetEnt)) then
 			if (((bot.playerclass == "Scout" and !string.find(bot:GetModel(),"bot")) or bot.playerclass == "Engineer")) then
 				if (IsValid(bot:GetWeapons()[2])) then
-					if (bot:GetWeapons()[1]:Clip1() == 0) then
+					if (bot:GetWeapons()[1]:Clip1() == 0 and bot:GetWeapons()[2].IsProjectileWeapon) then
 						bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
 					end
 				end
 			elseif (bot.playerclass == "Soldier") then
 				if (IsValid(bot:GetWeapons()[2])) then
 					if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 500) then
-						if (bot:GetWeapons()[1]:Clip1() == 0 and bot:GetWeapons()[2]:Clip1() ~= 0) then
+						if (bot:GetWeapons()[1]:Clip1() == 0 and bot:GetWeapons()[2]:Clip1() ~= 0 and bot:GetWeapons()[2].IsProjectileWeapon) then
 							bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
 						else
 							bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())		
@@ -630,9 +630,9 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				end
 			elseif (bot.playerclass == "Heavy") then
 				if (IsValid(bot:GetWeapons()[2])) then
-					if (bot:GetWeapons()[1]:Ammo1() == 0 and bot:GetWeapons()[2]:Ammo1() > 0) then
+					if (bot:GetWeapons()[1]:Ammo1() == 0 and bot:GetWeapons()[2]:Ammo1() > 0 and bot:GetWeapons()[2].IsProjectileWeapon) then
 						bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
-					elseif (bot:GetWeapons()[1]:Ammo1() == 0 and bot:GetWeapons()[2]:Ammo1() == 0) then
+					elseif (bot:GetWeapons()[1]:Ammo1() == 0 and bot:GetWeapons()[2]:Ammo1() == 0 and bot:GetWeapons()[2].IsProjectileWeapon) then
 						bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
 					else
 						bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())		
@@ -650,7 +650,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				end
 			elseif (bot.playerclass == "Sniper") then
 				if (IsValid(bot:GetWeapons()[2])) then
-					if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) > 200 and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 750) then
+					if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) > 200 and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 750 and bot:GetWeapons()[2].IsProjectileWeapon) then
 						bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
 					elseif (bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 200) then
 						bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
@@ -685,6 +685,14 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		bot.movingAway = false
 	
 		local controller = bot.ControllerBot
+		if (bot:GetPlayerClass() == "samuraidemo") then
+			if controller.nextStuckJump < CurTime() then
+				if !bot:Crouching() then
+					controller.NextJump = 0
+				end
+				controller.nextStuckJump = CurTime() + 10
+			end
+		end
 		if (controller ~= nil) then
 			if (bot.botPos ~= nil) then
 				controller.PosGen = bot.botPos
@@ -838,9 +846,8 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			mv:SetMoveAngles(Angle(0,0,0))
 			return
 		end
-		
 		if (bot:GetNWBool("Taunting",false) != true) then
-			if bot:GetVelocity():Length2DSqr() <= 225 then
+			if bot:GetVelocity():Length() <= 225 then
 				if controller.NextCenter < CurTime() then
 					controller.strafeAngle = ((controller.strafeAngle == 1 and 2) or 1)
 					controller.NextCenter = CurTime() + math.Rand(0.3, 0.65)
@@ -850,9 +857,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					end
 					controller.nextStuckJump = CurTime() + math.Rand(1, 2)
 				end
-			end
-			if (controller.nextStuckJump > CurTime()) then
-				buttons = buttons + IN_JUMP
 			end
 		end
 			-- think one step ahead!
@@ -1348,6 +1352,9 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			end
 							
 						
+			if (bot.ControllerBot.nextStuckJump > CurTime()) then
+				buttons = buttons + IN_JUMP
+			end
 		
 		if (string.find(game.GetMap(),"mvm_")) then
 			if (bot:GetPlayerClass() == "engineer" and !IsValid(bot.SentryGunHint) and !bot.BuiltSentry and bot:Team() != TEAM_BLU) then
@@ -1475,7 +1482,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			end
 			
 			if (bot:GetPlayerClass() == "samuraidemo") then
-				bot:SetJumpPower(200 * 2.3)
+				bot:SetJumpPower(220 * 2.3)
 			end
 		if IsValid(bot.TargetEnt) then
 			if (bot.TargetEnt:Health() > 0 and !GAMEMODE.IsSetupPhase) then 
@@ -1489,7 +1496,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 						end
 					end
 					if bot:GetActiveWeapon():GetClass() == "tf_weapon_bat_wood" then 
-						if (bot.TargetEnt:GetPos():Distance(bot:GetPos()) < 540) then
+						if (bot.TargetEnt:GetPos():Distance(bot:GetPos()) < 2500) then
 							buttons = buttons + IN_ATTACK2 
 						end
 					end

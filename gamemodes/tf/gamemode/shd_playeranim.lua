@@ -312,25 +312,13 @@ function GM:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 		end
 		
 	local d = pl.TargetBodyYaw - pl.PlayerBodyYaw
-	if (pl:IsL4D() or GetConVar("civ2_smooth_worldmodel_turning"):GetBool()) then
-
 		if d > 180 then
-			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(FrameTime() * 0.6, pl.PlayerBodyYaw+360, pl.TargetBodyYaw))
+			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(FrameTime() * 8, pl.PlayerBodyYaw+360, pl.TargetBodyYaw))
 		elseif d < -180 then
-			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(FrameTime() * 0.6, pl.PlayerBodyYaw-360, pl.TargetBodyYaw))
+			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(FrameTime() * 8, pl.PlayerBodyYaw-360, pl.TargetBodyYaw))
 		else
-			pl.PlayerBodyYaw = Lerp(FrameTime() * 0.6, pl.PlayerBodyYaw, pl.TargetBodyYaw)
+			pl.PlayerBodyYaw = Lerp(FrameTime() * 8, pl.PlayerBodyYaw, pl.TargetBodyYaw)
 		end
-
-	else
-		if d > 180 then
-			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(0.2, pl.PlayerBodyYaw+360, pl.TargetBodyYaw))
-		elseif d < -180 then
-			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(0.2, pl.PlayerBodyYaw-360, pl.TargetBodyYaw))
-		else
-			pl.PlayerBodyYaw = Lerp(0.2, pl.PlayerBodyYaw, pl.TargetBodyYaw)
-		end
-	end
 	if (string.StartWith(pl:GetModel(), "models/infected/") || pl:GetPlayerClass() == "rebel" || pl:GetPlayerClass() == "combinesoldier") then
 		pl:SetPoseParameter("body_yaw", -diff)
 	else
@@ -771,15 +759,28 @@ function plyr:DoTauntEvent(anim,autokill)
 				net.Broadcast()
 			end
 		elseif (isstring(anim)) then
-			self:AnimRestartGesture( GESTURE_SLOT_VCD, self:LookupSequence(anim), autokill )
+			if string.find(anim,"flinch") then
+				self:AnimRestartGesture( GESTURE_SLOT_FLINCH, self:LookupSequence(anim), autokill )
+			else
+				self:AnimRestartGesture( GESTURE_SLOT_VCD, self:LookupSequence(anim), autokill )
+			end
 			if SERVER then
 
-				self:AddVCDSequenceToGestureSlot( GESTURE_SLOT_VCD, self:LookupSequence(anim), 0, autokill )
-				net.Start("TauntAnim")
-					net.WriteEntity(self)
-					net.WriteInt(self:LookupSequence(anim),32)
-					net.WriteBool(autokill)
-				net.Broadcast()
+				if string.find(anim,"flinch") then
+					self:AddVCDSequenceToGestureSlot( GESTURE_SLOT_VCD, self:LookupSequence(anim), 0, autokill )
+					net.Start("TFGestureAnim")
+						net.WriteEntity(self)
+						net.WriteInt(self:LookupSequence(anim),32)
+						net.WriteBool(autokill)
+					net.Broadcast()
+				else
+					self:AddVCDSequenceToGestureSlot( GESTURE_SLOT_FLINCH, self:LookupSequence(anim), 0, autokill )
+					net.Start("TauntAnim")
+						net.WriteEntity(self)
+						net.WriteInt(self:LookupSequence(anim),32)
+						net.WriteBool(autokill)
+					net.Broadcast()
+				end
 			end
 		end
 	end

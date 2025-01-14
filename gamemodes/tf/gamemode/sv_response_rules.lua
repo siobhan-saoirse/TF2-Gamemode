@@ -631,7 +631,9 @@ function META:Speak(concept, nospeech, dbg)
 	
 	-- Current weapon
 	if IsValid(self:GetActiveWeapon()) then
-		if (self:GetActiveWeapon():GetClass() == "tf_weapon_allclass") then
+		if (self:GetActiveWeapon():GetClass() == "tf_weapon_phlogistinator") then
+			self.playerweapon = "tf_weapon_flamethrower"
+		elseif (self:GetActiveWeapon():GetClass() == "tf_weapon_allclass") then
 			if (self:GetPlayerClass() == "engineer") then
 				self.playerweapon = "tf_weapon_wrench"
 			elseif (self:GetPlayerClass() == "heavy") then
@@ -1415,7 +1417,9 @@ function META:Taunt(concept, nospeech, dbg)
 	
 	-- Current weapon
 	if IsValid(self:GetActiveWeapon()) then
-		if (self:GetActiveWeapon():GetClass() == "tf_weapon_allclass") then
+		if (self:GetActiveWeapon():GetClass() == "tf_weapon_phlogistinator" || self:GetActiveWeapon():GetClass() == "tf_weapon_flamethrower_rb") then
+			self.playerweapon = "tf_weapon_flamethrower"
+		elseif (self:GetActiveWeapon():GetClass() == "tf_weapon_allclass") then
 			if (self:GetPlayerClass() == "engineer") then
 				self.playerweapon = "tf_weapon_wrench"
 			elseif (self:GetPlayerClass() == "heavy") then

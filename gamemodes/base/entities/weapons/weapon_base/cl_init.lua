@@ -194,7 +194,7 @@ function SWEP:DrawWorldModel()
 		WorldModel:DrawModel()
 	end
 
-end
+end 
 
 --[[---------------------------------------------------------
 	Name: DrawWorldModelTranslucent

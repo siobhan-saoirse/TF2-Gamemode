@@ -356,7 +356,7 @@ hook.Add("CalcView", "TFCalcView", function(pl, pos, ang, fov)
 					pl:SetEyeAngles(taunt_angles)
 				end
 				pl.CurrentView.angles = ang
-				pl.CurrentView.distance = Lerp((pl.NextEndThirdperson - CurTime())/ThirdpersonEndDelay, 0, pl.TargetView.distance)
+				pl.CurrentView.distance = GetConVar("fov_desired"):GetFloat()
 				return {angles = pl.CurrentView.angles, origin = pos - pl.CurrentView.distance * pl.CurrentView.angles:Forward(), drawviewer = true}
 			end
 		end

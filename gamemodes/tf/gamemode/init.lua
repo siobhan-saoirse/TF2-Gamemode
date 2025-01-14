@@ -27,6 +27,7 @@ response_rules.Load("talker/tf_response_rules.lua")
 
 util.AddNetworkString("TFRagdollCreate")
 util.AddNetworkString("TauntAnim")
+util.AddNetworkString("TFGestureAnim")
 
 CreateConVar('tf_opentheorangebox', 0, FCVAR_ARCHIVE + FCVAR_SERVER_CAN_EXECUTE, 'Enables 2007 mode')
 -- Quickfix for Valve's typo in tf_reponse_rules.txt 
@@ -1716,7 +1717,12 @@ hook.Add( "PlayerButtonDown", "PlayerButtonDownTF", function( pl, key )
 				elseif (pl:GetActiveWeapon():GetClass() == "weapon_physgun") then
 					pl:ConCommand("tf_taunt_directors_vision")
 				else
-					pl:ConCommand("tf_taunt "..pl:GetActiveWeapon():GetSlot() + 1)         
+					local date = os.date("%b",os.time())
+					if (date == "Oct" and math.random(1,2) == 1) then
+						pl:ConCommand("tf_taunt_thriller")
+					else
+						pl:ConCommand("tf_taunt "..pl:GetActiveWeapon():GetSlot() + 1)         
+					end
 				end
 				--print("taunt")
 				--print(pl:GetWeapon(pl:GetActiveWeapon():GetClass()):GetSlot() + 1)

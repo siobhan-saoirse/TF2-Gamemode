@@ -331,6 +331,10 @@ function ENT:SpawnFunction( ply, tr, ClassName )
 
 end
 
+function ENT:CustomOnThink()
+	do return end
+end
+
 function ENT:Think()
 	if SERVER then
 		for k,v in ipairs(team.GetPlayers(TEAM_BLU)) do
@@ -341,6 +345,7 @@ function ENT:Think()
 				self.Removing = true
 			end
 		end
+		self:CustomOnThink()
 	end 
 	if (!IsValid(self.Bot) and SERVER) then
 		self:Remove() 

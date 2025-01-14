@@ -50,13 +50,6 @@ function SWEP:CanPrimaryAttack()
 	if (self:Ammo1() > 0) then
 		return true
 	end
-	if (self.Slot == 0) then
-		local wpn = self.Owner:GetWeapons()[2] or self.Owner:GetWeapons()[3]
-		self.Owner:SelectWeapon(wpn:GetClass())
-	elseif (self.Slot == 1) then
-		local wpn = self.Owner:GetWeapons()[3]
-		self.Owner:SelectWeapon(wpn:GetClass())
-	end
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	self:EmitSound("Weapon_WidowMaker.Empty")
 	return false
@@ -88,36 +81,6 @@ function SWEP:PrimaryAttack()
 	umsg.Start("PlayerMetalBonus", self.Owner)
 		umsg.Short(-40)
 	umsg.End()
-	end
-	if self:Clip1() <= 0 then
-		self:Reload()
-	end
-	if self.Owner:GetPlayerClass() == "spy" then
-		if self.Owner:GetModel() == "models/player/scout.mdl" or  self.Owner:GetModel() == "models/player/soldier.mdl" or  self.Owner:GetModel() == "models/player/pyro.mdl" or  self.Owner:GetModel() == "models/player/demo.mdl" or  self.Owner:GetModel() == "models/player/heavy.mdl" or  self.Owner:GetModel() == "models/player/engineer.mdl" or  self.Owner:GetModel() == "models/player/medic.mdl" or  self.Owner:GetModel() == "models/player/sniper.mdl" or  self.Owner:GetModel() == "models/player/hwm/spy.mdl"	 or self.Owner:GetModel() == "models/player/kleiner.mdl" then
-			if self.Owner:KeyDown( IN_ATTACK ) then
-				if self.Owner:GetInfoNum("tf_robot", 0) == 0 then
-					self.Owner:SetModel("models/player/spy.mdl") 
-				else
-					self.Owner:SetModel("models/bots/spy/bot_spy.mdl")
-				end
-				if IsValid( button) then 
-					button:Remove() 
-				end
-				for _,v in pairs(ents.GetAll()) do
-					if v:IsNPC() and not v:IsFriendly(self.Owner) then
-						v:AddEntityRelationship(self.Owner, D_HT, 99)
-					end
-				end
-				if self.Owner:Team() == TEAM_BLU then 
-					self.Owner:SetSkin(1) 
-				elseif self.Owner:Team() == TF_TEAM_PVE_INVADERS then 
-					self.Owner:SetSkin(1) 
-				else 
-					self.Owner:SetSkin(0) 
-				end 
-				self.Owner:EmitSoundEx("player/spy_disguise.wav", 65, 100) 
-			end
-		end
 	end
 	
 	self:RollCritical() -- Roll and check for criticals first

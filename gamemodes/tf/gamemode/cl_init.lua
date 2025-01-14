@@ -80,6 +80,7 @@ local function VectorMA( start, scale, direction, dest )
 end
 
 hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
+	physenv.SetGravity( Vector(0,0,-386) )
 	if (!ply:Alive()) then
 		if (IsValid(ply:GetNWEntity("RagdollEntity"))) then
 			if ((ply:GetObserverMode() == OBS_MODE_DEATHCAM)) then
@@ -490,6 +491,13 @@ net.Receive("TauntAnim", function()
     local autokill = net.ReadBool()
 	
 	ply:AddVCDSequenceToGestureSlot( GESTURE_SLOT_VCD, anim, 0, autokill )
+end)
+net.Receive("TFGestureAnim", function()
+    local ply = net.ReadEntity()
+    local anim = net.ReadInt(32)
+    local autokill = net.ReadBool()
+	
+	ply:AddVCDSequenceToGestureSlot( GESTURE_SLOT_FLINCH, anim, 0, autokill )
 end)
 net.Receive("TFRagdollCreate", function()
     local ply = net.ReadEntity()

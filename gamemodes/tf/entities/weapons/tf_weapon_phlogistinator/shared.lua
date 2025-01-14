@@ -27,12 +27,12 @@ function SWEP:SetFlamethrowerEffect(i)
 	local t = GAMEMODE:EntityTeam(self.Owner)
 	
 	if i==1 then
-		effect = ""
+		effect = "drg_phlo_stream"
 	elseif i>1 then
 		if t==2 then
-			effect = ""
+			effect = "drg_phlo_stream_crit"
 		else
-			effect = ""
+			effect = "drg_phlo_stream_crit"
 		end
 	end
 	

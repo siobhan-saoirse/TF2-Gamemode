@@ -14,6 +14,16 @@ hook.Add("OnEntityCreated", "TF_DeathNoticeEntityID", function(ent)
 	end
 end)
 
+function lookForNearestPlayer(bot)
+	local npcs = {}
+		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 8000000)) do
+			if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:GetNoDraw() == false and v:EntityTeam(bot) != TEAM_NEUTRAL and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET)) then
+				table.insert(npcs, v)
+			end
+		end
+		return table.Random(npcs)
+end
+
 function GM:DoTFPlayerDeath(ent, attacker, dmginfo)
 	if not IsValid(attacker) then return end
 	
@@ -587,7 +597,9 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	--end)
 	ply:SetNWFloat("m_flDeathTime",CurTime())
 	ply.LastDamageInfo = CopyDamageInfo(dmginfo)
-
+	if (attacker.TFBot) then
+		attacker.TargetEnt = lookForNearestPlayer(attacker)
+	end
 	if (string.find(ply:GetModel(),"/bot_")) then
 		ParticleEffect("bot_death",ply:GetPos(),ply:GetAngles(),nil)
 	end 
@@ -1305,11 +1317,6 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	if dmginfo:IsFallDamage() then -- Fall damage
 		ply.FallDeath = true
 		ply:EmitSound("player/pl_fleshbreak.wav", 70, math.random(92,96))
-		umsg.Start("Notice_EntityFell")
-			umsg.String(GAMEMODE:EntityDeathnoticeName(ply))
-			umsg.Short(GAMEMODE:EntityTeam(ply))
-			umsg.Short(GAMEMODE:EntityID(ply))
-		umsg.End()
 	elseif dmginfo:IsDamageType(DMG_BLAST) or dmginfo:IsExplosionDamage() or inflictor.Explosive then -- Explosion damage
 	
 		if ply:GetMaterial() == "models/shadertest/predator" then return end
@@ -1318,18 +1325,9 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		p = 1
 		
 		if not ply:IsHL2() and !ply:IsL4D() then
-			if (!(string.find(ply:GetModel(),"bot_"))) then	
-				local animent = ents.Create( 'prop_dynamic_override' )
-				animent:SetSkin(ply:GetSkin())
-				animent:SetPos(ply:GetPos())
-				animent:SetAngles(ply:GetAngles())
-				animent:SetModel(ply:GetModel())
-				animent:SetVelocity(ply:GetVelocity())
-				animent:Spawn()
-				animent:SetHealth(4000)
-				animent:Activate()
-				animent:AddFlags(FL_GODMODE) -- The entity used for the death animation	
-				animent:Fire("break","",0.01)
+			if (!(string.find(ply:GetModel(),"bot_"))) then
+				ply:Explode(dmginfo)
+				ply:SetMoveType(MOVETYPE_NONE)
 				ply:EmitSound("BaseCombatCharacter.CorpseGib")
 				shouldgib = true	
 			end
