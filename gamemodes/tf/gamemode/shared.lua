@@ -1281,42 +1281,6 @@ hook.Add("Think", "PlayerStuff", function()
 		local v = pl
 		
 		if (v:Alive()) then
-			if (v:IsHL2()) then		  
-				v:SetViewOffset(Vector(0,0,64 * v:GetModelScale()))
-				v:SetViewOffsetDucked(Vector(0, 0, 28 * v:GetModelScale()))
-			else
-				if (v:GetPlayerClass() == "scout") then
-					v:SetViewOffset(Vector(0, 0, 65 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 65 * (0.5 * v:GetModelScale())))
-				elseif (v:GetPlayerClass() == "soldier") then
-					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
-				elseif (v:GetPlayerClass() == "pyro") then
-					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
-				elseif (v:GetPlayerClass() == "demoman") then
-					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
-				elseif (v:GetPlayerClass() == "heavy") then
-					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
-				elseif (v:GetPlayerClass() == "engineer") then
-					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
-				elseif (v:GetPlayerClass() == "medic") then
-					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
-				elseif (v:GetPlayerClass() == "sniper") then
-					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
-				elseif (v:GetPlayerClass() == "spy") then
-					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
-				else
-					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 48 * v:GetModelScale()))
-				end
-			end
 		end
 
 		if CLIENT then

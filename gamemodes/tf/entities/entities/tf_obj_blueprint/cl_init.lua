@@ -49,7 +49,7 @@ end
 
 function ENT:Think()
 	if not IsValid(self.Player) then
-		self.Player = self:GetOwner().Owner
+		self.Player = self:GetOwner()
 	end
 	
 	if self.LastScale ~= self.dt.Scale then

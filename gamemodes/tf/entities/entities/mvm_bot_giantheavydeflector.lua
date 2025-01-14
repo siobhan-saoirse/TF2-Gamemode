@@ -14,7 +14,5 @@ list.Set( "NPC", "mvm_bot_giantheavydeflector", {
 	Name = ENT.PrintName,
 	Class = "mvm_bot_giantheavydeflector",
 	Category = ENT.Category,
-	AdminOnly = true,
-	--AdminOnly = true
-	AdminOnly = false
+	AdminOnly = true
 } )

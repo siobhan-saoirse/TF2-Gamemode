@@ -35,7 +35,7 @@ SWEP.ReloadTime = 0.8
 SWEP.IsRapidFire = false
 SWEP.ReloadSingle = true
 
-SWEP.HoldType = "PRIMARY2"
+SWEP.HoldType = "PRIMARY"
 
 SWEP.ProjectileShootOffset = Vector(0, 13, -4)
 

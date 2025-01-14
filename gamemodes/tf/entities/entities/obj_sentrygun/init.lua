@@ -235,10 +235,6 @@ function ENT:TakeAmmo2(a)
 	return false
 end
 
-function ENT:CalculateDamage(hitpos, ent)
-	return tf_util.CalculateDamage(self, hitpos)
-end
-
 function ENT:OnTakeDamage(dmginfo)
 	if dmginfo:GetInflictor():IsWorld() then return end
 	if dmginfo:GetDamageType() == DMG_POISON then return end
@@ -544,13 +540,11 @@ function ENT:ShootBullets()
 		Attacker = self:GetBuilder(),
 		
 		Team = GAMEMODE:EntityTeam(self),
-		Damage = self.BaseDamage,
 		RampUp = self.MaxDamageRampUp,
 		Falloff = self.MaxDamageFalloff,
 		Critical = false,
-		CritMultiplier = 3,
-		DamageModifier = 1,
-		DamageRandomize = self.DamageRandomize,
+		CritMultiplier = 1,
+		Damage = self.BaseDamage,
 		
 		Tracer = 1,
 		TracerName = "bullet_tracer01",
@@ -591,7 +585,7 @@ end
 function ENT:FindTarget(dbg)
 	local Target, MinDist, Method
 	for _,v in pairs(ents.FindInSphere(self:GetPos(), self.Range)) do
-		if (v:IsTFPlayer()) and ( v:Health() > 0 ) and (self:Team()==TEAM_NEUTRAL or GAMEMODE:EntityTeam(v)~=self:Team()) and v:EntIndex() != self:GetBuilder():EntIndex() then
+		if (v:IsTFPlayer()) and ( v:Health() > 0 ) and (self:Team()==TEAM_NEUTRAL or GAMEMODE:EntityTeam(v)~=self:Team()) and v:EntIndex() != self:GetBuilder():EntIndex() and v:GetNoDraw() == false then
 			local d = self:GetPos():Distance(v:GetPos())
 			if not MinDist or d<MinDist then
 				local method = self:GetTargetMethod(v, true, dbg)
@@ -683,7 +677,9 @@ function ENT:Think()
 	elseif (self:GetBuilder() == nil) then
 		self:Explode()
 	end
-	
+	if (IsValid(self:GetOwner())) then
+		self:GetOwner().SentryGun = self
+	end
 	self:OnThink()
 	if state==0 then
 		if CurTime()-self.StartTime>=self.TimeLeft then

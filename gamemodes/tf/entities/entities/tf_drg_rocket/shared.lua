@@ -318,22 +318,13 @@ function ENT:DoExplosion(ent)
 	
 	--self.ResultDamage = damage
 	
-	if self.Nuke then
-		--util.BlastDamage(self, owner, self:GetPos(), range*6, damage*6)
-		util.BlastDamage(self, owner, self:GetPos(), range*6, 100)
-	else
 		--util.BlastDamage(self, owner, self:GetPos(), range, damage)
-		for k,v in ipairs(ents.FindInSphere(self:GetPos(), range)) do
-			dmginfo:SetDamage(80)
+		local dmginfo = DamageInfo()
+			dmginfo:SetDamage(95)
 			dmginfo:SetDamageType(DMG_DISSOLVE)
 			dmginfo:SetAttacker(owner)
-			dmginfo:SetInflictor(self)
-			dmginfo:SetDamagePosition(self:GetPos())
-			dmginfo:SetDamageForce(vector_up)
-			v:TakeDamageInfo(dmginfo)
-		end
-		util.BlastDamage(self, owner, self:GetPos(), range, 100)
-	end
+			dmginfo:SetInflictor(owner)
+		util.BlastDamageInfo(dmginfo, self:GetPos(), range)
 	
 		local dmginfo = DamageInfo()
 		dmginfo:SetDamage(80)

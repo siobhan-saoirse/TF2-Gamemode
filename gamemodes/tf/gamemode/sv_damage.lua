@@ -503,11 +503,13 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			dmginfo:ScaleDamage(0.000001)
 		end
 	if (ent:IsPlayer()) then
-		if (dmginfo:GetDamageType() != DMG_GENERIC and !ent:HasGodMode()) then
+		if (dmginfo:GetDamageType() != DMG_GENERIC and !ent:HasGodMode() and dmginfo:GetDamage() > 0) then
 			ent:SetViewPunchAngles(Angle(-2,0,0))
 			if not ent.NextFlinch or CurTime() > ent.NextFlinch then
-				ent:DoTauntEvent("a_flinch01", true)
-				ent.NextFlinch = CurTime() + ent:SequenceDuration(ent:LookupSequence("a_flinch01"))
+				if (!ent:IsHL2()) then
+					ent:DoTauntEvent("a_flinch01", true)
+					ent.NextFlinch = CurTime() + ent:SequenceDuration(ent:LookupSequence("a_flinch01"))
+				end
 			end
 		end
 		if (ent:HasPlayerState(PLAYERSTATE_MARKED)) then
@@ -516,6 +518,32 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			end
 		end
 	end
+	
+    if (ent:IsPlayer() and ent:IsHL2()) then
+        if not ent.NextFlinch or CurTime() > ent.NextFlinch then
+			if (dmginfo:IsDamageType(DMG_CRUSH)) then
+				ent:DoTauntEvent("flinch_phys_0"..math.random(1,2),true)
+				ent.NextFlinch = CurTime() + ent:SequenceDuration(ent:SelectWeightedSequence(ACT_FLINCH_PHYSICS))
+			else
+				if (ent:LastHitGroup() == HITGROUP_HEAD) then
+					ent:DoTauntEvent("flinch_head_0"..math.random(1,2),true)
+					ent.NextFlinch = CurTime() + ent:SequenceDuration(ent:SelectWeightedSequence(ACT_FLINCH_HEAD))
+				elseif (ent:LastHitGroup() == HITGROUP_LEFTARM) then
+					ent:DoTauntEvent("flinch_shoulder_l",true)
+					ent.NextFlinch = CurTime() + ent:SequenceDuration(ent:SelectWeightedSequence(ACT_FLINCH_SHOULDER_LEFT))
+				elseif (ent:LastHitGroup() == HITGROUP_RIGHTARM) then
+					ent:DoTauntEvent("flinch_shoulder_r",true)
+					ent.NextFlinch = CurTime() + ent:SequenceDuration(ent:SelectWeightedSequence(ACT_FLINCH_SHOULDER_RIGHT))
+				elseif (ent:LastHitGroup() == HITGROUP_STOMACH) then
+					ent:DoTauntEvent("flinch_stomach_0"..math.random(1,2),true)
+					ent.NextFlinch = CurTime() + ent:SequenceDuration(ent:SelectWeightedSequence(ACT_FLINCH_STOMACH))
+				else
+					ent:DoTauntEvent("flinch_0"..math.random(1,2),true)
+					ent.NextFlinch = CurTime() + ent:SequenceDuration(ent:SelectWeightedSequence(ACT_FLINCH))
+				end
+			end
+        end
+    end
 	if (ent:IsPlayer() and att == ent && dmginfo:IsExplosionDamage() && (ent:GetNWBool("Bonked") == true || ent:EntityTeam() == TEAM_FRIENDLY)) then
 		if (ent.m_flBlastJumpLaunchTime == nil) then
 			if (!ent.Whistle) then
@@ -669,7 +697,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	if ent:IsPlayer() then
 		ent.DamagePositions = nil
 	end
-	
+
 	if not ent:IsTFPlayer() then
 		----print("-> Manually calling ScaleNPCDamage")
 		self:ScaleNPCDamage(ent, 0, dmginfo)
@@ -903,7 +931,17 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			end
 		else
 			if ent:HasGodMode() == false and !ent:IsMiniBoss() then
-				ent:PainSound("TLK_PLAYER_PAIN")
+				if (!ent.NextPainSound or ent.NextPainSound<CurTime()) then
+					
+					if SERVER and ent.playerclass then
+						
+						for k,v in ipairs(player.GetAll()) do
+							v:SendLua("Entity("..ent:EntIndex().."):EmitSound(\""..ent.playerclass..".ExplosionDeath\")")
+						end
+						ent.NextPainSound = CurTime() + 1.5
+					end
+
+				end
 			else
 				if (!ent:IsMiniBoss()) then
 					local effectdata = EffectData()

@@ -283,7 +283,7 @@ function ENT:OnThinkActive()
 		for k,_ in pairs(self.Clients) do
 			if self:GetBuildingType() == 2 then
 				k:SetHealth(math.Clamp(k:Health() + 1.5, 0, k:GetMaxHealth() + 140))
-			else
+			elseif (k:Health() > 0) then
 				k:SetHealth(math.Clamp(k:Health() + 1, 0, k:GetMaxHealth()))
 			end
 			

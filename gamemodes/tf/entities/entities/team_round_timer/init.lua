@@ -251,7 +251,7 @@ function ENT:Think()
 		
 		-- return (I want you to start thinking, immediately)
 	end
-	
+	GAMEMODE.IsSetupPhase = self.IsSetupPhase
 	local t = self:GetTime()
 	if t<=0 then
 		if self.IsSetupPhase then

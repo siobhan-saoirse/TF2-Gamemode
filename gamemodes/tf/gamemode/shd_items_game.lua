@@ -89,12 +89,12 @@ for k, v in pairs(items_game["items"]) do
 		v.item_name = v.name
 		v.item_quality = "collectors"
 	end
+    if (!v.item_slot) then
+        v.item_slot = "misc"
+        v.item_class = "tf_wearable_item"
+        v.item_quality = "unique"
+    end
     if (v.model_player) then
-        if (!v.item_slot) then
-            v.item_slot = "misc"
-            v.item_class = "tf_wearable_item"
-            v.item_quality = "unique"
-        end
         if (v.item_slot == "hat" or v.equip_region == "hat" or v.prefab == "hat") then
             v.item_slot = "misc"
             v.item_class = "tf_wearable_item"
@@ -332,7 +332,7 @@ for k, v in pairs(items_game["items"]) do
         tf_items.Items[v.name] = v
     end
 
-    tf_items.ItemsByID[v.id] = v
+    tf_items.ItemsByID[k] = v
 end
 
 tf_items.Attributes.n = #attributes

@@ -93,8 +93,8 @@ list.Set( "NPC", "mvm_robot_spawner", {
 } )
 function ENT:Initialize()
 	if CLIENT then return end	
-	self:SetModel("models/buildables/teleporter.mdl")
-	self:ResetSequence(self:LookupSequence("running"))
+	self:SetModel("models/buildables/teleporter_light.mdl")
+	self:ResetSequence("running")
 	self:SetSolid(SOLID_BBOX)
 	self:SetModelScale(1.0)
 	self.bots = {}

@@ -556,13 +556,13 @@ function meta:FireTFBullets(b)
 	self.TempDamageInfo = {
 		BaseDamage = b.Damage,
 		Src = b.Src,
-		Critical = b.Critical,
+		Critical = false,
 		Tracer = b.Tracer or 1,
 		TracerName = b.TracerName or "bullet_tracer01",
 		Force = b.Force or 1,
 	}
 	
-	b.Damage = 1
+	b.Damage = self.TempDamageInfo.BaseDamage
 	b.Tracer = 0
 	b.TracerName = ""
 	b.Callback = TFBulletCallback

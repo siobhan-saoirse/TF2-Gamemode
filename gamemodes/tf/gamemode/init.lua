@@ -2118,7 +2118,7 @@ function GM:PlayerSpawn(ply)
 	end)
 	timer.Simple(0.05, function()
 	
-		local v = ply
+		local v = ply 
 		if (v:Alive()) then
 			if (v:IsHL2()) then		  
 				v:SetViewOffset(Vector(0,0,64 * v:GetModelScale()))
