@@ -581,10 +581,10 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		end
 	end
 	ply:SetNWBool("Taunting",false)
-	timer.Simple(0.02, function()
-		ply:SetMoveType(MOVETYPE_NONE)
-		ply:SetPos(ply:GetPos() - Vector(0,0,30))
-	end)
+	--timer.Simple(0.02, function()
+		--ply:SetMoveType(MOVETYPE_NONE)
+		--ply:SetPos(ply:GetPos() - Vector(0,0,30))
+	--end)
 	ply:SetNWFloat("m_flDeathTime",CurTime())
 	ply.LastDamageInfo = CopyDamageInfo(dmginfo)
 
@@ -983,6 +983,9 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		
 		if (((!ply:IsHL2() and !ply:IsL4D() and not (dmginfo:IsDamageType(DMG_BLAST) or dmginfo:IsExplosionDamage() or inflictor.Explosive)) or (ply:IsHL2() || ply:IsL4D())) or string.find(ply:GetModel(),"/bot_") and ply:GetModelScale() == 1.0 and !string.find(ply:GetModel(),"_boss.mdl")) then
 			if (GetConVar("tf_use_client_ragdolls"):GetBool()) then
+				if ((string.find(ply:GetModel(),"bot_") and ply:GetModelScale() > 1.0) or ply:IsMiniBoss()) then
+					
+				else
 					if (!dmginfo:IsDamageType(DMG_DISSOLVE) and !ply:HasDeathFlag(DF_FROZEN) and !ply:HasDeathFlag(DF_GOLDEN)) then
 						net.Start("TFRagdollCreate")
 							net.WriteEntity(ply)
@@ -997,19 +1000,20 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 					if (ply:HasDeathFlag(DF_DECAP)) then
 						ply:EmitSound("TFPlayer.Decapitated")
 					end
-				/*
-				timer.Simple(0.1, function()
-					local ragdoll = ply:GetRagdollEntity()
-					TransferBones(ply,ragdoll)
-					ply.RagdollEntity = ragdoll
-					ply:SetNWEntity("RagdollEntity",ply.RagdollEntity)
-					local phys = ply:GetRagdollEntity():GetPhysicsObject()
-					if (IsValid(phys)) then
-						phys:SetVelocity(Vector(0,0,0))
-						phys:AddVelocity(ply:GetVelocity() * 8 + dmginfo:GetDamageForce())
-					end
-				end)
-				*/
+					/*
+					timer.Simple(0.1, function()
+						local ragdoll = ply:GetRagdollEntity()
+						TransferBones(ply,ragdoll)
+						ply.RagdollEntity = ragdoll
+						ply:SetNWEntity("RagdollEntity",ply.RagdollEntity)
+						local phys = ply:GetRagdollEntity():GetPhysicsObject()
+						if (IsValid(phys)) then
+							phys:SetVelocity(Vector(0,0,0))
+							phys:AddVelocity(ply:GetVelocity() * 8 + dmginfo:GetDamageForce())
+						end
+					end)
+					*/
+				end
 			end
 		end
 
@@ -1276,11 +1280,20 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	----print("DoPlayerDeath", dmginfo:GetInflictor(), dmginfo:GetAttacker(), dmginfo:GetDamage(), dmginfo:GetDamageType())
 	
 	if ((string.find(ply:GetModel(),"bot_") and ply:GetModelScale() > 1.0) or ply:IsMiniBoss()) then
-		ply:GibBreakServer( dmginfo:GetDamageForce() )
+		--ply:GibBreakServer( dmginfo:GetDamageForce() )
+		local animent = ents.Create( 'prop_dynamic_override' )
+		animent:SetSkin(ply:GetSkin())
+		animent:SetPos(ply:GetPos())
+		animent:SetAngles(ply:GetAngles())
+		animent:SetModel(ply:GetModel())
+		animent:SetVelocity(ply:GetVelocity())
+		animent:Spawn()
+		animent:SetHealth(4000)
+		animent:Activate()
+		animent:AddFlags(FL_GODMODE) -- The entity used for the death animation	
+		animent:Fire("break","",0.01)
 		if (ply:IsMiniBoss()) then
-			for k,v in ipairs(player.GetAll()) do
-				v:SendLua("LocalPlayer():EmitSound(\"MVM.GiantCommonExplodes\")")
-			end
+			ply:EmitSound("MVM.GiantCommonExplodes")
 		end
 	end
 	if (ply:GetPlayerClass() == "spitter") then
@@ -1305,9 +1318,19 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		p = 1
 		
 		if not ply:IsHL2() and !ply:IsL4D() then
-			if (!(string.find(ply:GetModel(),"bot_"))) then
-				ply:Explode(dmginfo)
-				ply:EmitSound("physics/flesh/flesh_squishy_impact_hard2.wav", 80, 100)
+			if (!(string.find(ply:GetModel(),"bot_"))) then	
+				local animent = ents.Create( 'prop_dynamic_override' )
+				animent:SetSkin(ply:GetSkin())
+				animent:SetPos(ply:GetPos())
+				animent:SetAngles(ply:GetAngles())
+				animent:SetModel(ply:GetModel())
+				animent:SetVelocity(ply:GetVelocity())
+				animent:Spawn()
+				animent:SetHealth(4000)
+				animent:Activate()
+				animent:AddFlags(FL_GODMODE) -- The entity used for the death animation	
+				animent:Fire("break","",0.01)
+				ply:EmitSound("BaseCombatCharacter.CorpseGib")
 				shouldgib = true	
 			end
 		else

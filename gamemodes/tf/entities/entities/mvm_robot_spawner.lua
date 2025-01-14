@@ -93,10 +93,14 @@ list.Set( "NPC", "mvm_robot_spawner", {
 } )
 function ENT:Initialize()
 	if CLIENT then return end	
-	self:SetModel("models/buildables/teleporter_light.mdl")
-	self:ResetSequence("running")
+	self:SetModel("models/editor/playerstart.mdl")
+	self:SetMaterial("models/debug/debugwhite")
+	self:SetColor(Color(128,128,128,100))
+	self:SetRenderMode(RENDERMODE_TRANSCOLOR)
+	self:SetRenderFX(kRenderFxHologram)
 	self:SetSolid(SOLID_BBOX)
 	self:SetModelScale(1.0)
+	self:SetCollisionGroup(COLLISION_GROUP_WORLD)
 	self.bots = {}
 	self.bot = {}
 	self.spawnsblu = {}	

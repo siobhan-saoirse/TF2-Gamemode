@@ -793,9 +793,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		
 		-- Store some info regarding damage for death hooks
 		ent.LastDamageInfo = CopyDamageInfo(dmginfo)
-		ent.LastDamageData = {
-			attacker_sequence = attacker:GetSequence(),
-		}
 	end
 	-- Increased explosion force
 	if dmginfo:IsExplosionDamage() then
