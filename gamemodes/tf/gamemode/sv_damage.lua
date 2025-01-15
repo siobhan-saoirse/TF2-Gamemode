@@ -883,7 +883,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	end
 	
 	if not ent:IsPlayer() or not ent:Alive() then return end
-	dmginfo:SetDamageForce(dmginfo:GetDamageForce() / ent:GetModelScale())
 	-- Pain and death sounds
 	local hp = ent:Health() - dmginfo:GetDamage()
 	ent:Speak("TLK_PLAYER_EXPRESSION", false)
