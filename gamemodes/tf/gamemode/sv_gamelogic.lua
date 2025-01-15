@@ -559,6 +559,11 @@ function GM:Think()
 	end
 	for _,v in pairs(player.GetAll()) do
 		
+		for _,child in ipairs(ents.GetAll()) do
+			if (child:GetParent():EntIndex() == v:EntIndex()) then
+				child:SetMaterial(v:GetMaterial())
+			end
+		end
 		if (v:Alive()) then
 			if (v:IsHL2()) then		  
 				v:SetViewOffset(Vector(0,0,64 * v:GetModelScale()))
