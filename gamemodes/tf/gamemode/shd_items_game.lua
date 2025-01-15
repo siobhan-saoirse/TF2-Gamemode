@@ -329,10 +329,10 @@ for k, v in pairs(items_game["items"]) do
 		end 
   
     elseif v.name then
-        tf_items.Items[v.name] = v
+        //tf_items.Items[v.name] = v
     else
         v.name = "Test " .. math.random(30000)
-        tf_items.Items[v.name] = v
+        //tf_items.Items[v.name] = v
     end
 
     tf_items.ItemsByID[k] = v
