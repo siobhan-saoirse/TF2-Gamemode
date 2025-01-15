@@ -894,11 +894,22 @@ local function GiveItemAutoComplete(cmd, args, slotfilter)
 	for k,v in pairs(Items) do
 		if type(v)=="table" and shouldShowItem(k, v, classname, slotfilter) then
 			table.insert(class_lst,v.name)
-			table.insert(t,cmd.." "..v.name)
 		end
 	end
 	
 	table.sort(class_lst)
+	
+	for _,k in ipairs(class_lst) do
+		if string.find(k, s) then
+			table.insert(t,cmd.." "..k)
+		end
+	end
+	
+	for _,k in ipairs(class_lst) do
+		if string.find(k, string.gsub("", "^%s*", "^")) then
+			table.insert(j,k)
+		end
+	end
 	
 	
 	return t
