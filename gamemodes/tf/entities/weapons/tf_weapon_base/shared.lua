@@ -386,14 +386,9 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
  
 
 	if GetConVar("tf_use_min_viewmodels"):GetBool() then -- TODO: Check for inspecting
-		newpos = newpos + (newang:Forward() * self.VMMinOffset.x)
-		newpos = newpos + (newang:Right() * self.VMMinOffset.y)
-		newpos = newpos + (newang:Up() * self.VMMinOffset.z)
-		if (string.StartWith(self.Owner:GetModel(),"models/infected/")) then
-			oldpos = oldpos + (newang:Forward() * self.VMMinOffset.x)
-			oldpos = oldpos + (newang:Right() * self.VMMinOffset.y)
-			oldpos = oldpos + (newang:Up() * self.VMMinOffset.z)
-		end
+		oldpos = oldpos + (newang:Forward() * self.VMMinOffset.x)
+		oldpos = oldpos + (newang:Right() * self.VMMinOffset.y)
+		oldpos = oldpos + (newang:Up() * self.VMMinOffset.z)
 	end
 	if (IsValid(self.Owner) and string.StartWith(self.Owner:GetModel(),"models/infected/")) then
 		return oldpos, oldang

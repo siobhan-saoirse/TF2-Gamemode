@@ -335,7 +335,7 @@ for k, v in pairs(items_game["items"]) do
         tf_items.Items[v.name] = v
     end
 
-    tf_items.ItemsByID[k] = v
+    --tf_items.ItemsByID[k] = v
     tf_items.Items[k] = v
 end
 

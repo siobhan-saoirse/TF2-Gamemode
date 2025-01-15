@@ -3259,6 +3259,20 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 			end
 			
 			return true
+		elseif IsValid(snd.Entity) and snd.Entity:GetModel() and snd.Entity:IsHL2() and snd.Entity:LookupBone("ValveBiped_Bip01.Head1") and string.find(snd.SoundName, "step") then
+			snd.Channel = CHAN_BODY
+			local speed = snd.Entity:GetVelocity():Length()
+			local groundspeed = snd.Entity:GetVelocity():Length2DSqr()
+			local pl = snd.Entity
+			if (snd.Entity:IsPlayer()) then
+				if (snd.Entity:Crouching()) then
+					snd.Volume = 1 * (groundspeed * 0.000006) * 4
+				else
+					snd.Volume = 1 * (groundspeed * 0.000006)
+				end
+			end
+			
+			return true
 		elseif IsValid(snd.Entity) and snd.Entity:GetModel() and string.StartWith(snd.Entity:GetModel(), "models/bots/headless_hatman") and string.find(snd.SoundName, "vo/") and !string.find(snd.SoundName, "knight") then
 			if (string.find(snd.SoundName,"demoman_") and string.find(snd.SoundName,"Pain") and !string.find(snd.SoundName,"Death")) then
 				snd.SoundName = string.Replace(snd.SoundName,snd.SoundName,"vo/halloween_boss/knight_pain0"..math.random(1,3)..".mp3")
