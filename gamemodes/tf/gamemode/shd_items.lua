@@ -893,23 +893,12 @@ local function GiveItemAutoComplete(cmd, args, slotfilter)
 	class_lst = {}
 	for k,v in pairs(Items) do
 		if type(v)=="table" and shouldShowItem(k, v, classname, slotfilter) then
-			table.insert(class_lst,k)
+			table.insert(class_lst,v.name)
+			table.insert(t,cmd.." "..v.name)
 		end
 	end
 	
 	table.sort(class_lst)
-	
-	for _,k in ipairs(class_lst) do
-		if string.find(k, s) then
-			table.insert(t,cmd.." "..k)
-		end
-	end
-	
-	for _,k in ipairs(class_lst) do
-		if string.find(k, string.gsub("", "^%s*", "^")) then
-			table.insert(j,k)
-		end
-	end
 	
 	
 	return t
@@ -950,13 +939,13 @@ concommand.Add("stripmisc", function(pl) pl:EmptyLoadoutSlot("misc") end)
 
 else
 
-concommand.Remove("giveitem")
-concommand.Remove("giveweapon")
-concommand.Remove("givehat")
-concommand.Remove("givemisc")
-concommand.Remove("givebundle")
+concommand.Remove("DEPRECATED_giveitem")
+concommand.Remove("DEPRECATED_giveweapon")
+concommand.Remove("DEPRECATED_givehat")
+concommand.Remove("DEPRECATED_givemisc")
+concommand.Remove("DEPRECATED_givebundle")
 
-concommand.Add("giveitem", function(pl,_,args)
+concommand.Add("DEPRECATED_giveitem", function(pl,_,args)
 	if LocalPlayer():Team() == TEAM_SPECTATOR then return end
 	
 	if table.HasValue( args, "list") then
@@ -966,7 +955,7 @@ concommand.Add("giveitem", function(pl,_,args)
 	RunConsoleCommand("__svgiveitem", unpack(args))
 end, AC_GiveItem)
 
-concommand.Add("giveweapon", function(pl,_,args)
+concommand.Add("DEPRECATED_giveweapon", function(pl,_,args)
 	if LocalPlayer():Team() == TEAM_SPECTATOR then return end
 	
 	if table.HasValue( args, "list") then
@@ -976,7 +965,7 @@ concommand.Add("giveweapon", function(pl,_,args)
 	RunConsoleCommand("__svgiveitem", unpack(args))
 end, AC_GiveWeapon)
 
-concommand.Add("givehat", function(pl,_,args)
+concommand.Add("DEPRECATED_givehat", function(pl,_,args)
 	if LocalPlayer():Team() == TEAM_SPECTATOR then return end
 	
 	if table.HasValue( args, "list") then
@@ -986,7 +975,7 @@ concommand.Add("givehat", function(pl,_,args)
 	RunConsoleCommand("__svgiveitem", unpack(args))
 end, AC_GiveHat)
 
-concommand.Add("givemisc", function(pl,_,args)
+concommand.Add("DEPRECATED_givemisc", function(pl,_,args)
 	if LocalPlayer():Team() == TEAM_SPECTATOR then return end
 	
 	if table.HasValue( args, "list") then
@@ -996,7 +985,7 @@ concommand.Add("givemisc", function(pl,_,args)
 	RunConsoleCommand("__svgiveitem", unpack(args))
 end, AC_GiveMisc)
 
-concommand.Add("givebundle", function(pl,_,args)
+concommand.Add("DEPRECATED_givebundle", function(pl,_,args)
 	if LocalPlayer():Team() == TEAM_SPECTATOR then return end
 	
 	if table.HasValue( args, "list") then
