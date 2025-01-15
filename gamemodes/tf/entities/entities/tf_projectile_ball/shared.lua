@@ -103,7 +103,14 @@ function ENT:Initialize()
 		end
 		--phys:EnableDrag(false)
 	end
-	
+	if (self:GetOwner():Team() == TEAM_RED) then
+		self.trail = util.SpriteTrail( self, 0, Color( 255, 255, 255 ), false, 9, 0, 0.4, 1 / ( 96 * 1 ), "effects/baseballtrail_red.vmt" )
+	else
+		self.trail = util.SpriteTrail( self, 0, Color( 255, 255, 255 ), false, 9, 0, 0.4, 1 / ( 96 * 1 ), "effects/baseballtrail_blu.vmt" )
+	end
+	timer.Simple(3, function()
+		self.trail:Remove()
+	end)
 	self.ai_sound = ents.Create("ai_sound")
 	self.ai_sound:SetPos(self:GetRealPos())
 	self.ai_sound:SetKeyValue("volume", "80")
@@ -118,19 +125,12 @@ function ENT:Initialize()
 	
 	local effect = ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner()))
 	
-	self.particle_trail = ents.Create("info_particle_system")
-	self.particle_trail:SetPos(self:GetRealPos())
-	self.particle_trail:SetParent(self)
-	self.particle_trail:SetKeyValue("effect_name","stunballtrail_" .. effect)
-	self.particle_trail:SetKeyValue("start_active", "1")
-	self.particle_trail:Spawn()
-	self.particle_trail:Activate()
-	
+
 	if self.critical then
 		self.particle_crit = ents.Create("info_particle_system")
 		self.particle_crit:SetPos(self:GetRealPos())
 		self.particle_crit:SetParent(self)
-		self.particle_crit:SetKeyValue("effect_name","critical_pipe_" .. effect)
+		self.particle_crit:SetKeyValue("effect_name","stunballtrail_" .. effect .. "_crit")
 		self.particle_crit:SetKeyValue("start_active", "1")
 		self.particle_crit:Spawn()
 		self.particle_crit:Activate()
@@ -285,7 +285,7 @@ function ENT:PhysicsCollide(data, physobj)
 		if data.Speed > 50 and data.DeltaTime > 0.2 then
 			self:EmitSound(self.BounceSound, 100, 100)
 		end
-		
+		self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 		self.BouncesLeft = self.BouncesLeft - 1
 		
 		if self.Bounciness then

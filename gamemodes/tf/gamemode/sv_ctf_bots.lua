@@ -20,7 +20,7 @@ local tf_bot_melee_only = CreateConVar("tf_bot_melee_only", "0", {FCVAR_ARCHIVE,
 function lookForNearestPlayer(bot)
 	local npcs = {}
 		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 8000000)) do
-			if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:GetNoDraw() == false and v:EntityTeam(bot) != TEAM_NEUTRAL and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET)) then
+			if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:GetNoDraw() == false and !v:IsNeutral() and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET)) then
 				table.insert(npcs, v)
 			end
 		end

@@ -9,7 +9,7 @@ end
 
 heavysandvichtaunt = { "vo/heavy_sandwichtaunt01.wav", "vo/heavy_sandwichtaunt02.wav", "vo/heavy_sandwichtaunt03.wav", "vo/heavy_sandwichtaunt04.wav", "vo/heavy_sandwichtaunt05.wav", "vo/heavy_sandwichtaunt06.wav", "vo/heavy_sandwichtaunt07.wav", "vo/heavy_sandwichtaunt08.wav", "vo/heavy_sandwichtaunt09.wav", "vo/heavy_sandwichtaunt10.wav", "vo/heavy_sandwichtaunt11.wav", "vo/heavy_sandwichtaunt12.wav", "vo/heavy_sandwichtaunt13.wav", "vo/heavy_sandwichtaunt14.wav", "vo/heavy_sandwichtaunt15.wav", "vo/heavy_sandwichtaunt16.wav", "vo/heavy_sandwichtaunt17.wav" }	
 
-SWEP.Base				= "tf_weapon_gun_base"
+SWEP.Base				= "tf_weapon_base"
 
 SWEP.Slot				= 1
 SWEP.ViewModel			= "models/weapons/c_models/c_engineer_arms.mdl"

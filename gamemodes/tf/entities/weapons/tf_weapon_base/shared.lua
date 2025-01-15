@@ -455,11 +455,11 @@ function SWEP:ProjectileShootPos()
 		return pos +
 			self.ProjectileShootOffset.x * ang:Forward() - 
 			self.ProjectileShootOffset.y * ang:Right() + 
-			self.ProjectileShootOffset.z * ang:Up()
+			(self.ProjectileShootOffset.z * ang:Up())
 		else return pos +
 			self.ProjectileShootOffset.x * ang:Forward() + 
 			self.ProjectileShootOffset.y * ang:Right() + 
-			self.ProjectileShootOffset.z * ang:Up()
+			(self.ProjectileShootOffset.z * ang:Up())
 		end
 	end
 end

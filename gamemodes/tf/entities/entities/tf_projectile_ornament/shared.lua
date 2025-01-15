@@ -117,20 +117,20 @@ function ENT:Initialize()
 	self.NextExplode = CurTime() + 20
 	
 	local effect = ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner()))
-	
-	self.particle_trail = ents.Create("info_particle_system")
-	self.particle_trail:SetPos(self:GetRealPos())
-	self.particle_trail:SetParent(self)
-	self.particle_trail:SetKeyValue("effect_name","stunballtrail_" .. effect)
-	self.particle_trail:SetKeyValue("start_active", "1")
-	self.particle_trail:Spawn()
-	self.particle_trail:Activate()
-	
+	if (self:GetOwner():Team() == TEAM_RED) then
+		self.trail = util.SpriteTrail( self, 0, Color( 255, 255, 255 ), false, 9, 0, 0.4, 1 / ( 96 * 1 ), "effects/baseballtrail_red.vmt" )
+	else
+		self.trail = util.SpriteTrail( self, 0, Color( 255, 255, 255 ), false, 9, 0, 0.4, 1 / ( 96 * 1 ), "effects/baseballtrail_blu.vmt" )
+	end
+	timer.Simple(3, function()
+		self.trail:Remove()
+	end)
+
 	if self.critical then
 		self.particle_crit = ents.Create("info_particle_system")
 		self.particle_crit:SetPos(self:GetRealPos())
 		self.particle_crit:SetParent(self)
-		self.particle_crit:SetKeyValue("effect_name","critical_pipe_" .. effect)
+		self.particle_crit:SetKeyValue("effect_name","stunballtrail_" .. effect .. "_crit")
 		self.particle_crit:SetKeyValue("start_active", "1")
 		self.particle_crit:Spawn()
 		self.particle_crit:Activate()

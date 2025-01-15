@@ -52,6 +52,7 @@ end
 function SWEP:SecondaryAttack()
 	self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_MELEE_SECONDARY)
 	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK_SPECIAL)
+	self:SetNextPrimaryFire( CurTime() + 0.25 )
 	self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
 	if SERVER then
 		self.Owner:EmitSoundEx("Weapon_BaseballBat.HitBall")

@@ -157,6 +157,9 @@ end
 function meta:CreateRagdoll()
 	self:CreateRagdollOLD()
 end
+function meta:IsNeutral()
+	return self:Team() == TEAM_NEUTRAL and !self:IsBot()
+end
 function meta:TFTaunt(args)
 	local ply = self 
 	if SERVER then

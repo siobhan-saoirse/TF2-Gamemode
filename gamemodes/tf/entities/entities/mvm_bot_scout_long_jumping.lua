@@ -27,7 +27,7 @@ function ENT:CustomOnInitialize(bot)
 end
  
 list.Set( "NPC", "mvm_bot_scout_long_jumping", {
-	Name = ENT.PrintName,
+	Name = ENT.PrintName, 
 	Class = "mvm_bot_scout_long_jumping",
 	Category = ENT.Category,
 	AdminOnly = true

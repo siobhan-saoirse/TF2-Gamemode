@@ -99,6 +99,20 @@ function CLASS:Initialize()
 	util.PrecacheModel(modelname)
 	self:SetModel(modelname)
 	self:Give("weapon_slam")
+	if (ConVarExists("hl2_cl_bob")) then
+
+		self:Give("weapon_hl2_crowbar")
+		self:Give("weapon_hl2_pistol")
+		self:Give("weapon_hl2_smg1")
+		self:Give("weapon_hl2_frag")
+		self:Give("weapon_hl2_physcannon")
+		self:Give("weapon_hl2_crossbow")
+		self:Give("weapon_hl2_shotgun")
+		self:Give("weapon_hl2_357")
+		self:Give("weapon_hl2_rpg")
+		self:Give("weapon_hl2_ar2")
+
+	else
 		self:Give("weapon_crowbar")
 		self:Give("weapon_pistol")
 		self:Give("weapon_smg1")
@@ -109,6 +123,7 @@ function CLASS:Initialize()
 		self:Give("weapon_357")
 		self:Give("weapon_rpg")
 		self:Give("weapon_ar2")
+	end
 	self:Give("weapon_gmod_hands")
 	self:Give("weapon_medkit")
 	self:Give("weapon_fists")

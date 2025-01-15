@@ -29,7 +29,7 @@ end
 
 end
 
-SWEP.Base				= "tf_weapon_gun_base"
+SWEP.Base				= "tf_weapon_base"
 
 SWEP.ViewModel			= "models/weapons/c_models/c_scout_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_energy_drink/c_energy_drink.mdl"

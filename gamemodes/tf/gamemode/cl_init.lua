@@ -2814,57 +2814,57 @@ local function MergeSteamInventory(ply)
 				--If the response does not contain the following table items.
 		
 				local status = json.status
-				local item1scout = -1
-				local item2scout = -1
-				local item3scout = -1
+				local item1scout = 200
+				local item2scout = 209
+				local item3scout = 190
 				local item4scout = -1
 				local item5scout = -1
 				local item6scout = -1
-				local item1soldier = -1
-				local item2soldier = -1
-				local item3soldier = -1
+				local item1soldier = 205
+				local item2soldier = 199
+				local item3soldier = 196
 				local item4soldier = -1
 				local item5soldier = -1
 				local item6soldier = -1
-				local item1pyro = -1
-				local item2pyro = -1
-				local item3pyro = -1
+				local item1pyro = 208
+				local item2pyro = 199
+				local item3pyro = 192
 				local item4pyro = -1
 				local item5pyro = -1
 				local item6pyro = -1
-				local item1demoman = -1
-				local item2demoman = -1
-				local item3demoman = -1
+				local item1demoman = 206
+				local item2demoman = 207
+				local item3demoman = 191
 				local item4demoman = -1
 				local item5demoman = -1
 				local item6demoman = -1
-				local item1heavy = -1
-				local item2heavy = -1
-				local item3heavy = -1
+				local item1heavy = 202
+				local item2heavy = 199
+				local item3heavy = 195
 				local item4heavy = -1
 				local item5heavy = -1
 				local item6heavy = -1
-				local item1engineer = -1
-				local item2engineer = -1
-				local item3engineer = -1
+				local item1engineer = 199
+				local item2engineer = 209
+				local item3engineer = 197
 				local item4engineer = -1
 				local item5engineer = -1
 				local item6engineer = -1
-				local item1medic = -1
-				local item2medic = -1
-				local item3medic = -1
+				local item1medic = 204
+				local item2medic = 211
+				local item3medic = 198
 				local item4medic = -1
 				local item5medic = -1
 				local item6medic = -1
-				local item1sniper = -1
-				local item2sniper = -1
-				local item3sniper = -1
+				local item1sniper = 201
+				local item2sniper = 203
+				local item3sniper = 193
 				local item4sniper = -1
 				local item5sniper = -1
 				local item6sniper = -1
-				local item1spy = -1
-				local item2spy = -1
-				local item3spy = -1
+				local item1spy = 210
+				local item2spy = 736
+				local item3spy = 194
 				local item4spy = -1
 				local item5spy = -1
 				local item6spy = -1
@@ -2934,9 +2934,9 @@ local function MergeSteamInventory(ply)
 
 										-- demoman
 										elseif (classes["class"] == 4) then
-											if (classes["slot"] == 1) then
+											if (classes["slot"] == 0) then
 												item1demoman = v.defindex
-											elseif (classes["slot"] == 0) then
+											elseif (classes["slot"] == 1) then
 												item2demoman = v.defindex
 											elseif (classes["slot"] == 2) then
 												item3demoman = v.defindex
@@ -3019,7 +3019,7 @@ local function MergeSteamInventory(ply)
 										elseif (classes["class"] == 8) then
 											if (classes["slot"] == 1) then
 												item1spy = v.defindex
-											elseif (classes["slot"] == 0) then
+											elseif (classes["slot"] == 4) then
 												item2spy = v.defindex
 											elseif (classes["slot"] == 2) then
 												item3spy = v.defindex
@@ -3190,7 +3190,7 @@ concommand.Add("tf_merge_loadout_ask", function(ply)
 				conflict_help_frame:Close()
 				MergeSteamInventory(LocalPlayer())
 			end
-	end
+	end 
 end)
 
 concommand.Add("tf_merge_loadout", function(ply)

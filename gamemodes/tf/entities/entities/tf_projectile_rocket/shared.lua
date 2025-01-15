@@ -341,9 +341,9 @@ function ENT:DoExplosion(ent)
 					end
 				end
 			end
-			util.BlastDamage(self, owner, self:GetPos(), range, damage)
+			util.BlastDamage(owner:GetActiveWeapon(), owner, self:GetPos(), range, damage)
 		else
-			util.BlastDamage(self, owner, self:GetPos(), range, damage)
+			util.BlastDamage(owner:GetActiveWeapon(), owner, self:GetPos(), range, damage)
 		end
 	end
 	

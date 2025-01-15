@@ -158,6 +158,9 @@ for k, v in pairs(items_game["items"]) do
     elseif v.item_class == "tf_weapon_soda_popper" then
         v.item_class = "tf_weapon_scattergun"	
     end
+    if (v.item_class == nil) then
+        v.item_class = "tf_wearable_item"
+    end
     if (v.item_class == "tf_wearable") then
         v.item_class = "tf_wearable_item"
     end
@@ -333,6 +336,7 @@ for k, v in pairs(items_game["items"]) do
     end
 
     tf_items.ItemsByID[k] = v
+    tf_items.Items[k] = v
 end
 
 tf_items.Attributes.n = #attributes

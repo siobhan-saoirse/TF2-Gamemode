@@ -2122,49 +2122,6 @@ function GM:PlayerSpawn(ply)
 		ply:SetPlayerClass(ply:GetPlayerClass())
 		
 	end)
-	timer.Simple(0.05, function()
-	
-		local v = ply 
-		if (v:Alive()) then
-			if (v:IsHL2()) then		  
-				v:SetViewOffset(Vector(0,0,64 * v:GetModelScale()))
-				v:SetViewOffsetDucked(Vector(0, 0, 28 * v:GetModelScale()))
-			else
-				if (v.playerclass == "Scout") then
-					v:SetViewOffset(Vector(0, 0, 65 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 65 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Soldier") then
-					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Pyro") then
-					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Demoman") then
-					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Heavy") then
-					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Engineer") then
-					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Medic") then
-					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Sniper") then
-					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Spy") then
-					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
-				else
-					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 48 * v:GetModelScale()))
-				end
-			end
-		end
-		
-	end)
 	if ply:GetObserverMode() ~= OBS_MODE_NONE then
 		ply:UnSpectate()
 	end

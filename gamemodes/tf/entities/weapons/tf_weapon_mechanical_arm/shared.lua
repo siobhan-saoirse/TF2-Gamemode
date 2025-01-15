@@ -65,7 +65,7 @@ function SWEP:CanPrimaryAttack(ent)
 	if self.Owner:KeyDown(IN_ATTACK2) then 
 		return false
 	end
-	return self:CallBaseFunction("CanPrimaryAttack")
+	return self:Ammo1() > 0
 end
 
 function SWEP:PreDrawViewModel(vm, vpn, ply)
