@@ -900,13 +900,13 @@ local function GiveItemAutoComplete(cmd, args, slotfilter)
 	table.sort(class_lst)
 	
 	for _,k in ipairs(class_lst) do
-		if string.find(k, s) then
+		if string.find(string.lower(k), string.lower(s)) then
 			table.insert(t,cmd.." "..k)
 		end
 	end
 	
 	for _,k in ipairs(class_lst) do
-		if string.find(k, string.gsub("", "^%s*", "^")) then
+		if string.find(string.lower(k), string.gsub("", "^%s*", "^")) then
 			table.insert(j,k)
 		end
 	end

@@ -179,7 +179,7 @@ for k, v in pairs(items_game["items"]) do
 
     if v.item_name then
         v.name = tf_lang.GetRaw(v.item_name)
-        tf_items.Items[v.name] = v
+        //tf_items.Items[v.name] = v
         if tf_lang.GetRaw(v.item_name) == "Red-Tape Recorder" then
 			v.item_class = "tf_weapon_rtr" 
             v.item_slot = "primary"
@@ -335,10 +335,12 @@ for k, v in pairs(items_game["items"]) do
         //tf_items.Items[v.name] = v
     end
 
-    tf_items.ItemsByID[k] = v
     tf_items.Items[k] = v
+    tf_items.ItemsByID[k] = v
 end
 
 tf_items.Attributes.n = #attributes
 tf_items.Items.n = #items
 tf_items.Qualities.n = #qualities
+
+//table.Merge(tf_items.ItemsByID,tf_items.Items)
