@@ -419,15 +419,6 @@ function GM:Think()
 			for k,v in ipairs(player.GetAll()) do
 				if (v:IsFriendly(LocalPlayer()) or LocalPlayer():Team() == TEAM_NEUTRAL) then
 					local theplrtable = {}
-					for _,child in ipairs(ents.GetAll()) do
-						if (child:GetParent():EntIndex() == v:EntIndex()) then
-							local childrentable = {}
-							table.insert(childrentable,child)
-							if (child:GetNoDraw() == false) then
-								halo.Add( childrentable, team.GetColor(v:Team()), 0, 0, 2, true, true )
-							end
-						end
-					end
 					table.insert(theplrtable,v)
 					halo.Add( theplrtable, team.GetColor(v:Team()), 0, 0, 2, true, true )
 				end
