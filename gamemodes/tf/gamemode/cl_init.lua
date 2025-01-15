@@ -2895,7 +2895,7 @@ local function MergeSteamInventory(ply)
 										-- soldier
 										elseif (classes["class"] == 3) then
 											if (classes["slot"] == 0) then
-												if (v.defindex == 199 or v.defindex == 1141 or v.defindex == 9 or v.defindex == 12 or v.defindex == 10 or v.defindex == 415 or v.defindex == 1153) then
+												if (v.defindex == 199 or v.defindex == 1141 or v.defindex == 9 or v.defindex == 12 or v.defindex == 10 or v.defindex == 415 or v.defindex == 1153 or v.defindex == 199) then
 													item2soldier = v.defindex
 												else
 													item1soldier = v.defindex
@@ -2915,7 +2915,7 @@ local function MergeSteamInventory(ply)
 										-- pyro
 										elseif (classes["class"] == 7) then
 											if (classes["slot"] == 0) then
-												if (v.defindex == 199 or v.defindex == 1141 or v.defindex == 9 or v.defindex == 12 or v.defindex == 10 or v.defindex == 415 or v.defindex == 1153) then
+												if (v.defindex == 199 or v.defindex == 1141 or v.defindex == 9 or v.defindex == 12 or v.defindex == 10 or v.defindex == 415 or v.defindex == 1153 or v.defindex == 199) then
 													item2pyro = v.defindex
 												else
 													item1pyro = v.defindex
@@ -2951,7 +2951,7 @@ local function MergeSteamInventory(ply)
 										-- heavy
 										elseif (classes["class"] == 6) then
 											if (classes["slot"] == 0) then
-												if (v.defindex == 199 or v.defindex == 1141 or v.defindex == 9 or v.defindex == 12 or v.defindex == 10 or v.defindex == 415 or v.defindex == 1153) then
+												if (v.defindex == 199 or v.defindex == 1141 or v.defindex == 9 or v.defindex == 12 or v.defindex == 10 or v.defindex == 415 or v.defindex == 1153 or v.defindex == 199) then
 													item2heavy = v.defindex
 												else
 													item1heavy = v.defindex
