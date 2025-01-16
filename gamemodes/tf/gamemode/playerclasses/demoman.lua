@@ -14,7 +14,7 @@ if CLIENT then
 end
 
 CLASS.Loadout = {"tf_weapon_grenadelauncher", "tf_weapon_pipebomblauncher", "tf_weapon_bottle"}
-CLASS.DefaultLoadout = {"Grenade Launcher", "Stickybomb Launcher", "Bottle"}
+CLASS.DefaultLoadout = {"TF_WEAPON_GRENADELAUNCHER", "TF_WEAPON_PIPEBOMBLAUNCHER", "TF_WEAPON_BOTTLE"}
 CLASS.ModelName = "demo"
 
 CLASS.Gibs = {

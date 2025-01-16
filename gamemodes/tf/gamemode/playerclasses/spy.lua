@@ -14,7 +14,7 @@ if CLIENT then
 end
 
 CLASS.Loadout = {"tf_weapon_revolver", "tf_weapon_sapper", "tf_weapon_knife", "tf_weapon_pda_spy"}
-CLASS.DefaultLoadout = {"Revolver", "Knife", "Disguise Kit", "TF_WEAPON_INVIS", "Sapper"}
+CLASS.DefaultLoadout = {"TF_WEAPON_REVOLVER", "TF_WEAPON_KNIFE", "TF_WEAPON_PDA_SPY", "TF_WEAPON_INVIS", "TF_WEAPON_BUILDER_SPY"}
 CLASS.ModelName = "spy"
 CLASS.Gibs = {
 	[GIB_LEFTLEG]		= GIBS_SPY_START,

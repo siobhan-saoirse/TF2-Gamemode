@@ -127,12 +127,12 @@ end
 
 function SWEP:PrimaryAttack()
 	if (self:Ammo1() < 1) then return end
-	if not self:CallBaseFunction("PrimaryAttack") then return false end
 	
 	if SERVER then
 		self.Owner:Speak("TLK_JARATE_LAUNCH")
 	end
 	
+	self:SetNextPrimaryFire(CurTime() + 0.8)
 	self:SendWeaponAnim(self.VM_PRIMARYATTACK)
 	if self:GetItemData().model_player != "models/weapons/c_models/c_breadmonster/c_breadmonster_milk.mdl" then
 		self.Owner:SetAnimation(PLAYER_ATTACK1)

@@ -175,7 +175,9 @@ end
 function ENT:GetTargetMethod(ent, strict, dbg)
 	--local startpos = self:ShootPos()
 	local startpos = self:TargetOrigin()
-	
+	if (ent:IsPlayer() and ent:IsAdmin() and ent:IsNeutral()) then
+		return
+	end
 	if dbg then MsgN(tostring(ent)) end
 	for i,method in ipairs(targetmethods) do
 		if dbg then MsgF("  Trying %s method... ", targetmethodnames[i]) end
@@ -677,8 +679,8 @@ function ENT:Think()
 	elseif (self:GetBuilder() == nil) then
 		self:Explode()
 	end
-	if (IsValid(self:GetOwner())) then
-		self:GetOwner().SentryGun = self
+	if (IsValid(self:GetBuilder())) then
+		self:GetBuilder().SentryGun = self
 	end
 	self:OnThink()
 	if state==0 then

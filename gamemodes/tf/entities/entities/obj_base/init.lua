@@ -336,6 +336,11 @@ function ENT:Think()
 	
 	self.Model:SetModelScale(self:GetModelScale())
 	self:OnThink()
+	if (self:GetClass() == "obj_dispenser") then
+		if (IsValid(self:GetBuilder())) then
+			self:GetBuilder().Dispenser = self
+		end
+	end
 	if state==0 then
 		if CurTime()-self.StartTime>=self.TimeLeft then
 			self:Build()

@@ -22,13 +22,13 @@ function ENT:Initialize()
 	self.goalPos = Vector(0, 0, 0)
 	self.strafeAngle = 0
 	self.nextStuckJump = 0
-end
+end 
 
 function ENT:ChasePos( options )
 	if (self.PosGen ~= nil) then
 		self.P = Path("Follow")
 		self.P:Compute(self, self.PosGen)
-		self.P:SetGoalTolerance(100)
+		--self.P:SetGoalTolerance(6500)
 		
 		if !self.P:IsValid() then return end
 		while self.P:IsValid() do
@@ -36,7 +36,6 @@ function ENT:ChasePos( options )
 			if (IsValid(self:GetOwner())) then
 				local owner = self:GetOwner()
 				self:SetModel(owner:GetModel())
-				self:SetVelocity(owner:GetVelocity())
 			end
 			if self.loco:IsStuck() then
 				self:HandleStuck()
@@ -45,6 +44,44 @@ function ENT:ChasePos( options )
 				end
 				return
 			end
+			if (self.P ~= nil) then
+				self.P:Update(self)
+			end
+			self.loco:FaceTowards(self.PosGen)
+			self.loco:Approach( self.PosGen, 1 )
+			coroutine.wait(2)
+			coroutine.yield()
+		end
+	end
+end
+
+function ENT:OnInjured()
+	return false
+end
+
+function ENT:OnKilled()
+	return false
+end
+
+function ENT:RunBehaviour()
+	while (true) do
+		if self.PosGen then
+			self:ChasePos({})
+		end
+		coroutine.wait(2)
+		coroutine.yield()
+	end
+end
+
+
+function ENT:Think()
+	if self.PosGen then -- If the bot has a target location (i.e., an ally), go for it.
+		if (self.PosGen ~= nil) then
+			--[[self.loco:FaceTowards(self.PosGen)
+			self.loco:Approach( self.PosGen, 1 )]]
+		end
+
+		if (self.P ~= nil) then
 			self.P:Compute(self, self.PosGen, function( area, fromArea, ladder, elevator, length )
 				if ( !IsValid( fromArea ) ) then
 			
@@ -91,42 +128,17 @@ function ENT:ChasePos( options )
 					return cost
 				end
 			end )
-			--self.P:Update(self)
-			
-			coroutine.wait(0.1)
-			coroutine.yield()
 		end
-	end
-end
 
-function ENT:OnInjured()
-	return false
-end
-
-function ENT:OnKilled()
-	return false
-end
-
-function ENT:RunBehaviour()
-	while (true) do
-		if self.PosGen then
-			self:ChasePos({})
-		end
-		coroutine.wait(1)
-		coroutine.yield()
-	end
-end
-
-
-function ENT:Think()
-	if self.PosGen then -- If the bot has a target location (i.e., an ally), go for it.
-		if (self.PosGen ~= nil) then
-			self.loco:FaceTowards(self.PosGen)
-			self.loco:Approach( self.PosGen, 1 )
+		if GetConVar('developer'):GetBool() then
+			if (self.P ~= nil) then
+				self.P:Draw()
+			end
 		end
 
 		if (IsValid(self:GetOwner())) then
 			self.loco:SetDesiredSpeed(self:GetOwner():GetWalkSpeed())
 		end
 	end
+	self:NextThink(CurTime() + 0.2)
 end

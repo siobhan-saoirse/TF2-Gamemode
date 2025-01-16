@@ -64,6 +64,7 @@ function Player:IsPlayer()
 	return oPlayer(self)
 end
 function Player:Nick()
+	if self:GetNWString("customname",oNick(self)) then return self:GetNWString("customname",oNick(self)) end
 	return oNick(self)
 end
 Player.Name = Player.Nick

@@ -100,7 +100,6 @@ function SWEP:MeleeAttack()
 end
 
 function SWEP:PrimaryAttack()
-	if not self:CallBaseFunction("PrimaryAttack") then return false end
 	if (!self:CanPrimaryAttack()) then return end
 	
 	if self.Owner:GetAmmoCount( self.Weapon:GetPrimaryAmmoType() ) == 0 then
@@ -111,11 +110,12 @@ function SWEP:PrimaryAttack()
 		self.Owner:Speak("TLK_JARATE_LAUNCH")
 		//self.Owner:SelectWeapon("tf_weapon_club")
 	end
-	
+	self:SetNextPrimaryFire(CurTime() + 0.8)
 	self:SendWeaponAnim(self.VM_PRIMARYATTACK)
 	if self:GetItemData().model_player == "models/weapons/c_models/c_breadmonster/c_breadmonster.mdl" then
 		self.ShootSound = Sound("Weapon_bm_throwable.throw")
 		self.ShootCritSound = Sound("Weapon_bm_throwable.throw")
+		self.Owner:DoAnimationEvent(ACT_MP_THROW)
 	else
 		self.Owner:SetAnimation(PLAYER_ATTACK1)
 	end

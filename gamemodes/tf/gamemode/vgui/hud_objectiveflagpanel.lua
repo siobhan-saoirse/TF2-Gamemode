@@ -81,7 +81,7 @@ function PANEL:Paint()
 	
 	-- Playing to :
 	param = {
-		text="Playing to: ∞",
+		text="Playing to: "..GetConVar("tf_flag_caps_per_round"):GetInt(),
 		font="HudFontSmall",
 		pos={320*WScale, (480-28+15)*Scale},
 		color=Colors.TanLight,

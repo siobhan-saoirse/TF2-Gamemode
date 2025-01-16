@@ -134,12 +134,12 @@ function ENT:Initialize()
 			npc:SetSkin(1)
 				
 		end
-		RandomWeapon2(npc, "primary")
-		RandomWeapon2(npc, "secondary")
-		RandomWeapon2(npc, "melee")
-		RandomCosmetic(npc, "head")
-		RandomCosmetic(npc, "misc")
-		RandomCosmetic(npc, "hat")			
+		--RandomWeapon2(npc, "primary")
+		--RandomWeapon2(npc, "secondary")
+		--RandomWeapon2(npc, "melee")
+		--RandomCosmetic(npc, "head")
+		--RandomCosmetic(npc, "misc")
+		--RandomCosmetic(npc, "hat")			
 		local class = npc:GetPlayerClass()
 		if (class != "scout" and 
 			class != "soldier" and 
@@ -194,7 +194,7 @@ end
 
 
 function RandomWeapon2(ply, wepslot)
-	local weps = tf_items.ReturnItems()
+	local weps = tf_items.ItemsByID
 	local class = ply:GetPlayerClass()
 	local validweapons = {}
 	for k, v in pairs(weps) do

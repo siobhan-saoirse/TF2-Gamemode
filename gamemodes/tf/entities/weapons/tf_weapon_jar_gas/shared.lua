@@ -52,7 +52,7 @@ self.VM_INSPECT_END = ACT_ITEM2_VM_INSPECT_END
 end
 
 function SWEP:Think()
-	self:CallBaseFunction("Think")
+	self.BaseClass.Think(self)
 	self.Owner:SetPoseParameter("r_arm", 2.2)
 	self.Owner:SetPoseParameter("r_hand_grip", 10.8)
 end
@@ -87,10 +87,7 @@ function SWEP:MeleeAttack()
 	end
 end
 
-function SWEP:PrimaryAttack()
-	if not self:CallBaseFunction("PrimaryAttack") then return false end
-	
-	if self.Owner:GetAmmoCount( self.Weapon:GetPrimaryAmmoType() ) == 0 then
+function SWEP:PrimaryAttack()	if self.Owner:GetAmmoCount( self.Weapon:GetPrimaryAmmoType() ) == 0 then
 		return
 	end
 	
@@ -111,6 +108,7 @@ function SWEP:PrimaryAttack()
 	if CLIENT then
 		self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_ITEM2, true)
 	end
+	self:SetNextPrimaryFire(CurTime() + 0.8)
 	self.NextIdle = CurTime() + self:SequenceDuration() - 0.2
 	
 	--self.NextMeleeAttack = CurTime() + 0.25

@@ -22,7 +22,8 @@ function ENT:PlayerTouched(pl)
 	
 	pl:SendLua([[EmitSound("HealthKit.Touch", Vector(]]..pl:GetPos().x..[[,]]..pl:GetPos().y..[[,]]..pl:GetPos().z..[[))]])
 	self:Hide()
-	GAMEMODE:GiveHealthPercent(pl, h)
+	GAMEMODE:GiveHealthPercent(pl,h)
+	GAMEMODE:HealPlayer(pl, pl, 1, true, true)
 	GAMEMODE:ExtinguishEntity(pl)
 	GAMEMODE:EntityStopBleeding(pl)
 end

@@ -17,6 +17,28 @@ local bot_respawn = CreateConVar("tf_bot_npc_respawn", "0", {FCVAR_ARCHIVE, FCVA
 local tf_bot_notarget = CreateConVar("tf_bot_notarget", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY})
 local tf_bot_melee_only = CreateConVar("tf_bot_melee_only", "0", {FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY})
 
+function lookForNearestHealthPack(bot)
+	
+	local npcs = {}
+	for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 8000000)) do
+		if (string.find(v:GetClass(),"item_healthkit") or string.find(v:GetClass(),"item_healthvial") or string.find(v:GetClass(),"obj_dispenser")) then
+			table.insert(npcs, v)
+		end
+	end
+	return table.Random(npcs)
+	
+end
+function lookForNearestAmmoPack(bot)
+	
+	local npcs = {}
+	for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 8000000)) do
+		if (string.find(v:GetClass(),"item_ammopack") or string.find(v:GetClass(),"obj_dispenser")) then
+			table.insert(npcs, v)
+		end
+	end
+	return table.Random(npcs)
+	
+end
 function lookForNearestPlayer(bot)
 	local npcs = {}
 		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 8000000)) do
@@ -580,9 +602,9 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				bot.TargetEnt = lookForNearestPlayer(bot)
 			end
 		end
-		if !controller.nextRandomLook or controller.nextRandomLook < CurTime() then
-			controller.LookAt = Angle(math.Rand(-45,45),math.Rand(-360,360),0)
-			controller.nextRandomLook = CurTime() + math.Rand(1,3) 
+		if !bot.ControllerBot.nextRandomLook or bot.ControllerBot.nextRandomLook < CurTime() then
+			bot.ControllerBot.LookAt = Angle(math.Rand(-45,45),math.Rand(-360,360),0)
+			bot.ControllerBot.nextRandomLook = CurTime() + math.Rand(1,3) 
 		end
 		local friendlyHuman = lookForClosestFriendlyHumanLookingAtMe(bot)
 		if (IsValid(friendlyHuman) and (GAMEMODE.IsSetupPhase) and !bot.acknowledgedHuman) then
@@ -612,73 +634,69 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			end
 		end
 		if (IsValid(bot.TargetEnt)) then
-			if (((bot.playerclass == "Scout" and !string.find(bot:GetModel(),"bot")) or bot.playerclass == "Engineer")) then
-				if (IsValid(bot:GetWeapons()[2])) then
-					if (bot:GetWeapons()[1]:Clip1() == 0 and bot:GetWeapons()[2].IsProjectileWeapon) then
-						bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
-					end
-				end
-			elseif (bot.playerclass == "Soldier") then
-				if (IsValid(bot:GetWeapons()[2])) then
-					if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 500) then
-						if (bot:GetWeapons()[1]:Clip1() == 0 and bot:GetWeapons()[2]:Clip1() ~= 0 and bot:GetWeapons()[2].IsProjectileWeapon) then
+			if (bot.Difficulty ~= 0) then
+				if (((bot.playerclass == "Scout" and !string.find(bot:GetModel(),"bot")))) then
+					if (IsValid(bot:GetWeapons()[2])) then
+						if (bot:GetWeapons()[1]:Clip1() == 0 and bot:GetWeapons()[2]:Ammo1() ~= 0 and bot:GetWeapons()[2].IsProjectileWeapon) then
 							bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
+						end
+					end
+				elseif (bot.playerclass == "Soldier") then
+					if (IsValid(bot:GetWeapons()[2])) then
+						if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 500) then
+							if (bot:GetWeapons()[1]:Clip1() == 0 and bot:GetWeapons()[2]:Clip1() ~= 0 and bot:GetWeapons()[2].IsProjectileWeapon) then
+								bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
+							else
+								bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())		
+							end
+						end
+					end
+				elseif (bot.playerclass == "Heavy") then
+					if (IsValid(bot:GetWeapons()[2])) then
+						if (bot:GetWeapons()[1]:Ammo1() == 0 and bot:GetWeapons()[2]:Ammo1() > 0 and bot:GetWeapons()[2].IsProjectileWeapon) then
+							bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
+						elseif (bot:GetWeapons()[1]:Ammo1() == 0 and bot:GetWeapons()[2]:Ammo1() == 0 and bot:GetWeapons()[2].IsProjectileWeapon) then
+							bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
 						else
 							bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())		
 						end
 					end
-				end
-			elseif (bot.playerclass == "Heavy") then
-				if (IsValid(bot:GetWeapons()[2])) then
-					if (bot:GetWeapons()[1]:Ammo1() == 0 and bot:GetWeapons()[2]:Ammo1() > 0 and bot:GetWeapons()[2].IsProjectileWeapon) then
-						bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
-					elseif (bot:GetWeapons()[1]:Ammo1() == 0 and bot:GetWeapons()[2]:Ammo1() == 0 and bot:GetWeapons()[2].IsProjectileWeapon) then
-						bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
-					else
-						bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())		
-					end
-				end
-			elseif (bot.playerclass == "Pyro" and !string.find(bot:GetModel(),"bot")) then
-				if (IsValid(bot:GetWeapons()[2])) then
-					if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) > 750) then
-						if (bot:GetWeapons()[2]:Clip1() ~= 0) then
-							bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
-						else
-							bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())		
+				elseif (bot.playerclass == "Pyro" and !string.find(bot:GetModel(),"bot")) then
+					if (IsValid(bot:GetWeapons()[2])) then
+						if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) > 750) then
+							if (bot:GetWeapons()[2]:Clip1() ~= 0) then
+								bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
+							else
+								bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())		
+							end
 						end
 					end
-				end
-			elseif (bot.playerclass == "Sniper") then
-				if (IsValid(bot:GetWeapons()[2])) then
-					if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) > 200 and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 750 and bot:GetWeapons()[2].IsProjectileWeapon) then
-						bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
-					elseif (bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 200) then
-						bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
-					else
-						bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())
+				elseif (bot.playerclass == "Sniper") then
+					if (IsValid(bot:GetWeapons()[2])) then
+						if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) > 200 and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 750 and bot:GetWeapons()[2].IsProjectileWeapon) then
+							bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
+						elseif (bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 200) then
+							bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
+						else
+							bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())
+						end
 					end
-				end
-			elseif (bot.playerclass == "Demoman") then
-				if (IsValid(bot:GetWeapons()[2])) then
-					if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 200) then
-						bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
-					else
-						bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())
+				elseif (bot.playerclass == "Demoman") then
+					if (IsValid(bot:GetWeapons()[2])) then
+						if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 200) then
+							bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
+						else
+							bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())
+						end
 					end
-				end
-			elseif (bot.playerclass == "Spy") then
-				if (IsValid(bot:GetWeapons()[2])) then
-					if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 200) then
-						bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
-					else
-						bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())
+				elseif (bot.playerclass == "Spy") then
+					if (IsValid(bot:GetWeapons()[2])) then
+						if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 200) then
+							bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
+						else
+							bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())
+						end
 					end
-				end
-			end
-		else
-			if (bot:GetWeapons()[1] ~= nil) then
-				if (bot:GetWeapons()[1]:Ammo1() ~= 0) then
-					bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())
 				end
 			end
 		end
@@ -734,7 +752,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			end]]
 		end
 			for k,v in ipairs(ents.FindInSphere(bot:GetPos(),moveawayrange)) do
-				if (IsValid(v) and GAMEMODE:EntityTeam(v) == bot:Team() and v:IsTFPlayer() and v:EntIndex() != bot:EntIndex() and bot:GetNWBool("Taunting",false) != true) then
+				if (IsValid(v) and GAMEMODE:EntityTeam(v) == bot:Team() and v:IsPlayer() and v:EntIndex() != bot:EntIndex() and bot:GetNWBool("Taunting",false) != true) then
 					local forward = bot:EyeAngles():Forward()
 					local right = bot:EyeAngles():Right()
 					local avoidVector = bot:GetPos()
@@ -878,7 +896,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			end
 
 				
-			if IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 6000 and bot.TargetEnt:Health() > 0 then
+			if IsValid(bot.TargetEnt) and bot.TargetEnt:Health() > 0 and bot:Visible(bot.TargetEnt) then
 				if (bot:GetPlayerClass() != "tank_l4d") then
 					if (bot:GetNWBool("Taunting",false) == true) then 
 						return 
@@ -897,9 +915,9 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				elseif bot.Difficulty == 3 then
 					lerp = 4
 				end
-				bot:SetEyeAngles(LerpAngle(FrameTime() * 3 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):Angle()))
+				bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):Angle()))
 			end
-			if IsValid(bot.intelcarrier) and bot:GetPos():Distance(bot.intelcarrier:GetPos()) < 6000 and bot.intelcarrier:Health() > 0 then
+			if IsValid(bot.intelcarrier) and !IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.intelcarrier:GetPos()) < 6000 and bot.intelcarrier:Health() > 0 then
 				if (bot:GetPlayerClass() != "tank_l4d") then
 					if (bot:GetNWBool("Taunting",false) == true) then 
 						return 
@@ -912,16 +930,16 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				if (!bot.isCarryingIntel) then
 					bot.botPos = bot.intelcarrier:GetPos()
 				end
-				bot:SetEyeAngles(LerpAngle(FrameTime() * 3 * lerp, bot:EyeAngles(), mva + (controller.LookAt * 0.5))) 
+				bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), mva + (controller.LookAt * 0.5))) 
 			end
-			if (!IsValid(bot.TargetEnt) or IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) > 6000) then 
+			if (!IsValid(bot.TargetEnt) or (IsValid(bot.TargetEnt) and !bot:Visible(bot.TargetEnt))) then 
 				if (bot.lookingAt) then return end
 				if (bot:GetPlayerClass() != "tank_l4d") then
 					if (bot:GetNWBool("Taunting",false) == true) then 
 						return 
 					end 
 				end	 
-				bot:SetEyeAngles(LerpAngle(FrameTime() * 3 * lerp, bot:EyeAngles(), mva + (controller.LookAt * 0.5))) 
+				bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), mva + (controller.LookAt * 0.5))) 
 			end 
 			
 			if (!bot:GetNWBool("Taunting",false) and bot.botPos) then
@@ -1053,10 +1071,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 						targetpos = fintelcap.Pos -- goto friendly cap spot
 						bot.intelcarrier = nil
 					elseif IsValid(intel.Carrier) and bot:EntIndex() != intel.Carrier:EntIndex() then -- or else if we have it already carried
-
-						if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
-							targetpos = intel.Carrier:GetPos()
-						end
+						targetpos = intel.Carrier:GetPos()
 						bot.intelcarrier = intel.carrier
 					else
 						targetpos = fintelcap.Pos -- move to the bomb, the flag is currently invalid until a bot gets it
@@ -1069,16 +1084,24 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				bot.botPos = targetpos
 			else
 				if (!IsValid(bot.TargetEnt)) then
-					-- our enemy doesn't exist anymore, don't move
-					mv:SetForwardSpeed(0)
-					mv:SetSideSpeed(0)
-					mv:SetMoveAngles(Angle(0,0,0))
-					return
+					-- our enemy doesn't exist anymore, don't do anything
 				else
 					bot.botPos = bot.TargetEnt:GetPos()
 				end
 			end
 		
+			if (2*bot:Health()<bot:GetMaxHealth()) then
+				if (!IsValid(bot.healthkit)) then
+					bot.healthkit = lookForNearestHealthPack(bot)
+				else
+					bot.botPos = bot.healthkit:GetPos()
+				end
+			else
+				if (IsValid(bot.healthkit)) then
+					bot.healthkit = nil
+					bot.botPos = nil
+				end
+			end
 		for _, intel in pairs(ents.FindByClass("item_teamflag_mvm")) do
 						
 			if IsValid(intel.Carrier) and bot:GetPos():Distance(intel.Carrier:GetPos()) < 180 and bot:EntIndex() != intel.Carrier:EntIndex() then -- dont move if too close!
@@ -1197,40 +1220,44 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			end
 		end
 
+		if (!bot.lookingAt and bot:GetNWBool("Taunting",false) != true) then
 			if (bot:GetPlayerClass() == "engineer") then
-				for k, v in pairs(ents.FindByClass("obj_*")) do
+				for k, v in pairs(ents.FindByClass("obj_sentrygun")) do
 						
-					if IsValid(v) and bot:GetPos():Distance(v:GetPos()) < 120 and bot:EntIndex() == v:GetBuilder():EntIndex() then -- dont move if too close!
-						bot.tooclose = true
-						bot.isCarryingIntel = true
-						if (bot:GetActiveWeapon():GetClass() != bot:GetWeapons()[3]:GetClass()) then
-							bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
-						end
-						if (CurTime() > bot:GetActiveWeapon():GetNextPrimaryFire()) then
-							bot:GetActiveWeapon():PrimaryAttack()
-						end
-						bot:AddFlags(FL_DUCKING)
-						
-						local shouldvegoneforthehead = v:EyePos()
-						local bone = 1
-						shouldvegoneforthehead = v:GetBonePosition(bone)
-						local lerp = 1.2
-						bot:SetEyeAngles(LerpAngle(FrameTime() * math.random(8, 10) * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):Angle()))
-						
-					else
-						bot.tooclose = false
-						bot.isCarryingIntel = false
-						bot:RemoveFlags(FL_DUCKING)
-					end
-
-					if IsValid(v) and bot:EntIndex() == v:GetBuilder():EntIndex() and v:GetClass() == "obj_sentrygun" then -- dont move if too close!
+					if (IsValid(bot.SentryGun) and bot.SentryGun:GetLevel() == 3 and bot.SentryGun:Health() == bot.SentryGun:GetMaxHealth() and !IsValid(bot.Dispenser)) then
+						bot.BuiltDispenser = false
 						bot.botPos = v:GetPos()
-					elseif (!IsValid(v)) then
-						bot.BuiltSentry = false
+					else
+						if IsValid(v) and bot:GetPos():Distance(v:GetPos()) < 120 and bot:EntIndex() == v:GetBuilder():EntIndex() then -- dont move if too close!
+							bot.tooclose = true
+							bot.isCarryingIntel = true
+							if (bot:GetActiveWeapon():GetClass() != bot:GetWeapons()[3]:GetClass()) then
+								bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
+							end
+							if (CurTime() > bot:GetActiveWeapon():GetNextPrimaryFire()) then
+								bot:GetActiveWeapon():PrimaryAttack()
+							end
+							bot:AddFlags(FL_DUCKING)
+							
+							local lerp = 1.2
+							bot:SetEyeAngles(LerpAngle(0.2, bot:EyeAngles(), (v:GetPos() - bot:GetShootPos()):Angle()))
+							mv:SetSideSpeed(0)
+							mv:SetMoveAngles(Angle(0,0,0))
+						else
+							bot.tooclose = false
+							bot.isCarryingIntel = false
+							bot:RemoveFlags(FL_DUCKING)
+						end
+
+						if IsValid(v) and bot:EntIndex() == v:GetBuilder():EntIndex() and v:GetClass() == "obj_sentrygun" then -- dont move if too close!
+							bot.botPos = v:GetPos()
+						elseif (!IsValid(v)) then
+							bot.BuiltSentry = false
+						end
 					end
 				end
 			end
-			
+		end
 			
 		cmd:SetButtons(buttons)
 	end
@@ -1355,46 +1382,80 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			if (bot.ControllerBot.nextStuckJump > CurTime()) then
 				buttons = buttons + IN_JUMP
 			end
-		
-		if (string.find(game.GetMap(),"mvm_")) then
-			if (bot:GetPlayerClass() == "engineer" and !IsValid(bot.SentryGunHint) and !bot.BuiltSentry and bot:Team() != TEAM_BLU) then
-				bot.SentryGunHint = table.Random(ents.FindByClass("bot_hint_sentrygun"))
-			elseif (IsValid(bot.SentryGunHint) and !bot.BuiltSentry and bot:Team() != TEAM_BLU) then
-				bot.ControllerBot.PosGen = bot.SentryGunHint:GetPos()
-				bot:Build(2,0)
-				if (bot:GetPos():Distance(bot.SentryGunHint:GetPos()) < 150) then
-					buttons = buttons + IN_ATTACK
-					bot.BuiltSentry = true
-					timer.Simple(0.2, function()
-						bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
-					end)
+		if (!bot.lookingAt and bot:GetNWBool("Taunting",false) != true) then
+			if (string.find(game.GetMap(),"mvm_")) then
+				if (bot.TargetEnt == nil) then
+					if (IsValid(bot.SentryGun) and bot.SentryGun:GetLevel() == 3 and bot.SentryGun:Health() == bot.SentryGun:GetMaxHealth()) then
+						if (IsValid(bot.SentryGunHint) and !bot.BuiltDispenser and bot:Team() != TEAM_BLU) then
+							bot.botPos = bot.SentryGunHint:GetPos()
+							bot:SetEyeAngles(bot:GetEyeAngles() + Angle(180,0,0))
+							bot:Build(0,0)
+							if (bot:GetPos():Distance(bot.SentryGunHint:GetPos()) < 150) then
+								buttons = buttons + IN_ATTACK
+								bot.BuiltDispenser = true
+								timer.Simple(0.2, function()
+									bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
+								end)
+							end
+						end
+					else
+						if (bot:GetPlayerClass() == "engineer" and !IsValid(bot.SentryGunHint) and !bot.BuiltSentry and bot:Team() != TEAM_BLU) then
+							bot.SentryGunHint = table.Random(ents.FindByClass("bot_hint_sentrygun"))
+						elseif (IsValid(bot.SentryGunHint) and !bot.BuiltSentry and bot:Team() != TEAM_BLU) then
+							bot.botPos = bot.SentryGunHint:GetPos()
+							bot:Build(2,0)
+							if (bot:GetPos():Distance(bot.SentryGunHint:GetPos()) < 150) then
+								buttons = buttons + IN_ATTACK
+								bot.BuiltSentry = true
+								timer.Simple(0.2, function()
+									bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
+								end)
+							end
+						elseif (bot:GetPlayerClass() == "engineer" and !IsValid(bot.SentryGunHint) and !bot.BuiltSentry and bot:Team() == TEAM_BLU) then
+							bot.SentryGunHint = table.Random(ents.FindByClass("bot_hint_sentrygun"))
+						elseif (IsValid(bot.SentryGunHint) and !bot.BuiltSentry and bot:Team() == TEAM_BLU) then
+							bot.botPos = bot.SentryGunHint:GetPos()
+							bot:Build(1,1)
+							bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), (bot.SentryGunHint:GetPos() - bot:GetShootPos()):Angle()))
+							if (bot:GetPos():Distance(bot.SentryGunHint:GetPos()) < 150) then
+								buttons = buttons + IN_ATTACK
+								bot.BuiltSentry = true
+								timer.Simple(0.2, function()
+									bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
+								end)
+							end
+						end
+					end
 				end
-			elseif (bot:GetPlayerClass() == "engineer" and !IsValid(bot.SentryGunHint) and !bot.BuiltSentry and bot:Team() == TEAM_BLU) then
-				bot.SentryGunHint = table.Random(ents.FindByClass("bot_hint_sentrygun"))
-			elseif (IsValid(bot.SentryGunHint) and !bot.BuiltSentry and bot:Team() == TEAM_BLU) then
-				bot.botPos = bot.SentryGunHint:GetPos()
-				bot:Build(1,1)
-				if (bot:GetPos():Distance(bot.SentryGunHint:GetPos()) < 150) then
-					buttons = buttons + IN_ATTACK
-					bot.BuiltSentry = true
-					timer.Simple(0.2, function()
-						bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
-					end)
-				end
-			end
-		else
-		
-			if (bot:GetPlayerClass() == "engineer" and !IsValid(bot.SentryGunHint) and !bot.BuiltSentry) then
-				bot.SentryGunHint = table.Random(ents.FindByClass("bot_hint_sentrygun"))
-			elseif (IsValid(bot.SentryGunHint) and !bot.BuiltSentry) then
-				bot.botPos = bot.SentryGunHint:GetPos()
-				bot:Build(2,0)
-				if (bot:GetPos():Distance(bot.SentryGunHint:GetPos()) < 150) then
-					buttons = buttons + IN_ATTACK
-					bot.BuiltSentry = true
-					timer.Simple(0.2, function()
-						bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
-					end)
+			else
+			
+				if (IsValid(bot.SentryGun) and bot.SentryGun:GetLevel() == 3 and bot.SentryGun:Health() == bot.SentryGun:GetMaxHealth()) then
+					if (IsValid(bot.SentryGunHint) and !bot.BuiltDispenser and bot:Team() != TEAM_BLU) then
+						bot.botPos = bot.SentryGunHint:GetPos()
+						bot:SetEyeAngles(bot:GetEyeAngles() + Angle(180,0,0))
+						bot:Build(0,0)
+						if (bot:GetPos():Distance(bot.SentryGunHint:GetPos()) < 150) then
+							buttons = buttons + IN_ATTACK
+							bot.BuiltDispenser = true
+							timer.Simple(0.2, function()
+								bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
+							end)
+						end
+					end
+				else
+					if (bot:GetPlayerClass() == "engineer" and !IsValid(bot.SentryGunHint) and !bot.BuiltSentry) then
+						bot.SentryGunHint = table.Random(ents.FindByClass("bot_hint_sentrygun"))
+					elseif (IsValid(bot.SentryGunHint) and !bot.BuiltSentry) then
+						bot.botPos = bot.SentryGunHint:GetPos()
+						bot:Build(2,0)
+						if (bot:GetPos():Distance(bot.SentryGunHint:GetPos()) < 150) then
+							buttons = buttons + IN_ATTACK
+							bot.BuiltSentry = true
+							timer.Simple(0.2, function()
+								bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
+							end)
+						end
+					end
 				end
 			end
 		end

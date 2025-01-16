@@ -223,7 +223,6 @@ function ENT:OnThinkActive()
 		if (self.Heal_Sound != nil and self.Heal_Sound:IsPlaying() and self:GetNWInt("NumClients",0) <= 0 and self:GetState()==3) then
 			self.Heal_Sound:Stop()
 		end
-
 	self:SetNWInt("NumClients",self.NumClients)
 	if self.NextGenerate and CurTime()>=self.NextGenerate then
 		local color = self:GetColor()

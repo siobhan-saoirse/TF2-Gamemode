@@ -18,11 +18,11 @@ function ENT:PlayerTouched(pl)
 	if pl.TempAttributes and pl.TempAttributes.AmmoFromPacksMultiplier then
 		a = a * pl.TempAttributes.AmmoFromPacksMultiplier
 	end
-	
-	pl:SendLua([[EmitSound("AmmoPack.Touch", Vector(]]..pl:GetPos().x..[[,]]..pl:GetPos().y..[[,]]..pl:GetPos().z..[[))]])
-	self:Hide()
 	if pl:IsPlayer() then
-		GAMEMODE:GiveAmmoPercent(pl, a)
+		if (GAMEMODE:GiveAmmoPercent(pl, a)) then
+			pl:SendLua([[EmitSound("AmmoPack.Touch", Vector(]]..pl:GetPos().x..[[,]]..pl:GetPos().y..[[,]]..pl:GetPos().z..[[))]])
+			self:Hide()
+		end
 	end
 end
 

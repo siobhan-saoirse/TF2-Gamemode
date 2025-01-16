@@ -52,6 +52,7 @@ function GM:ShouldCrit(ent, inf, att, hitgroup, dmginfo)
 		end
 	end
 
+	dmginfo:SetDamageType(bit.bor(dmginfo:GetDamageType(),DMG_ACID))
 	return false
 end
 

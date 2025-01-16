@@ -15,7 +15,7 @@ end
 
 CLASS.Loadout = {"tf_weapon_shotgun_primary", "tf_weapon_pistol", "tf_weapon_wrench",
 	"tf_weapon_pda_engineer_build", "tf_weapon_pda_engineer_destroy"}
-CLASS.DefaultLoadout = {"Shotgun","TF_WEAPON_PISTOL","TF_WEAPON_WRENCH",
+CLASS.DefaultLoadout = {"TF_WEAPON_SHOTGUN_PRIMARY","TF_WEAPON_PISTOL","TF_WEAPON_WRENCH",
 	"TF_WEAPON_PDA_ENGINEER_BUILD","TF_WEAPON_PDA_ENGINEER_DESTROY"}
 CLASS.ModelName = "engineer"
 

@@ -15,6 +15,108 @@ list.Set( "NPC", "tf_blue_team_spawner", {
 	AdminOnly = true,
 	AdminOnly = true
 } )
+local randomNames =
+{
+	"Chucklenuts",
+	"CryBaby",
+	"WITCH",
+	"ThatGuy",
+	"Still Alive",
+	"Hat-Wearing MAN",
+	"Me",
+	"Numnutz",
+	"H@XX0RZ",
+	"The G-Man",
+	"Chell",
+	"The Combine",
+	"Totally Not A Bot",
+	"Pow!",
+	"Zepheniah Mann",
+	"THEM",
+	"LOS LOS LOS",
+	"10001011101",
+	"DeadHead",
+	"ZAWMBEEZ",
+	"MindlessElectrons",
+	"TAAAAANK!",
+	"The Freeman",
+	"Black Mesa",
+	"Soulless",
+	"CEDA",
+	"BeepBeepBoop",
+	"NotMe",
+	"CreditToTeam",
+	"BoomerBile",
+	"Someone Else",
+	"Mann Co.",
+	"Dog",
+	"Kaboom!",
+	"AmNot",
+	"0xDEADBEEF",
+	"HI THERE",
+	"SomeDude",
+	"GLaDOS",
+	"Hostage",
+	"Headful of Eyeballs",
+	"CrySomeMore",
+	"Aperture Science Prototype XR7",
+	"Humans Are Weak",
+	"AimBot",
+	"C++",
+	"GutsAndGlory!",
+	"Nobody",
+	"Saxton Hale",
+	"RageQuit",
+	"Screamin' Eagles",
+
+	"Ze Ubermensch",
+	"Maggot",
+	"CRITRAWKETS",
+	"Herr Doktor",
+	"Gentlemanne of Leisure",
+	"Companion Cube",
+	"Target Practice",
+	"One-Man Cheeseburger Apocalypse",
+	"Crowbar",
+	"Delicious Cake",
+	"IvanTheSpaceBiker",
+	"I LIVE!",
+	"Cannon Fodder",
+
+	"trigger_hurt",
+	"Nom Nom Nom",
+	"Divide by Zero",
+	"GENTLE MANNE of LEISURE",
+	"MoreGun",
+	"Tiny Baby Man",
+	"Big Mean Muther Hubbard",
+	"Force of Nature",
+
+	"Crazed Gunman",
+	"Grim Bloody Fable",
+	"Poopy Joe",
+	"A Professional With Standards",
+	"Freakin' Unbelievable",
+	"SMELLY UNFORTUNATE",
+	"The Administrator",
+	"Mentlegen",
+
+	"Archimedes!",
+	"Ribs Grow Back",
+	"It's Filthy in There!",
+	"Mega Baboon",
+	"Kill Me",
+	"Glorified Toaster with Legs",
+	"John Spartan",
+	"Leeloo Dallas Multipass",
+	"Sho'nuff",
+	"Bruce Leroy",
+	"CAN YOUUUUUUUUU DIG IT?!?!?!?!",
+	"Big Gulp, Huh?",
+	"Stupid Hot Dog",
+	"I'm your huckleberry",
+	"The Crocketeer"
+};
 function ENT:Initialize()
 	if CLIENT then return end	
 	self:SetModel("models/editor/playerstart.mdl")
@@ -107,42 +209,29 @@ function ENT:Use( activator, caller )
 						"tf_red_bot_sniper",
 						"tf_red_bot_spy"
 					}
-					if (self.Team == TEAM_BLU) then
-						bots = {
-							"tf_blue_bot",
-							"tf_blue_bot_soldier",
-							"tf_blue_bot_pyro",
-							"tf_blue_bot_demo",
-							"tf_blue_bot_heavyweapons",
-							"tf_blue_bot_engineer",
-							"tf_blue_bot_medic",
-							"tf_blue_bot_sniper",
-							"tf_blue_bot_spy"
-						}
-					end
 						for i=1,1 do
 							local bot = ents.Create(table.Random(bots))
 								if (!IsValid(bot)) then
 									return
 								end
-								if (table.Count(self.spawnsblu) > 0 and self.Team == TEAM_BLU) then
-									local spawnpoint = table.Random(self.spawnsblu)
-									bot:SetPos(spawnpoint:GetPos() + Vector(0,0,45))
-								elseif (table.Count(self.spawnsred) > 0 and self.Team == TEAM_RED) then
-									local spawnpoint = table.Random(self.spawnsred)
-									bot:SetPos(spawnpoint:GetPos() + Vector(0,0,45))
-								else
-									bot:SetPos(spawn:GetPos() + Vector(0,0,45))
-								end
 								bot:SetOwner(self)
 								bot:Spawn() 
 								bot:EmitSound("Building_Teleporter.Receive",70,100)
-								bot.Bot.Difficulty = math.random(0,2)
+								bot.Bot.Difficulty = math.random(0,3)
 								bot.Bot:Speak("TLK_ROUND_START")
-								if (self.Team == TEAM_BLU) then
-									ParticleEffect("teleportedin_blue", bot:GetPos(), bot:GetAngles(), self)
+								bot.Bot:SetNWString("customname",table.Random(randomNames))
+								bot.Bot:SetTeam(self.Team)
+								bot.Bot:Spawn()
+								if (table.Count(self.spawnsblu) > 0 and self.Team == TEAM_BLU) then
+								elseif (table.Count(self.spawnsred) > 0 and self.Team == TEAM_RED) then
 								else
-									ParticleEffect("teleportedin_red", bot:GetPos(), bot:GetAngles(), self)
+									bot.Bot:SetPos(spawn:GetPos() + Vector(0,0,45))
+								end
+								bot:SetPos(bot.Bot:GetPos())
+								if (self.Team == TEAM_BLU) then
+									ParticleEffect("teleportedin_blue", bot.Bot:GetPos(), bot:GetAngles(), self)
+								else
+									ParticleEffect("teleportedin_red", bot.Bot:GetPos(), bot:GetAngles(), self)
 								end
 								table.insert(self.bots,bot) 
 								--print("Creating robot #"..bot:EntIndex())

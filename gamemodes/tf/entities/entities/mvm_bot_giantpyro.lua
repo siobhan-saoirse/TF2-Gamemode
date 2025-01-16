@@ -8,7 +8,7 @@ ENT.IsBoss = true
 ENT.Difficulty = 3
 ENT.PrintName		= "Giant Pyro"
 ENT.Category		= "TFBots - MVM"
-ENT.Items = {"Flame Thrower","Fire Axe"}
+ENT.Items = {"TF_WEAPON_FLAMETHROWER","TF_WEAPON_FIREAXE"}
 ENT.PreferredIcon = "hud/leaderboard_class_pyro"
 
 list.Set( "NPC", "mvm_bot_giantpyro", {

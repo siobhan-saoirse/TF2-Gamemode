@@ -334,9 +334,9 @@ for k, v in pairs(items_game["items"]) do
         v.name = "Test " .. math.random(30000)
         //tf_items.Items[v.name] = v
     end
-
-    tf_items.Items[k] = v
-    tf_items.ItemsByID[k] = v
+    tf_items.Items[v.name] = v
+    tf_items.Items[v.id] = v
+    tf_items.ItemsByID[v.id] = v
 end
 
 tf_items.Attributes.n = #attributes
