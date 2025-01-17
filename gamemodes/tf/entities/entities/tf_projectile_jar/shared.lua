@@ -111,7 +111,7 @@ function ENT:Initialize()
 	self.ai_sound:Fire("EmitAISound", "", 0.3)
 	
 	local effect = ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner()))
-	local trail = self.Trail[self:GetOwner():EntityTeam()] or self.Trail[1]
+	local trail = self.Trail[self:GetOwner():EntityTeam()-1] or self.Trail[1]
 	
 	self.particle_trail = ents.Create("info_particle_system")
 	self.particle_trail:SetPos(self:GetPos())

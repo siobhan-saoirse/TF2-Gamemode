@@ -62,6 +62,7 @@ function ENT:GetRealPos()
 		return self:GetPos()
 	end
 end
+ENT.Trail = {"peejar_trail_red_glow", "peejar_trail_blu_glow"}
 
 function ENT:Initialize()
 	if self:GetOwner().TempAttributes.ProjectileModelModifier == 1 then
@@ -137,6 +138,16 @@ function ENT:Initialize()
 	self.NextExplode = CurTime() + 20
 	
 	local effect = ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner()))
+	local trail = self.Trail[self:GetOwner():EntityTeam()-1] or self.Trail[1]
+	
+	self.particle_trail = ents.Create("info_particle_system")
+	self.particle_trail:SetPos(self:GetPos())
+	self.particle_trail:SetParent(self)
+	self.particle_trail:SetKeyValue("effect_name",trail)
+	self.particle_trail:SetKeyValue("start_active", "1")
+	self.particle_trail:Spawn()
+	self.particle_trail:Activate()
+	local effect = ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner()))
 end
 
 function ENT:OnRemove()
@@ -209,6 +220,8 @@ function ENT:PhysicsCollide(data, physobj)
 		
 		if data.Speed > 50 and data.DeltaTime > 0.2 and self.BouncesLeft == 1 then
 			self:EmitSound(self.BounceSound, 75, 100)
+			self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+			self.particle_trail:Remove()
 		end
 		
 		self.BouncesLeft = self.BouncesLeft - 1

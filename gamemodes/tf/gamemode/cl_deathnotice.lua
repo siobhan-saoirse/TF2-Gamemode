@@ -472,18 +472,18 @@ function GM:TFAddDeathNotice(Attacker, team1, Inflictor, Victim, team2, Cooperat
 		end
 	else
 		if team1 == -1 or team1 == 1002 then Death.color1 = table.Copy(Neutral_Color) 
-		elseif team1 == 1 then Death.color1 = table.Copy(Red_Color) 
-		elseif team1 == 2 then Death.color1 = table.Copy(Blu_Color) 
+		elseif team1 == 2 then Death.color1 = table.Copy(Red_Color) 
+		elseif team1 == 3 then Death.color1 = table.Copy(Blu_Color) 
 		else Death.color1 = table.Copy(GetTeamSecondaryColor(team1)) end
 			
 		if team2 == -1 or team2 == 1002 then Death.color2 = table.Copy(Neutral_Color) 
-		elseif team2 == 1 then Death.color2 = table.Copy(Red_Color) 
-		elseif team2 == 2 then Death.color2 = table.Copy(Blu_Color) 
+		elseif team2 == 2 then Death.color2 = table.Copy(Red_Color) 
+		elseif team2 == 3 then Death.color2 = table.Copy(Blu_Color) 
 		else Death.color2 = table.Copy(GetTeamSecondaryColor(team2)) end
 		
 		if team3 == -1 or team3 == 1002 then Death.color3 = table.Copy(Neutral_Color) 
-		elseif team3 == 1 then Death.color3 = table.Copy(Red_Color) 
-		elseif team3 == 2 then Death.color3 = table.Copy(Blu_Color) 
+		elseif team3 == 2 then Death.color3 = table.Copy(Red_Color) 
+		elseif team3 == 3 then Death.color3 = table.Copy(Blu_Color) 
 		else Death.color3 = table.Copy(GetTeamSecondaryColor(team3)) end
 	end
 	

@@ -9,16 +9,19 @@ local ChargeMeterMedium = Color(244,175,11,255)
 local ChargeMeterLow = Color(255,67,16,255)
 
 local misc_ammo_area = {
+	surface.GetTextureID("hud/misc_ammo_area_blue"),
 	surface.GetTextureID("hud/misc_ammo_area_red"),
 	surface.GetTextureID("hud/misc_ammo_area_blue"),
 }
 
 local ico_stickybomb = {
+	surface.GetTextureID("hud/ico_stickybomb_blue"),
 	surface.GetTextureID("hud/ico_stickybomb_red"),
 	surface.GetTextureID("hud/ico_stickybomb_blue"),
 }
 
 local ico_stickybomb_faded = {
+	surface.GetTextureID("hud/ico_stickybomb_blue_faded"),
 	surface.GetTextureID("hud/ico_stickybomb_red_faded"),
 	surface.GetTextureID("hud/ico_stickybomb_blue_faded"),
 }

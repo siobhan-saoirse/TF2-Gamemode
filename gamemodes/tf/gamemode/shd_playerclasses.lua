@@ -601,14 +601,15 @@ function meta:SetClassSpeed(sp)
 			self:SetRunSpeed(sp * 0.5) 
 			self:SetJumpPower(220)
 			self:SetCrouchedWalkSpeed(0.33)
-			self:SetMaxSpeed(520) 
+			self:SetMaxSpeed(450) 
 			self:SetNWFloat("ClassSpeed", sp * 0.5) 
 		else
 			self:SetWalkSpeed(sp) 
 			self:SetRunSpeed(sp) 
+			self:SetSlowWalkSpeed(sp * 0.5) 
 			self:SetJumpPower(220)
 			self:SetCrouchedWalkSpeed(0.33)
-			self:SetMaxSpeed(520) 
+			self:SetMaxSpeed(450) 
 			self:SetNWFloat("ClassSpeed", sp) 
 		end
 	else

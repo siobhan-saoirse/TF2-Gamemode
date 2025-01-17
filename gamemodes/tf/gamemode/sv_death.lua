@@ -1001,7 +1001,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 					if (!dmginfo:IsDamageType(DMG_DISSOLVE) and !ply:HasDeathFlag(DF_FROZEN) and !ply:HasDeathFlag(DF_GOLDEN)) then
 						net.Start("TFRagdollCreate")
 							net.WriteEntity(ply)
-							net.WriteVector(ply:GetVelocity() + (dmginfo:GetDamageForce()))
+							net.WriteVector(ply:GetAbsVelocity())
 						net.Broadcast()
 						
 					else
@@ -1059,6 +1059,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 			animent:SetPos(ply:GetPos() - Vector(0,0,40))
 			animent:Spawn()
 			animent:Activate()
+			animent:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 			animent:SetMaterial("models/player/shared/gold_player")
 			TransferBones(ply,ragdoll)
 			local bones = ragdoll:GetPhysicsObjectCount()
@@ -1085,6 +1086,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 			animent:SetAngles(ply:GetAngles())
 			animent:Spawn()
 			animent:Activate()
+			animent:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 			ply.RagdollEntity = animent
 			ply:EmitSound("weapons/icicle_freeze_victim_01.wav", 95, 100)
 			animent:SetMaterial("models/player/shared/ice_player")
@@ -1289,6 +1291,10 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		umsg.End()
 	end
 	
+	ply:SetPos(ply:GetPos() - Vector(0,0,40))
+	timer.Simple(0.02, function()
+		ply:SetMoveType(MOVETYPE_NONE)
+	end)
 	----print("DoPlayerDeath", dmginfo:GetInflictor(), dmginfo:GetAttacker(), dmginfo:GetDamage(), dmginfo:GetDamageType())
 	
 	if ((string.find(ply:GetModel(),"bot_") and ply:GetModelScale() > 1.0) or ply:IsMiniBoss()) then
@@ -1327,7 +1333,6 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		if not ply:IsHL2() and !ply:IsL4D() then
 			if (!(string.find(ply:GetModel(),"bot_"))) then
 				ply:Explode(dmginfo)
-				ply:SetMoveType(MOVETYPE_NONE)
 				ply:EmitSound("BaseCombatCharacter.CorpseGib")
 				shouldgib = true	
 			end

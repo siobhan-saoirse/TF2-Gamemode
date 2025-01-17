@@ -1,6 +1,6 @@
 local function MedigunEffectName(i, t)
-	if i==1 then
-		if t==2 then
+	if i==2 then
+		if t==3 then
 			return "medicgun_beam_blue_invun"
 		else
 			return "medicgun_beam_red_invun"
@@ -112,8 +112,8 @@ function SWEP:SetMedigunMuzzleEffect(i)
 	local effect
 	local t = GAMEMODE:EntityTeam(self.Owner)
 	
-	if i==1 then
-		if t==2 then
+	if i==2 then
+		if t==3 then
 			effect = "medicgun_invulnstatus_fullcharge_blue"
 		else
 			effect = "medicgun_invulnstatus_fullcharge_red"

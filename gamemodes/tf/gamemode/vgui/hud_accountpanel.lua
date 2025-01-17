@@ -13,6 +13,7 @@ local delta_lifetime = 1.5
 local delta_item_font = "HudFontMedium"
 
 local misc_ammo_area = {
+	surface.GetTextureID("hud/misc_ammo_area_blue"),
 	surface.GetTextureID("hud/misc_ammo_area_red"),
 	surface.GetTextureID("hud/misc_ammo_area_blue"),
 }

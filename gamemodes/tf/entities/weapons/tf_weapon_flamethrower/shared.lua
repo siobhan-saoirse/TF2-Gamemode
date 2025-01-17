@@ -45,7 +45,7 @@ function SWEP:SetFlamethrowerEffect(i)
 			if i==1 then
 				effect = "flamethrower"
 			elseif i>1 then
-				if t==2 then
+				if t==3 then
 					effect = "flamethrower_crit_blue"
 				else
 					effect = "flamethrower_crit_red"

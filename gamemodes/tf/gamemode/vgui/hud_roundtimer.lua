@@ -6,6 +6,7 @@ local H = ScrH()
 local Scale = H/480
 
 local objectives_timepanel_bg = {
+	surface.GetTextureID("hud/objectives_timepanel_blue_bg"),
 	surface.GetTextureID("hud/objectives_timepanel_red_bg"),
 	surface.GetTextureID("hud/objectives_timepanel_blue_bg")
 }

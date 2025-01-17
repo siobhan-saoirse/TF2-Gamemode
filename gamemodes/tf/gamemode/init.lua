@@ -1420,10 +1420,10 @@ concommand.Add( "random_team", function( ply, cmd, args )
 	end 
 
 	nDiffBetweenTeams = ( iMostPlayers - iLeastPlayers );
-	if (team.NumPlayers(1) > team.NumPlayers(2)) then
-		ply:SetTeam(2)	
-	elseif (team.NumPlayers(1) < team.NumPlayers(2)) then
-		ply:SetTeam(1)	
+	if (team.NumPlayers(TEAM_RED) > team.NumPlayers(TEAM_BLU)) then
+		ply:SetTeam(TEAM_BLU)	
+	elseif (team.NumPlayers(TEAM_RED) < team.NumPlayers(TEAM_BLU)) then
+		ply:SetTeam(TEAM_RED)	
 	else
 		ply:SetTeam(table.Random({TEAM_RED,TEAM_BLU}))	
 	end
@@ -1465,10 +1465,10 @@ concommand.Add( "changeteam", function( pl, cmd, args )
 		end 
 
 		nDiffBetweenTeams = ( iMostPlayers - iLeastPlayers );
-		if (team.NumPlayers(1) > team.NumPlayers(2) and theteam == 1) then
+		if (team.NumPlayers(TEAM_RED) > team.NumPlayers(TEAM_BLU) and theteam == TEAM_RED) then
 			pl:PrintMessage(HUD_PRINTTALK,"The team is full. Press the dot key to change teams again.")
 			return false
-		elseif (team.NumPlayers(1) < team.NumPlayers(2) and theteam == 2) then
+		elseif (team.NumPlayers(TEAM_BLU) < team.NumPlayers(TEAM_) and theteam == 2) then
 			pl:PrintMessage(HUD_PRINTTALK,"The team is full. Press the dot key to change teams again.")
 			return false
 		else
@@ -1550,10 +1550,10 @@ function GM:PlayerInitialSpawn(ply)
 		end 
 
 		nDiffBetweenTeams = ( iMostPlayers - iLeastPlayers );
-		if (team.NumPlayers(1) > team.NumPlayers(2)) then
-			ply:SetTeam(2)	
-		elseif (team.NumPlayers(1) < team.NumPlayers(2)) then
-			ply:SetTeam(1)	
+		if (team.NumPlayers(TEAM_RED) > team.NumPlayers(TEAM_BLU)) then
+			ply:SetTeam(TEAM_BLU)	
+		elseif (team.NumPlayers(TEAM_RED) < team.NumPlayers(TEAM_BLU)) then
+			ply:SetTeam(TEAM_RED)	
 		else
 			ply:SetTeam(table.Random({TEAM_RED,TEAM_BLU}))	
 		end

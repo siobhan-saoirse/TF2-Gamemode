@@ -33,7 +33,7 @@ matproxy.Add({
 			local t2 = ent.Owner:GetProxyVar("CritTeam") 
 			local s2 = ent.Owner:GetProxyVar("CritStatus")
 			if s2 and t2 then
-				mat:SetVector(self.ResultTo,GlowColorTable[t2][s2])
+				mat:SetVector(self.ResultTo,GlowColorTable[t2 - 1][s2])
 			else
 				mat:SetVector(self.ResultTo,DefaultGlowColor)
 			end

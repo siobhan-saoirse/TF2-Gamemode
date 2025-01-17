@@ -76,7 +76,7 @@ function ENT:UpdateParticles()
 end
 
 function ENT:Think()
-	if !self.Spin_Sound and self:GetLinkedTeleporter() != nil and self:GetState()==3 || self.Spin_Sound and !self.Spin_Sound:IsPlaying() and self:GetLinkedTeleporter() != nil and self:GetState()==3 then
+	if !self.Spin_Sound and self:GetLinkedTeleporter() != nil || self.Spin_Sound and !self.Spin_Sound:IsPlaying() and self:GetLinkedTeleporter() != nil then
 		
 		if (self:GetLevel() == 1) then
 

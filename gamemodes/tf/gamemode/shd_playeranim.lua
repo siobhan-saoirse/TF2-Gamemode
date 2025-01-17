@@ -24,7 +24,7 @@ function GM:HandlePlayerJumping(pl)
 			pl.anim_Jumping = false
 			pl.anim_GroundTime = nil
 			
-			if pl:OnGround() then
+			if pl:OnGround() and !pl.anim_Deployed then
 				if pl:IsL4D() then
 					pl:AnimRestartGesture(GESTURE_SLOT_JUMP, ACT_LAND, true)
 				else

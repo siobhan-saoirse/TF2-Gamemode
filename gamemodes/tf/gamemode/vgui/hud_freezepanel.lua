@@ -6,7 +6,7 @@ local WScale = W/640
 local Scale = H/480
 
 local color_panel = {
-	[0]=surface.GetTextureID("hud/color_panel_brown"),
+	surface.GetTextureID("hud/color_panel_brown"),
 	surface.GetTextureID("hud/color_panel_red"),
 	surface.GetTextureID("hud/color_panel_blu"),
 	surface.GetTextureID("hud/color_panel_ylw"),

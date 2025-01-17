@@ -5,6 +5,7 @@ local H = ScrH()
 local Scale = H/480
 
 local character_bg = {
+	surface.GetTextureID("hud/character_blue_bg"),
 	surface.GetTextureID("hud/character_red_bg"),
 	surface.GetTextureID("hud/character_blue_bg"),
 	surface.GetTextureID("hud/character_yellow_bg"),
@@ -192,7 +193,7 @@ function PANEL:Paint()
 		if self.ClassModel then self.ClassModel:Remove() end
 		tex = character_default
 		if tbl and tbl.CharacterImage and tbl.CharacterImage[1] then
-			tex = tbl.CharacterImage[t] or tbl.CharacterImage[1]
+			tex = tbl.CharacterImage[t - 1] or tbl.CharacterImage[1]
 		end
 		surface.SetTexture(tex)
 		surface.SetDrawColor(255,255,255,255)

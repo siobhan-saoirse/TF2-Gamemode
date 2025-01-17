@@ -204,13 +204,6 @@ function ENT:Think()
 	if SERVER and not IsValid(self:GetOwner()) then
 		self:Remove()
 	end
-	for k,v in ipairs(ents.FindInSphere(self:GetPos(),200)) do
-		if (v:IsValid() and v:IsTFPlayer() and v:EntIndex() != self:GetOwner():EntIndex() and !v:IsFriendly(self:GetOwner()) and v:Health() > 0 and self:GetPos():Distance(v:GetPos()) < v:GetModelRadius() + 24) then
-			if self.BouncesLeft>0 then
-				self:DoExplosion()
-			end
-		end
-	end
 	if self.NextExplode and CurTime()>=self.NextExplode then
 		self:DoExplosion()
 		self.NextExplode = nil
@@ -299,6 +292,9 @@ end
 
 function ENT:PhysicsCollide(data, physobj)
 	if data.HitEntity and data.HitEntity:IsValid(self.WModel2) and (data.HitEntity:IsTFPlayer()) and data.HitEntity:Health()>0 then
+		if self.BouncesLeft>0 then
+			self:DoExplosion()
+		end
 	else
 		if self.DetonateMode == 2 then
 			self:Break()

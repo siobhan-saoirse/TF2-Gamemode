@@ -50,7 +50,7 @@ hook.Add("PreScaleDamage", "BackstabSetDamageIcicle", function(ent, hitgroup, dm
 				animent:SetSkin(ent:GetSkin())
 				animent:SetPos(ent:GetPos())
 				animent:SetAngles(ent:GetAngles())
-				animent:SetBodyGroups(ent:GetBodyGroups())
+				--animent:SetBodyGroups(ent:GetBodyGroups())
 				animent:Spawn()
 				animent:Activate()
 	

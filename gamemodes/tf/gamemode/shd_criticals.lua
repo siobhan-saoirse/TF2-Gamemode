@@ -39,6 +39,12 @@ function GM:ShouldCrit(ent, inf, att, hitgroup, dmginfo)
 			return false
 		end
 	end
+	if (att:IsPlayer()) then
+		if (string.find(att:GetActiveWeapon():GetClass(),"tf_weapon") and att:GetActiveWeapon():Critical(ent,dmginfo)) then
+			dmginfo:SetDamageType(bit.bor(dmginfo:GetDamageType(),DMG_ACID))
+			return true
+		end
+	end
 	
 	-- if the weapon or projectile is critical
 	if (inf.Critical and inf:Critical(ent, dmginfo)) or (att.Critical) then

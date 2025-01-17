@@ -73,8 +73,9 @@ local obj_status_schemes = {
 	[1] = {
 		background = {
 			[0] = obj_status_background_disabled;
-			[1] = obj_status_background_red;
-			[2] = obj_status_background_blue;
+			[1] = obj_status_background_disabled;
+			[2] = obj_status_background_red;
+			[3] = obj_status_background_blue;
 		};
 		alert = obj_status_alert_background;
 		alert_p = {
@@ -134,8 +135,9 @@ local obj_status_schemes = {
 	[2] = {
 		background = {
 			[0] = obj_status_background_tall_disabled;
-			[1] = obj_status_background_tall_red;
-			[2] = obj_status_background_tall_blue;
+			[1] = obj_status_background_tall_disabled;
+			[2] = obj_status_background_tall_red;
+			[3] = obj_status_background_tall_blue;
 		};
 		alert = obj_status_alert_background_tall;
 		alert_p = {

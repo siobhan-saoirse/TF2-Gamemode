@@ -1,7 +1,6 @@
 if SERVER then AddCSLuaFile() end
 
-ENT.Base = "base_nextbot"
-ENT.Type = "nextbot"
+ENT.Type = "anim"
 ENT.PZClass = "scout" 
 ENT.Spawnable = false
 ENT.AdminOnly = true
@@ -108,7 +107,6 @@ function ENT:Initialize()
 	self:ResetSequence(self:SelectWeightedSequence(ACT_MP_STAND_MELEE))
 	self:SetSolid(SOLID_NONE)
 	self:SetModelScale(1) 
-	self:SetFOV(90)
 	self.bots = {}
 	self.infected = {}
 	local team = 0
@@ -134,12 +132,12 @@ function ENT:Initialize()
 			npc:SetSkin(1)
 				
 		end
-		--RandomWeapon2(npc, "primary")
-		--RandomWeapon2(npc, "secondary")
-		--RandomWeapon2(npc, "melee")
-		--RandomCosmetic(npc, "head")
-		--RandomCosmetic(npc, "misc")
-		--RandomCosmetic(npc, "hat")			
+		RandomWeapon2(npc, "primary")
+		RandomWeapon2(npc, "secondary")
+		RandomWeapon2(npc, "melee")
+		RandomCosmetic(npc, "misc")
+		RandomCosmetic(npc, "misc")
+		RandomCosmetic(npc, table.Random({"head","hat"}))			
 		local class = npc:GetPlayerClass()
 		if (class != "scout" and 
 			class != "soldier" and 
@@ -181,8 +179,8 @@ end
 function ENT:Think()
 	if (!IsValid(self.Bot) and SERVER) then
 		self:Remove() 
-	end
-	self:NextThink(CurTime())
+	end 
+	self:NextThink(CurTime() + 0.5)
 	return true
 end
 
@@ -234,30 +232,4 @@ function ENT:SpawnFunction( ply, tr, ClassName )
 
 	return ent
 
-end
-
-function ENT:RunBehaviour()
-	while ( true ) do
-		coroutine.yield()
-	end
-end
-
-function ENT:OnInjured()
-	return false
-end
-
-function ENT:OnKilled()
-	return false
-end
-
-function ENT:IsNPC()
-	return false
-end
-
-function ENT:IsNextBot()
-	return false
-end
-
-function ENT:Health()
-	return nil
 end

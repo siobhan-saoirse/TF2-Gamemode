@@ -6,6 +6,7 @@ local WScale = W/640
 local Scale = H/480
 
 local ammo_bg = {
+	surface.GetTextureID("hud/ammo_blue_bg"),
 	surface.GetTextureID("hud/ammo_red_bg"),
 	surface.GetTextureID("hud/ammo_blue_bg"),
 }

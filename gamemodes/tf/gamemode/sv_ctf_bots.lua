@@ -274,12 +274,12 @@ local function LeadBot_S_Add(team2)
 	end 
 
 	nDiffBetweenTeams = ( iMostPlayers - iLeastPlayers );
-	if (team.NumPlayers(1) > team.NumPlayers(2)) then
-		ply:SetTeam(2)	
-	elseif (team.NumPlayers(1) < team.NumPlayers(2)) then
-		ply:SetTeam(1)	
+	if (team.NumPlayers(TEAM_RED) > team.NumPlayers(TEAM_BLU)) then
+		ply:SetTeam(TEAM_BLU)	
+	elseif (team.NumPlayers(TEAM_RED) < team.NumPlayers(TEAM_BLU)) then
+		ply:SetTeam(TEAM_RED)	
 	else
-		ply:SetTeam(table.Random({TEAM_RED,TEAM_BLU}))	
+		ply:SetTeam(table.Random({2,3}))	
 	end
 	
 	local random = math.random(1,9)
@@ -743,7 +743,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				end
 			end]]
 		end
-		--[[
 			for k,v in ipairs(ents.FindInSphere(bot:GetPos(),moveawayrange)) do
 				if (IsValid(v) and GAMEMODE:EntityTeam(v) == bot:Team() and v:IsPlayer() and v:EntIndex() != bot:EntIndex() and bot:GetNWBool("Taunting",false) != true) then
 					local forward = bot:EyeAngles():Forward()
@@ -807,7 +806,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					mv:SetSideSpeed(mv:GetSideSpeed() + (side))
 				end
 			end
-			]]
 		if (bot.playerclass == "Medic") then
 			for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 1200)) do
 				if (v:IsPlayer() and v:EntIndex() != bot:EntIndex()) then
@@ -1065,8 +1063,14 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 						targetpos = fintelcap.Pos -- goto friendly cap spot
 						bot.intelcarrier = nil
 					elseif IsValid(intel.Carrier) and bot:EntIndex() != intel.Carrier:EntIndex() then -- or else if we have it already carried
-						targetpos = intel.Carrier:GetPos()
-						bot.intelcarrier = intel.carrier
+						if (!bot:IsMiniBoss()) then
+							targetpos = intel.Carrier:GetPos()
+							bot.intelcarrier = intel.carrier
+						else
+							if (IsValid(bot.TargetEnt)) then
+								targetpos = bot.TargetEnt:GetPos()
+							end
+						end
 					else
 						targetpos = fintelcap.Pos -- move to the bomb, the flag is currently invalid until a bot gets it
 						bot.intelcarrier = nil
@@ -1084,7 +1088,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				end
 			end
 		
-			if (2*bot:Health()<bot:GetMaxHealth()) then
+			if (2*bot:Health()<bot:GetMaxHealth() and !string.find(bot:GetModel(),"/bot_")) then
 				if (!IsValid(bot.healthkit)) then
 					bot.healthkit = lookForNearestHealthPack(bot)
 				else
@@ -1520,7 +1524,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 					end
 				end
 					
-			if (!IsValid(bot.TargetEnt) and math.random(1,300) == 1) then
+			if (!IsValid(bot.TargetEnt)) then
 				if (IsValid(bot.TargetEnt)) then
 					if (bot.TargetEnt:EntIndex() == bot:EntIndex()) then
 						bot.TargetEnt = lookForNearestPlayer(bot)

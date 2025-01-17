@@ -35,7 +35,7 @@ SWEP.HoldType = "ITEM1"
 SWEP.ProjectileShootOffset = Vector(0, 0, 0)
 
 SWEP.Properties = {}
-SWEP.Force = 800
+SWEP.Force = 1100
 SWEP.AddPitch = -4
 SWEP.VM_PRIMARYATTACK = ACT_ITEM3_VM_RELOAD		
 function SWEP:PredictCriticalHit()
@@ -72,7 +72,7 @@ function SWEP:MeleeAttack()
 		vel.p = vel.p + self.AddPitch
 		vel = vel:Forward() * self.Force * (grenade.Mass or 10)
 		
-		grenade:GetPhysicsObject():AddAngleVelocity(Vector(math.random(-2000,2000),math.random(-2000,2000),math.random(-2000,2000)))
+		grenade:GetPhysicsObject():AddAngleVelocity(Vector(0,math.random(-2000,2000),0))
 		grenade:GetPhysicsObject():ApplyForceCenter(vel)
 		self.Owner:EmitSoundEx(self.ShootSound)
 	end

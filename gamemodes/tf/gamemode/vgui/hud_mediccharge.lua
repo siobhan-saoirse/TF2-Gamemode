@@ -6,6 +6,7 @@ local WScale = W/640
 local Scale = H/480
 
 local medic_charge_bg = {
+	surface.GetTextureID("hud/medic_charge_blue_bg"),
 	surface.GetTextureID("hud/medic_charge_red_bg"),
 	surface.GetTextureID("hud/medic_charge_blue_bg"),
 }

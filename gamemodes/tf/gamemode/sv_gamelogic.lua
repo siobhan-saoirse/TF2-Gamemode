@@ -591,7 +591,7 @@ function GM:Think()
 					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
 					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
 				elseif (v.playerclass == "Sniper") then
-					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
+					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale())) 
 					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
 				elseif (v.playerclass == "Spy") then
 					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))

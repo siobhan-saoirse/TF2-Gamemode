@@ -235,7 +235,7 @@ function ENT:DoExplosion(ent)
 	if ent == self:GetOwner() and self:GetOwner():GetClass() == "eyeball_boss" then return end
 	self.Touch = nil
 	
-	local effect, angle
+	local effect, angle 
 	if (IsValid(self:GetOwner()) and self:GetOwner():IsPlayer()) then
 		if (string.find(self:GetOwner():GetModel(),"_boss")) then
 			if (self.ExplosionSound == "TF_BaseExplosionEffect.Sound") then
@@ -357,11 +357,7 @@ function ENT:DoExplosion(ent)
 				timer.Stop("StunnedReset"..v:EntIndex())
 				timer.Stop("Stunned"..v:EntIndex())
 				timer.Create("Stunned"..v:EntIndex(), 0.1, 10, function()
-					if (v:IsMiniBoss()) then
-						v:SetClassSpeed(v:GetPlayerClassTable().Speed * 0.8)
-					else
-						v:SetClassSpeed(v:GetPlayerClassTable().Speed * 0.7)
-					end
+					v:SetClassSpeed(v:GetPlayerClassTable().Speed * 0.5)
 					v:AddPlayerState(PLAYERSTATE_STUNNED)
 				end)
 				timer.Create("StunnedReset"..v:EntIndex(), 1, 0, function()
