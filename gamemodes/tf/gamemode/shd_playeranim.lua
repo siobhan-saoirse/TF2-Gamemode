@@ -313,11 +313,11 @@ function GM:UpdateAnimation(pl, velocity, maxseqgroundspeed)
 		
 	local d = pl.TargetBodyYaw - pl.PlayerBodyYaw
 		if d > 180 then
-			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(FrameTime() * 8, pl.PlayerBodyYaw+360, pl.TargetBodyYaw))
+			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(FrameTime() * 12, pl.PlayerBodyYaw+360, pl.TargetBodyYaw))
 		elseif d < -180 then
-			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(FrameTime() * 8, pl.PlayerBodyYaw-360, pl.TargetBodyYaw))
+			pl.PlayerBodyYaw = math.NormalizeAngle(Lerp(FrameTime() * 12, pl.PlayerBodyYaw-360, pl.TargetBodyYaw))
 		else
-			pl.PlayerBodyYaw = Lerp(FrameTime() * 8, pl.PlayerBodyYaw, pl.TargetBodyYaw)
+			pl.PlayerBodyYaw = Lerp(FrameTime() * 12, pl.PlayerBodyYaw, pl.TargetBodyYaw)
 		end
 	if (string.StartWith(pl:GetModel(), "models/infected/") || pl:GetPlayerClass() == "rebel" || pl:GetPlayerClass() == "combinesoldier") then
 		pl:SetPoseParameter("body_yaw", -diff)

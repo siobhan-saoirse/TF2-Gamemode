@@ -3196,3 +3196,15 @@ end)
 concommand.Add("tf_merge_loadout", function(ply)
 	MergeSteamInventory(ply)
 end)
+
+if not util.IsBinaryModuleInstalled("steamrichpresencer") then
+else
+
+	require("steamrichpresencer") -- module adds steamworks.SetRichPresence function on load
+	
+	for i = 0, 90 do
+		timer.Simple(120*i,function()
+			steamworks.SetRichPresence("generic", "Playing Team Fortress 2 - "..game.GetMap())
+		end)
+	end
+end

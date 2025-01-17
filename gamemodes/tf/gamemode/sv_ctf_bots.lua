@@ -574,9 +574,9 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 							RandomWeapon2(bot, "primary")
 							RandomWeapon2(bot, "secondary")
 							RandomWeapon2(bot, "melee")
-							--RandomCosmetic(bot, "hat")
-							--RandomCosmetic(bot, "misc")
-							--RandomCosmetic(bot, "head")
+							RandomCosmetic(bot, "hat")
+							RandomCosmetic(bot, "misc")
+							RandomCosmetic(bot, "head")
 						end
 
 					end)
@@ -591,14 +591,14 @@ end)
 hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 
 	local buttons = 0
-	if bot.TFBot then
+	if bot.TFBot and bot:Alive() then
 		-- if our targetent is not alive, don't do anything until it's nil
-		bot.LastSegmented = CurTime() + 1
+		bot.LastSegmented = CurTime() + 0.1
 		cmd:ClearMovement()
 		cmd:ClearButtons()
 
 		if (!IsValid(bot.TargetEnt)) then 
-			if (math.random(1,200) == 1) then
+			if (math.random(1,300) == 1) then
 				bot.TargetEnt = lookForNearestPlayer(bot)
 			end
 		end
@@ -726,14 +726,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			controller = bot.ControllerBot
 		else
 			controller:SetPos(bot:GetPos())
-				--[[
-			if IsValid(controller.P) then
-				if bot.botPos != nil then
-					if (math.random(1,2+(table.Count(player.GetAll())*0.8)) == 1) then
-						controller.P:Compute(controller, bot.botPos)
-					end
-				end
-			end]]
 		end
 	
 		local moveawayrange = 80
@@ -751,6 +743,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				end
 			end]]
 		end
+		--[[
 			for k,v in ipairs(ents.FindInSphere(bot:GetPos(),moveawayrange)) do
 				if (IsValid(v) and GAMEMODE:EntityTeam(v) == bot:Team() and v:IsPlayer() and v:EntIndex() != bot:EntIndex() and bot:GetNWBool("Taunting",false) != true) then
 					local forward = bot:EyeAngles():Forward()
@@ -814,6 +807,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					mv:SetSideSpeed(mv:GetSideSpeed() + (side))
 				end
 			end
+			]]
 		if (bot.playerclass == "Medic") then
 			for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 1200)) do
 				if (v:IsPlayer() and v:EntIndex() != bot:EntIndex()) then
@@ -1366,7 +1360,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			bot.TFBot = false
 		end
 	end
-		if bot.TFBot then 
+	if bot.TFBot and bot:Alive() then
 			-- if our targetent is not alive, don't do anything until it's nil
 			local buttons = 0
 			local controller = bot.ControllerBot
@@ -1526,7 +1520,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 					end
 				end
 					
-			if (!IsValid(bot.TargetEnt) and math.random(1,200) == 1) then
+			if (!IsValid(bot.TargetEnt) and math.random(1,300) == 1) then
 				if (IsValid(bot.TargetEnt)) then
 					if (bot.TargetEnt:EntIndex() == bot:EntIndex()) then
 						bot.TargetEnt = lookForNearestPlayer(bot)

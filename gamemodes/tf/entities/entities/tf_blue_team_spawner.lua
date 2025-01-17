@@ -197,7 +197,7 @@ function ENT:Use( activator, caller )
 			if SERVER then 
 				local slef = self
 				local spawn = self
-				if (table.Count(team.GetPlayers(self.Team)) < 8) then
+				if (table.Count(team.GetPlayers(self.Team)) < 12) then
 					local bots = {
 						"tf_red_bot",
 						"tf_red_bot_soldier",

@@ -28,30 +28,9 @@ function ENT:ChasePos( options )
 	if (self.PosGen ~= nil) then
 		self.P = Path("Follow")
 		self.P:Compute(self, self.PosGen)
-		--self.P:SetGoalTolerance(6500)
-		
-		if !self.P:IsValid() then return end
-		while self.P:IsValid() do
-				 
-			if (IsValid(self:GetOwner())) then
-				local owner = self:GetOwner()
-				self:SetModel(owner:GetModel())
-			end
-			if self.loco:IsStuck() then
-				self:HandleStuck()
-				if (IsValid(self:GetOwner())) then
-					self.nextStuckJump = CurTime() + math.Rand(1, 2)
-				end
-				return
-			end
-			if (self.P ~= nil) then
-				self.P:Update(self)
-			end
-			self.loco:FaceTowards(self.PosGen)
-			self.loco:Approach( self.PosGen, 1 )
-			coroutine.wait(2)
-			coroutine.yield()
-		end
+		self.P:SetGoalTolerance(250)
+		coroutine.wait(1)
+		coroutine.yield()
 	end
 end
 
@@ -68,7 +47,7 @@ function ENT:RunBehaviour()
 		if self.PosGen then
 			self:ChasePos({})
 		end
-		coroutine.wait(2)
+		coroutine.wait(0.1)
 		coroutine.yield()
 	end
 end
@@ -77,8 +56,6 @@ end
 function ENT:Think()
 	if self.PosGen then -- If the bot has a target location (i.e., an ally), go for it.
 		if (self.PosGen ~= nil) then
-			--[[self.loco:FaceTowards(self.PosGen)
-			self.loco:Approach( self.PosGen, 1 )]]
 		end
 
 		if (self.P ~= nil) then
@@ -127,7 +104,16 @@ function ENT:Think()
 			
 					return cost
 				end
-			end )
+			end)
+			if self.loco:IsStuck() then
+				self:HandleStuck()
+				if (IsValid(self:GetOwner())) then
+					self.nextStuckJump = CurTime() + math.Rand(1, 2)
+				end
+				return
+			end
+			self.loco:FaceTowards(self.PosGen)
+			self.loco:Approach( self.PosGen, 1 )
 		end
 
 		if GetConVar('developer'):GetBool() then
@@ -140,5 +126,5 @@ function ENT:Think()
 			self.loco:SetDesiredSpeed(self:GetOwner():GetWalkSpeed())
 		end
 	end
-	self:NextThink(CurTime() + 0.2)
+	self:NextThink(CurTime() + 0.5)
 end
