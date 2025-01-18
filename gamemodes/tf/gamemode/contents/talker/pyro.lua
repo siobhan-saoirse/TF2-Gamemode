@@ -242,7 +242,7 @@ Response InvulnerableSpeechPyro
 }
 Rule InvulnerableSpeechPyro
 {
-	criteria ConceptFireWeapon IsPyro IsInvulnerable PyroNotInvulnerableSpeech
+	criteria ConceptFireWeapon IsPyro IsInvulnerable  20PercentChance
 	ApplyContext "PyroInvulnerableSpeech:1:30"
 	Response InvulnerableSpeechPyro
 }

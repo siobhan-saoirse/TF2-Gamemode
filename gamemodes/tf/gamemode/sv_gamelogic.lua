@@ -558,7 +558,6 @@ function GM:Think()
 		end
 	end
 	for _,v in pairs(player.GetAll()) do
-		
 		for _,child in ipairs(ents.GetAll()) do
 			if (child:GetParent():EntIndex() == v:EntIndex()) then
 				child:SetMaterial(v:GetMaterial())
@@ -698,7 +697,7 @@ function GM:Think()
 		self.NextLoopExpression = CurTime() + 5
 	end]]
 end
-
+ 
 --[[
 hook.Add("Move", "TFPlayerSlowdown", function(pl, move)
 	-- Players run 10% slower when moving backwards

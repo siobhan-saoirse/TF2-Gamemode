@@ -16,7 +16,11 @@ local function LeadBot_S_Add_Zombie(team,class,pos,ent)
 	end
 
 	local name = string.upper(string.sub(class,1,1))..string.sub(class,2)
-	local bot = player.CreateNextBot(ent.PrintName)
+	local nickname = ent.PrintName
+	if (ent.PreferredName ~= nil) then
+		nickname = ent.PreferredName
+	end
+	local bot = player.CreateNextBot(nickname)
 	local teamv = TEAM_RED
 	if team == 1 then
 		teamv = TEAM_BLU

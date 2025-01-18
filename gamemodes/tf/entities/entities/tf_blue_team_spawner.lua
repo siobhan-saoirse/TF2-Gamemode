@@ -215,11 +215,11 @@ function ENT:Use( activator, caller )
 									return
 								end
 								bot:SetOwner(self)
+								bot.PreferredName = table.Random(randomNames)
 								bot:Spawn() 
 								bot:EmitSound("Building_Teleporter.Receive",70,100)
 								bot.Bot.Difficulty = math.random(0,3)
 								bot.Bot:Speak("TLK_ROUND_START")
-								bot.Bot:SetNWString("customname",table.Random(randomNames))
 								bot.Bot:SetTeam(self.Team)
 								bot.Bot:Spawn()
 								if (table.Count(self.spawnsblu) > 0 and self.Team == TEAM_BLU) then

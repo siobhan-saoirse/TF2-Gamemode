@@ -1282,28 +1282,6 @@ hook.Add("Think", "PlayerStuff", function()
 		
 		if (v:Alive()) then
 		end
-
-		if CLIENT then
-			if (pl:GetPlayerClass() == "heavy") then
-				pl:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
-			elseif (pl:GetPlayerClass() == "scout") then
-				pl:SetupPhonemeMappings( "player/scout/phonemes/phonemes" )
-			elseif (pl:GetPlayerClass() == "soldier") then
-				pl:SetupPhonemeMappings( "player/soldier/phonemes/phonemes" )
-			elseif (pl:GetPlayerClass() == "demoman") then
-				pl:SetupPhonemeMappings( "player/demo/phonemes/phonemes" )
-			elseif (pl:GetPlayerClass() == "engineer") then
-				pl:SetupPhonemeMappings( "player/engineer/phonemes/phonemes" )
-			elseif (pl:GetPlayerClass() == "medic") then
-				pl:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
-			elseif (pl:GetPlayerClass() == "sniper") then
-				pl:SetupPhonemeMappings( "player/sniper/phonemes/phonemes" )
-			elseif (pl:GetPlayerClass() == "spy") then
-				pl:SetupPhonemeMappings( "player/spy/phonemes/phonemes" )
-			else
-				pl:SetupPhonemeMappings( "phonemes" )
-			end
-		end
 		if not pl.anim_Jumping and !pl:IsOnGround() then
 			pl.anim_Jumping = true
 			pl.anim_FirstJumpFrame = false

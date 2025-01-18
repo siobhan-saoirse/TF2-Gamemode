@@ -13,6 +13,7 @@ function ENT:InitPostEntity()
 end
 
 function ENT:SendData(pl)
+	--[[
 	local layout = self.Properties.caplayout
 	
 	if not layout then
@@ -27,7 +28,7 @@ function ENT:SendData(pl)
 	
 	umsg.Start("TF_SetControlPointLayout", pl)
 		umsg.String(layout)
-	umsg.End()
+	umsg.End()]]
 end
 
 function ENT:UpdateControlPoints()
@@ -54,6 +55,7 @@ function ENT:KeyValue(key,value)
 end
 
 function ENT:Think() 
+
 	if not GAMEMODE.PostEntityDone then return end
 	if GAMEMODE.PostEntityDone and not self.PostEntityDone then
 		self:InitPostEntity()

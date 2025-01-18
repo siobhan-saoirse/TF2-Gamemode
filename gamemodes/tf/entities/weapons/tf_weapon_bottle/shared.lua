@@ -51,6 +51,7 @@ SWEP.BrokenHitWorld = Sound("Weapon_Bottle.BrokenHitWorld")
 
 SWEP.BreakSound = Sound("Weapon_Bottle.Break")
 SWEP.HasThirdpersonCritAnimation2 = false
+SWEP.DamageType = bit.bor(DMG_CLUB,DMG_BULLET)
 SWEP.BaseDamage = 65
 SWEP.DamageRandomize = 0.1
 SWEP.MaxDamageRampUp = 0

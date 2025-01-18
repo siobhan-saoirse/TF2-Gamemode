@@ -319,13 +319,11 @@ end)
 -- Critical hit notifications
 usermessage.Hook("CriticalHit", function(um)
 	local pos = um:ReadVector()
-	LocalPlayer():EmitSound("TFPlayer.CritHit")
 	ParticleEffect("crit_text", pos, Angle(0,0,0))
 end)
 
 usermessage.Hook("CriticalHitMini", function(um)
 	local pos = um:ReadVector()
-	LocalPlayer():EmitSound("TFPlayer.CritHit")
 	ParticleEffect("minicrit_text", pos, Angle(0,0,0))
 end)
 

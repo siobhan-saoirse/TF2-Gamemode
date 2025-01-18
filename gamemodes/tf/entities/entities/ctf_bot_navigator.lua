@@ -126,5 +126,5 @@ function ENT:Think()
 			self.loco:SetDesiredSpeed(self:GetOwner():GetWalkSpeed())
 		end
 	end
-	self:NextThink(CurTime() + 0.3)
+	self:NextThink(CurTime() + 0.2)
 end

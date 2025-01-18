@@ -1052,7 +1052,6 @@ hook.Add("EntityEmitSound", "MouthFix", function(snd)
 		if CLIENT and !snd.Entity:IsBot() then
 			if !IsValid(snd.Entity) then return end
 			if (snd.Entity:EntIndex() == LocalPlayer():EntIndex()) then
-				snd.Entity:SetupPhonemeMappings("phonemes")
 				----snd.Entity:SetModel(snd.Entity:GetNWString("PlayerClassModel"))
 			end
 		end

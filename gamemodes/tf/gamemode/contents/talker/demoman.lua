@@ -262,7 +262,7 @@ Response InvulnerableSpeechDemoman2
 
 Rule InvulnerableSpeechDemoman2
 {
-	criteria ConceptFireWeapon IsDemoman WeaponIsGrenade IsInvulnerable DemomanNotInvulnerableSpeech
+	criteria ConceptFireWeapon IsDemoman IsInvulnerable  20PercentChance
 	ApplyContext "DemomanInvulnerableSpeech:1:30"
 	Response InvulnerableSpeechDemoman2
 }
@@ -278,7 +278,7 @@ Response InvulnerableSpeechDemoman
 
 Rule InvulnerableSpeechDemoman
 {
-	criteria ConceptFireWeapon IsDemoman WeaponIsPipebomb IsInvulnerable DemomanNotInvulnerableSpeech
+	criteria ConceptFireWeapon IsDemoman IsInvulnerable  20PercentChance
 	ApplyContext "DemomanInvulnerableSpeech:1:30"
 	Response InvulnerableSpeechDemoman
 }

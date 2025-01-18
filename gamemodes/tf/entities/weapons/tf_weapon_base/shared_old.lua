@@ -591,11 +591,6 @@ function SWEP:PrimaryAttack()
 		self.NextReload = nil
 		self.NextReloadStart = nil
 	end
-	
-	if SERVER then
-		self.Owner:Speak("TLK_FIREWEAPON", true)
-	end
-	
 	return true
 end
 
@@ -643,10 +638,6 @@ function SWEP:SecondaryAttack()
 		
 		self.Delay = CurTime() + self.Secondary.Delay
 		self.QuickDelay = CurTime() + self.Secondary.QuickDelay
-		
-		if SERVER then
-			self.Owner:Speak("TLK_FIREWEAPON", true)
-		end
 		
 		return true
 	else

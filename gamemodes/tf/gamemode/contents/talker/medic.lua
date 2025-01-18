@@ -276,7 +276,7 @@ Response InvulnerableSpeechCombatMedic
 }
 Rule InvulnerableSpeechCombatMedic
 {
-	criteria ConceptFireWeapon IsMedic IsInvulnerable WeaponIsNotMediGun MedicNotInvulnerableSpeech
+	criteria ConceptFireWeapon IsMedic IsInvulnerable WeaponIsNotMediGun
 	ApplyContext "MedicInvulnerableSpeech:1:30"
 	Response InvulnerableSpeechCombatMedic
 }
@@ -288,7 +288,7 @@ Response KritzSpeechMedic
 }
 Rule KritzSpeechMedic
 {
-	criteria ConceptMedicChargeDeployed IsMedic WeaponIsNotVanillaSecondary WeaponIsNotTaggedMedigun MedicNotInvulnerableSpeech
+	criteria ConceptMedicChargeDeployed IsMedic WeaponIsNotVanillaSecondary WeaponIsNotTaggedMedigun
 	ApplyContext "MedicInvulnerableSpeech:1:30"
 	Response InvulnerableSpeechMedic
 	Response KritzSpeechMedic

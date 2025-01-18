@@ -122,7 +122,7 @@ function ENT:Initialize()
 		end
 		self:SetModel(npc:GetModel())
 		self:ResetSequence(self:SelectWeightedSequence(ACT_MP_STAND_MELEE))
-		npc:SetNWString("PreferredIcon",self.PreferredIcon)
+		npc:SetNWString("PreferredIcon",self.PreferredIcon) 
 		timer.Simple(0.3, function()
 		
 			npc:SetSkin(1)

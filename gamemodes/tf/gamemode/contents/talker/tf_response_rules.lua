@@ -308,6 +308,16 @@ criterion "IsPyro" "playerclass" "Pyro" "required"
 criterion "IsSpy" "playerclass" "Spy" "required"
 criterion "IsEngineer" "playerclass" "Engineer" "required"
 
+criterion "Isscout" "playerclass" "Scout" "required" 
+criterion "Issniper" "playerclass" "Sniper" "required"
+criterion "Issoldier" "playerclass" "Soldier" "required"
+criterion "Isdemoman" "playerclass" "Demoman" "required"
+criterion "Ismedic" "playerclass" "Medic" "required"
+criterion "Isheavy" "playerclass" "Heavy" "required"
+criterion "Ispyro" "playerclass" "Pyro" "required"
+criterion "Isspy" "playerclass" "Spy" "required"
+criterion "Isengineer" "playerclass" "Engineer" "required"
+
 criterion "IsNotScout" "playerclass" "!=Scout" "required" 
 criterion "IsNotSniper" "playerclass" "!=Sniper" "required"
 criterion "IsNotSoldier" "playerclass" "!=Soldier" "required"
@@ -353,7 +363,7 @@ criterion "100PercentChance"  "randomnum"               ">0"   required weight 1
 criterion "IsARecentKill"  "recentkills"               ">0"   required
 criterion "IsManyRecentKills"  "recentkills"               ">1"   required
 criterion "IsVeryManyRecentKills"  "recentkills"               ">3"   required
-criterion "IsInvulnerable"  "invulnerable"               "1"   required weight 10
+criterion "IsInvulnerable"  "invulnerable"               "1"   required
 
 criterion "IsOnFriendlyControlPoint"  "OnFriendlyControlPoint"	"1"   required
 criterion "IsOnCappableControlPoint"  "OnCappableControlPoint"	"1"   required
@@ -375,7 +385,7 @@ criterion "WeaponIsPistol" "playerweapon" "tf_weapon_pistol" "required"
 criterion "WeaponIsBuild" "playerweapon" "tf_weapon_builder" "required"
 criterion "WeaponIsWrench" "playerweapon" "tf_weapon_wrench" "required"
 criterion "WeaponIsScattergun" "playerweapon" "tf_weapon_scattergun" "required"
-criterion "WeaponIsScattergunDouble" "item_name" "The Force-a-Nature" "required" weight 10
+criterion "WeaponIsScattergunDouble" "item_name" "Force-a-Nature" "required" weight 10
 criterion "WeaponIsScattergunDoubleFestive" "item_name" "Festive Force-a-Nature" "required" weight 10
 criterion "WeaponIsPistolScout" "playerweapon" "tf_weapon_pistol_scout" "required"
 criterion "WeaponIsBat" "playerweapon" "tf_weapon_bat" "required"
@@ -395,46 +405,46 @@ criterion "WeaponIsRocket" "playerweapon" "tf_weapon_rocketlauncher" "required"
 criterion "WeaponIsShovel" "playerweapon" "tf_weapon_shovel" "required"
 criterion "WeaponIsFlaregun" "playerweapon" "tf_weapon_flaregun" "required"
 // Lunchbox modified to fire for Sandvich only, so we don't share lines.
-criterion "WeaponIsSandvich" "item_name" "The Sandvich" "required" weight 5
-criterion "WeaponIsRobotSandvich" "item_name" "The Robo-Sandvich" "required" weight 5
+criterion "WeaponIsSandvich" "item_name" "Sandvich" "required" weight 5
+criterion "WeaponIsRobotSandvich" "item_name" "Robo-Sandvich" "required" weight 5
 criterion "WeaponIsFestiveSandvich" "item_name" "Festive Sandvich" "required" weight 5
 criterion "WeaponIsLunchboxDrink" "playerweapon" "tf_weapon_lunchbox_drink" "required"
 criterion "WeaponIsLunchbox" "playerweapon" "tf_weapon_lunchbox" "required"
 criterion "WeaponIsGloves" "item_type_name" "#TF_Weapon_Gloves" "required" weight 10
-criterion "WeaponIsKritzkrieg" "item_name" "The Kritzkrieg" "required" weight 10
+criterion "WeaponIsKritzkrieg" "item_name" "Kritzkrieg" "required" weight 10
 criterion "WeaponIsBow" "item_type_name" "#TF_Weapon_CompoundBow" "required" weight 10
-criterion "WeaponIsEqualizer" "item_name" "The Equalizer" "required" weight 10
-criterion "WeaponIsEscapePlan" "item_name" "The Escape Plan" "required" weight 10
-criterion "WeaponIsDirectHit" "item_name" "The Direct Hit" "required" weight 10
-criterion "WeaponIsBeggarsBazooka" "item_name" "The Beggar's Bazooka" "required" weight 10
-criterion "WeaponIsBanner" "item_name" "The Buff Banner" "required" weight 10
+criterion "WeaponIsEqualizer" "item_name" "Equalizer" "required" weight 10
+criterion "WeaponIsEscapePlan" "item_name" "Escape Plan" "required" weight 10
+criterion "WeaponIsDirectHit" "item_name" "Direct Hit" "required" weight 10
+criterion "WeaponIsBeggarsBazooka" "item_name" "Beggar's Bazooka" "required" weight 10
+criterion "WeaponIsBanner" "item_name" "Buff Banner" "required" weight 10
 criterion "WeaponIsFestiveBanner" "item_name" "Festive Buff Banner" "required" weight 10
 // Former "sword is Eyelander" equivalency
-//criterion "WeaponIsSword" "item_name" "The Eyelander" "required" weight 10
+//criterion "WeaponIsSword" "item_name" "Eyelander" "required" weight 10
 // If valve add a new sword (and it uses the same tf_weapon_sword class) it will inherit the Eyelander taunt by default
 criterion "WeaponIsSword" "playerweapon" "tf_weapon_sword" "required" weight 10
-criterion "WeaponIsDefender" "item_name" "The Scottish Resistance" "required" weight 10
-criterion "WeaponIsUbersaw" "item_name" "The Ubersaw" "required" weight 10
+criterion "WeaponIsDefender" "item_name" "Scottish Resistance" "required" weight 10
+criterion "WeaponIsUbersaw" "item_name" "Ubersaw" "required" weight 10
 criterion "WeaponIsFestiveUbersaw" "item_name" "Festive Ubersaw" "required" weight 10
-criterion "WeaponIsFrontierJustice" "item_name" "The Frontier Justice" "required" weight 10
+criterion "WeaponIsFrontierJustice" "item_name" "Frontier Justice" "required" weight 10
 criterion "WeaponIsFestiveFrontierJustice" "item_name" "Festive Frontier Justice" "required" weight 10
-criterion "WeaponIsRobotArm" "item_name" "The Gunslinger" "required" weight 10
+criterion "WeaponIsRobotArm" "item_name" "Gunslinger" "required" weight 10
 criterion "WeaponIsGoldenWrench" "item_name" "Golden Wrench" "required" weight 10
 criterion "WeaponIsGoldenFryingPan" "item_name" "Gold Frying Pan" "required" weight 10
-criterion "WeaponIsShortstop" "item_name" "The Shortstop" "required" weight 10
+criterion "WeaponIsShortstop" "item_name" "Shortstop" "required" weight 10
 criterion "WeaponIsMadMilk" "item_name" "Mad Milk" "required" weight 10
 criterion "WeaponIsSDCleaver" "playerweapon" "tf_weapon_cleaver" "required" weight 10
-criterion "WeaponIsHolyMackerel" "item_name" "The Holy Mackerel" "required" weight 10
+criterion "WeaponIsHolyMackerel" "item_name" "Holy Mackerel" "required" weight 10
 criterion "WeaponIsFestiveHolyMackerel" "item_name" "Festive Holy Mackerel" "required" weight 10
 criterion "WeaponIsUnarmedCombat" "item_name" "Unarmed Combat" "required" weight 10
 criterion "WeaponIsKatana" "playerweapon" "tf_weapon_katana" "required" weight 10
-criterion "WeaponIsSashimono" "item_name" "The Concheror" "required" weight 10
+criterion "WeaponIsSashimono" "item_name" "Concheror" "required" weight 10
 criterion "WeaponIsSaxxy" "item_name" "Saxxy" "required" weight 10
 // Custom added criterion
-criterion "WeaponIsBenja" "item_name" "The Dalokohs Bar" "required" weight 10
+criterion "WeaponIsBenja" "item_name" "Dalokohs Bar" "required" weight 10
 criterion "WeaponIsFishcake" "item_name" "Fishcake" "required" weight 10
-criterion "WeaponIsSteak" "item_name" "The Buffalo Steak Sandvich" "required" weight 10 // Not actually used for the auto-eat response. Used for distinction in the taunts.
-criterion "WeaponIsPainTrain" "item_name" "The Pain Train" "required" weight 10
+criterion "WeaponIsSteak" "item_name" "Buffalo Steak Sandvich" "required" weight 10 // Not actually used for the auto-eat response. Used for distinction in the taunts.
+criterion "WeaponIsPainTrain" "item_name" "Pain Train" "required" weight 10
 criterion "WeaponIsNotPainTrain" "item_name" "!=The Pain Train" "required" weight 10
 criterion "WeaponIsFryingPan" "item_name" "Frying Pan" "required" weight 10
 criterion "WeaponIsNotFryingPan" "item_name" "!=Frying Pan" "required" weight 10
@@ -452,21 +462,21 @@ criterion "LoadoutIsDrink" "loadout_slot_secondary" "!=Crit-a-Cola" "required" w
 criterion "LoadoutIsCritDrink" "loadout_slot_secondary" "Crit-a-Cola" "required" weight 10
 criterion "LoadoutIsNotRobotArm" "loadout_slot_melee" "!=The Gunslinger" "required" weight 10
 criterion "WeaponIsJarate" "item_name" "Jarate" "required" weight 10
-criterion "WeaponIsBasher" "item_name" "The Boston basher" "required" weight 10
-criterion "WeaponIsCandy" "item_name" "The Candy Cane" "required" weight 10
+criterion "WeaponIsBasher" "item_name" "Boston basher" "required" weight 10
+criterion "WeaponIsCandy" "item_name" "Candy Cane" "required" weight 10
 criterion "WeaponIsMace" "item_name" "Sun-on-a-Stick" "required" weight 10
 criterion "WeaponIsNotBasher" "item_name" "!=The Boston basher" "required" weight 10
 criterion "WeaponIsNotCandy" "item_name" "!=The Candy Cane" "required" weight 10
 criterion "WeaponIsNotMace" "item_name" "!=Sun-on-a-Stick" "required" weight 10
 criterion "WeaponIsNotFish" "item_name" "!=The Holy Mackerel" "required" weight 10
 criterion "WeaponIsNotGunbai" "item_name" "!=The Fan O'War" "required" weight 10
-criterion "WeaponIsShiv" "item_name" "The Tribalman's Shiv" "required" weight 10
-criterion "WeaponIsGunbai" "item_name" "The Fan O'War" "required" weight 10
+criterion "WeaponIsShiv" "item_name" "Tribalman's Shiv" "required" weight 10
+criterion "WeaponIsGunbai" "item_name" "Fan O'War" "required" weight 10
 criterion "WeaponIsNotMediGun" "playerweapon" "!=tf_weapon_medigun" "required" weight 10
-criterion "WeaponIsSodaPopper" "item_name" "The Soda Popper" "required" weight 10
-criterion "WeaponIsAtomizer" "item_name" "The Atomizer" "required" weight 10
-criterion "WeaponIsBazaarBargain" "item_name" "The Bazaar Bargain" "required" weight 10
-criterion "WeaponIsCowMangler" "item_name" "The Cow Mangler 5000" "required" weight 10
+criterion "WeaponIsSodaPopper" "item_name" "Soda Popper" "required" weight 10
+criterion "WeaponIsAtomizer" "item_name" "Atomizer" "required" weight 10
+criterion "WeaponIsBazaarBargain" "item_name" "Bazaar Bargain" "required" weight 10
+criterion "WeaponIsCowMangler" "item_name" "Cow Mangler 5000" "required" weight 10
 criterion "WeaponIsNotTaggedMinigun" "item_name" "!=Upgradeable TF_WEAPON_MINIGUN" "required" weight 10
 criterion "WeaponIsNotTaggedRifle" "item_name" "!=Upgradeable TF_WEAPON_SNIPERRIFLE" "required" weight 10
 criterion "WeaponIsNotTaggedSMG" "item_name" "!=Upgradeable TF_WEAPON_SMG" "required" weight 10
@@ -475,36 +485,36 @@ criterion "WeaponIsNotTaggedMedigun" "item_name" "!=Upgradeable TF_WEAPON_MEDIGU
 criterion "WeaponIsNotSaxxy" "item_name" "!=Saxxy" "required" weight 10
 criterion "WeaponIsTRBlade" "item_name" "Three-Rune Blade" "required" weight 10
 criterion "WeaponIsNotTRBlade" "item_name" "!=Three-Rune Blade" "required" weight 10
-criterion "WeaponIsBackup" "item_name" "The Battalion's Backup" "required" weight 10
+criterion "WeaponIsBackup" "item_name" "Battalion's Backup" "required" weight 10
 criterion "WeaponIsHealArrow" "playerweapon" "tf_weapon_crossbow" "required" weight 10
 criterion "WeaponIsNotTomislav" "item_name" "!=Tomislav" "required" weight 10
 criterion "WeaponIsNotRobotArm" "item_name" "!=The Gunslinger" "required" weight 10
-criterion "WeaponIsRayGun" "item_name" "The Righteous Bison" "required" weight 10
-criterion "WeaponIsHippocrates" "item_name" "The Solemn Vow" "required" weight 10
-criterion "WeaponIsSharpDresser" "item_name" "The Sharp Dresser" "required" weight 10
-criterion "WeaponIsEurekaEffect" "item_name" "The Eureka Effect" "required" weight 10
-criterion "WeaponIsThirdDegree" "item_name" "The Third Degree" "required" weight 10
-criterion "WeaponIsPomson" "item_name" "The Pomson 6000" "required" weight 10
-criterion "WeaponIsManmelter" "item_name" "The Manmelter" "required" weight 10
-criterion "WeaponIsWrapAssassin" "item_name" "The Wrap Assassin" "required" weight 10
-criterion "WeaponIsSpycicle" "item_name" "The Spy-cicle" "required" weight 10
-criterion "WeaponIsRainblower" "item_name" "The Rainblower" "required" weight 10
-criterion "WeaponIsScorchShot" "item_name" "The Scorch Shot" "required" weight 10
-criterion "WeaponIsLollichop" "item_name" "The Lollichop" "required" weight 10
+criterion "WeaponIsRayGun" "item_name" "Righteous Bison" "required" weight 10
+criterion "WeaponIsHippocrates" "item_name" "Solemn Vow" "required" weight 10
+criterion "WeaponIsSharpDresser" "item_name" "Sharp Dresser" "required" weight 10
+criterion "WeaponIsEurekaEffect" "item_name" "Eureka Effect" "required" weight 10
+criterion "WeaponIsThirdDegree" "item_name" "Third Degree" "required" weight 10
+criterion "WeaponIsPomson" "item_name" "Pomson 6000" "required" weight 10
+criterion "WeaponIsManmelter" "item_name" "Manmelter" "required" weight 10
+criterion "WeaponIsWrapAssassin" "item_name" "Wrap Assassin" "required" weight 10
+criterion "WeaponIsSpycicle" "item_name" "Spy-cicle" "required" weight 10
+criterion "WeaponIsRainblower" "item_name" "Rainblower" "required" weight 10
+criterion "WeaponIsScorchShot" "item_name" "Scorch Shot" "required" weight 10
+criterion "WeaponIsLollichop" "item_name" "Lollichop" "required" weight 10
 criterion "WeaponIsPEPBrawlerBlaster" "playerweapon" "tf_weapon_pep_brawler_blaster" "required" weight 10
 criterion "WeaponIsHandgunScoutSecondary" "playerweapon" "tf_weapon_handgun_scout_secondary" "required" weight 10
-criterion "WeaponIsAnnihilator" "item_name" "The Neon Annihilator" "required" weight 10
+criterion "WeaponIsAnnihilator" "item_name" "Neon Annihilator" "required" weight 10
 criterion "WeaponIsPromoAnnihilator" "item_name" "Promo Neon Annihilator" "required" weight 10
-criterion "WeaponIsLooseCannon" "item_name" "The Loose Cannon" "required" weight 10
-criterion "WeaponIsRescueRanger" "item_name" "The Rescue Ranger" "required" weight 10
-criterion "WeaponIsShortCircuit" "item_name" "The Short Circuit" "required" weight 10
-criterion "WeaponIsScotsmansSkullcutter" "item_name" "The Scotsman's Skullcutter" "required" weight 10
+criterion "WeaponIsLooseCannon" "item_name" "Loose Cannon" "required" weight 10
+criterion "WeaponIsRescueRanger" "item_name" "Rescue Ranger" "required" weight 10
+criterion "WeaponIsShortCircuit" "item_name" "Short Circuit" "required" weight 10
+criterion "WeaponIsScotsmansSkullcutter" "item_name" "Scotsman's Skullcutter" "required" weight 10
 criterion "WeaponIsClassicSniperrifle" "playerweapon" "tf_weapon_sniperrifle_classic" "required"
 criterion "WeaponIsRocketLauncherAirStrike" "playerweapon" "tf_weapon_rocketlauncher_airstrike" "required"
 criterion "WeaponIsMutatedMilk" "item_name" "Mutated Milk" "required" weight 10
-criterion "WeaponIsDragonsFury" "item_name" "The Dragon's Fury" "required" weight 10
-criterion "WeaponIsGasCan" "item_name" "The Gas Passer" "required" weight 10
-criterion "WeaponIsSlap" "item_name" "The Hot Hand" "required" weight 10
+criterion "WeaponIsDragonsFury" "item_name" "Dragon's Fury" "required" weight 10
+criterion "WeaponIsGasCan" "item_name" "Gas Passer" "required" weight 10
+criterion "WeaponIsSlap" "item_name" "Hot Hand" "required" weight 10
 
 //Custom healed concept and critical hit
 criterion "IsBeingHealed" "beinghealed" "1" "required"
@@ -551,7 +561,7 @@ criterion "IsFiringMinigun" "minigunfiretime" ">0.0" required
 criterion "TimeFiringMinigunShort" "minigunfiretime" ">4.0,<=8.0" required
 criterion "TimeFiringMinigunLong" "minigunfiretime" ">8.0,<=15.0" required
 criterion "TimeFiringMinigunReallyLong" "minigunfiretime" ">15.0" required
-criterion "ConceptFireMinigunTalk" "Concept" "TLK_MINIGUN_FIREWEAPON" "required"
+criterion "ConceptFireMinigunTalk" "Concept" "TLK_FIREMINIGUN" "required"
 Criterion "NotDefendOnThePointSpeech" "worldDefendOnThePointSpeech" "!=1" "required" weight 0
 
 criterion "IsAprilFoolsTaunt" "IsAprilFoolsTaunt" "1" "required" weight 100

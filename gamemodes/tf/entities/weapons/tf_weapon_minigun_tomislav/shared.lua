@@ -279,7 +279,7 @@ function SWEP:PrimaryAttack(vampire)
 		self:GetOwner().minigunfiretime = CurTime() - self.StartTime
 		
 		if not self.NextPlayerTalk or CurTime()>self.NextPlayerTalk then
-			self:GetOwner():Speak("TLK_MINIGUN_FIREWEAPON")
+			self:GetOwner():Speak("TLK_FIREMINIGUN",true)
 			self.NextPlayerTalk = CurTime() + 1
 		end
 	end

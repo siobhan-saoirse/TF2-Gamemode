@@ -362,13 +362,13 @@ function GM:DoTFPlayerDeath(ent, attacker, dmginfo)
 	end
 	
 	-- Voice responses
-	if attacker:IsPlayer() and ent~=attacker then
+	if attacker:IsTFPlayer() and ent~=attacker then
 		if ent:IsBuilding() then
-				attacker:Speak("TLK_KILLED_OBJECT")
+				attacker:Speak("TLK_KILLED_OBJECT",true)
 		else
 			--self:AddKill(attacker)
 			attacker.victimclass = ent.playerclass or ""
-			attacker:Speak("TLK_KILLED_PLAYER")
+			attacker:Speak("TLK_KILLED_PLAYER",true)
 		end
 	end
 	attacker.domination = ""
@@ -1343,9 +1343,8 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 				ply:GetRagdollEntity():Remove()
 			end
 		end
-	elseif inflictor.Critical and inflictor:Critical() || dmginfo:IsDamageType(DMG_ACID) then -- Critical damage
+	elseif dmginfo:IsDamageType(DMG_ACID) then -- Critical damage
 		if not inflictor.IsSilentKiller then
-			if ply:GetMaterial() == "models/shadertest/predator" then return end
 			if (!ply:HasDeathFlag(DF_SILENCED) and !ply:IsMiniBoss()) then
 				ply:RandomSentence("CritDeath")
 			end

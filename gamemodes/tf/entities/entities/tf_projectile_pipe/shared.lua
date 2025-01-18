@@ -105,7 +105,7 @@ function ENT:Initialize()
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetHealth(1)
-	self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+	self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
 	
 	if self.GrenadeMode==1 then
 		self:SetMoveCollide(MOVECOLLIDE_FLY_BOUNCE)

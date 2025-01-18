@@ -228,7 +228,9 @@ function SWEP:PrimaryAttack()
 			self.Critting = false
 		end
 	end
-	
+	if SERVER then
+		self.Owner:Speak("TLK_FIREWEAPON")
+	end
 	self:SendWeaponAnim(self.VM_PRIMARYATTACK)
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	

@@ -385,7 +385,7 @@ Response InvulnerableSpeechScout
 }
 Rule InvulnerableSpeechScout
 {
-	criteria ConceptFireWeapon IsScout IsInvulnerable ScoutNotInvulnerableSpeech
+	criteria ConceptFireWeapon IsScout IsInvulnerable  20PercentChance
 	ApplyContext "ScoutInvulnerableSpeech:1:30"
 	Response InvulnerableSpeechScout
 }

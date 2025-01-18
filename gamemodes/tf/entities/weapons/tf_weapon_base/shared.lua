@@ -55,9 +55,7 @@ function SWEP:DrawWorldModel(  )
 
 					self.WModel:SetupBones()
 				end
-				if (self.WModel:GetMaterial() != "models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())) and _Owner:HasGodMode() and (_Owner:GetSkin() == 2 or _Owner:GetSkin() == 3) and !_Owner:GetNWBool("NoWeapon",false)) then
-					self.WModel:SetMaterial("models/effects/invulnfx_"..ParticleSuffix(GAMEMODE:EntityTeam(self:GetOwner())))
-				elseif (_Owner:GetNWBool("NoWeapon",false) == true or _Owner:GetMaterial() == "color") then 
+				if (_Owner:GetNWBool("NoWeapon",false) == true or _Owner:GetMaterial() == "color") then 
 					self.WModel:SetMaterial("color")
 				else
 					local mat = self.CustomMaterialOverride2 or self.MaterialOverride or self.WeaponMaterial or ""
@@ -1335,7 +1333,7 @@ function SWEP:SecondaryAttack(noscene)
 		self.QuickDelay = CurTime() + self.Secondary.QuickDelay
 		
 		if SERVER and not self.Secondary.NoFiringScene and not noscene then
-			self.Owner:Speak("TLK_FIREWEAPON", true)
+			self.Owner:Speak("TLK_FIREWEAPON")
 		end
 
 		self.NextIdle = nil

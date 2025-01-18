@@ -230,7 +230,7 @@ Response InvulnerableSpeechSpy
 }
 Rule InvulnerableSpeechSpy
 {
-	criteria ConceptFireWeapon IsSpy IsInvulnerable SpyNotInvulnerableSpeech
+	criteria ConceptFireWeapon IsSpy IsInvulnerable  20PercentChance
 	ApplyContext "SpyInvulnerableSpeech:1:30"
 	Response InvulnerableSpeechSpy
 }

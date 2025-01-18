@@ -370,10 +370,10 @@ function SWEP:MeleeHitSound(tr)
 				end
 			else
 				if tr.Entity:IsBuilding() and (tr.Entity:IsFriendly(self.Owner) && self.Owner.playerclass == "Engineer") then return end
-				if string.find(tr.Entity:GetModel(),"/bot_") == true then
-					tr.Entity:EmitSound(self.HitRobot)
+				if string.find(tr.Entity:GetModel(),"/bot_") then
+					self.Owner:EmitSound("MVM_"..self.HitFlesh)
 				else
-					tr.Entity:EmitSound(self.HitFlesh)
+					self.Owner:EmitSound(self.HitFlesh)
 				end
 					
 			end
@@ -884,7 +884,7 @@ function SWEP:PrimaryAttack()
 	end
 	
 	if SERVER  then
-		self.Owner:Taunt("TLK_FIREWEAPON", true)
+		self.Owner:Speak("TLK_FIREWEAPON")
 	end
 	
 	self.NextIdle = CurTime() + self:SequenceDuration()  

@@ -47,7 +47,7 @@ SWEP.ReloadTime = 0.8
 SWEP.HoldType = "MELEE"
 SWEP.HoldTypeHL2 = "MELEE2"
 
-SWEP.DamageType = DMG_SLASH
+SWEP.DamageType = bit.bor(DMG_CLUB,DMG_SLASH)
 --SWEP.CritDamageType = DMG_SLASH|DMG_CRUSH
 SWEP.CritDamageType = DMG_SLASH, DMG_CRUSH
 

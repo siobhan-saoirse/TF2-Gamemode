@@ -882,9 +882,9 @@ function SWEP:Think()
 		if self.ShouldOccurFists == true then
 			if SERVER then
 				if self.Owner:GetPlayerClass() == "heavy" and self.Owner:GetInfoNum("jakey_antlionfbii", 0) != 1 and self.Owner:GetInfoNum("dylan_rageheavy", 0) != 1 and self.Owner:GetInfoNum("tf_robot", 0) != 1 then
-					self.Owner:Speak("TLK_FIREWEAPON")
+					self.Owner:Speak("TLK_FIREWEAPON",true)
 				elseif self.Owner:GetPlayerClass() == "heavy" and self.Owner:GetInfoNum("tf_robot", 0) == 1 then
-					self.Owner:Speak("TLK_FIREWEAPON")
+					self.Owner:Speak("TLK_FIREWEAPON",true)
 					self.ShouldOccurFists = false 
 					timer.Simple(4, function()
 						self.ShouldOccurFists = true
@@ -930,7 +930,7 @@ end
 function SWEP:SecondaryAttack()
 	if (!self:CanPrimaryAttack()) then return end
 	if SERVER then
-		self.Owner:Speak("TLK_FIREWEAPON")
+		self.Owner:Speak("TLK_FIREWEAPON",true)
 	end
 	if (!self.Owner:IsBot() && self.Owner:GetPlayerClass() != "tank_l4d") then
 		--self.NextMeleeAttack = CurTime() + self.MeleeAttackDelay
@@ -1824,7 +1824,7 @@ function SWEP:PrimaryAttack()
 	if (!self:CanPrimaryAttack()) then return end
 	if self.Owner:KeyDown(IN_ATTACK2) then return end
 	if SERVER then
-		self.Owner:Speak("TLK_FIREWEAPON")
+		self.Owner:Speak("TLK_FIREWEAPON,true")
 	end
 	if self.Owner:GetPlayerClass() == "headcrab" then return end
 	if self.Owner:GetPlayerClass() == "charger" and !self.Owner:IsBot() then return end

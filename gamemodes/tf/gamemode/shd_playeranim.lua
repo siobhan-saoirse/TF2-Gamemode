@@ -670,6 +670,7 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_STAND_PREFIRE, true)
 			end
 			pl.anim_Deployed = true
+			pl.sniperzoomed = 1
 		elseif data == ACT_MP_ATTACK_STAND_POSTFIRE then
 			-- Postfire gesture
 			if pl.anim_InSwim then
@@ -683,6 +684,7 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_STAND_POSTFIRE, true)
 			end
 			pl.anim_Deployed = false
+			pl.sniperzoomed = 0
 		elseif data == ACT_MP_ATTACK_STAND_SECONDARYFIRE then
 			-- Secondary attack gesture
 			if pl.anim_InSwim then

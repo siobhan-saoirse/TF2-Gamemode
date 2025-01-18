@@ -94,10 +94,6 @@ CLASS.Sounds = {
 if SERVER then
 
 function CLASS:Initialize()
-	local cl_playermodel = self:GetInfo("cl_playermodel")
-	local modelname = player_manager.TranslatePlayerModel(cl_playermodel)
-	util.PrecacheModel(modelname)
-	self:SetModel(modelname)
 	self:Give("weapon_slam")
 	if (ConVarExists("hl2_cl_bob")) then
 
@@ -173,7 +169,6 @@ function CLASS:Initialize()
 		self:SelectWeapon(cl_defaultweapon) 
 	end
 	timer.Simple(0.12,function() 
-		self:SetNWString("PlayerClassModel",modelname)
 		if (self:IsBot() and self.TFBot and self:GetPlayerClass() == "gmodplayer") then
 
 			local primaryweps = { 
@@ -206,14 +201,13 @@ function CLASS:Initialize()
 				"weapon_357_scripted"
 			}
 				timer.Simple(0.3, function()
-				
-					self:SetModel(table.Random(player_manager.AllValidModels()))
+					local mdl = table.Random(player_manager.AllValidModels())
+					self:SetModel(mdl)
 					
 					self:StripWeapons()
 					self:Give(table.Random(primaryweps))
 					self:Give(table.Random(secondaryweps))
 					self:Give("weapon_knife_cstrike")
-					self:SetArmor(math.random(15,250))
 				end)
 
 		end

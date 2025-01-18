@@ -251,7 +251,7 @@ function ENT:PhysicsCollide(data, physobj)
 		data.HitEntity:SetMaxHealth(data.HitEntity:GetMaxHealth() + 50)
 		data.HitEntity:SetHealth(data.HitEntity:GetHealth() + 45)
 		data.HitEntity:Fire("DisableBark", "", 8)
-		self:GetOwner():EmitSound("vo/scout_stunballhit0"..math.random(1,9)..".wav")
+		self:GetOwner():Speak("TLK_STUNNED_TARGET")
 	end 
 	if data.HitEntity and data.HitEntity:IsValid(self.WModel2) and data.HitEntity:GetClass() == "npc_antlionguard" and !data.HitEntity:IsFriendly(self:GetOwner()) and self.critical and data.HitEntity:Health()>0 then
 		self:EmitSound(self.ExplosionSound2, 100, 100)
@@ -264,7 +264,7 @@ function ENT:PhysicsCollide(data, physobj)
 		data.HitEntity:SetMaxHealth(data.HitEntity:GetMaxHealth() + 140)
 		data.HitEntity:SetHealth(data.HitEntity:GetHealth() + 125)
 		data.HitEntity:Fire("DisableBark", "", 15)
-		self:GetOwner():EmitSound("vo/scout_stunballhit0"..math.random(1,9)..".wav")
+		self:GetOwner():Speak("TLK_STUNNED_TARGET")
 	end 
 	if data.HitEntity and data.HitEntity:IsValid(self.WModel2) and (data.HitEntity:IsNPC() or data.HitEntity:IsPlayer()) and data.HitEntity:Health()>0 then
 		if self.BouncesLeft>0 then
@@ -274,7 +274,7 @@ function ENT:PhysicsCollide(data, physobj)
 				sound.Play(self.ExplosionSound, self:GetPos())
 			end
 			self:DoExplosion()	
-			self:GetOwner():EmitSound("vo/scout_stunballhit0"..math.random(1,9)..".wav")
+			self:GetOwner():Speak("TLK_STUNNED_TARGET")
 		end
 	else
 		if self.DetonateMode == 2 then

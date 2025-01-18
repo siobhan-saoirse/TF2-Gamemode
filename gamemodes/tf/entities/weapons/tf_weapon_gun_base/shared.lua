@@ -171,9 +171,6 @@ function SWEP:PrimaryAttack()
 	self.NextReloadStart = nil
 	self.NextReload = nil
 	self.Reloading = false
-	if SERVER then
-		self.Owner:Speak("TLK_FIREWEAPON", true)
-	end
 
 	return true
 end
@@ -309,6 +306,9 @@ function SWEP:ShootEffects()
 		umsg.Start("TF2ShellEject")
 			umsg.Entity(self)
 		umsg.End()
+	end
+	if SERVER then
+		self.Owner:Speak("TLK_FIREWEAPON")
 	end
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	self.Reloading = false

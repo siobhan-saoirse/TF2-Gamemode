@@ -57,18 +57,6 @@ builds[2] = "obj_sentrygun"
 builds[0] = "obj_dispenser"
 builds[1] = "obj_teleporter"
 local Player = FindMetaTable("Player")
-local oNick = Player.Nick
-local oPlayer = Player.IsPlayer
- 
-function Player:IsPlayer()
-	return oPlayer(self)
-end
-function Player:Nick()
-	if self:GetNWString("customname",oNick(self)) then return self:GetNWString("customname",oNick(self)) end
-	return oNick(self)
-end
-Player.Name = Player.Nick
-Player.GetName = Player.Nick
 
 function RegisterStatType(obj, name)
 	local name_get = name
@@ -747,7 +735,7 @@ function meta:TFTaunt(args)
 				ply:DoAnimationEvent(ACT_DOD_HS_CROUCH_KNIFE, true)
 			end		
 		end
-		ply:Speak("TLK_PLAYER_TAUNT")
+		ply:Speak("TLK_PLAYER_TAUNT",true)
 		ply:SetNWBool("Taunting", true)
 		if IsValid(ply:GetActiveWeapon()) and table.HasValue(wep, ply:GetActiveWeapon():GetClass()) then ply:SetNWBool("NoWeapon", true) end
 		net.Start("ActivateTauntCam")

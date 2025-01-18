@@ -21,6 +21,7 @@ SWEP.Swing = Sound("Weapon_Shovel.Miss")
 SWEP.SwingCrit = Sound("Weapon_Shovel.MissCrit")
 SWEP.HitFlesh = Sound("Weapon_Shovel.HitFlesh")
 SWEP.HitWorld = Sound("Weapon_Shovel.HitWorld")
+SWEP.DamageType = bit.bor(DMG_CLUB,DMG_BULLET)
 
 local SpeedTable = {
 {40, 1.6},

@@ -570,13 +570,13 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 						if (!bot.IsL4DZombie) then
 							bot:SetPlayerClass(oldclass)
 						end
-						if (bot.IsL4DZombie and !string.find(bot:GetModel(),"/bot_")) then
+						if (--[[bot.IsL4DZombie and ]]!string.find(bot:GetModel(),"/bot_")) then
 							RandomWeapon2(bot, "primary")
 							RandomWeapon2(bot, "secondary")
 							RandomWeapon2(bot, "melee")
-							RandomCosmetic(bot, "hat")
 							RandomCosmetic(bot, "misc")
-							RandomCosmetic(bot, "head")
+							RandomCosmetic(bot, "misc")
+							RandomCosmetic(bot, table.Random({"hat","head"}))
 						end
 
 					end)
@@ -634,6 +634,17 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			end
 		end
 		if (IsValid(bot.TargetEnt)) then
+			if (bot.playerclass == "Sniper") then
+				if (IsValid(bot:GetWeapons()[2])) then
+					if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) > 200 and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 750 and bot:GetWeapons()[2].IsProjectileWeapon) then
+						bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
+					elseif (bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 200) then
+						bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
+					else
+						bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())
+					end
+				end
+			end
 			if (bot.Difficulty ~= 0) then
 				if (((bot.playerclass == "Scout" and !string.find(bot:GetModel(),"bot")))) then
 					if (IsValid(bot:GetWeapons()[2])) then
@@ -669,16 +680,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 							else
 								bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())		
 							end
-						end
-					end
-				elseif (bot.playerclass == "Sniper") then
-					if (IsValid(bot:GetWeapons()[2])) then
-						if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) > 200 and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 750 and bot:GetWeapons()[2].IsProjectileWeapon) then
-							bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
-						elseif (bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 200) then
-							bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
-						else
-							bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())
 						end
 					end
 				elseif (bot.playerclass == "Demoman") then
@@ -732,17 +733,18 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		if (string.find(bot:GetModel(),"/bot_") and !string.find(bot:GetModel(),"medic")) then
 			moveawayrange = 150
 		end
+		--[[
 		if controller.NextCenter > CurTime() and bot:GetNWBool("Taunting",false) != true and bot.botPos then
-			--[[if (IsValid(bot:GetActiveWeapon()) and !bot:GetActiveWeapon().IsMeleeWeapon) then
+			if (IsValid(bot:GetActiveWeapon()) and !bot:GetActiveWeapon().IsMeleeWeapon) then
 				if controller.strafeAngle == 1 then
-					mv:SetSideSpeed(1500)
+					mv:SetSideSpeed(bot:GetRunSpeed())
 				elseif controller.strafeAngle == 2 then
-					mv:SetSideSpeed(-1500)
+					mv:SetSideSpeed(-bot:GetRunSpeed())
 				else
-					mv:SetForwardSpeed(-1500)
+					mv:SetForwardSpeed(-bot:GetRunSpeed())
 				end
-			end]]
-		end
+			end
+		end]]
 			for k,v in ipairs(ents.FindInSphere(bot:GetPos(),moveawayrange)) do
 				if (IsValid(v) and GAMEMODE:EntityTeam(v) == bot:Team() and v:IsPlayer() and v:EntIndex() != bot:EntIndex() and bot:GetNWBool("Taunting",false) != true) then
 					local forward = bot:EyeAngles():Forward()
@@ -820,7 +822,11 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		if (bot.playerclass == "Medic" && IsValid(bot.TargetEnt)) then
 			if (bot.TargetEnt:EntityTeam() ~= bot:Team()) then
 
-				bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())
+				if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 200) then
+					bot:SelectWeapon(bot:GetWeapons()[3]:GetClass())
+				else
+					bot:SelectWeapon(bot:GetWeapons()[1]:GetClass())
+				end
 
 			else
 
@@ -850,6 +856,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 
 		if !bot.LastPath then return end
 		local curgoal = bot.LastPath[bot.CurSegment]
+		local iszoomed = (IsValid(bot.TargetEnt) and IsValid(bot:GetActiveWeapon()) and bot.playerclass == "Sniper" and bot:GetActiveWeapon():EntIndex() == bot:GetWeapons()[1]:EntIndex() and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 2500 and bot:Visible(bot.TargetEnt))
 		-- got nowhere to go, why keep moving?
 		if !curgoal then
 			mv:SetForwardSpeed(0)
@@ -861,12 +868,17 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				if controller.NextCenter < CurTime() then
 					controller.strafeAngle = ((controller.strafeAngle == 1 and 2) or 1)
 					controller.NextCenter = CurTime() + math.Rand(0.3, 0.65)
-				elseif controller.nextStuckJump < CurTime() then
-					if !bot:Crouching() then
-						controller.NextJump = 0
-					end
-					controller.nextStuckJump = CurTime() + math.Rand(1, 2)
 				end
+				if controller.nextStuckJump < CurTime() then
+					if !bot:Crouching() then
+						controller.nextStuckJump = 0
+					else
+						controller.nextStuckJump = CurTime() + math.Rand(1, 2)
+					end
+				end
+			else
+
+				controller.strafeAngle = 0
 			end
 		end
 			-- think one step ahead!
@@ -887,8 +899,15 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				end
 			end
 
+			if (iszoomed) then
+				if (bot:Visible(bot.TargetEnt)) then
+					mv:SetForwardSpeed(0)
+					mv:SetMoveAngles(Angle(0,0,0))
+					mv:SetSideSpeed(0)
+				end
+			end
 				
-			if IsValid(bot.TargetEnt) and bot.TargetEnt:Health() > 0 and bot:Visible(bot.TargetEnt) then
+			if IsValid(bot.TargetEnt) and bot.TargetEnt:Health() > 0 then
 				if (bot:GetPlayerClass() != "tank_l4d") then
 					if (bot:GetNWBool("Taunting",false) == true) then 
 						return 
@@ -897,6 +916,9 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			
 				local shouldvegoneforthehead = bot.TargetEnt:EyePos()
 				local bone = 1
+				if (bot.playerclass == "Sniper") then
+					bone = bot.TargetEnt:LookupBone("bip_head") or bot.TargetEnt:LookupBone("ValveBiped.Bip01_Head1") or 1
+				end
 				shouldvegoneforthehead = bot.TargetEnt:GetBonePosition(bone) or bot.TargetEnt:WorldSpaceCenter()
 
 				local lerp = 1.2
@@ -924,7 +946,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				end
 				bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), mva + (controller.LookAt * 0.5))) 
 			end
-			if (!IsValid(bot.TargetEnt) or (IsValid(bot.TargetEnt) and !bot:Visible(bot.TargetEnt))) then 
+			if (!IsValid(bot.TargetEnt)) then 
 				if (bot.lookingAt) then return end
 				if (bot:GetPlayerClass() != "tank_l4d") then
 					if (bot:GetNWBool("Taunting",false) == true) then 
@@ -939,7 +961,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					mv:SetForwardSpeed(0)
 					return
 				else
-					if (bot.TargetEnt ~= nil && bot:GetPos():Distance(bot.botPos) > bot.TargetEnt:GetModelRadius() || bot.TargetEnt == nil and bot:GetPos():Distance(bot.botPos) > 80) then
+					if (bot.TargetEnt ~= nil && bot:GetPos():Distance(bot.botPos) > bot.TargetEnt:GetModelRadius() and !IsValid(bot.healthkit) || bot.TargetEnt == nil || IsValid(bot.healthkit)) then
 						if (IsValid(bot.TargetEnt)) then
 							if (bot.TargetEnt:IsFriendly(bot) and bot.TargetEnt.movingAway) then 
 								mv:SetForwardSpeed(0)
@@ -1210,7 +1232,6 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			end
 			if bot:GetPlayerClass() == "sniper" then
 				if bot:GetActiveWeapon().Slot == 0 then
-					buttons = buttons + IN_ATTACK2
 					mv:SetForwardSpeed(0)
 				else
 					mv:SetForwardSpeed(1200)
@@ -1377,9 +1398,6 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			end
 							
 						
-			if (bot.ControllerBot.nextStuckJump > CurTime()) then
-				buttons = buttons + IN_JUMP
-			end
 		if (!bot.lookingAt and bot:GetNWBool("Taunting",false) != true) then
 			if (string.find(game.GetMap(),"mvm_")) then
 				if (bot.TargetEnt == nil) then
@@ -1543,10 +1561,20 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			if (bot:GetPlayerClass() == "samuraidemo") then
 				bot:SetJumpPower(220 * 2.3)
 			end
-		if IsValid(bot.TargetEnt) then
+		if IsValid(bot.TargetEnt) and bot:GetNWBool("InRespawnRoom",false) == false then
 			if (bot.TargetEnt:Health() > 0 and !GAMEMODE.IsSetupPhase) then 
 
 					if (!IsValid(bot:GetActiveWeapon())) then return end
+					
+			if bot:GetPlayerClass() == "sniper" then
+				if bot:GetActiveWeapon():EntIndex() == bot:GetWeapons()[1]:EntIndex() then
+					if (!bot:GetActiveWeapon().ZoomStatus and bot:Visible(bot.TargetEnt)) then
+						buttons = buttons + IN_ATTACK2
+					elseif (bot:GetActiveWeapon().ZoomStatus and !bot:Visible(bot.TargetEnt)) then
+						buttons = buttons + IN_ATTACK2
+					end
+				end
+			end
 					if bot:GetPlayerClass() == "melee_scout_sandman" or bot:GetPlayerClass() == "melee_scout" then 
 						for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 240)) do
 							if v == bot.TargetEnt then
@@ -1594,11 +1622,22 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 
 						if (bot:GetNWBool("Taunting",false) != true) then
 							if (bot:Visible(bot.TargetEnt)) then
-								if (bot:GetPlayerClass() == "gmodplayer" or bot.playerclass == "Sniper") then
-									if (IsValid(bot:GetActiveWeapon())) then
-										if (math.random(1,3) == 1) then
+								if (bot.playerclass == "Sniper") then
+									if (IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon():EntIndex() == bot:GetWeapons()[1]:EntIndex()) then
+										if (math.random(1,100) == 1) then
 											buttons = buttons + IN_ATTACK
 										end
+									else
+
+										if (bot:GetActiveWeapon().IsMeleeWeapon and bot.TargetEnt:GetPos():Distance(bot:GetPos()) > 400 * bot:GetModelScale()) then return end
+										if (bot:Team() == TEAM_BLU and string.find(bot:GetModel(),"/bot_") and bot:HasGodMode()) then return end
+										if (IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging and ply:GetPlayerClass() != "samuraidemo") then return end
+										if (bot:GetActiveWeapon().ReloadSingle and (!bot:GetActiveWeapon().Reloading || !bot:IsMiniBoss())) then
+											buttons = buttons + IN_ATTACK
+										elseif (!bot:GetActiveWeapon().ReloadSingle) then
+											buttons = buttons + IN_ATTACK
+										end
+
 									end
 								else 
 									if (IsValid(bot:GetActiveWeapon()) and bot.TargetEnt:Health() > 0 and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 2600 * bot:GetModelScale()) then
@@ -1607,7 +1646,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 										else
 											if (bot:GetActiveWeapon().IsMeleeWeapon and bot.TargetEnt:GetPos():Distance(bot:GetPos()) > 400 * bot:GetModelScale()) then return end
 											if (bot:Team() == TEAM_BLU and string.find(bot:GetModel(),"/bot_") and bot:HasGodMode()) then return end
-											if (IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging and ply:GetPlayerClass() != "samuraidemo") then return end
+											if (IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging and bot:GetPlayerClass() != "samuraidemo") then return end
 											if (bot:GetActiveWeapon().ReloadSingle and (!bot:GetActiveWeapon().Reloading || !bot:IsMiniBoss())) then
 												buttons = buttons + IN_ATTACK
 											elseif (!bot:GetActiveWeapon().ReloadSingle) then
@@ -1624,6 +1663,9 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			end
 		end
 
+		if (bot.ControllerBot.nextStuckJump > CurTime()) then
+			buttons = buttons + IN_JUMP
+		end
 		cmd:SetButtons(buttons)
 		end
 end)

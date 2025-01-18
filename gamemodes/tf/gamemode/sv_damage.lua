@@ -502,6 +502,12 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		if ent:GetNWBool("Bonked") == true || ent:IsPlayer() and ent:Team() == TEAM_FRIENDLY then
 			dmginfo:ScaleDamage(0.000001)
 		end
+		if (dmginfo:IsFallDamage() and string.find(ent:GetModel(),"/bot_")) then
+			dmginfo:ScaleDamage(0)
+			dmginfo:SetDamageType(DMG_GENERIC)
+			ent:StopSound("Player.FallDamage")
+			ent:EmitSound("MVM.FallDamageBots")
+		end
 	if (ent:IsPlayer()) then
 		if (dmginfo:GetDamageType() != DMG_GENERIC and !ent:HasGodMode() and dmginfo:GetDamage() > 0) then
 			ent:SetViewPunchAngles(Angle(-2,0,0))
@@ -876,8 +882,8 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	if not ent:IsPlayer() or not ent:Alive() then return end
 	-- Pain and death sounds
 	local hp = ent:Health() - dmginfo:GetDamage()
-	ent:Speak("TLK_PLAYER_EXPRESSION", false)
-	if (ent.TFBot and att:IsTFPlayer() and !att:IsFriendly(ent) and math.random(1,10) == 1) then
+	ent:Speak("TLK_PLAYER_EXPRESSION", true)
+	if (ent.TFBot and att:IsTFPlayer() and !att:IsFriendly(ent) and math.random(1,2) == 1) then
 		ent.TargetEnt = att 
 		for k,v in ipairs(ents.FindInSphere(ent:GetPos(), 800)) do
 			if (v.TFBot) then
@@ -907,14 +913,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 					end
 
 				end
-			else
-				if (!ent:IsMiniBoss()) then
-					local effectdata = EffectData()
-					effectdata:SetOrigin( dmginfo:GetDamagePosition() )
-					util.Effect( "MetalSpark", effectdata )
-					sound.Play( "FX_RicochetSound.Ricochet", dmginfo:GetDamagePosition(), 75, 100, 1 )
-					ent:SetBloodColor(DONT_BLEED)
-				end
 			end
 		else
 			if ent:HasGodMode() == false and !ent:IsMiniBoss() then
@@ -929,14 +927,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 					end
 
 				end
-			else
-				if (!ent:IsMiniBoss()) then
-					local effectdata = EffectData()
-					effectdata:SetOrigin( dmginfo:GetDamagePosition() )
-					util.Effect( "MetalSpark", effectdata )
-					sound.Play( "FX_RicochetSound.Ricochet", dmginfo:GetDamagePosition(), 75, 100, 1 )
-					ent:SetBloodColor(DONT_BLEED)
-				end
 			end
 		end
 		
@@ -947,8 +937,13 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	elseif dmginfo:IsFallDamage() and !string.find(ent:GetModel(),"/bot_") and !ent:IsMiniBoss() then 
 		ent:RandomSentence("Death")
 	end
-	if (dmginfo:IsFallDamage() and string.find(ent:GetModel(),"/bot_")) then
-		dmginfo:ScaleDamage(0)
+	if (ent:IsPlayer() and ent:HasGodMode()) then
+		local effectdata = EffectData()
+		effectdata:SetOrigin( dmginfo:GetDamagePosition() )
+		util.Effect( "MetalSpark", effectdata )
+		sound.Play( "FX_RicochetSound.Ricochet", dmginfo:GetDamagePosition(), 75, 100, 1 )
+		ent:SetBloodColor(DONT_BLEED)
+		dmginfo:SetDamage(0)
 	end
 end
 

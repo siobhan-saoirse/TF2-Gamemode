@@ -63,7 +63,7 @@ Response item_unicorn_uberSniper
 }
 Rule item_unicorn_uberSniper
 {
-	criteria ConceptMedicChargeDeployed IsSniper  IsInvulnerable MedicNotInvulnerableSpeech 20PercentChance IsUnicornHead
+	criteria ConceptMedicChargeDeployed IsSniper  IsInvulnerable 20PercentChance IsUnicornHead
 	Response item_unicorn_uberSniper
 }
 

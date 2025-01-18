@@ -338,7 +338,7 @@ Response InvulnerableSpeechSoldier
 }
 Rule InvulnerableSpeechSoldier
 {
-	criterion ConceptFireWeapon IsSoldier IsInvulnerable SoldierNotInvulnerableSpeech
+	criterion ConceptFireWeapon IsSoldier IsInvulnerable 20PercentChance
 	ApplyContext "SoldierInvulnerableSpeech:1:30"
 	Response InvulnerableSpeechSoldier
 }

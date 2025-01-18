@@ -418,7 +418,7 @@ Response InvulnerableSpeechEngineer
 
 Rule InvulnerableSpeechEngineer
 {
-	criteria ConceptFireWeapon IsEngineer IsInvulnerable EngineerNotInvulnerableSpeech
+	criteria ConceptFireWeapon IsEngineer IsInvulnerable  20PercentChance
 	ApplyContext "EngineerInvulnerableSpeech:1:30"
 	Response InvulnerableSpeechEngineer
 	Response EngyCritsReady

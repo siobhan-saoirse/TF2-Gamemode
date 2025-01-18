@@ -109,7 +109,7 @@ function SWEP:PrimaryAttack()
 			self.Owner:EmitSoundEx("TFPlayer.StunImpact")
 			self.Owner:SetClassSpeed(self.Owner:GetClassSpeed() * 0.75)
 			ParticleEffectAttach("bonk_text", PATTACH_POINT_FOLLOW, self.Owner, self.Owner:LookupAttachment("head"))
-			timer.Simple(20, function()
+			timer.Simple(10, function()
 				self.Owner:ResetClassSpeed()
 			end)	
 			self.Owner:ConCommand("tf_firstperson")
@@ -126,7 +126,7 @@ function SWEP:PrimaryAttack()
 			self.Owner:SetNWBool("Bonked", false)
 			end
 		end)
-		timer.Simple(7, function()
+		timer.Simple(3, function()
 			if SERVER then
 			self:EmitSound( "Scout.Invincible0"..math.random(1,4))
 			end

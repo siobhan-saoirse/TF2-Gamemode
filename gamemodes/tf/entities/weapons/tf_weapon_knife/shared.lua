@@ -38,6 +38,7 @@ SWEP.ResetBaseDamage = 40
 SWEP.DamageRandomize = 0
 SWEP.MaxDamageRampUp = 0
 SWEP.MaxDamageFalloff = 0
+SWEP.DamageType = bit.bor(DMG_CLUB,DMG_BULLET)
 
 SWEP.CriticalChance = 0
 

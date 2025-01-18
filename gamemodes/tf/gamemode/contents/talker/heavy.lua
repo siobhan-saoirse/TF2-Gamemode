@@ -439,7 +439,7 @@ Response InvulnerableSpeechHeavy
 }
 Rule InvulnerableSpeechHeavy
 {
-	criteria ConceptFireMinigun IsHeavy WeaponIsMinigun IsInvulnerable HeavyNotInvulnerableSpeech
+	criteria ConceptFireMinigun IsHeavy WeaponIsMinigun IsInvulnerable
 	ApplyContext "HeavyInvulnerableSpeech:1:30"
 	Response InvulnerableSpeechHeavy
 }
@@ -497,7 +497,7 @@ Response KilledPlayerMeleeHeavy
 }
 Rule KilledPlayerMeleeHeavy
 {
-	criteria ConceptKilledPlayer KilledPlayerDelay 30PercentChance  IsWeaponMelee HeavyNotKillSpeechMelee IsHeavy
+	criteria ConceptKilledPlayer 30PercentChance IsWeaponMelee IsHeavy
 	ApplyContext "HeavyKillSpeechMelee:1:10"
 	Response KilledPlayerMeleeHeavy
 }
@@ -510,7 +510,7 @@ Response KilledPlayerMeleeMetalHeavy
 }
 Rule KilledPlayerMeleeMetalHeavy
 {
-	criteria ConceptKilledPlayer KilledPlayerDelay 30PercentChance  WeaponIsMetalFists HeavyNotKillSpeechMelee IsHeavy
+	criteria ConceptKilledPlayer 30PercentChance  WeaponIsMetalFists IsHeavy
 	ApplyContext "HeavyKillSpeechMelee:1:10"
 	Response KilledPlayerMeleeMetalHeavy
 	Response KilledPlayerMeleeHeavy
@@ -551,7 +551,7 @@ Response HeavySwingFistsStart
 }
 Rule HeavySwingFistsStart
 {
-	criteria ConceptFireWeapon IsWeaponMelee 50PercentChance IsHeavy IsNotDaring HeavyNotKillSpeechMelee IsNotDominating IsNotHeavyFistsSwung WeaponIsNotSaxxy
+	criteria ConceptFireWeapon IsWeaponMelee IsHeavy IsNotHeavyFistsSwung
 	ApplyContext "HeavyFistsSwung:1:10"
 	Response HeavySwingFistsStart
 }
@@ -566,7 +566,7 @@ Response HeavySwingFists
 }
 Rule HeavySwingFists
 {
-	criteria ConceptFireWeapon IsWeaponMelee 50PercentChance IsHeavyFistsSwung IsNotDaring HeavyNotKillSpeechMelee IsNotDominating IsHeavy IsNotHeavyFistsSwinging
+	criteria ConceptFireWeapon IsWeaponMelee IsHeavyFistsSwung IsHeavy
 	ApplyContext "HeavyFistsSwinging:2:3"
 	Response HeavySwingFists
 }
@@ -1202,13 +1202,13 @@ Response PlayerShinyCryHeavy
 }
 Rule PlayerShinyCryHeavy
 {
-	criteria ConceptPlayerBattleCry 30PercentChance IsWeaponPrimary IsHeavy WeaponIsNotVanillaPrimary WeaponIsNotTaggedMinigun
+	criteria ConceptPlayerBattleCry 30PercentChance IsWeaponPrimary IsHeavy
 	Response PlayerShinyCryHeavy
 }
 
 Rule PlayerShinyWindupHeavy
 {
-	criteria ConceptWindMinigun IsWeaponPrimary IsHeavy WeaponIsNotVanillaPrimary WeaponIsNotTaggedMinigun WeaponIsNotTomislav 5PercentChance HeavyNotShinySpeech HeavyNotKillSpeech
+	criteria ConceptWindMinigun IsWeaponPrimary IsHeavy 5PercentChance
 	ApplyContext "HeavyShinySpeech:1:300"
 	Response PlayerShinyCryHeavy
 }
@@ -1221,7 +1221,7 @@ Response PlayerTauntCryHeavy
 }
 Rule PlayerTauntCryHeavy
 {
-	criteria ConceptPlayerBattleCry 75PercentChance IsHeavy IsOnEngineer IsCrosshairEnemy
+	criteria ConceptPlayerBattleCry 75PercentChance IsHeavy IsOnEngineer
 	Response PlayerTauntCryHeavy
 }
 

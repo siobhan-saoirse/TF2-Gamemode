@@ -264,7 +264,30 @@ function meta:SetPlayerClass(class)
 	if dgmod:GetBool() and (class == "gmodplayer" or class == "civilian") and !self:IsAdmin() then
 		return
 	end
-	
+	local pl = self
+
+	if CLIENT then
+		if (pl:GetPlayerClass() == "heavy") then
+			pl:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
+		elseif (pl:GetPlayerClass() == "scout") then
+			pl:SetupPhonemeMappings( "player/scout/phonemes/phonemes" )
+		elseif (pl:GetPlayerClass() == "soldier") then
+			pl:SetupPhonemeMappings( "player/soldier/phonemes/phonemes" )
+		elseif (pl:GetPlayerClass() == "demoman") then
+			pl:SetupPhonemeMappings( "player/demo/phonemes/phonemes" )
+		elseif (pl:GetPlayerClass() == "engineer") then
+			pl:SetupPhonemeMappings( "player/engineer/phonemes/phonemes" )
+		elseif (pl:GetPlayerClass() == "medic") then
+			pl:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
+		elseif (pl:GetPlayerClass() == "sniper") then
+			pl:SetupPhonemeMappings( "player/sniper/phonemes/phonemes" )
+		elseif (pl:GetPlayerClass() == "spy") then
+			pl:SetupPhonemeMappings( "player/spy/phonemes/phonemes" )
+		else
+			pl:SetupPhonemeMappings( "phonemes" )
+		end
+	end
+
 	local oldclass = self:GetPlayerClass()
 	local t1 = GAMEMODE.PlayerClasses[oldclass]
 	
@@ -390,8 +413,10 @@ function meta:SetPlayerClass(class)
 	
 	if (self:Team() == TEAM_BLU) then
 		self.teamrole = "offense"
+		self.IsMvMDefender = 0
 	else
 		self.teamrole = "defense"
+		self.IsMvMDefender = 1
 	end
 	if (class == "nick") then
 		self.Who = "Gambler"
@@ -485,7 +510,6 @@ function meta:SetPlayerClass(class)
 	self:SetModelScale(1.0)
 	if (!self:IsL4D() and !self:IsHL2()) then
 		self:SetModel(c.Model)
-		self:SetNWString("PlayerClassModel",c.Model)
 	end
 	-- If this class needs some special initialization, do it
 	if c.Initialize then c.Initialize(self) end
@@ -499,17 +523,18 @@ function meta:SetPlayerClass(class)
 	
 	timer.Simple(0, function() InitPlayerBodygroups(self) end)
 	self:ResetClassSpeed()
-	
-	if (class == "demoman") then
-		self:SetNWString("PreferredIcon","hud/leaderboard_class_demo")
-	elseif (class == "giantdemoman") then
-		self:SetNWString("PreferredIcon","hud/leaderboard_class_demo")
-	elseif (class == "gmodplayer") then
-		self:SetNWString("PreferredIcon","vgui/modicon")
-	elseif (class == "bonzi") then
-		self:SetNWString("PreferredIcon","icon16/monkey.png")
-	else
-		self:SetNWString("PreferredIcon","hud/leaderboard_class_"..string.Replace(class,"giant",""))
+	if (!self:IsBot()) then
+		if (class == "demoman") then
+			self:SetNWString("PreferredIcon","hud/leaderboard_class_demo")
+		elseif (class == "giantdemoman") then
+			self:SetNWString("PreferredIcon","hud/leaderboard_class_demo")
+		elseif (class == "gmodplayer") then
+			self:SetNWString("PreferredIcon","vgui/modicon")
+		elseif (class == "bonzi") then
+			self:SetNWString("PreferredIcon","icon16/monkey.png")
+		else
+			self:SetNWString("PreferredIcon","hud/leaderboard_class_"..string.Replace(class,"giant",""))
+		end
 	end
 	if (self.TFBot and self.IsL4DZombie) then
 		for k,v in ipairs(ents.GetAll()) do
@@ -575,9 +600,15 @@ function meta:SetPlayerClass(class)
 
 		timer.Simple(0.8, function()
 			self:SelectWeapon("tf_weapon_lunchbox_drink")
-			self:GetActiveWeapon():PrimaryAttack()
+			if (CurTime() > self:GetActiveWeapon():GetNextPrimaryFire()) then
+				self:GetActiveWeapon():PrimaryAttack()
+			end
 			timer.Simple(1.1, function()
-				self:SelectWeapon(self:GetWeapons()[3])	
+				if (string.find(self:GetModel(),"/bot_")) then
+					self:SelectWeapon(self:GetWeapons()[3])	
+				else
+					self:SelectWeapon(self:GetWeapons()[1])	
+				end
 			end)
 		end)
 		

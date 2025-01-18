@@ -2134,9 +2134,14 @@ function GM:PlayerSpawn(ply)
 	if ply:IsHL2() then
 		ply:EquipSuit()
 		ply:AllowFlashlight(true)
+		local cl_playermodel = ply:GetInfo("cl_playermodel")
+		local modelname = player_manager.TranslatePlayerModel(cl_playermodel)
+		util.PrecacheModel(modelname)
+		ply:SetModel(modelname)
 	end
 	
 	if !ply:IsHL2() then
+		ply:RemoveSuit()	
 		ply:AllowFlashlight(GetConVar("tf_flashlight"):GetBool())
 
 		if ply:Team()==TEAM_BLU or ply:Team()==TEAM_GREEN then

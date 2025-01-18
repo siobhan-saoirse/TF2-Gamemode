@@ -212,13 +212,13 @@ function PANEL:Paint()
 		end
 		
 		if c and c.ScoreboardImage then
-			if (pl:GetNWString("PreferredIcon") != "") then
+			if (pl:GetNWString("PreferredIcon","") != "") then
 
 				local tex
 				if d then
-					tex = surface.GetTextureID(pl:GetNWString("PreferredIcon"),nil) or c.ScoreboardImage[2]
+					tex = surface.GetTextureID(pl:GetNWString("PreferredIcon"),"") or c.ScoreboardImage[2]
 				else
-					tex = surface.GetTextureID(pl:GetNWString("PreferredIcon"),nil)
+					tex = surface.GetTextureID(pl:GetNWString("PreferredIcon"),"")
 				end
 				if tex then
 					if pl:IsMiniBoss() then

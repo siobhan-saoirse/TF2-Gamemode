@@ -127,7 +127,7 @@ function SWEP:Think()
 			end
 			
 			if SERVER and not self.Primary.NoFiringScene then
-				self.Owner:Speak("TLK_FIREWEAPON", true)
+				self.Owner:Speak("TLK_FIREWEAPON")
 			end
 			
 			self:RollCritical() -- Roll and check for criticals first

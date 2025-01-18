@@ -313,17 +313,17 @@ function PlayResponse(ent, response, nospeech, concept)
 				ent:SetNWBool("SpeechTime", time) 
 			end)
 		else
-			time = ent:PlayScene(r[1], 0)
+			time = ent:PlayScene(r[1], 0) 
 			ent:SetNWBool("SpeechTime", time)
 		end
 		
 		ent.LastScene = r[1]
 		if not nospeech then
-			
+			 
 			if tf_voice_cooldown:GetBool() then
 				if (time) then
 					--print("vcd time: "..1.5)
-					ent.NextSpeak = CurTime() + 1.5
+					ent.NextSpeak = CurTime() + time
 				else
 					--print("vcd time: 1.5")
 					ent.NextSpeak = CurTime() + 1.5
@@ -332,6 +332,8 @@ function PlayResponse(ent, response, nospeech, concept)
 			end
 		end
 		return true
+	else
+		ent:PlayScene(r[1], 0)
 	end
 	
 	return false
@@ -624,7 +626,7 @@ function META:Speak(concept, nospeech, dbg)
 	----------------------------------------------------------------
 	
 	-- Which concept we want to play
-	self.Concept = tostring(concept)
+	self.Concept = concept
 	
 	-- Random number
 	self.randomnum = math.random(0,100)
@@ -685,7 +687,7 @@ function META:Speak(concept, nospeech, dbg)
 		if self:GetActiveWeapon().GetItemData then
 			self.item_name = self:GetActiveWeapon():GetItemData().name or ""
 			self.item_type_name = self:GetActiveWeapon():GetItemData().item_type_name or ""
-		else
+		else 
 			self.item_name = ""
 			self.item_type_name = ""
 		end
@@ -693,6 +695,12 @@ function META:Speak(concept, nospeech, dbg)
 		self.playeranim = ""
 	end
 	
+	if (self:HasGodMode()) then
+		self.invulnerable = 1
+	else
+		self.invulnerable = 0
+	end
+
 	-- Health fraction
 	self.playerhealthfrac = self:Health()/self:GetMaxHealth()
 	
@@ -903,17 +911,17 @@ function META:PainSound(concept, nospeech, dbg, attacker)
 	
 	-- What class the player is looking at
 	self.crosshair_on = ""
-	self.crosshair_enemy = "No"
+	self.crosshair_enemy = "No" 
 	
 	local start = self:GetShootPos()
 	local endpos = start + self:GetAimVector() * 10000
 	local tr = util.TraceHull{
-		start = start,
+		start = start, 
 		endpos = endpos,
 		filter = self,
 		mins = Vector(-10, -10, -10),
 		maxs = Vector(10, 10, 10),
-	}
+	} 
 	
 	local class = ""
 	if tr.Entity and tr.Entity:IsPlayer() then
@@ -1554,7 +1562,7 @@ function META:Taunt(concept, nospeech, dbg)
 		
 		if self:IsValidEnemy(tr.Entity) then
 			self.crosshair_enemy = "Yes"
-		end
+		end 
 	end
 	self.crosshair_on = class
 	
@@ -1563,14 +1571,14 @@ function META:Taunt(concept, nospeech, dbg)
 	if self:IsLoser() then
 		self.OnWinningTeam = 0
 	else
-		self.OnWinningTeam = 1
+		self.OnWinningTeam = 1 
 	end
 	----------------------------------------------------------------
 	
-	local response = SelectResponse(self, dbg)
+	local response = SelectResponse(self, dbg) 
 	
 	if response then
-		if (concept == "TLK_FIREWEAPON" or concept == "TLK_MINIGUN_FIREWEAPON" or concept == "TLK_PLAYER_TAUNT") then
+		if (concept == "TLK_FIREWEAPON" or concept == "TLK_FIREMINIGUN" or concept == "TLK_PLAYER_TAUNT") then
 			return PlayResponse3(self, response, nospeech, dbg)
 		else
 			return PlayResponse4(self, response, nospeech, dbg)
