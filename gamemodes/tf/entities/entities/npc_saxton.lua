@@ -442,5 +442,6 @@ end
 list.Set( "NPC", "npc_saxton", {
 	Name = "Saxton Hale",
 	Class = "npc_saxton",
-	Category = "TFBots"
+	Category = "TFBots: Extras",
+	AdminOnly = true
 })

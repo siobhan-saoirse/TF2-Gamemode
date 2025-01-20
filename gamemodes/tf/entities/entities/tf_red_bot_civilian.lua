@@ -8,7 +8,7 @@ ENT.Spawnable = false
 ENT.AdminOnly = true
 ENT.IsBoss = false
 ENT.PrintName		= "Red Civilian"
-ENT.Category		= "TFBots"
+ENT.Category		= "TFBots: Extras"
 
 list.Set( "NPC", "tf_red_bot_civilian", {
 	Name = ENT.PrintName,

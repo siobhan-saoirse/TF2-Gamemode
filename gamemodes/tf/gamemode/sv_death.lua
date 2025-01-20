@@ -362,7 +362,7 @@ function GM:DoTFPlayerDeath(ent, attacker, dmginfo)
 	end
 	
 	-- Voice responses
-	if attacker:IsTFPlayer() and ent~=attacker then
+	if attacker:IsPlayer() and ent~=attacker then
 		if ent:IsBuilding() then
 				attacker:Speak("TLK_KILLED_OBJECT",true)
 		else
