@@ -5,7 +5,7 @@ ENT.PZClass = "melee_scout_sandman"
 ENT.Spawnable = false
 ENT.AdminOnly = true
 ENT.PrintName		= "Stun Scout"
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 ENT.PreferredName = "Scout"
 ENT.PreferredIcon = "hud/leaderboard_class_scout_stun"
 

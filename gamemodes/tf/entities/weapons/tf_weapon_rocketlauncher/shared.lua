@@ -282,7 +282,6 @@ function SWEP:ShootProjectile()
 		rocket:Activate()
 	end
 	
-	self.Owner:Speak("TLK_FIREWEAPON")
 	if CLIENT then
 		self:ShootEffects()
 	end

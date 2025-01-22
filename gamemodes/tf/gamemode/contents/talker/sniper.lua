@@ -2,23 +2,23 @@
 // Sniper Response Rule File
 //--------------------------------------------------------------------------------------------------------------
 
-Criterion "SniperIsNotStillonFire" "SniperOnFire" "!=1" "required" weight 0
-Criterion "SniperIsStillonFire" "SniperOnFire" "1" "required" weight 0
-Criterion "SniperNotKillSpeech" "SniperKillSpeech" "!=1" "required" weight 0
-Criterion "SniperNotKillSpeechMelee" "SniperKillSpeechMelee" "!=1" "required" weight 0
-Criterion "SniperNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required" weight 0
+Criterion "SniperIsNotStillonFire" "SniperOnFire" "!=1" "required"
+Criterion "SniperIsStillonFire" "SniperOnFire" "1" "required"
+Criterion "SniperNotKillSpeech" "SniperKillSpeech" "!=1" "required"
+Criterion "SniperNotKillSpeechMelee" "SniperKillSpeechMelee" "!=1" "required"
+Criterion "SniperNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required"
 Criterion "SniperNotSaidHealThanks" "SniperSaidHealThanks" "!=1" "required"
-Criterion "IsHelpCapSniper" "SniperHelpCap" "1" "required" weight 0
+Criterion "IsHelpCapSniper" "SniperHelpCap" "1" "required"
 // Custom stuff
-Criterion "SniperNotInvulnerableSpeech" "SniperInvulnerableSpeech" "!=1" "required" weight 0
-Criterion "SniperNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required" weight 0
-Criterion "SniperNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required" weight 0
-Criterion "SniperNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required" weight 0
-Criterion "SniperNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required" weight 0
-Criterion "SniperNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required" weight 0
-Criterion "SniperNotAwardSpeech" "SniperAwardSpeech" "!=1" "required" weight 0
-Criterion "SniperNotAssistSpeech" "SniperAssistSpeech" "!=1" "required" weight 0
-Criterion "SniperNotHoldStill" "SniperHoldStill" "!=1" "required" weight 0
+Criterion "SniperNotInvulnerableSpeech" "SniperInvulnerableSpeech" "!=1" "required"
+Criterion "SniperNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required"
+Criterion "SniperNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required"
+Criterion "SniperNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required"
+Criterion "SniperNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required"
+Criterion "SniperNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required"
+Criterion "SniperNotAwardSpeech" "SniperAwardSpeech" "!=1" "required"
+Criterion "SniperNotAssistSpeech" "SniperAssistSpeech" "!=1" "required"
+Criterion "SniperNotHoldStill" "SniperHoldStill" "!=1" "required"
 
 
 Response PlayerCloakedSpyDemomanSniper
@@ -1292,7 +1292,7 @@ Response SniperHoldStill
 }
 Rule SniperHoldStill
 {
-	criteria ConceptPlayerExpression IsSniper IsCrosshairEnemy DeployedContext SniperNotHoldStill
+	criteria ConceptPlayerExpression IsSniper IsCrossHairEnemy DeployedContext SniperNotHoldStill
 	ApplyContext "SniperHoldStill:1:10"
 	Response SniperHoldStill
 }
@@ -1716,7 +1716,7 @@ Response MeleeDareCombatSniper
 }
 Rule MeleeDareCombatSniper
 {
-	criteria ConceptPlayerBattleCry IsWeaponMelee IsSniper IsCrosshairEnemy
+	criteria ConceptPlayerBattleCry IsWeaponMelee IsSniper IsCrossHairEnemy
 	Response MeleeDareCombatSniper
 }
 

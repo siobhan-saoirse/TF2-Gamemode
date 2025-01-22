@@ -359,5 +359,6 @@ end
 list.Set( "NPC", "tank_boss", {
 	Name = "Tank",
 	Class = "tank_boss",
-	Category = "TFBots - MVM"
+	Category = "TFBots: MVM",
+	AdminOnly = true
 })

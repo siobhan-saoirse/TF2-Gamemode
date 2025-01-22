@@ -6,7 +6,7 @@ ENT.Spawnable = false
 ENT.AdminOnly = true
 ENT.IsBoss = true
 ENT.PrintName		= "Giant Heater Heavy"
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 ENT.PreferredIcon = "hud/leaderboard_class_heavy_heater"
 list.Set( "NPC", "mvm_bot_giantheavyheater", {
 	Name = ENT.PrintName,

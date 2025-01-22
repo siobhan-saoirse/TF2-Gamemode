@@ -961,8 +961,14 @@ local ATTRIBUTES = {
 ["bleeding_duration"] = {
 	pre_damage = function(v,ent,hitgroup,dmginfo)
 		if ent~=dmginfo:GetAttacker() and ent:CanBleed() then
-			--GAMEMODE:EntityStartBleeding(ent, dmginfo:GetInflictor(), dmginfo:GetAttacker(), v)
+			GAMEMODE:EntityStartBleeding(ent, dmginfo:GetInflictor(), dmginfo:GetAttacker(), v)
 		end
+	end,
+},
+
+["crit_on_hard_hit"] = {
+	pre_damage = function(v,ent,hitgroup,dmginfo)
+		ent:AddDeathFlag(DF_GIB)
 	end,
 },
 
@@ -975,7 +981,7 @@ local ATTRIBUTES = {
 		
 		local att = dmginfo:GetAttacker()
 		
-		--ent:AddPlayerState(PLAYERSTATE_JARATED, true)
+		ent:AddPlayerState(PLAYERSTATE_JARATED, true)
 		--timer.Simple(0, function() if IsValid(ent) then ent:AddPlayerState(PLAYERSTATE_JARATED, true) end end)
 		
 		ent.NextEndJarate = CurTime() + v

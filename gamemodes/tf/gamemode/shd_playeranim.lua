@@ -607,10 +607,10 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 	elseif event == PLAYERANIMEVENT_CUSTOM_GESTURE then
 		if data == ACT_MP_DOUBLEJUMP then
 			-- Double jump
-			pl:AnimRestartGesture(GESTURE_SLOT_FLINCH, ACT_MP_DOUBLEJUMP, true)
+			pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_DOUBLEJUMP)),true)
 		elseif data == ACT_MP_GESTURE_FLINCH_CHEST then
 			-- Flinch
-			pl:AnimRestartGesture(GESTURE_SLOT_FLINCH, ACT_MP_GESTURE_FLINCH_CHEST, true)
+			pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_GESTURE_FLINCH_CHEST, true)
 			--pl.RgChatActiveGesture = ACT_MP_GESTURE_FLINCH_CHEST
 		elseif data == ACT_MP_AIRWALK then
 			-- Go into airwalk animation
@@ -661,13 +661,13 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 			----MsgN("Restarting prefire gesture")
 			if pl.anim_InSwim then
 				--pl.RgChatActiveGesture = ACT_MP_ATTACK_SWIM_PREFIRE
-				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_SWIM_PREFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_SWIM_PREFIRE, true)
 			elseif pl:Crouching() then
 				--pl.RgChatActiveGesture = ACT_MP_ATTACK_CROUCH_PREFIRE
-				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_CROUCH_PREFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_CROUCH_PREFIRE, true)
 			else
 				--pl.RgChatActiveGesture = ACT_MP_ATTACK_STAND_PREFIRE
-				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_STAND_PREFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_STAND_PREFIRE, true)
 			end
 			pl.anim_Deployed = true
 			pl.sniperzoomed = 1
@@ -675,13 +675,13 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 			-- Postfire gesture
 			if pl.anim_InSwim then
 				--pl.RgChatActiveGesture = ACT_MP_ATTACK_SWIM_POSTFIRE
-				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_SWIM_POSTFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_SWIM_POSTFIRE, true)
 			elseif pl:Crouching() then
 				--pl.RgChatActiveGesture = ACT_MP_ATTACK_CROUCH_POSTFIRE
-				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_CROUCH_POSTFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_CROUCH_POSTFIRE, true)
 			else
 				--pl.RgChatActiveGesture = ACT_MP_ATTACK_STAND_POSTFIRE
-				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_STAND_POSTFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_STAND_POSTFIRE, true)
 			end
 			pl.anim_Deployed = false
 			pl.sniperzoomed = 0
@@ -716,7 +716,7 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 				pl:AnimRestartMainSequence()
 			end
 		elseif VoiceCommandGestures[data] then
-			pl:AnimRestartGesture(GESTURE_SLOT_FLINCH, data, true)
+			pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, data, true)
 		elseif TauntGestures[data] then -- laugh
 			pl:AddVCDSequenceToGestureSlot(GESTURE_SLOT_VCD, pl:LookupSequence(TauntGestures[data]), 0, true)
 		else

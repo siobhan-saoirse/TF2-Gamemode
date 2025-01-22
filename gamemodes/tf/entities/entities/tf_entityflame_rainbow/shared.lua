@@ -137,7 +137,7 @@ function ENT:Initialize()
 				self.Target:AddDeathFlag(DF_FIRE)
 			end
 			if self.Target:IsPlayer() then
-				self.Target:Speak("TLK_ONFIRE")
+				self.Target:Speak("TLK_ONFIRE",true)
 			end
 			
 			----print("ignite",self.Target)

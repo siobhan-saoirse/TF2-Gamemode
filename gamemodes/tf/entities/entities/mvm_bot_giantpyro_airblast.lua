@@ -7,7 +7,7 @@ ENT.AdminOnly = true
 ENT.IsBoss = true
 ENT.Difficulty = 3
 ENT.PrintName		= "Giant Airblast Pyro"
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 ENT.Items = {"Degreaser","Dead Cone"}
 ENT.PreferredIcon = "hud/leaderboard_class_pyro"
 

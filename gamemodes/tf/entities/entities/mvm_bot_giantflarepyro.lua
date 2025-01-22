@@ -7,7 +7,7 @@ ENT.AdminOnly = true
 ENT.IsBoss = true
 ENT.Difficulty = 3
 ENT.PrintName		= "Giant Flare Pyro"
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 ENT.Items = {"Detonator","Old Guadalajara"}
 ENT.PreferredIcon = "hud/leaderboard_class_pyro_flare_giant"
 

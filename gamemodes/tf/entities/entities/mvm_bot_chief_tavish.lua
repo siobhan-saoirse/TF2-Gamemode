@@ -7,7 +7,7 @@ ENT.AdminOnly = true
 ENT.IsBoss = true
 ENT.Difficulty = 3
 ENT.PrintName		= "Chief Tavish"
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 ENT.OverrideModelScale = 1.9 
 ENT.PreferredIcon = "hud/leaderboard_class_demoknight_giant"
 

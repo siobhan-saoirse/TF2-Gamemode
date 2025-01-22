@@ -7,7 +7,7 @@ ENT.AdminOnly = true
 ENT.IsBoss = true
 ENT.PrintName		= "Giant Medic"
 ENT.Items = {"Syringe Gun","Quick-Fix","Bonesaw"}
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 
 list.Set( "NPC", "mvm_bot_giantmedic", {
 	Name = ENT.PrintName,

@@ -6,7 +6,7 @@ ENT.Spawnable = false
 ENT.AdminOnly = true
 ENT.IsBoss = false
 ENT.PrintName		= "Steel Gauntlet"
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 ENT.PreferredIcon = "hud/leaderboard_class_heavy_steelfist"
 
 list.Set( "NPC", "mvm_bot_steelgauntlet", {

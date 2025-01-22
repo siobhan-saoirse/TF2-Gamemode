@@ -9,7 +9,7 @@ ENT.Difficulty = 2
 ENT.PrintName		= "Minor League Scout"
 ENT.PreferredIcon = "hud/leaderboard_class_scout_stun"
 ENT.Items = {"Batter's Helmet","Sandman"}
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 
 list.Set( "NPC", "mvm_bot_scout_minor_league", {
 	Name = ENT.PrintName,

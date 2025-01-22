@@ -1399,6 +1399,9 @@ if CLIENT then
 
 	list.Set( "ContentCategoryIcons", "Team Fortress 2", "games/16/tf.png" )
 	list.Set( "ContentCategoryIcons", "TFBots", "games/16/tf.png" )
+	list.Set( "ContentCategoryIcons", "TFBots: MVM", "games/16/tf_mvm.png" )
+	list.Set( "ContentCategoryIcons", "TFBots: Raid", "games/16/tf_raid.png" )
+	list.Set( "ContentCategoryIcons", "TFBots: Extras", "games/16/garrysmod.png" )
 
 end
 

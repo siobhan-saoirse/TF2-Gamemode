@@ -2,7 +2,7 @@
 // Medic Response Rule File - AUTO GENERATED DO NOT EDIT BY HAND
 //--------------------------------------------------------------------------------------------------------------
 
-Criterion "MedicNotIdleSpeech" "MedicIdleSpeech" "!=1" "required" weight 0
+Criterion "MedicNotIdleSpeech" "MedicIdleSpeech" "!=1" "required"
 
 Response item_birdhead_round_startMedic
 {

@@ -308,8 +308,9 @@ function SWEP:PrimaryAttack()
 	elseif CLIENT then
 		self:ResetBackstabState()
 	end
-	
-	self.Owner:Speak("TLK_FIREWEAPON")
+	if SERVER then
+		self.Owner:Speak("TLK_FIREWEAPON")
+	end
 	if self.Owner:GetPlayerClass() == "spy" then
 		if self:Critical() then
 			self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_MELEE_SECONDARY)

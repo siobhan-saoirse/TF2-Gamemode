@@ -9,7 +9,7 @@ ENT.Difficulty = 2
 ENT.PrintName		= "Giant Jumping Sandman"
 ENT.PreferredIcon = "hud/leaderboard_class_scout_stun"
 ENT.Items = {"Hanger-On Hood","Flight of the Monarch","Sandman"}
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 
 function ENT:CustomOnThink()
 	local bot = self.Bot

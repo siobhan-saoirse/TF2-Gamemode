@@ -9,7 +9,7 @@ ENT.Difficulty = 3
 ENT.PrintName		= "Major League Scout"
 ENT.PreferredIcon = "hud/leaderboard_class_scout_stun"
 ENT.Items = {"Batter's Helmet","Essential Accessories","Sandman"}
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 
 function ENT:CustomOnInitialize(bot)
 	bot:GetActiveWeapon().Secondary.Delay = math.max(bot:GetActiveWeapon().Secondary.Delay * 0.1,0.25)

@@ -7,7 +7,7 @@ ENT.AdminOnly = true
 ENT.IsBoss = true
 ENT.Difficulty = 3
 ENT.PrintName		= "Chief Pyro"
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 ENT.OverrideModelScale = 1.9 
 
 list.Set( "NPC", "mvm_bot_chief_pyro", {

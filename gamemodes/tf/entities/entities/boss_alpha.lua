@@ -439,5 +439,6 @@ end
 list.Set( "NPC", "boss_alpha", {
 	Name = "Knight",
 	Class = "boss_alpha",
-	Category = "TF2: Raid"
+	Category = "TFBots: Raid",
+	AdminOnly = true
 })

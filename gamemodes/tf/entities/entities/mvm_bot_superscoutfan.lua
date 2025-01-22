@@ -7,9 +7,10 @@ ENT.AdminOnly = true
 ENT.IsBoss = true
 ENT.Difficulty = 3
 ENT.PrintName		= "Force-A-Nature Super Scout"
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 ENT.PreferredIcon = "hud/leaderboard_class_scout_fan"
 ENT.Items = {"Force-A-Nature","Bolt Boy","Fed-Fightin' Fedora"}
+ENT.VisionLimits = 500
 
 function ENT:CustomOnInitialize(bot)
 	timer.Create("SetModel"..bot:EntIndex(),0.1,10,function() 

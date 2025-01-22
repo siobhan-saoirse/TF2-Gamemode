@@ -6,7 +6,7 @@ ENT.Spawnable = false
 ENT.AdminOnly = true		
 ENT.IsBoss = false
 ENT.PrintName		= "Sniper"
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 
 list.Set( "NPC", "mvm_bot_sniper", {
 	Name = ENT.PrintName,

@@ -2,20 +2,6 @@
 // Spy Response Rule File
 //--------------------------------------------------------------------------------------------------------------
 
-Criterion "SpyIsNotStillonFire" "SpyOnFire" "!=1" "required" weight 0
-Criterion "SpyIsStillonFire" "SpyOnFire" "1" "required" weight 0
-Criterion "SpyNotKillSpeech" "SpyKillSpeech" "!=1" "required" weight 0
-Criterion "SpyNotKillSpeechMelee" "SpyKillSpeechMelee" "!=1" "required" weight 0
-Criterion "SpyNotSaidHealThanks" "SpySaidHealThanks" "!=1" "required"
-Criterion "IsHelpCapSpy" "SpyHelpCap" "1" "required" weight 0
-// Custom stuff
-Criterion "EngineerWasKilled" "EngyKilled" "1" "required" weight 0
-Criterion "SapperDestroyed" "LostSapper" "1" "required" weight 0
-Criterion "ToysMurdered" "ObjectDestroyed" "1" "required" weight 0
-Criterion "NotSapSpeech" "SapKillSpeech" "!=1" "required" weight 0
-Criterion "NotSapperLostSpeech" "SpySapperLostSpeech" "!=1" "required" weight 0
-Criterion "SpyNotAssistSpeech" "SpyAssistSpeech" "!=1" "required" weight 0
-Criterion "SpyNotInvulnerableSpeech" "SpyInvulnerableSpeech" "!=1" "required" weight 0
 
 
 Response PlayerCloakedSpyDemomanSpy
@@ -648,7 +634,7 @@ Response PlayerStillOnFireSpy
 }
 Rule PlayerStillOnFireSpy
 {
-	criteria ConceptFire IsSpy  SpyIsStillonFire IsNotDominating
+	criteria ConceptFire IsSpy SpyIsStillonFire IsNotDominating
 	ApplyContext "SpyOnFire:1:7"
 	Response PlayerStillOnFireSpy
 }
@@ -987,7 +973,7 @@ Response MeleeDareCombatSpy
 }
 Rule MeleeDareCombatSpy
 {
-	criteria ConceptPlayerBattleCry IsWeaponMelee IsSpy IsCrosshairEnemy
+	criteria ConceptPlayerBattleCry IsWeaponMelee IsSpy IsCrossHairEnemy
 	Response MeleeDareCombatSpy
 }
 
@@ -1111,12 +1097,12 @@ Rule PlayerPositiveSpy
 //--------------------------------------------------------------------------------------------------------------
 // Auto Speech Cart
 //--------------------------------------------------------------------------------------------------------------
-Criterion "SpyNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required" weight 0
-Criterion "SpyNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required" weight 0
-Criterion "SpyNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required" weight 0
-Criterion "SpyNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required" weight 0
-Criterion "SpyNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required" weight 0
-Criterion "SpyNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required" weight 0
+Criterion "SpyNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required"
+Criterion "SpyNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required"
+Criterion "SpyNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required"
+Criterion "SpyNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required"
+Criterion "SpyNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required"
+Criterion "SpyNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required"
 Response CartMovingBackwardsDefenseSpy                                                     
 {
 	scene "scenes/Player/Spy/low/7588.vcd"

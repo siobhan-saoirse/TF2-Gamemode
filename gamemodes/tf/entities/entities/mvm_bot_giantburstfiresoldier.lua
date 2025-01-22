@@ -7,7 +7,7 @@ ENT.AdminOnly = true
 ENT.IsBoss = true 
 ENT.Difficulty = 3
 ENT.PrintName		= "Giant Burst Fire Soldier"
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 ENT.PreferredIcon = "hud/leaderboard_class_soldier_burstfire"
 
 list.Set( "NPC", "mvm_bot_giantburstfiresoldier", {

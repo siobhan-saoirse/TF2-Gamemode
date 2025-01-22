@@ -54,10 +54,13 @@ end
 
 
 function ENT:Think()
+	if (IsValid(self:GetOwner())) then
+		self:SetModelScale(self:GetOwner():GetModelScale())
+		self:SetModel(self:GetOwner():GetModel())
+	end
 	if self.PosGen then -- If the bot has a target location (i.e., an ally), go for it.
 		if (self.PosGen ~= nil) then
 		end
-
 		if (self.P ~= nil) then
 			self.P:Compute(self, self.PosGen, function( area, fromArea, ladder, elevator, length )
 				if ( !IsValid( fromArea ) ) then

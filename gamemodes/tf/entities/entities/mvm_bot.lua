@@ -10,7 +10,7 @@ ENT.Difficulty = 0
 ENT.PrintName		= "Scout"
 ENT.Items = {}
 ENT.Bot = nil
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 ENT.PreferredName = nil
 ENT.PreferredIcon = nil
 list.Set( "NPC", "mvm_bot", {
@@ -38,6 +38,7 @@ local function LeadBot_S_Add_Zombie(team,class,pos,ent)
 			bot = player.CreateNextBot(ent.PrintName)
 		end
 	end
+	bot.VisionLimits = ent.VisionLimits
 	local teamv = TEAM_RED
 	if team == 1 then
 		if (ent.PZClass == "wtfdemoman") then
@@ -106,6 +107,8 @@ end
 
 function ENT:CustomOnInitialize(bot) -- i did not steal this
 end
+function ENT:CustomOnKillEnemy(bot)
+end
 function ENT:Initialize()
 	self:SetModel("models/bots/scout/bot_scout.mdl")
 	self:ResetSequence(self:SelectWeightedSequence(ACT_MP_STAND_MELEE))
@@ -128,6 +131,7 @@ function ENT:Initialize()
 			npc:SetSkin(1)
 			timer.Simple(0.5, function()
 			
+				if (GetConVar("ai_disabled"):GetBool()) then return end
 				for k,v in ipairs(ents.FindByClass("item_teamflag_mvm")) do
 					if (!IsValid(v.Carrier) and !v.NextReturn and k == 1) then
 						if (npc:GetPlayerClass() != "engineer" and npc:GetPlayerClass() != "medic" and npc:GetPlayerClass() != "sentrybuster") then
@@ -192,37 +196,7 @@ function ENT:Initialize()
 							npc:SetModelScale(self.OverrideModelScale)	
 						else
 							npc:SetModelScale(1.75)	
-						end
-						npc:StopSound("MVM.GiantScoutLoop")
-						npc:StopSound("MVM.GiantSoldierLoop")
-						npc:StopSound("MVM.GiantPyroLoop")
-						npc:StopSound("MVM.GiantDemomanLoop")
-						npc:StopSound("MVM.GiantHeavyLoop")
-						timer.Simple(0.2, function()
-						
-							if (npc.playerclass == "Scout") then
-								npc:EmitSound("MVM.GiantScoutLoop")
-							elseif (npc.playerclass == "Soldier") then
-								npc:EmitSound("MVM.GiantSoldierLoop")
-							elseif (npc.playerclass == "Pyro") then
-								npc:EmitSound("MVM.GiantPyroLoop")
-							elseif (npc.playerclass == "Demoman") then
-							
-								if (!string.find(npc:GetPlayerClass(),"sentry")) then
-								
-									npc:EmitSound("MVM.GiantDemomanLoop")
-									
-								else
-									
-									npc:EmitSound("MVM.SentryBusterLoop")
-									npc:EmitSound("MVM.SentryBusterIntro")
-									
-								end
-								
-							elseif (npc.playerclass == "Heavy") then
-								npc:EmitSound("MVM.GiantHeavyLoop")
-							end	
-						end)
+						end	
 					end
 					
 				else

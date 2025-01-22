@@ -87,7 +87,8 @@ function SWEP:MeleeAttack()
 	end
 end
 
-function SWEP:PrimaryAttack()	if self.Owner:GetAmmoCount( self.Weapon:GetPrimaryAmmoType() ) == 0 then
+function SWEP:PrimaryAttack()	
+	if self:Ammo1() == 0 then
 		return
 	end
 	
@@ -104,9 +105,9 @@ function SWEP:PrimaryAttack()	if self.Owner:GetAmmoCount( self.Weapon:GetPrimary
 	
 	self.Owner.NextGiveAmmo = CurTime() + (20)
 	self.Owner.NextGiveAmmoType = self.Primary.Ammo
-	self:EmitSound("weapons/gas_can_throw.wav")
+	self:EmitSound("Weapon_GasCan.Throw")
 	if CLIENT then
-		self.Owner:DoAnimationEvent(ACT_MP_ATTACK_STAND_ITEM2, true)
+		self.Owner:DoTauntEvent("attackstand_gascan", true)
 	end
 	self:SetNextPrimaryFire(CurTime() + 0.8)
 	self.NextIdle = CurTime() + self:SequenceDuration() - 0.2

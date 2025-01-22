@@ -412,5 +412,6 @@ end
 list.Set( "NPC", "boss_alpha_sentry", {
 	Name = "Mecha Level 4 Sentry",
 	Class = "boss_alpha_sentry",
-	Category = "TF2: Raid"
+	Category = "TFBots: Raid",
+	AdminOnly = true
 })

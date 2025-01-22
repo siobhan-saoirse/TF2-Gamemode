@@ -7,7 +7,7 @@ ENT.AdminOnly = true
 ENT.IsBoss = true
 ENT.Difficulty = 3
 ENT.PrintName		= "Giant Sniper"
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 
 function ENT:CustomOnInitialize(bot)
 	timer.Create("SetModel"..bot:EntIndex(),0.1,10,function() 

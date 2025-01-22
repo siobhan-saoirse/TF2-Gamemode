@@ -5,7 +5,7 @@ ENT.Spawnable = false
 ENT.AdminOnly = true
 ENT.AutomaticFrameAdvance = true
 ENT.PrintName		= "Robot Spawner"
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 
 local stock_bots = {
 	"mvm_bot",

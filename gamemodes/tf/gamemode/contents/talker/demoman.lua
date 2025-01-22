@@ -2,18 +2,6 @@
 // Demoman Response Rule File
 //--------------------------------------------------------------------------------------------------------------
 
-Criterion "DemomanIsKillSpeechObject" "DemomanKillSpeechObject" "1" "required" weight 0
-Criterion "DemomanIsNotStillonFire" "DemomanOnFire" "!=1" "required" weight 0
-Criterion "DemomanIsStillonFire" "DemomanOnFire" "1" "required" weight 0
-Criterion "DemomanNotKillSpeech" "DemomanKillSpeech" "!=1" "required" weight 0
-Criterion "DemomanNotKillSpeechMelee" "DemomanKillSpeechMelee" "!=1" "required" weight 0
-Criterion "DemomanNotSaidHealThanks" "DemomanSaidHealThanks" "!=1" "required"
-Criterion "IsHelpCapDemoman" "DemomanHelpCap" "1" "required" weight 0
-// Custom stuff
-Criterion "DemomanNotInvulnerableSpeech" "DemomanInvulnerableSpeech" "!=1" "required" weight 0
-Criterion "DemomanNotAssistSpeech" "DemomanAssistSpeech" "!=1" "required" weight 0
-Criterion "IsDrunk" "NotSober" "1" "required" weight 0
-Criterion "DemomanNotAwardSpeech" "DemomanAwardSpeech" "!=1" "required" weight 0
 
 
 Response PlayerCloakedSpyDemomanDemoman
@@ -747,7 +735,7 @@ Response PlayerStillOnFireDemoman
 }
 Rule PlayerStillOnFireDemoman
 {
-	criteria ConceptFire IsDemoman  DemomanIsStillonFire IsNotDominating
+	criteria ConceptFire IsDemoman DemomanIsStillonFire IsNotDominating
 	ApplyContext "DemomanOnFire:1:7"
 	Response PlayerStillOnFireDemoman
 }
@@ -1098,7 +1086,7 @@ Response MeleeDareCombatDemoman
 }
 Rule MeleeDareCombatDemoman
 {
-	criteria ConceptPlayerBattleCry IsWeaponMelee IsDemoman IsCrosshairEnemy
+	criteria ConceptPlayerBattleCry IsWeaponMelee IsDemoman IsCrossHairEnemy
 	Response MeleeDareCombatDemoman
 }
 //End custom
@@ -1219,12 +1207,12 @@ Rule PlayerPositiveDemoman
 //--------------------------------------------------------------------------------------------------------------
 // Auto Speech Cart
 //--------------------------------------------------------------------------------------------------------------
-Criterion "DemomanNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required" weight 0
-Criterion "DemomanNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required" weight 0
-Criterion "DemomanNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required" weight 0
-Criterion "DemomanNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required" weight 0
-Criterion "DemomanNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required" weight 0
-Criterion "DemomanNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required" weight 0
+Criterion "DemomanNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required"
+Criterion "DemomanNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required"
+Criterion "DemomanNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required"
+Criterion "DemomanNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required"
+Criterion "DemomanNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required"
+Criterion "DemomanNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required"
 Response CartMovingBackwardsDefenseDemoman                                                     
 {
 	scene "scenes/Player/Demoman/low/7718.vcd"

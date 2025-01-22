@@ -2,20 +2,6 @@
 // Engineer Response Rule File
 //--------------------------------------------------------------------------------------------------------------
 
-Criterion "EngineerIsNotStillonFire" "EngineerOnFire" "!=1" "required" weight 0
-Criterion "EngineerIsStillonFire" "EngineerOnFire" "1" "required" weight 0
-Criterion "EngineerNotKillSpeech" "EngineerKillSpeech" "!=1" "required" weight 0
-Criterion "EngineerNotKillSpeechMelee" "EngineerKillSpeechMelee" "!=1" "required" weight 0
-Criterion "EngineerNotSaidHealThanks" "EngineerSaidHealThanks" "!=1" "required"
-Criterion "IsHelpCapEngineer" "EngineerHelpCap" "1" "required" weight 0
-// Custom stuff
-Criterion "EngineerNotAssistSpeech" "EngineerAssistSpeech" "!=1" "required" weight 0
-Criterion "IsEngyFistSwung" "EngyFistSwung" "1" "required" weight 0
-Criterion "IsNotEngyFistSwung" "EngyFistSwung" "!=1" "required" weight 0
-Criterion "EngineerNotInvulnerableSpeech" "EngineerInvulnerableSpeech" "!=1" "required" weight 0
-Criterion "IsMiniSentryKill" "MiniSentryKill" "1" "required" weight 0
-Criterion "IsSentryKill" "SentryKill" "1" "required" weight 0
-
 Response PlayerCloakedSpyDemomanEngineer
 {
 	scene "scenes/Player/Engineer/low/56.vcd" 
@@ -882,7 +868,7 @@ Response PlayerStillOnFireEngineer
 }
 Rule PlayerStillOnFireEngineer
 {
-	criteria ConceptFire IsEngineer  EngineerIsStillonFire IsNotDominating
+	criteria ConceptFire IsEngineer EngineerIsStillonFire IsNotDominating
 	ApplyContext "EngineerOnFire:1:7"
 	Response PlayerStillOnFireEngineer
 }
@@ -1218,12 +1204,12 @@ Response MeleeDareCombatEngineer
 }
 Rule MeleeDareCombatEngineer
 {
-	criteria ConceptPlayerBattleCry IsWeaponMelee IsEngineer IsCrosshairEnemy
+	criteria ConceptPlayerBattleCry IsWeaponMelee IsEngineer IsCrossHairEnemy
 	Response MeleeDareCombatEngineer
 }
 Rule MeleeDareCombatEngineerSlinger
 {
-	criteria ConceptPlayerBattleCry WeaponIsRobotArm IsEngineer IsCrosshairEnemy
+	criteria ConceptPlayerBattleCry WeaponIsRobotArm IsEngineer IsCrossHairEnemy
 	Response MeleeDareCombatEngineer
 }
 //End custom

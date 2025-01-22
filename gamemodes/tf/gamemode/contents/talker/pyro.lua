@@ -2,17 +2,6 @@
 // Pyro Response Rule File
 //--------------------------------------------------------------------------------------------------------------
 
-Criterion "PyroIsNotStillonFire" "PyroOnFire" "!=1" "required" weight 0
-Criterion "PyroIsStillonFire" "PyroOnFire" "1" "required" weight 0
-Criterion "PyroNotKillSpeech" "PyroKillSpeech" "!=1" "required" weight 0
-Criterion "PyroNotKillSpeechMelee" "PyroKillSpeechMelee" "!=1" "required" weight 0
-Criterion "PyroNotSaidHealThanks" "PyroSaidHealThanks" "!=1" "required"
-Criterion "IsHelpCapPyro" "PyroHelpCap" "1" "required" weight 0
-// Custom stuff
-Criterion "PyroNotAssistSpeech" "PyroAssistSpeech" "!=1" "required" weight 0
-Criterion "PyroNotInvulnerableSpeech" "PyroInvulnerableSpeech" "!=1" "required" weight 0
-Criterion "PyroNotKillSpeechSapper" "PyroKillSpeechSapper" "!=1" "required" weight 0
-
 
 Response PlayerCloakedSpyDemomanPyro
 {
@@ -638,7 +627,7 @@ Response MeleeDareCombatPyro
 }
 Rule MeleeDareCombatPyro
 {
-	criteria ConceptPlayerBattleCry IsWeaponMelee IsPyro IsCrosshairEnemy
+	criteria ConceptPlayerBattleCry IsWeaponMelee IsPyro IsCrossHairEnemy
 	Response MeleeDareCombatPyro
 }
 //End custom

@@ -5,6 +5,16 @@ GM.PlayerClasses = {}
 GM.PlayerClassesAutoComplete = {}
 GM.GibTypeTable = {}
 
+function lookForNearestPlayer(bot)
+	local npcs = {}
+		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 8000000)) do
+			if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:GetNoDraw() == false and !v:IsNeutral() and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET)) then
+				table.insert(npcs, v)
+			end
+		end
+		return table.Random(npcs)
+end
+
 local TFHull = {Vector(-24, -24, 0), Vector(24, 24, 82)}
 local TFHullDuck = {Vector(-24, -24, 0), Vector(24, 24, 62)}
 
@@ -266,28 +276,6 @@ function meta:SetPlayerClass(class)
 	end
 	local pl = self
 
-	if CLIENT then
-		if (pl:GetPlayerClass() == "heavy") then
-			pl:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
-		elseif (pl:GetPlayerClass() == "scout") then
-			pl:SetupPhonemeMappings( "player/scout/phonemes/phonemes" )
-		elseif (pl:GetPlayerClass() == "soldier") then
-			pl:SetupPhonemeMappings( "player/soldier/phonemes/phonemes" )
-		elseif (pl:GetPlayerClass() == "demoman") then
-			pl:SetupPhonemeMappings( "player/demo/phonemes/phonemes" )
-		elseif (pl:GetPlayerClass() == "engineer") then
-			pl:SetupPhonemeMappings( "player/engineer/phonemes/phonemes" )
-		elseif (pl:GetPlayerClass() == "medic") then
-			pl:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
-		elseif (pl:GetPlayerClass() == "sniper") then
-			pl:SetupPhonemeMappings( "player/sniper/phonemes/phonemes" )
-		elseif (pl:GetPlayerClass() == "spy") then
-			pl:SetupPhonemeMappings( "player/spy/phonemes/phonemes" )
-		else
-			pl:SetupPhonemeMappings( "phonemes" )
-		end
-	end
-
 	local oldclass = self:GetPlayerClass()
 	local t1 = GAMEMODE.PlayerClasses[oldclass]
 	
@@ -470,6 +458,8 @@ function meta:SetPlayerClass(class)
 			c.Model = "models/bots/"..(c.ModelName or "scout").."/bot_"..(c.ModelName or "scout")..".mdl"
 		elseif self:GetInfoNum("tf_player_use_female_models", 0) == 1 && self:GetPlayerClass() == "soldier" then
 			c.Model = "models/player/"..(c.ModelName or "scout").."_female.mdl"
+		elseif self:GetInfoNum("civ2_touhou", 0) == 1 and file.Exists("models/player/touhou/"..(c.ModelName or "scout")..".mdl", "WORKSHOP") then
+			c.Model = "models/player/touhou/"..(c.ModelName or "scout")..".mdl"
 		elseif self:GetInfoNum("tf_tfc_model_override", 0) == 1 and file.Exists("models/player/tfc_"..(c.ModelName or "scout")..".mdl", "WORKSHOP") then--or self:IsBot() then
 			c.Model = "models/player/tfc_"..(c.ModelName or "scout")..".mdl"
 		elseif self:GetInfoNum("tf_usehwmmodels", 0) == 1 then--or self:IsBot() then
@@ -479,13 +469,6 @@ function meta:SetPlayerClass(class)
 		else 
 			c.Model = "models/player/"..(c.ModelName or "scout")..".mdl"
 		end
-		self:StopSound("MVM.GiantScoutLoop")
-		self:StopSound("MVM.GiantSoldierLoop")
-		self:StopSound("MVM.GiantPyroLoop")
-		self:StopSound("MVM.GiantDemomanLoop")
-		self:StopSound("MVM.GiantHeavyLoop")
-		self:StopSound("MVM.SentryBusterLoop")
-		self:StopSound("MVM.SentryBusterIntro")
 		if self:GetInfoNum("tf_giant_robot", 0) == 1 then
 			if self:GetPlayerClass() != "medic" and self:GetPlayerClass() != "sniper" and self:GetPlayerClass() != "engineer" and self:GetPlayerClass() != "spy" then
 				c.Model = "models/bots/"..(c.ModelName or "scout").."_boss/bot_"..(c.ModelName or "scout").."_boss.mdl"
@@ -506,8 +489,9 @@ function meta:SetPlayerClass(class)
 			self:SetModelScale(1.75)
 		end
 	--end
-	
-	self:SetModelScale(1.0)
+	if (!self.TFBot) then
+		self:SetModelScale(1.0)
+	end
 	if (!self:IsL4D() and !self:IsHL2()) then
 		self:SetModel(c.Model)
 	end
@@ -566,33 +550,6 @@ function meta:SetPlayerClass(class)
 				self:ManipulateBoneScale(self:LookupBone("bip_head"),Vector(1, 1, 1))
 		end
 	end
-	if (self:IsMiniBoss()) then
-		if SERVER then
-			if (self.playerclass == "Scout") then
-				self:EmitSound("MVM.GiantScoutLoop")
-			elseif (self.playerclass == "Soldier") then
-				self:EmitSound("MVM.GiantSoldierLoop")
-			elseif (self.playerclass == "Pyro") then
-				self:EmitSound("MVM.GiantPyroLoop")
-			elseif (self.playerclass == "Demoman") then
-			
-				if (!string.find(self:GetPlayerClass(),"sentry")) then
-				
-					self:EmitSound("MVM.GiantDemomanLoop")
-					
-				else
-					
-					self:EmitSound("MVM.SentryBusterLoop")
-					self:EmitSound("MVM.SentryBusterIntro")
-					
-				end
-				
-			elseif (self.playerclass == "Heavy") then
-				self:EmitSound("MVM.GiantHeavyLoop")
-			end	
-		end
-
-	end
 	UpgradePlayerIfBot(self)
 	self:ResetClassSpeed()
 	local ply = self
@@ -621,7 +578,47 @@ function meta:SetPlayerClass(class)
 		ply.trail4:Remove()
 		ply.trail5:Remove()
 	end
-	ply.TargetEnt = nil
+	if (self.TFBot) then
+		self.TargetEnt = lookForNearestPlayer(self)
+	end
+	timer.Simple(0.1, function()
+	
+		if (self:IsMiniBoss()) then
+			if SERVER then
+				self:StopSound("MVM.GiantScoutLoop")
+				self:StopSound("MVM.GiantSoldierLoop")
+				self:StopSound("MVM.GiantPyroLoop")
+				self:StopSound("MVM.GiantDemomanLoop")
+				self:StopSound("MVM.GiantHeavyLoop")
+				self:StopSound("MVM.SentryBusterLoop")
+				self:StopSound("MVM.SentryBusterIntro")
+				if (self.playerclass == "Scout") then
+					self:EmitSound("MVM.GiantScoutLoop")
+				elseif (self.playerclass == "Soldier") then
+					self:EmitSound("MVM.GiantSoldierLoop")
+				elseif (self.playerclass == "Pyro") then
+					self:EmitSound("MVM.GiantPyroLoop")
+				elseif (self.playerclass == "Demoman") then
+				
+					if (!string.find(self:GetPlayerClass(),"sentry")) then
+					
+						self:EmitSound("MVM.GiantDemomanLoop")
+						
+					else
+						
+						self:EmitSound("MVM.SentryBusterLoop")
+						self:EmitSound("MVM.SentryBusterIntro")
+						
+					end
+					
+				elseif (self.playerclass == "Heavy") then
+					self:EmitSound("MVM.GiantHeavyLoop")
+				end	
+			end
+	
+		end
+		
+	end)
 end
 
 
@@ -742,6 +739,26 @@ local function PlayerClassChanged(id, oldclass, newclass, timeout)
 		pl.Buildings = tf_objects.GetBuildables(t2.Buildings)
 		pl.BuilderInit = pl.Buildings
 	end
+	
+		if (pl:GetPlayerClass() == "heavy") then
+			pl:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
+		elseif (pl:GetPlayerClass() == "scout") then
+			pl:SetupPhonemeMappings( "player/scout/phonemes/phonemes" )
+		elseif (pl:GetPlayerClass() == "soldier") then
+			pl:SetupPhonemeMappings( "player/soldier/phonemes/phonemes" )
+		elseif (pl:GetPlayerClass() == "demoman") then
+			pl:SetupPhonemeMappings( "player/demo/phonemes/phonemes" )
+		elseif (pl:GetPlayerClass() == "engineer") then
+			pl:SetupPhonemeMappings( "player/engineer/phonemes/phonemes" )
+		elseif (pl:GetPlayerClass() == "medic") then
+			pl:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
+		elseif (pl:GetPlayerClass() == "sniper") then
+			pl:SetupPhonemeMappings( "player/sniper/phonemes/phonemes" )
+		elseif (pl:GetPlayerClass() == "spy") then
+			pl:SetupPhonemeMappings( "player/spy/phonemes/phonemes" )
+		else
+			pl:SetupPhonemeMappings( "phonemes" )
+		end
 end
 
 usermessage.Hook("PlayerClassChanged", function(msg)

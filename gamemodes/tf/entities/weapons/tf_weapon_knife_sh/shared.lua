@@ -28,7 +28,7 @@ SWEP.SwingCrit = Sound("Weapon_Knife.MissCrit")
 SWEP.HitFlesh = Sound("Weapon_Knife.HitFlesh")
 SWEP.HitWorld = Sound("Weapon_Knife.HitWorld")
 
-SWEP.BaseDamage = 80
+SWEP.BaseDamage = 40
 SWEP.DamageRandomize = 1.35
 SWEP.MaxDamageRampUp = 0
 SWEP.MaxDamageFalloff = 0

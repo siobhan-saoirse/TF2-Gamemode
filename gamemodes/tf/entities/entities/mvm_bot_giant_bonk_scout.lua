@@ -8,7 +8,7 @@ ENT.IsBoss = true
 ENT.Difficulty = 3
 ENT.PrintName		= "Giant Bonk! Scout"
 ENT.PreferredName	= "Scout"
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 ENT.PreferredIcon = "hud/leaderboard_class_scout_bonk_giant"
 ENT.Items = {"Bonk! Atomic Punch","Atomizer","Bonk Helm"}
 

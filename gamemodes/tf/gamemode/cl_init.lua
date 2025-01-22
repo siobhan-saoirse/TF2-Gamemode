@@ -180,7 +180,8 @@ CreateClientConVar( "tf_sentrybuster", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_
 CreateClientConVar( "tf_skeleton", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Spooky... https://youtu.be/fPRMLk3jHX4" )
 CreateClientConVar( "tf_yeti", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Become a ordinary yeti after respawning." )
 CreateClientConVar( "tf_hhh", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Become HHH Jr. after respawning." )
-CreateClientConVar( "tf_player_use_female_models", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "For testing. Appends '_female' to the model filename loaded. SOLDIER ONLY" )
+CreateClientConVar( "tf_player_use_female_models", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "For testing. Appends '_female' to the model filename loaded." )
+CreateClientConVar( "civ2_touhou", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Touhou?" )
 CreateClientConVar( "tf_give_hl2_weapons", "1", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "If set to 1, HL2 Weapons will be given to you as an TF2 Class when spawned." )
 --CreateClientConVar( "civ2_bootleg_charger", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Become a bootleg charger after respawning." )
 CreateClientConVar( "tf_dingalingaling_sound", "", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Ding Dong!" )
@@ -835,6 +836,8 @@ if (LocalPlayer():GetInfoNum("tf_tfc_model_override",0) == 1  and file.Exists("m
 	icon:SetModel( "models/player/tfc_heavy.mdl" ) -- you can only change colors on playermodels
 elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 	icon:SetModel( "models/bots/heavy/bot_heavy.mdl" ) -- you can only change colors on playermodels
+elseif (LocalPlayer():GetInfoNum("civ2_touhou",0) == 1) then
+	icon:SetModel( "models/player/touhou/heavy.mdl" ) -- you can only change colors on playermodels
 else
 	icon:SetModel( "models/player/heavy.mdl" ) -- you can only change colors on playermodels
 end
@@ -1331,6 +1334,8 @@ ScoutButton.OnCursorEntered = function()
 		icon:SetModel( "models/player/tfc_scout.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/scout/bot_scout.mdl" ) -- you can only change colors on playermodels
+	elseif (LocalPlayer():GetInfoNum("civ2_touhou",0) == 1) then
+		icon:SetModel( "models/player/touhou/scout.mdl" ) -- you can only change colors on playermodels
 	else
 		icon:SetModel( "models/player/scout.mdl" ) -- you can only change colors on playermodels
 	end
@@ -1389,6 +1394,8 @@ SoldierButton.OnCursorEntered = function()
 		icon:SetModel( "models/player/tfc_soldier.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/soldier/bot_soldier.mdl" ) -- you can only change colors on playermodels
+	elseif (LocalPlayer():GetInfoNum("civ2_touhou",0) == 1) then
+		icon:SetModel( "models/player/touhou/soldier.mdl" ) -- you can only change colors on playermodels
 	else
 		icon:SetModel( "models/player/soldier.mdl" ) -- you can only change colors on playermodels
 	end
@@ -1445,6 +1452,8 @@ PyroButton.OnCursorEntered = function()
 		icon:SetModel( "models/player/tfc_pyro.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/pyro/bot_pyro.mdl" ) -- you can only change colors on playermodels
+	elseif (LocalPlayer():GetInfoNum("civ2_touhou",0) == 1) then
+		icon:SetModel( "models/player/touhou/pyro.mdl" ) -- you can only change colors on playermodels
 	else
 		icon:SetModel( "models/player/pyro.mdl" ) -- you can only change colors on playermodels
 	end
@@ -1502,6 +1511,8 @@ DemomanButton.OnCursorEntered = function()
 		icon:SetModel( "models/player/tfc_demo.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/demo/bot_demo.mdl" ) -- you can only change colors on playermodels
+	elseif (LocalPlayer():GetInfoNum("civ2_touhou",0) == 1) then
+		icon:SetModel( "models/player/touhou/demo.mdl" ) -- you can only change colors on playermodels
 	else
 		icon:SetModel( "models/player/demo.mdl" ) -- you can only change colors on playermodels
 	end
@@ -1560,6 +1571,8 @@ HeavyButton.OnCursorEntered = function()
 		icon:SetModel( "models/player/tfc_heavy.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/heavy/bot_heavy.mdl" ) -- you can only change colors on playermodels
+	elseif (LocalPlayer():GetInfoNum("civ2_touhou",0) == 1) then
+		icon:SetModel( "models/player/touhou/heavy.mdl" ) -- you can only change colors on playermodels
 	else
 		icon:SetModel( "models/player/heavy.mdl" ) -- you can only change colors on playermodels
 	end
@@ -1620,6 +1633,8 @@ EngineerButton.OnCursorEntered = function()
 		icon:SetModel( "models/player/tfc_engineer.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/engineer/bot_engineer.mdl" ) -- you can only change colors on playermodels
+	elseif (LocalPlayer():GetInfoNum("civ2_touhou",0) == 1) then
+		icon:SetModel( "models/player/touhou/engineer.mdl" ) -- you can only change colors on playermodels
 	else
 		icon:SetModel( "models/player/engineer.mdl" ) -- you can only change colors on playermodels
 	end
@@ -1686,6 +1701,8 @@ MedicButton.OnCursorEntered = function()
 		icon:SetModel( "models/player/tfc_medic.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/medic/bot_medic.mdl" ) -- you can only change colors on playermodels
+	elseif (LocalPlayer():GetInfoNum("civ2_touhou",0) == 1) then
+		icon:SetModel( "models/player/touhou/medic.mdl" ) -- you can only change colors on playermodels
 	else
 		icon:SetModel( "models/player/medic.mdl" ) -- you can only change colors on playermodels
 	end
@@ -1748,6 +1765,8 @@ SniperButton.OnCursorEntered = function()
 		icon:SetModel( "models/player/tfc_sniper.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/sniper/bot_sniper.mdl" ) -- you can only change colors on playermodels
+	elseif (LocalPlayer():GetInfoNum("civ2_touhou",0) == 1) then
+		icon:SetModel( "models/player/touhou/sniper.mdl" ) -- you can only change colors on playermodels
 	else
 		icon:SetModel( "models/player/sniper.mdl" ) -- you can only change colors on playermodels
 	end
@@ -1805,6 +1824,8 @@ SpyButton.OnCursorEntered = function()
 		icon:SetModel( "models/player/tfc_spy.mdl" ) -- you can only change colors on playermodels
 	elseif (LocalPlayer():GetInfoNum("tf_robot",0) == 1) then
 		icon:SetModel( "models/bots/spy/bot_spy.mdl" ) -- you can only change colors on playermodels
+	elseif (LocalPlayer():GetInfoNum("civ2_touhou",0) == 1) then
+		icon:SetModel( "models/player/touhou/spy.mdl" ) -- you can only change colors on playermodels
 	else
 		icon:SetModel( "models/player/spy.mdl" ) -- you can only change colors on playermodels
 	end

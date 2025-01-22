@@ -2,7 +2,7 @@
 // Soldier Response Rule File - AUTO GENERATED DO NOT EDIT BY HAND
 //--------------------------------------------------------------------------------------------------------------
 
-Criterion "SoldierNotIdleSpeech" "SoldierIdleSpeech" "!=1" "required" weight 0
+Criterion "SoldierNotIdleSpeech" "SoldierIdleSpeech" "!=1" "required"
 
 
 Response item_birdhead_round_startSoldier

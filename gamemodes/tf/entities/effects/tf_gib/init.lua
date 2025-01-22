@@ -53,7 +53,7 @@ function EFFECT:Init(data)
 		gamemode.Call("SetupPlayerGib", pl, self, self.GibType)
 	end
 	
-	self.InitialColor = self:GetColor()
+	self.InitialColor = Color(255,255,255,255)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:PhysicsInit(SOLID_VPHYSICS)
 	

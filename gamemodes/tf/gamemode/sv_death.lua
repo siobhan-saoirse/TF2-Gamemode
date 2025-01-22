@@ -364,11 +364,11 @@ function GM:DoTFPlayerDeath(ent, attacker, dmginfo)
 	-- Voice responses
 	if attacker:IsPlayer() and ent~=attacker then
 		if ent:IsBuilding() then
-				attacker:Speak("TLK_KILLED_OBJECT",true)
+			attacker:Speak("TLK_KILLED_OBJECT",false)
 		else
 			--self:AddKill(attacker)
 			attacker.victimclass = ent.playerclass or ""
-			attacker:Speak("TLK_KILLED_PLAYER",true)
+			attacker:Speak("TLK_KILLED_PLAYER",false)
 		end
 	end
 	attacker.domination = ""
@@ -603,6 +603,14 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	if (string.find(ply:GetModel(),"/bot_")) then
 		ParticleEffect("bot_death",ply:GetPos(),ply:GetAngles(),nil)
 	end 
+	
+	if (attacker.TFBot and string.find(attacker:GetModel(),"/bot_")) then
+		for k,v in ipairs(ents.GetAll()) do
+			if (v.Bot ~= nil and v.Bot:EntIndex() == attacker:EntIndex()) then
+				v:CustomOnKillEnemy(attacker)
+			end
+		end
+	end
 	net.Start("DeActivateTauntCamImmediate")
 	net.Send(ply)
 	ply.TargetEnt = nil
@@ -993,7 +1001,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 		end
 	else
 		
-		if (((!ply:IsHL2() and !ply:IsL4D() and not (dmginfo:IsDamageType(DMG_BLAST) or dmginfo:IsExplosionDamage() or inflictor.Explosive)) or (ply:IsHL2() || ply:IsL4D())) or string.find(ply:GetModel(),"/bot_") and ply:GetModelScale() == 1.0 and !string.find(ply:GetModel(),"_boss.mdl")) then
+		if (((!ply:IsHL2() and !ply:IsL4D() and not (dmginfo:IsDamageType(DMG_BLAST) or dmginfo:IsExplosionDamage() or inflictor.Explosive) and !ply:HasDeathFlag(DF_GIB) ) or (ply:IsHL2() || ply:IsL4D())) or string.find(ply:GetModel(),"/bot_") and ply:GetModelScale() == 1.0 and !string.find(ply:GetModel(),"_boss.mdl")) then
 			if (GetConVar("tf_use_client_ragdolls"):GetBool()) then
 				if ((string.find(ply:GetModel(),"bot_") and ply:GetModelScale() > 1.0) or ply:IsMiniBoss()) then
 					
@@ -1323,12 +1331,40 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	if dmginfo:IsFallDamage() then -- Fall damage
 		ply.FallDeath = true
 		ply:EmitSound("player/pl_fleshbreak.wav", 70, math.random(92,96))
-	elseif dmginfo:IsDamageType(DMG_BLAST) or dmginfo:IsExplosionDamage() or inflictor.Explosive then -- Explosion damage
+	elseif dmginfo:IsDamageType(DMG_BLAST) or dmginfo:IsExplosionDamage() or inflictor.Explosive or ply:HasDeathFlag(DF_GIB) then -- Explosion damage
 	
 		if ply:GetMaterial() == "models/shadertest/predator" then return end
-		ply:RandomSentence("ExplosionDeath")
+		if (!ply:HasDeathFlag(DF_GIB)) then
+			ply:RandomSentence("ExplosionDeath")
+		else
+			if dmginfo:IsDamageType(DMG_ACID) then -- Critical damage
+				if not inflictor.IsSilentKiller then
+					if (!ply:HasDeathFlag(DF_SILENCED) and !ply:IsMiniBoss()) then
+						ply:RandomSentence("CritDeath")
+					end
+				end
+			elseif dmginfo:IsDamageType(DMG_CLUB) then -- Melee damage
+				if not inflictor.IsSilentKiller then	
+					if ply:GetMaterial() == "models/shadertest/predator" then return end
+						if (!ply:HasDeathFlag(DF_SILENCED) and !ply:IsMiniBoss()) then
+							ply:RandomSentence("MeleeDeath")
+						end
+				end
+			else -- Bullet/fire damage
+				if not inflictor.IsSilentKiller then
+					if ply:GetMaterial() == "models/shadertest/predator" then return end
+					if (!ply:HasDeathFlag(DF_SILENCED) and !ply:IsMiniBoss()) then
+						ply:RandomSentence("Death") 
+					end
+				end
+			end
+		end
 		local p = player_gib_probability:GetFloat()
 		p = 1
+		
+		if (ply:HasDeathFlag(DF_GIB)) then
+			ParticleEffect("tfc_sniper_mist",ply:GetPos(),ply:GetAngles(),nil)
+		end
 		
 		if not ply:IsHL2() and !ply:IsL4D() then
 			if (!(string.find(ply:GetModel(),"bot_"))) then

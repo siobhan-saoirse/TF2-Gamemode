@@ -420,5 +420,6 @@ end
 list.Set( "NPC", "bot_boss_mini_rockets", {
 	Name = "Mini-Knight",
 	Class = "bot_boss_mini_rockets",
-	Category = "TF2: Raid"
+	Category = "TFBots: Raid",
+	AdminOnly = true
 })

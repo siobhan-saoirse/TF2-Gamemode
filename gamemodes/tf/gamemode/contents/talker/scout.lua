@@ -2,31 +2,31 @@
 // Scout Response Rule File
 //--------------------------------------------------------------------------------------------------------------
 
-Criterion "ScoutIsKillSpeechObject" "ScoutKillSpeechObject" "1" "required" weight 0
-Criterion "ScoutIsNotStillonFire" "ScoutOnFire" "!=1" "required" weight 0
-Criterion "ScoutIsStillonFire" "ScoutOnFire" "1" "required" weight 0
-Criterion "ScoutNotKillSpeech" "ScoutKillSpeech" "!=1" "required" weight 0
-Criterion "ScoutNotKillSpeechMelee" "ScoutKillSpeechMelee" "!=1" "required" weight 0
-Criterion "ScoutNotKillSpeechMeleeFat" "ScoutKillSpeechMeleeFat" "!=1" "required" weight 0
-Criterion "ScoutNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required" weight 0
-Criterion "ScoutNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required" weight 0
-Criterion "ScoutNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required" weight 0
-Criterion "ScoutNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required" weight 0
-Criterion "ScoutNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required" weight 0
-Criterion "ScoutNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required" weight 0
+Criterion "ScoutIsKillSpeechObject" "ScoutKillSpeechObject" "1" "required"
+Criterion "ScoutIsNotStillonFire" "ScoutOnFire" "!=1" "required"
+Criterion "ScoutIsStillonFire" "ScoutOnFire" "1" "required"
+Criterion "ScoutNotKillSpeech" "ScoutKillSpeech" "!=1" "required"
+Criterion "ScoutNotKillSpeechMelee" "ScoutKillSpeechMelee" "!=1" "required"
+Criterion "ScoutNotKillSpeechMeleeFat" "ScoutKillSpeechMeleeFat" "!=1" "required"
+Criterion "ScoutNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required"
+Criterion "ScoutNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required"
+Criterion "ScoutNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required"
+Criterion "ScoutNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required"
+Criterion "ScoutNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required"
+Criterion "ScoutNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required"
 Criterion "ScoutNotSaidHealThanks" "ScoutSaidHealThanks" "!=1" "required"
-Criterion "IsHelpCapScout" "ScoutHelpCap" "1" "required" weight 0
+Criterion "IsHelpCapScout" "ScoutHelpCap" "1" "required"
 Criterion "NotSaidScoutHitBallSpeech" "ScoutHitBallSpeech" "!=1" "required"
 Criterion "NotScoutGrabbedIntelligence" "ScoutGrabbedIntelligence" "!=1" "required"
 Criterion "ScoutIsNotInvuln" "ScoutInvuln" "!=1" "required"
 //Custom stuff
-Criterion "ScoutNotInvulnerableSpeech" "ScoutInvulnerableSpeech" "!=1" "required" weight 0
-Criterion "ScoutNotAssistSpeech" "ScoutAssistSpeech" "!=1" "required" weight 0
-Criterion "ScoutNotDoubleJumpSpeech" "ScoutDoubleJumpSpeech" "!=1" "required" weight 0
-Criterion "ScoutNotAwardSpeech" "ScoutAwardSpeech" "!=1" "required" weight 0
-Criterion "ScoutNotDrinkReadySpeech" "ScoutDrinkReadySpeech" "!=1" "required" weight 0
-Criterion "ScoutIsNotCrit" "ScoutIsCrit" "1" "required" weight 0
-Criterion "ScoutHasFired" "ScoutFired" "1" "required" weight 0
+Criterion "ScoutNotInvulnerableSpeech" "ScoutInvulnerableSpeech" "!=1" "required"
+Criterion "ScoutNotAssistSpeech" "ScoutAssistSpeech" "!=1" "required"
+Criterion "ScoutNotDoubleJumpSpeech" "ScoutDoubleJumpSpeech" "!=1" "required"
+Criterion "ScoutNotAwardSpeech" "ScoutAwardSpeech" "!=1" "required"
+Criterion "ScoutNotDrinkReadySpeech" "ScoutDrinkReadySpeech" "!=1" "required"
+Criterion "ScoutIsNotCrit" "ScoutIsCrit" "1" "required"
+Criterion "ScoutHasFired" "ScoutFired" "1" "required"
 
 Response PlayerCloakedSpyDemomanScout
 {
@@ -1507,7 +1507,7 @@ Response MeleeDareCombatScout
 }
 Rule MeleeDareCombatScout
 {
-	criteria ConceptPlayerBattleCry IsWeaponMelee IsScout IsCrosshairEnemy
+	criteria ConceptPlayerBattleCry IsWeaponMelee IsScout IsCrossHairEnemy
 	Response MeleeDareCombatScout
 }
 //End custom

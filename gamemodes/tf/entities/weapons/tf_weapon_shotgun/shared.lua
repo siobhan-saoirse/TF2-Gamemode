@@ -60,6 +60,15 @@ function SWEP:InspectAnimCheck()
 			self.Primary.Ammo			= TF_SECONDARY
 			self:SetHoldType("SECONDARY")
 		end
+		if (self.Owner:GetPlayerClass() == "giantheavyshotgun") then
+			self.Primary.Delay          = 0.6 * 2.5
+			self.ReloadTime = 0.5 * 0.1
+			self.BulletsPerShot = 10 + 10
+			self.BaseDamage = 6 * 0.5
+			self.HoldType = "SECONDARY"
+			self.Primary.Ammo			= TF_SECONDARY
+			self:SetHoldType("SECONDARY")
+		end
 		if (self.Owner:GetPlayerClass() == "soldier"
 		|| self.Owner:GetPlayerClass() == "heavy"
 		|| self.Owner:GetPlayerClass() == "heavyshotgun"

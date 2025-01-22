@@ -12,11 +12,14 @@ function meta:GiveLoadout()
         local itemname = nil
         -- oh no
         for name, wep in pairs(tf_items.Items) do
-            if istable(wep) and wep.id == id then
-                itemname = name
+            if istable(wep) and wep.id == id then     
+                if (IsValid(self.Owner) and string.find(self.Owner:GetModel(),"/player/touhou/") and wep.item_class == "tf_wearable_item") then
+
+                else
+                    itemname = name
+                end
             end
         end
-
         if itemname then
             self:EquipInLoadout(itemname)
             --tf_items.CC_GiveItem(self, _, {itemname})

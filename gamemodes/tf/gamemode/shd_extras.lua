@@ -461,48 +461,12 @@ end
 if CLIENT then
 
 hook.Add("SetupPlayerGib", "GEYGIB", function(pl, gib)
-	if pl:HasDeathFlag(DF_GEY) then
-		gib:SetMaterial("models/shiny")
-		gib:SetColor(255,30,150,255)
-	end
 end)
 
 hook.Add("SetupPlayerRagdoll", "GEYRAGDOLL_PLAYER", function(pl, rag)
-	if pl:HasDeathFlag(DF_GEY) then
-		rag:SetMaterial("models/shiny")
-		rag:SetColor(255,30,150,255)
-		for i=0,rag:GetPhysicsObjectCount()-1 do
-			local p=rag:GetPhysicsObjectNum(i)
-			p:SetMaterial("gmod_bouncy")
-			p:ApplyForceCenter(Vector(0,0,math.Rand(2000,8000)))
-			timer.Simple(0.1,function() if p and p:IsValid() then p:AddAngleVelocity(Vector(math.Rand(-100000,100000),math.Rand(-100000,100000),math.Rand(-100000,100000))) end end)
-			p:SetMass(math.Rand(10,200))
-		end
-		rag.Gey=true
-		pl.GeyRagdoll = rag
-		local effectdata = EffectData()
-		effectdata:SetEntity(pl)
-		util.Effect("tf_rainbow_trail", effectdata)
-	end
 end)
 
 hook.Add("SetupNPCRagdoll", "GEYRAGDOLL_NPC", function(npc, rag)
-	if npc:HasDeathFlag(DF_GEY) then
-		rag:SetMaterial("models/shiny")
-		rag:SetColor(255,30,150,255)
-		for i=0,rag:GetPhysicsObjectCount()-1 do
-			local p=rag:GetPhysicsObjectNum(i)
-			p:SetMaterial("gmod_bouncy")
-			p:ApplyForceCenter(Vector(0,0,math.Rand(2000,8000)))
-			p:SetMass(math.Rand(10,400))
-			p:AddAngleVelocity(Vector(math.Rand(-10000,10000),math.Rand(-10000,10000),math.Rand(-10000,10000)))
-		end
-		rag.Gey=true
-		npc.GeyRagdoll = rag
-		local effectdata = EffectData()
-		effectdata:SetEntity(npc)
-		util.Effect("gayplayer", effectdata)
-	end
 end)
 
 end

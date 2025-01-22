@@ -9,7 +9,7 @@ ENT.Difficulty = 3
 ENT.PrintName		= "Major League"
 ENT.PreferredIcon = "hud/leaderboard_class_scout_stun"
 ENT.Items = {"Boston Boom-Bringer","Summer Shades","Genuine Cockfighter","Sandman"}
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 
 function ENT:CustomOnInitialize(bot)
 	timer.Create("SetModel"..bot:EntIndex(),0.1,10,function() 

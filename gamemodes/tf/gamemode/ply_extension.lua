@@ -152,7 +152,7 @@ end
 function meta:TFTaunt(args)
 	local ply = self 
 	if SERVER then
-		if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','laugh')") return end
+		if ply:IsHL2() then ply:SendLua("RunConsoleCommand('act','dance')") return end
 		if ply:GetNWBool("Taunting") == true then return end
 		if not ply:IsOnGround() then return end
 		if ply:WaterLevel() ~= 0 then return end
@@ -735,7 +735,7 @@ function meta:TFTaunt(args)
 				ply:DoAnimationEvent(ACT_DOD_HS_CROUCH_KNIFE, true)
 			end		
 		end
-		ply:Speak("TLK_PLAYER_TAUNT",true)
+		ply:Speak("TLK_PLAYER_TAUNT")
 		ply:SetNWBool("Taunting", true)
 		if IsValid(ply:GetActiveWeapon()) and table.HasValue(wep, ply:GetActiveWeapon():GetClass()) then ply:SetNWBool("NoWeapon", true) end
 		net.Start("ActivateTauntCam")

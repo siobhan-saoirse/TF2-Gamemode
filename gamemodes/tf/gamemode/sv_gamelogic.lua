@@ -552,11 +552,6 @@ end
 function GM:Tick()
 end
 function GM:Think()
-	for _,v in pairs(player.GetBots()) do -- if bots are in here, disable thinking
-		if (IsValid(v)) then
-			return false
-		end
-	end
 	for _,v in pairs(player.GetAll()) do
 		for _,child in ipairs(ents.GetAll()) do
 			if (child:GetParent():EntIndex() == v:EntIndex()) then
@@ -568,36 +563,13 @@ function GM:Think()
 				v:SetViewOffset(Vector(0,0,64 * v:GetModelScale()))
 				v:SetViewOffsetDucked(Vector(0, 0, 28 * v:GetModelScale()))
 			else
-				if (v.playerclass == "Scout") then
+				if (v.playerclass == "Scout" or v.playerclass == "Soldier"
+					or v.playerclass == "Pyro" or v.playerclass == "Demoman" or v.playerclass == "Engineer") then
 					v:SetViewOffset(Vector(0, 0, 65 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 65 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Soldier") then
-					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Pyro") then
-					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Demoman") then
-					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Heavy") then
-					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Engineer") then
-					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 68 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Medic") then
-					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Sniper") then
-					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale())) 
-					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
-				elseif (v.playerclass == "Spy") then
-					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 75 * (0.5 * v:GetModelScale())))
+					v:SetViewOffsetDucked(Vector(0, 0, 28 * v:GetModelScale()))
 				else
-					v:SetViewOffset(Vector(0, 0, 68 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 48 * v:GetModelScale()))
+					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
+					v:SetViewOffsetDucked(Vector(0, 0, 28 * v:GetModelScale()))
 				end
 			end
 		end
@@ -715,7 +687,6 @@ hook.Add("Move", "TFPlayerSlowdown", function(pl, move)
 end)
 ]]
 hook.Add("Think", "TFPlayerThink", function()
-	if (math.random(1,3+(table.Count(player.GetAll())*0.4)) == 1) then 
 		for v,_ in pairs(entset.GetTFPlayers()) do
 			--------------------------------------------------------
 			-- Overheal
@@ -860,12 +831,7 @@ hook.Add("Think", "TFPlayerThink", function()
 					local data = {health = 0}
 					
 					if v:GetPlayerClassTable().HasMedicRegeneration then
-						data.health = Lerp((CurTime() - (v.LastDamaged or 0)) / 10, 3, 6)
-						
-						if v:IsPlayer() and IsValid(v:GetActiveWeapon()) then
-							ApplyAttributesFromEntity(v:GetActiveWeapon(), "medic_health_regen", v, data)
-						end
-						ApplyGlobalAttributesFromPlayer(v, "medic_health_regen", v, data)
+						data.health = 2
 					end
 					
 					if v:IsPlayer() and IsValid(v:GetActiveWeapon()) then
@@ -898,5 +864,4 @@ hook.Add("Think", "TFPlayerThink", function()
 				end
 			end
 		end
-	end
 end)

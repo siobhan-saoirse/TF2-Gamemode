@@ -2,33 +2,33 @@
 // Heavy Response Rule File
 //--------------------------------------------------------------------------------------------------------------
 
-Criterion "HeavyIsKillSpeechObject" "HeavyKillSpeechObject" "1" "required" weight 0
-Criterion "HeavyIsNotStillonFire" "HeavyOnFire" "!=1" "required" weight 0
-Criterion "HeavyIsStillonFire" "HeavyOnFire" "1" "required" weight 0
-Criterion "HeavyNotInvulnerableSpeech" "HeavyInvulnerableSpeech" "!=1" "required" weight 0
-Criterion "HeavyNotKillSpeech" "HeavyKillSpeech" "!=1" "required" weight 0
-Criterion "HeavyNotKillSpeechMelee" "HeavyKillSpeechMelee" "!=1" "required" weight 0
-Criterion "HeavyNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required" weight 0
-Criterion "HeavyNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required" weight 0
-Criterion "HeavyNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required" weight 0
-Criterion "HeavyNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required" weight 0
-Criterion "HeavyNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required" weight 0
-Criterion "HeavyNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required" weight 0
+Criterion "HeavyIsKillSpeechObject" "HeavyKillSpeechObject" "1" "required"
+Criterion "HeavyIsNotStillonFire" "HeavyOnFire" "!=1" "required"
+Criterion "HeavyIsStillonFire" "HeavyOnFire" "1" "required"
+Criterion "HeavyNotInvulnerableSpeech" "HeavyInvulnerableSpeech" "!=1" "required"
+Criterion "HeavyNotKillSpeech" "HeavyKillSpeech" "!=1" "required"
+Criterion "HeavyNotKillSpeechMelee" "HeavyKillSpeechMelee" "!=1" "required"
+Criterion "HeavyNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required"
+Criterion "HeavyNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required"
+Criterion "HeavyNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required"
+Criterion "HeavyNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required"
+Criterion "HeavyNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required"
+Criterion "HeavyNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required"
 Criterion "HeavyNotSaidHealThanks" "HeavySaidHealThanks" "!=1" "required"
-Criterion "IsHelpCapHeavy" "HeavyHelpCap" "1" "required" weight 0
+Criterion "IsHelpCapHeavy" "HeavyHelpCap" "1" "required"
 // Custom stuff
 Criterion "HeavyNotMedicSpeech" "HeavyMedicSpeech" "!=1" "required"
 Criterion "HeavyNotAwardSpeech" "HeavyAwardSpeech" "!=1" "required"
-Criterion "HeavyNotAssistSpeech" "HeavyAssistSpeech" "!=1" "required" weight 0
-Criterion "IsHeavyFistsSwung" "HeavyFistsSwung" "1" "required" weight 0
-Criterion "IsNotHeavyFistsSwung" "HeavyFistsSwung" "!=1" "required" weight 0
-Criterion "IsHeavyFistsSwinging" "HeavyFistsSwinging" "1" "required" weight 0
-Criterion "IsNotHeavyFistsSwinging" "HeavyFistsSwinging" "!=1" "required" weight 0
-Criterion "NotGunTauntHeavy" "GunTauntHeavy" "!=1" "required" weight 0
-Criterion "IsNotDaring" "IsDaring" "!=1" "required" weight 0
-Criterion "HeavyNotKillSpeechObject" "HeavyKillSpeechObject" "!=1" "required" weight 0
-Criterion "HeavyNotShinySpeech" "HeavyShinySpeech" "!=1" "required" weight 0
-Criterion "HeavyNotFairyNoises" "HeavyFairyNoises" "!=1" "required" weight 0
+Criterion "HeavyNotAssistSpeech" "HeavyAssistSpeech" "!=1" "required"
+Criterion "IsHeavyFistsSwung" "HeavyFistsSwung" "1" "required"
+Criterion "IsNotHeavyFistsSwung" "HeavyFistsSwung" "!=1" "required"
+Criterion "IsHeavyFistsSwinging" "HeavyFistsSwinging" "1" "required"
+Criterion "IsNotHeavyFistsSwinging" "HeavyFistsSwinging" "!=1" "required"
+Criterion "NotGunTauntHeavy" "GunTauntHeavy" "!=1" "required"
+Criterion "IsNotDaring" "IsDaring" "!=1" "required"
+Criterion "HeavyNotKillSpeechObject" "HeavyKillSpeechObject" "!=1" "required"
+Criterion "HeavyNotShinySpeech" "HeavyShinySpeech" "!=1" "required"
+Criterion "HeavyNotFairyNoises" "HeavyFairyNoises" "!=1" "required"
 
 
 Response PlayerCloakedSpyDemomanHeavy
@@ -539,7 +539,7 @@ Response KilledPlayerTauntHeavy
 }
 Rule KilledPlayerTauntHeavy
 {
-	criteria ConceptKilledPlayer KilledPlayerDelay 30PercentChance IsHeavy IsVictimEngineer IsCrosshairEnemy HeavyNotKillSpeech
+	criteria ConceptKilledPlayer KilledPlayerDelay 30PercentChance IsHeavy IsVictimEngineer IsCrossHairEnemy HeavyNotKillSpeech
 	ApplyContext "HeavyKillSpeech:1:10"
 	Response KilledPlayerTauntHeavy
 }
@@ -806,7 +806,7 @@ Response PlayerStillOnFireHeavy
 }
 Rule PlayerStillOnFireHeavy
 {
-	criteria ConceptFire IsHeavy  HeavyIsStillonFire IsNotDominating
+	criteria ConceptFire IsHeavy HeavyIsStillonFire IsNotDominating
 	ApplyContext "HeavyOnFire:1:7"
 	Response PlayerStillOnFireHeavy
 }
@@ -1187,7 +1187,7 @@ Response MeleeDareCombatHeavy
 }
 Rule MeleeDareCombatHeavy
 {
-	criteria ConceptPlayerBattleCry IsWeaponMelee IsHeavy IsCrosshairEnemy
+	criteria ConceptPlayerBattleCry IsWeaponMelee IsHeavy IsCrossHairEnemy
 	ApplyContext "IsDaring:1:5"
 	Response MeleeDareCombatHeavy
 }
@@ -1234,7 +1234,7 @@ Response PlayerTauntGunHeavy
 }
 Rule PlayerTauntGunHeavy
 {
-	criterion ConceptPlayerBattleCry 75PercentChance IsHeavy IsNotOnHeavy IsCrosshairEnemy NotGunTauntHeavy IsNotWeaponMelee
+	criterion ConceptPlayerBattleCry 75PercentChance IsHeavy IsNotOnHeavy IsCrossHairEnemy NotGunTauntHeavy IsNotWeaponMelee
 	ApplyContext "GunTauntHeavy:1:10"
 	Response PlayerTauntGunHeavy
 }

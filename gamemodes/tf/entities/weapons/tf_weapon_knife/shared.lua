@@ -293,58 +293,7 @@ hook.Add("PreScaleDamage", "BackstabSetDamage", function(ent, hitgroup, dmginfo)
 	local inf = dmginfo:GetInflictor()
 	if inf.ShouldBackstab and inf:ShouldBackstab(ent) and inf:GetClass() != "tf_weapon_knife_icicle" then
 		inf.ResetBaseDamage = inf.BaseDamage
-		if (ent:GetClass() == "npc_headless_hatman" or ent:GetClass() == "npc_merasmus" or ent:GetClass() == "npc_tf_zombie_boss") then
-			inf.BaseDamage = ent:GetMaxHealth() * 0.12
-			inf.NextIdle = CurTime() + 5
-			timer.Simple(0.04, function()
-				inf:SendWeaponAnimEx(ACT_MELEE_VM_STUN) 
-				inf.Owner:GetViewModel():SetPlaybackRate(1)
-				inf:SetNextPrimaryFire(CurTime() + 2)
-			end) 
-		elseif ent:IsPlayer() and ent:GetInfoNum("hahahahahahahahaowneronly_ragespy", 0) == 1 then
-			inf.BaseDamage = ent:GetMaxHealth() * 0.12
-			inf.NextIdle = CurTime() + 5
-			ent:EmitSound("vo/test_two.wav", 80, 100)
-			timer.Simple(0.04, function()
-				inf:SendWeaponAnimEx(ACT_MELEE_VM_STUN) 
-				inf.Owner:GetViewModel():SetPlaybackRate(0.5)
-				inf:SetNextPrimaryFire(CurTime() + 2)
-			end)
-		elseif ent:IsPlayer() and ent:GetInfoNum("tf_vagineer", 0) == 1 then
-			inf.BaseDamage = ent:GetMaxHealth() * 0.12
-			inf.NextIdle = CurTime() + 5
-			timer.Simple(0.04, function()
-				inf:SendWeaponAnimEx(ACT_MELEE_VM_STUN)
-				inf.Owner:GetViewModel():SetPlaybackRate(0.5)
-				inf:SetNextPrimaryFire(CurTime() + 2)
-			end) 
-		elseif ent:IsPlayer() and string.find(ent:GetModel(),"boss") then
-			inf.BaseDamage = ent:GetMaxHealth() * 0.06 
-		elseif ent:IsPlayer() and ent:GetInfoNum("tf_sentrybuster", 0) == 1 then
-			inf.BaseDamage = 20
-			inf.NextIdle = CurTime() + 5
-			timer.Simple(0.04, function()
-				inf:SendWeaponAnimEx(ACT_MELEE_VM_STUN)
-				inf.Owner:GetViewModel():SetPlaybackRate(0.5)
-				inf:SetNextPrimaryFire(CurTime() + 2)
-			end)
-		elseif ent:IsPlayer() and ent:GetInfoNum("tf_merasmus", 0) == 1 then
-			inf.BaseDamage = 20
-			inf.NextIdle = CurTime() + 5
-			timer.Simple(0.04, function()
-				inf:SendWeaponAnimEx(ACT_MELEE_VM_STUN)
-				inf.Owner:GetViewModel():SetPlaybackRate(0.5)
-				inf:SetNextPrimaryFire(CurTime() + 2)
-			end)
-		elseif ent:IsPlayer() and ent:GetInfoNum("tf_giant_robot", 0) == 1 then
-			inf.BaseDamage = ent:GetMaxHealth() * 0.12
-			inf.NextIdle = CurTime() + 5
-			timer.Simple(0.04, function()
-				inf:SendWeaponAnimEx(ACT_MELEE_VM_STUN)
-				inf.Owner:GetViewModel():SetPlaybackRate(0.5)
-				inf:SetNextPrimaryFire(CurTime() + 2)
-			end)
-		elseif ent:IsPlayer() and string.find(ent:GetPlayerClass(),"giant") then
+		if ent:IsPlayer() and ent:IsMiniBoss() then
 			inf.BaseDamage = ent:GetMaxHealth() * 0.12
 			inf.BaseDamage = 195
 			inf.NextIdle = CurTime() + 5

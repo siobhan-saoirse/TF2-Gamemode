@@ -3789,9 +3789,9 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 				snd.SoundName = string.Replace(snd.SoundName, "heavy_laughshort05", "heavy_laughshort02")
 				snd.SoundName = string.Replace(snd.SoundName, "heavy_laughlong03", "heavy_laughlong02")
 			end
-			if (!string.find(snd.SoundName,"announcer_") && !string.find(snd.SoundName,"mvm_")) then
+			if (!string.find(snd.SoundName,"announcer_") && !string.find(snd.SoundName,"/mvm_")) then
 				
-				if snd.Entity:GetInfoNum("tf_player_use_female_models", 0) == 1 then
+				if snd.Entity:GetInfoNum("tf_player_use_female_models", 0) == 1 || snd.Entity:GetInfoNum("civ2_touhou", 0) == 1 then
 					snd.Pitch = 130
 				end 
 			end 

@@ -2,18 +2,18 @@
 // Soldier Response Rule File
 //--------------------------------------------------------------------------------------------------------------
 
-Criterion "SoldierIsKillSpeechObject" "SoldierKillSpeechObject" "1" "required" weight 0
-Criterion "SoldierIsNotStillonFire" "SoldierOnFire" "!=1" "required" weight 0
-Criterion "SoldierIsStillonFire" "SoldierOnFire" "1" "required" weight 0
-Criterion "SoldierNotKillSpeech" "SoldierKillSpeech" "!=1" "required" weight 0
-Criterion "SoldierNotKillSpeechMelee" "SoldierKillSpeechMelee" "!=1" "required" weight 0
+Criterion "SoldierIsKillSpeechObject" "SoldierKillSpeechObject" "1" "required"
+Criterion "SoldierIsNotStillonFire" "SoldierOnFire" "!=1" "required"
+Criterion "SoldierIsStillonFire" "SoldierOnFire" "1" "required"
+Criterion "SoldierNotKillSpeech" "SoldierKillSpeech" "!=1" "required"
+Criterion "SoldierNotKillSpeechMelee" "SoldierKillSpeechMelee" "!=1" "required"
 Criterion "SoldierNotSaidHealThanks" "SoldierSaidHealThanks" "!=1" "required"
-Criterion "SoldierNotRobotNoises" "SoldierRobotNoises" "!=1" "required" weight 0
-Criterion "IsHelpCapSoldier" "SoldierHelpCap" "1" "required" weight 0
+Criterion "SoldierNotRobotNoises" "SoldierRobotNoises" "!=1" "required"
+Criterion "IsHelpCapSoldier" "SoldierHelpCap" "1" "required"
 // Custom criterion
-Criterion "SoldierNotAssistSpeech" "SoldierAssistSpeech" "!=1" "required" weight 0
-Criterion "SoldierNotInvulnerableSpeech" "SoldierInvulnerableSpeech" "!=1" "required" weight 0
-Criterion "SoldierNotAwardSpeech" "SoldierAwardSpeech" "!=1" "required" weight 0
+Criterion "SoldierNotAssistSpeech" "SoldierAssistSpeech" "!=1" "required"
+Criterion "SoldierNotInvulnerableSpeech" "SoldierInvulnerableSpeech" "!=1" "required"
+Criterion "SoldierNotAwardSpeech" "SoldierAwardSpeech" "!=1" "required"
 
 Response PlayerCloakedSpyDemomanSoldier
 {
@@ -673,7 +673,7 @@ Response PlayerStillOnFireSoldier
 }
 Rule PlayerStillOnFireSoldier
 {
-	criteria ConceptFire IsSoldier  SoldierIsStillonFire IsNotDominating
+	criteria ConceptFire IsSoldier SoldierIsStillonFire IsNotDominating
 	ApplyContext "SoldierOnFire:1:7"
 	Response PlayerStillOnFireSoldier
 }
@@ -1011,7 +1011,7 @@ Response MeleeDareCombatSoldier
 }
 Rule MeleeDareCombatSoldier
 {
-	criteria ConceptPlayerBattleCry IsWeaponMelee IsSoldier IsCrosshairEnemy
+	criteria ConceptPlayerBattleCry IsWeaponMelee IsSoldier IsCrossHairEnemy
 	Response MeleeDareCombatSoldier
 }
 //End custom
@@ -1593,12 +1593,12 @@ Rule MvMMoneyPickupSoldier
 //--------------------------------------------------------------------------------------------------------------
 // Auto Speech Cart
 //--------------------------------------------------------------------------------------------------------------
-Criterion "SoldierNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required" weight 0
-Criterion "SoldierNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required" weight 0
-Criterion "SoldierNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required" weight 0
-Criterion "SoldierNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required" weight 0
-Criterion "SoldierNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required" weight 0
-Criterion "SoldierNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required" weight 0
+Criterion "SoldierNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required"
+Criterion "SoldierNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required"
+Criterion "SoldierNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required"
+Criterion "SoldierNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required"
+Criterion "SoldierNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required"
+Criterion "SoldierNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required"
 Response CartMovingBackwardsDefenseSoldier                                                     
 {
 	scene "scenes/Player/Soldier/low/7371.vcd"

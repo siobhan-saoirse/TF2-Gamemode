@@ -2021,7 +2021,7 @@ function GM:PlayerSpawn(ply)
 		end
 	end
 	timer.Simple(0.5, function()
-		if ply:GetPlayerClass() == "engineer" and (string.find(ply:GetModel(),"/bot_") or (bot.TFBot and bot:Team() == TEAM_BLU and string.find(game.GetMap(),"mvm_"))) then 
+		if ply:GetPlayerClass() == "engineer" and (string.find(ply:GetModel(),"/bot_") or (ply.TFBot and ply:Team() == TEAM_BLU and string.find(game.GetMap(),"mvm_"))) then 
 			ply:EmitSound("MVM.Robot_Engineer_Spawn")
 			
 			umsg.Start("TF_PlayGlobalSound")
@@ -2036,6 +2036,13 @@ function GM:PlayerSpawn(ply)
 	ply:ResetDeathFlags()
 	ply:SetNoCollideWithTeammates( true ) 
 	ply.LastWeapon = nil
+	timer.Create("ItsHealing"..ply:EntIndex(), 1, 0, function()
+		if (ply:GetPlayerClass() != "medic") then return end
+		if (!ply:Alive()) then return end
+		if (ply:Health() < ply:GetMaxHealth()) then
+			GAMEMODE:HealPlayer(ply, ply, 2, false, false)
+		end
+	end)
 	if GetConVar("tf_crossover_mode"):GetBool() then
 		if ply:IsHL2() then
 			if ply:Team() == TEAM_RED then
@@ -2241,6 +2248,12 @@ function GM:PlayerSpawn(ply)
 			end
 		end 
 	end)]]
+	
+	umsg.Start("PlayerClassChanged")
+		umsg.Long(ply:EntIndex()) 
+		umsg.String(ply:GetPlayerClass())
+		umsg.String(ply:GetPlayerClass())
+	umsg.End()
 end
 
 function GM:PlayerSetHandsModel( ply, ent )
@@ -2536,8 +2549,8 @@ elseif file.Exists("maps/"..game.GetMap()..".lua", "LUA") then
 end
 
 RunConsoleCommand("sk_player_head", "1")
-RunConsoleCommand("sv_friction", "8")
-RunConsoleCommand("sv_stopspeed", "10")
+RunConsoleCommand("sv_friction", "4")
+RunConsoleCommand("sv_stopspeed", "100")
 --Disables use key on objects (Can Be Re-enabled)
 -- WHAT WERE YOU THINKING
 RunConsoleCommand("sv_playerpickupallowed", "1")

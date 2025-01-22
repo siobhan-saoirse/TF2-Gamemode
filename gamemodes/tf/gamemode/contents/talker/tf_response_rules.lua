@@ -329,25 +329,25 @@ criterion "IsNotSpy" "playerclass" "!=Spy" "required"
 criterion "IsNotEngineer" "playerclass" "!=Engineer" "required"
 
 
-criterion "IsVictimScout" "victimclass" "Scout" "required" weight 0
-criterion "IsVictimSniper" "victimclass" "Sniper" "required" weight 0
-criterion "IsVictimSoldier" "victimclass" "Soldier" "required" weight 0
-criterion "IsVictimDemoman" "victimclass" "Demoman" "required" weight 0
-criterion "IsVictimMedic" "victimclass" "Medic" "required" weight 0
-criterion "IsVictimHeavy" "victimclass" "Heavy" "required" weight 0
-criterion "IsVictimPyro" "victimclass" "Pyro" "required" weight 0
-criterion "IsVictimSpy" "victimclass" "Spy" "required" weight 0
-criterion "IsVictimEngineer" "victimclass" "Engineer" "required"  weight 0
+criterion "IsVictimScout" "victimclass" "Scout" "required"
+criterion "IsVictimSniper" "victimclass" "Sniper" "required"
+criterion "IsVictimSoldier" "victimclass" "Soldier" "required"
+criterion "IsVictimDemoman" "victimclass" "Demoman" "required"
+criterion "IsVictimMedic" "victimclass" "Medic" "required"
+criterion "IsVictimHeavy" "victimclass" "Heavy" "required"
+criterion "IsVictimPyro" "victimclass" "Pyro" "required"
+criterion "IsVictimSpy" "victimclass" "Spy" "required"
+criterion "IsVictimEngineer" "victimclass" "Engineer" "required" 
 
-criterion "IsNotVictimScout" "victimclass" "!=Scout" "required" weight 0
-criterion "IsNotVictimSniper" "victimclass" "!=Sniper" "required" weight 0
-criterion "IsNotVictimSoldier" "victimclass" "!=Soldier" "required" weight 0
-criterion "IsNotVictimDemoman" "victimclass" "!=Demoman" "required" weight 0
-criterion "IsNotVictimMedic" "victimclass" "!=Medic" "required" weight 0
-criterion "IsNotVictimHeavy" "victimclass" "!=Heavy" "required" weight 0
-criterion "IsNotVictimPyro" "victimclass" "!=Pyro" "required" weight 0
-criterion "IsNotVictimSpy" "victimclass" "!=Spy" "required" weight 0
-criterion "IsNotVictimEngineer" "victimclass" "!=Engineer" "required" weight 0
+criterion "IsNotVictimScout" "victimclass" "!=Scout" "required"
+criterion "IsNotVictimSniper" "victimclass" "!=Sniper" "required"
+criterion "IsNotVictimSoldier" "victimclass" "!=Soldier" "required"
+criterion "IsNotVictimDemoman" "victimclass" "!=Demoman" "required"
+criterion "IsNotVictimMedic" "victimclass" "!=Medic" "required"
+criterion "IsNotVictimHeavy" "victimclass" "!=Heavy" "required"
+criterion "IsNotVictimPyro" "victimclass" "!=Pyro" "required"
+criterion "IsNotVictimSpy" "victimclass" "!=Spy" "required"
+criterion "IsNotVictimEngineer" "victimclass" "!=Engineer" "required"
     
 
 
@@ -390,6 +390,7 @@ criterion "WeaponIsScattergunDoubleFestive" "item_name" "Festive Force-a-Nature"
 criterion "WeaponIsPistolScout" "playerweapon" "tf_weapon_pistol_scout" "required"
 criterion "WeaponIsBat" "playerweapon" "tf_weapon_bat" "required"
 criterion "WeaponIsWoodBat" "playerweapon" "tf_weapon_bat_wood" "required"
+criterion "WeaponIsSniperRifle" "playerweapon" "tf_weapon_sniperrifle" "required"
 criterion "WeaponIsSniperrifle" "playerweapon" "tf_weapon_sniperrifle" "required"
 criterion "WeaponIsSMG" "playerweapon" "tf_weapon_smg" "required"
 criterion "WeaponIsChargedSMG" "playerweapon" "tf_weapon_charged_smg" "required"
@@ -520,7 +521,7 @@ criterion "WeaponIsSlap" "item_name" "Hot Hand" "required" weight 10
 criterion "IsBeingHealed" "beinghealed" "1" "required"
 criterion "IsNotBeingHealed" "beinghealed" "!=1" "required"
 criterion "IsCritical" "damagecritical" "1" "required"
-criterion "IsNotDominating" "IsDominating" "!=1" "required" weight 0
+criterion "IsNotDominating" "IsDominating" "!=1" "required"
 
 
 criterion "IsCrossHairEnemy" "crosshair_enemy" "Yes" "required" 
@@ -562,7 +563,7 @@ criterion "TimeFiringMinigunShort" "minigunfiretime" ">4.0,<=8.0" required
 criterion "TimeFiringMinigunLong" "minigunfiretime" ">8.0,<=15.0" required
 criterion "TimeFiringMinigunReallyLong" "minigunfiretime" ">15.0" required
 criterion "ConceptFireMinigunTalk" "Concept" "TLK_FIREMINIGUN" "required"
-Criterion "NotDefendOnThePointSpeech" "worldDefendOnThePointSpeech" "!=1" "required" weight 0
+Criterion "NotDefendOnThePointSpeech" "worldDefendOnThePointSpeech" "!=1" "required"
 
 criterion "IsAprilFoolsTaunt" "IsAprilFoolsTaunt" "1" "required" weight 100
 criterion "IsHalloweenTaunt" "IsHalloweenTaunt" "1" "required" weight 100
@@ -696,6 +697,144 @@ criterion "IsCompWinner"	"IsCompWinner" "1" required
 criterion "ConceptPlayerGameOverComp" "Concept" "TLK_GAME_OVER_COMP" required
 criterion "ConceptPlayerMatchOverComp" "Concept" "TLK_MATCH_OVER_COMP" required
 
+Criterion "DemomanIsKillSpeechObject" "DemomanKillSpeechObject" "1" "required"
+Criterion "DemomanIsNotStillonFire" "DemomanOnFire" "!=1" "required"
+Criterion "DemomanIsStillonFire" "DemomanOnFire" "1" "required"
+Criterion "DemomanNotKillSpeech" "DemomanKillSpeech" "!=1" "required"
+Criterion "DemomanNotKillSpeechMelee" "DemomanKillSpeechMelee" "!=1" "required"
+Criterion "DemomanNotSaidHealThanks" "DemomanSaidHealThanks" "!=1" "required"
+Criterion "IsHelpCapDemoman" "DemomanHelpCap" "1" "required"
+// Custom stuff
+Criterion "DemomanNotInvulnerableSpeech" "DemomanInvulnerableSpeech" "!=1" "required"
+Criterion "DemomanNotAssistSpeech" "DemomanAssistSpeech" "!=1" "required"
+Criterion "IsDrunk" "NotSober" "1" "required"
+Criterion "DemomanNotAwardSpeech" "DemomanAwardSpeech" "!=1" "required"
+
+Criterion "EngineerIsNotStillonFire" "EngineerOnFire" "!=1" "required"
+Criterion "EngineerIsStillonFire" "EngineerOnFire" "1" "required"
+Criterion "EngineerNotKillSpeech" "EngineerKillSpeech" "!=1" "required"
+Criterion "EngineerNotKillSpeechMelee" "EngineerKillSpeechMelee" "!=1" "required"
+Criterion "EngineerNotSaidHealThanks" "EngineerSaidHealThanks" "!=1" "required"
+Criterion "IsHelpCapEngineer" "EngineerHelpCap" "1" "required"
+// Custom stuff
+Criterion "EngineerNotAssistSpeech" "EngineerAssistSpeech" "!=1" "required"
+Criterion "IsEngyFistSwung" "EngyFistSwung" "1" "required"
+Criterion "IsNotEngyFistSwung" "EngyFistSwung" "!=1" "required"
+Criterion "EngineerNotInvulnerableSpeech" "EngineerInvulnerableSpeech" "!=1" "required"
+Criterion "IsMiniSentryKill" "MiniSentryKill" "1" "required"
+Criterion "IsSentryKill" "SentryKill" "1" "required"
+
+
+Criterion "HeavyIsKillSpeechObject" "HeavyKillSpeechObject" "1" "required"
+Criterion "HeavyIsNotStillonFire" "HeavyOnFire" "!=1" "required"
+Criterion "HeavyIsStillonFire" "HeavyOnFire" "1" "required"
+Criterion "HeavyNotInvulnerableSpeech" "HeavyInvulnerableSpeech" "!=1" "required"
+Criterion "HeavyNotKillSpeech" "HeavyKillSpeech" "!=1" "required"
+Criterion "HeavyNotKillSpeechMelee" "HeavyKillSpeechMelee" "!=1" "required"
+Criterion "HeavyNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required"
+Criterion "HeavyNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required"
+Criterion "HeavyNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required"
+Criterion "HeavyNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required"
+Criterion "HeavyNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required"
+Criterion "HeavyNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required"
+Criterion "HeavyNotSaidHealThanks" "HeavySaidHealThanks" "!=1" "required"
+Criterion "IsHelpCapHeavy" "HeavyHelpCap" "1" "required"
+// Custom stuff
+Criterion "HeavyNotMedicSpeech" "HeavyMedicSpeech" "!=1" "required"
+Criterion "HeavyNotAwardSpeech" "HeavyAwardSpeech" "!=1" "required"
+Criterion "HeavyNotAssistSpeech" "HeavyAssistSpeech" "!=1" "required"
+Criterion "IsHeavyFistsSwung" "HeavyFistsSwung" "1" "required"
+Criterion "IsNotHeavyFistsSwung" "HeavyFistsSwung" "!=1" "required"
+Criterion "IsHeavyFistsSwinging" "HeavyFistsSwinging" "1" "required"
+Criterion "IsNotHeavyFistsSwinging" "HeavyFistsSwinging" "!=1" "required"
+Criterion "NotGunTauntHeavy" "GunTauntHeavy" "!=1" "required"
+Criterion "IsNotDaring" "IsDaring" "!=1" "required"
+Criterion "HeavyNotKillSpeechObject" "HeavyKillSpeechObject" "!=1" "required"
+Criterion "HeavyNotShinySpeech" "HeavyShinySpeech" "!=1" "required"
+Criterion "HeavyNotFairyNoises" "HeavyFairyNoises" "!=1" "required"
+
+Criterion "MedicIsKillSpeechObject" "MedicKillSpeechObject" "1" "required"
+Criterion "MedicIsNotStillonFire" "MedicOnFire" "!=1" "required"
+Criterion "MedicIsStillonFire" "MedicOnFire" "1" "required"
+Criterion "MedicNotInvulnerableSpeech" "MedicInvulnerableSpeech" "!=1" "required"
+Criterion "MedicNotKillSpeech" "MedicKillSpeech" "!=1" "required"
+Criterion "MedicNotKillSpeechMelee" "MedicKillSpeechMelee" "!=1" "required"
+Criterion "MedicNotSaidHealThanks" "MedicSaidHealThanks" "!=1" "required"
+Criterion "IsHelpCapMedic" "MedicHelpCap" "1" "required"
+// Custom stuff
+Criterion "MedicNotAssistSpeech" "MedicAssistSpeech" "!=1" "required"
+
+
+Criterion "PyroIsNotStillonFire" "PyroOnFire" "!=1" "required"
+Criterion "PyroIsStillonFire" "PyroOnFire" "1" "required"
+Criterion "PyroNotKillSpeech" "PyroKillSpeech" "!=1" "required"
+Criterion "PyroNotKillSpeechMelee" "PyroKillSpeechMelee" "!=1" "required"
+Criterion "PyroNotSaidHealThanks" "PyroSaidHealThanks" "!=1" "required"
+Criterion "IsHelpCapPyro" "PyroHelpCap" "1" "required"
+// Custom stuff
+Criterion "PyroNotAssistSpeech" "PyroAssistSpeech" "!=1" "required"
+Criterion "PyroNotInvulnerableSpeech" "PyroInvulnerableSpeech" "!=1" "required"
+Criterion "PyroNotKillSpeechSapper" "PyroKillSpeechSapper" "!=1" "required"
+
+
+Criterion "ScoutIsKillSpeechObject" "ScoutKillSpeechObject" "1" "required"
+Criterion "ScoutIsNotStillonFire" "ScoutOnFire" "!=1" "required"
+Criterion "ScoutIsStillonFire" "ScoutOnFire" "1" "required"
+Criterion "ScoutNotKillSpeech" "ScoutKillSpeech" "!=1" "required"
+Criterion "ScoutNotKillSpeechMelee" "ScoutKillSpeechMelee" "!=1" "required"
+Criterion "ScoutNotKillSpeechMeleeFat" "ScoutKillSpeechMeleeFat" "!=1" "required"
+Criterion "ScoutNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required"
+Criterion "ScoutNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required"
+Criterion "ScoutNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required"
+Criterion "ScoutNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required"
+Criterion "ScoutNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required"
+Criterion "ScoutNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required"
+Criterion "ScoutNotSaidHealThanks" "ScoutSaidHealThanks" "!=1" "required"
+Criterion "IsHelpCapScout" "ScoutHelpCap" "1" "required"
+Criterion "NotSaidScoutHitBallSpeech" "ScoutHitBallSpeech" "!=1" "required"
+Criterion "NotScoutGrabbedIntelligence" "ScoutGrabbedIntelligence" "!=1" "required"
+Criterion "ScoutIsNotInvuln" "ScoutInvuln" "!=1" "required"
+//Custom stuff
+Criterion "ScoutNotInvulnerableSpeech" "ScoutInvulnerableSpeech" "!=1" "required"
+Criterion "ScoutNotAssistSpeech" "ScoutAssistSpeech" "!=1" "required"
+Criterion "ScoutNotDoubleJumpSpeech" "ScoutDoubleJumpSpeech" "!=1" "required"
+Criterion "ScoutNotAwardSpeech" "ScoutAwardSpeech" "!=1" "required"
+Criterion "ScoutNotDrinkReadySpeech" "ScoutDrinkReadySpeech" "!=1" "required"
+Criterion "ScoutIsNotCrit" "ScoutIsCrit" "1" "required"
+Criterion "ScoutHasFired" "ScoutFired" "1" "required"
+
+Criterion "SniperIsNotStillonFire" "SniperOnFire" "!=1" "required"
+Criterion "SniperIsStillonFire" "SniperOnFire" "1" "required"
+Criterion "SniperNotKillSpeech" "SniperKillSpeech" "!=1" "required"
+Criterion "SniperNotKillSpeechMelee" "SniperKillSpeechMelee" "!=1" "required"
+Criterion "SniperNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required"
+Criterion "SniperNotSaidHealThanks" "SniperSaidHealThanks" "!=1" "required"
+Criterion "IsHelpCapSniper" "SniperHelpCap" "1" "required"
+// Custom stuff
+Criterion "SniperNotInvulnerableSpeech" "SniperInvulnerableSpeech" "!=1" "required"
+Criterion "SniperNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required"
+Criterion "SniperNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required"
+Criterion "SniperNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required"
+Criterion "SniperNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required"
+Criterion "SniperNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required"
+Criterion "SniperNotAwardSpeech" "SniperAwardSpeech" "!=1" "required"
+Criterion "SniperNotAssistSpeech" "SniperAssistSpeech" "!=1" "required"
+Criterion "SniperNotHoldStill" "SniperHoldStill" "!=1" "required"
+
+Criterion "SpyIsNotStillonFire" "SpyOnFire" "!=1" "required"
+Criterion "SpyIsStillonFire" "SpyOnFire" "1" "required"
+Criterion "SpyNotKillSpeech" "SpyKillSpeech" "!=1" "required"
+Criterion "SpyNotKillSpeechMelee" "SpyKillSpeechMelee" "!=1" "required"
+Criterion "SpyNotSaidHealThanks" "SpySaidHealThanks" "!=1" "required"
+Criterion "IsHelpCapSpy" "SpyHelpCap" "1" "required"
+// Custom stuff
+Criterion "EngineerWasKilled" "EngyKilled" "1" "required"
+Criterion "SapperDestroyed" "LostSapper" "1" "required"
+Criterion "ToysMurdered" "ObjectDestroyed" "1" "required"
+Criterion "NotSapSpeech" "SapKillSpeech" "!=1" "required"
+Criterion "NotSapperLostSpeech" "SpySapperLostSpeech" "!=1" "required"
+Criterion "SpyNotAssistSpeech" "SpyAssistSpeech" "!=1" "required"
+Criterion "SpyNotInvulnerableSpeech" "SpyInvulnerableSpeech" "!=1" "required"
 // Test rules
 #include "talker/tf.lua"
 #include "talker/Heavy.lua"

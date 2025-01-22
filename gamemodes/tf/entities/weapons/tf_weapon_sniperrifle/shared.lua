@@ -204,7 +204,7 @@ function SWEP:ZoomIn()
 		self.Owner:DoAnimationEvent(ACT_MP_DEPLOYED, true)
 		--self.Owner:DrawViewModel(false)
 		self.ChargeTimerStart = CurTime()
-		self.Owner:SetFOV(20, 0.2	)
+		self.Owner:SetFOV(20, 0.1)
 	end
 	
 	if not self.DisableZoomSpeedPenalty then
@@ -240,7 +240,7 @@ function SWEP:ZoomOut()
 			umsg.Bool(false)
 		umsg.End()
 		
-		self.Owner:SetFOV(0, 0.2)
+		self.Owner:SetFOV(0, 0.1)
 		--self.Owner:DrawViewModel(true)
 		self.ChargeTimerStart = nil
 	end
@@ -456,14 +456,18 @@ end
 
 if SERVER then
 
-hook.Add("PreScaleDamage", "BackstabSetDamage2", function(ent, hitgroup, dmginfo)
-	if dmginfo:GetInflictor().ZoomStatus then	
-		if dmginfo:GetInflictor():GetItemData().model_player == "models/workshop/weapons/c_models/c_pro_rifle/c_pro_rifle.mdl" then
-			ent:AddDeathFlag(DF_DECAP)
-		else
-			ent:AddDeathFlag(DF_HEADSHOT)
+hook.Add("EntityTakeDamage", "BackstabSetDamage2", function(ent, dmginfo)
+	
+	if (dmginfo:GetInflictor().IsTFWeapon and dmginfo:GetInflictor():GetItemData().model_player ~= nil) then  
+		if dmginfo:GetInflictor():GetItemData().model_player == "models/weapons/c_models/c_tfc_sniperrifle/c_tfc_sniperrifle.mdl" or
+			dmginfo:GetInflictor():GetItemData().model_player == "models/workshop/weapons/c_models/c_sr3_punch/c_sr3_punch.mdl" then
+			ent:AddDeathFlag(DF_GIB)
+		elseif dmginfo:GetInflictor():GetItemData().model_player == "models/workshop/weapons/c_models/c_pro_rifle/c_pro_rifle.mdl" then
+			if (dmginfo:GetInflictor().ZoomStatus) then
+				ent:AddDeathFlag(DF_DECAP)
+			end
 		end
-	end
+	end 
 end)
 
 end

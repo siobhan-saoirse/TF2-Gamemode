@@ -7,7 +7,7 @@ ENT.AdminOnly = true
 ENT.IsBoss = false
 ENT.Difficulty = 3
 ENT.PrintName		= "Steel Gauntlet Pusher"
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 
 list.Set( "NPC", "mvm_bot_steelgauntletpusher", {
 	Name = ENT.PrintName,

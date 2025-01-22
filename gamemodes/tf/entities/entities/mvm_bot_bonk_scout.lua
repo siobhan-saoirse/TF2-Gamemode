@@ -6,7 +6,7 @@ ENT.Spawnable = false
 ENT.AdminOnly = true 
 ENT.Difficulty = 3
 ENT.PrintName		= "Bonk! Scout"
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 ENT.PreferredIcon = "hud/leaderboard_class_scout_bonk"
 ENT.Items = {"Bonk! Atomic Punch","Atomizer","Bonk Helm"}
 

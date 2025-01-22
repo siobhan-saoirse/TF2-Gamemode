@@ -443,5 +443,6 @@ end
 list.Set( "NPC", "boss_cart", {
 	Name = "Undentified Machine Type 2",
 	Class = "boss_cart",
-	Category = "TF2: Raid"
+	Category = "TFBots: Raid",
+	AdminOnly = true
 })

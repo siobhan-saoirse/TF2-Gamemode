@@ -6,7 +6,7 @@ ENT.Spawnable = false
 ENT.AdminOnly = true
 ENT.Difficulty = 3
 ENT.PrintName		= "Melee Scout (Expert)"
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 ENT.PreferredName = "Scout"
 ENT.PreferredIcon = "hud/leaderboard_class_scout"
 

@@ -559,17 +559,10 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 						
 					end
 				end
+				if (!bot.IsL4DZombie) then
+					bot:SetPlayerClass(table.Random(classtb)) -- change to different class unrelated to the regular classes
+				end
 				timer.Simple(0.1, function()
-					local oldclass = bot:GetPlayerClass()
-					
-					if (!bot.IsL4DZombie) then
-						bot:SetPlayerClass(table.Random(classtb)) -- change to different class unrelated to the regular classes
-					end
-					timer.Simple(0.2, function()
-					
-						if (!bot.IsL4DZombie) then
-							bot:SetPlayerClass(oldclass)
-						end
 						if (--[[bot.IsL4DZombie and ]]!string.find(bot:GetModel(),"/bot_")) then
 							RandomWeapon2(bot, "primary")
 							RandomWeapon2(bot, "secondary")
@@ -578,12 +571,8 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 							RandomCosmetic(bot, "misc")
 							RandomCosmetic(bot, table.Random({"hat","head"}))
 						end
-
-					end)
 				end)
-				timer.Simple(1, function()
-					bot:SetFOV(75, 0) 
-				end)
+				bot:SetFOV(90, 0) 
 		end
 	end
 end)
@@ -597,6 +586,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 		cmd:ClearMovement()
 		cmd:ClearButtons()
 
+		if (GetConVar("ai_disabled"):GetBool()) then return end
 		if (!IsValid(bot.TargetEnt)) then 
 			if (math.random(1,300) == 1) then
 				bot.TargetEnt = lookForNearestPlayer(bot)
@@ -856,7 +846,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 
 		if !bot.LastPath then return end
 		local curgoal = bot.LastPath[bot.CurSegment]
-		local iszoomed = (IsValid(bot.TargetEnt) and IsValid(bot:GetActiveWeapon()) and bot.playerclass == "Sniper" and bot:GetActiveWeapon():EntIndex() == bot:GetWeapons()[1]:EntIndex() and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 2500 and bot:Visible(bot.TargetEnt))
+		local iszoomed = (IsValid(bot.TargetEnt) and IsValid(bot:GetActiveWeapon()) and bot.playerclass == "Sniper" and bot:GetActiveWeapon():GetClass() == "tf_weapon_sniperrifle" and bot:GetActiveWeapon():EntIndex() == bot:GetWeapons()[1]:EntIndex() and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 2500 and bot:Visible(bot.TargetEnt))
 		-- got nowhere to go, why keep moving?
 		if !curgoal then
 			mv:SetForwardSpeed(0)
@@ -899,13 +889,6 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				end
 			end
 
-			if (iszoomed) then
-				if (bot:Visible(bot.TargetEnt)) then
-					mv:SetForwardSpeed(0)
-					mv:SetMoveAngles(Angle(0,0,0))
-					mv:SetSideSpeed(0)
-				end
-			end
 				
 			if IsValid(bot.TargetEnt) and bot.TargetEnt:Health() > 0 then
 				if (bot:GetPlayerClass() != "tank_l4d") then
@@ -930,6 +913,14 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					lerp = 4
 				end
 				bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * lerp, bot:EyeAngles(), (shouldvegoneforthehead - bot:GetShootPos()):Angle()))
+			end
+			if (iszoomed) then
+				if (bot:Visible(bot.TargetEnt)) then
+					mv:SetForwardSpeed(0)
+					mv:SetMoveAngles(Angle(0,0,0))
+					mv:SetSideSpeed(0)
+					return
+				end
 			end
 			if IsValid(bot.intelcarrier) and !IsValid(bot.TargetEnt) and bot:GetPos():Distance(bot.intelcarrier:GetPos()) < 6000 and bot.intelcarrier:Health() > 0 then
 				if (bot:GetPlayerClass() != "tank_l4d") then
@@ -983,6 +974,7 @@ end)
 hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 	local buttons = 0
 	if bot.TFBot then
+		if (GetConVar("ai_disabled"):GetBool()) then return end
 		-- if our targetent is not alive, don't do anything until it's nil
 		
 		local controller = bot.ControllerBot
@@ -1391,6 +1383,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			local controller = bot.ControllerBot
 			cmd:ClearMovement()
 			cmd:ClearButtons()
+			if (GetConVar("ai_disabled"):GetBool()) then return end
 			if (IsValid(bot.TargetEnt)) then
 				if (bot:IsFriendly(bot.TargetEnt) and bot.playerclass != "Medic") then -- can we please get along? unless if you're healing...
 					bot.TargetEnt = nil
@@ -1640,7 +1633,7 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 
 									end
 								else 
-									if (IsValid(bot:GetActiveWeapon()) and bot.TargetEnt:Health() > 0 and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 2600 * bot:GetModelScale()) then
+									if ((!bot.VisionLimits and IsValid(bot:GetActiveWeapon()) and bot.TargetEnt:Health() > 0 and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 2600 * bot:GetModelScale()) or (bot.VisionLimits and IsValid(bot:GetActiveWeapon()) and bot.TargetEnt:Health() > 0 and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < bot.VisionLimits)) then
 										if (bot:GetPlayerClass() != "samuraidemo" and IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging) then
 										
 										else

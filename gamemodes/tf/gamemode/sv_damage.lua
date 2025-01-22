@@ -357,15 +357,12 @@ function GM:CommonScaleDamage(ent, hitgroup, dmginfo)
 
 	if (dmginfo:IsDamageType(DMG_CLUB)) then
 
-		dmginfo:SetDamagePosition(dmginfo:GetDamageForce())
+		--dmginfo:SetDamagePosition(dmginfo:GetDamageForce())
 		
 	end
 	
 	if (string.find(game.GetMap(),"mvm_") and GAMEMODE:EntityTeam(ent) == TEAM_RED) then
 		--ent:SetVelocity(dmginfo:GetDamageForce() * (dmginfo:GetDamage()) * 0.5)
-	end
-	if (ent:IsPlayer()) then
-		dmginfo:SetDamageForce((dmginfo:GetDamageForce() / ent:GetModelScale()))
 	end
 	if (inf.IsTFWeapon and (string.find(inf:GetClass(),"sword") or string.find(inf:GetClass(),"katana"))) then
 		ent:AddDeathFlag(DF_DECAP)
@@ -513,8 +510,8 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			ent:SetViewPunchAngles(Angle(-2,0,0))
 			if not ent.NextFlinch or CurTime() > ent.NextFlinch then
 				if (!ent:IsHL2()) then
-					ent:DoTauntEvent("a_flinch01", true)
-					ent.NextFlinch = CurTime() + ent:SequenceDuration(ent:LookupSequence("a_flinch01"))
+					ent:DoTauntEvent(ent:GetSequenceName(ent:SelectWeightedSequence(ACT_MP_GESTURE_FLINCH_CHEST)), true)
+					ent.NextFlinch = CurTime() + ent:SequenceDuration(ent:SelectWeightedSequence(ACT_MP_GESTURE_FLINCH_CHEST))
 				end
 			end
 		end
@@ -717,6 +714,11 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		if (attacker:IsPlayer() && attacker:IsHL2()) then
 			-- too overpowered! eugh!
 			--dmginfo:SetDamage(dmginfo:GetDamage() * 1.5)
+		end
+	end
+	if (attacker:IsPlayer()) then
+		if (attacker:GetPlayerClass() == "captain_punch" or attacker:GetPlayerClass() == "chiefpyro" or attacker:GetPlayerClass() == "chieftavish") then
+			dmginfo:ScaleDamage(5)
 		end
 	end
 	if ent:IsTFPlayer() then
@@ -944,6 +946,13 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		sound.Play( "FX_RicochetSound.Ricochet", dmginfo:GetDamagePosition(), 75, 100, 1 )
 		ent:SetBloodColor(DONT_BLEED)
 		dmginfo:SetDamage(0)
+	end
+	if (ent:IsPlayer()) then
+		if (ent:IsMiniBoss()) then
+			dmginfo:SetDamageForce(((dmginfo:GetDamageForce() / ent:GetModelScale())) * 0.3)
+		else
+			dmginfo:SetDamageForce((dmginfo:GetDamageForce() / ent:GetModelScale()))
+		end
 	end
 end
 

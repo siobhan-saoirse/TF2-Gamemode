@@ -168,7 +168,7 @@ function SWEP:DrawWorldModel()
 			if (boneid == _Owner:LookupBone("weapon_bone")) then
 				local offsetVec = Vector(0, -2, 5)
 				if (string.find(self.WorldModel,"_pist")) then
-					offsetVec = Vector(0, -2, 0)
+					offsetVec = Vector(0, -2, 5)
 				end
 				local offsetAng = Angle(-90, -90, 0)
 				local newPos, newAng = LocalToWorld(offsetVec, offsetAng, matrix:GetTranslation(), matrix:GetAngles())

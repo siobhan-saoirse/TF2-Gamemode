@@ -321,7 +321,7 @@ function PlayResponse(ent, response, nospeech, concept)
 		if not nospeech then
 			 
 			if tf_voice_cooldown:GetBool() then
-				if (time) then
+				if (time and !string.find(concept,"TLK_PLAYER_")) then
 					--print("vcd time: "..1.5)
 					ent.NextSpeak = CurTime() + time
 				else
@@ -1241,7 +1241,7 @@ function META:SpeakWithEnemyCrosshair(concept, nospeech, dbg)
 	self.Concept = tostring(concept)
 	
 	-- Random number
-	self.randomnum = math.random(0,100)
+	self.randomnum = math.random(0,100) 
 	
 	-- Current weapon
 	if IsValid(self:GetActiveWeapon()) then
@@ -1250,7 +1250,7 @@ function META:SpeakWithEnemyCrosshair(concept, nospeech, dbg)
 				self.playerweapon = "tf_weapon_wrench"
 			elseif (self:GetPlayerClass() == "heavy") then
 				self.playerweapon = "tf_weapon_fists"
-			elseif (self:GetPlayerClass() == "pyro") then
+			elseif (self:GetPlayerClass() == "pyro") then 
 				self.playerweapon = "tf_weapon_fireaxe"
 			elseif (self:GetPlayerClass() == "demoman") then
 				self.playerweapon = "tf_weapon_bottle"
@@ -1565,7 +1565,7 @@ function META:Taunt(concept, nospeech, dbg)
 		end 
 	end
 	self.crosshair_on = class
-	
+	 
 	-- Temporary
 	self.GameRound = 5
 	if self:IsLoser() then

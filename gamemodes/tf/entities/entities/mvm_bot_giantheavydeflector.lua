@@ -8,7 +8,7 @@ ENT.IsBoss = true
 ENT.Difficulty = 3
 ENT.PrintName		= "Giant Deflector Heavy"
 ENT.Items = {"U-clank-a","Deflector"}
-ENT.Category		= "TFBots - MVM"
+ENT.Category		= "TFBots: MVM"
 ENT.PreferredIcon = "hud/leaderboard_class_heavy_deflector" 
 list.Set( "NPC", "mvm_bot_giantheavydeflector", {
 	Name = ENT.PrintName,

@@ -250,6 +250,9 @@ for k, v in pairs(items_game["items"]) do
         if tf_lang.GetRaw(v.item_name) == "Spy-cicle" then
 			v.item_class = "tf_weapon_knife_icicle" 
         end
+        if tf_lang.GetRaw(v.item_name) == "Sharp Dresser" then
+			v.item_class = "tf_weapon_knife_sh" 
+        end
         if tf_lang.GetRaw(v.item_name) == "Escape Plan" then
 			v.item_class = "tf_weapon_pickaxe" 
 		end

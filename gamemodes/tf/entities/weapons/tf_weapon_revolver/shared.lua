@@ -51,7 +51,7 @@ SWEP.IsRapidFire = false
 
 -- Ambassador properties
 SWEP.AccuracyRecoveryStartDelay = 0.5
-SWEP.AccuracyRecoveryDelay = 0.75
+SWEP.AccuracyRecoveryDelay = 0.5
 
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = false
@@ -257,7 +257,7 @@ function SWEP:Think()
 		if self.NextEndRecovery then
 			local diff = self.NextEndRecovery - CurTime()
 			local r = math.Clamp(diff/self.AccuracyRecoveryDelay, 0, 1)
-			self.CrosshairScale = Lerp(r, 1, self.CrosshairMaxScale)
+			self.CrosshairScale = 1
 			self.BulletSpread = Lerp(r, self.MinSpread, self.MaxSpread)
 			
 			if diff<=0 then

@@ -2,17 +2,6 @@
 // Medic Response Rule File
 //--------------------------------------------------------------------------------------------------------------
 
-Criterion "MedicIsKillSpeechObject" "MedicKillSpeechObject" "1" "required" weight 0
-Criterion "MedicIsNotStillonFire" "MedicOnFire" "!=1" "required" weight 0
-Criterion "MedicIsStillonFire" "MedicOnFire" "1" "required" weight 0
-Criterion "MedicNotInvulnerableSpeech" "MedicInvulnerableSpeech" "!=1" "required" weight 0
-Criterion "MedicNotKillSpeech" "MedicKillSpeech" "!=1" "required" weight 0
-Criterion "MedicNotKillSpeechMelee" "MedicKillSpeechMelee" "!=1" "required" weight 0
-Criterion "MedicNotSaidHealThanks" "MedicSaidHealThanks" "!=1" "required"
-Criterion "IsHelpCapMedic" "MedicHelpCap" "1" "required" weight 0
-// Custom stuff
-Criterion "MedicNotAssistSpeech" "MedicAssistSpeech" "!=1" "required" weight 0
-
 
 Response MedicChargeReady
 {
@@ -483,7 +472,7 @@ Response PlayerStillOnFireMedic
 }
 Rule PlayerStillOnFireMedic
 {
-	criteria ConceptFire IsMedic  MedicIsStillonFire IsNotDominating
+	criteria ConceptFire IsMedic MedicIsStillonFire IsNotDominating
 	ApplyContext "MedicOnFire:1:7"
 	Response PlayerStillOnFireMedic
 }
@@ -834,7 +823,7 @@ Response MeleeDareCombatMedic
 }
 Rule MeleeDareCombatMedic
 {
-	criteria ConceptPlayerBattleCry IsWeaponMelee IsMedic IsCrosshairEnemy
+	criteria ConceptPlayerBattleCry IsWeaponMelee IsMedic IsCrossHairEnemy
 	Response MeleeDareCombatMedic
 }
 //End custom
@@ -1318,12 +1307,12 @@ Rule MvMGiantKilledMedic
 //--------------------------------------------------------------------------------------------------------------
 // Auto Speech Cart
 //--------------------------------------------------------------------------------------------------------------
-Criterion "MedicNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required" weight 0
-Criterion "MedicNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required" weight 0
-Criterion "MedicNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required" weight 0
-Criterion "MedicNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required" weight 0
-Criterion "MedicNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required" weight 0
-Criterion "MedicNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required" weight 0
+Criterion "MedicNotSaidCartMovingBackwardD" "SaidCartMovingBackwardD" "!=1" "required"
+Criterion "MedicNotSaidCartMovingBackwardO" "SaidCartMovingBackwardO" "!=1" "required"
+Criterion "MedicNotSaidCartMovingForwardD" "SaidCartMovingForwardD" "!=1" "required"
+Criterion "MedicNotSaidCartMovingForwardO" "SaidCartMovingForwardO" "!=1" "required"
+Criterion "MedicNotSaidCartMovingStoppedD" "SaidCartMovingStoppedD" "!=1" "required"
+Criterion "MedicNotSaidCartMovingStoppedO" "SaidCartMovingStoppedO" "!=1" "required"
 Response CartMovingBackwardsDefenseMedic                                                     
 {
 }

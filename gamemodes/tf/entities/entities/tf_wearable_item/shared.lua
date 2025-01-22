@@ -133,6 +133,13 @@ function ENT:Think()
 		end
 	end
 
+	if (IsValid(self.Owner) and string.find(self.Owner:GetModel(),"/player/touhou/")) then
+		if SERVER then
+			self:Remove()
+		end
+		return
+	end
+
 	if (file.Exists(self:GetModel(),"GAME")) then
 		local item = self:GetItemData()
 		if (IsValid(self.Owner)) then
