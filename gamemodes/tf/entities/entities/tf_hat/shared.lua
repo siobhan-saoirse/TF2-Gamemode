@@ -193,7 +193,7 @@ local ActivityTranslateFixTF2 = {}
 if CLIENT then
 	
 	hook.Add("PlayerFireAnimationEvent","OnStepEventPlayStepSound",function( pl, pos, ang, event, name )
-		if (event == 7001 and !pl:GetNWBool("Taunting",false) and !pl:GetNWBool("Congaing",false) and !pl:GetNWBool("Russian",false)) then
+		if ((event == 7001 or event == 7002) and !pl:GetNWBool("Taunting",false) and !pl:GetNWBool("Congaing",false) and !pl:GetNWBool("Russian",false)) then
 			
 			local tr = util.TraceLine( {
 				start = pl:GetPos() + Vector(0,0,72),

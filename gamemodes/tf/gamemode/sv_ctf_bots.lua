@@ -564,12 +564,12 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 				end
 				timer.Simple(0.1, function()
 						if (--[[bot.IsL4DZombie and ]]!string.find(bot:GetModel(),"/bot_")) then
-							RandomWeapon2(bot, "primary")
-							RandomWeapon2(bot, "secondary")
-							RandomWeapon2(bot, "melee")
-							RandomCosmetic(bot, "misc")
-							RandomCosmetic(bot, "misc")
-							RandomCosmetic(bot, table.Random({"hat","head"}))
+							//RandomWeapon2(bot, "primary")
+							//RandomWeapon2(bot, "secondary")
+							//RandomWeapon2(bot, "melee")
+							//RandomCosmetic(bot, "misc")
+							//RandomCosmetic(bot, "misc")
+							//RandomCosmetic(bot, table.Random({"hat","head"}))
 						end
 				end)
 				bot:SetFOV(90, 0) 
