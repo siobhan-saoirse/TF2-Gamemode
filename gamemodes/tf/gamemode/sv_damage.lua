@@ -678,6 +678,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		end
 	elseif inflictor:GetClass()=="entityflame" and ent:IsPlayer() then
 		dmginfo:SetDamageType(DMG_GENERIC)
+		ent:Speak("TLK_ONFIRE")
 	end
 	
 	
@@ -884,7 +885,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	if not ent:IsPlayer() or not ent:Alive() then return end
 	-- Pain and death sounds
 	local hp = ent:Health() - dmginfo:GetDamage()
-	ent:Speak("TLK_PLAYER_EXPRESSION", true)
+	ent:Speak("TLK_PLAYER_EXPRESSION")
 	if (ent.TFBot and att:IsTFPlayer() and !att:IsFriendly(ent) and math.random(1,2) == 1) then
 		ent.TargetEnt = att 
 		for k,v in ipairs(ents.FindInSphere(ent:GetPos(), 800)) do
@@ -897,19 +898,24 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	end
 	if hp<=0 then
 		ent.LastDamageInfo = CopyDamageInfo(dmginfo)
-	elseif not dmginfo:IsFallDamage() and not dmginfo:IsDamageType(DMG_DIRECT) and not dmginfo:IsDamageType(DMG_BURN) and ent:WaterLevel() < 1 and !(inflictor:GetClass()=="tf_entityflame" and inflictor:GetClass()=="tf_flame" and inflictor:GetClass()=="entityflame") then
+	elseif not dmginfo:IsFallDamage() and not dmginfo:IsDamageType(DMG_DIRECT) and not dmginfo:IsDamageType(DMG_BURN) and ent:WaterLevel() < 1 then
 		if attacker:IsPlayer() then
 			if ent:HasGodMode() == false and !ent:IsMiniBoss() then
 				if (!ent.NextPainSound or ent.NextPainSound<CurTime()) then
 					
 					if SERVER and ent.playerclass then
-						
+						 
+						if (ent:HasPlayerState(PLAYERSTATE_ONFIRE)) then
+							ent:Speak("TLK_ONFIRE",true)
+						else
+							ent:Speak("TLK_PLAYER_PAIN",true)
 							attacker:SendLua("Entity("..ent:EntIndex().."):EmitSound(\""..ent.playerclass..".Death\")")	
 							for k,v in ipairs(player.GetAll()) do
 								if (v:EntIndex() != attacker:EntIndex()) then
 									v:SendLua("Entity("..ent:EntIndex().."):EmitSound(\""..ent.playerclass..".ExplosionDeath\")")
 								end
 							end
+						end
 
 						ent.NextPainSound = CurTime() + 1.5
 					end

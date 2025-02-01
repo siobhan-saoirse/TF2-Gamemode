@@ -588,7 +588,7 @@ Response PlayerAttackerPainSpy
 }
 Rule PlayerAttackerPainSpy
 {
-	criteria ConceptAttackerPain IsSpy IsNotDominating
+	criteria ConceptAttackerPain IsSpy
 	Response PlayerAttackerPainSpy
 }
 
@@ -624,7 +624,7 @@ Response PlayerPainSpy
 }
 Rule PlayerPainSpy
 {
-	criteria ConceptPain IsSpy IsNotDominating
+	criteria ConceptPain IsSpy
 	Response PlayerPainSpy
 }
 
@@ -634,7 +634,7 @@ Response PlayerStillOnFireSpy
 }
 Rule PlayerStillOnFireSpy
 {
-	criteria ConceptFire IsSpy SpyIsStillonFire IsNotDominating
+	criteria ConceptFire IsSpy SpyIsStillonFire
 	ApplyContext "SpyOnFire:1:7"
 	Response PlayerStillOnFireSpy
 }

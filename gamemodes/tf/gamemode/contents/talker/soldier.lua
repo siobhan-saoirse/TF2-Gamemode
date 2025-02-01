@@ -623,7 +623,7 @@ Response PlayerAttackerPainSoldier
 }
 Rule PlayerAttackerPainSoldier
 {
-	criteria ConceptAttackerPain IsSoldier IsNotDominating
+	criteria ConceptAttackerPain IsSoldier
 	Response PlayerAttackerPainSoldier
 }
 
@@ -663,7 +663,7 @@ Response PlayerPainSoldier
 }
 Rule PlayerPainSoldier
 {
-	criteria ConceptPain IsSoldier IsNotDominating
+	criteria ConceptPain IsSoldier
 	Response PlayerPainSoldier
 }
 
@@ -673,7 +673,7 @@ Response PlayerStillOnFireSoldier
 }
 Rule PlayerStillOnFireSoldier
 {
-	criteria ConceptFire IsSoldier SoldierIsStillonFire IsNotDominating
+	criteria ConceptFire IsSoldier SoldierIsStillonFire
 	ApplyContext "SoldierOnFire:1:7"
 	Response PlayerStillOnFireSoldier
 }

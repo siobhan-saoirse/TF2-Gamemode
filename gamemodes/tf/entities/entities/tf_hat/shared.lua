@@ -3791,7 +3791,7 @@ hook.Add("EntityEmitSound", "MVMVoices", function(snd)
 			end
 			if (!string.find(snd.SoundName,"announcer_") && !string.find(snd.SoundName,"/mvm_")) then
 				
-				if snd.Entity:GetInfoNum("tf_player_use_female_models", 0) == 1 || snd.Entity:GetInfoNum("civ2_touhou", 0) == 1 then
+				if string.find(snd.Entity:GetModel(),"female") || string.find(snd.Entity:GetModel(),"touhou") then
 					snd.Pitch = 130
 				end 
 			end 

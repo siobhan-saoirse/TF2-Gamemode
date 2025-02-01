@@ -1088,7 +1088,7 @@ Response PlayerAttackerPainScout
 }
 Rule PlayerAttackerPainScout
 {
-	criteria ConceptAttackerPain IsScout IsNotDominating
+	criteria ConceptAttackerPain IsScout
 	Response PlayerAttackerPainScout
 }
 
@@ -1127,7 +1127,7 @@ Response PlayerPainScout
 }
 Rule PlayerPainScout
 {
-	criteria ConceptPain IsScout IsNotDominating
+	criteria ConceptPain IsScout
 	Response PlayerPainScout
 }
 

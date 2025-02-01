@@ -686,7 +686,7 @@ Response PlayerAttackerPainDemoman
 }
 Rule PlayerAttackerPainDemoman
 {
-	criteria ConceptAttackerPain IsDemoman IsNotDominating
+	criteria ConceptAttackerPain IsDemoman
 	Response PlayerAttackerPainDemoman
 }
 
@@ -725,7 +725,7 @@ Response PlayerPainDemoman
 }
 Rule PlayerPainDemoman
 {
-	criteria ConceptPain IsDemoman IsNotDominating
+	criteria ConceptPain IsDemoman
 	Response PlayerPainDemoman
 }
 
@@ -735,7 +735,7 @@ Response PlayerStillOnFireDemoman
 }
 Rule PlayerStillOnFireDemoman
 {
-	criteria ConceptFire IsDemoman DemomanIsStillonFire IsNotDominating
+	criteria ConceptFire IsDemoman DemomanIsStillonFire
 	ApplyContext "DemomanOnFire:1:7"
 	Response PlayerStillOnFireDemoman
 }

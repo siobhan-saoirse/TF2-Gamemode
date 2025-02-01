@@ -458,7 +458,7 @@ if SERVER then
 
 hook.Add("EntityTakeDamage", "BackstabSetDamage2", function(ent, dmginfo)
 	
-	if (dmginfo:GetInflictor().IsTFWeapon and dmginfo:GetInflictor():GetItemData().model_player ~= nil) then  
+	if (dmginfo:GetInflictor().IsTFWeapon and dmginfo:GetInflictor().GetItemData and dmginfo:GetInflictor():GetItemData().model_player ~= nil) then  
 		if dmginfo:GetInflictor():GetItemData().model_player == "models/weapons/c_models/c_tfc_sniperrifle/c_tfc_sniperrifle.mdl" or
 			dmginfo:GetInflictor():GetItemData().model_player == "models/workshop/weapons/c_models/c_sr3_punch/c_sr3_punch.mdl" then
 			ent:AddDeathFlag(DF_GIB)

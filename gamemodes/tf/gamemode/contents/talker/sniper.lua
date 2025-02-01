@@ -1311,7 +1311,7 @@ Response PlayerAttackerPainSniper
 }
 Rule PlayerAttackerPainSniper
 {
-	criteria ConceptAttackerPain IsSniper IsNotDominating
+	criteria ConceptAttackerPain IsSniper
 	Response PlayerAttackerPainSniper
 }
 
@@ -1337,7 +1337,7 @@ Response PlayerPainSniper
 }
 Rule PlayerPainSniper
 {
-	criteria ConceptPain IsSnipe
+	criteria ConceptPain IsSniper
 	Response PlayerPainSniper
 }
 
@@ -1347,7 +1347,7 @@ Response PlayerStillOnFireSniper
 }
 Rule PlayerStillOnFireSniper
 {
-	criteria ConceptFire IsSniper  SniperIsStillonFire IsNotDominating
+	criteria ConceptFire IsSniper SniperIsStillonFire
 	ApplyContext "SniperOnFire:1:7"
 	Response PlayerStillOnFireSniper
 }

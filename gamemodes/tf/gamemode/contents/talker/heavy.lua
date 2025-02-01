@@ -757,7 +757,7 @@ Response PlayerAttackerPainHeavy
 }
 Rule PlayerAttackerPainHeavy
 {
-	criteria ConceptAttackerPain IsHeavy IsNotDominating
+	criteria ConceptAttackerPain IsHeavy
 	Response PlayerAttackerPainHeavy
 }
 
@@ -796,7 +796,7 @@ Response PlayerPainHeavy
 }
 Rule PlayerPainHeavy
 {
-	criteria ConceptPain IsHeavy IsNotDominating
+	criteria ConceptPain IsHeavy
 	Response PlayerPainHeavy
 }
 
@@ -806,7 +806,7 @@ Response PlayerStillOnFireHeavy
 }
 Rule PlayerStillOnFireHeavy
 {
-	criteria ConceptFire IsHeavy HeavyIsStillonFire IsNotDominating
+	criteria ConceptFire IsHeavy HeavyIsStillonFire
 	ApplyContext "HeavyOnFire:1:7"
 	Response PlayerStillOnFireHeavy
 }

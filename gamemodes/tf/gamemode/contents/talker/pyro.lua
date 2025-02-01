@@ -291,7 +291,7 @@ Response PlayerAttackerPainPyro
 }
 Rule PlayerAttackerPainPyro
 {
-	criteria ConceptAttackerPain IsPyro IsNotDominating
+	criteria ConceptAttackerPain IsPyro
 	Response PlayerAttackerPainPyro
 }
 
@@ -319,7 +319,7 @@ Response PlayerPainPyro
 }
 Rule PlayerPainPyro
 {
-	criteria ConceptPain IsPyro IsNotDominating
+	criteria ConceptPain IsPyro
 	Response PlayerPainPyro
 }
 

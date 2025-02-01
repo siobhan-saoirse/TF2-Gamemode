@@ -444,7 +444,7 @@ Response EngySwingFistStart
 }
 Rule EngySwingFistStart
 {
-	criteria ConceptFireWeapon WeaponIsRobotArm IsEngineer EngineerNotKillSpeech IsNotDominating IsNotEngyFistSwung
+	criteria ConceptFireWeapon WeaponIsRobotArm IsEngineer EngineerNotKillSpeech IsNotEngyFistSwung
 	ApplyContext "EngyFistSwung:1:20" //every 20 seconds this line will fire
 	Response EngySwingFistStart
 }
@@ -858,7 +858,7 @@ Response PlayerPainEngineer
 }
 Rule PlayerPainEngineer
 {
-	criteria ConceptPain IsEngineer IsNotDominating
+	criteria ConceptPain IsEngineer
 	Response PlayerPainEngineer
 }
 
@@ -868,7 +868,7 @@ Response PlayerStillOnFireEngineer
 }
 Rule PlayerStillOnFireEngineer
 {
-	criteria ConceptFire IsEngineer EngineerIsStillonFire IsNotDominating
+	criteria ConceptFire IsEngineer EngineerIsStillonFire
 	ApplyContext "EngineerOnFire:1:7"
 	Response PlayerStillOnFireEngineer
 }

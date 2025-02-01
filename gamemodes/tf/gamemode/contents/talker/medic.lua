@@ -420,7 +420,7 @@ Response PlayerAttackerPainMedic
 }
 Rule PlayerAttackerPainMedic
 {
-	criteria ConceptAttackerPain IsMedic IsNotDominating
+	criteria ConceptAttackerPain IsMedic
 	Response PlayerAttackerPainMedic
 }
 
@@ -462,7 +462,7 @@ Response PlayerPainMedic
 }
 Rule PlayerPainMedic
 {
-	criteria ConceptPain IsMedic IsNotDominating
+	criteria ConceptPain IsMedic
 	Response PlayerPainMedic
 }
 
@@ -472,7 +472,7 @@ Response PlayerStillOnFireMedic
 }
 Rule PlayerStillOnFireMedic
 {
-	criteria ConceptFire IsMedic MedicIsStillonFire IsNotDominating
+	criteria ConceptFire IsMedic MedicIsStillonFire
 	ApplyContext "MedicOnFire:1:7"
 	Response PlayerStillOnFireMedic
 }

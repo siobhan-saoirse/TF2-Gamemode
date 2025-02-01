@@ -122,7 +122,7 @@ SWEP.AirblastDeflectSound = Sound("Weapon_FlameThrower.AirBurstAttackDeflect")
 
 SWEP.Primary.ClipSize		= -1
 SWEP.Primary.Ammo			= TF_PRIMARY
-SWEP.Primary.Delay          = 0.04
+SWEP.Primary.Delay          = 0.08
 
 SWEP.Secondary.Automatic	= true
 SWEP.Secondary.Delay		= 0.8

@@ -28,7 +28,7 @@ SWEP.MeleeRange = 66
 SWEP.MaxDamageRampUp = 0
 SWEP.MaxDamageFalloff = 0
 
-SWEP.CriticalChance = 10
+SWEP.CriticalChance = 4
 SWEP.HasThirdpersonCritAnimation = false
 SWEP.NoHitSound = false
 
