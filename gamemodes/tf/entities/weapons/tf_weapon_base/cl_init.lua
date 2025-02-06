@@ -355,8 +355,8 @@ usermessage.Hook("TF2ShellEject", function(msg)
 					if (LocalPlayer():ShouldDrawLocalPlayer()) then
 
 						effectdata:SetEntity( w.Owner:GetViewModel() )
-						effectdata:SetOrigin( w.WModel:GetAttachment(w.WModel:LookupAttachment("eject_brass")).Pos )
-						effectdata:SetAngles( Angle(w.WModel:GetAttachment(w.WModel:LookupAttachment("eject_brass")).Ang.x,w.WModel:GetAttachment(w.WModel:LookupAttachment("eject_brass")).Ang.y,w.WModel:GetAttachment(w.CModel:LookupAttachment("eject_brass")).Ang.z) )
+						effectdata:SetOrigin( w:GetAttachment(w:LookupAttachment("eject_brass")).Pos )
+						effectdata:SetAngles( Angle(w:GetAttachment(w:LookupAttachment("eject_brass")).Ang.x,w:GetAttachment(w:LookupAttachment("eject_brass")).Ang.y,w.WModel:GetAttachment(w.CModel:LookupAttachment("eject_brass")).Ang.z) )
 
 					else
 

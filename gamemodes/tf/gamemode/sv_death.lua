@@ -1474,10 +1474,14 @@ function GM:PlayerDeath(ent, inflictor, attacker)
 	elseif (ent:GetNWBool("Russian")) then
 		ent:ConCommand("tf_taunt_russian_stop")
 	end
-	if (GetConVar("civ2_allow_respawn_with_key_press"):GetBool()) then
-		ent.NextSpawnTime = CurTime() + 2.5
+	if (!GAMEMODE.RoundHasWinner) then
+		if (GetConVar("civ2_allow_respawn_with_key_press"):GetBool()) then
+			ent.NextSpawnTime = CurTime() + 2.5
+		else
+			ent.NextSpawnTime = CurTime() + 7
+		end
 	else
-		ent.NextSpawnTime = CurTime() + 7
+		ent.NextSpawnTime = CurTime() + 15
 	end
 	ent.DeathTime = CurTime()
 	
@@ -1513,7 +1517,7 @@ function GM:PlayerDeath(ent, inflictor, attacker)
 	
 	timer.Stop("Respawn"..ent:EntIndex())
 	timer.Create("Respawn"..ent:EntIndex(), 6.5, 1, function()
-		if (!GAMEMODE.RoundHasWinner) then
+		if (GAMEMODE.RoundHasWinner == false) then
 			if IsValid(animent) then
 				animent:Fire("Kill", "", 0.1)
 			end

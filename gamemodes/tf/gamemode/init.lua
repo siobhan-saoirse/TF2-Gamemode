@@ -28,6 +28,7 @@ response_rules.Load("talker/tf_response_rules.lua")
 util.AddNetworkString("TFRagdollCreate")
 util.AddNetworkString("TauntAnim")
 util.AddNetworkString("TFGestureAnim")
+util.AddNetworkString("UpdatePhonemes")
 
 CreateConVar('tf_opentheorangebox', 0, FCVAR_ARCHIVE + FCVAR_SERVER_CAN_EXECUTE, 'Enables 2007 mode')
 -- Quickfix for Valve's typo in tf_reponse_rules.txt 

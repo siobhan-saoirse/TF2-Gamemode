@@ -568,9 +568,7 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 	end
 	if (ent:IsPlayer() and ent:IsHL2()) then
 		if (att and att:IsPlayer() and !att:IsHL2()) then
-			dmginfo:ScaleDamage(0.3)
-			ent:StopSound("Player.ResistanceMedium")
-			ent:EmitSound("Player.ResistanceMedium")
+			dmginfo:ScaleDamage(0.8)
 		end
 	end
 	if (!att:IsL4D() and !ent:IsL4D()) then
@@ -881,19 +879,22 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 			umsg.End()
 		end
 	end
+	if (attacker:GetClass() == "npc_headcrab_black") then
+		dmginfo:SetDamage(35)
+		if ent~=dmginfo:GetAttacker() and ent:CanBleed() then
+			GAMEMODE:EntityStartBleeding(ent, dmginfo:GetAttacker(), Entity(0), 8)
+		end
+	end
 	
 	if not ent:IsPlayer() or not ent:Alive() then return end
 	-- Pain and death sounds
 	local hp = ent:Health() - dmginfo:GetDamage()
 	ent:Speak("TLK_PLAYER_EXPRESSION")
-	if (ent.TFBot and att:IsTFPlayer() and !att:IsFriendly(ent) and math.random(1,2) == 1) then
-		ent.TargetEnt = att 
-		for k,v in ipairs(ents.FindInSphere(ent:GetPos(), 800)) do
-			if (v.TFBot) then
-				if (v:Team() == ent:Team() and v:EntIndex() ~= ent:EntIndex()) then
-					v.TargetEnt = att
-				end
-			end
+	if (ent.TFBot and att:IsTFPlayer() and !att:IsFriendly(ent)) then
+		if (!timer.Exists("UpdateTarget"..ent:EntIndex())) then
+			timer.Create("UpdateTarget"..ent:EntIndex(),0.5,1, function()
+				ent.TargetEnt = att
+			end)
 		end
 	end
 	if hp<=0 then

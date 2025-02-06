@@ -155,7 +155,7 @@ function ENT:Hit(ent)
 	local dir = self:GetVelocity():GetNormal()
 	
 	if ent:IsTFPlayer() and ent:HasPlayerState(PLAYERSTATE_ONFIRE) then
-		self.minicrit = true
+		self.critical = true
 	end
 	if self.IsSpecial then
 		for k,v in ipairs(ents.FindInSphere(self:GetPos(), 350)) do 

@@ -133,7 +133,7 @@ function SWEP:SecondaryAttack()
 					elseif v:GetLevel() == 3 then 
 						builder.MovedBuildingLevel = 3
 					end
-					v:Fire("Kill", "", 0.1)
+					v:Fire("Kill")
 					self.Owner:Move(2, 0)
 					builder:SetWeaponHoldType("BUILDING_DEPLOYED")
 				end
@@ -147,7 +147,7 @@ function SWEP:SecondaryAttack()
 					elseif v:GetLevel() == 3 then 
 						builder.MovedBuildingLevel = 3
 					end
-					v:Fire("Kill", "", 0.1)
+					v:Fire("Kill")
 					self.Owner:Move(0, 0)
 					builder:SetWeaponHoldType("BUILDING_DEPLOYED")
 				end
@@ -161,7 +161,7 @@ function SWEP:SecondaryAttack()
 					elseif v:GetLevel() == 3 then 
 						builder.MovedBuildingLevel = 3
 					end
-					v:Fire("Kill", "", 0.1)
+					v:Fire("Kill")
 					self.Owner:Move(1, 0)
 					builder:SetWeaponHoldType("BUILDING_DEPLOYED")
 				end
@@ -175,7 +175,7 @@ function SWEP:SecondaryAttack()
 					elseif v:GetLevel() == 3 then 
 						builder.MovedBuildingLevel = 3
 					end
-					v:Fire("Kill", "", 0.1)
+					v:Fire("Kill")
 					self.Owner:Move(1, 1)
 					builder:SetWeaponHoldType("BUILDING_DEPLOYED")
 				end

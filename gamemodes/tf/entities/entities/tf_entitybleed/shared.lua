@@ -106,8 +106,8 @@ function ENT:Think()
 				dmginfo:SetAttacker(self)
 			end
 			dmginfo:SetInflictor(self)
-			dmginfo:SetDamage(DamagePerTick)
-			dmginfo:SetDamageType(DMG_GENERIC)
+			dmginfo:SetDamage(4)
+			dmginfo:SetDamageType(DMG_BUCKSHOT)
 			dmginfo:SetDamagePosition(self.Target:GetPos())
 		self.Target:TakeDamageInfo(dmginfo)
 		self.NextBleed = CurTime() + DamagePeriod

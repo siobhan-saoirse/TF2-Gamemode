@@ -68,8 +68,6 @@ function SWEP:PrimaryAttack()
 	
 	if (!self.Reloading and self:Clip1() >= 0) then
 
-		self:ShootProjectile(self.BulletsPerShot, self.BulletSpread)
-		
 		if (self.Primary.FastDelay) then
 			self:SetNextPrimaryFire(CurTime() + self.Primary.FastDelay)
 			self:SetNextSecondaryFire(CurTime() + self.Primary.FastDelay)
@@ -78,6 +76,7 @@ function SWEP:PrimaryAttack()
 			self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
 		end
 
+		self:ShootProjectile(self.BulletsPerShot, self.BulletSpread)
 		
 		self:SendWeaponAnim(self.VM_PRIMARYATTACK)
 		if SERVER then
@@ -85,6 +84,7 @@ function SWEP:PrimaryAttack()
 		end	
 		self:ShootEffects()
 		self:RustyBulletHole()	
+		
 	end
 	if (self.FastDelay) then
 		self.NextIdle = CurTime() + self:SequenceDuration(self:SelectWeightedSequence(self.VM_PRIMARYATTACK)) / self.Primary.FastDelay

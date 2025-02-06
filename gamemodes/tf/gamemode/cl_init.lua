@@ -88,50 +88,6 @@ hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
 				local newdist = 115
 				local origin = ragdoll:GetPos()
 				if GetConVar("cam_collision"):GetBool() then
-					if (IsValid(ply:GetObserverTarget())) then
-						local killer = ply:GetObserverTarget()
-						local interpolation = ( CurTime() - ply:GetNWFloat("m_flDeathTime",CurTime()) ) / 8
-						interpolation = math.Clamp( interpolation, 0.0, 1.0 );
-
-						local flMinChaseDistance = 16;
-						local flMaxChaseDistance = 96;
-						local flScaleSquared = killer:GetModelScale() * killer:GetModelScale();
-						flMinChaseDistance = flMinChaseDistance * flScaleSquared;
-						flMaxChaseDistance = flMaxChaseDistance * flScaleSquared;
-						m_flObserverChaseDistance = math.Clamp( FrameTime() * 48.0, flMinChaseDistance, flMaxChaseDistance );
-						
-						local aForward = EyeAngles()
-						local vKiller = killer:EyePos() - origin
-						local aKiller = vKiller:Angle()
-						
-						local theangles = LerpAngle(interpolation, aKiller, angles);
-
-						local vForward = angles:Forward()
-						vForward:Normalize()
-						local eyepos = VectorMA( origin, -m_flObserverChaseDistance, vForward, eyepos )
-						
-
-						local thetrace = util.TraceHull( {
-							entity = ply,
-							start = origin,
-							endpos = eyepos,
-							mins = Vector(-6, -6, -6),
-							maxs = Vector(6, 6, 6),
-							collisiongroup = COLLISION_GROUP_NONE,
-							mask = MASK_SOLID,
-						} )
-						
-						m_flObserverChaseDistance = (origin - eyepos):Length()
-
-						local view = {
-							origin = thetrace.HitPos + Vector(0,0,10),
-							angles = theangles,
-							fov = fov,
-							drawviewer = true
-						}	
-						
-						return view
-					end
 					local tr = util.TraceHull{
 						start = origin,
 						endpos = origin - newdist * angles:Forward(),
@@ -142,7 +98,6 @@ hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
 					newdist = 115 * tr.Fraction
 					local view = {
 						origin = ragdoll:GetPos() - ( angles:Forward() * newdist ),
-						angles = angles,
 						fov = fov,
 						drawviewer = true
 					}	
@@ -2250,7 +2205,7 @@ concommand.Add("tf_upgradeweprapidfire2clientonly", function(ply)
 end)
 concommand.Add("l4d_changeclass", L4DClassSelection)
 concommand.Add("l4d2_changeclass", L4DClassSelection)
-concommand.Add("tf_changeclass", ClassSelection)
+concommand.Add("tf_changeclass", ClassSelection) 
 concommand.Add("tf_door", DoorClose)
 concommand.Add("tf_hatpainter", HatPicker)
 concommand.Add("tf_menu", ClassSelection)
@@ -2265,6 +2220,8 @@ concommand.Add("tf_menu", ClassSelection)
 	return --ply:IsAdmin()
 end]]
 
+hook.Add("Think","Phonemes",function()
+end)
 hook.Add( "PlayerSay", "Change class", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass" ) then

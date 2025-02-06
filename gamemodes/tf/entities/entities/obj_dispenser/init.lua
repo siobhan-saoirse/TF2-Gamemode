@@ -239,7 +239,7 @@ function ENT:OnThinkActive()
 	if not self.NextSearch or CurTime()>=self.NextSearch then
 		local removedclients = table.Copy(self.Clients)
 		for _,v in pairs(ents.FindInSphere(self:GetPos(), self.Range)) do
-			if (v:IsPlayer() or v:IsNPC() or v.Base == "npc_tf2base") and not v:IsBuilding() and (self:Team()==TEAM_NEUTRAL or GAMEMODE:EntityTeam(v)==self:Team()) then
+			if (v:IsPlayer() or v.Base == "npc_tf2base") and not v:IsBuilding() and (self:Team()==TEAM_NEUTRAL or GAMEMODE:EntityTeam(v)==self:Team()) then
 				if self.Clients[v] then
 					-- Don't remove that client
 					removedclients[v] = nil

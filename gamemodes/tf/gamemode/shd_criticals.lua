@@ -31,7 +31,10 @@ function GM:ShouldCrit(ent, inf, att, hitgroup, dmginfo)
 		return true
 	end
 	if dmginfo:GetDamage() == 0 and not inf.ZeroDamageCrits then return false end
-	
+	if (ent:HasPlayerState(PLAYERSTATE_CRITBOOST)) then 
+		dmginfo:SetDamageType(bit.bor(dmginfo:GetDamageType(),DMG_ACID))
+		return true 
+	end
 	if att:IsNPC() then
 		if (math.random(1,15) == 1) then
 			return true

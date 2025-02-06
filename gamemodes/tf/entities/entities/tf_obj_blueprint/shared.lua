@@ -59,7 +59,7 @@ function ENT:CalcPos(pl)
 	
 	local origin
 	
-	if pl:Crouching() then
+	if pl:IsFlagSet(FL_DUCKING) then
 		origin = pl:GetPos() + self.BuildYOffsetDuck * vector_up
 	else
 		origin = pl:GetPos() + self.BuildYOffsetStand * vector_up

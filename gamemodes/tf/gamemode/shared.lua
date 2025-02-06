@@ -2716,6 +2716,8 @@ function GM:RoundWin(teamnum)
 		else
 			pl:SendLua([[surface.PlaySound("misc/your_team_lost.wav")]])
 			pl:StripWeapons()
+			net.Start("ActivateTauntCam")
+			net.Send(pl)
 		end
 	end
 

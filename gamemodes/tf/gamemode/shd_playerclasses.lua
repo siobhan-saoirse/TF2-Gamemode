@@ -693,6 +693,27 @@ if CLIENT then
 local function PlayerClassChanged(id, oldclass, newclass, timeout)
 	local pl = Entity(id)
 	
+	
+	if (pl:GetPlayerClass() == "heavy") then
+		pl:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
+	elseif (pl:GetPlayerClass() == "scout") then
+		pl:SetupPhonemeMappings( "player/scout/phonemes/phonemes" )
+	elseif (pl:GetPlayerClass() == "soldier") then
+		pl:SetupPhonemeMappings( "player/soldier/phonemes/phonemes" )
+	elseif (pl:GetPlayerClass() == "demoman") then
+		pl:SetupPhonemeMappings( "player/demo/phonemes/phonemes" )
+	elseif (pl:GetPlayerClass() == "engineer") then
+		pl:SetupPhonemeMappings( "player/engineer/phonemes/phonemes" )
+	elseif (pl:GetPlayerClass() == "medic") then
+		pl:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
+	elseif (pl:GetPlayerClass() == "sniper") then
+		pl:SetupPhonemeMappings( "player/sniper/phonemes/phonemes" )
+	elseif (pl:GetPlayerClass() == "spy") then
+		pl:SetupPhonemeMappings( "player/spy/phonemes/phonemes" )
+	else
+		pl:SetupPhonemeMappings( "phonemes" )
+	end
+	
 	-- Because when the player spawns for the first time, their clientside entity seems not to have been created yet when this is called
 	-- So we keep on trying till we run out of cake, err... I mean, until LocalPlayer() exists
 	-- Also, there is no failsafe exit, because this should never loop forever unless something really wrong happens
@@ -739,26 +760,6 @@ local function PlayerClassChanged(id, oldclass, newclass, timeout)
 		pl.Buildings = tf_objects.GetBuildables(t2.Buildings)
 		pl.BuilderInit = pl.Buildings
 	end
-	
-		if (pl:GetPlayerClass() == "heavy") then
-			pl:SetupPhonemeMappings( "player/heavy/phonemes/phonemes" )
-		elseif (pl:GetPlayerClass() == "scout") then
-			pl:SetupPhonemeMappings( "player/scout/phonemes/phonemes" )
-		elseif (pl:GetPlayerClass() == "soldier") then
-			pl:SetupPhonemeMappings( "player/soldier/phonemes/phonemes" )
-		elseif (pl:GetPlayerClass() == "demoman") then
-			pl:SetupPhonemeMappings( "player/demo/phonemes/phonemes" )
-		elseif (pl:GetPlayerClass() == "engineer") then
-			pl:SetupPhonemeMappings( "player/engineer/phonemes/phonemes" )
-		elseif (pl:GetPlayerClass() == "medic") then
-			pl:SetupPhonemeMappings( "player/medic/phonemes/phonemes" )
-		elseif (pl:GetPlayerClass() == "sniper") then
-			pl:SetupPhonemeMappings( "player/sniper/phonemes/phonemes" )
-		elseif (pl:GetPlayerClass() == "spy") then
-			pl:SetupPhonemeMappings( "player/spy/phonemes/phonemes" )
-		else
-			pl:SetupPhonemeMappings( "phonemes" )
-		end
 end
 
 usermessage.Hook("PlayerClassChanged", function(msg)

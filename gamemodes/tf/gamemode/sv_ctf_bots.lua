@@ -976,7 +976,15 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 	if bot.TFBot then
 		if (GetConVar("ai_disabled"):GetBool()) then return end
 		-- if our targetent is not alive, don't do anything until it's nil
-		
+		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), bot:GetModelRadius() * 1.02)) do
+			if (v:IsPlayer() and !v:IsFriendly(bot)) then
+				if (!timer.Exists("UpdateTarget"..bot:EntIndex())) then
+					timer.Create("UpdateTarget"..bot:EntIndex(),0.5,1, function()
+						bot.TargetEnt = v
+					end)
+				end
+			end
+		end
 		local controller = bot.ControllerBot
 		bot.movement = mv
 		if bot:IsPlayer() and !bot:IsBot() then
@@ -1860,3 +1868,6 @@ concommand.Add("tf_bot_takecontrol", function(ply) local bot = ply:GetObserverTa
 		v:ChatPrint("Difficulty has been set to "..args[1].." ("..diffn..")") 
 	end 
 end)]]
+
+hook.Add( "ShouldCollide", "TFBot_CheckCollisions", function( ent1, ent2 )
+end )

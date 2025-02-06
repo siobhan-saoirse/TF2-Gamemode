@@ -1509,6 +1509,9 @@ end
 function SWEP:Think() 
 	self:Inspect()
 	self:InspectAnimCheck()
+	if (self:GetNWFloat("ReloadTimeMultiplier",1.0) > 0.0) then
+		self.ReloadTimeMultiplier = self:GetNWFloat("ReloadTimeMultiplier",1.0)
+	end
 	if (string.find(self.Owner:GetModel(),"/bot_")) then
 		self.CriticalChance = 0
 	end

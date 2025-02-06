@@ -36,19 +36,19 @@ local ATTRIBUTES = {
 
 ["mult_reload_time_hidden"] = {
 	equip = function(v,weapon,owner)
-		weapon.ReloadTimeMultiplier = v
+		weapon:SetNWFloat("ReloadTimeMultiplier",v)
 	end,
 },
 
 ["mult_reload_time"] = {
 	equip = function(v,weapon,owner)
-		weapon.ReloadTimeMultiplier = v
+		weapon:SetNWFloat("ReloadTimeMultiplier",v)
 	end,
 },
 
 ["hwn_mult_reload_time"] = {
 	equip = function(v,weapon,owner)
-		weapon.ReloadTimeMultiplier = v
+		weapon:SetNWFloat("ReloadTimeMultiplier",v)
 	end,
 },
 
@@ -1055,8 +1055,8 @@ local ATTRIBUTES = {
 	post_damage = function(v,ent,hitgroup,dmginfo)
 		local att = dmginfo:GetAttacker()
 		if att:IsValidEnemy(ent) then
-			--if (!ent:HasPlayerState(PLAYERSTATE_MARKED)) then
-				--ent:AddPlayerState(PLAYERSTATE_MARKED, true)
+			if (!ent:HasPlayerState(PLAYERSTATE_MARKED)) then
+				ent:AddPlayerState(PLAYERSTATE_MARKED, true)
 				if (ent:IsPlayer()) then
 					if SERVER then
 						ent:SendLua('LocalPlayer():GetActiveWeapon():EmitSound("Weapon_Marked_for_Death.Indicator")')
@@ -1065,7 +1065,7 @@ local ATTRIBUTES = {
 				if CLIENT then
 					ent:EmitSound('Weapon_Marked_for_Death.Initial')
 				end
-			--end
+			end
 		end
 	end,
 },

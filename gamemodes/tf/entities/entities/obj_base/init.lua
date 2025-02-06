@@ -178,9 +178,9 @@ function ENT:Upgrade()
 				self.TimeLeft = 0.1
 			else
 				self.Model:SetPlaybackRate(1)
-				self.Duration = self.Model:SequenceDuration()
-				self.TimeLeft = self.Model:SequenceDuration()
-				timer.Simple(self.Model:SequenceDuration(), function()
+				self.Duration = 1.5
+				self.TimeLeft = 1.5
+				timer.Simple(1.5, function()
 					self:EmitSoundEx("Building_Sentrygun.Built")
 				end) 
 			end
@@ -241,9 +241,9 @@ function ENT:Enable()
 				self.TimeLeft = 0.1
 			else
 				self.Model:SetPlaybackRate(1)
-				self.Duration = self.Model:SequenceDuration()
-				self.TimeLeft = self.Model:SequenceDuration()
-				timer.Simple(self.Model:SequenceDuration(), function()
+				self.Duration = 1.5
+				self.TimeLeft = 1.5
+				timer.Simple(1.5, function()
 					self:EmitSoundEx("Building_Sentrygun.Built")
 				end) 
 			end
@@ -271,9 +271,9 @@ function ENT:Enable()
 				self.Duration = 0.1
 				self.TimeLeft = 0.1
 			else
-				self.Duration = self.Model:SequenceDuration()
-				self.TimeLeft = self.Model:SequenceDuration()
-				timer.Simple(self.Model:SequenceDuration(), function()
+				self.Duration = 1.5
+				self.TimeLeft = 1.5
+				timer.Simple(1.5, function()
 					self:EmitSoundEx("Building_Sentrygun.Built")
 				end) 
 			end

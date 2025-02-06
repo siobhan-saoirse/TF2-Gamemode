@@ -35,11 +35,7 @@ function meta:GiveLoadout()
 			if (self:GetInfoNum("tf_give_hl2_weapons",0) == 1 && (!GetConVar("tf_competitive"):GetBool() || self:IsAdmin())) then
 				self:Give("weapon_physgun")
                 
-	            if (ConVarExists("hl2_cl_bob")) then
-                    self:Give("weapon_hl2_physcannon")	
-                else
-				    self:Give("weapon_physcannon")	
-                end
+				self:Give("weapon_physcannon")
 				self:Give("gmod_tool")
 				self:Give("gmod_camera")
 			end

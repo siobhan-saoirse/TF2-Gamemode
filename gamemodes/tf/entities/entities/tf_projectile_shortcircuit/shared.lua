@@ -215,11 +215,7 @@ function ENT:DoExplosion(ent)
 		--[[if self.FastRocket then
 			self:EmitSound(self.ExplosionSoundFast)
 		else]]
-			if self.dt.Critical then
-				self:EmitSound(self.ExplosionSound2, 120, 80)
-			else
-				self:EmitSound(self.ExplosionSound, 120, 100)
-			end
+			sound.Play(self.ExplosionSound, self:GetPos())
 		--end
 		
 		local flags = 0

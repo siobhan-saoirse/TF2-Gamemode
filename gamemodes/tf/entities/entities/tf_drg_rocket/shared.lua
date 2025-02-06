@@ -234,7 +234,7 @@ function ENT:DoExplosion(ent)
 			if self.dt.Critical then
 				self:EmitSound("weapons/cow_mangler_explosion_charge_0"..math.random(1,6)..".wav", 95, 100)
 			else
-				self:EmitSound(self.ExplosionSound, 95, 100)
+				sound.Play(self.ExplosionSound, self:GetPos())
 			end
 		--end
 		

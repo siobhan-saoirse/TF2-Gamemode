@@ -661,13 +661,13 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 			----MsgN("Restarting prefire gesture")
 			if pl.anim_InSwim then
 				--pl.RgChatActiveGesture = ACT_MP_ATTACK_SWIM_PREFIRE
-				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_SWIM_PREFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_SWIM_PREFIRE, true)
 			elseif pl:Crouching() then
 				--pl.RgChatActiveGesture = ACT_MP_ATTACK_CROUCH_PREFIRE
-				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_CROUCH_PREFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_CROUCH_PREFIRE, true)
 			else
 				--pl.RgChatActiveGesture = ACT_MP_ATTACK_STAND_PREFIRE
-				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_STAND_PREFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_STAND_PREFIRE, true)
 			end
 			pl.anim_Deployed = true
 			pl.sniperzoomed = 1
@@ -675,13 +675,13 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 			-- Postfire gesture
 			if pl.anim_InSwim then
 				--pl.RgChatActiveGesture = ACT_MP_ATTACK_SWIM_POSTFIRE
-				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_SWIM_POSTFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_SWIM_POSTFIRE, true)
 			elseif pl:Crouching() then
 				--pl.RgChatActiveGesture = ACT_MP_ATTACK_CROUCH_POSTFIRE
-				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_CROUCH_POSTFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_CROUCH_POSTFIRE, true)
 			else
 				--pl.RgChatActiveGesture = ACT_MP_ATTACK_STAND_POSTFIRE
-				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_STAND_POSTFIRE, true)
+				pl:AnimRestartGesture(GESTURE_SLOT_CUSTOM, ACT_MP_ATTACK_STAND_POSTFIRE, true)
 			end
 			pl.anim_Deployed = false
 			pl.sniperzoomed = 0
