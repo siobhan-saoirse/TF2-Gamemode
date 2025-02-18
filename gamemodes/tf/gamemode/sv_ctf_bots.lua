@@ -21,7 +21,7 @@ function lookForNearestHealthPack(bot)
 	
 	local npcs = {}
 	for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 8000000)) do
-		if (string.find(v:GetClass(),"item_healthkit") or string.find(v:GetClass(),"item_healthvial") or string.find(v:GetClass(),"obj_dispenser")) then
+		if (string.find(v:GetClass(),"item_healthkit") or string.find(v:GetClass(),"item_healthvial") or (string.find(v:GetClass(),"obj_dispenser") and v:IsFriendly(bot))) then
 			table.insert(npcs, v)
 		end
 	end
@@ -872,7 +872,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			end
 		end
 			-- think one step ahead!
-			if bot:GetPos():Distance(curgoal.pos) < (bot:GetModelRadius() + 30) * bot:GetModelScale() and bot.LastPath[bot.CurSegment + 1] then
+			if bot:GetPos():Distance(curgoal.pos) < 120 and bot.LastPath[bot.CurSegment + 1] then
 				curgoal = bot.LastPath[bot.CurSegment + 1]
 			end
 			
@@ -883,7 +883,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 			local mva = ((curgoal.pos + bot:GetCurrentViewOffset()) - bot.ControllerBot:EyePos()):Angle()
 			if bot.botPos and curgoal.area:GetAttributes() != NAV_MESH_CLIFF then
 				if (IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging) then
-					return
+					
 				else
 					mv:SetMoveAngles(mva)
 				end
@@ -953,18 +953,11 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 					return
 				else
 					if (bot.TargetEnt ~= nil && bot:GetPos():Distance(bot.botPos) > bot.TargetEnt:GetModelRadius() and !IsValid(bot.healthkit) || bot.TargetEnt == nil || IsValid(bot.healthkit)) then
-						if (IsValid(bot.TargetEnt)) then
-							if (bot.TargetEnt:IsFriendly(bot) and bot.TargetEnt.movingAway) then 
-								mv:SetForwardSpeed(0)
-								return 
-							else
-								mv:SetForwardSpeed(bot:GetWalkSpeed())
-							end
-						else
-							mv:SetForwardSpeed(bot:GetWalkSpeed())
-						end
+						mv:SetForwardSpeed(bot:GetWalkSpeed())
 					else
 						mv:SetForwardSpeed(0)
+						mv:SetMoveAngles(Angle(0,0,0))
+						mv:SetSideSpeed(0)
 						return
 					end 
 				end
@@ -1122,6 +1115,14 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 					bot.botPos = nil
 				end
 			end
+			
+		for k, v in ipairs(ents.FindInSphere(bot:GetPos(),600)) do
+			if (v:GetClass() == "obj_teleporter" and v:EntIndex() != bot.intelcarrier:EntIndex()) then
+				if (v:IsEntrance() and IsValid(v:GetLinkedTeleporter()) and v:IsFriendly(bot) and v:IsReady()) then 
+					bot.botPos = v:GetPos()
+				end
+			end
+		end
 		for _, intel in pairs(ents.FindByClass("item_teamflag_mvm")) do
 						
 			if IsValid(intel.Carrier) and bot:GetPos():Distance(intel.Carrier:GetPos()) < 180 and bot:EntIndex() != intel.Carrier:EntIndex() then -- dont move if too close!

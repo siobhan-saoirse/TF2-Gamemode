@@ -2682,6 +2682,9 @@ concommand.Add("-inspect", function(pl)
 	timer.Simple( 0.02, function() pl:SetNWString("inspect", "inspecting_done") end )
 end)
 
+GM.RoundHasWinner = false
+
+
 function GM:RoundWin(teamnum)
 	GAMEMODE.RoundHasWinner = true
 	timer.Simple(15, function() 
@@ -2704,6 +2707,8 @@ function GM:RoundWin(teamnum)
 
 					end) 
 				end)
+				net.Start("DeActivateTauntCam")
+				net.Send(v)
 			end
 			team.SetScore(TEAM_RED,0)
 			team.SetScore(TEAM_BLU,0)

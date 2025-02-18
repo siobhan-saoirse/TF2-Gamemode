@@ -1451,38 +1451,10 @@ function SWEP:Reload()
 						self:SetNextPrimaryFire(CurTime() + self:SequenceDuration())
 					end
 				end
-				
-				if self.FastReloadTime and self.OldReloadTime then  
-					if (!self.ReloadTimeMultiplier) then
-						
-						self.Owner:GetViewModel():SetPlaybackRate(1.0 / self.FastReloadTime)
-						self.ReloadTime = self.OldReloadTime * self.FastReloadTime
-						self.NextIdle = CurTime() + self.ReloadTime
-						self.NextReload = self.NextIdle
-						self.NextReload2 = self.ReloadTime
-					
-					else
-					
-						self.Owner:GetViewModel():SetPlaybackRate(1.0 / self.FastReloadTime / self.ReloadTimeMultiplier)
-						self.ReloadTime = self.OldReloadTime * (self.FastReloadTime * self.ReloadTimeMultiplier)
-						self.NextIdle = CurTime() + self.ReloadTime
-						self.NextReload = self.NextIdle
-						self.NextReload2 = CurTime() + self.ReloadTime
-						
-					end
-				elseif !self.FastReloadTime and self.ReloadTimeMultiplier then  
-					self.Owner:GetViewModel():SetPlaybackRate(1.0 / self.ReloadTimeMultiplier)
-					if (!self.OriginalReloadTime) then
-						self.OriginalReloadTime = self.ReloadTime
-					end
-					self.NextIdle = self.OriginalReloadTime * self.ReloadTimeMultiplier
+
+					self.NextIdle = CurTime() + self:SequenceDuration() / self.Owner:GetViewModel():GetPlaybackRate()
 					self.NextReload = self.NextIdle
 					self.NextReload2 = CurTime() + self.ReloadTime
-				else
-					self.NextIdle = CurTime() + (self.ReloadTime or self:SequenceDuration())
-					self.NextReload = self.NextIdle
-					self.NextReload2 = CurTime() + self.ReloadTime
-				end
 				
 				self.AmmoAdded = math.min(self.Primary.ClipSize - ammo, available)
 				self.Reloading = true

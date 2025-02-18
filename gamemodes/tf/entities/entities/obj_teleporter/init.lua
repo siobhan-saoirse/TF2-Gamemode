@@ -207,14 +207,14 @@ function ENT:Teleport(pl)
 	self:EmitSoundEx(self.Sound_Send)
 	if pl:IsTFPlayer() then
 		if pl:IsPlayer() then
-		pl:SetFOV(50, 0.7)
+		pl:SetFOV(50, 0.4)
 		umsg.Start("TFTeleportEffect", pl)
 		umsg.End()
-		pl:ScreenFade( SCREENFADE.OUT, Color( 255, 255, 255, 150 ), 0.5, 0.65 )
+		pl:ScreenFade( SCREENFADE.OUT, Color( 255, 255, 255, 150 ), 0.4, 0.4 )
 		end
 		ParticleEffect("teleportedin_red", self:GetPos(), self:GetAngles(), pl)
 	end
-	timer.Simple(0.6, function()
+	timer.Simple(0.4, function()
 	
 		self:SetChargePercentage(0)
 		if self:GetLevel() == 2 then
@@ -399,7 +399,7 @@ function ENT:OnThinkActive()
 			v.removeme = true
 		end
 		
-		for _,pl in pairs(ents.FindInBox(pos + Vector(-10, -10, 0), pos + Vector(10, 10, 30))) do
+		for _,pl in pairs(ents.FindInSphere(pos, 70)) do
 			if pl:IsTFPlayer() and self:IsFriendly(pl) and not pl:IsBuilding() then
 				if not self.Clients[pl] then
 					self.Clients[pl] = {starttime = CurTime()}

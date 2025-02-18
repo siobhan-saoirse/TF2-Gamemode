@@ -1477,7 +1477,7 @@ function GM:PlayerDeath(ent, inflictor, attacker)
 	if (!GAMEMODE.RoundHasWinner) then
 		if (GetConVar("civ2_allow_respawn_with_key_press"):GetBool()) then
 			ent.NextSpawnTime = CurTime() + 2.5
-		else
+		else 
 			ent.NextSpawnTime = CurTime() + 7
 		end
 	else
@@ -1517,7 +1517,7 @@ function GM:PlayerDeath(ent, inflictor, attacker)
 	
 	timer.Stop("Respawn"..ent:EntIndex())
 	timer.Create("Respawn"..ent:EntIndex(), 6.5, 1, function()
-		if (GAMEMODE.RoundHasWinner == false) then
+		if (!GAMEMODE.RoundHasWinner) then
 			if IsValid(animent) then
 				animent:Fire("Kill", "", 0.1)
 			end
