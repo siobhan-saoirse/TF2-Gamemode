@@ -989,8 +989,8 @@ function SWEP:Deploy()
 	local hold = self.HoldType
 	local drawAnim = self.VM_DRAW
 	if (self.VM_DRAW != nil) then
-		local draw_duration = self:SequenceDuration(self:SelectWeightedSequence(self.VM_DRAW)) / self:GetDeploySpeed()
-		local deploy_duration = self.DeployDuration / self:GetDeploySpeed() 
+		local draw_duration = 0.5 / self:GetDeploySpeed()
+		local deploy_duration = 0.5 / self:GetDeploySpeed() 
 		if SERVER then
 			self:SendWeaponAnim(drawAnim)
 			self.Owner:GetViewModel():SetPlaybackRate(self:GetDeploySpeed())
@@ -1003,16 +1003,8 @@ function SWEP:Deploy()
 			draw_duration = draw_duration * self.DeployTimeMultiplier
 			deploy_duration = deploy_duration * self.DeployTimeMultiplier
 		end
-		if (self:GetClass() == "tf_weapon_syringegun_medic") then
-			self.NextIdle = CurTime() + 0.5
-			self.NextDeployed = CurTime() + 0.5
-		elseif (self:GetClass() == "tf_weapon_crossbow") then
-			self.NextIdle = CurTime() + 0.5
-			self.NextDeployed = CurTime() + 0.5
-		else
-			self.NextIdle = CurTime() + draw_duration + 0.02
-			self.NextDeployed = CurTime() + deploy_duration + 0.02
-		end
+		self.NextIdle = CurTime() + self:SequenceDuration(self:SelectWeightedSequence(self.VM_DRAW)) / self:GetDeploySpeed()
+		self.NextDeployed = CurTime() + deploy_duration
 	end
 	if (IsValid(self.CModel)) then
 		self.CModel:SetSkin(self.WeaponSkin or self:GetOwner():GetSkin())
