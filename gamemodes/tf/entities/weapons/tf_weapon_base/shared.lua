@@ -15,7 +15,7 @@ SWEP.ShootCritSound = Sound("Weapon_Scatter_Gun.SingleCrit")
 SWEP.ReloadSound = Sound("Weapon_Scatter_Gun.WorldReload") 
 SWEP.ReloadSoundFinish = nil
 SWEP.IsMeleeWeapon = false
-local defaultdeployspeed = CreateConVar( "tf_default_deploy_speed", "1.4", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY, FCVAR_ARCHIVE}, "LEGS!" )
+local defaultdeployspeed = CreateConVar( "tf_default_deploy_speed", "1.34", {FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY, FCVAR_ARCHIVE}, "LEGS!" )
 -- Sounds
 
 if CLIENT then
@@ -989,8 +989,8 @@ function SWEP:Deploy()
 	local hold = self.HoldType
 	local drawAnim = self.VM_DRAW
 	if (self.VM_DRAW != nil) then
-		local draw_duration = 0.5 / self:GetDeploySpeed()
-		local deploy_duration = 0.5 / self:GetDeploySpeed() 
+		local draw_duration = (0.5 / self:GetDeploySpeed()) / 1.34
+		local deploy_duration = (0.5 / self:GetDeploySpeed()) / 1.34
 		if SERVER then
 			self:SendWeaponAnim(drawAnim)
 			self.Owner:GetViewModel():SetPlaybackRate(self:GetDeploySpeed())
@@ -999,9 +999,6 @@ function SWEP:Deploy()
 		if self.Owner.TempAttributes and self.Owner.TempAttributes.DeployTimeMultiplier then
 			draw_duration = draw_duration * self.Owner.TempAttributes.DeployTimeMultiplier
 			deploy_duration = deploy_duration * self.Owner.TempAttributes.DeployTimeMultiplier
-		elseif self.DeployTimeMultiplier then
-			draw_duration = draw_duration * self.DeployTimeMultiplier
-			deploy_duration = deploy_duration * self.DeployTimeMultiplier
 		end
 		self.NextIdle = CurTime() + self:SequenceDuration(self:SelectWeightedSequence(self.VM_DRAW)) / self:GetDeploySpeed()
 		self.NextDeployed = CurTime() + deploy_duration
