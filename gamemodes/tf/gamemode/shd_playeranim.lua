@@ -580,14 +580,45 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 	
 	local w = pl:GetActiveWeapon()
 	if event == PLAYERANIMEVENT_ATTACK_PRIMARY then
-		if pl.anim_InSwim then
-			pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_SWIM_PRIMARYFIRE, true)
-		elseif pl:Crouching() then
-			pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_CROUCH_PRIMARYFIRE, true)
+		if (IsValid(pl.PuppetAnim)) then
+			if (IsValid(pl:GetActiveWeapon())) then
+				if (pl:GetActiveWeapon().HoldType ~= nil) then
+					if (pl:GetActiveWeapon().HoldType == "PRIMARY") then
+						if pl.anim_InSwim then
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_ATTACK_SWIM_PRIMARY)))
+						elseif pl:Crouching() then
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_ATTACK_CROUCH_PRIMARY)))
+						else
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_ATTACK_STAND_PRIMARY)))
+						end
+					elseif (pl:GetActiveWeapon().HoldType == "SECONDARY") then
+						if pl.anim_InSwim then
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_ATTACK_SWIM_SECONDARY)))
+						elseif pl:Crouching() then
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_ATTACK_CROUCH_SECONDARY)))
+						else
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_ATTACK_STAND_SECONDARY)))
+						end
+					elseif (pl:GetActiveWeapon().HoldType == "MELEE") then
+						if pl.anim_InSwim then
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_ATTACK_SWIM_MELEE)))
+						elseif pl:Crouching() then
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_ATTACK_CROUCH_MELEE)))
+						else
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_ATTACK_STAND_MELEE)))
+						end
+					end
+				end
+			end
 		else
-			pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_STAND_PRIMARYFIRE, true)
+			if pl.anim_InSwim then
+				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_SWIM_PRIMARYFIRE, true)
+			elseif pl:Crouching() then
+				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_CROUCH_PRIMARYFIRE, true)
+			else
+				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_STAND_PRIMARYFIRE, true)
+			end
 		end
-		
 		--return ACT_INVALID
 		if IsValid(w) and w.GetPrimaryFireActivity then
 			return w:GetPrimaryFireActivity()
@@ -595,14 +626,45 @@ function GM:DoAnimationEvent(pl, event, data, taunt)
 			return ACT_INVALID
 		end
 	elseif event == PLAYERANIMEVENT_RELOAD then
-		if pl.anim_InSwim then
-			pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_SWIM, true)
-		elseif pl:Crouching() then
-			pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_CROUCH, true)
+		if (IsValid(pl.PuppetAnim)) then
+			if (IsValid(pl:GetActiveWeapon())) then
+				if (pl:GetActiveWeapon().HoldType ~= nil) then
+					if (pl:GetActiveWeapon().HoldType == "PRIMARY") then
+						if pl.anim_InSwim then
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_RELOAD_SWIM_PRIMARY)))
+						elseif pl:Crouching() then
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_RELOAD_CROUCH_PRIMARY)))
+						else
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_RELOAD_STAND_PRIMARY)))
+						end
+					elseif (pl:GetActiveWeapon().HoldType == "SECONDARY") then
+						if pl.anim_InSwim then
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_RELOAD_SWIM_SECONDARY)))
+						elseif pl:Crouching() then
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_RELOAD_CROUCH_SECONDARY)))
+						else
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_RELOAD_STAND_SECONDARY)))
+						end
+					elseif (pl:GetActiveWeapon().HoldType == "MELEE") then
+						if pl.anim_InSwim then
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_RELOAD_SWIM_MELEE)))
+						elseif pl:Crouching() then
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_RELOAD_CROUCH_MELEE)))
+						else
+							pl:DoTauntEvent(pl:GetSequenceName(pl:SelectWeightedSequence(ACT_MP_RELOAD_STAND_MELEE)))
+						end
+					end
+				end
+			end
 		else
-			pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_STAND, true)
+			if pl.anim_InSwim then
+				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_SWIM, true)
+			elseif pl:Crouching() then
+				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_CROUCH, true)
+			else
+				pl:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_STAND, true)
+			end
 		end
-		
 		return ACT_INVALID
 	elseif event == PLAYERANIMEVENT_CUSTOM_GESTURE then
 		if data == ACT_MP_DOUBLEJUMP then
@@ -768,6 +830,11 @@ function plyr:DoTauntEvent(anim,autokill)
 			end
 			if SERVER then
 
+				if (IsValid(self.PuppetAnim)) then
+					self.PuppetAnim:GetPuppeteer():SetLayerSequence(0,self:LookupSequence(anim))
+					self.PuppetAnim:GetPuppeteer():SetLayerLooping(0,!autokill)
+					self.PuppetAnim:GetPuppeteer():SetLayerCycle(0,0)
+				end
 				if string.find(anim,"flinch") then
 					self:AddVCDSequenceToGestureSlot( GESTURE_SLOT_VCD, self:LookupSequence(anim), 0, autokill )
 					net.Start("TFGestureAnim")

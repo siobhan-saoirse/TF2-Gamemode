@@ -52,7 +52,7 @@ function SWEP:PrimaryAttack()
 		net.Start("ActivateTauntCam")
 		net.Send(self.Owner)
 	end
-	self.Owner:DoAnimationEvent(ACT_DOD_CROUCH_IDLE_PISTOL, true)
+	self.Owner:DoTauntEvent("taunt04", true)
 	self.Owner:SetNWBool("Taunting", true)
 	
 	if SERVER then

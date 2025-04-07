@@ -1514,7 +1514,9 @@ function GM:PlayerDeath(ent, inflictor, attacker)
 		end
 			
 	end
-	
+	if (IsValid(ent.PuppetAnim)) then
+		ent.PuppetAnim:Remove()
+	end
 	timer.Stop("Respawn"..ent:EntIndex())
 	timer.Create("Respawn"..ent:EntIndex(), 6.5, 1, function()
 		if (!GAMEMODE.RoundHasWinner) then

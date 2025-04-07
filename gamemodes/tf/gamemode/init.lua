@@ -13,7 +13,6 @@ include("sv_loadout.lua")
 include("shd_taunts.lua") 
 resource.AddWorkshop( "1932936017" )
 resource.AddWorkshop( "3323795558" )
-resource.AddFile("scenes/scenes.image")
 local LOGFILE = "tf/log_server.txt" 
 file.Delete(LOGFILE) 
 file.Append(LOGFILE, "Loading serverside script\n")
@@ -30,7 +29,6 @@ util.AddNetworkString("TauntAnim")
 util.AddNetworkString("TFGestureAnim")
 util.AddNetworkString("UpdatePhonemes")
 
-CreateConVar('tf_opentheorangebox', 0, FCVAR_ARCHIVE + FCVAR_SERVER_CAN_EXECUTE, 'Enables 2007 mode')
 -- Quickfix for Valve's typo in tf_reponse_rules.txt 
 
 --concommand.Add("lua_pick", function(pl, cmd, args)
@@ -2255,6 +2253,25 @@ function GM:PlayerSpawn(ply)
 		umsg.String(ply:GetPlayerClass())
 		umsg.String(ply:GetPlayerClass())
 	umsg.End()
+	if (ply:GetInfoNum("civ2_playermodel_reference_pose_prevention",0) == 1) then
+		if (!ply:IsHL2()) then
+
+			local axe = ents.Create("prop_animated")
+			local cl_playermodel = ply:GetInfo("cl_playermodel")
+			local modelname = player_manager.TranslatePlayerModel(cl_playermodel)
+			util.PrecacheModel(modelname)
+			axe:SetModel(modelname)
+			axe:SetParent(ply)
+			axe:SetPos(ply:GetPos())
+			axe:SetAngles(ply:GetAngles())
+			axe:Spawn()
+			axe:SetPuppeteerModel(GAMEMODE.PlayerClasses[ply:GetPlayerClass()].Model)
+			axe:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+			axe:GetPuppeteer():SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+			ply.Anim = axe
+			ply:SetMaterial("color")
+		end
+	end
 end
 
 function GM:PlayerSetHandsModel( ply, ent )

@@ -551,11 +551,35 @@ function GM:RollCritical(pl)
 end
 function GM:Tick()
 end
+local function CopyPoseParams(pEntityFrom, pEntityTo)
+	if (SERVER) then
+		for i = 0, pEntityFrom:GetNumPoseParameters() - 1 do
+			local sPose = pEntityFrom:GetPoseParameterName(i)
+			pEntityTo:SetPoseParameter(sPose, pEntityFrom:GetPoseParameter(sPose))
+		end
+	else
+		for i = 0, pEntityFrom:GetNumPoseParameters() - 1 do
+			local flMin, flMax = pEntityFrom:GetPoseParameterRange(i)
+			local sPose = pEntityFrom:GetPoseParameterName(i)
+			pEntityTo:SetPoseParameter(sPose, math.Remap(pEntityFrom:GetPoseParameter(sPose), 0, 1, flMin, flMax))
+		end
+	end
+end
 function GM:Think()
 	for _,v in pairs(player.GetAll()) do
+		if (IsValid(v.PuppetAnim)) then
+			CopyPoseParams(v,v.PuppetAnim:GetPuppeteer())
+			v.PuppetAnim:GetPuppeteer():SetSequence(v:GetSequence())
+			v.PuppetAnim:GetPuppeteer():SetPlaybackRate(1)
+			v.PuppetAnim:GetPuppeteer():SetCycle(v:GetCycle())
+			v.PuppetAnim:GetPuppeteer():SetEnableAnimEventEffects(false)
+			v.PuppetAnim:GetPuppeteer():SetPuppeteerAlpha(false)
+			v.PuppetAnim:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+			v.PuppetAnim:GetPuppeteer():SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+		end
 		for _,child in ipairs(ents.GetAll()) do
 			if (child:GetParent():EntIndex() == v:EntIndex()) then
-				child:SetMaterial(v:GetMaterial())
+				--child:SetMaterial(v:GetMaterial())
 			end
 		end
 		if (v:Alive()) then

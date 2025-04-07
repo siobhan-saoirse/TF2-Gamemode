@@ -141,6 +141,7 @@ CreateClientConVar( "tf_give_hl2_weapons", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE}, "
 --CreateClientConVar( "civ2_bootleg_charger", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Become a bootleg charger after respawning." )
 CreateClientConVar( "tf_dingalingaling_sound", "", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Ding Dong!" )
 CreateClientConVar( "tf_dingalingaling_killsound", "", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Diiinnng...." )
+CreateClientConVar( "civ2_playermodel_reference_pose_prevention", "0", {FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_ARCHIVE}, "Use Animated Props for fixing broken playermodel animations." )
 
 
 concommand.Add("tf_upgradewep03clientonly", function(ply)

@@ -55,7 +55,7 @@ function SWEP:DrawWorldModel(  )
 
 					self.WModel:SetupBones()
 				end
-				if (_Owner:GetNWBool("NoWeapon",false) == true or _Owner:GetMaterial() == "color") then 
+				if (_Owner:GetNWBool("NoWeapon",false) == true) then 
 					self.WModel:SetMaterial("color")
 				else
 					local mat = self.CustomMaterialOverride2 or self.MaterialOverride or self.WeaponMaterial or ""
