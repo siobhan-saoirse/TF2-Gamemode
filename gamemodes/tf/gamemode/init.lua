@@ -2268,7 +2268,7 @@ function GM:PlayerSpawn(ply)
 			axe:SetPuppeteerModel(GAMEMODE.PlayerClasses[ply:GetPlayerClass()].Model)
 			axe:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 			axe:GetPuppeteer():SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-			ply.Anim = axe
+			ply.PuppetAnim = axe
 			ply:SetMaterial("color")
 		end
 	end
