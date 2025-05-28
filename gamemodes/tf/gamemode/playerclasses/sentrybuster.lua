@@ -1,6 +1,6 @@
 CLASS.Name = "Sentry Buster"
 CLASS.Speed = 400
-CLASS.Health = 3600
+CLASS.Health = 2500
 
 if CLIENT then
 	CLASS.CharacterImage = {

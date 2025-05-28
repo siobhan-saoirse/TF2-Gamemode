@@ -1,21 +1,21 @@
 if SERVER then
-	AddCSLuaFile( "shared.lua" )
-	
+       AddCSLuaFile( "shared.lua")
+
 end
 
-if CLIENT then
+if ClIENT then
 
-SWEP.PrintName			= "Colonel Barrage Rocket Launcher"
-SWEP.Slot				= 0
-SWEP.RenderGroup 		= RENDERGROUP_BOTH
+SWEP.PrintName                 ="Major Crits Rocket Launcher"
+SWWEP.Slot                            = 0
+SWEP.RenderGroup               = RENDERGROUP_BOTH
 
 function SWEP:ClientStartCharge()
-	self.ClientCharging = true
-	self.ClientChargeStart = CurTime()
+        self.ClientCharging = true
+        self.ClientChargingStart = CurTime()
 end
 
 function SWEP:ClientEndCharge()
-	self.ClientCharging = false
+        self.ClientCharging = false
 end
 
 end
@@ -66,8 +66,8 @@ SWEP.Properties = {}
 
 SWEP.ChargeTime = 2
 SWEP.MinForce = 150
-SWEP.MaxForce = 2800 * 0.4
-
+SWEP.MaxForce = 2800 * 0.65
+SWEP.CriticalChance = 100
 SWEP.MinAddPitch = -1
 SWEP.MaxAddPitch = -6
 
@@ -154,18 +154,16 @@ function SWEP:ShootProjectile()
 		rocket:SetPos(self:ProjectileShootPos())
 		local ang = self.Owner:EyeAngles()
 		
-		rocket:SetAngles(ang + Angle(math.random(-5,5),math.random(-5,5),0))
+		rocket:SetAngles(ang + Angle(math.Rand(-1.6,1.6),math.Rand(-1.6,1.6),0))
 		--rocket.ExplosionSound = "MVM.GiantSoldierRocketExplode"
-		if self:Critical() then
-			rocket.critical = true
-		end
+		rocket.critical = true
 		for k,v in pairs(self.Properties) do
 			rocket[k] = v
 		end
 		
 		rocket:SetOwner(self.Owner)
-		rocket.BaseDamage = 95 * 1.5
-		rocket.BaseSpeed = 1100 * 0.4
+		rocket.BaseDamage = 95 * 2.0
+		rocket.BaseSpeed = 1100 * 0.3
 		self:InitProjectileAttributes(rocket)
 		
 		rocket:Spawn()

@@ -12,6 +12,10 @@ SWEP.ViewModel			= "models/weapons/v_models/v_bat_scout.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_wooden_bat/c_wooden_bat.mdl"
 SWEP.Crosshair = "tf_crosshair3"
 
+SWEP.Spawnable = true
+SWEP.Adminonly = true
+SWEP.Category = "Team Fortress 2"
+
 SWEP.Swing = Sound("Weapon_Bat.Miss")
 SWEP.SwingCrit = Sound("Weapon_Bat.MissCrit")
 SWEP.HitFlesh = Sound("Weapon_BaseballBat.HitFlesh")
