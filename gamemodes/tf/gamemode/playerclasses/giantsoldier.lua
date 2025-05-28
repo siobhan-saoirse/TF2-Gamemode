@@ -1,6 +1,6 @@
 CLASS.Name = "Giant Soldier"
 CLASS.Speed = 240 * 0.5
-CLASS.Health = 3600
+CLASS.Health = 3800
 
 if CLIENT then
 	CLASS.CharacterImage = {
