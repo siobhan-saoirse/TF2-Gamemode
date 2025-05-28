@@ -14,7 +14,7 @@ SWEP.Crosshair = "tf_crosshair3"
 
 SWEP.Spawnable = true
 SWEP.Adminonly = true
-SWEP.Category ="Team Fortress 2"
+SWEP.Category = "Team Fortress 2"
 
 SWEP.Swing = Sound("Weapon_Bat.Miss")
 SWEP.SwingCrit = Sound("Weapon_Bat.MissCrit")
