@@ -36,7 +36,7 @@ SWEP.ViewModel			= "models/weapons/c_models/c_soldier_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_rocketlauncher/c_rocketlauncher.mdl"
 SWEP.Crosshair = "tf_crosshair3"
 
-SWEP.Spawnable = false
+SWEP.Spawnable = true
 SWEP.AdminOnly = true
 SWEP.Category = "Team Fortress 2"
 
