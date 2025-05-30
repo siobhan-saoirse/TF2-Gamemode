@@ -6,7 +6,7 @@ end
 SWEP.Slot				= 0
 if CLIENT then
 
-SWEP.PrintName			= "Rapid Fire Grenade Launcher for Giant Demoman"
+SWEP.PrintName			= "Giant Burst Fire Grenade Launcher for Giant Demoman"
 
 function SWEP:InitializeCModel()
 	self:CallBaseFunction("InitializeCModel")
@@ -58,7 +58,7 @@ SWEP.WorldModel			= "models/weapons/c_models/c_grenadelauncher/c_grenadelauncher
 SWEP.Crosshair = "tf_crosshair3"
 
 SWEP.Spawnable = true
-SWEP.AdminSpawnable = false
+SWEP.AdminOnly = true
 SWEP.Category = "Team Fortress 2"
 
 --[[ --Viewmodel Settings Override (left-over from testing; works well)
@@ -73,11 +73,11 @@ SWEP.ShootSound = Sound("Weapon_GrenadeLauncher.Single")
 SWEP.ShootCritSound = Sound("Weapon_GrenadeLauncher.SingleCrit")
 SWEP.ReloadSound = Sound("Weapon_GrenadeLauncher.WorldReload")
 
-SWEP.Primary.ClipSize		= 4
+SWEP.Primary.ClipSize		= 4 + 7
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
 SWEP.Primary.Ammo			= TF_PRIMARY
-SWEP.Primary.Delay          = 0.6 * 0.75
-SWEP.ReloadTime = 0.6 * -0.4
+SWEP.Primary.Delay          = 0.6 * 0.1
+SWEP.ReloadTime = 0.6 * 0.65
 
 SWEP.IsRapidFire = false
 SWEP.ReloadSingle = true
@@ -87,7 +87,7 @@ SWEP.HoldType = "SECONDARY"
 SWEP.HoldTypeHL2 = "shotgun"
 
 SWEP.ProjectileShootOffset = Vector(0, 7, -6)
-SWEP.Force = 1100
+SWEP.Force = 1100 * 1.1
 SWEP.AddPitch = -4
 
 SWEP.PunchView = Angle( -2, 0, 0 )
