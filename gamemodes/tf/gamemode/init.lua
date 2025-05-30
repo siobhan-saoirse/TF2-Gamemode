@@ -2265,11 +2265,14 @@ function GM:PlayerSpawn(ply)
 			axe:SetPos(ply:GetPos())
 			axe:SetAngles(ply:GetAngles())
 			axe:Spawn()
-			axe:SetPuppeteerModel(GAMEMODE.PlayerClasses[ply:GetPlayerClass()].Model)
+			axe:SetPuppeteerModel(ply:GetModel())
 			axe:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 			axe:GetPuppeteer():SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 			ply.PuppetAnim = axe
 			ply:SetMaterial("color")
+			timer.Simple(0.3, function()
+				axe:SetPuppeteerModel(ply:GetModel())
+			end)
 		end
 	end
 end

@@ -576,6 +576,7 @@ function GM:Think()
 			v.PuppetAnim:GetPuppeteer():SetPuppeteerAlpha(false)
 			v.PuppetAnim:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 			v.PuppetAnim:GetPuppeteer():SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+			v.PuppetAnim:SetModelScale((v:GetModelRadius() / v.PuppetAnim:GetModelRadius()) * v:GetModelScale())
 		end
 		for _,child in ipairs(ents.GetAll()) do
 			if (child:GetParent():EntIndex() == v:EntIndex()) then

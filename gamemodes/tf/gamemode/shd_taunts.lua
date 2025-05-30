@@ -245,7 +245,7 @@ concommand.Add("tf_taunt_laugh", function(ply)
 
 	if ply:GetInfoNum("tf_giantrobot", 0) == 1 then ply:ChatPrint("You can't taunt as a mighty robot!") return end	
 	local time = ply:PlayScene("scenes/player/"..ply:GetPlayerClass().."/low/taunt_laugh.vcd", 0)	
-	ply:DoAnimationEvent(ACT_DOD_HS_CROUCH_KNIFE, true)
+	ply:DoTauntEvent("taunt_laugh",true)
 	ply:SetNWBool("Taunting", true)
 	ply:SetNWBool("NoWeapon", true)
 	net.Start("ActivateTauntCam")

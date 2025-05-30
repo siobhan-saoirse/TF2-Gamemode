@@ -425,8 +425,9 @@ function meta:TFTaunt(args)
 					
 					end
 				else
-				ply:SelectWeapon(ply:GetWeapons()[2]:GetClass())
-				ply:DoAnimationEvent(ACT_DOD_CROUCHWALK_AIM_MP40, true)
+					
+					ply:SelectWeapon(ply:GetWeapons()[2]:GetClass())
+					ply:DoTauntEvent("taunt02", true)
 				end
 			elseif table.KeyFromValue(allowedtaunts,args[1]) == 3 then	
 				if ply:GetPlayerClass() == "pyro" then
