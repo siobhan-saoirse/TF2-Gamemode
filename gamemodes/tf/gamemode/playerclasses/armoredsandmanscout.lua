@@ -1,21 +1,21 @@
-CLASS.Name = "Soldier"
-CLASS.Speed = 240 * 0.5
-CLASS.Health = 3800
+CLASS.Name = "Scout"
+CLASS.Speed = 300
+CLASS.Health = 3000
 
 if CLIENT then
 	CLASS.CharacterImage = {
-		surface.GetTextureID("hud/class_soldierred"),
-		surface.GetTextureID("hud/class_soldierblue")
+		surface.GetTextureID("hud/class_scoutred"),
+		surface.GetTextureID("hud/class_scoutblue")
 	}
 	CLASS.ScoreboardImage = {
-		surface.GetTextureID("hud/leaderboard_class_soldier_spammer"),
-		surface.GetTextureID("hud/leaderboard_class_soldier_spammer")
+		surface.GetTextureID("hud/leaderboard_class_scout_giant_stun"),
+		surface.GetTextureID("hud/leaderboard_class_scout_giant_stun")
 	}
 end
 
-CLASS.Loadout = {"tf_weapon_rocketlauncher", "tf_weapon_shotgun_soldier", "tf_weapon_shovel"}
-CLASS.DefaultLoadout = {}
-CLASS.ModelName = "soldier"
+CLASS.Loadout = {"tf_weapon_scattergun", "tf_weapon_bat"}
+CLASS.DefaultLoadout = {"Sandman","Essential Accessories","Batter's Helmet"}
+CLASS.ModelName = "scout"
 
 CLASS.Gibs = {
 	[GIB_LEFTLEG]		= GIBS_SOLDIER_START,
@@ -68,10 +68,9 @@ CLASS.AmmoMax = {
 if SERVER then
 
 function CLASS:Initialize()
-	self:SetModel("models/bots/soldier_boss/bot_soldier_boss.mdl")
+	self:SetModel("models/bots/scout_boss/bot_scout_boss.mdl")
 	self:SetModelScale(1.75)
-	self:Give("tf_weapon_rocketlauncher_mvm_blast")
-	self:SelectWeapon("tf_weapon_rocketlauncher_mvm_blast")
+	self:SetViewOffset(Vector(0, 0, 126))
 end
 
 end

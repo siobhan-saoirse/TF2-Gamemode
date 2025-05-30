@@ -18,6 +18,10 @@ SWEP.ViewModel			= "models/weapons/c_models/c_soldier_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_bet_rocketlauncher/c_bet_rocketlauncher.mdl"
 SWEP.Crosshair = "tf_crosshair3"
 
+SWEP.Spawnable = true
+SWEP.Adminonly = true
+SWEP.Category = "Team Fortress 2"
+
 SWEP.MuzzleEffect = "muzzle_pipelauncher"
 
 SWEP.ShootSound = Sound("Weapon_QuakeRPG.Single")

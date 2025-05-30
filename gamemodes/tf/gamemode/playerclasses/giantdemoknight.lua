@@ -1,6 +1,6 @@
 CLASS.Name = "Giant Demoknight"
 CLASS.Speed = 280 * 0.5
-CLASS.Health = 3600
+CLASS.Health = 3300
 
 if CLIENT then
 	CLASS.CharacterImage = {
