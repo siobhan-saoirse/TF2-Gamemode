@@ -50,7 +50,7 @@ SWEP.ReloadSound = Sound("")
 
 SWEP.Primary.ClipSize		= 10
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
-SWEP.Primary.Delay          = 0.8 * 0.25
+SWEP.Primary.Delay          = 0.8 * 0.16
 
 SWEP.IsRapidFire = false
 SWEP.ReloadSingle = true
