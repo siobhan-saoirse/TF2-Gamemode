@@ -6,7 +6,7 @@ end
 
 if CLIENT then
 
-SWEP.PrintName			= "The Original"
+SWEP.PrintName			= "The Original for Giant Charged Soldier"
 SWEP.Slot				= 0
 SWEP.HasCModel = true
 
@@ -33,7 +33,7 @@ SWEP.Primary.ClipSize		= 4
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
 SWEP.Primary.Ammo			= TF_PRIMARY
 SWEP.Primary.Delay = 2.0
-SWEP.ReloadTime = 0.8 * 0.16
+SWEP.ReloadTime = 0.8 * 0.2
 
 SWEP.IsRapidFire = false
 SWEP.ReloadSingle = true
@@ -78,6 +78,8 @@ function SWEP:Deploy()
 	self.BaseClass.Deploy(self)
 	if (self.Owner:GetPlayerClass() == "pyro" and self:GetClass() == "tf_weapon_rocketlauncher_qrl") then
 		self:SetHoldType("ITEM1")
+		
+	        GAMEMODE:StartCritBoost(self)
 	end
 	self.VM_DRAW = ACT_VM_DRAW_QRL
 	self.VM_IDLE = ACT_VM_IDLE_QRL
