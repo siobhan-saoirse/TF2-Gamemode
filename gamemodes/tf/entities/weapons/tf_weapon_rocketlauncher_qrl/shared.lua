@@ -32,8 +32,8 @@ SWEP.ReloadSound = Sound("Weapon_QuakeRPG.Reload")
 SWEP.Primary.ClipSize		= 4
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
 SWEP.Primary.Ammo			= TF_PRIMARY
-SWEP.Primary.Delay = 0.8
-SWEP.ReloadTime = 0.8
+SWEP.Primary.Delay = 0.01
+SWEP.ReloadTime = 0.8 * 0.16
 
 SWEP.IsRapidFire = false
 SWEP.ReloadSingle = true
@@ -45,6 +45,13 @@ SWEP.ProjectileShootOffset = Vector(30, 0, -6)
 SWEP.PunchView = Angle( 0, 0, 0 )
 
 SWEP.Properties = {}
+
+SWEP.ChargeTime = 2
+SWEP.MinForce = 150
+SWEP.MaxForce = 2800 * 0.65
+SWEP.CriticalChance = 100
+SWEP.MinAddPitch = -1
+SWEP.MaxAddPitch = -6
 
 SWEP.VM_DRAW = ACT_VM_DRAW_QRL
 SWEP.VM_IDLE = ACT_VM_IDLE_QRL
