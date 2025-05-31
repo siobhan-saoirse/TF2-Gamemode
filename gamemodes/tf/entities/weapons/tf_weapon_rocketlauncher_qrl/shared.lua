@@ -77,9 +77,7 @@ end
 function SWEP:Deploy()
 	self.BaseClass.Deploy(self)
 	if (self.Owner:GetPlayerClass() == "pyro" and self:GetClass() == "tf_weapon_rocketlauncher_qrl") then
-		self:SetHoldType("ITEM1")
-		
-	        GAMEMODE:StartCritBoost(self)
+		self:SetHoldType("ITEM1") 
 	end
 	self.VM_DRAW = ACT_VM_DRAW_QRL
 	self.VM_IDLE = ACT_VM_IDLE_QRL
