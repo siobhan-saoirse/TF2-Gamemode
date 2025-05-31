@@ -29,10 +29,10 @@ SWEP.MaxDamageFalloff = 0
 
 SWEP.Primary.Automatic		= true
 SWEP.Primary.Ammo			= "none"
-SWEP.Primary.Delay          = 0.5 * 0.25
+SWEP.Primary.Delay          = 0.5 
 SWEP.Secondary.Automatic		= true
 SWEP.Secondary.Ammo			= "none"
-SWEP.Secondary.Delay          = 10
+SWEP.Secondary.Delay          = 10 * 0.25
 
 SWEP.HoldType = "MELEE"
 SWEP.HasThirdpersonCritAnimation = false
