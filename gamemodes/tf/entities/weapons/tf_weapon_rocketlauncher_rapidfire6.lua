@@ -74,8 +74,8 @@ SWEP.MaxAddPitch = -6
 SWEP.MinGravity = 1
 SWEP.MaxGravity = 1
 SWEP.BulletSpread = 7
-SWEP.ReloadTime = 0.8 * 0.22
-SWEP.ReloadStartTime = 0.8 * 0.22
+SWEP.ReloadTime = 0.8 * 0.4
+SWEP.ReloadStartTime = 0.8 * 0.4
 SWEP.VM_DRAW = ACT_PRIMARY_VM_DRAW
 SWEP.VM_IDLE = ACT_PRIMARY_VM_IDLE
 SWEP.VM_PRIMARYATTACK = ACT_PRIMARY_VM_PRIMARYATTACK
@@ -163,7 +163,7 @@ function SWEP:ShootProjectile()
 		
 		rocket:SetOwner(self.Owner)
 		rocket.BaseDamage = 95 * 2.0
-		rocket.BaseSpeed = 1100 * 0.3
+		rocket.BaseSpeed = 1100 * 0.25
 		self:InitProjectileAttributes(rocket)
 		
 		rocket:Spawn()
