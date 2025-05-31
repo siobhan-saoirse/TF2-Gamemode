@@ -58,7 +58,7 @@ SWEP.WorldModel			= "models/weapons/c_models/c_grenadelauncher/c_grenadelauncher
 SWEP.Crosshair = "tf_crosshair3"
 
 SWEP.Spawnable = true
-SWEP.AdminOnly = true
+SWEP.AdminSpawnable = false
 SWEP.Category = "Team Fortress 2"
 
 --[[ --Viewmodel Settings Override (left-over from testing; works well)
@@ -73,7 +73,7 @@ SWEP.ShootSound = Sound("Weapon_GrenadeLauncher.Single")
 SWEP.ShootCritSound = Sound("Weapon_GrenadeLauncher.SingleCrit")
 SWEP.ReloadSound = Sound("Weapon_GrenadeLauncher.WorldReload")
 
-SWEP.Primary.ClipSize		= 4 + 200
+SWEP.Primary.ClipSize		= 4 + 8
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
 SWEP.Primary.Ammo			= TF_PRIMARY
 SWEP.Primary.Delay          = 0.6 * 0.2
@@ -87,7 +87,7 @@ SWEP.HoldType = "SECONDARY"
 SWEP.HoldTypeHL2 = "shotgun"
 
 SWEP.ProjectileShootOffset = Vector(0, 7, -6)
-SWEP.Force = 1100 * 1.1
+SWEP.Force = 1100
 SWEP.AddPitch = -4
 
 SWEP.PunchView = Angle( -2, 0, 0 )
@@ -102,14 +102,7 @@ function SWEP:OnEquipAttribute(a, owner)
 	end
 end
 
-function SWEP:Deploy()
-	if CLIENT then
 
-timer.Create("ColonelBarrage"..self.Owner:EntIndex(), 1, 0, function()
-		if (self.Owner:GetPlayerClass() == "colonelbarrage") then
-			GAMEMODE:HealPlayer(self, self, 200, true, false)
-		end
-	end)
 function SWEP:ShootProjectile()
 	if SERVER then
 		grenade = ents.Create("tf_projectile_pipe")
