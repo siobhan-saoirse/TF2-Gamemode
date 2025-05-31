@@ -36,7 +36,7 @@ SWEP.DamageRandomize = 4
 SWEP.MaxDamageRampUp = 0.5
 SWEP.MaxDamageFalloff = 0.5
 
-SWEP.BulletsPerShot = 10 * -1
+SWEP.BulletsPerShot = 30
 SWEP.BulletSpread = 0.0675
 
 SWEP.Primary.ClipSize		= 6
