@@ -56,11 +56,7 @@ function SWEP:ShootProjectile()
 		if self:Critical() then
 			rocket.critical = true
 		end
-		function SWEP:Deploy()
-	if CLIENT then
-        
-        GAMEMODE:StartCritBoost(self)
-        
+		
 		--rocket.FastRocket = true
 		for k,v in pairs(self.Properties) do
 			rocket[k] = v
