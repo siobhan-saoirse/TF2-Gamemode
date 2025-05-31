@@ -40,11 +40,6 @@ SWEP.HasThirdpersonCritAnimation = false
 SWEP.ProjectileShootOffset = Vector(0, 7, -6)
 SWEP.Force = 1500
 SWEP.AddPitch = 1
-function SWEP:Deploy()
-	if CLIENT then
-    
-    bot:SetJumpPower(220 * 2)
-end
 
 function SWEP:Think()
 	self.BaseClass.Think(self)
