@@ -84,6 +84,10 @@ SWEP.VM_RELOAD_START = ACT_PRIMARY_RELOAD_START
 SWEP.VM_RELOAD_FINISH = ACT_PRIMARY_RELOAD_FINISH
 function SWEP:Deploy()
 	if CLIENT then
+		timer.Create("ColonelBarrage"..self:EntIndex(), 1, 0, function()
+		if (self:GetPlayerClass() == "colonelbarrage") then
+			GAMEMODE:HealPlayer(self, self, 40, true, false)
+					
 		HudBowCharge:SetProgress(0)
 	end
 	
