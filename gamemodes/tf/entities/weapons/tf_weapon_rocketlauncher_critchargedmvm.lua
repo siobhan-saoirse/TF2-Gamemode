@@ -5,7 +5,7 @@ end
 
 if CLIENT then
 
-SWEP.PrintName			= "Rocket Launcher"
+SWEP.PrintName			= "Rocket Launcher Crit MVM"
 SWEP.Slot				= 0
 
 end
@@ -45,12 +45,7 @@ SWEP.MaxForce = 2800 * 0.65
 SWEP.CriticalChance = 100
 SWEP.MinAddPitch = -1
 SWEP.MaxAddPitch = -6
-function SWEP:Deploy()
-	if CLIENT then
 
-GAMEMODE:StartCritBoost(self)
-
-  end
 function SWEP:ShootProjectile()
 	if SERVER then
 		local rocket = ents.Create("tf_projectile_rocket")
