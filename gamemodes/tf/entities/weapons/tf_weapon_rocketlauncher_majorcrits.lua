@@ -87,6 +87,8 @@ function SWEP:Deploy()
 		HudBowCharge:SetProgress(0)
 	end
 
+	GAMEMODE:StartCritBoost(self)
+
 	timer.Create("ColonelBarrage"..self.Owner:EntIndex(), 1, 0, function()
 		if (self.Owner:GetPlayerClass() == "colonelbarrage") then
 			GAMEMODE:HealPlayer(self, self, 40, true, false)
