@@ -94,6 +94,9 @@ SWEP.PunchView = Angle( -2, 0, 0 )
 
 SWEP.Properties = {}
 
+SWEP.ChargeTime = 2
+SWEP.MinForce = 150
+SWEP.MaxForce = 2800 * 0.65
 SWEP.CriticalChance = 100
 SWEP.MinAddPitch = -1
 SWEP.MaxAddPitch = -6
@@ -105,12 +108,7 @@ function SWEP:OnEquipAttribute(a, owner)
 		self.SpinSound = false
 	end
 end
-function SWEP:Deploy()
-	if CLIENT then
 
-      GAMEMODE:StartCritBoost(self)
-
-end
 
 function SWEP:ShootProjectile()
 	if SERVER then
