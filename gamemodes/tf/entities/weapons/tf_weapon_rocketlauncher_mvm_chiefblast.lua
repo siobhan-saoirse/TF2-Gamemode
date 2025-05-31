@@ -5,7 +5,7 @@ end
 
 if CLIENT then
 
-SWEP.PrintName			= "Chief Blast Fire Rocket Launcher"
+SWEP.PrintName			= "Chief Blast Rocket Launcher"
 SWEP.Slot				= 0
 SWEP.RenderGroup 		= RENDERGROUP_BOTH
 
