@@ -87,6 +87,9 @@ function SWEP:Deploy()
 		HudBowCharge:SetProgress(0)
 	end
 	
+	GAMEMODE:StartCritBoost(self)
+                end
+        end)
 	return self:CallBaseFunction("Deploy")
 end
  
