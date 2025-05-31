@@ -88,8 +88,7 @@ function SWEP:Deploy()
 	end
 	
 	GAMEMODE:StartCritBoost(self)
-                end
-        end)
+                
 	return self:CallBaseFunction("Deploy")
 end
  
