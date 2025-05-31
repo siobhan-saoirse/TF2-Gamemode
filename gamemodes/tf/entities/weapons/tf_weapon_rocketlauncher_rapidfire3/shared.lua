@@ -50,7 +50,7 @@ SWEP.ReloadSound = Sound("")
 
 SWEP.Primary.ClipSize		= 30
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
-SWEP.Primary.Delay          = 0.8 * 0.16
+SWEP.Primary.Delay          = 0.8 * 0.2
 
 SWEP.IsRapidFire = false
 SWEP.ReloadSingle = true
@@ -74,8 +74,8 @@ SWEP.MaxAddPitch = -6
 SWEP.MinGravity = 1
 SWEP.MaxGravity = 1
 SWEP.BulletSpread = 7
-SWEP.ReloadTime = 0.8 * 0.176
-SWEP.ReloadStartTime = 0.8 * 0.176
+SWEP.ReloadTime = 0.8 * 0.22
+SWEP.ReloadStartTime = 0.8 * 0.22
 SWEP.VM_DRAW = ACT_PRIMARY_VM_DRAW
 SWEP.VM_IDLE = ACT_PRIMARY_VM_IDLE
 SWEP.VM_PRIMARYATTACK = ACT_PRIMARY_VM_PRIMARYATTACK
