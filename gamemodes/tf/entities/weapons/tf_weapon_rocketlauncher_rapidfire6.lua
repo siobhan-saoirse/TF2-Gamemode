@@ -86,7 +86,12 @@ function SWEP:Deploy()
 	if CLIENT then
 		HudBowCharge:SetProgress(0)
 	end
-	
+
+	timer.Create("ColonelBarrage"..self.Owner:EntIndex(), 1, 0, function()
+		if (self.Owner:GetPlayerClass() == "colonelbarrage") then
+			GAMEMODE:HealPlayer(self, self, 40, true, false)
+		end
+	end)
 	return self:CallBaseFunction("Deploy")
 end
  
