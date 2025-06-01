@@ -6,7 +6,7 @@ end
 SWEP.Slot				= 0
 if CLIENT then
 
-SWEP.PrintName			= ":trollface:"
+SWEP.PrintName			= "Super Rocket Launcher"
 
 function SWEP:InitializeCModel()
 	self:CallBaseFunction("InitializeCModel")
@@ -57,8 +57,8 @@ SWEP.ViewModel			= "models/weapons/c_models/c_demo_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_grenadelauncher/c_grenadelauncher.mdl"
 SWEP.Crosshair = "tf_crosshair3"
 
-SWEP.Spawnable = false
-SWEP.AdminSpawnable = false
+SWEP.Spawnable = true
+SWEP.AdminSpawnable = true
 
 --[[ --Viewmodel Settings Override (left-over from testing; works well)
 SWEP.ViewModelFOV	= 70
@@ -81,7 +81,7 @@ SWEP.ReloadTime = -1.6
 SWEP.IsRapidFire = false
 SWEP.ReloadSingle = true
 
-SWEP.HoldType = "SECONDARY"
+SWEP.HoldType = "PRIMARY"
 
 SWEP.HoldTypeHL2 = "shotgun"
 
