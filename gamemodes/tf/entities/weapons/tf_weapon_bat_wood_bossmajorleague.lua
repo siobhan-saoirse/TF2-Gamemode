@@ -32,7 +32,7 @@ SWEP.Primary.Ammo			= "none"
 SWEP.Primary.Delay          = 0.5
 SWEP.Secondary.Automatic		= true
 SWEP.Secondary.Ammo			= "none"
-SWEP.Secondary.Delay          = 10 * 0.00001
+SWEP.Secondary.Delay          = 10 * 0.01
 
 SWEP.HoldType = "MELEE"
 SWEP.HasThirdpersonCritAnimation = false
