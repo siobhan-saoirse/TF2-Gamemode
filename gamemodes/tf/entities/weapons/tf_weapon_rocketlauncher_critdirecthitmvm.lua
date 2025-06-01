@@ -1,10 +1,12 @@
+-- Real class name: tf_weapon_rocketlauncher_directhit (see shd_items.lua)
+
 if SERVER then
 	AddCSLuaFile( "shared.lua" )
 end
 
 if CLIENT then
 
-SWEP.PrintName			= "The Direct Hit Crit MVM Soldier"
+SWEP.PrintName			= "Crit Direct Hit "
 SWEP.Slot				= 0
 SWEP.HasCModel = true
 
@@ -15,6 +17,10 @@ SWEP.Base				= "tf_weapon_gun_base"
 SWEP.ViewModel			= "models/weapons/c_models/c_soldier_arms.mdl"
 SWEP.WorldModel			= "models/weapons/c_models/c_directhit/c_directhit.mdl"
 SWEP.Crosshair = "tf_crosshair3"
+
+SWEP.Spawnable = true
+SWEP.AdminOnly = true
+SWEP.Category = "Team Fortress 2"
 
 SWEP.MuzzleEffect = "muzzle_pipelauncher"
 
