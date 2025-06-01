@@ -29,7 +29,7 @@ SWEP.MaxDamageFalloff = 0
 
 SWEP.Primary.Automatic		= true
 SWEP.Primary.Ammo			= "none"
-SWEP.Primary.Delay          = 0.5 
+SWEP.Primary.Delay          = 0.5
 SWEP.Secondary.Automatic		= true
 SWEP.Secondary.Ammo			= "none"
 SWEP.Secondary.Delay          = 10 * 0.5
