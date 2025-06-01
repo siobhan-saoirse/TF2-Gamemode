@@ -6,7 +6,7 @@ end
 
 if CLIENT then
 
-SWEP.PrintName			= "The Original for Giant Charged Soldier"
+SWEP.PrintName			= "The Original for Giant BOSS Charged Soldier"
 SWEP.Slot				= 0
 SWEP.HasCModel = true
 
@@ -32,8 +32,8 @@ SWEP.ReloadSound = Sound("Weapon_QuakeRPG.Reload")
 SWEP.Primary.ClipSize		= 4
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
 SWEP.Primary.Ammo			= TF_PRIMARY
-SWEP.Primary.Delay = 2.0
-SWEP.ReloadTime = 0.8 * 0.2
+SWEP.Primary.Delay = 2.0 * 0.2
+SWEP.ReloadTime = 0.8 * 0.6
 
 SWEP.IsRapidFire = false
 SWEP.ReloadSingle = true
@@ -120,7 +120,7 @@ function SWEP:ShootProjectile()
 		self:InitProjectileAttributes(rocket)
 		
 		if (self.Owner:GetPlayerClass() == "giantsoldiercharged") then
-			rocket.BaseSpeed = 1100 * 0.5
+			rocket.BaseSpeed = 1100 * 1.3
 		end 
 		
 		rocket:Spawn()
