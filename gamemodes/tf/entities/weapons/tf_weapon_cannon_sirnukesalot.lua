@@ -5,7 +5,7 @@ end
 
 if CLIENT then
 
-SWEP.PrintName			= "Loose Cannon"
+SWEP.PrintName			= "Sirnukesalot Loose Cannon"
 SWEP.Slot				= 0
 SWEP.CustomHUD = {HudBowCharge = true}
 
@@ -60,9 +60,7 @@ SWEP.ShootSound = Sound("Weapon_LooseCannon.Shoot")
 SWEP.ShootCritSound = Sound("Weapon_LooseCannon.ShootCrit")
 SWEP.ReloadSound = Sound("Weapon_GrenadeLauncher.WorldReload")
 
-SWEP.BaseDamage = * 7
-SWEP.ExplosionRadius = * 1.2
-SWEP.Primary.ClipSize		= 2
+SWEP.Primary.ClipSize		= 4
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
 SWEP.Primary.Ammo			= TF_PRIMARY
 SWEP.Primary.Delay          = 0.6 * 2.0
@@ -257,12 +255,7 @@ function SWEP:ShootProjectile()
 		if auto_reload then
 			timer.Create("AutoReload", (self:SequenceDuration() + self.AutoReloadTime), 1, function() self:Reload() end)
 		end
-
-		DispatchParticleEffect("explosionTrail_seeds_mvm")
-DispatchParticleEffect("fluidSmokeExpl_ring_mvm")
-
-end
-
+		
 		local grenade = ents.Create("tf_projectile_cannonball")
 		grenade:SetPos(self:ProjectileShootPos())
 		grenade:SetAngles(self.Owner:EyeAngles())
