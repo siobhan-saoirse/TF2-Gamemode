@@ -49,7 +49,7 @@ SWEP.PunchView = Angle( -2, 0, 0 )
 
 SWEP.ReloadSingle = true
 
-SWEP.HoldType = "PRIMARY"
+SWEP.HoldType = "SECONDARY"
 
 SWEP.HoldTypeHL2 = "shotgun"
 
