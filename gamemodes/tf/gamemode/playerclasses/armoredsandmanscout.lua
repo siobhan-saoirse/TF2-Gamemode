@@ -14,7 +14,7 @@ if CLIENT then
 end
 
 CLASS.Loadout = {"tf_weapon_scattergun", "tf_weapon_bat"}
-CLASS.DefaultLoadout = {"Sandman","Essential Accessories","Batter's Helmet"}
+CLASS.DefaultLoadout = {"Sandman","Batter's Helmet"}
 CLASS.ModelName = "scout"
 
 CLASS.Gibs = {
