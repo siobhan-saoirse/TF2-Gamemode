@@ -5,7 +5,7 @@ end
 
 if CLIENT then
 
-SWEP.PrintName			= "Rocket Launcher Crit MVM"
+SWEP.PrintName			= "Crit MVM Rocket Launcher"
 SWEP.Slot				= 0
 
 end
@@ -26,7 +26,7 @@ SWEP.Primary.ClipSize		= 4
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
 SWEP.Primary.Ammo			= TF_PRIMARY
 SWEP.Primary.Delay = 0.8 * 0.6
-SWEP.ReloadTime = 0.8 * -0.8
+SWEP.ReloadTime = 0.8 * -1.8
 
 SWEP.IsRapidFire = false
 SWEP.ReloadSingle = true
