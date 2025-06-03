@@ -73,7 +73,7 @@ SWEP.ShootSound = Sound("Weapon_GrenadeLauncher.Single")
 SWEP.ShootCritSound = Sound("Weapon_GrenadeLauncher.SingleCrit")
 SWEP.ReloadSound = Sound("Weapon_GrenadeLauncher.WorldReload")
 
-SWEP.Primary.ClipSize		= 4
+SWEP.Primary.ClipSize		= 4 + 7
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
 SWEP.Primary.Ammo			= TF_PRIMARY
 SWEP.Primary.Delay          = 0.6 * 0.1
