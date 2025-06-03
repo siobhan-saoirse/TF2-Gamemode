@@ -2,10 +2,8 @@ if SERVER then
 	AddCSLuaFile( "shared.lua" )
 end
 
-SWEP.Slot				= 0 
-if CLIENT then
-	SWEP.PrintName			= "Shotgun"
-end
+SWEP.Slot				= 1
+SWEP.PrintName			= "MVM Shotgun for Heavy "
 
 SWEP.Base				= "tf_weapon_gun_base"
 
@@ -14,13 +12,13 @@ SWEP.WorldModel			= "models/weapons/c_models/c_shotgun/c_shotgun.mdl"
 SWEP.Crosshair = "tf_crosshair1"
 
 SWEP.Spawnable = true
-SWEP.AdminSpawnable = false
+SWEP.AdminSpawnable = true
 SWEP.Category = "Team Fortress 2"
-
+ 
 SWEP.MuzzleEffect = "muzzle_shotgun"
 SWEP.MuzzleOffset = Vector(20, 4, -3)
 
-SWEP.ShootSound = Sound("weapons/shotgun_shoot.wav")
+SWEP.ShootSound = Sound("Weapon_Shotgun.TF_Single")
 SWEP.ShootCritSound = Sound("Weapon_Shotgun.SingleCrit")
 SWEP.ReloadSound = Sound("Weapon_Shotgun.WorldReload")
 
@@ -31,37 +29,86 @@ PrecacheParticleSystem("bullet_shotgun_tracer01_blue")
 PrecacheParticleSystem("bullet_shotgun_tracer01_blue_crit")
 PrecacheParticleSystem("muzzle_shotgun")
 
-SWEP.BaseDamage = 6 * 1.75
+SWEP.BaseDamage = 6
 SWEP.DamageRandomize = 4
 SWEP.MaxDamageRampUp = 0.5
 SWEP.MaxDamageFalloff = 0.5
 
+
+SWEP.HoldType = "PRIMARY"
+
+SWEP.HoldTypeHL2 = "shotgun"
 SWEP.BulletsPerShot = 30
 SWEP.BulletSpread = 0.0675
-
 SWEP.Primary.ClipSize		= 6
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
 SWEP.Primary.Ammo			= TF_PRIMARY
-SWEP.Primary.Delay          = 0.6 * 2.5
+SWEP.Primary.Delay          = 0.625 * 2.5
 SWEP.ReloadTime = 0.5 * 0.1
 
 SWEP.PunchView = Angle( -2, 0, 0 )
 
 SWEP.ReloadSingle = true
 
-SWEP.HoldType = "SECONDARY"
-
-SWEP.HoldTypeHL2 = "shotgun"
-
-function SWEP:Think()
-	if self:GetItemData().model_player == "models/workshop/weapons/c_models/c_trenchgun/c_trenchgun.mdl" then
-		if self:Health() <= self.Owner:GetMaxHealth() then
-			self:SetNextPrimaryFire(CurTime() + self.Primary.Delay - self.Owner:Health() / 4 )
+function SWEP:InspectAnimCheck()
+	if (IsValid(self.Owner)) then
+		if (self.Owner:GetPlayerClass() == "heavyshotgun") then
+			self.Primary.Delay          = 0.6 * 2.5
+			self.ReloadTime = 0.5 * 0.1
+			self.BulletsPerShot = 10 + 3
+			self.HoldType = "SECONDARY"
+			self.Primary.Ammo			= TF_SECONDARY
+			self:SetHoldType("SECONDARY")
+		end
+		if (self.Owner:GetPlayerClass() == "giantheavyshotgun") then
+			self.Primary.Delay          = 0.6 * 2.5
+			self.ReloadTime = 0.5 * 0.1
+			self.BulletsPerShot = 10 + 10
+			self.BaseDamage = 6 * 0.5
+			self.HoldType = "SECONDARY"
+			self.Primary.Ammo			= TF_SECONDARY
+			self:SetHoldType("SECONDARY")
+		end
+		if (self.Owner:GetPlayerClass() == "soldier"
+		|| self.Owner:GetPlayerClass() == "heavy"
+		|| self.Owner:GetPlayerClass() == "heavyshotgun"
+		|| self.Owner:GetPlayerClass() == "giantheavyshotgun"
+		|| self.Owner:GetPlayerClass() == "pyro") then
+			self.item_slot = "SECONDARY"
+			self.VM_DRAW = ACT_SECONDARY_VM_DRAW	
+			self.VM_IDLE = ACT_SECONDARY_VM_IDLE
+			self.VM_PRIMARYATTACK = ACT_SECONDARY_VM_PRIMARYATTACK
+			self.VM_RELOAD_START = ACT_SECONDARY_RELOAD_START
+			self.VM_RELOAD = ACT_SECONDARY_VM_RELOAD
+			self.VM_RELOAD_FINISH = ACT_SECONDARY_RELOAD_FINISH
+			self.Slot				= 1
+			self.HoldType = "SECONDARY"
+			self.Primary.Ammo			= TF_SECONDARY
+			self:SetHoldType("SECONDARY")
+		elseif (self.Owner:GetPlayerClass() == "scout"
+		|| self.Owner:GetPlayerClass() == "engineer") then
+			self.VM_DRAW = ACT_PRIMARY_VM_DRAW	
+			self.VM_IDLE = ACT_PRIMARY_VM_IDLE
+			self.VM_PRIMARYATTACK = ACT_PRIMARY_VM_PRIMARYATTACK
+			self.VM_RELOAD_START = ACT_PRIMARY_RELOAD_START
+			self.VM_RELOAD = ACT_PRIMARY_VM_RELOAD
+			self.VM_RELOAD_FINISH = ACT_PRIMARY_RELOAD_FINISH
+			self.Slot				= 0
+			self.Primary.Ammo			= TF_PRIMARY
+			self.HoldType = "PRIMARY"
+			self:SetHoldType("PRIMARY")
+		else
+			self.VM_DRAW = ACT_SECONDARY_VM_DRAW	
+			self.VM_IDLE = ACT_SECONDARY_VM_IDLE
+			self.VM_PRIMARYATTACK = ACT_SECONDARY_VM_PRIMARYATTACK
+			self.VM_RELOAD_START = ACT_SECONDARY_RELOAD_START
+			self.VM_RELOAD = ACT_SECONDARY_VM_RELOAD
+			self.VM_RELOAD_FINISH = ACT_SECONDARY_RELOAD_FINISH
+			self.Slot				= 1
+			self.Primary.Ammo			= TF_SECONDARY
+			self.HoldType = "PRIMARY"
+			self:SetHoldType("PRIMARY")
 		end
 	end
-	self:CallBaseFunction("Think")
-end
-
-function SWEP:PrimaryAttack()
-	self:CallBaseFunction("PrimaryAttack")
+	return self.BaseClass.InspectAnimCheck(self)
 end
