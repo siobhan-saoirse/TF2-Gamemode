@@ -33,8 +33,8 @@ local function UpgradePlayerIfBot(self)
 	if SERVER then
 
 			if self:GetPlayerClass() == "scout" then
-				self:SetHealth(125 + 150)
-				self:SetMaxHealth(125 + 150)
+				self:SetHealth(125 + 60)
+				self:SetMaxHealth(125 + 60)
 				self:SetArmor(2000)
 				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
 					if self:Alive() then
@@ -46,8 +46,8 @@ local function UpgradePlayerIfBot(self)
 					end
 				end)
 			elseif self:GetPlayerClass() == "soldier" then
-				self:SetHealth(200 + 150)
-				self:SetMaxHealth(200 + 150)
+				self:SetHealth(200 + 100)
+				self:SetMaxHealth(200 + 100)
 				self:SetArmor(2950)
 				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
 					if self:Alive() then
@@ -59,8 +59,8 @@ local function UpgradePlayerIfBot(self)
 					end
 				end)
 			elseif self:GetPlayerClass() == "gmodplayer" then
-				self:SetHealth(100 + 350)
-				self:SetMaxHealth(100 + 350)
+				self:SetHealth(100 + 150)
+				self:SetMaxHealth(100 + 150)
 				self:SetArmor(2950)
 				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
 					if self:Alive() then
@@ -72,8 +72,8 @@ local function UpgradePlayerIfBot(self)
 					end
 				end)
 			elseif self:GetPlayerClass() == "pyro" then
-				self:SetHealth(175 + 150)
-				self:SetMaxHealth(175 + 150)
+				self:SetHealth(175 + 85)
+				self:SetMaxHealth(175 + 85)
 				self:SetArmor(2220)
 				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
 					if self:Alive() then
@@ -85,8 +85,8 @@ local function UpgradePlayerIfBot(self)
 					end
 				end)
 			elseif self:GetPlayerClass() == "demoman" then
-				self:SetHealth(150 + 175)
-				self:SetMaxHealth(150 + 175)
+				self:SetHealth(175 + 85)
+				self:SetMaxHealth(175 + 85)
 				self:SetArmor(2220)
 				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
 					if self:Alive() then
@@ -98,8 +98,8 @@ local function UpgradePlayerIfBot(self)
 					end
 				end)
 			elseif self:GetPlayerClass() == "heavy" then
-				self:SetHealth(300 + 175)
-				self:SetMaxHealth(300 + 175)
+				self:SetHealth(300 + 150)
+				self:SetMaxHealth(300 + 150)
 				self:SetArmor(2320)
 				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
 					if self:Alive() then
@@ -111,8 +111,8 @@ local function UpgradePlayerIfBot(self)
 					end
 				end)
 			elseif self:GetPlayerClass() == "engineer" then
-				self:SetHealth(125 + 150)
-				self:SetMaxHealth(125 + 150)
+				self:SetHealth(125 + 60)
+				self:SetMaxHealth(125 + 60)
 				self:SetArmor(2420)
 				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
 					if self:Alive() then
@@ -124,8 +124,8 @@ local function UpgradePlayerIfBot(self)
 					end
 				end)
 			elseif self:GetPlayerClass() == "medic" then
-				self:SetHealth(175 + 150)
-				self:SetMaxHealth(175 + 150)
+				self:SetHealth(150 + 75)
+				self:SetMaxHealth(150 + 75)
 				self:SetArmor(2620)
 				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
 					if self:Alive() then
@@ -137,8 +137,8 @@ local function UpgradePlayerIfBot(self)
 					end
 				end)
 			elseif self:GetPlayerClass() == "sniper" then
-				self:SetHealth(125 + 150)
-				self:SetMaxHealth(125 + 150)
+				self:SetHealth(125 + 60)
+				self:SetMaxHealth(125 + 60)
 				self:SetArmor(2420)
 				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
 					if self:Alive() then
@@ -150,8 +150,8 @@ local function UpgradePlayerIfBot(self)
 					end
 				end)
 			elseif self:GetPlayerClass() == "spy" then
-				self:SetHealth(125 + 150)
-				self:SetMaxHealth(125 + 150)
+				self:SetHealth(125 + 60)
+				self:SetMaxHealth(125 + 60)
 				self:SetArmor(2920)
 				timer.Create("Speed"..self:EntIndex(), 0.01, 0, function()
 					if self:Alive() then
@@ -476,9 +476,24 @@ function meta:SetPlayerClass(class)
 				c.Model = "models/bots/"..(c.ModelName or "scout").."/bot_"..(c.ModelName or "scout")..".mdl"
 			end
 			self:SetModelScale(1.75)
-			if self:GetPlayerClass() == "medic" and self:GetPlayerClass() == "pyro" and self:GetPlayerClass() == "soldier" and self:GetPlayerClass() == "demoman" and self:GetPlayerClass() == "engineer" and self:GetPlayerClass() == "sniper" then
-				self:SetHealth(3600)
-				self:SetMaxHealth(3600)
+			   if  self:GetPlayerClass() == "medic" then
+				self:SetHealth(4500)
+				self:SetMaxHealth(4500)
+		        elseif self:GetPlayerClass() == "pyro" then
+				self:SetHealth(3000)
+				self:SetMaxHealth(3000)
+			elseif self:GetPlayerClass() == "soldier" then
+				self:SetHealth(3800)
+				self:SetMaxHealth(3800)
+			elseif self:GetPlayerClass() == "demoman" then
+				self:SetHealth(3300)
+				self:SetMaxHealth(3300)
+			elseif self:GetPlayerClass() == "engineer" then
+				self:SetHealth(2000)
+			        self:SetMaxHealth(2000)
+		        elseif self:GetPlayerClass() == "sniper" then
+			        self:SetHealth(1600)
+			        self:SetMaxHealth(1600)
 			elseif self:GetPlayerClass() == "scout" and self:GetPlayerClass() == "spy" then
 				self:SetHealth(1600)
 				self:SetMaxHealth(1600)	
