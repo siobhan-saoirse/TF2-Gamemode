@@ -12,7 +12,7 @@ SWEP.WorldModel			= "models/weapons/c_models/c_shotgun/c_shotgun.mdl"
 SWEP.Crosshair = "tf_crosshair1"
 
 SWEP.Spawnable = true
-SWEP.AdminSpawnable = true
+SWEP.AdminSpawnable = false
 SWEP.Category = "Team Fortress 2"
  
 SWEP.MuzzleEffect = "muzzle_shotgun"
