@@ -58,7 +58,7 @@ SWEP.WorldModel			= "models/weapons/c_models/c_grenadelauncher/c_grenadelauncher
 SWEP.Crosshair = "tf_crosshair3"
 
 SWEP.Spawnable = true
-SWEP.AdminOnly = true
+SWEP.AdminOnly = false
 SWEP.Category = "Team Fortress 2"
 
 --[[ --Viewmodel Settings Override (left-over from testing; works well)
