@@ -19,7 +19,7 @@ SWEP.WorldModel			= "models/weapons/c_models/c_directhit/c_directhit.mdl"
 SWEP.Crosshair = "tf_crosshair3"
 
 SWEP.Spawnable = true
-SWEP.AdminOnly = true
+SWEP.AdminOnly = false
 SWEP.Category = "Team Fortress 2"
 
 SWEP.MuzzleEffect = "muzzle_pipelauncher"
