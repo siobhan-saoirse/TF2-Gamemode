@@ -37,7 +37,7 @@ SWEP.WorldModel			= "models/workshop/weapons/c_models/c_liberty_launcher/c_liber
 SWEP.Crosshair = "tf_crosshair3"
 
 SWEP.Spawnable = true
-SWEP.AdminOnly = true
+SWEP.AdminOnly = false
 SWEP.Category = "Team Fortress 2"
 
 SWEP.MuzzleEffect = "muzzle_pipelauncher"
