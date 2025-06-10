@@ -37,7 +37,7 @@ SWEP.WorldModel			= "models/weapons/c_models/c_rocketlauncher/c_rocketlauncher.m
 SWEP.Crosshair = "tf_crosshair3"
 
 SWEP.Spawnable = true
-SWEP.AdminOnly = false
+SWEP.AdminOnly = true
 SWEP.Category = "Team Fortress 2"
 
 SWEP.MuzzleEffect = "muzzle_pipelauncher"
