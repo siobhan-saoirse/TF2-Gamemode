@@ -37,7 +37,7 @@ SWEP.WorldModel			= "models/weapons/c_models/c_rocketlauncher/c_rocketlauncher.m
 SWEP.Crosshair = "tf_crosshair3"
 
 SWEP.Spawnable = true
-SWEP.AdminOnly = true
+SWEP.AdminOnly = false
 SWEP.Category = "Team Fortress 2"
 
 SWEP.MuzzleEffect = "muzzle_pipelauncher"
@@ -48,7 +48,7 @@ SWEP.ShootCritSound = Sound("MVM.GiantSoldierRocketShootCrit")
 SWEP.ChargeSound = Sound("Weapon_StickyBombLauncher.ChargeUp")
 SWEP.ReloadSound = Sound("")
 
-SWEP.Primary.ClipSize		= 30
+SWEP.Primary.ClipSize		= 9
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
 SWEP.Primary.Delay          = 0.8 * 0.2
 
@@ -71,13 +71,6 @@ SWEP.CriticalChance = 100
 SWEP.MinAddPitch = -1
 SWEP.MaxAddPitch = -6
 
-SWEP.ChargeTime = 2
-SWEP.MinForce = 150
-SWEP.MaxForce = 2800 * 0.4
-
-SWEP.MinAddPitch = -1
-SWEP.MaxAddPitch = -6
-
 SWEP.MinGravity = 1
 SWEP.MaxGravity = 1
 SWEP.BulletSpread = 7
@@ -93,14 +86,9 @@ function SWEP:Deploy()
 	if CLIENT then
 		HudBowCharge:SetProgress(0)
 	end
-
-GAMEMODE:StartCritBoost(self)
 	
-	timer.Create("ColonelBarrage"..self.Owner:EntIndex(), 1, 0, function()
-		if (self.Owner:GetPlayerClass() == "colonelbarrage") then
-			GAMEMODE:HealPlayer(self, self, 40, true, false)
-		end
-	end)
+	GAMEMODE:StartCritBoost(self)
+                
 	return self:CallBaseFunction("Deploy")
 end
  
@@ -168,17 +156,15 @@ function SWEP:ShootProjectile()
 		rocket:SetPos(self:ProjectileShootPos())
 		local ang = self.Owner:EyeAngles()
 		
-		rocket:SetAngles(ang + Angle(math.random(-5,5),math.random(-5,5),0))
+		rocket:SetAngles(ang + Angle(math.Rand(-1.6,1.6),math.Rand(-1.6,1.6),0))
 		--rocket.ExplosionSound = "MVM.GiantSoldierRocketExplode"
-		if self:Critical() then
-			rocket.critical = true
-		end
+		rocket.critical = true
 		for k,v in pairs(self.Properties) do
 			rocket[k] = v
 		end
 		
 		rocket:SetOwner(self.Owner)
-		rocket.BaseDamage = 95 * 1.5
+		rocket.BaseDamage = 95 * 2.0
 		rocket.BaseSpeed = 1100 * 0.4
 		self:InitProjectileAttributes(rocket)
 		
@@ -195,3 +181,9 @@ function SWEP:OnRemove()
 		self.ChargeUpSound = nil
 	end
 end
+
+
+	
+		
+		
+		
