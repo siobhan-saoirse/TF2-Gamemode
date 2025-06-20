@@ -92,8 +92,8 @@ end
 
 function lookForClosestHumanPlayer(bot)
 	local npcs = {} 
-	if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
-		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 12000)) do 
+	if bot.TFBot then
+		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 800)) do 
 			if (v:IsPlayer() and v:Health() > 0 and !v:IsBot() and v:EntIndex() != bot:EntIndex() and v:EntityTeam(bot) != TEAM_NEUTRAL and !IsValid(bot.TargetEnt) and !v:IsFriendly(bot) and v:Team() != TEAM_NEUTRAL and v:Team() != TEAM_FRIENDLY and v:Health() > 0 ) then
 				table.insert(npcs, v)
 			elseif ((v:IsNPC() or v:IsNextBot()) and !v:IsFriendly(bot)) then
@@ -107,17 +107,6 @@ function lookForClosestHumanPlayer(bot)
 end
 
 function getNPCsAndPlayers()
-	local npcs = {}
-	if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
-		for k,v in ipairs(ents.GetAll()) do
-			if (v:IsNPC() or v:IsNextBot()) then
-				if (v:Health() > 0) then
-					table.insert(npcs, v)
-				end
-			end
-		end
-	end
-	return npcs, player.GetAll()
 end
 
 function LBAddProfile(tab) 
@@ -582,7 +571,6 @@ hook.Add("SetupMove", "LeadBot_Control22", function(bot, mv, cmd)
 	local buttons = 0
 	if bot.TFBot and bot:Alive() then
 		-- if our targetent is not alive, don't do anything until it's nil
-		bot.LastSegmented = CurTime() + 0.1
 		--cmd:ClearMovement()
 		--cmd:ClearButtons()
 
@@ -709,14 +697,6 @@ hook.Add("SetupMove", "LeadBot_Control22", function(bot, mv, cmd)
 		end
 		if (bot.OverrideModelScale) then
 			bot:SetModelScale(bot.OverrideModelScale)
-		end
-		if !IsValid(controller) then
-			bot.ControllerBot = ents.Create("ctf_bot_navigator")
-			bot.ControllerBot:Spawn()
-			bot.ControllerBot:SetOwner(bot)
-			controller = bot.ControllerBot
-		else
-			controller:SetPos(bot:GetPos())
 		end
 	
 		local moveawayrange = 80
@@ -877,6 +857,7 @@ hook.Add("SetupMove", "LeadBot_Control22", function(bot, mv, cmd)
 					bot.botPos = bot.intelcarrier:GetPos()
 				end
 				--bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), mva + (controller.LookAt * 0.5))) 
+				bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), (controller.LookAt))) 
 			end
 			if (!IsValid(bot.TargetEnt)) then 
 				if (bot.lookingAt) then return end
@@ -886,6 +867,7 @@ hook.Add("SetupMove", "LeadBot_Control22", function(bot, mv, cmd)
 					end 
 				end	 
 				--bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), mva + (controller.LookAt * 0.5))) 
+				bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), (controller.LookAt))) 
 			end 
 	end
 end)
@@ -1196,38 +1178,6 @@ hook.Add("PlayerDisconnected", "leadbot_removed", function(ply)
 	ply:StopSound("MVM.GiantHeavyLoop")
 end)
 
-hook.Add("Think", "leadbot_think", function()
-	--for _, bot in pairs(player.GetBots()) do
-		----print(bot)
-		--[[for m, n in pairs(ents.FindByClass("prop_buys")) do
-			if n:GetPos():Distance(bot:GetPos()) < 120 then
-				--print(n)
-			end
-		end]]
-		--[[if bot:Team() == TEAM_SPECTATOR then
-			bot:SetTeam(TEAM_PLAYERS)
-		end]]
-		--[[if bot.TFBot then
-			if IsValid(bot:GetActiveWeapon()) then
-				local wep = bot:GetActiveWeapon()
-				local ammoty = wep:GetPrimaryAmmoType() or wep.Primary.Ammo
-				--bot:SetAmmo(32, ammoty)
-			end]]
-
-			--[[if nzRound:InState(ROUND_WAITING) and !IsValid(bot:GetActiveWeapon()) then
-				bot:KillSilent()
-			end]]	
-
-			--if bot:GetActiveWeapon() == NULL or (IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon():GetClass() ~= Entity(1):GetActiveWeapon():GetClass()) or !IsValid(bot:GetActiveWeapon()) then
-				--if Entity(1):GetActiveWeapon():GetClass() ~= "nz_quickknife_crowbar" and Entity(1):GetActiveWeapon():GetClass() ~= "nz_grenade" and !IsValid(bot.UseTarget) then
-					--bot:StripWeapons()
-					--bot:Give(Entity(1):GetActiveWeapon():GetClass())
-				--end
-			--end
-		--end
-	--end
-end)
-
 hook.Add("OnPlayerReady", "leadbot_ready", function()
 	RunConsoleCommand("lk.ready_bots")
 end)
@@ -1371,32 +1321,6 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 				end
 			end
 		end
-			
-		if (bot.LastPath ~= nil and bot.LastPath[bot.CurSegment + 1] ~= nil) then
-			local curgoal = bot.LastPath[bot.CurSegment + 1]
-			if (curgoal ~= nil) then
-					if curgoal.area:HasAttributes(NAV_MESH_JUMP) then
-						if (bot:IsOnGround()) then
-							
-							if (math.random(1,5) == 1) then
-								buttons = buttons + IN_JUMP
-							end
-
-						end
-					end
-					if curgoal.area:HasAttributes(NAV_MESH_CROUCH) then
-						if (curgoal.area:HasAttributes(NAV_MESH_JUMP) and !bot:IsOnGround()) then
-							if (math.random(1,16) == 1) then
-								buttons = buttons + IN_DUCK
-							end
-						elseif (!curgoal.area:HasAttributes(NAV_MESH_JUMP)) then
-							if (math.random(1,16) == 1) then
-								buttons = buttons + IN_DUCK
-							end
-						end
-					end
-				end
-			end
 			
 			local curgoal = navmesh.GetNavArea(bot:GetPos(),128)
 			if (curgoal ~= nil) then
@@ -1632,106 +1556,6 @@ concommand.Add("tf_bot_add", function(ply, cmd, args, argStr)
 		end
 	end 
 end)
-concommand.Add("z_spawn", function(ply, _, _, args) 
-	if ply:IsAdmin() or ply:IsSuperAdmin() then 
-		
-		if (game.SinglePlayer()) then 
-			if (args == "witch") then
-				local bot = ents.Create("npc_vj_l4d2_witch")
-				local pos = ply:GetEyeTrace().HitPos
-				bot:SetPos(pos)
-				bot:Spawn()
-				bot:Activate()
-			elseif (args == "boomer") then
-				local bot = ents.Create(table.Random({"npc_vj_l4d2_boomer","npc_vj_l4d2_boomer","npc_vj_l4d2_boomer","npc_vj_l4d2_boomer","npc_vj_l4d2_boomette","npc_vj_l4d_boomer"}))
-				local pos = ply:GetEyeTrace().HitPos
-				bot:SetPos(pos)
-				bot:Spawn()
-				bot:Activate()
-			elseif (args == "smoker") then
-				local bot = ents.Create(table.Random({"npc_vj_l4d2_smoker","npc_vj_l4d_smoker"}))
-				local pos = ply:GetEyeTrace().HitPos
-				bot:SetPos(pos)
-				bot:Spawn()
-				bot:Activate()
-			elseif (args == "hunter") then
-				local bot = ents.Create(table.Random({"npc_vj_l4d2_hunter","npc_vj_l4d_hunter"}))
-				local pos = ply:GetEyeTrace().HitPos
-				bot:SetPos(pos)
-				bot:Spawn()
-				bot:Activate()
-			elseif (args == "tank_l4d") then
-				local bot = ents.Create(table.Random({"npc_vj_l4d2_tank","npc_vj_l4d_tank"}))
-				local pos = ply:GetEyeTrace().HitPos
-				if (math.random(1,8) == 1) then
-					bot:SetMaterial("color")
-					local animent2 = ents.Create( 'prop_dynamic_override' ) -- The entity used for the death animation	
-					animent2:SetModel("models/infected/hulk_dlc3.mdl")
-					animent2:SetSkin(bot:GetSkin())
-					animent2:SetPos(bot:GetPos())
-					animent2:SetAngles(bot:GetAngles())
-					animent2:SetParent(bot)
-					animent2:AddEffects(EF_BONEMERGE)
-				end
-				bot:SetPos(pos)
-				bot:Spawn()
-				bot:Activate()
-			elseif (args == "charger") then
-				local bot = ents.Create("npc_vj_l4d2_charger")
-				local pos = ply:GetEyeTrace().HitPos
-				bot:SetPos(pos)
-				bot:Spawn()
-				bot:Activate()
-			elseif (args == "spitter") then
-				local bot = ents.Create("npc_vj_l4d2_spitter")
-				local pos = ply:GetEyeTrace().HitPos
-				bot:SetPos(pos)
-				bot:Spawn()
-				bot:Activate()
-			elseif (args == "jockey") then
-				local bot = ents.Create("npc_vj_l4d2_jockey")
-				local pos = ply:GetEyeTrace().HitPos
-				bot:SetPos(pos)
-				bot:Spawn()
-				bot:Activate()
-			else
-				local bot = ents.Create("sent_vj_l4d_cominf")
-				local pos = ply:GetEyeTrace().HitPos
-				bot:SetPos(pos)
-				bot:Spawn()
-				bot:Activate()
-			end
-		else
-			if (args == "smoker" || args == "boomer" || args == "hunter" || args == "tank_l4d" || args == "charger" || args == "jockey" || args == "spitter") then
-				LeadBot_S_Add_Zombie(1,args,ply:GetEyeTrace().HitPos) 
-			else
-				if (args == "witch") then
-					local bot = ents.Create("npc_vj_l4d2_witch")
-					local pos = ply:GetEyeTrace().HitPos
-					bot:SetPos(pos)
-					bot:Spawn()
-					bot:Activate()
-				else
-					local bot = ents.Create("sent_vj_l4d_cominf")
-					local pos = ply:GetEyeTrace().HitPos
-					bot:SetPos(pos)
-					bot:Spawn()
-					bot:Activate()
-				end
-			end
-		end
-	end 
-end)
-concommand.Add("sb_add", function(ply, _, _, args) 
-	if ply:IsAdmin() or ply:IsSuperAdmin() then 
-		LeadBot_S_Add_Survivor(0,args,ply:GetEyeTrace().HitPos) 
-	end 
-end)
-concommand.Add("sb_add_blue", function(ply, _, _, args) 
-	if ply:IsAdmin() or ply:IsSuperAdmin() then 
-		LeadBot_S_Add_BlueSurvivor(0,args,ply:GetEyeTrace().HitPos) 
-	end 
-end)
 concommand.Add("tf_bot_name_add", function(_, _, args) table.insert(names, args[1]) MsgN(args[1].." added to names list!") end)
 concommand.Add("tf_bot_quota", function(_, _, args) for i=0, args[1]-1 do LeadBot_S_Add() end end)
 
@@ -1889,7 +1713,7 @@ hook.Add( "StartCommand", "astar_example", function( ply, cmd )
 	// Only run this code on bots, and only if bot_mimic is set to 0
 	if ( !ply.TFBot || ply.botPos == nil ) then return end
 	local currentArea = navmesh.GetNearestNavArea( ply:GetPos() )
-	--cmd:ClearMovement()
+	cmd:ClearMovement()
 
 	// internal variable to regenerate the path every X seconds to keep the pace with the target player
 	ply.lastRePath = ply.lastRePath or 0

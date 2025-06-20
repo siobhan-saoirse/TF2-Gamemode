@@ -66,21 +66,6 @@ local function meta_init(ent)
 end
 
 hook.Add("Think", "TFClientEntityThink", function()
-	for _,v in pairs(ents.GetAll()) do
-		if IsValid(v) and forced_client_class[v:GetClass()] then
-			meta_init(v)
-			
-			if not v.ClientInitialized then
-				if v.Initialize then
-					v:Initialize()
-					v.ClientInitialized = true
-				end
-				v.ClientInitialized = true
-			else
-				if v.Think then v:Think() end
-			end
-		end
-	end
 end)
 
 hook.Add("PostDrawOpaqueRenderables", "TFClientEntityDraw", function()

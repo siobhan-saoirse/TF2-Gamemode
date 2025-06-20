@@ -26,9 +26,6 @@ end
 
 function ENT:ChasePos( options )
 	if (self.PosGen ~= nil) then
-		self.P = Path("Follow")
-		self.P:Compute(self, self.PosGen)
-		self.P:SetGoalTolerance(250)
 		coroutine.wait(1)
 		coroutine.yield()
 	end
@@ -44,12 +41,7 @@ end
 
 function ENT:RunBehaviour()
 	while (true) do
-		coroutine.wait(0.1)
+		coroutine.wait(1)
 		coroutine.yield()
 	end
-end
-
-
-function ENT:Think()
-	self:NextThink(CurTime())
 end

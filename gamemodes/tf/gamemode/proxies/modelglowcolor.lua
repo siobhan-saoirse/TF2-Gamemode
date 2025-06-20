@@ -3,10 +3,6 @@ local DefaultGlowColor = Vector(1.0, 1.0, 1.0)
 
 --[[local ]]
 GlowColorTable = {
-	{	-- red
-		Vector(14.0, 1.0, 1.0),	-- crit
-		Vector(9.0, 4.0, 1.0),	-- minicrit
-	},
 	{	-- blue
 		Vector(1.0, 4.0, 14.0),	-- crit
 		Vector(2.0, 9.0, 9.0),	-- minicrit
@@ -14,6 +10,10 @@ GlowColorTable = {
 	{	-- red
 		Vector(14.0, 1.0, 1.0),	-- crit
 		Vector(9.0, 4.0, 1.0),	-- minicrit
+	},
+	{	-- blue
+		Vector(1.0, 4.0, 14.0),	-- crit
+		Vector(2.0, 9.0, 9.0),	-- minicrit
 	},
 	{	-- blue
 		Vector(1.0, 4.0, 14.0),	-- crit

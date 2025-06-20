@@ -31,7 +31,7 @@ function meta:IsTFPlayer()
 	if (self:GetClass() == "ctf_bot_navigator") then
 		return false
 	else
-		return self:IsPlayer() or self:IsNextBot() or self:IsNPC() or self:GetClass() == "reviver" or self:GetClass() == "eyeball_boss"  or self:GetClass() == "headless_hatman" or self:GetClass() == "tf_zombie" or self.Base == "npc_tf2base" or self.Base == "npc_tf2base_mvm" or self.Base == "npc_demo_red" or self.Base == "npc_demo_mvm" or self.Base == "npc_scout_mvm" or self.Base == "npc_hwg_red" or self.Base == "npc_heavy_mvm" or self.Base == "npc_heavy_mvm_shotgun" or self.Base == "npc_soldier_red" or self.Base == "npc_sniper_red" or self.Base == "npc_spy_red" or self.Base == "npc_scout_red" or self.Base == "npc_pyro_red" or self.Base == "npc_medic_red" or self.Base == "npc_engineer_red"
+		return self:IsPlayer() or self:IsNPC() or self:GetClass() == "reviver" or self:GetClass() == "eyeball_boss"  or self:GetClass() == "headless_hatman" or self:GetClass() == "tf_zombie" or self.Base == "npc_tf2base" or self.Base == "npc_tf2base_mvm" or self.Base == "npc_demo_red" or self.Base == "npc_demo_mvm" or self.Base == "npc_scout_mvm" or self.Base == "npc_hwg_red" or self.Base == "npc_heavy_mvm" or self.Base == "npc_heavy_mvm_shotgun" or self.Base == "npc_soldier_red" or self.Base == "npc_sniper_red" or self.Base == "npc_spy_red" or self.Base == "npc_scout_red" or self.Base == "npc_pyro_red" or self.Base == "npc_medic_red" or self.Base == "npc_engineer_red"
 	end
 end
 
@@ -41,11 +41,7 @@ function meta:EntityName()
 end
 
 function meta:IsL4D()
-	if (self:IsPlayer()) then
-		return self:GetNWBool("IsL4D")
-	else
-		return self:GetClass() == "infected"
-	end
+	return false
 end 
 
 -- Entity team is the team attributed to an entity by the gamemode (this is important for placing NPCs into the correct team)
@@ -92,87 +88,15 @@ function meta:HasNPCFlag(f)
 	return d.flags and bit.band(d.flags, f)>0
 end
 
--- Health related overrides
-if not meta.GetMaxHealthOLD then
-	meta.GetMaxHealthOLD = meta.GetMaxHealth
-end
-function meta:GetMaxHealth()
-	local h,t
-	if self:IsPlayer() then
-		h = self:GetNWInt("PlayerMaxHealthOverride")
-		if h>0 then
-			return h
-		else
-			t = self:GetPlayerClassTable()
-			if t and t.Health then
-				return t.Health
-			else
-				return 100
-			end
-		end
-	else
-		if CLIENT then
-			h = self:GetNWInt("MaxHealth")
-			if h > 0 then return h end
-		end
-		
-		t = self:GetNPCData()
-		if t.health then
-			if type(t.health)=="table" then
-				return t.health[string.lower(self:GetModel())] or t.health[0]
-			else
-				return t.health
-			end
-		elseif SERVER then
-			h = self:GetMaxHealthOLD()
-			return (h>0 and h) or 1
-		end
-		
-		return 1
-	end
-end
-
 if not meta.SetMaxHealthOLD then
 	meta.SetMaxHealthOLD = meta.SetMaxHealth
 end
-function meta:SetMaxHealth(h)
-	if self:IsPlayer() then
-		self:SetNWInt("PlayerMaxHealthOverride",h)
-		if h <= 0 then -- nope
-			self:Kill()
-		end
-	else
-		self:SetNWInt("MaxHealth",h)
-	end
-	self:SetMaxHealthOLD(h)
-end
-
 function meta:ResetMaxHealth()
 	local h
 	self:SetNWInt("PlayerMaxHealthOverride", 0)
 	h = self:GetMaxHealth()
-	self:SetMaxHealthOLD(h)
+	self:SetMaxHealth(h)
 	self:SetNWInt("MaxHealth",h)
-end
-
-if not meta.HealthOLD then
-	meta.HealthOLD = meta.Health
-end
-function meta:Health()
-	if self:IsPlayer() then
-		if not IsValid(self) then
-			--ErrorNoHalt(Format("WARNING: %s:Health: self is not a valid entity!"))
-			tf_util.SaveFullDebugInfo()
-			return 0
-		end
-		return self:HealthOLD()
-	else
-		if SERVER then
-			return self:HealthOLD()
-		else
-			return self:GetNWInt("Health")
-		end
-	end
 end
 
 function meta:ResetHealth()

@@ -543,13 +543,13 @@ function ITEM:ResetParticles(state_override)
 		local effect2
 		local t = self.Owner:EntityTeam()
 		
-		if t==2 then
+		if t==3 then
 			effect = "critgun_weaponmodel_blu"
 		else
 			effect = "critgun_weaponmodel_red"
 		end
 		
-		if t==2 then
+		if t==3 then
 			effect2 = "critgun_weaponmodel_blu_glow"
 		else
 			effect2 = "critgun_weaponmodel_red_glow"
@@ -717,7 +717,6 @@ end)
 
 hook.Add("Think", "TFCheckUpdateItems", function()
 	
-	if (math.random(1,3+(table.Count(player.GetAll())*0.4)) == 1) then 
 		for _,v in pairs(ents.GetAll()) do
 			if v.IsRootLocator and not IsValid(v:GetParent()) then
 				v:Remove()
@@ -728,7 +727,6 @@ hook.Add("Think", "TFCheckUpdateItems", function()
 				end
 			end
 		end
-	end
 end)
 
 end

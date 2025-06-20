@@ -495,26 +495,6 @@ local function CopyPoseParams(pEntityFrom, pEntityTo)
 		end
 	end
 end
-hook.Add("Think", "CanYouSetMovea_XParameterToThePlayers?", function()
-	if (math.random(1,3+(table.Count(player.GetAll())*0.4)) == 1) then 
-		for k,pl in ipairs(player.GetAll()) do
-			if (pl.IsL4DZombie) then
-				pl:SetSaveValue("m_iClass",CLASS_ZOMBIE)
-			elseif (pl:Team() == TEAM_BLU and !pl.IsL4DZombie) then
-				pl:SetSaveValue("m_iClass",CLASS_COMBINE)
-			elseif (pl:Team() == TEAM_RED and !pl.IsL4DZombie) then
-				pl:SetSaveValue("m_iClass",CLASS_PLAYER)
-			else
-				pl:SetSaveValue("m_iClass",CLASS_HUMAN_MILITARY)
-			end
-			if (pl:WaterLevel() > 1) then
-				if (pl:IsOnFire()) then
-					pl:Extinguish()
-				end
-			end
-		end
-	end
-end)
 
 concommand.Add( "tf_sentrybuster_explode", function( ply, cmd )
 

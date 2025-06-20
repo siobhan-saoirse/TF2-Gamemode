@@ -834,7 +834,6 @@ hook.Add("EntityEmitSound", "MouthFix", function(snd)
 
 	if (IsValid(snd.Entity)) then
 		if (snd.Entity.TFBot) then
-			if ( math.random(1,2+(table.Count(player.GetAll())*4))) then
 				for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),22000)) do
 					if ((--[[v:IsTFPlayer() || ]]v:IsPlayer() && v.TFBot) and !IsValid(v.TargetEnt) and v:EntIndex( ) != snd.Entity:EntIndex()) then
 						local oldangles = v:EyeAngles()
@@ -874,8 +873,6 @@ hook.Add("EntityEmitSound", "MouthFix", function(snd)
 				end
 				
 			end
-		end 
-		if math.random(1,2+(table.Count(player.GetAll())*4)) then
 			for k,v in ipairs(ents.FindInSphere(snd.Entity:GetPos(),22000)) do
 				if ((--[[v:IsTFPlayer() || ]]v:IsPlayer() && v.TFBot) and !IsValid(v.TargetEnt) and v:EntIndex( ) != snd.Entity:EntIndex()) then
 					local oldangles = v:EyeAngles()
@@ -913,7 +910,6 @@ hook.Add("EntityEmitSound", "MouthFix", function(snd)
 					end
 				end
 			end
-		end	
 		local sound = string.Replace(snd.SoundName, ".mp3", ".wav")
 		if (file.Exists("sound/"..sound, "WORKSHOP")) then
 			if (!string.find(snd.SoundName,"announcer_") && !string.find(snd.SoundName,"mvm_")) then
@@ -1190,52 +1186,6 @@ hook.Add("Think","Bacterias",function()
 				if (v.Whistle:IsPlaying()) then
 					v.Whistle:Stop()
 					v.m_flBlastJumpLaunchTime = nil
-				end
-			end
-		end
-	end
-	if (math.random(1,3+(table.Count(player.GetAll())*0.4)) == 1) then 
-		for k,v in ipairs(player.GetAll()) do
-
-			if (v:WaterLevel() > 2 and !v.IsUnderWater) then
-				PrecacheParticleSystem("water_playerdive")
-				ParticleEffectAttach("water_playerdive", PATTACH_ABSORIGIN_FOLLOW, v, 0) 
-				v.IsUnderWater = true
-			elseif (v:WaterLevel() < 2 and v.IsUnderWater) then
-				PrecacheParticleSystem("water_playeremerge")
-				ParticleEffectAttach("water_playeremerge", PATTACH_ABSORIGIN_FOLLOW, v, 0) 
-				v.IsUnderWater = false
-			end
-			local pl = v
-		end
-	end
-	if (math.random(1,150) == 1 and SERVER) then
-		for k,v in ipairs(player.GetAll()) do
-			if (v:Alive()) then
-				if (v:GetPlayerClass() == "boomer") then
-					if (math.random(1,5) == 1) then
-						v:EmitSound(table.Random({"Event.BoomerAlert","Event.BoomerAlert","Event.BoomerAlert","Event.BoomerAlertClose"}))
-					end
-				elseif (v:GetPlayerClass() == "charger") then
-					if (math.random(1,5) == 1) then
-						v:EmitSound(table.Random({"Event.ChargerAlert","Event.ChargerAlert","Event.ChargerAlert","Event.ChargerAlertClose"}))	
-					end
-				elseif (v:GetPlayerClass() == "hunter") then
-					if (math.random(1,5) == 1) then
-						v:EmitSound(table.Random({"Event.HunterAlert","Event.HunterAlert","Event.HunterAlert","Event.HunterAlertClose"}))
-					end
-				elseif (v:GetPlayerClass() == "smoker") then
-					if (math.random(1,5) == 1) then
-						v:EmitSound(table.Random({"Event.SmokerAlert","Event.SmokerAlert","Event.SmokerAlert","Event.SmokerAlertClose"}))
-					end
-				elseif (v:GetPlayerClass() == "jockey") then
-					if (math.random(1,5) == 1) then
-						v:EmitSound(table.Random({"Event.JockeyAlert","Event.JockeyAlert","Event.JockeyAlert","Event.JockeyAlertClose"}))
-					end
-				elseif (v:GetPlayerClass() == "spitter") then
-					if (math.random(1,5) == 1) then
-						v:EmitSound(table.Random({"Event.SpitterAlert","Event.SpitterAlert","Event.SpitterAlert","Event.SpitterAlertClose"}))
-					end
 				end
 			end
 		end

@@ -2221,8 +2221,6 @@ concommand.Add("tf_menu", ClassSelection)
 	return --ply:IsAdmin()
 end]]
 
-hook.Add("Think","Phonemes",function()
-end)
 hook.Add( "PlayerSay", "Change class", function( ply, text, public )
 	text = string.lower( text ) -- Make the chat message entirely lowercase
 	if ( string.sub( text, 1 ) == "!changeclass" ) then

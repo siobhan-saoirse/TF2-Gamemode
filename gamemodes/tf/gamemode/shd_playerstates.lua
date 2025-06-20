@@ -294,13 +294,13 @@ PlayerStates = {
 	},
 	[PLAYERSTATE_CRITBOOST] = {
 		proxyvars = {
-			{"CritTeam", function(ent) return ((GAMEMODE:EntityTeam(ent)==TEAM_BLU or GAMEMODE:EntityTeam(ent)==TF_TEAM_PVE_INVADERS) and 2) or 1 end},
+			{"CritTeam", function(ent) return ((GAMEMODE:EntityTeam(ent)==TEAM_BLU or GAMEMODE:EntityTeam(ent)==TF_TEAM_PVE_INVADERS) and 3) or 2 end},
 			{"CritStatus", 1},
 		},
 	},
 	[PLAYERSTATE_MINICRIT] = {
 		proxyvars = {
-			{"CritTeam", function(ent) return ((GAMEMODE:EntityTeam(ent)==TEAM_BLU or GAMEMODE:EntityTeam(ent)==TF_TEAM_PVE_INVADERS) and 2) or 1 end},
+			{"CritTeam", function(ent) return ((GAMEMODE:EntityTeam(ent)==TEAM_BLU or GAMEMODE:EntityTeam(ent)==TF_TEAM_PVE_INVADERS) and 3) or 2 end},
 			{"CritStatus", 2},
 		},
 	},

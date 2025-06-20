@@ -199,6 +199,3 @@ hook.Add("OnEntityCreated", "TF_UpdateNPCRelationship", function(ent)
 		end
 	end
 end)
-hook.Add("Think", "TF_UpdateNPCRelationshipLoop", function(ent)
-	
-end)

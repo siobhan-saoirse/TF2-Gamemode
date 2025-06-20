@@ -859,18 +859,6 @@ function SWEP:Deploy()
 			end
 		end
 	end
-	for k, v in pairs(player.GetAll()) do
-		if v == self.Owner then		
-			if v:IsHL2() then 
-				self:SetHoldType(self.HoldTypeHL2)
-				if self.DeploySound then
-					self:EmitSound(self.DeploySound)
-				end
-			else
-				self:SetWeaponHoldType(self.HoldType)
-			end
-		end
-	end	
 	
 	local hold = self.HoldType 
 	----MsgN(Format("SetupCModelActivities %s", tostring(self)))
@@ -1523,6 +1511,7 @@ function SWEP:Think()
 			self.CModel:SetProxyVar("CritStatus",s2)
 	
 		end
+		--[[
 		if IsValid(self.WModel) then
 			self.WModel:DrawModel()
 			local skin = self.WeaponSkin or self.Owner:GetSkin()
@@ -1532,7 +1521,7 @@ function SWEP:Think()
 			if (self.WModel:GetMaterial() != self.WeaponMaterial) then
 				self.WModel:SetMaterial(self.WeaponMaterial)
 			end
-		end
+		end]]
 		if IsValid(self.ExtraCModel) then
 			self.ExtraCModel:DrawModel()
 			self.ExtraCModel:SetParent(self.CModel)

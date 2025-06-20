@@ -549,8 +549,6 @@ function GM:RollCritical(pl)
 		--pl:ChatPrint(Format("Rolling crit (%d%%): Fail!",chance))
 	end
 end
-function GM:Tick()
-end
 local function CopyPoseParams(pEntityFrom, pEntityTo)
 	if (SERVER) then
 		for i = 0, pEntityFrom:GetNumPoseParameters() - 1 do
@@ -564,135 +562,6 @@ local function CopyPoseParams(pEntityFrom, pEntityTo)
 			pEntityTo:SetPoseParameter(sPose, math.Remap(pEntityFrom:GetPoseParameter(sPose), 0, 1, flMin, flMax))
 		end
 	end
-end
-function GM:Think()
-	for _,v in pairs(player.GetAll()) do
-		if (IsValid(v.PuppetAnim)) then
-			CopyPoseParams(v,v.PuppetAnim:GetPuppeteer())
-			v.PuppetAnim:GetPuppeteer():SetSequence(v:GetSequence())
-			v.PuppetAnim:GetPuppeteer():SetPlaybackRate(0)
-			v.PuppetAnim:GetPuppeteer():SetCycle(v:GetCycle())
-			v.PuppetAnim:GetPuppeteer():SetEnableAnimEventEffects(false)
-			v.PuppetAnim:GetPuppeteer():SetPuppeteerAlpha(false)
-			v.PuppetAnim:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-			v.PuppetAnim:GetPuppeteer():SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-			v.PuppetAnim:SetModelScale((v:GetModelRadius() / v.PuppetAnim:GetModelRadius()) * v:GetModelScale())
-		end
-		for _,child in ipairs(ents.GetAll()) do
-			if (child:GetParent():EntIndex() == v:EntIndex()) then
-				--child:SetMaterial(v:GetMaterial())
-			end
-		end
-		if (v:Alive()) then
-			if (v:IsHL2()) then		  
-				v:SetViewOffset(Vector(0,0,64 * v:GetModelScale()))
-				v:SetViewOffsetDucked(Vector(0, 0, 28 * v:GetModelScale()))
-			else
-				if (v.playerclass == "Scout" or v.playerclass == "Soldier"
-					or v.playerclass == "Pyro" or v.playerclass == "Demoman" or v.playerclass == "Engineer") then
-					v:SetViewOffset(Vector(0, 0, 65 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 28 * v:GetModelScale()))
-				else
-					v:SetViewOffset(Vector(0, 0, 75 * v:GetModelScale()))
-					v:SetViewOffsetDucked(Vector(0, 0, 28 * v:GetModelScale()))
-				end
-			end
-		end
-		
-		if (v:GetNWBool("Taunting",false) == true) then
-			if (v:IsOnGround()) then
-				v:SetVelocity(Vector(0,0,0))
-			end
-		end
-	end
-	if (math.random(1,2+(table.Count(player.GetAll())*2))) then
-		if not self.NextUpdateDamage or CurTime()>self.NextUpdateDamage then
-			for _,v in pairs(player.GetAll()) do
-				-- Update damage dealt in the last 20 seconds for every player
-				self:UpdateTotalDamage(v)
-				self:UpdateKills(v)
-				
-				-- Roll critical hits for rapidfire weapons
-				local w = v:GetActiveWeapon()
-				if w and w:IsValid() and w.CriticalChance and w.IsRapidFire then
-					self:RollCritical(v)
-				end
-			end
-			
-			self.NextUpdateDamage = CurTime() + 1
-		end
-		for k, v in ipairs(ents.GetAll()) do
-			if (v:GetClass() == "gmod_tool" && GetConVar("tf_competitive"):GetBool() && IsValid(v:GetOwner()) and !v:GetOwner():IsAdmin()) then
-				v:Remove()
-			end
-		end
-		for k, self in ipairs(player.GetAll()) do
-			if (self:IsNextBot()) then
-				for p, ply in ipairs(player.GetAll()) do
-					if(ply:EyePos():Distance(self:EyePos()) <= 300) then
-						self:SetEyeTarget(ply:EyePos())
-					end
-				end
-			end
-		end
-		for _,pl in ipairs(player.GetAll()) do
-			for p, ply in ipairs(player.GetAll()) do
-				if(ply:EntIndex() != pl:EntIndex() and ply:EyePos():Distance(pl:EyePos()) <= 300) then
-					pl:SetEyeTarget(ply:EyePos())
-				end
-			end
-			if (IsValid(pl.ShovedAnimation)) then
-				pl:SetAngles(pl.ShovedAnimation:GetAngles())
-				pl.ShovedAnimation.IsVJBaseSNPC = false
-			end
-			if (pl:Health() > pl:GetMaxHealth()) then
-
-				if not pl.NextHealthDecay then
-					pl.NextHealthDecay = CurTime() + 0.2
-				elseif CurTime() >= pl.NextHealthDecay then
-					pl:SetHealth(pl:Health() - 1)
-					pl.NextHealthDecay = CurTime() + 0.2
-				end
-
-			end
-			for k,v in ipairs(ents.FindInSphere(pl:GetShootPos() * 1.05,80 * pl:GetModelScale() * 1.01)) do
-			
-				if (pl:IsPlayer() and !pl:IsHL2() and IsValid(pl:GetActiveWeapon()) and pl.IsTFWeapon) then
-					
-					if (pl:GetActiveWeapon():GetItemData().item_name and pl:GetActiveWeapon():GetItemData().item_name == "#TF_Minigun_Deflector" and (string.find(v:GetClass(), "tf_projectile_") or v:GetClass() == "prop_combine_ball" or v:GetClass() == "rpg_missile" or v:GetCollisionGroup() == COLLISION_GROUP_PROJECTILE) and pl:KeyDown(IN_ATTACK)) then
-					
-						v:EmitSound("Halloween.HeadlessBossAxeHitWorld")
-						
-						local effectdata = EffectData()
-							effectdata:SetOrigin(v:GetPos())
-							effectdata:SetNormal(Vector(0,0,1))
-							effectdata:SetMagnitude(2)
-							effectdata:SetScale(1)
-							effectdata:SetRadius(5)
-						util.Effect("Sparks", effectdata)
-						
-						v:Remove()
-
-					end
-					
-				end
-				
-			end
-		end
-		for _,bot in pairs(player.GetBots()) do
-			if (string.find(bot:GetModel(),"/bot_")) then
-				GAMEMODE:GiveAmmoPercent(bot, 100)
-			end
-		end
-	end
-	--[[
-	if not self.NextLoopExpression or CurTime()>self.NextLoopExpression then
-		for _,v in pairs(player.GetAll()) do
-			v:Speak("TLK_PLAYER_EXPRESSION", true)
-		end
-		
-		self.NextLoopExpression = CurTime() + 5
-	end]]
 end
  
 --[[
@@ -712,7 +581,61 @@ hook.Add("Move", "TFPlayerSlowdown", function(pl, move)
 end)
 ]]
 hook.Add("Think", "TFPlayerThink", function()
-		for v,_ in pairs(entset.GetTFPlayers()) do
+	
+	for _,v in ipairs(player.GetAll()) do
+		if (IsValid(v.PuppetAnim)) then
+			CopyPoseParams(v,v.PuppetAnim:GetPuppeteer())
+			v.PuppetAnim:GetPuppeteer():SetSequence(v:GetSequence())
+			v.PuppetAnim:GetPuppeteer():SetPlaybackRate(0)
+			v.PuppetAnim:GetPuppeteer():SetCycle(v:GetCycle())
+			v.PuppetAnim:GetPuppeteer():SetEnableAnimEventEffects(false)
+			v.PuppetAnim:GetPuppeteer():SetPuppeteerAlpha(false)
+			v.PuppetAnim:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+			v.PuppetAnim:GetPuppeteer():SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+			v.PuppetAnim:SetModelScale((v:GetModelRadius() / v.PuppetAnim:GetModelRadius()) * v:GetModelScale())
+		end
+		if (v:GetNWBool("Taunting",false) == true) then
+			if (v:IsOnGround()) then
+				v:SetVelocity(Vector(0,0,0))
+			end
+		end
+			local pl = v
+			if (pl:WaterLevel() > 1) then
+				if (pl:IsOnFire()) then
+					pl:Extinguish()
+				end
+			end
+			local self = GAMEMODE
+			if not self.NextUpdateDamage or CurTime()>self.NextUpdateDamage then
+					-- Update damage dealt in the last 20 seconds for every player
+					self:UpdateTotalDamage(v)
+					self:UpdateKills(v)
+					
+					-- Roll critical hits for rapidfire weapons
+					local w = v:GetActiveWeapon()
+					if w and w:IsValid() and w.CriticalChance and w.IsRapidFire then
+						self:RollCritical(v)
+					end
+				
+				self.NextUpdateDamage = CurTime() + 1
+			end
+			if (IsValid(pl.ShovedAnimation)) then
+				pl:SetAngles(pl.ShovedAnimation:GetAngles())
+				pl.ShovedAnimation.IsVJBaseSNPC = false
+			end
+			if (pl:Health() > pl:GetMaxHealth()) then
+
+				if not pl.NextHealthDecay then
+					pl.NextHealthDecay = CurTime() + 0.2
+				elseif CurTime() >= pl.NextHealthDecay then
+					pl:SetHealth(pl:Health() - 1)
+					pl.NextHealthDecay = CurTime() + 0.2
+				end
+
+			end
+		end
+		for _,v in pairs(ents.GetAll()) do
+			if (!v:IsTFPlayer()) then return end
 			--------------------------------------------------------
 			-- Overheal
 			if v:IsValid() then

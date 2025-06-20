@@ -254,15 +254,6 @@ function ENT:Touch(ent)
 	end
 end
 
-hook.Add("Think", "FlameBurnSoundThink", function()
-	for _,v in pairs(ents.GetAll()) do
-		if v.FlameBurnSound and (not v.NextStopBurnSound or CurTime()>v.NextStopBurnSound) then
-			v.NextStopBurnSound = nil
-			v.FlameBurnSound:Stop()
-		end
-	end
-end)
-
 hook.Add("EntityRemoved", "FlameBurnSoundRemove", function(ent)
 	if ent.FlameBurnSound then
 		ent.FlameBurnSound:Stop()
