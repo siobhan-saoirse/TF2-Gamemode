@@ -120,6 +120,7 @@ function SWEP:ShootProjectile()
 		self:InitProjectileAttributes(rocket)
 		
 		if (self.Owner:GetPlayerClass() == "giantsoldiercharged") then
+			rocket.BaseDamage = 95 * 2.0
 			rocket.BaseSpeed = 1100 * 0.5
 		end 
 		

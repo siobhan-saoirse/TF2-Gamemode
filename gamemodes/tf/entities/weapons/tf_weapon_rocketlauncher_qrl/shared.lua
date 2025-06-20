@@ -29,11 +29,11 @@ SWEP.ShootCritSound = Sound("Weapon_QuakeRPG.SingleCrit")
 SWEP.CustomExplosionSound = Sound("Weapon_QuakeRPG.Reload")
 SWEP.ReloadSound = Sound("Weapon_QuakeRPG.Reload")
 
-SWEP.Primary.ClipSize		= 4
+SWEP.Primary.ClipSize		= 11
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
 SWEP.Primary.Ammo			= TF_PRIMARY
 SWEP.Primary.Delay = 2.0 * 0.2
-SWEP.ReloadTime = 0.8 * 0.6
+SWEP.ReloadTime = 0.8 * 0.4
 
 SWEP.IsRapidFire = false
 SWEP.ReloadSingle = true

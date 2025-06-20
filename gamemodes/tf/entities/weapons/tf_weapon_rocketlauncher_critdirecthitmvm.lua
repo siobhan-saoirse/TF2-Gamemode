@@ -69,6 +69,8 @@ function SWEP:ShootProjectile()
 		end
 		
 		rocket:SetOwner(self.Owner)
+		rocket.BaseDamage = 95 * 2.0
+		rocket.BaseSpeed = 1100 * 1
 		self:InitProjectileAttributes(rocket)
 		
 		rocket.NameOverride = self:GetItemData().item_iconname or self.NameOverride 

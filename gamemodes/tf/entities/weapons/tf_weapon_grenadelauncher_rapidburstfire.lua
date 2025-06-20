@@ -6,7 +6,7 @@ end
 SWEP.Slot				= 0
 if CLIENT then
 
-SWEP.PrintName			= "Rapid Fire Grenade Launcher for Giant Demoman"
+SWEP.PrintName			= "Rapid Burst Fire Grenade Launcher Fir Giant Demoman"
 
 function SWEP:InitializeCModel()
 	self:CallBaseFunction("InitializeCModel")
@@ -58,7 +58,7 @@ SWEP.WorldModel			= "models/weapons/c_models/c_grenadelauncher/c_grenadelauncher
 SWEP.Crosshair = "tf_crosshair3"
 
 SWEP.Spawnable = true
-SWEP.AdminOnly = true
+SWEP.AdminSpawnable = false
 SWEP.Category = "Team Fortress 2"
 
 --[[ --Viewmodel Settings Override (left-over from testing; works well)
@@ -76,7 +76,7 @@ SWEP.ReloadSound = Sound("Weapon_GrenadeLauncher.WorldReload")
 SWEP.Primary.ClipSize		= 4
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
 SWEP.Primary.Ammo			= TF_PRIMARY
-SWEP.Primary.Delay          = 0.6 * 0.75
+SWEP.Primary.Delay          = 0.6 * 0.1
 SWEP.ReloadTime = 0.6 * -0.6
 
 SWEP.IsRapidFire = false

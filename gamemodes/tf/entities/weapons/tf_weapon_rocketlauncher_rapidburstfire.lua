@@ -5,7 +5,7 @@ end
 
 if CLIENT then
 
-SWEP.PrintName			= "Giant Burst Fire 2 Rocket Launcher"
+SWEP.PrintName			= "Rapid Burst Fire Rocket Launcher for Giant Soldier"
 SWEP.Slot				= 0
 SWEP.RenderGroup 		= RENDERGROUP_BOTH
 
@@ -37,7 +37,7 @@ SWEP.WorldModel			= "models/weapons/c_models/c_rocketlauncher/c_rocketlauncher.m
 SWEP.Crosshair = "tf_crosshair3"
 
 SWEP.Spawnable = true
-SWEP.AdminOnly = false
+SWEP.AdminOnly = true
 SWEP.Category = "Team Fortress 2"
 
 SWEP.MuzzleEffect = "muzzle_pipelauncher"
@@ -50,7 +50,7 @@ SWEP.ReloadSound = Sound("")
 
 SWEP.Primary.ClipSize		= 9
 SWEP.Primary.DefaultClip	= SWEP.Primary.ClipSize
-SWEP.Primary.Delay          = 0.8 * 0.2
+SWEP.Primary.Delay          = 0.8 * 0.1
 
 SWEP.IsRapidFire = false
 SWEP.ReloadSingle = true
@@ -66,16 +66,17 @@ SWEP.Properties = {}
 
 SWEP.ChargeTime = 2
 SWEP.MinForce = 150
-SWEP.MaxForce = 2800 * 0.65
-SWEP.CriticalChance = 100
+SWEP.MaxForce = 2800
+
 SWEP.MinAddPitch = -1
 SWEP.MaxAddPitch = -6
 
 SWEP.MinGravity = 1
 SWEP.MaxGravity = 1
-SWEP.BulletSpread = 7
-SWEP.ReloadTime = 0.8 * 0.4
-SWEP.ReloadStartTime = 0.8 * 0.4
+SWEP.BulletSpread = 7 
+SWEP.ReloadTime = 0.8
+SWEP.OldReloadTime = 0.8
+SWEP.FastReloadTime = -2.24
 SWEP.VM_DRAW = ACT_PRIMARY_VM_DRAW
 SWEP.VM_IDLE = ACT_PRIMARY_VM_IDLE
 SWEP.VM_PRIMARYATTACK = ACT_PRIMARY_VM_PRIMARYATTACK
@@ -87,8 +88,6 @@ function SWEP:Deploy()
 		HudBowCharge:SetProgress(0)
 	end
 	
-	GAMEMODE:StartCritBoost(self)
-                
 	return self:CallBaseFunction("Deploy")
 end
  
@@ -156,18 +155,20 @@ function SWEP:ShootProjectile()
 		rocket:SetPos(self:ProjectileShootPos())
 		local ang = self.Owner:EyeAngles()
 		
-		rocket:SetAngles(ang + Angle(math.Rand(-1.6,1.6),math.Rand(-1.6,1.6),0))
+		rocket:SetAngles(ang--[[ + Angle(math.Rand(-1.6,1.6),math.Rand(-1.6,1.6),0)]])
 		--rocket.ExplosionSound = "MVM.GiantSoldierRocketExplode"
-		rocket.critical = true
+		if self:Critical() then
+			rocket.critical = true
+		end
+		
 		for k,v in pairs(self.Properties) do
 			rocket[k] = v
 		end
 		
 		rocket:SetOwner(self.Owner)
-		rocket.BaseDamage = 95 * 2.0
-		rocket.BaseSpeed = 1100 * 0.9
 		self:InitProjectileAttributes(rocket)
 		
+		rocket.BaseSpeed = 1100 * 0.65
 		rocket:Spawn()
 		rocket:Activate() 
 	end

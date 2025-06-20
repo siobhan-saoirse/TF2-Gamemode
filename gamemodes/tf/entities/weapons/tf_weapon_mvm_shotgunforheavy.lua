@@ -35,7 +35,7 @@ SWEP.MaxDamageRampUp = 0.5
 SWEP.MaxDamageFalloff = 0.5
 
 
-SWEP.HoldType = "PRIMARY"
+SWEP.HoldType = "SECONDARY"
 
 SWEP.HoldTypeHL2 = "shotgun"
 SWEP.BulletsPerShot = 30
