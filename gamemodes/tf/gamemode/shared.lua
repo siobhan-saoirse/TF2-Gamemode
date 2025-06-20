@@ -11,6 +11,7 @@ end
 
 --If you ask me a question about why I'm using console commands trust me, this shit is golden
  
+local mp_friendlyfire = CreateConVar("mp_friendlyfire", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY, FCVAR_REPLICATED}, "Enables/Disables Friendly fire (for some reason, Rubat deleted this cvar. This broke TF2 Gamemode and CStrike gamemode.)")
 resource.AddFile("models/weapons/c_models/c_scout_arms_empty.dx90.vtx")
 resource.AddFile("models/weapons/c_models/c_scout_arms_empty.dx80.vtx")
 resource.AddFile("models/weapons/c_models/c_scout_arms.mdl")
@@ -1638,6 +1639,15 @@ if (IsMounted("tf")) then
 	player_manager.AddValidModel("!tf_medic","models/player/medic.mdl")
 	player_manager.AddValidModel("!tf_sniper","models/player/sniper.mdl")
 	player_manager.AddValidModel("!tf_spy","models/player/spy.mdl")
+	player_manager.AddValidModel("!tf_bot_scout","models/bots/scout/bot_scout.mdl")
+	player_manager.AddValidModel("!tf_bot_soldier","models/bots/soldier/bot_soldier.mdl")
+	player_manager.AddValidModel("!tf_bot_pyro","models/bots/pyro/bot_pyro.mdl")
+	player_manager.AddValidModel("!tf_bot_demo","models/bots/demo/bot_demo.mdl")
+	player_manager.AddValidModel("!tf_bot_heavy","models/bots/heavy/bot_heavy.mdl")
+	player_manager.AddValidModel("!tf_bot_engineer","models/bots/engineer/bot_engineer.mdl")
+	player_manager.AddValidModel("!tf_bot_medic","models/bots/medic/bot_medic.mdl")
+	player_manager.AddValidModel("!tf_bot_sniper","models/bots/sniper/bot_sniper.mdl")
+	player_manager.AddValidModel("!tf_bot_spy","models/bots/spy/bot_spy.mdl")
 end
 if (IsMounted("thestanleyparable")) then 
 	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/npc_sounds_stanley.lua")

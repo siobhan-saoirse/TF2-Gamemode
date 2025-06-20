@@ -577,14 +577,14 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 	end
 end)
 
-hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
+hook.Add("SetupMove", "LeadBot_Control22", function(bot, mv, cmd)
 
 	local buttons = 0
 	if bot.TFBot and bot:Alive() then
 		-- if our targetent is not alive, don't do anything until it's nil
 		bot.LastSegmented = CurTime() + 0.1
-		cmd:ClearMovement()
-		cmd:ClearButtons()
+		--cmd:ClearMovement()
+		--cmd:ClearButtons()
 
 		if (GetConVar("ai_disabled"):GetBool()) then return end
 		if (!IsValid(bot.TargetEnt)) then 
@@ -828,66 +828,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				
 		
 	
-		-- force a recompute
-		
-				if (bot.botPos) then
-					bot.ControllerBot.PosGen = bot.botPos
-				end
-		if bot.ControllerBot.P then
-			bot.LastPath = bot.ControllerBot.P:GetAllSegments()
-		end
-		if bot.CurSegment ~= 2 and !table.EqualValues( bot.LastPath, bot.ControllerBot.P:GetAllSegments() ) then
-			bot.CurSegment = 2
-		end
-	
-		------------------------------
-		--------[[BOT EYES]]---------
-		------------------------------
 
-		if !bot.LastPath then return end
-		local curgoal = bot.LastPath[bot.CurSegment]
-		local iszoomed = (IsValid(bot.TargetEnt) and IsValid(bot:GetActiveWeapon()) and bot.playerclass == "Sniper" and bot:GetActiveWeapon():GetClass() == "tf_weapon_sniperrifle" and bot:GetActiveWeapon():EntIndex() == bot:GetWeapons()[1]:EntIndex() and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 2500 and bot:Visible(bot.TargetEnt))
-		-- got nowhere to go, why keep moving?
-		if !curgoal then
-			mv:SetForwardSpeed(0)
-			mv:SetMoveAngles(Angle(0,0,0))
-			return
-		end
-		if (bot:GetNWBool("Taunting",false) != true) then
-			if bot:GetVelocity():Length() <= 225 then
-				if controller.NextCenter < CurTime() then
-					controller.strafeAngle = ((controller.strafeAngle == 1 and 2) or 1)
-					controller.NextCenter = CurTime() + math.Rand(0.3, 0.65)
-				end
-				if controller.nextStuckJump < CurTime() then
-					if !bot:Crouching() then
-						controller.nextStuckJump = 0
-					else
-						controller.nextStuckJump = CurTime() + math.Rand(1, 2)
-					end
-				end
-			else
-
-				controller.strafeAngle = 0
-			end
-		end
-			-- think one step ahead!
-			if bot:GetPos():Distance(curgoal.pos) < 120 and bot.LastPath[bot.CurSegment + 1] then
-				curgoal = bot.LastPath[bot.CurSegment + 1]
-			end
-			
-			local goalpos = curgoal.pos
-			local controller = bot.ControllerBot
-			local lerpc = FrameTime() * 8
-			
-			local mva = ((curgoal.pos + bot:GetCurrentViewOffset()) - bot.ControllerBot:EyePos()):Angle()
-			if bot.botPos and curgoal.area:GetAttributes() != NAV_MESH_CLIFF then
-				if (IsValid(bot.TargeEntity) and bot.TargeEntity.dt.Charging) then
-					
-				else
-					mv:SetMoveAngles(mva)
-				end
-			end
 
 				
 			if IsValid(bot.TargetEnt) and bot.TargetEnt:Health() > 0 then
@@ -935,7 +876,7 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 				if (!bot.isCarryingIntel) then
 					bot.botPos = bot.intelcarrier:GetPos()
 				end
-				bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), mva + (controller.LookAt * 0.5))) 
+				--bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), mva + (controller.LookAt * 0.5))) 
 			end
 			if (!IsValid(bot.TargetEnt)) then 
 				if (bot.lookingAt) then return end
@@ -944,24 +885,8 @@ hook.Add("SetupMove", "LeadBot_Control2", function(bot, mv, cmd)
 						return 
 					end 
 				end	 
-				bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), mva + (controller.LookAt * 0.5))) 
+				--bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), mva + (controller.LookAt * 0.5))) 
 			end 
-			
-			if (!bot:GetNWBool("Taunting",false) and bot.botPos) then
-				if ((bot.intelcarrier and bot.intelcarrier.movingAway)) then
-					mv:SetForwardSpeed(0)
-					return
-				else
-					if (bot.TargetEnt ~= nil && bot:GetPos():Distance(bot.botPos) > bot.TargetEnt:GetModelRadius() and !IsValid(bot.healthkit) || bot.TargetEnt == nil || IsValid(bot.healthkit)) then
-						mv:SetForwardSpeed(bot:GetWalkSpeed())
-					else
-						mv:SetForwardSpeed(0)
-						mv:SetMoveAngles(Angle(0,0,0))
-						mv:SetSideSpeed(0)
-						return
-					end 
-				end
-			end
 	end
 end)
 hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
@@ -1194,30 +1119,6 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			-- move to our target
 			local distance = bot.TargetEnt:GetPos():Distance(bot:GetPos())
 
-			-- back up if the target is really close
-			-- TODO: find a random spot rather than trying to back up into what could just be a wall
-			-- something like controller.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350, radius = 1000})?
-			if distance <= bot:GetModelRadius() and !bot:GetNWBool("Taunting",false) then
-				if (((IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) or !bot.TargetEnt:IsFriendly(bot)) and !bot:GetNWBool("Taunting",false)) then   
-					if (IsValid(bot:GetActiveWeapon()) and bot:GetActiveWeapon().IsMeleeWeapon) then
-						mv:SetForwardSpeed((bot.ControllerBot:GetAngles():Forward()*bot:GetWalkSpeed()):Length())
-						
-							if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
-								bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * (110 * bot:GetModelScale()), radius = 120 * bot:GetModelScale()})
-							end
-					else
-						mv:SetForwardSpeed(-(bot.ControllerBot:GetAngles():Forward()*bot:GetWalkSpeed()):Length())
-							if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
-								bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350 * bot:GetModelScale(), radius = 3000 * bot:GetModelScale()})
-							end
-					end
-				else
-					mv:SetForwardSpeed(-(bot.ControllerBot:GetAngles():Forward()*bot:GetWalkSpeed()):Length())
-						if bot.TFBot and math.random(1,2+(table.Count(player.GetAll())*table.Count(player.GetAll()))) == 1 then
-							bot.ControllerBot.PosGen = controller:FindSpot("random", {pos = bot:GetPos() - bot:GetForward() * 350 * bot:GetModelScale(), radius = 3000 * bot:GetModelScale()})
-						end
-				end
-			end
 	
 			-- back up if the target is really close
 			-- TODO: find a random spot rather than trying to back up into what could just be a wall
@@ -1229,13 +1130,6 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 					bot:SelectWeapon(bot:GetWeapons()[2])
 				elseif (IsValid(bot:GetWeapons()[1]) and bot:GetWeapons()[1].IsMeleeWeapon) then
 					bot:SelectWeapon(bot:GetWeapons()[1])
-				end
-			end
-			if bot:GetPlayerClass() == "sniper" then
-				if bot:GetActiveWeapon().Slot == 0 then
-					mv:SetForwardSpeed(0)
-				else
-					mv:SetForwardSpeed(1200)
 				end
 			end
 		end
@@ -1261,8 +1155,8 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 							
 							local lerp = 1.2
 							bot:SetEyeAngles(LerpAngle(0.2, bot:EyeAngles(), (v:GetPos() - bot:GetShootPos()):Angle()))
-							mv:SetSideSpeed(0)
-							mv:SetMoveAngles(Angle(0,0,0))
+							--mv:SetSideSpeed(0)
+							--mv:SetMoveAngles(Angle(0,0,0))
 						else
 							bot.tooclose = false
 							bot.isCarryingIntel = false
@@ -1390,8 +1284,8 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			-- if our targetent is not alive, don't do anything until it's nil
 			local buttons = 0
 			local controller = bot.ControllerBot
-			cmd:ClearMovement()
-			cmd:ClearButtons()
+			--cmd:ClearMovement()
+			--cmd:ClearButtons()
 			if (GetConVar("ai_disabled"):GetBool()) then return end
 			if (IsValid(bot.TargetEnt)) then
 				if (bot:IsFriendly(bot.TargetEnt) and bot.playerclass != "Medic") then -- can we please get along? unless if you're healing...
@@ -1871,4 +1765,193 @@ concommand.Add("tf_bot_takecontrol", function(ply) local bot = ply:GetObserverTa
 end)]]
 
 hook.Add( "ShouldCollide", "TFBot_CheckCollisions", function( ent1, ent2 )
+end )
+
+
+-- bot movement
+
+function Astar( start, goal )
+	if ( !IsValid( start ) || !IsValid( goal ) ) then return false end
+	if ( start == goal ) then return true end
+
+	start:ClearSearchLists()
+
+	start:AddToOpenList()
+
+	local cameFrom = {}
+
+	start:SetCostSoFar( 0 )
+
+	start:SetTotalCost( heuristic_cost_estimate( start, goal ) )
+	start:UpdateOnOpenList()
+
+	while ( !start:IsOpenListEmpty() ) do
+		local current = start:PopOpenList() // Remove the area with lowest cost in the open list and return it
+		if ( current == goal ) then
+			return reconstruct_path( cameFrom, current )
+		end
+
+		current:AddToClosedList()
+
+		for k, neighbor in pairs( current:GetAdjacentAreas() ) do
+			local newCostSoFar = current:GetCostSoFar() + heuristic_cost_estimate( current, neighbor )
+
+			if ( neighbor:IsUnderwater() ) then // Add your own area filters or whatever here
+				continue
+			end
+			
+			if ( ( neighbor:IsOpen() || neighbor:IsClosed() ) && neighbor:GetCostSoFar() <= newCostSoFar ) then
+				continue
+			else
+				neighbor:SetCostSoFar( newCostSoFar );
+				neighbor:SetTotalCost( newCostSoFar + heuristic_cost_estimate( neighbor, goal ) )
+
+				if ( neighbor:IsClosed() ) then
+				
+					neighbor:RemoveFromClosedList()
+				end
+
+				if ( neighbor:IsOpen() ) then
+					// This area is already on the open list, update its position in the list to keep costs sorted
+					neighbor:UpdateOnOpenList()
+				else
+					neighbor:AddToOpenList()
+				end
+
+				cameFrom[ neighbor:GetID() ] = current:GetID()
+			end
+		end
+	end
+
+	return false
+end
+
+function heuristic_cost_estimate( start, goal )
+	// Perhaps play with some calculations on which corner is closest/farthest or whatever
+	return start:GetCenter():Distance( goal:GetCenter() )
+end
+
+// using CNavAreas as table keys doesn't work, we use IDs
+function reconstruct_path( cameFrom, current )
+	local total_path = { current }
+
+	current = current:GetID()
+	while ( cameFrom[ current ] ) do
+		current = cameFrom[ current ]
+		table.insert( total_path, navmesh.GetNavAreaByID( current ) )
+	end
+	return total_path
+end
+
+function AstarVector( start, goal )
+	local startArea = navmesh.GetNearestNavArea( start )
+	local goalArea = navmesh.GetNearestNavArea( goal )
+	return Astar( startArea, goalArea )
+end
+
+function drawThePath( path, time )
+	local prevArea
+	for _, area in pairs( path ) do
+		debugoverlay.Sphere( area:GetCenter(), 8, time or 9, color_white, true  )
+		if ( prevArea ) then
+			debugoverlay.Line( area:GetCenter(), prevArea:GetCenter(), time or 9, color_white, true )
+		end
+
+		area:Draw()
+		prevArea = area
+	end
+end
+
+concommand.Add( "test_astar", function( ply )
+
+	// Use the start position of the player who ran the console command
+	local start = navmesh.GetNearestNavArea( ply:GetPos() )
+
+	// Target position, use the player's aim position for this example
+	local goal = navmesh.GetNearestNavArea( ply:GetEyeTrace().HitPos )
+
+	local path = Astar( start, goal )
+	if ( !istable( path ) ) then // We can't physically get to the goal or we are in the goal.
+		return
+	end
+
+	PrintTable( path ) // Print the generated path to console for debugging
+	
+	if (GetConVar("developer"):GetInt() > 0) then
+		drawThePath( path ) // Draw the generated path for 9 seconds
+	end
+
+end)
+
+local rePathDelay = 1 // How many seconds need to pass before we need to remake the path to keep it updated
+hook.Add( "StartCommand", "astar_example", function( ply, cmd )
+
+	// Only run this code on bots, and only if bot_mimic is set to 0
+	if ( !ply.TFBot || ply.botPos == nil ) then return end
+	local currentArea = navmesh.GetNearestNavArea( ply:GetPos() )
+	--cmd:ClearMovement()
+
+	// internal variable to regenerate the path every X seconds to keep the pace with the target player
+	ply.lastRePath = ply.lastRePath or 0
+
+	// internal variable to limit how often the path can be (re)generated
+	ply.lastRePath2 = ply.lastRePath2 or 0 
+
+	if ( ply.path && ply.lastRePath + rePathDelay < CurTime() && currentArea != ply.targetArea ) then
+		ply.path = nil
+		ply.lastRePath = CurTime()
+	end
+
+	if ( !ply.path && ply.lastRePath2 + rePathDelay < CurTime() ) then
+
+		local targetPos = ply.botPos // target position to go to, the first player on the server
+		local targetArea = navmesh.GetNearestNavArea( targetPos )
+
+		ply.targetArea = nil
+		ply.path = Astar( currentArea, targetArea )
+		if ( !istable( ply.path ) ) then // We are in the same area as the target, or we can't navigate to the target
+			ply.path = nil // Clear the path, bail and try again next time
+			ply.lastRePath2 = CurTime()
+			return
+		end
+		//PrintTable( ply.path )
+
+		// TODO: Add inbetween points on area intersections
+		// TODO: On last area, move towards the target position, not center of the last area
+		table.remove( ply.path ) // Just for this example, remove the starting area, we are already in it!
+	end
+
+	// We have no path, or its empty (we arrived at the goal), try to get a new path.
+	if ( !ply.path || #ply.path < 1 ) then
+		ply.path = nil
+		ply.targetArea = nil
+		return
+	end
+
+	// We got a path to follow to our target!
+	if (GetConVar("developer"):GetInt() > 0) then
+		drawThePath( ply.path, .1 ) // Draw the path for debugging
+	end
+
+	// Select the next area we want to go into
+	if ( !IsValid( ply.targetArea ) ) then
+		ply.targetArea = ply.path[ #ply.path ]
+	end
+
+	// The area we selected is invalid or we are already there, remove it, bail and wait for next cycle
+	if ( !IsValid( ply.targetArea ) || ( ply.targetArea == currentArea && ply.targetArea:GetCenter():Distance( ply:GetPos() ) < 100 ) ) then
+		table.remove( ply.path ) // Removes last element
+		ply.targetArea = nil
+		return
+	end
+
+	// We got the target to go to, aim there and MOVE
+	local targetang = ( ply.targetArea:GetCenter() - ply:GetPos() ):GetNormalized():Angle()
+	if (ply:GetNWBool("Taunting",false) == true) then 
+		cmd:SetForwardMove( 0 )
+	else
+		cmd:SetViewAngles( targetang )
+		cmd:SetForwardMove( 1000 )
+	end
+
 end )

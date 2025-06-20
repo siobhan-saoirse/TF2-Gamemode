@@ -29,6 +29,9 @@ function SWEP:DrawWorldModel(  )
 			self.WModel:SetNoDraw(true)
 		else
 			if (IsValid(_Owner)) then
+				if (IsValid(self.Owner:GetNWEntity("PuppetAnim",nil))) then
+					self.Owner:SetModelScale((self.Owner:GetNWEntity("PuppetAnim",nil):GetModelRadius() / self.Owner:GetModelRadius()) * self.Owner:GetNWEntity("PuppetAnim",nil):GetModelScale())
+				end
 				local t2 = _Owner:GetProxyVar("CritTeam") 
 				local s2 = _Owner:GetProxyVar("CritStatus")
 				self.WModel:SetProxyVar("CritTeam",t2)
@@ -55,7 +58,7 @@ function SWEP:DrawWorldModel(  )
 
 					self.WModel:SetupBones()
 				end
-				if (_Owner:GetNWBool("NoWeapon",false) == true) then 
+				if (self.Owner:GetNWBool("NoWeapon",false) == true) then 
 					self.WModel:SetMaterial("color")
 				else
 					local mat = self.CustomMaterialOverride2 or self.MaterialOverride or self.WeaponMaterial or ""

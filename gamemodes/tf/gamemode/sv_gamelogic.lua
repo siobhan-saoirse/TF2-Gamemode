@@ -570,7 +570,7 @@ function GM:Think()
 		if (IsValid(v.PuppetAnim)) then
 			CopyPoseParams(v,v.PuppetAnim:GetPuppeteer())
 			v.PuppetAnim:GetPuppeteer():SetSequence(v:GetSequence())
-			v.PuppetAnim:GetPuppeteer():SetPlaybackRate(1)
+			v.PuppetAnim:GetPuppeteer():SetPlaybackRate(0)
 			v.PuppetAnim:GetPuppeteer():SetCycle(v:GetCycle())
 			v.PuppetAnim:GetPuppeteer():SetEnableAnimEventEffects(false)
 			v.PuppetAnim:GetPuppeteer():SetPuppeteerAlpha(false)
