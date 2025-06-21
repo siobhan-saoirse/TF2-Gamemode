@@ -499,12 +499,6 @@ function GM:EntityTakeDamage(  ent, dmginfo )
 		if ent:GetNWBool("Bonked") == true || ent:IsPlayer() and ent:Team() == TEAM_FRIENDLY then
 			dmginfo:ScaleDamage(0.000001)
 		end
-		if (dmginfo:IsFallDamage() and string.find(ent:GetModel(),"/bot_")) then
-			dmginfo:ScaleDamage(0)
-			dmginfo:SetDamageType(DMG_GENERIC)
-			ent:StopSound("Player.FallDamage")
-			ent:EmitSound("MVM.FallDamageBots")
-		end
 	if (ent:IsPlayer()) then
 		if (dmginfo:GetDamageType() != DMG_GENERIC and !ent:HasGodMode() and dmginfo:GetDamage() > 0) then
 			ent:SetViewPunchAngles(Angle(-2,0,0))

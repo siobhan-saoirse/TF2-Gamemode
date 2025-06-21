@@ -312,7 +312,8 @@ function meta:SetPlayerClass(class)
 	else
 		self:SetClassSpeed(c.Speed or 100)
 	end
-	self:ResetMaxHealth()
+	self:SetMaxHealth(c.Health)
+	self:SetHealth(c.Health)
 	
 	if c.IsHL2 then -- ...however, only gmodplayers use the default view offset, TF2 players keep their own view height even when playing a HL2 map
 
@@ -754,7 +755,8 @@ local function PlayerClassChanged(id, oldclass, newclass, timeout)
 	end
 	
 	if pl:ShouldUseDefaultHull() then
-		pl:ResetHull()
+    	pl:SetHull(Vector(-16, -16, 0 ),Vector(16, 16, 62 ))
+    	pl:SetHullDuck(Vector(-16, -16, 0 ),Vector(16, 16, 14 ))
 	else
 		pl:SetHull(unpack(TFHull))
 		pl:SetHullDuck(unpack(TFHullDuck))

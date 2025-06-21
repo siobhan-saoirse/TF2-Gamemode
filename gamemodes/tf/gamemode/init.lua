@@ -2382,6 +2382,16 @@ function GM:PlayerSelectSpawn(pl)
 		end
 	end
 
+	for k, v in pairs(ents.FindByClass("info_player_counterterrorist")) do
+		----print(v, "says")
+		table.insert(spawnsblu, v)
+	end
+
+	for k, v in pairs(ents.FindByClass("info_player_terrorist")) do
+		----print(v, "says")
+		table.insert(spawnsred, v)
+	end
+
 
 	if pl:Team() == TEAM_RED and IsValid(spawnsred[1]) then
 		return table.Random(spawnsred)

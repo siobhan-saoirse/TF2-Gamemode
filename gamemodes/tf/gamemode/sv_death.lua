@@ -35,6 +35,9 @@ function GM:DoTFPlayerDeath(ent, attacker, dmginfo)
 		ent:SetNoDraw(false)
 	end
 	for k,v in ipairs(player.GetAll()) do
+		if (v.TargetEnt == ent) then
+			v.TargetEnt = nil
+		end
 		if (v:GetObserverTarget() == ent) then
 			timer.Simple(2.0, function()
 				if (v:GetObserverTarget() == ent) then
@@ -590,6 +593,15 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 			end
 		end
 	end
+	timer.Simple(0.2, function()
+	
+		for k,v in ipairs(player.GetAll()) do
+			if (v.TargetEnt == ply) then
+				v.TargetEnt = nil
+			end
+		end
+
+	end)
 	ply:SetNWBool("Taunting",false)
 	--timer.Simple(0.02, function()
 		--ply:SetMoveType(MOVETYPE_NONE)

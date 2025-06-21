@@ -10,7 +10,7 @@ local bots = {}
 --local names = {"LeadKiller", "A Random Person", "Foxie117", "G.A.M.E.R v24", "Agent Agrimar"}
 local names = {"A Professional With Standards", "AimBot", "AmNot", "Aperture Science Prototype XR7", "Archimedes!", "BeepBeepBoop", "Big Mean Muther Hubbard", "Black Mesa", "BoomerBile", "Cannon Fodder", "CEDA", "Chell", "Chucklenuts", "Companion Cube", "Crazed Gunman", "CreditToTeam", "CRITRAWKETS", "Crowbar", "CryBaby", "CrySomeMore", "C++", "DeadHead", "Delicious Cake", "Divide by Zero", "Dog", "Force of Nature", "Freakin' Unbelievable", "Gentlemanne of Leisure", "GENTLE MANNE of LEISURE ", "GLaDOS", "Glorified Toaster with Legs", "Grim Bloody Fable", "GutsAndGlory!", "Hat-Wearing MAN", "Headful of Eyeballs", "Herr Doktor", "HI THERE", "Hostage", "Humans Are Weak", "H@XX0RZ", "I LIVE!", "It's Filthy in There!", "IvanTheSpaceBiker", "Kaboom!", "Kill Me", "LOS LOS LOS", "Maggot", "Mann Co.", "Me", "Mega Baboon", "Mentlegen", "Mindless Electrons", "MoreGun", "Nobody", "Nom Nom Nom", "NotMe", "Numnutz", "One-Man Cheeseburger Apocalypse", "Poopy Joe", "Pow!", "RageQuit", "Ribs Grow Back", "Saxton Hale", "Screamin' Eagles", "SMELLY UNFORTUNATE", "SomeDude", "Someone Else", "Soulless", "Still Alive", "TAAAAANK!", "Target Practice", "ThatGuy", "The Administrator", "The Combine", "The Freeman", "The G-Man", "THEM", "Tiny Baby Man", "Totally Not A Bot", "trigger_hurt", "WITCH", "ZAWMBEEZ", "Ze Ubermensch", "Zepheniah Mann", "0xDEADBEEF", "10001011101"}
 local classtbl4d = {"tank_l4d","boomer","boomer","boomer","jockey","charger","charger","spitter","spitter","smoker","hunter"}
-local classtb = {"scout", "soldier", "heavy", "demoman", "medic"} -- "scout", "soldier", "pyro", "engineer", "heavy", "demoman", "sniper", "medic", "spy"
+local classtb = {"scout", "soldier", "pyro", "demoman", "heavy", "engineer", "medic", "sniper", "spy"}
 local bot_class = CreateConVar("tf_bot_keep_class_after_death", "0", {FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY})
 local bot_diff = CreateConVar("tf_bot_difficulty", "1", {FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Sets the difficulty level for the bots. Values are: 0=easy, 1=normal, 2=hard, 3=expert. Default is \"Normal\" (1).")
 local bot_respawn = CreateConVar("tf_bot_npc_respawn", "0", {FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Should the NPC bots respawn?")
@@ -857,7 +857,7 @@ hook.Add("SetupMove", "LeadBot_Control22", function(bot, mv, cmd)
 					bot.botPos = bot.intelcarrier:GetPos()
 				end
 				--bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), mva + (controller.LookAt * 0.5))) 
-				bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), (controller.LookAt))) 
+				bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), (controller.LookAt * 0.5))) 
 			end
 			if (!IsValid(bot.TargetEnt)) then 
 				if (bot.lookingAt) then return end
@@ -867,10 +867,95 @@ hook.Add("SetupMove", "LeadBot_Control22", function(bot, mv, cmd)
 					end 
 				end	 
 				--bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), mva + (controller.LookAt * 0.5))) 
-				bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), (controller.LookAt))) 
+				bot:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, bot:EyeAngles(), (controller.LookAt * 0.5))) 
 			end 
 	end
 end)
+
+local function ComputePathCost(bot, area, fromArea, ladder, length)
+	local self = bot
+    if not fromArea then
+        -- First area in path, no cost
+        return 0.0
+    end
+
+    -- Is the area traversable?
+    if not self.loco:IsAreaTraversable(area) then
+        return -1.0
+    end
+
+
+    -- Avoid enemy spawn rooms
+    if (self:Team() == TEAM_RED and area:HasTFAttribute("spawn_room_blue")) or
+       (self:Team() == TEAM_BLUE and area:HasTFAttribute("spawn_room_red")) then
+        if not TFGameRules.RoundHasBeenWon or not TFGameRules:RoundHasBeenWon() then
+            return -1.0
+        end
+    end
+
+    -- Compute distance
+    local dist
+    if ladder then
+        dist = ladder:GetLength()
+    elseif length and length > 0 then
+        dist = length
+    else
+        dist = area:GetCenter():Distance(fromArea:GetCenter())
+    end
+
+    -- Check vertical height difference
+    local deltaZ = fromArea:ComputeAdjacentConnectionHeightChange(area)
+    if deltaZ >= self.stepHeight then
+        if deltaZ >= self.maxJumpHeight then
+            return -1.0
+        end
+
+        -- Apply jump penalty
+        dist = dist * 2.0
+    elseif deltaZ < -self.maxDropHeight then
+        return -1.0
+    end
+
+    -- Unique random penalty per bot/area to vary routes
+    local preference = 1.0
+    if self.routeType == "default" and not self:IsMiniBoss() then
+        local timeMod = math.floor(CurTime() / 10) + 1
+        preference = 1.0 + 50.0 * (1.0 + math.cos(self:EntIndex() * area:GetID() * timeMod))
+    end
+
+    if self.routeType == "safest" then
+        if area:IsInCombat() then
+            dist = dist * 4.0 * area:GetCombatIntensity()
+        end
+
+        if (self:Team() == TEAM_RED and area:HasTFAttribute("blue_sentry_danger")) or
+           (self:Team() == TEAM_BLUE and area:HasTFAttribute("red_sentry_danger")) then
+            dist = dist * 5.0
+        end
+    end
+
+    if self:GetPlayerClass("spy") then
+        local enemyTeam = (self:Team() == TEAM_RED) and TEAM_BLUE or TEAM_RED
+
+        for _, ent in ipairs(ents.GetAll()) do
+            if ent:IsValid() and ent:GetClass() == "obj_sentrygun" and ent:Team() == enemyTeam then
+                if ent.GetLastKnownArea and ent:GetLastKnownArea() == area then
+                    dist = dist * 10.0
+                end
+            end
+        end
+
+        dist = dist + dist * 10.0 * area:GetPlayerCount(self:Team())
+    end
+
+    local cost = dist * preference
+
+    if area:HasAttribute(NAV_MESH_FUNC_COST) then
+        cost = cost * area:ComputeFuncNavCost(self)
+    end
+
+    return cost + fromArea:GetCostSoFar()
+end
 hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 	local buttons = 0
 	if bot.TFBot then
@@ -881,6 +966,25 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				if (!timer.Exists("UpdateTarget"..bot:EntIndex())) then
 					timer.Create("UpdateTarget"..bot:EntIndex(),0.5,1, function()
 						bot.TargetEnt = v
+						timer.Create("UpdateTarget"..v:EntIndex(),0.5,1, function()
+							v.TargetEnt = bot
+						end)
+					end)
+				end
+			end
+		end
+		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 1200)) do
+			if (v:IsPlayer() and v:Team() ~= bot:Team()) then
+				if (!timer.Exists("UpdateTarget"..bot:EntIndex())) then
+					timer.Create("UpdateTarget"..bot:EntIndex(),0.5,1, function()
+						if (v:GetEyeTrace().Entity == bot) then
+							bot.TargetEnt = v
+							timer.Create("UpdateTarget"..v:EntIndex(),0.5,1, function()
+								if (bot:GetEyeTrace().Entity == v) then
+									v.TargetEnt = bot
+								end
+							end)
+						end
 					end)
 				end
 			end
@@ -1003,8 +1107,12 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 
 				bot.botPos = targetpos
 			else
-				if (!IsValid(bot.TargetEnt)) then
-					-- our enemy doesn't exist anymore, don't do anything
+				if (!IsValid(bot.TargetEnt) || !bot.TargetEnt:Alive()) then
+					-- our enemy doesn't exist anymore, find a random spot every 1.5 seconds
+					if (CurTime() > controller.LastSegmented) then
+						bot.botPos = controller:FindSpot("random", {radius = 12500})
+			        	controller.LastSegmented = CurTime() + 1
+					end
 				else
 					bot.botPos = bot.TargetEnt:GetPos()
 				end
@@ -1233,6 +1341,23 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 	if bot.TFBot and bot:Alive() then
 			-- if our targetent is not alive, don't do anything until it's nil
 			local buttons = 0
+			
+			if (bot.botPos) then
+				if (bot:GetVelocity():Length() < 30) then
+
+					if (bot:IsOnGround()) then
+						
+						if (math.random(1,5) == 1) then
+							buttons = buttons + IN_JUMP
+						end
+						cmd:SetSideMove(table.Random({-520,520}))
+						cmd:SetForwardMove(table.Random({-520,520}))
+					else
+						buttons = buttons + IN_DUCK
+					end
+					
+				end
+			end
 			local controller = bot.ControllerBot
 			--cmd:ClearMovement()
 			--cmd:ClearButtons()
@@ -1322,29 +1447,27 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			end
 		end
 			
-			local curgoal = navmesh.GetNavArea(bot:GetPos(),128)
-			if (curgoal ~= nil) then
-				if curgoal:HasAttributes(NAV_MESH_JUMP) then
-					if (bot:IsOnGround()) then
-						
-						if (math.random(1,5) == 1) then
-							buttons = buttons + IN_JUMP
-						end
+		local curgoal = navmesh.GetNavArea(bot:GetPos(),64)
+		if (curgoal ~= nil) then 
+			if curgoal:HasAttributes(NAV_MESH_JUMP) then
+				if (bot:IsOnGround()) then
+					
+					if (math.random(1,5) == 1) then
+						buttons = buttons + IN_JUMP
+					end
 
-					end
-				end
-				if curgoal:HasAttributes(NAV_MESH_CROUCH) then
-					if (curgoal:HasAttributes(NAV_MESH_JUMP) and !bot:IsOnGround()) then
-						if (math.random(1,16) == 1) then
-							buttons = buttons + IN_DUCK
-						end
-					elseif (!curgoal:HasAttributes(NAV_MESH_JUMP)) then
-						if (math.random(1,16) == 1) then
-							buttons = buttons + IN_DUCK
-						end
-					end
 				end
 			end
+			if curgoal:HasAttributes(NAV_MESH_CROUCH) then
+				if (curgoal:HasAttributes(NAV_MESH_JUMP) and !bot:IsOnGround()) then
+					if (math.random(1,5) == 1) then
+						buttons = buttons + IN_DUCK
+					end
+				elseif (!curgoal:HasAttributes(NAV_MESH_JUMP)) then
+					buttons = buttons + IN_DUCK
+				end
+			end
+		end
 
 			if (IsValid(bot:GetActiveWeapon())) then
 					if (bot:GetActiveWeapon():Ammo1() < 0 and bot:GetActiveWeapon():Clip1() < 0 and bot:GetActiveWeapon().Primary.ClipSize ~= -1 && !bot:GetActiveWeapon().IsMeleeWeapon) then
@@ -1381,7 +1504,8 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			if (bot:GetPlayerClass() == "samuraidemo") then
 				bot:SetJumpPower(220 * 2.3)
 			end
-		if IsValid(bot.TargetEnt) and bot:GetNWBool("InRespawnRoom",false) == false then
+		if IsValid(bot.TargetEnt) and bot:GetNWBool("InRespawnRoom",false) == false and bot:GetNWBool("Taunting",false) != true then
+			
 			if (bot.TargetEnt:Health() > 0 and !GAMEMODE.IsSetupPhase) then 
 
 					if (!IsValid(bot:GetActiveWeapon())) then return end
@@ -1594,7 +1718,7 @@ end )
 
 -- bot movement
 
-function Astar( start, goal )
+function Astar( bot, start, goal )
 	if ( !IsValid( start ) || !IsValid( goal ) ) then return false end
 	if ( start == goal ) then return true end
 
@@ -1606,7 +1730,7 @@ function Astar( start, goal )
 
 	start:SetCostSoFar( 0 )
 
-	start:SetTotalCost( heuristic_cost_estimate( start, goal ) )
+	start:SetTotalCost( heuristic_cost_so_far_estimate( bot, start, goal ) )
 	start:UpdateOnOpenList()
 
 	while ( !start:IsOpenListEmpty() ) do
@@ -1618,17 +1742,21 @@ function Astar( start, goal )
 		current:AddToClosedList()
 
 		for k, neighbor in pairs( current:GetAdjacentAreas() ) do
-			local newCostSoFar = current:GetCostSoFar() + heuristic_cost_estimate( current, neighbor )
+			local newCostSoFar = current:GetCostSoFar()
 
-			if ( neighbor:IsUnderwater() ) then // Add your own area filters or whatever here
+			if ( neighbor:HasAttributes(NAV_MESH_CLIFF) ) then // Add your own area filters or whatever here
+				continue
+			end
+
+			if ( neighbor:HasAttributes(NAV_MESH_AVOID) ) then // Add your own area filters or whatever here
 				continue
 			end
 			
 			if ( ( neighbor:IsOpen() || neighbor:IsClosed() ) && neighbor:GetCostSoFar() <= newCostSoFar ) then
 				continue
 			else
-				neighbor:SetCostSoFar( newCostSoFar );
-				neighbor:SetTotalCost( newCostSoFar + heuristic_cost_estimate( neighbor, goal ) )
+				neighbor:SetCostSoFar( newCostSoFar + heuristic_cost_so_far_estimate( bot, start, goal ) );
+				neighbor:SetTotalCost( newCostSoFar + heuristic_cost_so_far_estimate( bot, start, goal ) )
 
 				if ( neighbor:IsClosed() ) then
 				
@@ -1650,7 +1778,17 @@ function Astar( start, goal )
 	return false
 end
 
-function heuristic_cost_estimate( start, goal )
+function heuristic_cost_estimate( m_me, start, goal )
+	return start:GetCenter():Distance( goal:GetCenter() )
+end
+
+function heuristic_cost_so_far_estimate( m_me, start, goal )
+	-- this term causes the same bot to choose different routes over time,
+	-- but keep the same route for a period in case of repaths
+	local timeMod = math.floor(CurTime() / 10) + 1
+	local entIndex = m_me:EntIndex()
+	local areaID = start:GetID()
+	local preference = 1.0 + 50.0 * (1.0 + math.cos(entIndex * areaID * timeMod))
 	// Perhaps play with some calculations on which corner is closest/farthest or whatever
 	return start:GetCenter():Distance( goal:GetCenter() )
 end
@@ -1667,10 +1805,10 @@ function reconstruct_path( cameFrom, current )
 	return total_path
 end
 
-function AstarVector( start, goal )
-	local startArea = navmesh.GetNearestNavArea( start )
-	local goalArea = navmesh.GetNearestNavArea( goal )
-	return Astar( startArea, goalArea )
+function AstarVector( bot, start, goal )
+	local startArea = navmesh.GetNearestNavArea( start, false, 10000, false, true, bot:Team() )
+	local goalArea = navmesh.GetNearestNavArea( goal, false, 10000, false, true, bot:Team() )
+	return Astar( bot, startArea, goalArea )
 end
 
 function drawThePath( path, time )
@@ -1681,7 +1819,7 @@ function drawThePath( path, time )
 			debugoverlay.Line( area:GetCenter(), prevArea:GetCenter(), time or 9, color_white, true )
 		end
 
-		area:Draw()
+		//area:Draw()
 		prevArea = area
 	end
 end
@@ -1694,25 +1832,24 @@ concommand.Add( "test_astar", function( ply )
 	// Target position, use the player's aim position for this example
 	local goal = navmesh.GetNearestNavArea( ply:GetEyeTrace().HitPos )
 
-	local path = Astar( start, goal )
+	local path = Astar( ply, start, goal )
 	if ( !istable( path ) ) then // We can't physically get to the goal or we are in the goal.
 		return
 	end
 
 	PrintTable( path ) // Print the generated path to console for debugging
 	
-	if (GetConVar("developer"):GetInt() > 0) then
-		drawThePath( path ) // Draw the generated path for 9 seconds
-	end
+	drawThePath( path ) // Draw the generated path for 9 seconds
 
 end)
 
 local rePathDelay = 1 // How many seconds need to pass before we need to remake the path to keep it updated
-hook.Add( "StartCommand", "astar_example", function( ply, cmd )
+hook.Add( "StartCommand", "TFBot_Movement", function( ply, cmd )
 
 	// Only run this code on bots, and only if bot_mimic is set to 0
 	if ( !ply.TFBot || ply.botPos == nil ) then return end
 	local currentArea = navmesh.GetNearestNavArea( ply:GetPos() )
+	local hiding
 	cmd:ClearMovement()
 
 	// internal variable to regenerate the path every X seconds to keep the pace with the target player
@@ -1729,20 +1866,43 @@ hook.Add( "StartCommand", "astar_example", function( ply, cmd )
 	if ( !ply.path && ply.lastRePath2 + rePathDelay < CurTime() ) then
 
 		local targetPos = ply.botPos // target position to go to, the first player on the server
-		local targetArea = navmesh.GetNearestNavArea( targetPos )
-
 		ply.targetArea = nil
-		ply.path = Astar( currentArea, targetArea )
-		if ( !istable( ply.path ) ) then // We are in the same area as the target, or we can't navigate to the target
-			ply.path = nil // Clear the path, bail and try again next time
-			ply.lastRePath2 = CurTime()
-			return
-		end
-		//PrintTable( ply.path )
+		
+		if ((ply:GetPlayerClass() == "sniper") and ply.botPos) then
+			local area = navmesh.GetNearestNavArea( ply.botPos )
+			hiding = area:GetHidingSpots(1)
+			if (area:GetHidingSpots(2)) then
+				hiding = area:GetHidingSpots(2)
+			end
+			if (hiding[1]) then
+				print(hiding[1])
+				targetPos = hiding[1]
+			end
+			ply.path = AstarVector( ply, ply:GetPos(), targetPos )
+			if ( !istable( ply.path ) ) then // We are in the same area as the target, or we can't navigate to the target
+				ply.path = nil // Clear the path, bail and try again next time
+				ply.lastRePath2 = CurTime()
+				return
+			end
+			//PrintTable( ply.path )
 
-		// TODO: Add inbetween points on area intersections
-		// TODO: On last area, move towards the target position, not center of the last area
-		table.remove( ply.path ) // Just for this example, remove the starting area, we are already in it!
+			// TODO: Add inbetween points on area intersections
+			// TODO: On last area, move towards the target position, not center of the last area
+			table.remove( ply.path ) // Just for this example, remove the starting area, we are already in it!
+		else
+			
+			ply.path = AstarVector( ply, ply:GetPos(), targetPos )
+			if ( !istable( ply.path ) ) then // We are in the same area as the target, or we can't navigate to the target
+				ply.path = nil // Clear the path, bail and try again next time
+				ply.lastRePath2 = CurTime()
+				return
+			end
+			//PrintTable( ply.path )
+
+			// TODO: Add inbetween points on area intersections
+			// TODO: On last area, move towards the target position, not center of the last area
+			table.remove( ply.path ) // Just for this example, remove the starting area, we are already in it!
+		end
 	end
 
 	// We have no path, or its empty (we arrived at the goal), try to get a new path.
@@ -1763,7 +1923,7 @@ hook.Add( "StartCommand", "astar_example", function( ply, cmd )
 	end
 
 	// The area we selected is invalid or we are already there, remove it, bail and wait for next cycle
-	if ( !IsValid( ply.targetArea ) || ( ply.targetArea == currentArea && ply.targetArea:GetCenter():Distance( ply:GetPos() ) < 100 ) ) then
+	if ( !IsValid( ply.targetArea ) || ( ply.targetArea == currentArea && ply.targetArea:GetCenter():Distance( ply:GetPos() ) < 40 * ply:GetModelScale() ) ) then
 		table.remove( ply.path ) // Removes last element
 		ply.targetArea = nil
 		return
