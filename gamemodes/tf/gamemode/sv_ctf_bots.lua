@@ -17,10 +17,39 @@ local bot_respawn = CreateConVar("tf_bot_npc_respawn", "0", {FCVAR_ARCHIVE, FCVA
 local tf_bot_notarget = CreateConVar("tf_bot_notarget", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY})
 local tf_bot_melee_only = CreateConVar("tf_bot_melee_only", "0", {FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY})
 
+local function IsValidTarget(bot,target)
+
+	if (IsValid(target)) then
+		if (target:EntIndex() == bot:EntIndex()) then
+			return false
+		end
+		if (target:IsPlayer() and target:Team() == bot:Team()) then
+			return false
+		end
+		if (target:Health() < 1) then
+			return false
+		end
+		if (target:IsPlayer() and target:Team() == 1) then
+			return false
+		end
+		if (target:EntIndex() == bot.ControllerBot:EntIndex()) then
+			return false
+		end
+		if (target:IsFlagSet(FL_NOTARGET)) then
+			return false
+		end
+		if (target:EntIndex() == bot:EntIndex()) then
+			return false
+		end
+		return true
+	end
+	return false
+
+end
 function lookForNearestHealthPack(bot)
 	
 	local npcs = {}
-	for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 8000000)) do
+	for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 2048)) do
 		if (string.find(v:GetClass(),"item_healthkit") or string.find(v:GetClass(),"item_healthvial") or (string.find(v:GetClass(),"obj_dispenser") and v:IsFriendly(bot))) then
 			table.insert(npcs, v)
 		end
@@ -31,7 +60,7 @@ end
 function lookForNearestAmmoPack(bot)
 	
 	local npcs = {}
-	for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 8000000)) do
+	for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 2048)) do
 		if (string.find(v:GetClass(),"item_ammopack") or string.find(v:GetClass(),"obj_dispenser")) then
 			table.insert(npcs, v)
 		end
@@ -41,7 +70,7 @@ function lookForNearestAmmoPack(bot)
 end
 function lookForNearestPlayer(bot)
 	local npcs = {}
-		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 8000000)) do
+		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 2048)) do
 			if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:GetNoDraw() == false and !v:IsNeutral() and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET)) then
 				table.insert(npcs, v)
 			end
@@ -51,7 +80,7 @@ end
 
 function lookForClosestFriendlyHumanLookingAtMe(bot)
 	local npcs = {}
-		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 8000000)) do
+		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 2048)) do
 			if (v:IsPlayer() and v:Health() > 0 and v:IsFriendly(bot) and !v:IsBot()) then
 				local tr = v:GetEyeTrace()
 				if (tr.Entity:EntIndex() == bot:EntIndex()) then
@@ -575,8 +604,8 @@ hook.Add("SetupMove", "LeadBot_Control22", function(bot, mv, cmd)
 		--cmd:ClearButtons()
 
 		if (GetConVar("ai_disabled"):GetBool()) then return end
-		if (!IsValid(bot.TargetEnt)) then 
-			if (math.random(1,300) == 1) then
+		if (IsValid(bot.TargetEnt)) then
+			if (!IsValidTarget(bot,bot.TargetEnt)) then
 				bot.TargetEnt = lookForNearestPlayer(bot)
 			end
 		end
@@ -679,6 +708,7 @@ hook.Add("SetupMove", "LeadBot_Control22", function(bot, mv, cmd)
 				end
 			end
 		end
+		
 		bot.movingAway = false
 	
 		local controller = bot.ControllerBot
@@ -934,7 +964,7 @@ local function ComputePathCost(bot, area, fromArea, ladder, length)
         end
     end
 
-    if self:GetPlayerClass("spy") then
+    if self:GetPlayerClass() == "spy" then
         local enemyTeam = (self:Team() == TEAM_RED) and TEAM_BLUE or TEAM_RED
 
         for _, ent in ipairs(ents.GetAll()) do
@@ -1108,13 +1138,20 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				bot.botPos = targetpos
 			else
 				if (!IsValid(bot.TargetEnt) || !bot.TargetEnt:Alive()) then
-					-- our enemy doesn't exist anymore, find a random spot every 1.5 seconds
+					-- our enemy doesn't exist anymore, find a random spot every 10 seconds
 					if (CurTime() > controller.LastSegmented) then
 						bot.botPos = controller:FindSpot("random", {radius = 12500})
-			        	controller.LastSegmented = CurTime() + 1
+			        	controller.LastSegmented = CurTime() + 10
 					end
 				else
-					bot.botPos = bot.TargetEnt:GetPos()
+					if (bot:Visible(bot.TargetEnt)) then
+						bot.botPos = bot.TargetEnt:GetPos()
+					else
+						if (CurTime() > controller.LastSegmented) then
+							bot.botPos = controller:FindSpot("random", {radius = 12500, pos = bot.TargetEnt:GetPos(), type = "exposed"})
+							controller.LastSegmented = CurTime() + 10
+						end
+					end
 				end
 			end
 		
@@ -1362,11 +1399,6 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			--cmd:ClearMovement()
 			--cmd:ClearButtons()
 			if (GetConVar("ai_disabled"):GetBool()) then return end
-			if (IsValid(bot.TargetEnt)) then
-				if (bot:IsFriendly(bot.TargetEnt) and bot.playerclass != "Medic") then -- can we please get along? unless if you're healing...
-					bot.TargetEnt = nil
-				end
-			end
 							
 						
 		if (!bot.lookingAt and bot:GetNWBool("Taunting",false) != true) then
@@ -1484,22 +1516,6 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 						end
 					end
 				end
-					
-			if (!IsValid(bot.TargetEnt)) then
-				if (IsValid(bot.TargetEnt)) then
-					if (bot.TargetEnt:EntIndex() == bot:EntIndex()) then
-						bot.TargetEnt = lookForNearestPlayer(bot)
-					elseif (bot.TargetEnt:IsFriendly(bot) and bot.playerclass != "Medic") then 
-						bot.TargetEnt = lookForNearestPlayer(bot)
-					elseif (bot.TargetEnt:IsPlayer() and !bot.TargetEnt:Alive()) then
-						bot.TargetEnt = lookForNearestPlayer(bot)
-					elseif (bot.TargetEnt:EntIndex() == bot.ControllerBot:EntIndex()) then
-						bot.TargetEnt = lookForNearestPlayer(bot)
-					elseif (!bot:Visible(bot.TargetEnt) and bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 2500 and math.random(1,90) == 1) then
-						bot.TargetEnt = lookForNearestPlayer(bot)
-					end
-				end
-			end
 			
 			if (bot:GetPlayerClass() == "samuraidemo") then
 				bot:SetJumpPower(220 * 2.3)
@@ -1676,7 +1692,7 @@ concommand.Add("tf_bot_add", function(ply, cmd, args, argStr)
 	end 
 	if ply:IsAdmin() or ply:IsSuperAdmin() then 
 		for i=0, args[1]-1 do
-			LeadBot_S_Add(args[2]) 
+			LeadBot_S_Add() 
 		end
 	end 
 end)
@@ -1868,16 +1884,6 @@ hook.Add( "StartCommand", "TFBot_Movement", function( ply, cmd )
 		local targetPos = ply.botPos // target position to go to, the first player on the server
 		ply.targetArea = nil
 		
-		if ((ply:GetPlayerClass() == "sniper") and ply.botPos) then
-			local area = navmesh.GetNearestNavArea( ply.botPos )
-			hiding = area:GetHidingSpots(1)
-			if (area:GetHidingSpots(2)) then
-				hiding = area:GetHidingSpots(2)
-			end
-			if (hiding[1]) then
-				print(hiding[1])
-				targetPos = hiding[1]
-			end
 			ply.path = AstarVector( ply, ply:GetPos(), targetPos )
 			if ( !istable( ply.path ) ) then // We are in the same area as the target, or we can't navigate to the target
 				ply.path = nil // Clear the path, bail and try again next time
@@ -1889,20 +1895,6 @@ hook.Add( "StartCommand", "TFBot_Movement", function( ply, cmd )
 			// TODO: Add inbetween points on area intersections
 			// TODO: On last area, move towards the target position, not center of the last area
 			table.remove( ply.path ) // Just for this example, remove the starting area, we are already in it!
-		else
-			
-			ply.path = AstarVector( ply, ply:GetPos(), targetPos )
-			if ( !istable( ply.path ) ) then // We are in the same area as the target, or we can't navigate to the target
-				ply.path = nil // Clear the path, bail and try again next time
-				ply.lastRePath2 = CurTime()
-				return
-			end
-			//PrintTable( ply.path )
-
-			// TODO: Add inbetween points on area intersections
-			// TODO: On last area, move towards the target position, not center of the last area
-			table.remove( ply.path ) // Just for this example, remove the starting area, we are already in it!
-		end
 	end
 
 	// We have no path, or its empty (we arrived at the goal), try to get a new path.
@@ -1923,7 +1915,7 @@ hook.Add( "StartCommand", "TFBot_Movement", function( ply, cmd )
 	end
 
 	// The area we selected is invalid or we are already there, remove it, bail and wait for next cycle
-	if ( !IsValid( ply.targetArea ) || ( ply.targetArea == currentArea && ply.targetArea:GetCenter():Distance( ply:GetPos() ) < 40 * ply:GetModelScale() ) ) then
+	if ( !IsValid( ply.targetArea ) || ( ply.targetArea == currentArea && ply.targetArea:GetCenter():Distance( ply:GetPos() ) < 25 * ply:GetModelScale() ) ) then
 		table.remove( ply.path ) // Removes last element
 		ply.targetArea = nil
 		return

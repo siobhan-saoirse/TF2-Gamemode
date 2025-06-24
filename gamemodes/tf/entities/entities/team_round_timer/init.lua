@@ -77,8 +77,8 @@ function ENT:RestartTimer(endsetup)
 		self:TriggerOutput("OnSetupStart",self)
 	else
 		
-		self.IsSetupPhase = false
 		timer.Simple(1, function()
+			self.IsSetupPhase = false
 			if (string.find(game.GetMap(),"mvm")) then
 				umsg.Start("TF_PlayGlobalSound")
 					umsg.String("Ambient.Siren")
@@ -259,6 +259,11 @@ function ENT:Think()
 		elseif not self.RoundFinished then
 			self.RoundFinished = true
 			self:TriggerOutput("OnFinished")
+			if !self.IsSetupPhase then
+				if (string.find(game.GetMap(),"pl_")) then
+					GAMEMODE:RoundWin(2)
+				end
+			end
 		end
 		return
 	end
@@ -336,9 +341,16 @@ function ENT:Input_AddTime(activator, caller, data)
 end
 
 function ENT:Input_AddTeamTime(activator, caller, data)
-	local t, sec = string.match("(.*)%s+(.*)")
+	local t, sec = string.match(data,"(.*)%s+(.*)")
 	t, sec = tonumber(t), tonumber(sec)
-	
+	for k,v in ipairs(player.GetAll()) do
+		if (v:Team() == t) then
+			v:SendLua([[surface.PlaySound("Announcer.TimeAwardedForTeam")]])
+		else
+			v:SendLua([[surface.PlaySound("Announcer.TimeAddedForEnemy")]])
+		end
+			v:SendLua([[surface.PlaySound("Hud.PointCaptured")]])
+	end
 	if t and sec then
 		--print(Format("Added %d seconds due to team %d", sec, t))
 		self:SetTime(self:GetTime() + sec)

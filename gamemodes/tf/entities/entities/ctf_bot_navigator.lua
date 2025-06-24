@@ -24,13 +24,6 @@ function ENT:Initialize()
 	self.nextStuckJump = 0
 end 
 
-function ENT:ChasePos( options )
-	if (self.PosGen ~= nil) then
-		coroutine.wait(1)
-		coroutine.yield()
-	end
-end
-
 function ENT:OnInjured()
 	return false
 end
@@ -39,9 +32,80 @@ function ENT:OnKilled()
 	return false
 end
 
-function ENT:RunBehaviour()
-	while (true) do
-		coroutine.wait(1)
-		coroutine.yield()
+
+function ENT:FindChaseSpots( tbl )
+
+	local tbl = tbl or {}
+
+	tbl.pos			= tbl.pos			or self:WorldSpaceCenter()
+	tbl.radius		= tbl.radius		or 1000
+	tbl.stepdown	= tbl.stepdown		or 20
+	tbl.stepup		= tbl.stepup		or 20
+	tbl.type		= tbl.type			or 'hiding'
+
+	-- Use a path to find the length
+	local path = Path( "Follow" )
+
+	-- Find a bunch of areas within this distance
+	local areas = navmesh.Find( tbl.pos, tbl.radius, tbl.stepdown, tbl.stepup )
+
+	local found = {}
+
+	-- In each area
+	for _, area in ipairs( areas ) do
+
+		-- get the spots
+		local spots
+
+		if ( tbl.type == 'hiding' ) then 
+			spots = area:GetHidingSpots(1)
+		else
+			spots = area:GetHidingSpots(8)
+		end
+		for k, vec in ipairs( spots ) do
+
+			-- Work out the length, and add them to a table
+			path:Invalidate()
+
+			path:Compute( self, tbl.pos ) -- TODO: This is bullshit - it's using 'self.pos' not tbl.pos
+
+			table.insert( found, { vector = vec, distance = path:GetLength() } )
+
+		end
+
 	end
+
+	return found
+
+end
+
+--
+-- Name: NextBot:FindSpot
+-- Desc: Like FindSpots but only returns a vector
+-- Arg1: string|type|Either "random", "near", "far"
+-- Arg2: table|options|A table containing a bunch of tweakable options. See the function definition for more details
+-- Ret1: vector|If it finds a spot it will return a vector. If not it will return nil.
+--
+function ENT:FindSpot( type, options )
+
+	local spots = self:FindChaseSpots( options )
+	if ( !spots || #spots == 0 ) then return end
+
+	if ( type == "near" ) then
+
+		table.SortByMember( spots, "distance", true )
+		return spots[1].vector
+
+	end
+
+	if ( type == "far" ) then
+
+		table.SortByMember( spots, "distance", false )
+		return spots[1].vector
+
+	end
+
+	-- random
+	return spots[ math.random( 1, #spots ) ].vector
+
 end

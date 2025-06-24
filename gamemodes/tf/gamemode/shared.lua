@@ -2594,31 +2594,34 @@ GM.RoundHasWinner = false
 
 function GM:RoundWin(teamnum)
 	GAMEMODE.RoundHasWinner = true
+	team.SetScore(teamnum,team.GetScore() + 1)
 	timer.Simple(15, function() 
 		GAMEMODE.RoundHasWinner = false
 		if SERVER then
 			RunConsoleCommand("gmod_admin_cleanup")
-			for k,v in ipairs(player.GetAll()) do
-				v:Spawn()
-				v:SetNWBool("Taunting",true)
-				timer.Create("SlowGuydown"..v:EntIndex(), 0.1, 48, function()
-					v:SetWalkSpeed(1)
-					v:SetRunSpeed(1)
-				end) 
-				timer.Simple(5, function()
-					v:SetNWBool("Taunting",false)
-					v:ResetClassSpeed()
-					timer.Simple(math.Rand(0,2.0), function()
-					
-						v:Speak("TLK_ROUND_START")
-
+			timer.Simple(0.1, function()
+			
+				for k,v in ipairs(player.GetAll()) do
+					v:Spawn()
+					v:SetNWBool("Taunting",true)
+					timer.Create("SlowGuydown"..v:EntIndex(), 0.1, 48, function()
+						v:SetWalkSpeed(1)
+						v:SetRunSpeed(1)
 					end) 
-				end)
-				net.Start("DeActivateTauntCam")
-				net.Send(v)
-			end
-			team.SetScore(TEAM_RED,0)
-			team.SetScore(TEAM_BLU,0)
+					timer.Simple(5, function()
+						v:SetNWBool("Taunting",false)
+						v:ResetClassSpeed()
+						timer.Simple(math.Rand(0,2.0), function()
+						
+							v:Speak("TLK_ROUND_START")
+
+						end) 
+					end)
+					net.Start("DeActivateTauntCam")
+					net.Send(v)
+				end
+
+			end)
 		end
 	end)
 	for _,pl in pairs( player.GetAll() ) do

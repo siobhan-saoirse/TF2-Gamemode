@@ -421,6 +421,7 @@ function GM:Think()
 					local theplrtable = {}
 					table.insert(theplrtable,v)
 					halo.Add( theplrtable, team.GetColor(v:Team()), 0, 0, 2, true, true )
+					v:DrawModel(RENDERGROUP_VIEWMODEL)
 				end
 			end
 		end
