@@ -656,23 +656,26 @@ sound.Add( {
 if (IsMounted("ep2")) then
 	sound.Add( {
 		name = "DoSpark",
-		volume = 1.0,
-		level = 75,
-		pitch = { 100 },
+		volume = {0.4, 0.6},
+		channel = CHAN_VOICE,
+		level = 70,
+		pitch = { 100, 120 },
 		sound = {"ambient/energy/newspark01.wav","ambient/energy/newspark02.wav","ambient/energy/newspark03.wav","ambient/energy/newspark04.wav","ambient/energy/newspark05.wav","ambient/energy/newspark06.wav","ambient/energy/newspark07.wav","ambient/energy/newspark08.wav","ambient/energy/newspark09.wav","ambient/energy/newspark10.wav","ambient/energy/newspark11.wav"} 
 	} )
 	sound.Add( {
 		name = "LoudSpark",
-		volume = 1.0,
-		level = 95,
-		pitch = { 100 },
+		volume = {0.8, 1.0},
+		channel = CHAN_VOICE,
+		level = 80,
+		pitch = { 100, 120 },
 		sound = {"ambient/energy/newspark01.wav","ambient/energy/newspark02.wav","ambient/energy/newspark03.wav","ambient/energy/newspark04.wav","ambient/energy/newspark05.wav","ambient/energy/newspark06.wav","ambient/energy/newspark07.wav","ambient/energy/newspark08.wav","ambient/energy/newspark09.wav","ambient/energy/newspark10.wav","ambient/energy/newspark11.wav"} 
 	} )
 	sound.Add( {
 		name = "ReallyLoudSpark",
-		volume = 1.0,
-		level = 135,
-		pitch = { 100 },
+		volume = {0.8, 1.0},
+		channel = CHAN_VOICE,
+		level = 130,
+		pitch = { 100, 120 },
 		sound = {"ambient/energy/newspark01.wav","ambient/energy/newspark02.wav","ambient/energy/newspark03.wav","ambient/energy/newspark04.wav","ambient/energy/newspark05.wav","ambient/energy/newspark06.wav","ambient/energy/newspark07.wav","ambient/energy/newspark08.wav","ambient/energy/newspark09.wav","ambient/energy/newspark10.wav","ambient/energy/newspark11.wav"} 
 	} )
 end
