@@ -1551,47 +1551,6 @@ if (IsMounted("thestanleyparable")) then
 	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/npc_sounds_stanley.lua")
 	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/soundscapes_stanley.lua")
 end
-if (IsMounted("left4dead2")) then 
-	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/l4d2_game_sounds_doors.lua")
-	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/l4d2_game_sounds_weapons.lua")
-	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/l4d2_game_sounds_music.lua")
-	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/l4d2_game_sounds_player.lua")
-	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/l4d2_game_sounds_infected_common.lua")
-	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/l4d2_game_sounds_infected_special.lua")
-	player_manager.AddValidModel("infected_smoker","models/infected/smoker.mdl")
-	player_manager.AddValidHands("infected_smoker","models/v_models/weapons/v_claw_smoker.mdl")
-	player_manager.AddValidModel("infected_smoker_l4d1","models/infected/smoker_l4d1.mdl")
-	player_manager.AddValidHands("infected_smoker_l4d1","models/v_models/weapons/v_claw_smoker_l4d1.mdl")
-	player_manager.AddValidModel("infected_boomer","models/infected/boomer.mdl")
-	player_manager.AddValidHands("infected_boomer","models/v_models/weapons/v_claw_boomer.mdl")
-	player_manager.AddValidModel("infected_boomette","models/infected/boomette.mdl")
-	player_manager.AddValidHands("infected_boomette","models/v_models/weapons/v_claw_boomer.mdl")
-	player_manager.AddValidModel("infected_boomer_l4d1","models/infected/boomer_l4d1.mdl")
-	player_manager.AddValidHands("infected_boomer_l4d1","models/v_models/weapons/v_claw_boomer_l4d1.mdl")
-	player_manager.AddValidModel("infected_hunter","models/infected/hunter.mdl")
-	player_manager.AddValidHands("infected_hunter","models/v_models/weapons/v_claw_hunter.mdl")
-	player_manager.AddValidModel("infected_hunter_l4d1","models/infected/hunter_l4d1.mdl")
-	player_manager.AddValidHands("infected_hunter_l4d1","models/v_models/weapons/v_claw_hunter_l4d1.mdl")
-	player_manager.AddValidModel("infected_tank","models/infected/hulk.mdl")
-	player_manager.AddValidHands("infected_tank","models/v_models/weapons/v_claw_hulk.mdl")
-	player_manager.AddValidModel("infected_tank_sacrifice","models/infected/hulk_dlc3.mdl")
-	player_manager.AddValidHands("infected_tank_sacrifice","models/v_models/weapons/v_claw_hulk_dlc3.mdl")
-	player_manager.AddValidModel("infected_tank_l4d1","models/infected/hulk_l4d1.mdl")
-	player_manager.AddValidHands("infected_tank_l4d1","models/v_models/weapons/v_claw_hulk_l4d1.mdl")
-	player_manager.AddValidModel("infected_witch","models/infected/witch.mdl")
-	player_manager.AddValidHands("infected_witch","models/v_models/weapons/v_claw_hunter.mdl")
-	player_manager.AddValidModel("infected_witch_bride","models/infected/witch_bride.mdl")
-	player_manager.AddValidHands("infected_witch_bride","models/v_models/weapons/v_claw_hunter.mdl")
-	player_manager.AddValidModel("infected_jockey","models/infected/jockey.mdl")
-	player_manager.AddValidHands("infected_jockey","models/weapons/arms/v_jockey_arms.mdl")
-	player_manager.AddValidModel("infected_spitter","models/infected/spitter.mdl")
-	player_manager.AddValidHands("infected_spitter","models/weapons/arms/v_spitter_arms.mdl")
-	player_manager.AddValidModel("infected_charger","models/infected/charger.mdl")
-	player_manager.AddValidHands("infected_charger","models/weapons/arms/v_charger_arms.mdl")
-end
-if (IsMounted("left4dead")) then 
-	sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/l4d1_game_sounds_infected_special.lua") 
-end
 sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_mvm.lua") 
 sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_weapons_tf.lua")
 sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds_weapons_tf2.lua")
@@ -1615,51 +1574,6 @@ sound.AddSoundOverrides(GM.Folder.."/gamemode/contents/game_sounds.lua")
 
 hook.Add("PlayerStepSoundTime", "FootTime", function(ply, iType, iWalking)
 	if (!ply:IsHL2()) then
-		if (ply:GetPlayerClass() == "tank_l4d") then
-			if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
-				local speed = 250 + 100
-				return speed
-			else
-				local speed = 250
-				return speed
-			end
-		end
-		if (ply:GetPlayerClass() == "boomer") then
-			if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
-				local speed = 400 + 100
-				return speed
-			else
-				local speed = 350
-				return speed
-			end
-		end
-		if (ply:GetPlayerClass() == "charger") then
-			if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
-				local speed = 300 + 100
-				return speed
-			else
-				local speed = 270
-				return speed
-			end
-		end
-		if (ply:GetPlayerClass() == "smoker") then
-			if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
-				local speed = 400 + 100
-				return speed
-			else
-				local speed = 370
-				return speed
-			end
-		end
-		if (ply:GetPlayerClass() == "hunter") then
-			if (ply:Crouching() || ply:GetMoveType() == MOVETYPE_LADDER) then
-				local speed = 400 + 100
-				return speed
-			else
-				local speed = 360
-				return speed
-			end
-		end
 		if (iType == STEPSOUNDTIME_ON_LADDER) then
 			local speed = 350
 			return speed
@@ -1725,6 +1639,30 @@ hook.Add("PlayerStepSoundTime", "FootTime", function(ply, iType, iWalking)
 					else
 						local speed = math.Remap(ply:GetWalkSpeed(), 200, 450, 600, 200)
 						return speed
+					end
+				end
+			end
+		end
+	else
+
+		if (iType == STEPSOUNDTIME_ON_LADDER) then
+			local speed = 400
+			return speed
+		elseif (iType == STEPSOUNDTIME_NORMAL || iType == STEPSOUNDTIME_WATER_FOOT || iType == STEPSOUNDTIME_WATER_KNEE) then
+			if (ply:GetMoveType() == MOVETYPE_LADDER) then
+				local speed = 400
+				return speed
+			else
+				if (ply:Crouching() or ply:KeyDown(IN_WALK)) then
+					local speed = 400 + 100
+					return speed
+				else
+					if (ply:KeyDown(IN_SPEED)) then
+						local speed = 300
+						return speed 
+					else
+						local speed = 400
+						return speed 
 					end
 				end
 			end
