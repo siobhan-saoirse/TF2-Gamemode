@@ -653,28 +653,29 @@ sound.Add( {
 	pitch = { 100 },
 	sound = {"player/taunt_hand_clap.wav"} 
 } )
-sound.Add( {
-	name = "DoSpark",
-	volume = 1.0,
-	level = 75,
-	pitch = { 100 },
-	sound = {"ambient/energy/newspark01.wav","ambient/energy/newspark02.wav","ambient/energy/newspark03.wav","ambient/energy/newspark04.wav","ambient/energy/newspark05.wav","ambient/energy/newspark06.wav","ambient/energy/newspark07.wav","ambient/energy/newspark08.wav","ambient/energy/newspark09.wav","ambient/energy/newspark10.wav","ambient/energy/newspark11.wav"} 
-} )
-sound.Add( {
-	name = "LoudSpark",
-	volume = 1.0,
-	level = 95,
-	pitch = { 100 },
-	sound = {"ambient/energy/newspark01.wav","ambient/energy/newspark02.wav","ambient/energy/newspark03.wav","ambient/energy/newspark04.wav","ambient/energy/newspark05.wav","ambient/energy/newspark06.wav","ambient/energy/newspark07.wav","ambient/energy/newspark08.wav","ambient/energy/newspark09.wav","ambient/energy/newspark10.wav","ambient/energy/newspark11.wav"} 
-} )
-sound.Add( {
-	name = "ReallyLoudSpark",
-	volume = 1.0,
-	level = 135,
-	pitch = { 100 },
-	sound = {"ambient/energy/newspark01.wav","ambient/energy/newspark02.wav","ambient/energy/newspark03.wav","ambient/energy/newspark04.wav","ambient/energy/newspark05.wav","ambient/energy/newspark06.wav","ambient/energy/newspark07.wav","ambient/energy/newspark08.wav","ambient/energy/newspark09.wav","ambient/energy/newspark10.wav","ambient/energy/newspark11.wav"} 
-} )
-
+if (IsMounted("ep2")) then
+	sound.Add( {
+		name = "DoSpark",
+		volume = 1.0,
+		level = 75,
+		pitch = { 100 },
+		sound = {"ambient/energy/newspark01.wav","ambient/energy/newspark02.wav","ambient/energy/newspark03.wav","ambient/energy/newspark04.wav","ambient/energy/newspark05.wav","ambient/energy/newspark06.wav","ambient/energy/newspark07.wav","ambient/energy/newspark08.wav","ambient/energy/newspark09.wav","ambient/energy/newspark10.wav","ambient/energy/newspark11.wav"} 
+	} )
+	sound.Add( {
+		name = "LoudSpark",
+		volume = 1.0,
+		level = 95,
+		pitch = { 100 },
+		sound = {"ambient/energy/newspark01.wav","ambient/energy/newspark02.wav","ambient/energy/newspark03.wav","ambient/energy/newspark04.wav","ambient/energy/newspark05.wav","ambient/energy/newspark06.wav","ambient/energy/newspark07.wav","ambient/energy/newspark08.wav","ambient/energy/newspark09.wav","ambient/energy/newspark10.wav","ambient/energy/newspark11.wav"} 
+	} )
+	sound.Add( {
+		name = "ReallyLoudSpark",
+		volume = 1.0,
+		level = 135,
+		pitch = { 100 },
+		sound = {"ambient/energy/newspark01.wav","ambient/energy/newspark02.wav","ambient/energy/newspark03.wav","ambient/energy/newspark04.wav","ambient/energy/newspark05.wav","ambient/energy/newspark06.wav","ambient/energy/newspark07.wav","ambient/energy/newspark08.wav","ambient/energy/newspark09.wav","ambient/energy/newspark10.wav","ambient/energy/newspark11.wav"} 
+	} )
+end
 
 sound.Add( {
 	name = "Selection.EngineerWrenchShoulder",
@@ -2594,9 +2595,11 @@ GM.RoundHasWinner = false
 
 function GM:RoundWin(teamnum)
 	GAMEMODE.RoundHasWinner = true
+	GAMEMODE.WinningTeam = teamnum
 	team.SetScore(teamnum,team.GetScore() + 1)
 	timer.Simple(15, function() 
 		GAMEMODE.RoundHasWinner = false
+		GAMEMODE.WinningTeam = nil
 		if SERVER then
 			RunConsoleCommand("gmod_admin_cleanup")
 			timer.Simple(0.1, function()

@@ -31,7 +31,7 @@ function ENT:InitPostEntity()
 	self.Properties.team_previouspoint_3_1 = ents.FindByName(self.Properties.team_previouspoint_3_1 or "")[1] or NULL
 	self.Properties.team_previouspoint_3_2 = ents.FindByName(self.Properties.team_previouspoint_3_2 or "")[1] or NULL
 	
-	PrintTable(self.Properties or {})
+	PrintTable(self.Properties or {}) 
 	
 	self:SendData()
 	self.Ready = true
@@ -191,7 +191,13 @@ function ENT:Think()
 	
 	
 end
-
 function ENT:AcceptInput(name, activator, caller, data)
-	
+	if name == "SetOwner" then
+		local teamNum = tonumber(data)
+		if teamNum then
+			self:SetOwnerTeam(teamNum)
+			self:UpdateLockStatus()
+			return true
+		end
+	end
 end

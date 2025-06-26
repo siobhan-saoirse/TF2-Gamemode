@@ -8,7 +8,109 @@ local profiles = {}
 local bots = {}
 
 --local names = {"LeadKiller", "A Random Person", "Foxie117", "G.A.M.E.R v24", "Agent Agrimar"}
-local names = {"A Professional With Standards", "AimBot", "AmNot", "Aperture Science Prototype XR7", "Archimedes!", "BeepBeepBoop", "Big Mean Muther Hubbard", "Black Mesa", "BoomerBile", "Cannon Fodder", "CEDA", "Chell", "Chucklenuts", "Companion Cube", "Crazed Gunman", "CreditToTeam", "CRITRAWKETS", "Crowbar", "CryBaby", "CrySomeMore", "C++", "DeadHead", "Delicious Cake", "Divide by Zero", "Dog", "Force of Nature", "Freakin' Unbelievable", "Gentlemanne of Leisure", "GENTLE MANNE of LEISURE ", "GLaDOS", "Glorified Toaster with Legs", "Grim Bloody Fable", "GutsAndGlory!", "Hat-Wearing MAN", "Headful of Eyeballs", "Herr Doktor", "HI THERE", "Hostage", "Humans Are Weak", "H@XX0RZ", "I LIVE!", "It's Filthy in There!", "IvanTheSpaceBiker", "Kaboom!", "Kill Me", "LOS LOS LOS", "Maggot", "Mann Co.", "Me", "Mega Baboon", "Mentlegen", "Mindless Electrons", "MoreGun", "Nobody", "Nom Nom Nom", "NotMe", "Numnutz", "One-Man Cheeseburger Apocalypse", "Poopy Joe", "Pow!", "RageQuit", "Ribs Grow Back", "Saxton Hale", "Screamin' Eagles", "SMELLY UNFORTUNATE", "SomeDude", "Someone Else", "Soulless", "Still Alive", "TAAAAANK!", "Target Practice", "ThatGuy", "The Administrator", "The Combine", "The Freeman", "The G-Man", "THEM", "Tiny Baby Man", "Totally Not A Bot", "trigger_hurt", "WITCH", "ZAWMBEEZ", "Ze Ubermensch", "Zepheniah Mann", "0xDEADBEEF", "10001011101"}
+local names = {
+
+		"Chucklenuts",
+		"CryBaby",
+		"WITCH",
+		"ThatGuy",
+		"Still Alive",
+		"Hat-Wearing MAN",
+		"Me",
+		"Numnutz",
+		"H@XX0RZ",
+		"The G-Man",
+		"Chell",
+		"The Combine",
+		"Totally Not A Bot",
+		"Pow!",
+		"Zepheniah Mann",
+		"THEM",
+		"LOS LOS LOS",
+		"10001011101",
+		"DeadHead",
+		"ZAWMBEEZ",
+		"MindlessElectrons",
+		"TAAAAANK!",
+		"The Freeman",
+		"Black Mesa",
+		"Soulless",
+		"CEDA",
+		"BeepBeepBoop",
+		"NotMe",
+		"CreditToTeam",
+		"BoomerBile",
+		"Someone Else",
+		"Mann Co.",
+		"Dog",
+		"Kaboom!",
+		"AmNot",
+		"0xDEADBEEF",
+		"HI THERE",
+		"SomeDude",
+		"GLaDOS",
+		"Hostage",
+		"Headful of Eyeballs",
+		"CrySomeMore",
+		"Aperture Science Prototype XR7",
+		"Humans Are Weak",
+		"AimBot",
+		"C++",
+		"GutsAndGlory!",
+		"Nobody",
+		"Saxton Hale",
+		"RageQuit",
+		"Screamin' Eagles",
+
+		"Ze Ubermensch",
+		"Maggot",
+		"CRITRAWKETS",
+		"Herr Doktor",
+		"Gentlemanne of Leisure",
+		"Companion Cube",
+		"Target Practice",
+		"One-Man Cheeseburger Apocalypse",
+		"Crowbar",
+		"Delicious Cake",
+		"IvanTheSpaceBiker",
+		"I LIVE!",
+		"Cannon Fodder",
+
+		"trigger_hurt",
+		"Nom Nom Nom",
+		"Divide by Zero",
+		"GENTLE MANNE of LEISURE",
+		"MoreGun",
+		"Tiny Baby Man",
+		"Big Mean Muther Hubbard",
+		"Force of Nature",
+
+		"Crazed Gunman",
+		"Grim Bloody Fable",
+		"Poopy Joe",
+		"A Professional With Standards",
+		"Freakin' Unbelievable",
+		"SMELLY UNFORTUNATE",
+		"The Administrator",
+		"Mentlegen",
+
+		"Archimedes!",
+		"Ribs Grow Back",
+		"It's Filthy in There!",
+		"Mega Baboon",
+		"Kill Me",
+		"Glorified Toaster with Legs",
+
+		"John Spartan",
+		"Leeloo Dallas Multipass",
+		"Sho'nuff",
+		"Bruce Leroy",
+		"CAN YOUUUUUUUUU DIG IT?!?!?!?!",
+		"Big Gulp, Huh?",
+		"Stupid Hot Dog",
+		"I'm your huckleberry",
+		"The Crocketeer",
+}
 local classtbl4d = {"tank_l4d","boomer","boomer","boomer","jockey","charger","charger","spitter","spitter","smoker","hunter"}
 local classtb = {"scout", "soldier", "pyro", "demoman", "heavy", "engineer", "medic", "sniper", "spy"}
 local bot_class = CreateConVar("tf_bot_keep_class_after_death", "0", {FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY})
@@ -16,6 +118,16 @@ local bot_diff = CreateConVar("tf_bot_difficulty", "1", {FCVAR_ARCHIVE, FCVAR_RE
 local bot_respawn = CreateConVar("tf_bot_npc_respawn", "0", {FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Should the NPC bots respawn?")
 local tf_bot_notarget = CreateConVar("tf_bot_notarget", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY})
 local tf_bot_melee_only = CreateConVar("tf_bot_melee_only", "0", {FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY})
+
+local currentNameIndex = 0
+
+function GetNextBotName()
+    currentNameIndex = currentNameIndex + 1
+    if currentNameIndex > #names then
+        currentNameIndex = 1 -- wrap around to start
+    end
+    return names[currentNameIndex]
+end
 
 local function IsValidTarget(bot,target)
 
@@ -71,8 +183,17 @@ end
 function lookForNearestPlayer(bot)
 	local npcs = {}
 		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 2048)) do
-			if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:GetNoDraw() == false and !v:IsNeutral() and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET)) then
-				table.insert(npcs, v)
+			if (v:IsPlayer() and v:Health() > 1 and IsValidTarget(bot,v) and (bot:Visible(v))) then
+				table.insert(npcs, v)	
+			end
+		end
+		return table.Random(npcs)
+end
+function lookForNearestEnemyPlayer(bot)
+	local npcs = {}
+		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 2048)) do
+			if (v:IsPlayer() and v:Health() > 1 and IsValidTarget(bot,v)) then
+				table.insert(npcs, v)	
 			end
 		end
 		return table.Random(npcs)
@@ -80,7 +201,7 @@ end
 
 function lookForClosestFriendlyHumanLookingAtMe(bot)
 	local npcs = {}
-		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 2048)) do
+		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 600)) do
 			if (v:IsPlayer() and v:Health() > 0 and v:IsFriendly(bot) and !v:IsBot()) then
 				local tr = v:GetEyeTrace()
 				if (tr.Entity:EntIndex() == bot:EntIndex()) then
@@ -125,14 +246,52 @@ function lookForClosestHumanPlayer(bot)
 		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 800)) do 
 			if (v:IsPlayer() and v:Health() > 0 and !v:IsBot() and v:EntIndex() != bot:EntIndex() and v:EntityTeam(bot) != TEAM_NEUTRAL and !IsValid(bot.TargetEnt) and !v:IsFriendly(bot) and v:Team() != TEAM_NEUTRAL and v:Team() != TEAM_FRIENDLY and v:Health() > 0 ) then
 				table.insert(npcs, v)
-			elseif ((v:IsNPC() or v:IsNextBot()) and !v:IsFriendly(bot)) then
-				if (v:Health() > 0) then
-					table.insert(npcs, v)
-				end
 			end
 		end
 	end
 	return table.Random(npcs)
+end
+
+-- Utility: Find visible enemy players
+local function IsEnemyVisible(ply, other)
+    if not IsValid(other) or not other:Alive() then return false end
+    if ply:Team() == other:Team() then return false end
+
+    local tr = util.TraceLine({
+        start = ply:GetPos() + Vector(0, 0, 60),
+        endpos = other:GetPos() + Vector(0, 0, 60),
+        filter = { ply },
+        mask = MASK_SOLID
+    })
+
+    return tr.Fraction > 0.95 -- mostly unobstructed
+end
+
+-- Utility: Check if nav area is safe (no enemy nearby or visible)
+local function IsNavAreaSafe(nav, ply)
+    local center = nav:GetCenter()
+	local enemy = ply.TargetEnt
+	if (enemy != nil) then
+		if enemy:GetPos():Distance(center) < 80 then
+			return false
+		end
+	end
+    return true
+end
+
+-- Pick a random safe nav area
+local function GetSafeRetreatArea(ply)
+    local areas = navmesh.GetAllNavAreas()
+    local candidates = {}
+
+    for _, area in ipairs(areas) do
+        if IsNavAreaSafe(area, ply) then
+            table.insert(candidates, area)
+        end
+    end
+
+    if #candidates == 0 then return nil end
+    return candidates[math.random(#candidates)]
 end
 
 function getNPCsAndPlayers()
@@ -162,7 +321,7 @@ function LBAddBot(team)
 	elseif diff == 3 then
 		diffn = "Expert"
 	end]]
-	local name = table.Random(names) -- .." (bot) "..diffn --"Bot"..math.random(0, 99)
+	local name = GetNextBotName()
 	local bot = player.CreateNextBot(name)
 	local teamd = TEAM_RED
 	if team == 1 then
@@ -246,8 +405,7 @@ local function LeadBot_S_Add(team2)
 		return
 	end
 
-	local name = table.Random(names) or "Bot"
-	local bot = player.CreateNextBot(name)
+	local bot = player.CreateNextBot(GetNextBotName())
 	local teamv = TEAM_RED
 	if team2 == 1 then
 		teamv = TEAM_BLU
@@ -296,8 +454,6 @@ local function LeadBot_S_Add(team2)
 		ply:SetTeam(TEAM_BLU)	
 	elseif (team.NumPlayers(TEAM_RED) < team.NumPlayers(TEAM_BLU)) then
 		ply:SetTeam(TEAM_RED)	
-	else
-		ply:SetTeam(table.Random({2,3}))	
 	end
 	
 	local random = math.random(1,9)
@@ -327,7 +483,7 @@ local function LeadBot_S_Add(team2)
 
 	end)
 
-	MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")
+	MsgN("[LeadBot] Bot " .. bot:Nick() .. " with strategy " .. bot.BotStrategy .. " added!")
 end
 
 local function LeadBot_S_Add_Zombie(team,class,pos)
@@ -467,6 +623,7 @@ end)
 
 hook.Add("PostPlayerDeath", "LeadBot_S_Death", function(bot)
 	if bot.TFBot then
+		--[[
 		local time = 6 
 		timer.Simple(time, function()
 			if IsValid(bot) and !bot:Alive() then
@@ -494,23 +651,9 @@ hook.Add("PostPlayerDeath", "LeadBot_S_Death", function(bot)
 					end
 				end
 			end
-		end)
+		end)]]
 	end
 end)
-
-hook.Add("StartCommand", "LeadBot_S_Command", function(bot, cmd)
-	if bot.TFBot then
-		local botWeapon = bot:GetActiveWeapon()
-
-		--[[if IsValid(botWeapon) and (botWeapon:Clip1() == 0 or !IsValid(bot.TargetEnt) and botWeapon:Clip1() <= botWeapon:GetMaxClip1() / 2) then
-			buttons = buttons + IN_RELOAD
-		end]]
-
-		--cmd:ClearButtons()
-		--cmd:ClearMovement()
-	end
-end)
-
 function RandomWeapon2(ply, wepslot)
 	local weps = tf_items.ReturnItems()
 	local class = ply:GetPlayerClass()
@@ -595,7 +738,8 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 	end
 end)
 
-hook.Add("SetupMove", "LeadBot_Control22", function(bot, mv, cmd)
+hook.Remove("SetupMove", "LeadBot_Control22")
+hook.Add("Move", "LeadBot_Control22", function(bot, mv)
 
 	local buttons = 0
 	if bot.TFBot and bot:Alive() then
@@ -819,7 +963,7 @@ hook.Add("SetupMove", "LeadBot_Control22", function(bot, mv, cmd)
 				end
 			end
 		end
-		if (bot.playerclass == "Medic" && IsValid(bot.TargetEnt)) then
+		if (bot.playerclass == "Medic" && IsValid(bot.TargetEnt) && table.Count(bot:GetWeapons()) > 0) then
 			if (bot.TargetEnt:EntityTeam() ~= bot:Team()) then
 
 				if (bot:GetPos():Distance(bot.TargetEnt:GetPos()) < 200) then
@@ -935,14 +1079,14 @@ local function ComputePathCost(bot, area, fromArea, ladder, length)
 
     -- Check vertical height difference
     local deltaZ = fromArea:ComputeAdjacentConnectionHeightChange(area)
-    if deltaZ >= self.stepHeight then
-        if deltaZ >= self.maxJumpHeight then
+    if deltaZ >= 16 then
+        if deltaZ >= 64 then
             return -1.0
         end
 
         -- Apply jump penalty
         dist = dist * 2.0
-    elseif deltaZ < -self.maxDropHeight then
+    elseif deltaZ < -64 then
         return -1.0
     end
 
@@ -977,6 +1121,8 @@ local function ComputePathCost(bot, area, fromArea, ladder, length)
 
         dist = dist + dist * 10.0 * area:GetPlayerCount(self:Team())
     end
+
+		
 
     local cost = dist * preference
 
@@ -1139,8 +1285,8 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 			else
 				if (!IsValid(bot.TargetEnt) || !bot.TargetEnt:Alive()) then
 					-- our enemy doesn't exist anymore, find a random spot every 10 seconds
-					if (CurTime() > controller.LastSegmented) then
-						bot.botPos = controller:FindSpot("random", {radius = 12500})
+					if (CurTime() > controller.LastSegmented || IsValid(bot.botPos) and bot:GetPos():Distance(bot.botPos) < bot:GetModelRadius() * 1.05) then
+						bot.botPos = controller:FindSpot("random", {radius = 12500, pos = lookForNearestEnemyPlayer(bot):GetPos()})
 			        	controller.LastSegmented = CurTime() + 10
 					end
 				else
@@ -1168,6 +1314,12 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				end
 			end
 			
+		if (GAMEMODE.RoundHasWinner && GAMEMODE.WinningTeam != bot:Team()) then
+            local navArea = GetSafeRetreatArea(bot) 
+            if navArea then
+				bot.botPos = navArea:GetCenter()
+			end
+		end
 		for k, v in ipairs(ents.FindInSphere(bot:GetPos(),600)) do
 			if (v:GetClass() == "obj_teleporter" and v:EntIndex() != bot.intelcarrier:EntIndex()) then
 				if (v:IsEntrance() and IsValid(v:GetLinkedTeleporter()) and v:IsFriendly(bot) and v:IsReady()) then 
@@ -1327,7 +1479,7 @@ hook.Add("OnPlayerReady", "leadbot_ready", function()
 	RunConsoleCommand("lk.ready_bots")
 end)
 hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
-	if (bot.ControllingPlayer) then
+	--[[if (bot.ControllingPlayer) then
 		bot.ControlledButtons = cmd:GetButtons()
 		bot.ControlledImpulse = cmd:GetImpulse()
 		bot.ControlledMouseWheel = cmd:GetMouseWheel()
@@ -1374,21 +1526,21 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 			bot.WasTFBot = bot.TFBot
 			bot.TFBot = false
 		end
-	end
+	end]]
 	if bot.TFBot and bot:Alive() then
 			-- if our targetent is not alive, don't do anything until it's nil
 			local buttons = 0
 			
-			if (bot.botPos) then
-				if (bot:GetVelocity():Length() < 30) then
+			if (bot.botPos and !bot:GetNWBool("Taunting",false)) then
+				if (bot:GetVelocity():Length() < 50) then
 
 					if (bot:IsOnGround()) then
 						
 						if (math.random(1,5) == 1) then
 							buttons = buttons + IN_JUMP
 						end
-						cmd:SetSideMove(table.Random({-520,520}))
-						cmd:SetForwardMove(table.Random({-520,520}))
+						cmd:SetSideMove(math.Rand(-520,520))
+						cmd:SetForwardMove(math.Rand(-520,520))
 					else
 						buttons = buttons + IN_DUCK
 					end
@@ -1475,28 +1627,6 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 							end)
 						end
 					end
-				end
-			end
-		end
-			
-		local curgoal = navmesh.GetNavArea(bot:GetPos(),64)
-		if (curgoal ~= nil) then 
-			if curgoal:HasAttributes(NAV_MESH_JUMP) then
-				if (bot:IsOnGround()) then
-					
-					if (math.random(1,5) == 1) then
-						buttons = buttons + IN_JUMP
-					end
-
-				end
-			end
-			if curgoal:HasAttributes(NAV_MESH_CROUCH) then
-				if (curgoal:HasAttributes(NAV_MESH_JUMP) and !bot:IsOnGround()) then
-					if (math.random(1,5) == 1) then
-						buttons = buttons + IN_DUCK
-					end
-				elseif (!curgoal:HasAttributes(NAV_MESH_JUMP)) then
-					buttons = buttons + IN_DUCK
 				end
 			end
 		end
@@ -1688,16 +1818,33 @@ concommand.Add("tf_bot_say", function(ply, _, args) for k, v in pairs(player.Get
 --concommand.Add("lk.downme", function(ply) ply:DownPlayer() end)
 concommand.Add("tf_bot_add", function(ply, cmd, args, argStr) 
 	if (game.SinglePlayer()) then 
-		--print("Doesn't work in Singleplayer!") 
+		table.insert( Errors, {
+			last	= SysTime(),
+			text	= "TFBots do not work in Singleplayer! >:("
+		} )
+		return
 	end 
-	if ply:IsAdmin() or ply:IsSuperAdmin() then 
+	if IsValid(ply) and (ply:IsAdmin() or ply:IsSuperAdmin()) || !IsValid(ply) then 
 		for i=0, args[1]-1 do
 			LeadBot_S_Add() 
 		end
 	end 
 end)
 concommand.Add("tf_bot_name_add", function(_, _, args) table.insert(names, args[1]) MsgN(args[1].." added to names list!") end)
-concommand.Add("tf_bot_quota", function(_, _, args) for i=0, args[1]-1 do LeadBot_S_Add() end end)
+concommand.Add("tf_bot_quota", function(ply, cmd, args, argStr) 
+	if (game.SinglePlayer()) then 
+		table.insert( Errors, {
+			last	= SysTime(),
+			text	= "TFBots do not work in Singleplayer! >:("
+		} )
+		return
+	end 
+	if IsValid(ply) and (ply:IsAdmin() or ply:IsSuperAdmin()) || !IsValid(ply) then 
+		timer.Create("BotQuota",0.25,args[1]-1,function()
+			LeadBot_S_Add()
+		end)
+	end
+end)
 
 --concommand.Add("lk.playerclass", function(_, _, args) for k, v in pairs(player.GetBots()) do v:SetPlayerClass(args[1]) end end)
 
@@ -1759,19 +1906,11 @@ function Astar( bot, start, goal )
 
 		for k, neighbor in pairs( current:GetAdjacentAreas() ) do
 			local newCostSoFar = current:GetCostSoFar()
-
-			if ( neighbor:HasAttributes(NAV_MESH_CLIFF) ) then // Add your own area filters or whatever here
-				continue
-			end
-
-			if ( neighbor:HasAttributes(NAV_MESH_AVOID) ) then // Add your own area filters or whatever here
-				continue
-			end
 			
 			if ( ( neighbor:IsOpen() || neighbor:IsClosed() ) && neighbor:GetCostSoFar() <= newCostSoFar ) then
 				continue
 			else
-				neighbor:SetCostSoFar( newCostSoFar + heuristic_cost_so_far_estimate( bot, start, goal ) );
+				neighbor:SetCostSoFar( newCostSoFar );
 				neighbor:SetTotalCost( newCostSoFar + heuristic_cost_so_far_estimate( bot, start, goal ) )
 
 				if ( neighbor:IsClosed() ) then
@@ -1801,12 +1940,58 @@ end
 function heuristic_cost_so_far_estimate( m_me, start, goal )
 	-- this term causes the same bot to choose different routes over time,
 	-- but keep the same route for a period in case of repaths
-	local timeMod = math.floor(CurTime() / 10) + 1
-	local entIndex = m_me:EntIndex()
-	local areaID = start:GetID()
-	local preference = 1.0 + 50.0 * (1.0 + math.cos(entIndex * areaID * timeMod))
-	// Perhaps play with some calculations on which corner is closest/farthest or whatever
-	return start:GetCenter():Distance( goal:GetCenter() )
+	
+	local area = start
+    local dist
+	
+    -- Unique random penalty per bot/area to vary routes
+    local preference = 1.0
+    if not m_me:IsMiniBoss() then
+        local timeMod = math.floor(CurTime() / 10) + 1
+        preference = 1.0 + 50.0 * (1.0 + math.cos(m_me:EntIndex() * area:GetID() * timeMod))
+    end
+    if ladder then
+        dist = ladder:GetLength()
+    elseif length and length > 0 then
+        dist = length
+    else
+        dist = start:GetCenter():Distance(goal:GetCenter())
+    end
+		-- Crawling through a vent is very slow.
+		-- NOTE: The cost is determined by the bot's crouch speed
+		if area:HasAttributes( NAV_MESH_CROUCH ) then 
+			
+			local crouchPenalty = 5
+			if IsValid( bot ) then crouchPenalty = math.floor( 1 / bot:GetCrouchedWalkSpeed() ) end
+			
+			dist	=	dist + ( dist * crouchPenalty )
+			
+		end
+		
+		-- If this area might damage us if we walk through it we should avoid it at all costs.
+		if area:IsDamaging() || area:HasAttributes( NAV_MESH_CLIFF ) then
+		
+			dist	=	dist + ( dist * 100.0 )
+			
+		end
+		
+		-- The bot should avoid this area unless alternatives are too dangerous or too far.
+		if area:HasAttributes( NAV_MESH_AVOID ) then 
+			
+			dist	=	dist + ( dist * 20 )
+			
+		end
+		
+		-- We will try not to swim since it can be slower than running on land, it can also be very dangerous, Ex. "Acid, Lava, Etc."
+		if area:IsUnderwater() then
+		
+			dist	=	dist + ( dist * 2 )
+			
+		end
+
+    local cost = dist * preference
+
+    return cost + goal:GetCostSoFar()
 end
 
 // using CNavAreas as table keys doesn't work, we use IDs
@@ -1913,9 +2098,14 @@ hook.Add( "StartCommand", "TFBot_Movement", function( ply, cmd )
 	if ( !IsValid( ply.targetArea ) ) then
 		ply.targetArea = ply.path[ #ply.path ]
 	end
+	if (ply.botPos:Distance(ply:GetPos()) > ply:GetModelRadius()) then
+		cmd:SetForwardMove( 1000 )
+		local targetang = ( ply.botPos - ply:GetPos() ):GetNormalized():Angle()
+		cmd:SetViewAngles( targetang )
+	end
 
 	// The area we selected is invalid or we are already there, remove it, bail and wait for next cycle
-	if ( !IsValid( ply.targetArea ) || ( ply.targetArea == currentArea && ply.targetArea:GetCenter():Distance( ply:GetPos() ) < 25 * ply:GetModelScale() ) ) then
+	if ( !IsValid( ply.targetArea ) || ( ply.targetArea == currentArea && ply.targetArea:GetCenter():Distance( ply:GetPos() ) < 40 * ply:GetModelScale() ) ) then
 		table.remove( ply.path ) // Removes last element
 		ply.targetArea = nil
 		return
@@ -1927,7 +2117,53 @@ hook.Add( "StartCommand", "TFBot_Movement", function( ply, cmd )
 		cmd:SetForwardMove( 0 )
 	else
 		cmd:SetViewAngles( targetang )
-		cmd:SetForwardMove( 1000 )
 	end
 
 end )
+
+
+-- CONFIGURABLE WAVE TIMES PER TEAM (seconds)
+local respawnWaveTimes = {
+    [TEAM_RED] = 20.5,
+    [TEAM_BLU] = 20.5
+}
+
+-- Player queues per team
+local respawnQueue = {
+    [TEAM_RED] = {},
+    [TEAM_BLU] = {}
+}
+
+-- Add player to the team's respawn queue
+hook.Add("PlayerDeath", "TF2_RespawnWave_Queue", function(ply)
+    if not IsValid(ply) or not ply:Team() then return end
+    local teamID = ply:Team()
+
+    table.insert(respawnQueue[teamID], ply)
+    ply:SetNWBool("InRespawnQueue", true)
+
+    -- Prevent automatic respawn
+    ply:StripWeapons()
+end)
+
+-- Respawn wave timer
+local function ProcessRespawnWave(teamID)
+    local queue = respawnQueue[teamID]
+    if not queue then return end
+
+    for i = #queue, 1, -1 do
+        local ply = queue[i]
+        if IsValid(ply) and ply:Team() == teamID and ply:Alive() == false then
+            ply:Spawn()
+            ply:SetNWBool("InRespawnQueue", false)
+        end
+        table.remove(queue, i)
+    end
+end
+
+-- Set up per-team respawn wave timers
+for teamID, waveTime in pairs(respawnWaveTimes) do
+    timer.Create("TF2_RespawnWave_Team_" .. teamID, waveTime, 0, function()
+        ProcessRespawnWave(teamID)
+    end)
+end

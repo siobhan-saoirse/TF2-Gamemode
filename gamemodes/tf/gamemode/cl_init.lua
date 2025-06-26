@@ -81,31 +81,6 @@ end
 
 hook.Add( "CalcView", "SetPosToRagdoll", function( ply, pos, angles, fov )
 	physenv.SetGravity( Vector(0,0,-386) )
-	if (!ply:Alive()) then
-		if (IsValid(ply:GetNWEntity("RagdollEntity"))) then
-			if ((ply:GetObserverMode() == OBS_MODE_DEATHCAM)) then
-				local ragdoll = ply:GetNWEntity("RagdollEntity")
-				local newdist = 115
-				local origin = ragdoll:GetPos()
-				if GetConVar("cam_collision"):GetBool() then
-					local tr = util.TraceHull{
-						start = origin,
-						endpos = origin - newdist * angles:Forward(),
-						filter = {ply,ragdoll},
-						mins = Vector(-3,-3,-3),
-						maxs = Vector( 3, 3, 3)
-					}
-					newdist = 115 * tr.Fraction
-					local view = {
-						origin = ragdoll:GetPos() - ( angles:Forward() * newdist ),
-						fov = fov,
-						drawviewer = true
-					}	
-					return view
-				end
-			end
-		end
-	end
 end )
  
 if (IsValid(LocalPlayer())) then
@@ -3183,3 +3158,177 @@ else
 		end)
 	end
 end
+
+
+    hook.Add("HUDPaint", "TF2_RespawnWave_Timer", function()
+        local ply = LocalPlayer()
+        if not ply:GetNWBool("InRespawnQueue", false) then return end
+
+        local teamID = ply:Team()
+        local nextWave = timer.TimeLeft("TF2_RespawnWave_Team_" .. teamID)
+        if not nextWave then return end
+
+        draw.SimpleText("You will respawn in " .. math.ceil(nextWave) .. " second(s)",
+            "Trebuchet24", ScrW() / 2, ScrH() * 0.75,
+            Color(255, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    end)
+
+	
+local matAlert = Material( "icon16/emoticon_unhappy.png" )
+local matError = Material( "icon16/delete.png" )
+
+local cl_drawhud = GetConVar( "cl_drawhud" )
+
+hook.Add( "DrawOverlay", "MenuDrawLuaMessages", function()
+
+	if ( !cl_drawhud:GetBool() ) then return end
+	x = 32
+	local idealy = 32
+	local height = 30
+	local EndTime = SysTime() - 10
+	local Recent = SysTime() - 0.5
+	if (!IsMounted("tf")) then
+
+		surface.SetFont( "DermaDefaultBold" )
+		if ( y == nil ) then y = idealy end
+		if ( w == nil ) then w = surface.GetTextSize( "[TF2GM] TF2 is not mounted! Expect errors!" ) + 48 end
+
+		draw.RoundedBox( 2, x + 2, y + 2, w, height, Color( 40, 40, 40, 255 ) )
+		draw.RoundedBox( 2, x, y, w, height, Color( 240, 240, 240, 255 ) )
+
+		draw.RoundedBox( 2, x, y, w, height, Color( 16, 149, 242, 255 ) ) 
+
+		surface.SetTextColor( 255, 255, 255, 255 )
+		surface.SetTextPos( x + 34, y + 8 )
+		surface.DrawText( "[TF2GM] TF2 is not mounted! Expect errors!" )
+
+		surface.SetDrawColor( 255, 255, 255, 255 )
+		surface.SetMaterial( matError )
+		surface.DrawTexturedRect( x + 6, y + 6, 16, 16 )
+
+		y = idealy
+
+		idealy = idealy + 40
+	elseif (game.SinglePlayer()) then
+		surface.SetFont( "DermaDefaultBold" )
+		if ( y == nil ) then y = idealy end
+		if ( w == nil ) then w = surface.GetTextSize( "[TF2GM] You're playing on Singleplayer! :(" ) + 48 end
+
+		draw.RoundedBox( 2, x + 2, y + 2, w, height, Color( 40, 40, 40, 255 ) )
+		draw.RoundedBox( 2, x, y, w, height, Color( 240, 240, 240, 255 ) )
+
+		draw.RoundedBox( 2, x, y, w, height, Color( 16, 149, 242, 255 ) )
+
+		surface.SetTextColor( 255, 255, 255, 255 )
+		surface.SetTextPos( x + 34, y + 8 )
+		surface.DrawText( "[TF2GM] You're playing on Singleplayer! :(" )
+
+		surface.SetDrawColor( 255, 255, 255, 255 )
+		surface.SetMaterial( matAlert )
+		surface.DrawTexturedRect( x + 6, y + 6, 16, 16 )
+
+		y = idealy
+
+		idealy = idealy + 40
+	end
+end )
+
+hook.Add("CalcView", "TF2_DeathCamView", function(ply, pos, angles, fov)
+    if not IsValid(ply) then return end
+    if ply:Team() == TEAM_SPECTATOR then return end
+    if ply:GetObserverMode() ~= OBS_MODE_DEATHCAM then return end
+
+	local ragdoll = ply:GetNWEntity("RagdollEntity")
+	
+	if (!IsValid(ragdoll)) then
+		ragdoll = ply:GetRagdollEntity()
+	end
+    -- Setup
+    local killer = ply:GetObserverTarget()
+    local eyeOrigin = pos
+    local eyeAngles = angles
+    local origin = ply:GetPos() + Vector(0, 0, 64)
+	if (IsValid(ragdoll)) then
+		origin = ragdoll:GetPos() + Vector(0, 0, 15)
+	end
+    local forward = Angle(eyeAngles.p, eyeAngles.y, eyeAngles.r)
+    local interpolation = math.Clamp((CurTime() - (ply:GetNWFloat("DeathTime",0) or 0)) / (2.0 * 0.5), 0, 1)
+    interpolation = math.ease.InOutCubic(interpolation)
+
+    -- Setup chase distances
+    local chaseMin = 40
+    local chaseMax = 96
+    local chaseDistance = ply:GetNWInt("ChaseDistance",40) or chaseMin
+
+    if IsValid(killer) and killer.GetModelScale then
+        local scale = killer:GetModelScale()
+        local scaleSqr = scale * scale
+        chaseMin = chaseMin * scaleSqr
+        chaseMax = chaseMax * scaleSqr
+    end
+
+    chaseDistance = math.Clamp(chaseDistance + FrameTime() * 48, chaseMin, chaseMax)
+    ply:SetNWFloat("ChaseDistance",chaseDistance)
+
+    -- If player has a decapitated head entity (optional feature)
+    if IsValid(ply.HeadGib) then
+        local phys = ply.HeadGib:GetPhysicsObject()
+        if IsValid(phys) then
+            local massCenter = phys:GetMassCenter()
+            local worldCenter = ply.HeadGib:LocalToWorld(massCenter)
+            ply.HeadGib:AddEffects(EF_NODRAW)
+
+            eyeOrigin = worldCenter + Vector(0, 0, 6)
+
+            local headAng = ply.HeadGib:GetAngles()
+            local bodyVec
+            if IsValid(ply.Ragdoll) then
+                bodyVec = ply.Ragdoll:GetPos() - eyeOrigin
+            else
+                bodyVec = ply.HeadGib:GetPos() - eyeOrigin
+            end
+
+            local bodyAng = bodyVec:Angle()
+            eyeAngles = LerpAngle(interpolation, headAng, bodyAng)
+
+            return {
+                origin = eyeOrigin,
+                angles = eyeAngles,
+                fov = ply:GetFOV()
+            }
+        end
+    end
+
+    -- Interpolate toward killer
+    if IsValid(killer) and killer ~= ply then
+        local toKiller = killer:EyePos() - origin
+        local killerAng = toKiller:Angle()
+        eyeAngles = LerpAngle(interpolation, forward, killerAng)
+    end
+
+    -- Calculate camera offset
+    local viewForward = eyeAngles:Forward()
+    viewForward:Normalize()
+    eyeOrigin = origin - viewForward * chaseDistance
+
+    -- Ray trace against world
+    local tr = util.TraceHull({
+        start = origin,
+        endpos = eyeOrigin,
+        mins = Vector(-4, -4, -4),
+        maxs = Vector(4, 4, 4),
+        mask = MASK_SOLID,
+        filter = ply
+    })
+
+    if tr.Fraction < 1.0 then
+        eyeOrigin = tr.HitPos
+        ply.ChaseDistance = (origin - eyeOrigin):Length()
+    end
+
+    return {
+        origin = eyeOrigin,
+        angles = eyeAngles,
+        fov = ply:GetFOV()
+    }
+end)

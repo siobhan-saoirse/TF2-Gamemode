@@ -40,25 +40,20 @@ function ENT:Think()
 		self.Pos = pos
 	end
 	
-	for k,v in ipairs(ents.FindByClass("team_train_watcher")) do
-		if (IsValid(v.Train)) then
-			self.Train = v.Train
+		for _,train in ipairs(ents.FindByClass("func_tracktrain")) do
+			if (string.find(game.GetMap(),"pl_")) then
+				self.Train = train
+						
+				for _,hurt in ipairs(ents.FindByClass("trigger_hurt")) do
+					if (hurt:GetParent() == train) then
+						hurt:Remove()
+					end
+				end
+			end
 		end
-		if (IsValid(v.Goal)) then
-			self.Goal = v.Goal
-		end
-	end
 	if GAMEMODE.PostEntityDone and not self.PostEntityDone then
 		self:InitPostEntity()
 		self.PostEntityDone = true
-	end
-	
-	if (IsValid(self.Goal)) then
-		if (self.Pos:Distance(self.Goal:GetPos()) < 180) then
-			if (!GAMEMODE.RoundHasWinner) then
-				GAMEMODE:RoundWin(TEAM_BLU)
-			end
-		end
 	end
 end
 
@@ -141,12 +136,6 @@ function ENT:StartTouch(ent)
 end
 
 function ENT:EndTouch(ent)
-	for k,v in ipairs(ents.FindByClass("team_train_watcher")) do
-		if (IsValid(v.Train)) then
-			self.Train = v.Train
-		end
-	end
-	
 	if (ent:IsPlayer()) then 
 		if (ent:Team() == TEAM_BLU) then
 			self.Players = self.Players - 1

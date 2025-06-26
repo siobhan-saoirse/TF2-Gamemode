@@ -85,8 +85,11 @@ end
 
 function ENT:EndTouch(ent)
 	if ent:IsPlayer() then
-		ent:SetNWBool("InRespawnRoom",false)
+		timer.Simple(2.0, function()
+			ent:SetNWBool("InRespawnRoom",false)
+			ent:GodDisable()
+		end)
+		
 		self.Players[ent] = nil
-		ent:GodDisable()
 	end
 end

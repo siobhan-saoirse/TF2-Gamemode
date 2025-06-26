@@ -10,6 +10,13 @@ ENT.PrintName		= "Red Scout"
 ENT.Category		= "TFBots"
 
 local function LeadBot_S_Add_Zombie(team,class,pos,ent)
+	if (game.SinglePlayer()) then
+		table.insert( Errors, {
+			last	= SysTime(),
+			text	= "TFBots do not work in Singleplayer! >:("
+		} )
+		return
+	end
 	if !navmesh.IsLoaded() then
 		ErrorNoHalt("There is no navmesh! Generate one using \"nav_generate\"!\n")
 		return

@@ -2,11 +2,9 @@
 
 if SERVER then AddCSLuaFile() end
 
-ENT.Base = "base_nextbot"
-ENT.Type = "nextbot"
+ENT.Type = "point"
 
 function ENT:Initialize()
-	self:SetModel("models/gman.mdl")
 	self:SetNoDraw(true)
 	self:SetSolid( SOLID_NONE )
 	self.PosGen = nil
@@ -37,14 +35,14 @@ function ENT:FindChaseSpots( tbl )
 
 	local tbl = tbl or {}
 
-	tbl.pos			= tbl.pos			or self:WorldSpaceCenter()
+	tbl.pos			= tbl.pos			or self:GetOwner():WorldSpaceCenter()
 	tbl.radius		= tbl.radius		or 1000
 	tbl.stepdown	= tbl.stepdown		or 20
 	tbl.stepup		= tbl.stepup		or 20
 	tbl.type		= tbl.type			or 'hiding'
 
 	-- Use a path to find the length
-	local path = Path( "Follow" )
+	local path = Path( "Chase" )
 
 	-- Find a bunch of areas within this distance
 	local areas = navmesh.Find( tbl.pos, tbl.radius, tbl.stepdown, tbl.stepup )
@@ -67,7 +65,7 @@ function ENT:FindChaseSpots( tbl )
 			-- Work out the length, and add them to a table
 			path:Invalidate()
 
-			path:Compute( self, tbl.pos ) -- TODO: This is bullshit - it's using 'self.pos' not tbl.pos
+			path:Compute( self:GetOwner(), tbl.pos ) -- TODO: This is bullshit - it's using 'self.pos' not tbl.pos
 
 			table.insert( found, { vector = vec, distance = path:GetLength() } )
 

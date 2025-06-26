@@ -16,8 +16,8 @@ end)
 
 function lookForNearestPlayer(bot)
 	local npcs = {}
-		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 8000000)) do
-			if ((v:IsTFPlayer()) and v:Health() > 0 and !v:IsFriendly(bot) and v:GetNoDraw() == false and !v:IsNeutral() and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET)) then
+		for k,v in ipairs(ents.FindInSphere(bot:GetPos(), 2048)) do
+			if ((v:IsTFPlayer()) and v:Health() > 1 and !v:IsFriendly(bot) and v:GetNoDraw() == false and v:EntIndex() != bot:EntIndex() and !v:IsFlagSet(FL_NOTARGET)) then
 				table.insert(npcs, v)
 			end
 		end
@@ -1150,7 +1150,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	ply:SpectateEntity(nil)
 	if (IsValid(attacker) and attacker:IsTFPlayer() and attacker:EntIndex() != ply:EntIndex() and !ply:Alive()) then
 		ply:SpectateEntity(attacker)
-		timer.Simple(0 + 2.0 + 0.4 - 0.3, function()
+		timer.Simple(2.0, function()
 			if (!ply:Alive() && IsValid(attacker)) then
 				ply:SendLua("surface.PlaySound('misc/freeze_cam.wav')")
 			end
@@ -1536,7 +1536,7 @@ function GM:PlayerDeath(ent, inflictor, attacker)
 				animent:Fire("Kill", "", 0.1)
 			end
 			if IsValid(ent) then
-				if !ent:Alive() then
+				if !ent:Alive() and !ent.TFBot then
 					ent:Spawn()
 				end
 			end

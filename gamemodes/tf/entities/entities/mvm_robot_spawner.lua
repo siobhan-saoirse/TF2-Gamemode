@@ -254,7 +254,7 @@ function ENT:Use( activator, caller )
 				if (table.Count(self.spawnsblu) == 0) then
 					spawn = self
 				end
-				if (table.Count(team.GetPlayers(TEAM_BLU)) < 6) then
+				if (table.Count(team.GetPlayers(TEAM_BLU)) < 22) then
 					if (math.random(1,8) == 1) then
 						local bottable = table.Random(horde_bots)
 						if (math.random(1,4) == 1) then -- unlocked bots

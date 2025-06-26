@@ -1,13 +1,13 @@
 
 --if (!IsMounted("cstrike")) then return end
 AddCSLuaFile()
-SWEP.Base = "weapon_csbase"
+SWEP.Base = "weapon_base"
 SWEP.Category = "Team Fortress 2 Gamemode"
 SWEP.PrintName = "Hands"
 SWEP.Author = "Daisreich"
 
-SWEP.Slot = 1
-SWEP.SlotPos = 0
+SWEP.Slot = 0
+SWEP.SlotPos = 99
 
 SWEP.Spawnable = true
 SWEP.ViewModelFOV = 90

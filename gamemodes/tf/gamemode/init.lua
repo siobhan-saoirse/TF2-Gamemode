@@ -10,6 +10,7 @@ include("sv_death.lua")
 include("shd_gravitygun.lua")
 include("sv_chat.lua")  
 include("sv_loadout.lua")   
+include("sv_mvm.lua")   
 include("shd_taunts.lua") 
 resource.AddWorkshop( "1932936017" )
 resource.AddWorkshop( "3323795558" )
@@ -2633,3 +2634,8 @@ function GM:PlayerDroppedWeapon(ply)
 		net.Send(ply)
 	end
 end
+
+hook.Add("DoPlayerDeath", "TF2_DeathCam_Initialize", function(ply, attacker, dmginfo)
+    ply:SetNWFloat("DeathTime",CurTime())
+    ply:SetNWFloat("ChaseDistance",40)
+end)

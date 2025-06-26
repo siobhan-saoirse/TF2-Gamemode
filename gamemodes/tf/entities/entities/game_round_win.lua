@@ -24,8 +24,7 @@ end
 
 -- Trigger win
 function ENT:AcceptInput(name, activator, caller)
-	name = string.lower(name)
-	if name == "roundwin" then 
+	if name == "RoundWin" then 
 		self:TriggerRoundWin()
 	end
 end
