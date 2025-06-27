@@ -1976,6 +1976,17 @@ function GM:PlayerSpawn(ply)
 		ply:SetNoCollideWithTeammates(false)
 	end
 	if string.find(game.GetMap(), "mvm_") then
+		
+            
+				if ply:Team() == TEAM_BLU then
+                    for _,flag in ipairs(ents.FindByClass("item_teamflag_mvm")) do
+                        if (!IsValid(flag.Carrier) and !flag.NextReturn) then
+                            if (bot:GetPlayerClass() != "engineer" and bot:GetPlayerClass() != "medic" and bot:GetPlayerClass() != "sentrybuster") then
+                                flag:Pickup(ply)
+                            end
+                        end
+                    end
+				end
 		timer.Simple(0.4, function()
 			for k,v in ipairs(ents.FindByClass("obj_teleporter")) do
 				if GAMEMODE:EntityTeam(v) == TEAM_BLU then
@@ -2389,6 +2400,16 @@ function GM:PlayerSelectSpawn(pl)
 	end
 
 	for k, v in pairs(ents.FindByClass("info_player_terrorist")) do
+		----print(v, "says")
+		table.insert(spawnsred, v)
+	end
+
+	for k, v in pairs(ents.FindByClass("info_player_allies")) do
+		----print(v, "says")
+		table.insert(spawnsblu, v)
+	end
+
+	for k, v in pairs(ents.FindByClass("info_player_axis")) do
 		----print(v, "says")
 		table.insert(spawnsred, v)
 	end

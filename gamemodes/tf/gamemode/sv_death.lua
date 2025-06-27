@@ -1150,15 +1150,18 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	ply:SpectateEntity(nil)
 	if (IsValid(attacker) and attacker:IsTFPlayer() and attacker:EntIndex() != ply:EntIndex() and !ply:Alive()) then
 		ply:SpectateEntity(attacker)
+		ply:SetFOV(attacker:GetFOV())
 		timer.Simple(2.0, function()
 			if (!ply:Alive() && IsValid(attacker)) then
 				ply:SendLua("surface.PlaySound('misc/freeze_cam.wav')")
+				ply:SetFOV(attacker:GetFOV())
 			end
 		end)
 		timer.Simple(2.0, function()
 			if (!ply:Alive() && IsValid(attacker)) then
 				ply:Spectate(OBS_MODE_FREEZECAM)
 				ply:SpectateEntity(attacker)
+				ply:SetFOV(attacker:GetFOV())
 			end
 		end)
 	end

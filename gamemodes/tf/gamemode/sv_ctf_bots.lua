@@ -153,6 +153,9 @@ local function IsValidTarget(bot,target)
 		if (target:EntIndex() == bot:EntIndex()) then
 			return false
 		end
+		if (target:Team() != TEAM_RED &&  target:Team() != TEAM_BLU) then
+			return false
+		end
 		return true
 	end
 	return false
@@ -691,10 +694,6 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 			end
 		elseif bot.TFBot then
 				local class = table.Random(classtb)
-				timer.Simple(1, function()
-					--TalkToMe(bot, "join")
-				end)
-				if !bot_class:GetBool() then
 					if (!bot.IsL4DZombie) then
 										
 						local random = math.random(1,9)
@@ -719,10 +718,6 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 						end
 						
 					end
-				end
-				if (!bot.IsL4DZombie) then
-					bot:SetPlayerClass(table.Random(classtb)) -- change to different class unrelated to the regular classes
-				end
 				timer.Simple(0.1, function()
 						if (--[[bot.IsL4DZombie and ]]!string.find(bot:GetModel(),"/bot_")) then
 							//RandomWeapon2(bot, "primary")
@@ -733,7 +728,7 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 							//RandomCosmetic(bot, table.Random({"hat","head"}))
 						end
 				end)
-				bot:SetFOV(90, 0) 
+				bot:SetFOV(75, 0) 
 		end
 	end
 end)
@@ -797,7 +792,7 @@ hook.Add("Move", "LeadBot_Control22", function(bot, mv)
 				end
 			end
 			if (bot.Difficulty ~= 0) then
-				if (((bot.playerclass == "Scout" and !string.find(bot:GetModel(),"bot")))) then
+				if ((((bot.playerclass == "Scout" || bot.playerclass == "Engineer") and !string.find(bot:GetModel(),"bot")))) then
 					if (IsValid(bot:GetWeapons()[2])) then
 						if (bot:GetWeapons()[1]:Clip1() == 0 and bot:GetWeapons()[2]:Ammo1() ~= 0 and bot:GetWeapons()[2].IsProjectileWeapon) then
 							bot:SelectWeapon(bot:GetWeapons()[2]:GetClass())
@@ -1286,7 +1281,7 @@ hook.Add("SetupMove", "LeadBot_Control", function(bot, mv, cmd)
 				if (!IsValid(bot.TargetEnt) || !bot.TargetEnt:Alive()) then
 					-- our enemy doesn't exist anymore, find a random spot every 10 seconds
 					if (CurTime() > controller.LastSegmented || IsValid(bot.botPos) and bot:GetPos():Distance(bot.botPos) < bot:GetModelRadius() * 1.05) then
-						bot.botPos = controller:FindSpot("random", {radius = 12500, pos = lookForNearestEnemyPlayer(bot):GetPos()})
+						bot.botPos = controller:FindSpot("random", {radius = 12500})
 			        	controller.LastSegmented = CurTime() + 10
 					end
 				else
@@ -2007,8 +2002,8 @@ function reconstruct_path( cameFrom, current )
 end
 
 function AstarVector( bot, start, goal )
-	local startArea = navmesh.GetNearestNavArea( start, false, 10000, false, true, bot:Team() )
-	local goalArea = navmesh.GetNearestNavArea( goal, false, 10000, false, true, bot:Team() )
+	local startArea = navmesh.GetNearestNavArea( start, true, 10000, true, true, bot:Team() )
+	local goalArea = navmesh.GetNearestNavArea( goal, true, 10000, true, true, bot:Team() )
 	return Astar( bot, startArea, goalArea )
 end
 
@@ -2098,11 +2093,6 @@ hook.Add( "StartCommand", "TFBot_Movement", function( ply, cmd )
 	if ( !IsValid( ply.targetArea ) ) then
 		ply.targetArea = ply.path[ #ply.path ]
 	end
-	if (ply.botPos:Distance(ply:GetPos()) > ply:GetModelRadius()) then
-		cmd:SetForwardMove( 1000 )
-		local targetang = ( ply.botPos - ply:GetPos() ):GetNormalized():Angle()
-		cmd:SetViewAngles( targetang )
-	end
 
 	// The area we selected is invalid or we are already there, remove it, bail and wait for next cycle
 	if ( !IsValid( ply.targetArea ) || ( ply.targetArea == currentArea && ply.targetArea:GetCenter():Distance( ply:GetPos() ) < 40 * ply:GetModelScale() ) ) then
@@ -2116,7 +2106,11 @@ hook.Add( "StartCommand", "TFBot_Movement", function( ply, cmd )
 	if (ply:GetNWBool("Taunting",false) == true) then 
 		cmd:SetForwardMove( 0 )
 	else
+		cmd:SetForwardMove( 1000 )
 		cmd:SetViewAngles( targetang )
+		if (!IsValid(ply.TargetEnt)) then
+			ply:SetEyeAngles(LerpAngle(FrameTime() * 5 * 1.2, ply:EyeAngles(), targetang))
+		end
 	end
 
 end )
@@ -2167,3 +2161,37 @@ for teamID, waveTime in pairs(respawnWaveTimes) do
         ProcessRespawnWave(teamID)
     end)
 end
+
+local function BreakTouchingEntities(ply)
+    if not IsValid(ply) or not ply:IsPlayer() then return end
+
+    local bboxMin, bboxMax = ply:OBBMins(), ply:OBBMaxs()
+    local pos = ply:GetPos()
+
+    -- Find entities within player's bounding box
+    local nearby = ents.FindInBox(pos + bboxMin, pos + bboxMax)
+    for _, ent in ipairs(nearby) do
+        if not IsValid(ent) then continue end
+
+        local class = ent:GetClass()
+        if class == "func_breakable" or class == "func_breakable_surf" then
+            if ent:Health() > 0 then
+                local dmg = DamageInfo()
+                dmg:SetAttacker(ply)
+                dmg:SetInflictor(ply)
+                dmg:SetDamage(ent:Health())
+                dmg:SetDamageType(DMG_CRUSH) -- or DMG_CLUB, DMG_GENERIC
+
+                ent:TakeDamageInfo(dmg)
+            end
+        end
+    end
+end
+
+hook.Add("Think", "BreakablesTouchByBotPlayers", function()
+    for _, ply in ipairs(player.GetAll()) do
+        if ply.TFBot then
+            BreakTouchingEntities(ply)
+        end
+    end
+end)

@@ -152,7 +152,7 @@ function ENT:Think()
 	for k, v in pairs(player.GetAll()) do
 				local trace = util.QuickTrace(self:GetPos(), v:EyePos() - self:GetPos(), self.Prop)
 		if self:GetSkin() == 1 and v:IsBot() and !v:IsHL2() then
-			local color = Color(255, 0, 0)
+			local color = Color(255, 0, 0) 
 			if trace.Entity == v then
 				color = Color(0, 255, 255)
 			end

@@ -64,8 +64,11 @@ function ENT:FindChaseSpots( tbl )
 
 			-- Work out the length, and add them to a table
 			path:Invalidate()
-
-			path:Compute( self:GetOwner(), tbl.pos ) -- TODO: This is bullshit - it's using 'self.pos' not tbl.pos
+			if (self:GetOwner().TargetEnt != nil) then
+				path:Chase( self:GetOwner(), self:GetOwner().TargetEnt ) -- TODO: This is bullshit - it's using 'self.pos' not tbl.pos
+			else
+				path:Compute( self:GetOwner(), tbl.pos ) -- TODO: This is bullshit - it's using 'self.pos' not tbl.pos
+			end
 
 			table.insert( found, { vector = vec, distance = path:GetLength() } )
 
