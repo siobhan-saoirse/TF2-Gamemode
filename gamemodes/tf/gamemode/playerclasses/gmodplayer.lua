@@ -92,7 +92,35 @@ CLASS.Sounds = {
 }
 
 if SERVER then
+local function GetSpawnmenuWeaponsBySlot()
+    local slots = {
+        [0] = {}, -- Primary
+        [1] = {}, -- Secondary
+        [2] = {}, -- Melee or Utility
+    }
 
+    for _, wep in ipairs(weapons.GetList()) do
+        -- Must be spawnable and have a valid Slot
+        if wep.Spawnable  then
+            table.insert(slots[wep.Slot], wep.ClassName)
+        end
+    end
+
+    return slots
+end
+
+local function GiveRandomSpawnmenuWeapons(ply)
+    if not IsValid(ply) or not ply:IsPlayer() then return end
+
+    local weaponsBySlot = GetSpawnmenuWeaponsBySlot()
+
+    for slot, list in pairs(weaponsBySlot) do
+        if #list > 0 then
+            local class = list[math.random(#list)]
+            ply:Give(class)
+        end
+    end
+end
 function CLASS:Initialize()
 	self:Give("weapon_slam")
 	if (ConVarExists("hl2_cl_bob")) then
@@ -171,44 +199,13 @@ function CLASS:Initialize()
 	timer.Simple(0.12,function() 
 		if (self:IsBot() and self.TFBot and self:GetPlayerClass() == "gmodplayer") then
 
-			local primaryweps = { 
-				"weapon_ak47_cstrike",
-				"weapon_aug_cstrike",
-				"weapon_famas_cstrike",
-				"weapon_galil_cstrike",
-				"weapon_m3_cstrike",
-				"weapon_mp5_cstrike",
-				"weapon_p90_cstrike",
-				"weapon_m4a1_cstrike",
-				"weapon_sg552_cstrike",
-				"weapon_tmp_cstrike",
-				"weapon_xm1014_cstrike",
-				"weapon_ar2_scripted",
-				"weapon_shotgun_scripted",
-				"weapon_smg1_scripted",
-				"",
-				"",
-				"",
-			}
-			local secondaryweps = {
-				"weapon_deagle_cstrike",
-				"weapon_elite_cstrike",
-				"weapon_fiveseven_cstrike",
-				"weapon_glock_cstrike",
-				"weapon_p228_cstrike",
-				"weapon_usp_cstrike",
-				"weapon_pistol_scripted",
-				"weapon_357_scripted"
-			}
-				timer.Simple(0.3, function()
-					local mdl = table.Random(player_manager.AllValidModels())
-					self:SetModel(mdl)
-					
-					self:StripWeapons()
-					self:Give(table.Random(primaryweps))
-					self:Give(table.Random(secondaryweps))
-					self:Give("weapon_knife_cstrike")
-				end)
+			if (ConVarExists("hl2_cl_bob")) then
+				self:SelectWeapon(table.Random({"weapon_hl2_shotgun","weapon_hl2_smg1","weapon_hl2_357","weapon_hl2_ar2"}))
+			else
+				self:SelectWeapon(table.Random({"weapon_shotgun","weapon_smg1","weapon_357","weapon_ar2"}))
+			end
+			local mdl = table.Random(player_manager.AllValidModels())
+			self:SetModel(mdl)
 
 		end
 	end)

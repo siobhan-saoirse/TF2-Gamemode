@@ -73,8 +73,12 @@ function PANEL:Init()
 	self:SetVisible(true)
 	
 	self.Avatars = {}
+	self.BotAvatars = {}
 	for i=1, 12 do
 		self.Avatars[i] = vgui.Create("AvatarImage", self)
+	end
+	for i=1, 12 do
+		self.BotAvatars[i] = vgui.Create("SpawnIcon", self)
 	end
 	self.PlayerTeam = TEAM_RED
 end
@@ -87,9 +91,11 @@ function PANEL:PerformLayout()
 	local ypos = math.floor(23*Scale)
 	
 	for i=1, 12 do
-		self.Avatars[i]:SetVisible(true)
+		--self.Avatars[i]:SetVisible(true)
 		self.Avatars[i]:SetPos(math.floor(14*Scale), ypos-math.floor(8*Scale))
 		self.Avatars[i]:SetSize(15*Scale, 15*Scale)
+		self.BotAvatars[i]:SetPos(math.floor(14*Scale), ypos-math.floor(8*Scale))
+		self.BotAvatars[i]:SetSize(15*Scale, 15*Scale)
 		ypos = ypos + math.floor(22*Scale)
 	end
 end
@@ -119,9 +125,15 @@ function PANEL:Paint()
 			surface.DrawRect(3*Scale, ypos-math.floor(11*Scale), w-math.floor(6*Scale), math.floor(21*Scale))
 			surface.SetDrawColor(255, 255, 255, 255)
 		end
-		if self then
+		if (self and pl:IsBot()) then
+    		self.BotAvatars[i]:SetModel(pl:GetModel())
+			self.BotAvatars[i]:SetVisible(true)
+			self.Avatars[i]:SetVisible(false)
+		end
+		if self and !pl:IsBot() then
 			self.Avatars[i]:SetPlayer(pl)
 			self.Avatars[i]:SetVisible(true)
+			self.BotAvatars[i]:SetVisible(false)
 		end
 		if d then
 			col.a = 127
@@ -177,11 +189,6 @@ function PANEL:Paint()
 		if pl:GetFriendStatus() == "friend" then
 			surface.SetTexture(ico_friend_indicator_scoreboard)
 			surface.DrawTexturedRect(math.floor(3*Scale), ypos-math.floor(8.5*Scale), 30*Scale, 30*Scale)
-		end
-
-		if !pl:IsBot() then
-			surface.SetTexture(default_avatar)
-			surface.DrawTexturedRect(math.floor(14*Scale), ypos-math.floor(8*Scale), 15*Scale, 15*Scale)
 		end
 
 		
@@ -261,6 +268,9 @@ function PANEL:Paint()
 	for i=#players+1, 12 do
 		self.Avatars[i]:SetPlayer(NULL)
 		self.Avatars[i]:SetVisible(false)
+	end
+	for i=#players+1, 12 do
+		self.BotAvatars[i]:SetVisible(false)
 	end
 end
 

@@ -56,48 +56,6 @@ local function LeadBot_S_Add_Zombie(team,class,pos,ent)
 		if IsValid(bot) then
 			bot:SetPlayerClass(class)
 			bot.TFBot = true
-			
-			if (bot:GetPlayerClass() == "gmodplayer") then
-					local primaryweps = { 
-						"weapon_ak47_cstrike",
-						"weapon_aug_cstrike",
-						"weapon_famas_cstrike",
-						"weapon_galil_cstrike",
-						"weapon_m3_cstrike",
-						"weapon_mp5_cstrike",
-						"weapon_p90_cstrike",
-						"weapon_m4a1_cstrike",
-						"weapon_sg552_cstrike",
-						"weapon_tmp_cstrike",
-						"weapon_xm1014_cstrike",
-						"weapon_ar2_scripted",
-						"weapon_shotgun_scripted",
-						"weapon_smg1_scripted",
-						"",
-						"",
-						"",
-					}
-					local secondaryweps = {
-						"weapon_deagle_cstrike",
-						"weapon_elite_cstrike",
-						"weapon_fiveseven_cstrike",
-						"weapon_glock_cstrike",
-						"weapon_p228_cstrike",
-						"weapon_usp_cstrike",
-						"weapon_pistol_scripted",
-						"weapon_357_scripted"
-					}
-					timer.Simple(0.3, function()
-					
-						bot:SetModel(table.Random(player_manager.AllValidModels()))
-						
-						bot:StripWeapons()
-						bot:Give(table.Random(primaryweps))
-						bot:Give(table.Random(secondaryweps))
-						bot:Give("weapon_knife_cstrike")
-						bot:SetArmor(math.random(15,250))
-					end)
-			end
 		end
 	end)
 	--MsgN("[LeadBot] Bot " .. name .. " with strategy " .. bot.BotStrategy .. " added!")

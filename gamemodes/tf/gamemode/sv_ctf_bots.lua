@@ -5,7 +5,7 @@ if CLIENT then return end
 --[[ONLY MEAN TO BE USED WITHIN Team Fortress 2 Gamemode Dev!!!]]--
 
 local profiles = {}
-local bots = {}
+local bots = {} 
 
 --local names = {"LeadKiller", "A Random Person", "Foxie117", "G.A.M.E.R v24", "Agent Agrimar"}
 local names = {
@@ -117,6 +117,7 @@ local bot_class = CreateConVar("tf_bot_keep_class_after_death", "0", {FCVAR_ARCH
 local bot_diff = CreateConVar("tf_bot_difficulty", "1", {FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Sets the difficulty level for the bots. Values are: 0=easy, 1=normal, 2=hard, 3=expert. Default is \"Normal\" (1).")
 local bot_respawn = CreateConVar("tf_bot_npc_respawn", "0", {FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY}, "Should the NPC bots respawn?")
 local tf_bot_notarget = CreateConVar("tf_bot_notarget", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY})
+local tf_bot_force_class = CreateConVar("tf_bot_force_class", "", {FCVAR_GAMEDLL})
 local tf_bot_melee_only = CreateConVar("tf_bot_melee_only", "0", {FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_NOTIFY})
 
 local currentNameIndex = 0
@@ -153,7 +154,7 @@ local function IsValidTarget(bot,target)
 		if (target:EntIndex() == bot:EntIndex()) then
 			return false
 		end
-		if (target:Team() != TEAM_RED &&  target:Team() != TEAM_BLU) then
+		if (target:EntityTeam() != TEAM_RED &&  target:EntityTeam() != TEAM_BLU) then
 			return false
 		end
 		return true
@@ -217,7 +218,7 @@ end
 function escortAvailable(bot)
 	local npcs = {} 
 	for k,v in ipairs(ents.FindByClass("team_train_watcher")) do
-		if (IsValid(v) and bot:Team() == TEAM_BLU) then
+		if (IsValid(v)) then
 			table.insert(npcs, v)		
 		end
 	end
@@ -459,6 +460,7 @@ local function LeadBot_S_Add(team2)
 		ply:SetTeam(TEAM_RED)	
 	end
 	
+	bot:Spawn()
 	local random = math.random(1,9)
 	if (random == 1) then
 		bot:SetPlayerClass("scout")
@@ -480,11 +482,6 @@ local function LeadBot_S_Add(team2)
 		bot:SetPlayerClass("spy")
 	end
 	bot.TFBot = true
-	timer.Simple(0.1, function()
-	
-		bot:Spawn()
-
-	end)
 
 	MsgN("[LeadBot] Bot " .. bot:Nick() .. " with strategy " .. bot.BotStrategy .. " added!")
 end
@@ -687,13 +684,11 @@ end
 
 hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 	if (IsValid(bot)) then
-		if bot.TFBot and bot:GetPlayerClass() == "gmodplayer" then
-			local randWeapon = table.Random(bot:GetWeapons())
-			if (randWeapon:GetClass() != "weapon_knife_cstrike") then
-				bot:SelectWeapon(tostring(randWeapon:GetClass()))
-			end
-		elseif bot.TFBot then
+		if bot.TFBot then
 				local class = table.Random(classtb)
+				if (tf_bot_force_class:GetString() != "") then
+					bot:SetPlayerClass(tf_bot_force_class:GetString())
+				else
 					if (!bot.IsL4DZombie) then
 										
 						local random = math.random(1,9)
@@ -718,6 +713,7 @@ hook.Add("PlayerSpawn", "LeadBot_S_PlayerSpawn", function(bot)
 						end
 						
 					end
+				end
 				timer.Simple(0.1, function()
 						if (--[[bot.IsL4DZombie and ]]!string.find(bot:GetModel(),"/bot_")) then
 							//RandomWeapon2(bot, "primary")
@@ -1525,7 +1521,11 @@ hook.Add("StartCommand", "leadbot_control", function(bot, cmd)
 	if bot.TFBot and bot:Alive() then
 			-- if our targetent is not alive, don't do anything until it's nil
 			local buttons = 0
-			
+			if (bot:GetPlayerClass() == "gmodplayer" and bot.botPos) then
+				if (bot:GetPos():Distance(bot.botPos) > bot:GetModelRadius() * 2) then
+					buttons = buttons + IN_SPEED
+				end
+			end
 			if (bot.botPos and !bot:GetNWBool("Taunting",false)) then
 				if (bot:GetVelocity():Length() < 50) then
 
@@ -2131,13 +2131,15 @@ local respawnQueue = {
 -- Add player to the team's respawn queue
 hook.Add("PlayerDeath", "TF2_RespawnWave_Queue", function(ply)
     if not IsValid(ply) or not ply:Team() then return end
-    local teamID = ply:Team()
+	if (ply:IsBot()) then
+		local teamID = ply:Team()
 
-    table.insert(respawnQueue[teamID], ply)
-    ply:SetNWBool("InRespawnQueue", true)
+		table.insert(respawnQueue[teamID], ply)
+		ply:SetNWBool("InRespawnQueue", true)
 
-    -- Prevent automatic respawn
-    ply:StripWeapons()
+		-- Prevent automatic respawn
+		ply:StripWeapons()
+	end
 end)
 
 -- Respawn wave timer
