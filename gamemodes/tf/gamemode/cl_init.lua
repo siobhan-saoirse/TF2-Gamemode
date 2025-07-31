@@ -3212,7 +3212,7 @@ hook.Add( "DrawOverlay", "MenuDrawLuaMessages", function()
 	elseif (game.SinglePlayer()) then
 		surface.SetFont( "DermaDefaultBold" )
 		if ( y == nil ) then y = idealy end
-		if ( w == nil ) then w = surface.GetTextSize( "[TF2GM] You're playing on Singleplayer! :(" ) + 48 end
+		if ( w == nil ) then w = surface.GetTextSize( "[TF2GM] You're playing on Singleplayer! Things will not work correctly while playing in Singleplayer." ) + 48 end
 
 		draw.RoundedBox( 2, x + 2, y + 2, w, height, Color( 40, 40, 40, 255 ) )
 		draw.RoundedBox( 2, x, y, w, height, Color( 240, 240, 240, 255 ) )
@@ -3221,7 +3221,7 @@ hook.Add( "DrawOverlay", "MenuDrawLuaMessages", function()
 
 		surface.SetTextColor( 255, 255, 255, 255 )
 		surface.SetTextPos( x + 34, y + 8 )
-		surface.DrawText( "[TF2GM] You're playing on Singleplayer! :(" )
+		surface.DrawText( "[TF2GM] You're playing on Singleplayer! Things will not work correctly while playing in Singleplayer." )
 
 		surface.SetDrawColor( 255, 255, 255, 255 )
 		surface.SetMaterial( matAlert )
