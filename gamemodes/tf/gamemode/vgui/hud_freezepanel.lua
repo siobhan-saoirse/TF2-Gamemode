@@ -2,7 +2,7 @@ local PANEL = {}
 
 local W = ScrW()
 local H = ScrH()
-local WScale = W/640
+local WScale = W/640 
 local Scale = H/480
 
 local color_panel = {

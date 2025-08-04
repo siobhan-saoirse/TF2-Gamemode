@@ -1501,11 +1501,11 @@ local function GetFirstObserverPoint()
 end
 function GM:PlayerInitialSpawn(ply)
 	if (!ply:IsBot()) then
-		ply:ConCommand("tf_merge_loadout_ask")
+		--ply:ConCommand("tf_merge_loadout_ask")
 		ply:SetTeam(TEAM_SPECTATOR)	
-		ply:Spectate(OBS_MODE_IN_EYE)
 		if (GetFirstObserverPoint() != nil) then
 			ply:SpectateEntity(GetFirstObserverPoint())
+			ply:Spectate(OBS_MODE_FIXED)
 		end
 	else
 	

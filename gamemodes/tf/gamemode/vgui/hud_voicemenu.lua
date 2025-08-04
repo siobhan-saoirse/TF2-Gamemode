@@ -53,28 +53,6 @@ concommand.Add("voicemenu", function(pl, cmd, args)
 	
 	v = v[b+1]
 	if not v then return end
-	if pl:GetPlayerClass() == "combinesoldier" then
-		RunConsoleCommand("voicemenu_combine", a, b)
-	end
-	if pl:GetPlayerClass() == "tank_l4d" then
-		pl:EmitSound("Tank.Yell")
-	elseif pl:GetPlayerClass() == "charger" then
-		pl:EmitSound("Charger.Idle")
-	elseif pl:GetPlayerClass() == "boomer" then
-		pl:EmitSound("player/boomer/voice/idle/male_boomer_lurk_0"..math.random(1,9)..".wav",90,100,1,CHAN_VOICE)
-	elseif pl:GetPlayerClass() == "l4d_zombie" then
-		pl:EmitSound("vj_l4d_com/attack_b/male/rage_"..math.random(50,82)..".wav",90,100,1,CHAN_VOICE)
-	end
-	if a == 2 and b == 8 then
-		NextSpeak = CurTime() + 1.5
-		if NextSpeak and CurTime()<NextSpeak then
-			if pl:GetPlayerClass() == "heavy" or pl:GetPlayerClass() == "scout" then
-				pl:EmitSound("vo/"..pl:GetPlayerClass().."_mvm_loot_godlike0"..math.random(1,3)..".wav")
-			else
-				pl:EmitSound("vo/"..pl:GetPlayerClass().."_mvm_loot_godlike0"..math.random(1,3)..".wav")
-			end
-		end
-	end
 	RunConsoleCommand("__svspeak", v[1])
 			
 
