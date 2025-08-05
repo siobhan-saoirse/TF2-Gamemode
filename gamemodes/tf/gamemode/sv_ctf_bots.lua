@@ -612,7 +612,7 @@ local function LeadBot_S_Add_BlueSurvivor(team,class,pos)
 end
 
 hook.Add("PostCleanupMap", "LeadBot_S_PostCleanup", function()
-	for k, v in pairs(player.GetBots()) do
+	for k, v in pairs(player.GetAll()) do
 		if v.TFBot then
 			v.ControllerBot = ents.Create("ctf_bot_navigator")
 			v.ControllerBot:Spawn()
@@ -2097,7 +2097,7 @@ hook.Add( "StartCommand", "TFBot_Movement", function( ply, cmd )
 	end
 
 	// The area we selected is invalid or we are already there, remove it, bail and wait for next cycle
-	if ( !IsValid( ply.targetArea ) || ( ply.targetArea == currentArea && ply.targetArea:GetCenter():Distance( ply:GetPos() ) < 40 * ply:GetModelScale() ) ) then
+	if ( !IsValid( ply.targetArea ) || ( ply.targetArea == currentArea && ply.targetArea:GetCenter():Distance( ply:GetPos() ) < 10 * ply:GetModelScale() ) ) then
 		table.remove( ply.path ) // Removes last element
 		ply.targetArea = nil
 		return

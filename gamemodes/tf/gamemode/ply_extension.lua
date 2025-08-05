@@ -156,7 +156,6 @@ function meta:TFTaunt(args)
 		if ply:GetNWBool("Taunting") == true then return end
 		if not ply:IsOnGround() then return end
 		if ply:WaterLevel() ~= 0 then return end
-
 		if ply:GetPlayerClass() == "combinesoldier" then
 			EmitSentence( "COMBINE_THROW_GRENADE" .. math.random( 0, 4 ), ply:GetPos(), 1, CHAN_AUTO, 1, 75, 0, 100 )
 		end
@@ -738,6 +737,7 @@ function meta:TFTaunt(args)
 		end
 		ply:Speak("TLK_PLAYER_TAUNT")
 		ply:SetNWBool("Taunting", true)
+		ply:SetLocalVelocity(Vector(0,0,0))
 		if IsValid(ply:GetActiveWeapon()) and table.HasValue(wep, ply:GetActiveWeapon():GetClass()) then ply:SetNWBool("NoWeapon", true) end
 		net.Start("ActivateTauntCam")
 		net.Send(ply)
