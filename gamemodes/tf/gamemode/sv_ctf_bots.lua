@@ -862,6 +862,8 @@ hook.Add("Move", "LeadBot_Control22", function(bot, mv)
 		end
 		if (bot.OverrideModelScale) then
 			bot:SetModelScale(bot.OverrideModelScale)
+			bot:SetViewOffset(Vector(0,0,72) * bot.OverrideModelScale) 
+			bot:SetViewOffsetDucked(Vector(0, 0, 48) * bot.OverrideModelScale)
 		end
 	
 		local moveawayrange = 80

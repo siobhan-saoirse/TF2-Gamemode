@@ -199,6 +199,9 @@ local cycle = 0
 local speed = 0
 local flmaxSpeedDelta = 0
 local bob_offset = 0
+
+local BobStates = {}
+
 local function CalcViewModelBobHelper(self)
 	local cl_bob = cvar_bob:GetFloat()
 	local cl_bobcycle = math.max(cvar_bobcycle:GetFloat(), 0.1)
@@ -252,58 +255,69 @@ local function CalcViewModelBobHelper(self)
 	end
 	return 0.0
 end
-function SWEP:CalcViewModelBobHelper(  )
-	local cl_bob = cvar_bob:GetFloat()
-	local cl_bobcycle = math.max(cvar_bobcycle:GetFloat(), 0.1)
-	local cl_bobup = cvar_bobup:GetFloat()
-	
-	local ply = LocalPlayer()
-	
-	if ply:ShouldDrawLocalPlayer() then return 0 end
 
-	local cltime = CurTime()
-	local cycle = cltime - math.floor(cltime/cl_bobcycle)*cl_bobcycle
-	cycle = cycle / (cl_bobcycle)
-	if (cycle < cl_bobup) then
-		cycle = math.pi * cycle / cl_bobup
-	else
-		cycle = math.pi + math.pi*(cycle-cl_bobup)/(1.0 - cl_bobup)
-	end
+function SWEP:CalcViewModelBobHelper(ply)
+    if not IsValid(ply) then return end
+	local cl_bob = cvar_bob
+	local cl_bobcycle = cvar_bobcycle
+	local cl_bobup = cvar_bobup
 
-	local velocity = ply:GetVelocity()
+    local state = BobStates[ply] or {
+        m_flBobTime = 0,
+        m_flLastBobTime = CurTime(),
+        m_flLastSpeed = 0,
+        m_flVerticalBob = 0,
+        m_flLateralBob = 0
+    }
 
-	//Find the speed of the player
-	local speed = ply:GetVelocity():Length2D();
-	local flmaxSpeedDelta = math.max( 0, (CurTime() - cycle ) * 320.0 );
+    local curtime = CurTime()
+    local frametime = FrameTime()
+    if frametime <= 0 then return end
 
-	// don't allow too big speed changes
-	speed = math.Clamp( speed, speed-flmaxSpeedDelta, speed+flmaxSpeedDelta );
-	speed = math.Clamp( speed, -320, 320 );
+    local flBobup = math.max(cl_bobup:GetFloat(), 0.01)
+    local flBobCycle = math.max(cl_bobcycle:GetFloat(), 0.01)
 
-	self.g_verticalBob = speed * cl_bob
-	self.g_verticalBob = self.g_verticalBob*0.3 + self.g_verticalBob*0.7*math.sin(cycle)
-	if (self.g_verticalBob > 4) then
-		self.g_verticalBob = 4
-	elseif (self.g_verticalBob < -7) then
-		self.g_verticalBob = -7
-	end
-	
-	local cycle2 = cltime - math.floor(cltime/(cl_bobcycle*2))*(cl_bobcycle*2)
-	cycle2 = cycle2 / (cl_bobcycle*2)
-	if (cycle2 < cl_bobup) then
-		cycle2 = math.pi * cycle2 / cl_bobup
-	else
-		cycle2 = math.pi + math.pi*(cycle2-cl_bobup)/(1.0 - cl_bobup)
-	end
+    local velocity = ply:GetVelocity()
+    local speed = velocity:Length2D()
 
-	self.g_lateralBob = speed * cl_bob
-	self.g_lateralBob = self.g_lateralBob*0.3 + self.g_lateralBob*0.7*math.sin(cycle2)
-	if (self.g_lateralBob > 4) then
-		self.g_lateralBob = 4
-	elseif (self.g_lateralBob < -7) then
-		self.g_lateralBob = -7
-	end
-	return 0.0
+    local deltaTime = curtime - state.m_flLastBobTime
+    local flmaxSpeedDelta = math.max(0, deltaTime * 320)
+
+    -- Smooth the speed change, just like in C++
+    speed = math.Clamp(speed, state.m_flLastSpeed - flmaxSpeedDelta, state.m_flLastSpeed + flmaxSpeedDelta)
+    speed = math.Clamp(speed, -320, 320)
+    state.m_flLastSpeed = speed
+
+    local bob_offset = math.Remap(speed, 0, 320, 0.0, 1.0)
+
+    state.m_flBobTime = state.m_flBobTime + deltaTime * bob_offset
+    state.m_flLastBobTime = curtime
+
+    -- VERTICAL BOB
+    local cycle = (state.m_flBobTime % flBobCycle) / flBobCycle
+    if cycle < flBobup then
+        cycle = math.pi * cycle / flBobup
+    else
+        cycle = math.pi + math.pi * (cycle - flBobup) / (1 - flBobup)
+    end
+
+    local verticalBob = speed * 0.005
+    verticalBob = verticalBob * 0.3 + verticalBob * 0.7 * math.sin(cycle)
+    state.m_flVerticalBob = math.Clamp(verticalBob, -7.0, 4.0)
+
+    -- LATERAL BOB
+    local cycle2 = (state.m_flBobTime % (flBobCycle * 2)) / (flBobCycle * 2)
+    if cycle2 < flBobup then
+        cycle2 = math.pi * cycle2 / flBobup
+    else
+        cycle2 = math.pi + math.pi * (cycle2 - flBobup) / (1 - flBobup)
+    end
+
+    local lateralBob = speed * 0.005
+    lateralBob = lateralBob * 0.3 + lateralBob * 0.7 * math.sin(cycle2)
+    state.m_flLateralBob = math.Clamp(lateralBob, -7.0, 4.0)
+
+    BobStates[ply] = state
 end
 
 function SWEP:VectorMA( start, scale, direction, dest )
@@ -357,20 +371,21 @@ hook.Add("CalcViewModelView","TFViewmodelBob",function(wep, vm, oldpos, oldang, 
 					local right = wep.Owner:GetRight()
 					local origin = oldpos
 					local angles = oldang
-					CalcViewModelBobHelper(wep)
+					local state = BobStates[ply]
+					if not state then return newpos, newang end
 
 					// Apply bob, but scaled down to 40%
-					origin = VectorMA( origin, wep.g_verticalBob * 0.4, forward, origin );
+					origin = VectorMA( origin, state.m_flVerticalBob * 0.4, forward, origin );
 
 					// Z bob a bit more
-					origin.z = origin.z + wep.g_verticalBob * 0.1;
+					origin.z = origin.z + state.m_flVerticalBob * 0.1;
 
 					// bob the angles
-					angles.r	= angles.r + wep.g_verticalBob * 0.5;
-					angles.p	= angles.p - wep.g_verticalBob * 0.4;
-					angles.y = angles.y - wep.g_lateralBob  * 0.3;
+					angles.r	= angles.r + state.m_flVerticalBob * 0.5;
+					angles.p	= angles.p - state.m_flVerticalBob * 0.4;
+					angles.y = angles.y - state.m_flLateralBob  * 0.3;
 
-					origin = VectorMA( origin, wep.g_lateralBob * 0.2, right, origin );
+					origin = VectorMA( origin, state.m_flLateralBob * 0.2, right, origin );
 					return origin, angles
 				end
 		end
@@ -418,24 +433,25 @@ function SWEP:CalcViewModelView(vm, oldpos, oldang, newpos, newang)
 
 		]]
 		if CLIENT then
-			local forward = self.Owner:GetForward()
-			local right = self.Owner:GetRight()
+			local forward = oldang:Forward()
+			local right = oldang:Right()
 			local origin = oldpos
 			local angles = oldang
-			self:CalcViewModelBobHelper()
 
+			local state = BobStates[self.Owner]
+			if not state then return pos, ang end
 			// Apply bob, but scaled down to 40%
-			origin = self:VectorMA( origin, self.g_verticalBob * 0.4, forward, origin );
+			origin = self:VectorMA( origin, state.m_flVerticalBob * 0.4, forward, origin );
 
 			// Z bob a bit more
-			origin.z = origin.z + self.g_verticalBob * 0.1;
+			origin.z = origin.z + state.m_flVerticalBob * 0.1;
 
 			// bob the angles
-			angles.r	= angles.r + self.g_verticalBob * 0.5;
-			angles.p	= angles.p - self.g_verticalBob * 0.4;
-			angles.y = angles.y - self.g_lateralBob  * 0.3;
+			angles.r	= angles.r + state.m_flVerticalBob * 0.5;
+			angles.p	= angles.p - state.m_flVerticalBob * 0.4;
+			angles.y = angles.y - state.m_flLateralBob  * 0.3;
 
-			origin = self:VectorMA( origin, self.g_lateralBob * 0.2, right, origin );
+			origin = self:VectorMA( origin, state.m_flLateralBob * 0.2, right, origin );
 			return origin, angles
 		else
 			return oldpos, oldang
@@ -445,17 +461,17 @@ end
 
 
 function SWEP:ProjectileShootPos()
-	local pos, ang = self.Owner:GetShootPos(), self.Owner:EyeAngles()
+	local pos, ang, scale = self.Owner:GetShootPos(), self.Owner:EyeAngles(), self.Owner:GetModelScale()
 	if self then
 		if self.Owner:GetInfoNum("tf_righthand", 1) == 0 then
-		return pos +
+		return (pos +
 			self.ProjectileShootOffset.x * ang:Forward() - 
 			self.ProjectileShootOffset.y * ang:Right() + 
-			(self.ProjectileShootOffset.z * ang:Up())
-		else return pos +
+			(self.ProjectileShootOffset.z * ang:Up()))
+		else return (pos +
 			self.ProjectileShootOffset.x * ang:Forward() + 
 			self.ProjectileShootOffset.y * ang:Right() + 
-			(self.ProjectileShootOffset.z * ang:Up())
+			(self.ProjectileShootOffset.z * ang:Up()))
 		end
 	end
 end

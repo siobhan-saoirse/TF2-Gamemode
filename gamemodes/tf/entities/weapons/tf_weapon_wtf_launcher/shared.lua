@@ -5,8 +5,8 @@ end
 
 SWEP.Slot				= 0
 if CLIENT then
-
-SWEP.PrintName			= "Super Rocket Launcher"
+SWEP.Category			= "Team Fortress 2 Gamemode"
+SWEP.PrintName			= "WTF Grenade Launcher"
 
 function SWEP:InitializeCModel()
 	self:CallBaseFunction("InitializeCModel")
@@ -59,6 +59,7 @@ SWEP.Crosshair = "tf_crosshair3"
 
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true
+SWEP.AdminOnly = true
 
 --[[ --Viewmodel Settings Override (left-over from testing; works well)
 SWEP.ViewModelFOV	= 70

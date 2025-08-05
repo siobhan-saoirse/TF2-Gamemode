@@ -337,6 +337,8 @@ function meta:SetPlayerClass(class)
 		self:SetHull(unpack(TFHull))
 		self:SetHullDuck(unpack(TFHullDuck))
 		self:SetCollisionBounds(unpack(TFHull))
+		self:SetViewOffset(Vector(0,0,72)) 
+		self:SetViewOffsetDucked(Vector(0, 0, 48))
 		self:SetStepSize(18)
 	end
 	self:SetDuckSpeed(0.2)

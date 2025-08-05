@@ -11,6 +11,8 @@ local color_panel = {
 	surface.GetTextureID("hud/color_panel_blu"),
 	surface.GetTextureID("hud/color_panel_ylw"),
 	surface.GetTextureID("hud/color_panel_grn"),
+	surface.GetTextureID("hud/color_panel_brown"),
+	surface.GetTextureID("hud/color_panel_brown"),
 }
 local color_panel_browner = surface.GetTextureID("hud/color_panel_browner")
 

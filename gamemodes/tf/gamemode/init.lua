@@ -1504,8 +1504,8 @@ function GM:PlayerInitialSpawn(ply)
 		--ply:ConCommand("tf_merge_loadout_ask")
 		ply:SetTeam(TEAM_SPECTATOR)	
 		if (GetFirstObserverPoint() != nil) then
+			ply:Spectate(OBS_MODE_IN_EYE)
 			ply:SpectateEntity(GetFirstObserverPoint())
-			ply:Spectate(OBS_MODE_FIXED)
 		end
 	else
 	

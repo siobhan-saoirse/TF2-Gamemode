@@ -265,6 +265,7 @@ function SWEP:ViewModelDrawn()
 
 	self:StartVisualOverrides()
 	
+	self:CalcViewModelBobHelper(self.Owner)
 	self:RenderCModel()
 	
 	self:EndVisualOverrides()
