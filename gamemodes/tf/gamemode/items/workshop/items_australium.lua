@@ -1178,11 +1178,11 @@
 		"10000547"
 		{
 			"name"	"Decal Targe"
-			"item_class"	"tf_wearable_demoshield"
+			"item_class"	"tf_wearable_item_demoshield"
 			"craft_class"	"weapon"
 			"item_type_name"	"Shield"
 			"item_name"	"Decal Targe"
-			"item_slot"	"secondary"
+			"item_slot"	"primary"
 			"item_quality"	"normal"
 			"baseitem" "1"
 			"min_ilevel"	"1"
