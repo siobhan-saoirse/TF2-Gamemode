@@ -752,7 +752,7 @@
 		}
 		"10000537"
 		{
-			"name"	"Fly Swatter"
+			"name"	"Stratonic Swatter"
 			"item_class"	"tf_weapon_shovel"
 			"craft_class"	"weapon"
 			"capabilities"
@@ -761,12 +761,12 @@
 				"can_gift_wrap" 	"1"
 			}
 			"show_in_armory"	"1"
-			"item_type_name"	"#TF_Weapon_Shovel"
-			"item_name"	"Fly Swatter"
+			"item_type_name"	"Fly Swatter"
+			"item_name"	"Stratonic Swatter"
 			"item_slot"	"melee"
 			"item_logname"	"fly_swatter"
-			"item_iconname"	"shovel"
-			"image_inventory"	"backpack/weapons/w_models/w_shovel"
+			"item_iconname"	"fly_swatter"
+			"image_inventory"	"backpack/weapons/c_models/c_fly_swat/c_fly_swat"
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
 			"model_player"	"models/weapons/c_models/c_fly_swat/c_fly_swat.mdl"
