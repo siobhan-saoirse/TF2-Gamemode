@@ -927,16 +927,6 @@
 				"wpn_uses_aimmode" "1"
 				"only_on_minigun" "1"
 			}
-			"visuals"
-			{
-				"sound_reload"	"Weapon_Minifun.Reload"
-				"sound_empty"	"Weapon_Minifun.ClipEmpty"
-				"sound_double_shot"	"Weapon_Minifun.Fire"
-				"sound_special1"	"Weapon_Minifun.WindUp"
-				"sound_special2"	"Weapon_Minifun.WindDown"
-				"sound_special3"	"Weapon_Minifun.Spin"
-				"sound_burst"	"Weapon_Minifun.FireCrit"
-			}
 			"mouse_pressed_sound"	"ui/item_heavy_gun_pickup.wav"
 			"drop_sound"		"ui/item_heavy_gun_drop.wav"
 		}
@@ -981,16 +971,6 @@
 				"attrib_vs_burning" "1"
 				"wpn_uses_aimmode" "1"
 				"only_on_minigun" "1"
-			}
-			"visuals"
-			{
-				"sound_reload"	"Weapon_Minifun.Reload"
-				"sound_empty"	"Weapon_Minifun.ClipEmpty"
-				"sound_double_shot"	"Weapon_Minifun.Fire"
-				"sound_special1"	"Weapon_Minifun.WindUp"
-				"sound_special2"	"Weapon_Minifun.WindDown"
-				"sound_special3"	"Weapon_Minifun.Spin"
-				"sound_burst"	"Weapon_Minifun.FireCrit"
 			}
 			"mouse_pressed_sound"	"ui/item_heavy_gun_pickup.wav"
 			"drop_sound"		"ui/item_heavy_gun_drop.wav"

@@ -750,6 +750,12 @@ d_force_a_nature={
 
 ["_images_v3"]={
 	
+d_fly_swatter={
+	x=3,
+	y=224,
+	w=92,
+	h=32,
+},
 d_sharp_dresser={
 	x=0,
 	y=288,
