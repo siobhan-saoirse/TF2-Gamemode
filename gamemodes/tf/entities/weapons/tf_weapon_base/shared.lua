@@ -87,24 +87,29 @@ end
 
 
 SWEP.ViewModelFlip	= false
---eugh, another ugly hack.
-if GetConVar("tf_righthand") then
-	if GetConVar("tf_righthand"):GetInt() == 0 then
-		SWEP.ViewModelFlip = false
-	else
-		SWEP.ViewModelFlip = false
-	end
-end
-
-function SWEP:TranslateFOV( fov )
-	return fov
-end
 
 function SWEP:TFViewModelFOV()
 	if GetConVar("tf_use_viewmodel_fov"):GetInt() > 0 then
-		self.ViewModelFOV	= GetConVar( "viewmodel_fov_tf" ):GetInt()
+		self.ViewModelFOV	= self.Owner:GetInfoNum("viewmodel_fov_tf",54)
 	else
-		self.ViewModelFOV	= GetConVar( "viewmodel_fov" )
+		self.ViewModelFOV	= self.Owner:GetInfoNum("viewmodel_fov",54)
+	end
+		
+	--eugh, another ugly hack.
+	if GetConVar("tf_righthand") then
+		if GetConVar("tf_righthand"):GetInt() == 0 then
+			if (self:GetClass() == "tf_weapon_compound_bow") then
+				self.ViewModelFlip = false
+			else 
+				self.ViewModelFlip = true
+			end
+		else
+			if (self:GetClass() == "tf_weapon_compound_bow") then
+				self.ViewModelFlip = true
+			else
+				self.ViewModelFlip = false
+			end
+		end
 	end
 end
 
@@ -926,12 +931,6 @@ function SWEP:Deploy()
 		self.ViewModelFlip = false
 	end
 	end
-	
-	if GetConVar("tf_use_viewmodel_fov"):GetInt() > 0 then
-		self.ViewModelFOV	= GetConVar( "viewmodel_fov_tf" ):GetInt()
-	else
-		self.ViewModelFOV	= GetConVar( "viewmodel_fov" )
-	end
 
 	if SERVER then
 		----MsgN(Format("Deploy %s (owner:%s)",tostring(self),tostring(self:GetOwner())))
@@ -1110,6 +1109,12 @@ function SWEP:InspectAnimCheck()
 				self.VM_SWINGHARD		= getfenv()["ACT_"..hold.."_VM_SWINGHARD"]
 				self.BACKSTAB_VM_UP		= getfenv()["ACT_"..hold.."_BACKSTAB_VM_UP"]
 				self.BACKSTAB_VM_DOWN		= getfenv()["ACT_"..hold.."_BACKSTAB_VM_DOWN"]
+				if self.UsesSpecialAnimations then
+					self.VM_DRAW = ACT_VM_DRAW_SPECIAL
+					self.VM_IDLE = ACT_VM_IDLE_SPECIAL
+					self.VM_HITCENTER = ACT_VM_HITCENTER_SPECIAL
+					self.VM_SWINGHARD = ACT_VM_SWINGHARD_SPECIAL
+				end
 			end
 
 				if visuals.sound_single_shot then
@@ -1475,6 +1480,7 @@ end
 
 
 function SWEP:Think() 
+	self:TFViewModelFOV()
 	self:Inspect()
 	self:InspectAnimCheck()
 	if (self:GetNWFloat("ReloadTimeMultiplier",1.0) > 0.0) then
