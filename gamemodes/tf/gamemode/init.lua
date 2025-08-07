@@ -2461,6 +2461,23 @@ function GM:GiveAmmoPercentNoMetal(pl, pc)
 end
 
 function GM:GiveHealthPercent(pl, pc)
+		if pl:IsPlayer() then
+			umsg.Start("PlayerHealthBonus", pl)
+				umsg.Short(pc)
+			umsg.End()
+			
+			umsg.Start("PlayerHealthBonusEffect")
+				umsg.Long(pl:UserID())
+				umsg.Bool(pc>0)
+				umsg.Bool(pc>100)
+			umsg.End()
+		else
+			umsg.Start("EntityHealthBonusEffect")
+				umsg.Entity(pl)
+				umsg.Bool(pc>0)
+				umsg.Bool(pc>100)
+			umsg.End()
+		end
 	return pl:GiveHealth(pc * 0.01, true)
 end
 

@@ -79,6 +79,9 @@ for k, v in pairs(items_game["items"]) do
 	if (string.find(v.name,"Grappling")) then
 		v.id = 10000666
 	end
+    if (v.item_class == "tf_wearable") then
+        v.item_class = "tf_wearable_item"
+    end
 	if (string.find(v.name,"MvM GateBot ")) then
 		v.item_name = v.name
         v.item_slot = "head"

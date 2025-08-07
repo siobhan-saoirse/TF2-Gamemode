@@ -897,7 +897,11 @@ function SWEP:PrimaryAttack()
 	self:StopTimers()
 	
 	if IsFirstTimePredicted() then 
-		table.insert(self.NextMeleeAttack, CurTime() + self.MeleeAttackDelay)
+		if (self:GetClass() == "tf_weapon_knife") then
+			table.insert(self.NextMeleeAttack, -1)
+		else
+			table.insert(self.NextMeleeAttack, CurTime() + self.MeleeAttackDelay)
+		end
 	end
 	return true
 end
