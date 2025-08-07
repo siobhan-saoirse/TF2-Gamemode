@@ -292,9 +292,7 @@ if SERVER then
 hook.Add("PreScaleDamage", "BackstabSetDamage", function(ent, hitgroup, dmginfo)
 	local inf = dmginfo:GetInflictor()
 	if inf.ShouldBackstab and inf:ShouldBackstab(ent) and inf:GetClass() != "tf_weapon_knife_icicle" then
-		inf.ResetBaseDamage = inf.BaseDamage
 		if ent:IsPlayer() and ent:IsMiniBoss() then
-			inf.BaseDamage = ent:GetMaxHealth() * 0.12
 			inf.BaseDamage = 195
 			inf.NextIdle = CurTime() + 5
 			timer.Simple(0.04, function()
@@ -303,24 +301,22 @@ hook.Add("PreScaleDamage", "BackstabSetDamage", function(ent, hitgroup, dmginfo)
 				inf:SetNextPrimaryFire(CurTime() + 2)
 			end)
 		elseif ent:IsNPC() and ent:GetClass() == "npc_antlionguard" then
-			inf.BaseDamage = ent:GetMaxHealth() * 0.15
-			inf.Owner:EmitSound("physics/body/body_medium_break2.wav", 120, math.random(50,60))
-			inf.NextIdle = CurTime() + 5
-			ent:EmitSound("npc/antlion_guard/antlion_guard_pain"..math.random(1,2)..".wav", 100, math.random(93, 102))
 			inf.Owner:GetViewModel():SetPlaybackRate(1)
 			timer.Simple(0.04, function()
 				inf:SendWeaponAnimEx(ACT_MELEE_VM_STUN)	 	 
+				inf.NextIdle = CurTime() + 5
 				inf:SetNextPrimaryFire(CurTime() + 2)
 			end)
 		else
-			inf.BaseDamage = ent:Health() * 2
 			ent:AddDeathFlag(DF_BACKSTAB)
 		end
 		inf.NameOverride = "tf_weapon_knife_backstab"
-		dmginfo:SetDamage(inf.BaseDamage)
-	else
-		if (string.find(inf:GetClass(),"tf_weapon_knife")) then
-			inf.BaseDamage = 45
+		if ent:IsPlayer() and ent:IsMiniBoss() then
+			dmginfo:SetDamage(120)
+		elseif ent:IsNPC() and ent:GetClass() == "npc_antlionguard" then
+			dmginfo:SetDamage(120)
+		else
+			dmginfo:SetDamage(ent:Health() * 2)
 		end
 	end
 end)
