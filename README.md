@@ -5,7 +5,7 @@ The Gamemode that allows you to play TF2 in Gmod! Now frequently updated!
 
 Yes, I know that this repository is outdated. I'll update this repository whenever I feel like it.
 
-Warning: Not suitable for the weak children
+Warning: Not suitable for the weaklings due to very little amount of errors that don't affect gameplay
 
 # Warning
 This gamemode is **unstable** and needs a lot of fixes. Community fixes are welcome.
